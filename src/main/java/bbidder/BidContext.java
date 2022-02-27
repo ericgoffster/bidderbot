@@ -10,7 +10,7 @@ import java.util.TreeSet;
  */
 public class BidContext implements Cloneable {
     public final BidPatternList patterns;
-    public final Map<String, Integer> suits ;
+    public final Map<String, Integer> suits;
     private static final short ALL_SUITS = 0xf;
     private static final short MINORS = 0x3;
     private static final short MAJORS = MINORS << 2;
@@ -18,7 +18,7 @@ public class BidContext implements Cloneable {
     Bid lastBidSuit;
     int patternPos;
     boolean matches;
-    
+
     private BidContext(BidPatternList patterns, Map<String, Integer> suits, Bid lastBidSuit, int patternPos, boolean matches) {
         this.patterns = patterns;
         this.suits = suits;
@@ -26,11 +26,15 @@ public class BidContext implements Cloneable {
         this.patternPos = patternPos;
         this.matches = matches;
     }
-    
+
+    @Override
     public BidContext clone() {
         return new BidContext(patterns, new HashMap<>(suits), lastBidSuit, patternPos, matches);
     }
-    
+
+    /**
+     * @return all matching bids, in either ascending order or descending order.
+     */
     public Set<Bid> getMatchingBids() {
         if (!matches) {
             return Set.of();
@@ -39,10 +43,16 @@ public class BidContext implements Cloneable {
             return Set.of();
         }
         BidPattern patt = patterns.bids.get(patternPos);
-        TreeSet<Bid> result = getBids(patt.str);
+        TreeSet<Bid> result = getBids(patt);
         return patterns.upTheLine ? result : result.descendingSet();
     }
 
+    /**
+     * Adds a bid made by opposition.
+     * 
+     * @param bid
+     *            The bid to add.
+     */
     public void addThey(Bid bid) {
         if (!matches) {
             return;
@@ -53,22 +63,19 @@ public class BidContext implements Cloneable {
         }
         BidPattern patt = patterns.bids.get(patternPos);
         if (!patt.isOpposition) {
-            if (bid != Bid.P) {
-                matches = false;
-                return;
-            }
+            add(bid, new BidPattern(true, "P"));
         } else {
             patternPos++;
-            if (!matches(bid, patt.str)) {
-                matches = false;
-                return;
-            }
-        }
-        if (bid.isSuitBid()) {
-            lastBidSuit = bid;
+            add(bid, patt);
         }
     }
 
+    /**
+     * Adds a bid made by us.
+     * 
+     * @param bid
+     *            The bid to add.
+     */
     public void addWe(Bid bid) {
         if (!matches) {
             return;
@@ -82,15 +89,17 @@ public class BidContext implements Cloneable {
             matches = false;
             return;
         }
-        if (!matches(bid, patt.str)) {
-            matches = false;
-            return;
-        }
-        if (bid.isSuitBid()) {
-            lastBidSuit = bid;
-        }
+        add(bid, patt);
     }
 
+    /**
+     * Constructs a bid context from a list of bids, and a list of bid patterns.
+     * 
+     * @param bids
+     *            The bids
+     * @param patterns
+     *            The patterns
+     */
     public BidContext(BidList bids, BidPatternList patterns) {
         this(patterns, new HashMap<>(), null, 0, true);
         boolean isOpp = bids.bids.size() % 2 == 0;
@@ -104,6 +113,10 @@ public class BidContext implements Cloneable {
         }
     }
 
+    /**
+     * @param symbol
+     * @return The suit represented by the symbol. null if not found.
+     */
     Integer getSuit(String symbol) {
         Integer strain = Bid.getStrain(symbol);
         if (strain != null) {
@@ -112,110 +125,86 @@ public class BidContext implements Cloneable {
         return suits.get(symbol);
     }
 
-    private class LevelAndSymbol {
-        public final String level;
-        public final String symbol;
-
-        public LevelAndSymbol(String level, String symbol) {
-            super();
-            this.level = level;
-            this.symbol = symbol;
-        }
-
-        @Override
-        public String toString() {
-            return level + symbol;
-        }
-        
-        public short getStrains() {
-            Integer strain = getSuit(symbol);
-            if (strain != null) {
-                return (short)(1 << strain);
-            }
-            short values = getSuitClass();
-            for(int i: suits.values()) {
-                values &= ~(1 << i);
-            }
-            return values;
-        }
-
-        private short getSuitClass() {
-            if (symbol.equals("M")) {
-                return MAJORS;
-            } else if (symbol.equals("m")) {
-                return MINORS;
-            } else {
-                return ALL_SUITS;
-            }
-        }
-
-        public Bid getBid(int strain) {
-            switch (level) {
-            case "J":
-                return nextLevel(strain).raise();
-            case "NJ":
-                return nextLevel(strain);
-            default:
-                return Bid.valueOf(level.charAt(0) - '1', strain);
-            }
-        }
-        public TreeSet<Bid> getBids() {
-            TreeSet<Bid> result = new TreeSet<>();
-            for (int strain : BitUtil.iterate(getStrains())) {
-                result.add(getBid(strain));
-            }
-            return result;
-        }
-
-        public Bid nextLevel(int strain) {
-            if (strain > lastBidSuit.strain) {
-                return Bid.valueOf(lastBidSuit.level, strain);
-            } else {
-                return Bid.valueOf(lastBidSuit.level + 1, strain);
-            }
+    private static short getSuitClass(BidPattern pattern) {
+        switch (pattern.getSuit()) {
+        case "M":
+            return MAJORS;
+        case "m":
+            return MINORS;
+        default:
+            return ALL_SUITS;
         }
     }
 
-    private LevelAndSymbol parsePattern(String pattern) {
-        if (pattern.startsWith("NJ")) {
-            return new LevelAndSymbol(pattern.substring(0, 2), pattern.substring(2));
+    private Bid getBid(BidPattern pattern, int strain) {
+        String level = pattern.getLevel();
+        switch (level) {
+        case "J":
+            return nextLevel(strain).raise();
+        case "NJ":
+            return nextLevel(strain);
+        default:
+            return Bid.valueOf(level.charAt(0) - '1', strain);
         }
-        return new LevelAndSymbol(pattern.substring(0, 1), pattern.substring(1));
     }
 
-    private TreeSet<Bid> getBids(String pattern) {
-        if (pattern.equalsIgnoreCase("P")) {
+    private short getStrains(BidPattern pattern) {
+        Integer strain = getSuit(pattern.getSuit());
+        if (strain != null) {
+            return (short) (1 << strain);
+        }
+        short values = getSuitClass(pattern);
+        for (int i : suits.values()) {
+            values &= ~(1 << i);
+        }
+        return values;
+    }
+
+    private Bid nextLevel(int strain) {
+        if (strain > lastBidSuit.strain) {
+            return Bid.valueOf(lastBidSuit.level, strain);
+        } else {
+            return Bid.valueOf(lastBidSuit.level + 1, strain);
+        }
+    }
+
+    private TreeSet<Bid> getBids(BidPattern pattern) {
+        if (pattern.str.equalsIgnoreCase("P")) {
             TreeSet<Bid> ts = new TreeSet<Bid>();
             ts.add(Bid.P);
             return ts;
         }
-        if (pattern.equalsIgnoreCase("X")) {
+        if (pattern.str.equalsIgnoreCase("X")) {
             TreeSet<Bid> ts = new TreeSet<Bid>();
             ts.add(Bid.X);
             return ts;
         }
-        if (pattern.equalsIgnoreCase("XX")) {
+        if (pattern.str.equalsIgnoreCase("XX")) {
             TreeSet<Bid> ts = new TreeSet<Bid>();
             ts.add(Bid.XX);
             return ts;
         }
-        return parsePattern(pattern).getBids();
+        TreeSet<Bid> result = new TreeSet<>();
+        for (int strain : BitUtil.iterate(getStrains(pattern))) {
+            result.add(getBid(pattern, strain));
+        }
+        return result;
     }
 
-    private boolean matches(Bid bid, String pattern) {
+    private void add(Bid bid, BidPattern pattern) {
         Set<Bid> bids = getBids(pattern);
-        if (bids.contains(bid)) {
-            if (!bid.isSuitBid()) {
-                return true;
-            }
-            String symbol = parsePattern(pattern).symbol;
+        if (!bids.contains(bid)) {
+            matches = false;
+            return;
+        }
+        if (bid.isSuitBid()) {
+            String symbol = pattern.getSuit();
             Integer strain = getSuit(symbol);
             if (strain == null) {
                 suits.put(symbol, bid.strain);
             }
-            return true;
+            lastBidSuit = bid;
         }
-        return false;
     }
 
     public boolean matches() {

@@ -33,6 +33,20 @@ public class BidPattern {
         return Objects.hash(isOpposition, str);
     }
 
+    public String getSuit() {
+        if (str.startsWith("NJ")) {
+            return str.substring(2);
+        }
+        return str.substring(1);
+    }
+
+    public String getLevel() {
+        if (str.startsWith("NJ")) {
+            return str.substring(0, 2);
+        }
+        return str.substring(0, 1);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

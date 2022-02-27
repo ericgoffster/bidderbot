@@ -24,19 +24,24 @@ public class HCPRangeTest {
 
     @Test
     public void testToString() {
+        Context ctx = new SimpleContext();
         assertEquals("8-10 hcp", new HCPRange("8", "10").toString());
+        assertEquals("8-10 hcp", new HCPRange("8", "10").bind(ctx).toString());
         assertEquals("8+ hcp", new HCPRange("8", null).toString());
+        assertEquals("8+ hcp", new HCPRange("8", null).bind(ctx).toString());
         assertEquals("10- hcp", new HCPRange(null, "10").toString());
+        assertEquals("10- hcp", new HCPRange(null, "10").bind(ctx).toString());
         assertEquals("10 hcp", new HCPRange("10", "10").toString());
+        assertEquals("10 hcp", new HCPRange("10", "10").bind(ctx).toString());
     }
 
     @Test
     public void test() {
         Context ctx = new SimpleContext();
-        assertTrue(new HCPRange("10", "10").matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new HCPRange("10", null).matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new HCPRange("11", null).matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new HCPRange(null, "10").matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new HCPRange(null, "9").matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange("10", "10").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange("10", null).bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new HCPRange("11", null).bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange(null, "10").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new HCPRange(null, "9").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
     }
 }

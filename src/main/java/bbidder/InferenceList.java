@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import bbidder.inferences.AndBoundInference;
+import bbidder.inferences.ConstBoundInference;
+
 public class InferenceList {
     public final List<Inference> inferences;
 
@@ -47,13 +50,12 @@ public class InferenceList {
         InferenceList other = (InferenceList) obj;
         return Objects.equals(inferences, other.inferences);
     }
-    
-    public boolean matches(Context context, Hand hand) {
-        for(Inference i: inferences) {
-            if (!i.matches(context, hand)) {
-                return false;
-            }
+
+    public IBoundInference bind(Context context) {
+        IBoundInference result = new ConstBoundInference(true);
+        for (Inference i : inferences) {
+            result = AndBoundInference.create(result, i.bind(context));
         }
-        return true;
+        return result;
     }
 }

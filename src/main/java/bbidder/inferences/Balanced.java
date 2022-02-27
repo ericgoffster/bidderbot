@@ -3,6 +3,7 @@ package bbidder.inferences;
 import bbidder.BitUtil;
 import bbidder.Context;
 import bbidder.Hand;
+import bbidder.IBoundInference;
 import bbidder.Inference;
 
 public class Balanced implements Inference {
@@ -19,18 +20,8 @@ public class Balanced implements Inference {
     }
 
     @Override
-    public boolean matches(Context context, Hand hand) {
-        int ndoub = 0;
-        for (int s = 0; s < 4; s++) {
-            int len = BitUtil.size(hand.suits[s]);
-            if (len < 2) {
-                return false;
-            }
-            if (len == 2) {
-                ndoub++;
-            }
-        }
-        return ndoub <= 1;
+    public IBoundInference bind(Context context) {
+        return new BoundInf();
     }
 
     @Override
@@ -52,5 +43,27 @@ public class Balanced implements Inference {
     @Override
     public String toString() {
         return "balanced";
+    }
+
+    private static final class BoundInf implements IBoundInference {
+        @Override
+        public boolean matches(Hand hand) {
+            int ndoub = 0;
+            for (int s = 0; s < 4; s++) {
+                int len = BitUtil.size(hand.suits[s]);
+                if (len < 2) {
+                    return false;
+                }
+                if (len == 2) {
+                    ndoub++;
+                }
+            }
+            return ndoub <= 1;
+        }
+
+        @Override
+        public String toString() {
+            return "balanced";
+        }
     }
 }

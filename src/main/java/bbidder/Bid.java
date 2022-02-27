@@ -4,6 +4,7 @@ import static bbidder.Constants.*;
 
 /**
  * A bid.
+ * 
  * @author goffster
  *
  */
@@ -53,6 +54,7 @@ public enum Bid {
 
     /**
      * A suit bid, not X, XX, or P
+     * 
      * @return true if this is a suit bid
      */
     public boolean isSuitBid() {
@@ -82,7 +84,9 @@ public enum Bid {
 
     /**
      * Parses a bid.
-     * @param str The string to parse
+     * 
+     * @param str
+     *            The string to parse
      * @return The bid
      */
     public static Bid fromStr(String str) {
@@ -104,11 +108,14 @@ public enum Bid {
         }
         return valueOf(Integer.parseInt(str.substring(0, 1)) - 1, strain.intValue());
     }
-    
+
     /**
      * Bid from a level and stain.
-     * @param level The level
-     * @param strain The strain
+     * 
+     * @param level
+     *            The level
+     * @param strain
+     *            The strain
      * @return a Bid
      */
     public static Bid valueOf(int level, int strain) {
@@ -122,7 +129,9 @@ public enum Bid {
 
     /**
      * Parses a strain
-     * @param str The string to parse
+     * 
+     * @param str
+     *            The string to parse
      * @return The strain, null if not recognized.
      */
     public static Integer getStrain(String str) {
@@ -145,11 +154,6 @@ public enum Bid {
         }
     }
 
-    private static final Bid[][] ALL_BIDS = {
-            {_1C, _2C, _3C, _4C, _5C, _6C, _7C},
-            {_1D, _2D, _3D, _4D, _5D, _6D, _7D},
-            {_1H, _2H, _3H, _4H, _5H, _6H, _7H},
-            {_1S, _2S, _3S, _4S, _5S, _6S, _7S},
-            {_1N, _2N, _3N, _4N, _5N, _6N, _7N},
-    };
+    private static final Bid[][] ALL_BIDS = { { _1C, _2C, _3C, _4C, _5C, _6C, _7C }, { _1D, _2D, _3D, _4D, _5D, _6D, _7D },
+            { _1H, _2H, _3H, _4H, _5H, _6H, _7H }, { _1S, _2S, _3S, _4S, _5S, _6S, _7S }, { _1N, _2N, _3N, _4N, _5N, _6N, _7N }, };
 }

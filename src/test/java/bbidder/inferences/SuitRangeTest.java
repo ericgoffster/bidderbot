@@ -18,20 +18,22 @@ public class SuitRangeTest {
 
     @Test
     public void testToString() {
+        Context ctx = new SimpleContext();
         assertEquals("8-10 in s", new SuitRange("s", "8", "10").toString());
+        assertEquals("8-10 in S", new SuitRange("s", "8", "10").bind(ctx).toString());
     }
 
     @Test
     public void test() {
         Context ctx = new SimpleContext();
-        assertTrue(new SuitRange("s", "3", "3").matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new SuitRange("s", "3", "4").matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new SuitRange("s", null, "3").matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new SuitRange("s", "4", null).matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new SuitRange("s", "3", "3").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new SuitRange("s", "3", "4").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new SuitRange("s", null, "3").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new SuitRange("s", "4", null).bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
 
-        assertFalse(new SuitRange("c", "3", "3").matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new SuitRange("c", "3", "4").matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new SuitRange("c", "2", "3").matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new SuitRange("c", "4", null).matches(ctx, Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new SuitRange("c", "3", "3").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new SuitRange("c", "3", "4").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new SuitRange("c", "2", "3").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new SuitRange("c", "4", null).bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
     }
 }

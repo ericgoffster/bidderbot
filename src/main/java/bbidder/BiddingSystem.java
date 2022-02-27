@@ -11,6 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import bbidder.inferences.AndBoundInference;
+import bbidder.inferences.ConstBoundInference;
+import bbidder.inferences.NotBoundInference;
+import bbidder.inferences.OrBoundInference;
+
 public class BiddingSystem {
     public final List<BidInference> inferences;
 
@@ -40,31 +45,38 @@ public class BiddingSystem {
         }
         return new BiddingSystem(inferences);
     }
-    
+
     public void spew(OutputStream os) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
-            for(BidInference bi: inferences) {
+            for (BidInference bi : inferences) {
                 bw.write(bi.toString());
             }
         }
     }
-    
-    public List<BoundInference> getInference(BidList bids) {
+
+    /**
+     * Retrieves the inference from a list of bids according to the system.
+     * 
+     * @param bids
+     *            The list of bids.
+     * @return The inference
+     */
+    public IBoundInference getInference(BidList bids) {
         Bid lastBid = bids.bids.get(bids.bids.size() - 1);
         BidList exceptLast = new BidList(bids.bids.subList(0, bids.bids.size() - 1));
-        List<BoundInference> result = new ArrayList<>();
-        List<BoundInference> negative = new ArrayList<>();
-        for(BidInference i: inferences) {
+        IBoundInference result = new ConstBoundInference(false);
+        IBoundInference negative = new ConstBoundInference(true);
+        for (BidInference i : inferences) {
             BidContext bc = new BidContext(exceptLast, i.bids);
-            for(Bid b: bc.getMatchingBids()) {
+            for (Bid b : bc.getMatchingBids()) {
                 BidContext bc2 = bc.clone();
                 bc2.addWe(b);
                 SimpleContext context = new SimpleContext(s -> bc2.getSuit(s));
-                BoundInference newInference = new BoundInference(i.inferences, context, new ArrayList<>(negative));
+                IBoundInference newInference = AndBoundInference.create(i.inferences.bind(context), negative);
                 if (b == lastBid) {
-                    result.add(newInference);
+                    result = OrBoundInference.create(newInference, result);
                 }
-                negative.add(newInference);
+                negative = AndBoundInference.create(negative, NotBoundInference.create(newInference));
             }
         }
         return result;

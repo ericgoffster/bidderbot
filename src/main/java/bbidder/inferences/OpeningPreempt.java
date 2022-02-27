@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import bbidder.Context;
 import bbidder.Hand;
+import bbidder.IBoundInference;
 import bbidder.Inference;
 
 public class OpeningPreempt implements Inference {
@@ -34,21 +35,8 @@ public class OpeningPreempt implements Inference {
     }
 
     @Override
-    public boolean matches(Context context, Hand hand) {
-        int s = context.lookupSuit(suit);
-        int hcp = hand.numHCP();
-        switch (level) {
-        case 2:
-            return hcp >= 5 && hcp <= 10 && hand.numInSuit(s) == 6;
-        case 3:
-            return hcp >= 5 && hcp <= 10 && hand.numInSuit(s) == 7;
-        case 4:
-            return hcp >= 5 && hcp <= 10 && hand.numInSuit(s) == 8;
-        case 5:
-            return hcp >= 5 && hcp <= 10 && hand.numInSuit(s) > 8;
-        default:
-            throw new IllegalStateException("Invalid level");
-        }
+    public IBoundInference bind(Context context) {
+        return new BoundInf(context.lookupSuit(suit), level);
     }
 
     @Override
@@ -66,5 +54,39 @@ public class OpeningPreempt implements Inference {
             return false;
         OpeningPreempt other = (OpeningPreempt) obj;
         return level == other.level && Objects.equals(suit, other.suit);
+    }
+
+    static class BoundInf implements IBoundInference {
+        final int suit;
+        final int level;
+
+        public BoundInf(int suit, int level) {
+            super();
+            this.suit = suit;
+            this.level = level;
+        }
+
+        @Override
+        public boolean matches(Hand hand) {
+            int hcp = hand.numHCP();
+            int len = hand.numInSuit(suit);
+            switch (level) {
+            case 2:
+                return hcp >= 5 && hcp <= 10 && len == 6;
+            case 3:
+                return hcp >= 5 && hcp <= 10 && len == 7;
+            case 4:
+                return hcp >= 5 && hcp <= 10 && len == 8;
+            case 5:
+                return hcp >= 5 && hcp <= 10 && len > 8;
+            default:
+                throw new IllegalStateException("Invalid level");
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "opening_preempt " + level + " " + "CDHS".charAt(suit);
+        }
     }
 }

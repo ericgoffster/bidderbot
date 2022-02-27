@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import bbidder.Context;
 import bbidder.Hand;
+import bbidder.IBoundInference;
 import bbidder.Inference;
 
 public class SuitRange implements Inference {
@@ -57,15 +58,9 @@ public class SuitRange implements Inference {
     }
 
     @Override
-    public boolean matches(Context context, Hand hand) {
-        int len = hand.numInSuit(context.lookupSuit(suit));
-        if (min != null && len < context.resolveLength(min)) {
-            return false;
-        }
-        if (max != null && len > context.resolveLength(max)) {
-            return false;
-        }
-        return true;
+    public IBoundInference bind(Context context) {
+        return new BoundInf(context.lookupSuit(suit), min == null ? null : context.resolveLength(min),
+                max == null ? null : context.resolveLength(max));
     }
 
     @Override
@@ -85,4 +80,43 @@ public class SuitRange implements Inference {
         return Objects.equals(max, other.max) && Objects.equals(min, other.min) && Objects.equals(suit, other.suit);
     }
 
+    static class BoundInf implements IBoundInference {
+        final int suit;
+        final Integer min;
+        final Integer max;
+
+        public BoundInf(int suit, Integer imin, Integer imax) {
+            super();
+            this.suit = suit;
+            this.min = imin;
+            this.max = imax;
+        }
+
+        @Override
+        public boolean matches(Hand hand) {
+            int len = hand.numInSuit(suit);
+            if (min != null && len < min) {
+                return false;
+            }
+            if (max != null && len > max) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            char s = "CDHS".charAt(suit);
+            if (max == null) {
+                return min + "+ in " + s;
+            }
+            if (min == null) {
+                return max + "- in " + s;
+            }
+            if (min.equals(max)) {
+                return min + " in " + s;
+            }
+            return min + "-" + max + " in " + s;
+        }
+    }
 }

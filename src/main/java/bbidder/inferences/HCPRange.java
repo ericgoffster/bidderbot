@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import bbidder.Context;
 import bbidder.Hand;
+import bbidder.IBoundInference;
 import bbidder.Inference;
 
 public class HCPRange implements Inference {
@@ -53,15 +54,8 @@ public class HCPRange implements Inference {
     }
 
     @Override
-    public boolean matches(Context context, Hand hand) {
-        int hcp = hand.numHCP();
-        if (min != null && hcp < context.resolvePoints(min)) {
-            return false;
-        }
-        if (max != null && hcp > context.resolvePoints(max)) {
-            return false;
-        }
-        return true;
+    public IBoundInference bind(Context context) {
+        return new BoundInf(min == null ? null : context.resolvePoints(min), max == null ? null : context.resolvePoints(max));
     }
 
     @Override
@@ -81,4 +75,40 @@ public class HCPRange implements Inference {
         return Objects.equals(max, other.max) && Objects.equals(min, other.min);
     }
 
+    static class BoundInf implements IBoundInference {
+        final Integer min;
+        final Integer max;
+
+        public BoundInf(Integer imin, Integer imax) {
+            super();
+            this.min = imin;
+            this.max = imax;
+        }
+
+        @Override
+        public boolean matches(Hand hand) {
+            int hcp = hand.numHCP();
+            if (min != null && hcp < min) {
+                return false;
+            }
+            if (max != null && hcp > max) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            if (max == null) {
+                return min + "+ hcp";
+            }
+            if (min == null) {
+                return max + "- hcp";
+            }
+            if (min.equals(max)) {
+                return min + " hcp";
+            }
+            return min + "-" + max + " hcp";
+        }
+    }
 }

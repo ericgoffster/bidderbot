@@ -1,5 +1,5 @@
 package bbidder;
 
 public interface Inference {
-    public boolean matches(Context context, Hand hand);
+    public IBoundInference bind(Context context);
 }

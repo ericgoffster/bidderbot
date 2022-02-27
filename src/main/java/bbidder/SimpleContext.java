@@ -3,10 +3,9 @@ package bbidder;
 import java.util.function.Function;
 
 public class SimpleContext implements Context {
-    
+
     public final Function<String, Integer> lookupSuit;
-    
-    
+
     public SimpleContext(Function<String, Integer> lookupSuit) {
         super();
         this.lookupSuit = lookupSuit;
