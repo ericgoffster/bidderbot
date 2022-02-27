@@ -11,20 +11,20 @@ public class InferenceList {
         super();
         this.inferences = inferences;
     }
-    
+
     public static InferenceList valueOf(InferenceRegistry registry, String str) {
         List<Inference> l = new ArrayList<>();
-        for(String part: str.trim().split(",")) {
-           l.add(registry.valueOf(part));
+        for (String part : str.trim().split(",")) {
+            l.add(registry.valueOf(part));
         }
         return new InferenceList(l);
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         String delim = "";
-        for(Inference inf: inferences) {
+        for (Inference inf : inferences) {
             sb.append(delim).append(inf);
             delim = ",";
         }

@@ -14,17 +14,18 @@ public class LongestOrEqualLowerRankingTest {
     @Test
     public void testValueOf() {
         assertEquals(new LongestOrEqualLowerRanking("s", "all"), LongestOrEqualLowerRanking.valueOf("longest_or_equal_lower_ranking s among all"));
-        assertEquals(new LongestOrEqualLowerRanking("s", "all"), LongestOrEqualLowerRanking.valueOf("   longest_or_equal_lower_ranking    s    among    all    "));
+        assertEquals(new LongestOrEqualLowerRanking("s", "all"),
+                LongestOrEqualLowerRanking.valueOf("   longest_or_equal_lower_ranking    s    among    all    "));
         assertEquals(new LongestOrEqualLowerRanking("s", null), LongestOrEqualLowerRanking.valueOf("longest_or_equal_lower_ranking s"));
         assertEquals(new LongestOrEqualLowerRanking("s", null), LongestOrEqualLowerRanking.valueOf("    longest_or_equal_lower_ranking   s    "));
     }
-    
+
     @Test
     public void testToString() {
         assertEquals("longest_or_equal_lower_ranking s among all", new LongestOrEqualLowerRanking("s", "all").toString());
         assertEquals("longest_or_equal_lower_ranking s", new LongestOrEqualLowerRanking("s", null).toString());
     }
-    
+
     @Test
     public void testLowerRanking() {
         Context ctx = new SimpleContext();

@@ -10,7 +10,7 @@ public class SuitRange implements Inference {
     public final String suit;
     public final String min;
     public final String max;
-    
+
     public static SuitRange valueOf(String str) {
         str = str.trim();
         int pos = str.indexOf(" in ");
@@ -68,12 +68,10 @@ public class SuitRange implements Inference {
         return true;
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hash(max, min, suit);
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -86,5 +84,5 @@ public class SuitRange implements Inference {
         SuitRange other = (SuitRange) obj;
         return Objects.equals(max, other.max) && Objects.equals(min, other.min) && Objects.equals(suit, other.suit);
     }
-   
+
 }

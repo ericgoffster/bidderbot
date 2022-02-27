@@ -11,33 +11,30 @@ public class BidPatternList {
         super();
         this.bids = bids;
     }
-    
-    
+
     public static BidPatternList valueOf(String str) {
         List<BidPattern> l = new ArrayList<>();
-        for(String part: str.trim().split("\\s+")) {
-           l.add(BidPattern.valueOf(part));
+        for (String part : str.trim().split("\\s+")) {
+            l.add(BidPattern.valueOf(part));
         }
         return new BidPatternList(l);
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         String delim = "";
-        for(BidPattern bid: bids) {
+        for (BidPattern bid : bids) {
             sb.append(delim).append(bid);
             delim = " ";
         }
         return sb.toString();
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hash(bids);
     }
-
 
     @Override
     public boolean equals(Object obj) {

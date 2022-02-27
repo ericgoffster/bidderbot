@@ -10,7 +10,7 @@ import bbidder.Inference;
 public class LongestOrEqualLowerRanking implements Inference {
     public final String suit;
     public final String among;
-    
+
     public static LongestOrEqualLowerRanking valueOf(String str) {
         str = str.trim();
         if (!str.toLowerCase().startsWith("longest_or_equal_lower_ranking")) {

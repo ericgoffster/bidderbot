@@ -14,7 +14,7 @@ import bbidder.inferences.SuitRange;
 public class InferenceRegistryTest {
     @Test
     public void testValueOf() {
-        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();        
+        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         assertEquals(new Balanced(), reg.valueOf("balanced"));
         assertEquals(new HCPRange("10", null), reg.valueOf("10+hcp"));
         assertEquals(new LongestOrEqualHigherRanking("s", "all"), reg.valueOf("longest_or_equal_higher_ranking s among all"));

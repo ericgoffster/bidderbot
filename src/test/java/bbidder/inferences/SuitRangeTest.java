@@ -15,7 +15,6 @@ public class SuitRangeTest {
     public void testValueOf() {
         assertEquals(new SuitRange("s", "10", null), SuitRange.valueOf("10+ in s"));
     }
-    
 
     @Test
     public void testToString() {

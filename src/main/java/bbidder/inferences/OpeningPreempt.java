@@ -9,7 +9,7 @@ import bbidder.Inference;
 public class OpeningPreempt implements Inference {
     private final String suit;
     private final int level;
-    
+
     public static OpeningPreempt valueOf(String str) {
         str = str.trim();
         if (!str.toLowerCase().startsWith("opening_preempt")) {
@@ -21,7 +21,7 @@ public class OpeningPreempt implements Inference {
         }
         return new OpeningPreempt(parts[2], Integer.parseInt(parts[1]));
     }
-    
+
     @Override
     public String toString() {
         return "opening_preempt " + level + " " + suit;

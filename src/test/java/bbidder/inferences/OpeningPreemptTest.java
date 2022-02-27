@@ -16,12 +16,12 @@ public class OpeningPreemptTest {
         assertEquals(new OpeningPreempt("S", 2), OpeningPreempt.valueOf("opening_preempt 2 S"));
         assertEquals(new OpeningPreempt("S", 2), OpeningPreempt.valueOf("   opening_preempt    2   S   "));
     }
-    
+
     @Test
     public void testToString() {
         assertEquals("opening_preempt 2 S", new OpeningPreempt("S", 2).toString());
     }
-    
+
     @Test
     public void test2() {
         Context ctx = new SimpleContext();
