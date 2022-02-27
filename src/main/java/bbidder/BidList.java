@@ -9,4 +9,9 @@ public class BidList {
         super();
         this.bids = bids;
     }
+    
+    @Override
+    public String toString() {
+        return String.valueOf(bids);
+    }
 }

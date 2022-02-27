@@ -57,4 +57,16 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
         }
     }
+    
+    @Test
+    public void test4() throws IOException {
+        BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/2over1.bidding"));
+        {
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1N)));
+            assertFalse(l.matches(Hand.valueOf("AKQ KQT 234 2345")));
+            assertTrue(l.matches(Hand.valueOf("AKQ KQJ 234 2345")));
+            assertTrue(l.matches(Hand.valueOf("AKQ AKJ 234 2345")));
+            assertFalse(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
+        }
+    }
 }

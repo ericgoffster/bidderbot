@@ -72,9 +72,9 @@ public class BiddingSystem {
                 BidContext bc2 = bc.clone();
                 bc2.addWe(b);
                 SimpleContext context = new SimpleContext(s -> bc2.getSuit(s));
-                IBoundInference newInference = AndBoundInference.create(i.inferences.bind(context), negative);
+                IBoundInference newInference = i.inferences.bind(context);
                 if (b == lastBid) {
-                    result = OrBoundInference.create(newInference, result);
+                    result = OrBoundInference.create(AndBoundInference.create(newInference, negative), result);
                 }
                 negative = AndBoundInference.create(negative, NotBoundInference.create(newInference));
             }

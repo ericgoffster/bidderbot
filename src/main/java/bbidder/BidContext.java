@@ -42,6 +42,9 @@ public class BidContext implements Cloneable {
         if (patternPos >= patterns.bids.size()) {
             return Set.of();
         }
+        if (patternPos < patterns.bids.size() - 1) {
+            return Set.of();
+        }
         BidPattern patt = patterns.bids.get(patternPos);
         TreeSet<Bid> result = getBids(patt);
         return patterns.upTheLine ? result : result.descendingSet();

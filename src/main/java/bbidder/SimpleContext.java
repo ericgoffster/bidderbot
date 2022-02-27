@@ -30,6 +30,10 @@ public class SimpleContext implements Context {
         case "S":
             return 3;
         default:
+            Integer s2 = lookupSuit.apply(s);
+            if (s2 == null) {
+                throw new IllegalArgumentException("unknown suit: " + s);
+            }
             return lookupSuit.apply(s);
         }
     }
