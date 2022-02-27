@@ -13,23 +13,23 @@
 5x => opening_preempt 5 x
 
 # Responses to suit bid
-1M, 2N => 13+ hcp, 4+ in M
-1M, 2M => 6-10 hcp, 3+ in M
-1M, 3M => 11-12 hcp, 4+ in M
-1M, 1N => 11-12 hcp, 3 in M
+1M 2N => 13+ hcp, 4+ in M
+1M 2M => 6-10 hcp, 3+ in M
+1M 3M => 11-12 hcp, 4+ in M
+1M 1N => 11-12 hcp, 3 in M
 
-1x, NJy => 13+ hcp, 5+ in y, longest_or_equal_higher_ranking y among unbid
-1x, NJy => 13+ hcp, 4 in y, longest_or_equal_lower_ranking y among unbid
+1x NJy => 13+ hcp, 5+ in y, longest_or_equal_higher_ranking y among unbid
+1x NJy => 13+ hcp, 4 in y, longest_or_equal_lower_ranking y among unbid
 
-1x, 1y => 6+ hcp, 5+ in y, longest_or_equal_higher_ranking y among under 1N
-1x, 1y => 6+ hcp, 4 in y, longest_or_equal_lower_ranking y among under 1N
+1x 1y => 6+ hcp, 5+ in y, longest_or_equal_higher_ranking y among
+1x 1y => 6+ hcp, 4 in y, longest_or_equal_lower_ranking y among
 
-1m, 3N => 13-15 hcp, balanced
-1m, 2N => 11-12 hcp, balanced
-1m, 1N => 6-10 hcp, balanced
-1m, 2m => 11+ hcp, 4+ in m
-1m, 3m => 6-10 hcp, 5+ in m
+1m 3N => 13-15 hcp, balanced
+1m 2N => 11-12 hcp, balanced
+1m 1N => 6-10 hcp, balanced
+1m 2m => 11+ hcp, 4+ in m
+1m 3m => 6-10 hcp, 5+ in m
 
-1M, 1N => 6+ hcp
-1M, 3m => 11-12 hcp, 6+ in m
-1x, 1N => 6-10 hcp
+1M 1N => 6+ hcp
+1M 3m => 11-12 hcp, 6+ in m
+1x 1N => 6-10 hcp

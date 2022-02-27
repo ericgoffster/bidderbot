@@ -1,19 +1,18 @@
 package bbidder;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BidContext {
-    public final List<Bid> bids;
+    public final BidList bids;
     public final Map<String, Integer> suits = new HashMap<>();
     static Pattern BID = Pattern.compile("(\\d)(\\w+)");
     static Pattern NJ = Pattern.compile("NJ(\\w+)");
     static Pattern J = Pattern.compile("J(\\w+)");
 
-    public BidContext(List<Bid> bids) {
+    public BidContext(BidList bids) {
         super();
         this.bids = bids;
     }
@@ -92,15 +91,15 @@ public class BidContext {
         }
     }
 
-    public boolean matches(List<BidPattern> patterns) {
-        boolean isOpp = bids.size() % 2 == 0;
+    public boolean matches(BidPatternList patterns) {
+        boolean isOpp = bids.bids.size() % 2 == 0;
         int i = 0;
         Bid lastBidSuit = null;
-        for (Bid bid : bids) {
-            if (i >= patterns.size()) {
+        for (Bid bid : bids.bids) {
+            if (i >= patterns.bids.size()) {
                 return false;
             }
-            BidPattern patt = patterns.get(i);
+            BidPattern patt = patterns.bids.get(i);
             if (isOpp && !patt.isOpposition) {
                 if (bid != Bid.P) {
                     return false;
@@ -116,6 +115,6 @@ public class BidContext {
                 lastBidSuit = bid;
             }
         }
-        return i == patterns.size();
+        return i == patterns.bids.size();
     }
 }

@@ -10,27 +10,27 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class BidContextTest {
-    public static List<Bid> getBids(String ... bids) {
+    public static BidList getBids(String ... bids) {
         List<Bid> l = new ArrayList<>();
         for(String b: bids) {
             l.add(Bid.fromStr(b));
         }
-        return l;
+        return new BidList(l);
     }
-    public static List<Bid> getUnopposedBids(String ... bids) {
+    public static BidList getUnopposedBids(String ... bids) {
         List<Bid> l = new ArrayList<>();
         for(String b: bids) {
             l.add(Bid.P);
             l.add(Bid.fromStr(b));
         }
-        return l;
+        return new BidList(l);
     }
-    public static List<BidPattern> getPatterns(String ... bids) {
+    public static BidPatternList getPatterns(String ... bids) {
         List<BidPattern> l = new ArrayList<>();
         for(String b: bids) {
             l.add(BidPattern.valueOf(b));
         }
-        return l;
+        return new BidPatternList(l);
     }
     @Test
     public void testOpposition() {
