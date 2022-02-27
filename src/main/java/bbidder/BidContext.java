@@ -1,22 +1,14 @@
 package bbidder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class BidContext {
-    public final List<Bid> bids = new ArrayList<Bid>();
     public final BidPatternList patterns;
     public final Map<String, Integer> suits = new HashMap<>();
-    static Pattern BID = Pattern.compile("(\\d)(\\w+)");
-    static Pattern NJ = Pattern.compile("NJ(\\w+)");
-    static Pattern J = Pattern.compile("J(\\w+)");
-    
+
     Bid lastBidSuit = null;
     int patternPos = 0;
     boolean matches = true;
@@ -46,7 +38,7 @@ public class BidContext {
             lastBidSuit = bid;
         }
     }
-    
+
     public void addWe(Bid bid) {
         if (!matches) {
             return;
@@ -68,26 +60,18 @@ public class BidContext {
             lastBidSuit = bid;
         }
     }
-    
+
     public BidContext(BidList bids, BidPatternList patterns) {
         super();
         this.patterns = patterns;
         boolean isOpp = bids.bids.size() % 2 == 0;
-        for(Bid bid: bids.bids) {
+        for (Bid bid : bids.bids) {
             if (isOpp) {
                 addThey(bid);
             } else {
                 addWe(bid);
             }
             isOpp = !isOpp;
-        }
-    }
-
-    public Bid nextLevel(Bid lastBidSuit, int strain) {
-        if (strain > lastBidSuit.strain) {
-            return Bid.valueOf(lastBidSuit.level, strain);
-        } else {
-            return Bid.valueOf(lastBidSuit.level + 1, strain);
         }
     }
 
@@ -99,29 +83,78 @@ public class BidContext {
         return suits.get(symbol);
     }
 
-    public boolean matchesStrain(Bid bid, String symbol) {
-        return matchesStrain(bid.strain, symbol);
-    }
-    public boolean matchesStrain(int bidStrain, String symbol) {
-        Integer strain = getSuit(symbol);
-        if (strain != null) {
-            return bidStrain == strain.intValue();
+    public class LevelAndSymbol {
+        public final String level;
+        public final String symbol;
+
+        public LevelAndSymbol(String level, String symbol) {
+            super();
+            this.level = level;
+            this.symbol = symbol;
         }
-        if (symbol.equals("M")) {
-            return bidStrain == 2 || bidStrain == 3;
-        } else if (symbol.equals("m")) {
-            return bidStrain == 0 || bidStrain == 1;
-        } else {
-            if (bidStrain == 4) {
-                return false;
+
+        @Override
+        public String toString() {
+            return level + symbol;
+        }
+        
+        public Set<Integer> getSuits() {
+            Integer strain = getSuit(symbol);
+            if (strain != null) {
+                return Set.of(strain);
             }
-            if (suits.values().contains(bidStrain)) {
-                return false;
+            if (symbol.equals("M")) {
+                return Set.of(2, 3);
+            } else if (symbol.equals("m")) {
+                return Set.of(0, 1);
+            } else {
+                Set<Integer> values = new HashSet<>();
+                values.add(0);
+                values.add(1);
+                values.add(2);
+                values.add(3);
+                values.removeAll(suits.values());
+                return values;
             }
-            return true;
+        }
+
+        public Set<Bid> getBids() {
+            Set<Bid> result = new HashSet<>();
+            switch (level) {
+            case "J":
+                for (int s: getSuits()) {
+                    result.add(nextLevel(s).raise());
+                }
+                return result;
+            case "NJ":
+                for (int s: getSuits()) {
+                    result.add(nextLevel(s));
+                }
+                return result;
+            default:
+                int lev = Integer.parseInt(level) - 1;
+                for (int s: getSuits()) {
+                    result.add(Bid.valueOf(lev, s));
+                }
+                return result;
+            }
+        }
+        public Bid nextLevel(int strain) {
+            if (strain > lastBidSuit.strain) {
+                return Bid.valueOf(lastBidSuit.level, strain);
+            } else {
+                return Bid.valueOf(lastBidSuit.level + 1, strain);
+            }
         }
     }
-    
+
+    public LevelAndSymbol parsePattern(String pattern) {
+        if (pattern.startsWith("NJ")) {
+            return new LevelAndSymbol(pattern.substring(0, 2), pattern.substring(2));
+        }
+        return new LevelAndSymbol(pattern.substring(0, 1), pattern.substring(1));
+    }
+
     public Set<Bid> getBids(String pattern) {
         if (pattern.equalsIgnoreCase("P")) {
             return Set.of(Bid.P);
@@ -132,45 +165,7 @@ public class BidContext {
         if (pattern.equalsIgnoreCase("XX")) {
             return Set.of(Bid.XX);
         }
-        Set<Bid> result = new HashSet<>();
-        {
-            Matcher m = BID.matcher(pattern);
-            if (m.matches()) {
-                String strain = m.group(2);
-                int level = Integer.parseInt(m.group(1)) - 1;
-                for(int s = 0; s < 5; s++) {
-                    if (matchesStrain(s, strain)) {
-                        result.add(Bid.valueOf(level, s));
-                    }
-                }
-                return result;
-            }
-        }
-        {
-            Matcher m = NJ.matcher(pattern);
-            if (m.matches()) {
-                String strain = m.group(1);
-                for(int s = 0; s < 5; s++) {
-                    if (matchesStrain(s, strain)) {
-                        result.add(nextLevel(lastBidSuit, getStrain(s, strain)));
-                    }
-                }
-                return result;
-            }
-        }
-        {
-            Matcher m = J.matcher(pattern);
-            if (m.matches()) {
-                String strain = m.group(1);
-                for(int s = 0; s < 5; s++) {
-                    if (matchesStrain(s, strain)) {
-                        result.add(nextLevel(lastBidSuit, getStrain(s, strain)).raise());
-                    }
-                }
-                return result;
-            }
-        }
-        return result;
+        return parsePattern(pattern).getBids();
     }
 
     public boolean matches(Bid bid, String pattern) {
@@ -179,49 +174,15 @@ public class BidContext {
             if (!bid.isSuitBid()) {
                 return true;
             }
-            {
-                Matcher m = BID.matcher(pattern);
-                if (m.matches()) {
-                    String strain = m.group(2);
-                    addStrain(bid, strain);
-                    return true;
-                }
-            }
-            {
-                Matcher m = NJ.matcher(pattern);
-                if (m.matches()) {
-                    String strain = m.group(1);
-                    addStrain(bid, strain);
-                    return true;
-                }
-            }
-            {
-                Matcher m = J.matcher(pattern);
-                if (m.matches()) {
-                    String strain = m.group(1);
-                    addStrain(bid, strain);
-                    return true;
-                }
+            LevelAndSymbol levelSym = parsePattern(pattern);
+            String symbol = levelSym.symbol;
+            Integer strain = getSuit(symbol);
+            if (strain == null) {
+                suits.put(symbol, bid.strain);
             }
             return true;
         }
         return false;
-    }
-    
-    private int getStrain(int bidStrain, String symbol) {
-        Integer strain = getSuit(symbol);
-        if (strain != null) {
-            return strain;
-        } else {
-            return bidStrain;
-        }
-    }
-
-    private void addStrain(Bid bid, String symbol) {
-        Integer strain = getSuit(symbol);
-        if (strain == null) {
-            suits.put(symbol, bid.strain);
-        }
     }
 
     public boolean matches() {
