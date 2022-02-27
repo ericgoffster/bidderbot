@@ -67,6 +67,14 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AKQ KQJ 234 2345")));
             assertTrue(l.matches(Hand.valueOf("AKQ AKJ 234 2345")));
             assertFalse(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
+            
+            HandList hands = HandGenerator.generateHands(l, 100);
+            assertTrue(hands.minHcp() >= 15);
+            assertTrue(hands.maxHcp() <= 17);
+            assertTrue(hands.minInSuit(0) >= 2);
+            assertTrue(hands.minInSuit(1) >= 2);
+            assertTrue(hands.minInSuit(2) >= 2);
+            assertTrue(hands.minInSuit(3) >= 2);
         }
         {
             IBoundInference l = bs.getInference(new BidList(List.of(Bid._1S)));
