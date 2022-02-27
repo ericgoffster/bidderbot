@@ -9,9 +9,27 @@ import org.junit.Test;
 
 public class BiddingSystemTest {
     @Test
-    public void test() throws IOException {
+    public void test1() throws IOException {
         BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/test1.bidding"));
         List<BoundInference> l = bs.getInference(new BidList(List.of(Bid._1H)));
         assertEquals(1, l.size());
+    }
+    @Test
+    public void test1n() throws IOException {
+        BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/test1.bidding"));
+        List<BoundInference> l = bs.getInference(new BidList(List.of(Bid._1C)));
+        assertEquals(0, l.size());
+    }
+    @Test
+    public void test2() throws IOException {
+        BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/test2.bidding"));
+        List<BoundInference> l = bs.getInference(new BidList(List.of(Bid._1H, Bid._2C)));
+        assertEquals(1, l.size());
+    }
+    @Test
+    public void test2n() throws IOException {
+        BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/test2.bidding"));
+        List<BoundInference> l = bs.getInference(new BidList(List.of(Bid._1H, Bid._2H)));
+        assertEquals(0, l.size());
     }
 }
