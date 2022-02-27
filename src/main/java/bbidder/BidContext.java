@@ -2,12 +2,16 @@ package bbidder;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class BidContext {
     public final BidPatternList patterns;
     public final Map<String, Integer> suits = new HashMap<>();
+    private static final List<Integer> ALL_SUITS = List.of(0, 1, 2, 3);
+    private static final List<Integer> MINORS = List.of(0, 1);
+    private static final List<Integer> MAJORS = List.of(2, 3);
 
     Bid lastBidSuit = null;
     int patternPos = 0;
@@ -103,42 +107,39 @@ public class BidContext {
             if (strain != null) {
                 return Set.of(strain);
             }
+            HashSet<Integer> values = new HashSet<>(getSuitClass());
+            values.removeAll(suits.values());
+            return values;
+        }
+
+        private List<Integer> getSuitClass() {
             if (symbol.equals("M")) {
-                return Set.of(2, 3);
+                return MAJORS;
             } else if (symbol.equals("m")) {
-                return Set.of(0, 1);
+                return MINORS;
             } else {
-                Set<Integer> values = new HashSet<>();
-                values.add(0);
-                values.add(1);
-                values.add(2);
-                values.add(3);
-                values.removeAll(suits.values());
-                return values;
+                return ALL_SUITS;
             }
         }
 
         public Set<Bid> getBids() {
             Set<Bid> result = new HashSet<>();
-            switch (level) {
-            case "J":
-                for (int s: getSuits()) {
+            for (int s : getSuits()) {
+                switch (level) {
+                case "J":
                     result.add(nextLevel(s).raise());
-                }
-                return result;
-            case "NJ":
-                for (int s: getSuits()) {
+                    break;
+                case "NJ":
                     result.add(nextLevel(s));
+                    break;
+                default:
+                    result.add(Bid.valueOf(Integer.parseInt(level) - 1, s));
+                    break;
                 }
-                return result;
-            default:
-                int lev = Integer.parseInt(level) - 1;
-                for (int s: getSuits()) {
-                    result.add(Bid.valueOf(lev, s));
-                }
-                return result;
             }
+            return result;
         }
+
         public Bid nextLevel(int strain) {
             if (strain > lastBidSuit.strain) {
                 return Bid.valueOf(lastBidSuit.level, strain);
