@@ -1,54 +1,60 @@
 package bbidder;
 
+import static bbidder.Constants.*;
+
+/**
+ * A bid.
+ * @author goffster
+ *
+ */
 public enum Bid {
-    _1C(0, 0),
-    _1D(1, 0),
-    _1H(2, 0),
-    _1S(3, 0),
-    _1N(4, 0),
-    _2C(0, 1),
-    _2D(1, 1),
-    _2H(2, 1),
-    _2S(3, 1),
-    _2N(4, 1),
-    _3C(0, 2),
-    _3D(1, 2),
-    _3H(2, 2),
-    _3S(3, 2),
-    _3N(4, 2),
-    _4C(0, 3),
-    _4D(1, 3),
-    _4H(2, 3),
-    _4S(3, 3),
-    _4N(4, 3),
-    _5C(0, 4),
-    _5D(1, 4),
-    _5H(2, 4),
-    _5S(3, 4),
-    _5N(4, 4),
-    _6C(0, 5),
-    _6D(1, 5),
-    _6H(2, 5),
-    _6S(3, 5),
-    _6N(4, 5),
-    _7C(0, 6),
-    _7D(1, 6),
-    _7H(2, 6),
-    _7S(3, 6),
-    _7N(4, 6),
-    X(-1, 2),
-    XX(-1, 4),
-    P(-1, 1);
+    _1C(0, CLUB),
+    _1D(0, DIAMOND),
+    _1H(0, HEART),
+    _1S(0, SPADE),
+    _1N(0, NOTRUMP),
+    _2C(1, CLUB),
+    _2D(1, DIAMOND),
+    _2H(1, HEART),
+    _2S(1, SPADE),
+    _2N(1, NOTRUMP),
+    _3C(2, CLUB),
+    _3D(2, DIAMOND),
+    _3H(2, HEART),
+    _3S(2, SPADE),
+    _3N(2, NOTRUMP),
+    _4C(3, CLUB),
+    _4D(3, DIAMOND),
+    _4H(3, HEART),
+    _4S(3, SPADE),
+    _4N(3, NOTRUMP),
+    _5C(4, CLUB),
+    _5D(4, DIAMOND),
+    _5H(4, HEART),
+    _5S(4, SPADE),
+    _5N(4, NOTRUMP),
+    _6C(5, CLUB),
+    _6D(5, DIAMOND),
+    _6H(5, HEART),
+    _6S(5, SPADE),
+    _6N(5, NOTRUMP),
+    _7C(6, CLUB),
+    _7D(6, DIAMOND),
+    _7H(6, HEART),
+    _7S(6, SPADE),
+    _7N(6, NOTRUMP),
+    X(2, -1),
+    XX(4, -1),
+    P(1, -1);
     ;
 
     public final int strain;
     public final int level;
 
-    private Bid(int strain, int level) {
-        this.strain = strain;
-        this.level = level;
-    }
-
+    /**
+     * A suit bid, not X, XX, or P
+     * @return true if this is a suit bid
+     */
     public boolean isSuitBid() {
         return strain >= 0;
     }
@@ -67,28 +73,22 @@ public enum Bid {
         return String.valueOf(level + 1) + "CDHSN".charAt(strain);
     }
 
-    static Integer getStrain(String c) {
-        switch (c.toLowerCase()) {
-        case "c":
-            return 0;
-        case "d":
-            return 1;
-        case "h":
-            return 2;
-        case "s":
-            return 3;
-        case "n":
-            return 4;
-        default:
-            return null;
-        }
-    }
-
+    /**
+     * The next level up.
+     */
     public Bid raise() {
         return valueOf(level + 1, strain);
     }
 
+    /**
+     * Parses a bid.
+     * @param str The string to parse
+     * @return The bid
+     */
     public static Bid fromStr(String str) {
+        if (str == null) {
+            return null;
+        }
         if (str.equalsIgnoreCase("P")) {
             return P;
         }
@@ -104,114 +104,52 @@ public enum Bid {
         }
         return valueOf(Integer.parseInt(str.substring(0, 1)) - 1, strain.intValue());
     }
-
+    
+    /**
+     * Bid from a level and stain.
+     * @param level The level
+     * @param strain The strain
+     * @return a Bid
+     */
     public static Bid valueOf(int level, int strain) {
-        switch (strain) {
-        case 0:
-            switch (level) {
-            case 0:
-                return _1C;
-            case 1:
-                return _2C;
-            case 2:
-                return _3C;
-            case 3:
-                return _4C;
-            case 4:
-                return _5C;
-            case 5:
-                return _6C;
-            case 6:
-                return _7C;
-            default:
-                throw new IllegalArgumentException("invalid level " + level);
-            }
-        case 1:
-            switch (level) {
-            case 0:
-                return _1D;
-            case 1:
-                return _2D;
-            case 2:
-                return _3D;
-            case 3:
-                return _4D;
-            case 4:
-                return _5D;
-            case 5:
-                return _6D;
-            case 6:
-                return _7D;
-            default:
-                throw new IllegalArgumentException("invalid level " + level);
-            }
-        case 2:
-            switch (level) {
-            case 0:
-                return _1H;
-            case 1:
-                return _2H;
-            case 2:
-                return _3H;
-            case 3:
-                return _4H;
-            case 4:
-                return _5H;
-            case 5:
-                return _6H;
-            case 6:
-                return _7H;
-            default:
-                throw new IllegalArgumentException("invalid level " + level);
-            }
-        case 3:
-            switch (level) {
-            case 0:
-                return _1S;
-            case 1:
-                return _2S;
-            case 2:
-                return _3S;
-            case 3:
-                return _4S;
-            case 4:
-                return _5S;
-            case 5:
-                return _6S;
-            case 6:
-                return _7S;
-            default:
-                throw new IllegalArgumentException("invalid level " + level);
-            }
-        case 4:
-            switch (level) {
-            case 0:
-                return _1N;
-            case 1:
-                return _2N;
-            case 2:
-                return _3N;
-            case 3:
-                return _4N;
-            case 4:
-                return _5N;
-            case 5:
-                return _6N;
-            case 6:
-                return _7N;
-            default:
-                throw new IllegalArgumentException("invalid level " + level);
-            }
+        return ALL_BIDS[strain][level];
+    }
+
+    private Bid(int level, int strain) {
+        this.strain = strain;
+        this.level = level;
+    }
+
+    /**
+     * Parses a strain
+     * @param str The string to parse
+     * @return The strain, null if not recognized.
+     */
+    public static Integer getStrain(String str) {
+        if (str == null) {
+            return null;
+        }
+        switch (str.toLowerCase()) {
+        case "c":
+            return CLUB;
+        case "d":
+            return DIAMOND;
+        case "h":
+            return HEART;
+        case "s":
+            return SPADE;
+        case "n":
+            return NOTRUMP;
         default:
-            throw new IllegalArgumentException("invalid strain " + strain);
+            return null;
         }
     }
 
-    public boolean isMajor() {
-        return isSuitBid() && strain >= 2 && strain < 4;
-    }
-
-    public boolean isMinor() {
-        return isSuitBid() && strain < 2;
-    }
+    private static final Bid[][] ALL_BIDS = {
+            {_1C, _2C, _3C, _4C, _5C, _6C, _7C},
+            {_1D, _2D, _3D, _4D, _5D, _6D, _7D},
+            {_1H, _2H, _3H, _4H, _5H, _6H, _7H},
+            {_1S, _2S, _3S, _4S, _5S, _6S, _7S},
+            {_1N, _2N, _3N, _4N, _5N, _6N, _7N},
+    };
 }

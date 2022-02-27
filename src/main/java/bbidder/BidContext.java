@@ -2,20 +2,45 @@ package bbidder;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class BidContext {
+/**
+ * The context of applying a series of bids, trying to match a pattern.
+ */
+public class BidContext implements Cloneable {
     public final BidPatternList patterns;
-    public final Map<String, Integer> suits = new HashMap<>();
-    private static final List<Integer> ALL_SUITS = List.of(0, 1, 2, 3);
-    private static final List<Integer> MINORS = List.of(0, 1);
-    private static final List<Integer> MAJORS = List.of(2, 3);
+    public final Map<String, Integer> suits ;
+    private static final short ALL_SUITS = 0xf;
+    private static final short MINORS = 0x3;
+    private static final short MAJORS = MINORS << 2;
 
-    Bid lastBidSuit = null;
-    int patternPos = 0;
-    boolean matches = true;
+    Bid lastBidSuit;
+    int patternPos;
+    boolean matches;
+    
+    private BidContext(BidPatternList patterns, Map<String, Integer> suits, Bid lastBidSuit, int patternPos, boolean matches) {
+        this.patterns = patterns;
+        this.suits = suits;
+        this.lastBidSuit = lastBidSuit;
+        this.patternPos = patternPos;
+        this.matches = matches;
+    }
+    
+    public BidContext clone() {
+        return new BidContext(patterns, new HashMap<>(suits), lastBidSuit, patternPos, matches);
+    }
+    
+    public Set<Bid> getBids() {
+        if (!matches) {
+            return Set.of();
+        }
+        if (patternPos >= patterns.bids.size()) {
+            return Set.of();
+        }
+        BidPattern patt = patterns.bids.get(patternPos);
+        return getBids(patt.str);
+    }
 
     public void addThey(Bid bid) {
         if (!matches) {
@@ -66,8 +91,7 @@ public class BidContext {
     }
 
     public BidContext(BidList bids, BidPatternList patterns) {
-        super();
-        this.patterns = patterns;
+        this(patterns, new HashMap<>(), null, 0, true);
         boolean isOpp = bids.bids.size() % 2 == 0;
         for (Bid bid : bids.bids) {
             if (isOpp) {
@@ -102,17 +126,19 @@ public class BidContext {
             return level + symbol;
         }
         
-        public Set<Integer> getStrains() {
+        public short getStrains() {
             Integer strain = getSuit(symbol);
             if (strain != null) {
-                return Set.of(strain);
+                return (short)(1 << strain);
             }
-            HashSet<Integer> values = new HashSet<>(getSuitClass());
-            values.removeAll(suits.values());
+            short values = getSuitClass();
+            for(int i: suits.values()) {
+                values &= ~(1 << i);
+            }
             return values;
         }
 
-        private List<Integer> getSuitClass() {
+        private short getSuitClass() {
             if (symbol.equals("M")) {
                 return MAJORS;
             } else if (symbol.equals("m")) {
@@ -134,7 +160,7 @@ public class BidContext {
         }
         public Set<Bid> getBids() {
             Set<Bid> result = new HashSet<>();
-            for (int strain : getStrains()) {
+            for (int strain : BitUtil.iterate(getStrains())) {
                 result.add(getBid(strain));
             }
             return result;

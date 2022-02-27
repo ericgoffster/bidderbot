@@ -1,8 +1,6 @@
 package bbidder;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -98,91 +96,5 @@ public class BidTest {
         assertEquals(Bid._6N, Bid._5N.raise());
         assertEquals(Bid._7N, Bid._6N.raise());
 
-    }
-
-    @Test
-    public void testIsMajor() {
-        assertFalse(Bid._1C.isMajor());
-        assertFalse(Bid._2C.isMajor());
-        assertFalse(Bid._3C.isMajor());
-        assertFalse(Bid._4C.isMajor());
-        assertFalse(Bid._5C.isMajor());
-        assertFalse(Bid._6C.isMajor());
-        assertFalse(Bid._7C.isMajor());
-
-        assertFalse(Bid._1D.isMajor());
-        assertFalse(Bid._2D.isMajor());
-        assertFalse(Bid._3D.isMajor());
-        assertFalse(Bid._4D.isMajor());
-        assertFalse(Bid._5D.isMajor());
-        assertFalse(Bid._6D.isMajor());
-        assertFalse(Bid._7D.isMajor());
-
-        assertTrue(Bid._1H.isMajor());
-        assertTrue(Bid._2H.isMajor());
-        assertTrue(Bid._3H.isMajor());
-        assertTrue(Bid._4H.isMajor());
-        assertTrue(Bid._5H.isMajor());
-        assertTrue(Bid._6H.isMajor());
-        assertTrue(Bid._7H.isMajor());
-
-        assertTrue(Bid._1S.isMajor());
-        assertTrue(Bid._2S.isMajor());
-        assertTrue(Bid._3S.isMajor());
-        assertTrue(Bid._4S.isMajor());
-        assertTrue(Bid._5S.isMajor());
-        assertTrue(Bid._6S.isMajor());
-        assertTrue(Bid._7S.isMajor());
-
-        assertFalse(Bid._1N.isMajor());
-        assertFalse(Bid._2N.isMajor());
-        assertFalse(Bid._3N.isMajor());
-        assertFalse(Bid._4N.isMajor());
-        assertFalse(Bid._5N.isMajor());
-        assertFalse(Bid._6N.isMajor());
-        assertFalse(Bid._7N.isMajor());
-    }
-
-    @Test
-    public void testIsMinor() {
-        assertTrue(Bid._1C.isMinor());
-        assertTrue(Bid._2C.isMinor());
-        assertTrue(Bid._3C.isMinor());
-        assertTrue(Bid._4C.isMinor());
-        assertTrue(Bid._5C.isMinor());
-        assertTrue(Bid._6C.isMinor());
-        assertTrue(Bid._7C.isMinor());
-
-        assertTrue(Bid._1D.isMinor());
-        assertTrue(Bid._2D.isMinor());
-        assertTrue(Bid._3D.isMinor());
-        assertTrue(Bid._4D.isMinor());
-        assertTrue(Bid._5D.isMinor());
-        assertTrue(Bid._6D.isMinor());
-        assertTrue(Bid._7D.isMinor());
-
-        assertFalse(Bid._1H.isMinor());
-        assertFalse(Bid._2H.isMinor());
-        assertFalse(Bid._3H.isMinor());
-        assertFalse(Bid._4H.isMinor());
-        assertFalse(Bid._5H.isMinor());
-        assertFalse(Bid._6H.isMinor());
-        assertFalse(Bid._7H.isMinor());
-
-        assertFalse(Bid._1S.isMinor());
-        assertFalse(Bid._2S.isMinor());
-        assertFalse(Bid._3S.isMinor());
-        assertFalse(Bid._4S.isMinor());
-        assertFalse(Bid._5S.isMinor());
-        assertFalse(Bid._6S.isMinor());
-        assertFalse(Bid._7S.isMinor());
-
-        assertFalse(Bid._1N.isMinor());
-        assertFalse(Bid._2N.isMinor());
-        assertFalse(Bid._3N.isMinor());
-        assertFalse(Bid._4N.isMinor());
-        assertFalse(Bid._5N.isMinor());
-        assertFalse(Bid._6N.isMinor());
-        assertFalse(Bid._7N.isMinor());
     }
 }

@@ -47,4 +47,13 @@ public class InferenceList {
         InferenceList other = (InferenceList) obj;
         return Objects.equals(inferences, other.inferences);
     }
+    
+    public boolean matches(Context context, Hand hand) {
+        for(Inference i: inferences) {
+            if (!i.matches(context, hand)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

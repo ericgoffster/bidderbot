@@ -1,6 +1,23 @@
 package bbidder;
 
+import java.util.function.Function;
+
 public class SimpleContext implements Context {
+    
+    public final Function<String, Integer> lookupSuit;
+    
+    
+    public SimpleContext(Function<String, Integer> lookupSuit) {
+        super();
+        this.lookupSuit = lookupSuit;
+    }
+
+    public SimpleContext() {
+        super();
+        this.lookupSuit = s -> {
+            throw new IllegalArgumentException("unknown suit " + s);
+        };
+    }
 
     @Override
     public int lookupSuit(String s) {
@@ -13,8 +30,9 @@ public class SimpleContext implements Context {
             return 2;
         case "S":
             return 3;
+        default:
+            return lookupSuit.apply(s);
         }
-        throw new IllegalArgumentException("unknown suit " + s);
     }
 
     @Override
