@@ -83,6 +83,13 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AQJ32 AQ234 2 45")));
             assertFalse(l.matches(Hand.valueOf("AQJ32 AQ2345 2 4")));
             assertFalse(l.matches(Hand.valueOf("AQJ32 234 23 456")));
+            
+            HandList hands = HandGenerator.generateHands(l, 100);
+            assertTrue(hands.minHcp() >= 13);
+            assertTrue(hands.minInSuit(0) >= 0);
+            assertTrue(hands.minInSuit(1) >= 0);
+            assertTrue(hands.minInSuit(2) >= 0);
+            assertTrue(hands.minInSuit(3) >= 5);
         }
         {
             IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H)));
@@ -91,6 +98,13 @@ public class BiddingSystemTest {
             assertFalse(l.matches(Hand.valueOf("AQJ32 AQ234 2 45")));
             assertTrue(l.matches(Hand.valueOf("AQJ32 AQ2345 2 4")));
             assertFalse(l.matches(Hand.valueOf("234 AQJ32 23 456")));
+            
+            HandList hands = HandGenerator.generateHands(l, 100);
+            assertTrue(hands.minHcp() >= 13);
+            assertTrue(hands.minInSuit(0) >= 0);
+            assertTrue(hands.minInSuit(1) >= 0);
+            assertTrue(hands.minInSuit(2) >= 5);
+            assertTrue(hands.minInSuit(3) >= 0);
         }
     }
 }
