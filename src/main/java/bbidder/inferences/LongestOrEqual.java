@@ -7,29 +7,29 @@ import bbidder.Context;
 import bbidder.Hand;
 import bbidder.Inference;
 
-public class LongestOrEqualLowerRanking implements Inference {
+public class LongestOrEqual implements Inference {
     public final String suit;
     public final String among;
 
-    public static LongestOrEqualLowerRanking valueOf(String str) {
+    public static LongestOrEqual valueOf(String str) {
         str = str.trim();
-        if (!str.toLowerCase().startsWith("longest_or_equal_lower_ranking")) {
+        if (!str.toLowerCase().startsWith("longest_or_equal")) {
             return null;
         }
-        str = str.substring(31).trim();
+        str = str.substring(16).trim();
         int pos = str.indexOf("among");
         if (pos >= 0) {
-            return new LongestOrEqualLowerRanking(str.substring(0, pos).trim(), str.substring(pos + 5).trim());
+            return new LongestOrEqual(str.substring(0, pos).trim(), str.substring(pos + 5).trim());
         }
-        return new LongestOrEqualLowerRanking(str, null);
+        return new LongestOrEqual(str, null);
     }
 
     @Override
     public String toString() {
-        return "longest_or_equal_lower_ranking " + suit + (among == null ? "" : " among " + among);
+        return "longest_or_equal " + suit + (among == null ? "" : " among " + among);
     }
 
-    public LongestOrEqualLowerRanking(String suit, String among) {
+    public LongestOrEqual(String suit, String among) {
         super();
         this.suit = suit;
         this.among = among;
@@ -43,9 +43,6 @@ public class LongestOrEqualLowerRanking implements Inference {
         for (int s : BitUtil.iterate(iamong)) {
             int len2 = hand.numInSuit(s);
             if (len2 > len) {
-                return false;
-            }
-            if (len2 == len && s < isuit) {
                 return false;
             }
         }
@@ -65,7 +62,7 @@ public class LongestOrEqualLowerRanking implements Inference {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        LongestOrEqualLowerRanking other = (LongestOrEqualLowerRanking) obj;
+        LongestOrEqual other = (LongestOrEqual) obj;
         return Objects.equals(among, other.among) && Objects.equals(suit, other.suit);
     }
 }

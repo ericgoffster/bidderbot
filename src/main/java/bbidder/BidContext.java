@@ -1,9 +1,9 @@
 package bbidder;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * The context of applying a series of bids, trying to match a pattern.
@@ -31,7 +31,7 @@ public class BidContext implements Cloneable {
         return new BidContext(patterns, new HashMap<>(suits), lastBidSuit, patternPos, matches);
     }
     
-    public Set<Bid> getBids() {
+    public Set<Bid> getMatchingBids() {
         if (!matches) {
             return Set.of();
         }
@@ -39,7 +39,8 @@ public class BidContext implements Cloneable {
             return Set.of();
         }
         BidPattern patt = patterns.bids.get(patternPos);
-        return getBids(patt.str);
+        TreeSet<Bid> result = getBids(patt.str);
+        return patterns.upTheLine ? result : result.descendingSet();
     }
 
     public void addThey(Bid bid) {
@@ -111,7 +112,7 @@ public class BidContext implements Cloneable {
         return suits.get(symbol);
     }
 
-    public class LevelAndSymbol {
+    private class LevelAndSymbol {
         public final String level;
         public final String symbol;
 
@@ -158,8 +159,8 @@ public class BidContext implements Cloneable {
                 return Bid.valueOf(level.charAt(0) - '1', strain);
             }
         }
-        public Set<Bid> getBids() {
-            Set<Bid> result = new HashSet<>();
+        public TreeSet<Bid> getBids() {
+            TreeSet<Bid> result = new TreeSet<>();
             for (int strain : BitUtil.iterate(getStrains())) {
                 result.add(getBid(strain));
             }
@@ -175,27 +176,33 @@ public class BidContext implements Cloneable {
         }
     }
 
-    public LevelAndSymbol parsePattern(String pattern) {
+    private LevelAndSymbol parsePattern(String pattern) {
         if (pattern.startsWith("NJ")) {
             return new LevelAndSymbol(pattern.substring(0, 2), pattern.substring(2));
         }
         return new LevelAndSymbol(pattern.substring(0, 1), pattern.substring(1));
     }
 
-    public Set<Bid> getBids(String pattern) {
+    private TreeSet<Bid> getBids(String pattern) {
         if (pattern.equalsIgnoreCase("P")) {
-            return Set.of(Bid.P);
+            TreeSet<Bid> ts = new TreeSet<Bid>();
+            ts.add(Bid.P);
+            return ts;
         }
         if (pattern.equalsIgnoreCase("X")) {
-            return Set.of(Bid.X);
+            TreeSet<Bid> ts = new TreeSet<Bid>();
+            ts.add(Bid.X);
+            return ts;
         }
         if (pattern.equalsIgnoreCase("XX")) {
-            return Set.of(Bid.XX);
+            TreeSet<Bid> ts = new TreeSet<Bid>();
+            ts.add(Bid.XX);
+            return ts;
         }
         return parsePattern(pattern).getBids();
     }
 
-    public boolean matches(Bid bid, String pattern) {
+    private boolean matches(Bid bid, String pattern) {
         Set<Bid> bids = getBids(pattern);
         if (bids.contains(bid)) {
             if (!bid.isSuitBid()) {

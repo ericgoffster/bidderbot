@@ -6,18 +6,22 @@ import java.util.Objects;
 
 public class BidPatternList {
     public final List<BidPattern> bids;
+    public final boolean upTheLine;
 
-    public BidPatternList(List<BidPattern> bids) {
+    public BidPatternList(List<BidPattern> bids, boolean upTheLine) {
         super();
         this.bids = bids;
+        this.upTheLine = upTheLine;
     }
 
     public static BidPatternList valueOf(String str) {
+        String[] parts = str.split(":");
         List<BidPattern> l = new ArrayList<>();
-        for (String part : str.trim().split("\\s+")) {
+        for (String part : parts[0].trim().split("\\s+")) {
             l.add(BidPattern.valueOf(part));
         }
-        return new BidPatternList(l);
+        boolean upTheLine = parts.length > 1 && parts[1].trim().equals("down");
+        return new BidPatternList(l, upTheLine);
     }
 
     @Override
@@ -28,7 +32,7 @@ public class BidPatternList {
             sb.append(delim).append(bid);
             delim = " ";
         }
-        return sb.toString();
+        return upTheLine ? sb.toString() : sb + ":down";
     }
 
     @Override

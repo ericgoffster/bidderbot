@@ -56,7 +56,7 @@ public class BiddingSystem {
         List<BoundInference> negative = new ArrayList<>();
         for(BidInference i: inferences) {
             BidContext bc = new BidContext(exceptLast, i.bids);
-            for(Bid b: bc.getBids()) {
+            for(Bid b: bc.getMatchingBids()) {
                 BidContext bc2 = bc.clone();
                 bc2.addWe(b);
                 SimpleContext context = new SimpleContext(s -> bc2.getSuit(s));
