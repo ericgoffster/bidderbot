@@ -102,7 +102,7 @@ public class BidContext {
             return level + symbol;
         }
         
-        public Set<Integer> getSuits() {
+        public Set<Integer> getStrains() {
             Integer strain = getSuit(symbol);
             if (strain != null) {
                 return Set.of(strain);
@@ -122,20 +122,20 @@ public class BidContext {
             }
         }
 
+        public Bid getBid(int strain) {
+            switch (level) {
+            case "J":
+                return nextLevel(strain).raise();
+            case "NJ":
+                return nextLevel(strain);
+            default:
+                return Bid.valueOf(level.charAt(0) - '1', strain);
+            }
+        }
         public Set<Bid> getBids() {
             Set<Bid> result = new HashSet<>();
-            for (int s : getSuits()) {
-                switch (level) {
-                case "J":
-                    result.add(nextLevel(s).raise());
-                    break;
-                case "NJ":
-                    result.add(nextLevel(s));
-                    break;
-                default:
-                    result.add(Bid.valueOf(Integer.parseInt(level) - 1, s));
-                    break;
-                }
+            for (int strain : getStrains()) {
+                result.add(getBid(strain));
             }
             return result;
         }
@@ -175,8 +175,7 @@ public class BidContext {
             if (!bid.isSuitBid()) {
                 return true;
             }
-            LevelAndSymbol levelSym = parsePattern(pattern);
-            String symbol = levelSym.symbol;
+            String symbol = parsePattern(pattern).symbol;
             Integer strain = getSuit(symbol);
             if (strain == null) {
                 suits.put(symbol, bid.strain);
