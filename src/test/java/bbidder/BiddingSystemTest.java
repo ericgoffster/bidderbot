@@ -68,5 +68,21 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AKQ AKJ 234 2345")));
             assertFalse(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
         }
+        {
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1S)));
+            assertFalse(l.matches(Hand.valueOf("AKQ KQT 234 2345")));
+            assertTrue(l.matches(Hand.valueOf("AQJ32 AQ2 23 456")));
+            assertTrue(l.matches(Hand.valueOf("AQJ32 AQ234 2 45")));
+            assertFalse(l.matches(Hand.valueOf("AQJ32 AQ2345 2 4")));
+            assertFalse(l.matches(Hand.valueOf("AQJ32 234 23 456")));
+        }
+        {
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H)));
+            assertFalse(l.matches(Hand.valueOf("AKQ KQT 234 2345")));
+            assertTrue(l.matches(Hand.valueOf("AQ2 AQJ32 23 456")));
+            assertFalse(l.matches(Hand.valueOf("AQJ32 AQ234 2 45")));
+            assertTrue(l.matches(Hand.valueOf("AQJ32 AQ2345 2 4")));
+            assertFalse(l.matches(Hand.valueOf("234 AQJ32 23 456")));
+        }
     }
 }

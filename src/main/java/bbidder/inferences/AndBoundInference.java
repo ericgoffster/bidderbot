@@ -1,5 +1,8 @@
 package bbidder.inferences;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bbidder.Hand;
 import bbidder.IBoundInference;
 
@@ -16,10 +19,25 @@ public class AndBoundInference implements IBoundInference {
     public boolean matches(Hand hand) {
         return i1.matches(hand) && i2.matches(hand);
     }
+    
+    void gatherAnds(List<String> l) {
+        if (i1 instanceof AndBoundInference) {
+            ((AndBoundInference) i1).gatherAnds(l);
+        } else {
+            l.add(i1.toString());
+        }
+        if (i2 instanceof AndBoundInference) {
+            ((AndBoundInference) i2).gatherAnds(l);
+        } else {
+            l.add(i2.toString());
+        }
+    }
 
     @Override
     public String toString() {
-        return "(and " + i1 + " " + i2 + ")";
+        List<String> l = new ArrayList<>();
+        gatherAnds(l);
+        return "(" + String.join(",", l) + ")";
     }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
