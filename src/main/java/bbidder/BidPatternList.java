@@ -20,8 +20,8 @@ public class BidPatternList {
         for (String part : parts[0].trim().split("\\s+")) {
             l.add(BidPattern.valueOf(part));
         }
-        boolean upTheLine = parts.length > 1 && parts[1].trim().equals("down");
-        return new BidPatternList(l, upTheLine);
+        boolean downTheLine = parts.length > 1 && parts[1].trim().equals("down");
+        return new BidPatternList(l, !downTheLine);
     }
 
     @Override
