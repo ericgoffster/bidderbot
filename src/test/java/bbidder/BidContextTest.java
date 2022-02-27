@@ -37,147 +37,147 @@ public class BidContextTest {
 
     @Test
     public void testOpposition() {
-        assertTrue(new BidContext(getBids("P")).matches(getPatterns("P")));
-        assertTrue(new BidContext(getBids("P", "P")).matches(getPatterns("P")));
-        assertTrue(new BidContext(getBids("P", "P")).matches(getPatterns("(P)", "P")));
-        assertTrue(new BidContext(getBids("P", "P", "P")).matches(getPatterns("P", "(P)", "P")));
-        assertFalse(new BidContext(getBids("P", "P")).matches(getPatterns("P", "(P)", "P")));
-        assertTrue(new BidContext(getBids("P", "P", "P", "P")).matches(getPatterns("P", "P")));
+        assertTrue(new BidContext(getBids("P"),getPatterns("P")).matches());
+        assertTrue(new BidContext(getBids("P", "P"), getPatterns("P")).matches());
+        assertTrue(new BidContext(getBids("P", "P"), getPatterns("(P)", "P")).matches());
+        assertTrue(new BidContext(getBids("P", "P", "P"), getPatterns("P", "(P)", "P")).matches());
+        assertFalse(new BidContext(getBids("P", "P"), getPatterns("P", "(P)", "P")).matches());
+        assertTrue(new BidContext(getBids("P", "P", "P", "P"), getPatterns("P", "P")).matches());
     }
 
     @Test
     public void testPasses() {
-        assertTrue(new BidContext(getBids("P")).matches(getPatterns("P")));
-        assertFalse(new BidContext(getBids("P")).matches(getPatterns("X")));
-        assertFalse(new BidContext(getBids("P")).matches(getPatterns("XX")));
-        assertFalse(new BidContext(getBids("P")).matches(getPatterns("1C")));
+        assertTrue(new BidContext(getBids("P"), getPatterns("P")).matches());
+        assertFalse(new BidContext(getBids("X"), getPatterns("P")).matches());
+        assertFalse(new BidContext(getBids("XX"),getPatterns("P")).matches());
+        assertFalse(new BidContext(getBids("1C"),getPatterns("P")).matches());
     }
 
     @Test
     public void testDouble() {
-        assertTrue(new BidContext(getBids("X")).matches(getPatterns("X")));
-        assertFalse(new BidContext(getBids("X")).matches(getPatterns("P")));
-        assertFalse(new BidContext(getBids("X")).matches(getPatterns("XX")));
-        assertFalse(new BidContext(getBids("X")).matches(getPatterns("1C")));
+        assertTrue(new BidContext(getBids("X"), getPatterns("X")).matches());
+        assertFalse(new BidContext(getBids("P"), getPatterns("X")).matches());
+        assertFalse(new BidContext(getBids("XX"),getPatterns("X")).matches());
+        assertFalse(new BidContext(getBids("1C"),getPatterns("X")).matches());
     }
 
     @Test
     public void testReDouble() {
-        assertTrue(new BidContext(getBids("XX")).matches(getPatterns("XX")));
-        assertFalse(new BidContext(getBids("XX")).matches(getPatterns("P")));
-        assertFalse(new BidContext(getBids("XX")).matches(getPatterns("X")));
-        assertFalse(new BidContext(getBids("XX")).matches(getPatterns("1C")));
+        assertTrue(new BidContext(getBids("XX"), getPatterns("XX")).matches());
+        assertFalse(new BidContext(getBids("X"), getPatterns("XX")).matches());
+        assertFalse(new BidContext(getBids("1C"),getPatterns("XX")).matches());
+        assertFalse(new BidContext(getBids("P"), getPatterns("XX")).matches());
     }
 
     @Test
     public void testSuit() {
-        assertTrue(new BidContext(getBids("1C")).matches(getPatterns("1C")));
-        assertFalse(new BidContext(getBids("1C")).matches(getPatterns("P")));
-        assertFalse(new BidContext(getBids("1C")).matches(getPatterns("X")));
-        assertFalse(new BidContext(getBids("1C")).matches(getPatterns("XX")));
-        assertFalse(new BidContext(getBids("1C")).matches(getPatterns("1D")));
+        assertFalse(new BidContext(getBids("P"), getPatterns("1C")).matches());
+        assertFalse(new BidContext(getBids("XX"),getPatterns("1C")).matches());
+        assertFalse(new BidContext(getBids("X"), getPatterns("1C")).matches());
+        assertTrue(new BidContext(getBids("1C"),getPatterns("1C")).matches());
+        assertFalse(new BidContext(getBids("1C"),getPatterns("1D")).matches());
     }
 
     @Test
     public void testMinor() {
-        assertFalse(new BidContext(getBids("P")).matches(getPatterns("1m")));
-        assertFalse(new BidContext(getBids("X")).matches(getPatterns("1m")));
-        assertFalse(new BidContext(getBids("XX")).matches(getPatterns("1m")));
-        assertTrue(new BidContext(getBids("1C")).matches(getPatterns("1m")));
-        assertTrue(new BidContext(getBids("1D")).matches(getPatterns("1m")));
-        assertFalse(new BidContext(getBids("1H")).matches(getPatterns("1m")));
-        assertFalse(new BidContext(getBids("1S")).matches(getPatterns("1m")));
-        assertFalse(new BidContext(getBids("1N")).matches(getPatterns("1m")));
+        assertFalse(new BidContext(getBids("P"),getPatterns("1m")).matches());
+        assertFalse(new BidContext(getBids("X"),getPatterns("1m")).matches());
+        assertFalse(new BidContext(getBids("XX"),getPatterns("1m")).matches());
+        assertTrue(new BidContext(getBids("1C"),getPatterns("1m")).matches());
+        assertTrue(new BidContext(getBids("1D"),getPatterns("1m")).matches());
+        assertFalse(new BidContext(getBids("1H"),getPatterns("1m")).matches());
+        assertFalse(new BidContext(getBids("1S"),getPatterns("1m")).matches());
+        assertFalse(new BidContext(getBids("1N"),getPatterns("1m")).matches());
     }
 
     @Test
     public void testMajor() {
-        assertFalse(new BidContext(getBids("P")).matches(getPatterns("1M")));
-        assertFalse(new BidContext(getBids("X")).matches(getPatterns("1M")));
-        assertFalse(new BidContext(getBids("XX")).matches(getPatterns("1M")));
-        assertFalse(new BidContext(getBids("1C")).matches(getPatterns("1M")));
-        assertFalse(new BidContext(getBids("1D")).matches(getPatterns("1M")));
-        assertTrue(new BidContext(getBids("1H")).matches(getPatterns("1M")));
-        assertTrue(new BidContext(getBids("1S")).matches(getPatterns("1M")));
-        assertFalse(new BidContext(getBids("1N")).matches(getPatterns("1M")));
+        assertFalse(new BidContext(getBids("P"),getPatterns("1M")).matches());
+        assertFalse(new BidContext(getBids("X"),getPatterns("1M")).matches());
+        assertFalse(new BidContext(getBids("XX"),getPatterns("1M")).matches());
+        assertFalse(new BidContext(getBids("1C"),getPatterns("1M")).matches());
+        assertFalse(new BidContext(getBids("1D"),getPatterns("1M")).matches());
+        assertTrue(new BidContext(getBids("1H"),getPatterns("1M")).matches());
+        assertTrue(new BidContext(getBids("1S"),getPatterns("1M")).matches());
+        assertFalse(new BidContext(getBids("1N"),getPatterns("1M")).matches());
     }
 
     @Test
     public void testAny() {
-        assertFalse(new BidContext(getBids("P")).matches(getPatterns("1x")));
-        assertFalse(new BidContext(getBids("X")).matches(getPatterns("1x")));
-        assertFalse(new BidContext(getBids("XX")).matches(getPatterns("1m")));
-        assertTrue(new BidContext(getBids("1C")).matches(getPatterns("1x")));
-        assertTrue(new BidContext(getBids("1D")).matches(getPatterns("1x")));
-        assertTrue(new BidContext(getBids("1H")).matches(getPatterns("1x")));
-        assertTrue(new BidContext(getBids("1S")).matches(getPatterns("1x")));
-        assertFalse(new BidContext(getBids("1N")).matches(getPatterns("1x")));
+        assertFalse(new BidContext(getBids("P"),getPatterns("1x")).matches());
+        assertFalse(new BidContext(getBids("X"),getPatterns("1x")).matches());
+        assertFalse(new BidContext(getBids("XX"),getPatterns("1x")).matches());
+        assertTrue(new BidContext(getBids("1C"),getPatterns("1x")).matches());
+        assertTrue(new BidContext(getBids("1D"),getPatterns("1x")).matches());
+        assertTrue(new BidContext(getBids("1H"),getPatterns("1x")).matches());
+        assertTrue(new BidContext(getBids("1S"),getPatterns("1x")).matches());
+        assertFalse(new BidContext(getBids("1N"),getPatterns("1x")).matches());
     }
 
     @Test
     public void tedtSubst() {
-        BidContext bc = new BidContext(getBids("1C"));
-        assertTrue(bc.matches(getPatterns("1x")));
+        BidContext bc = new BidContext(getBids("1C"),getPatterns("1x"));
+        assertTrue(bc.matches());
         assertEquals(bc.suits.get("x").intValue(), 0);
     }
 
     @Test
     public void testRaise() {
-        BidContext bc = new BidContext(getUnopposedBids("1C", "2C"));
-        assertTrue(bc.matches(getPatterns("1x", "2x")));
+        BidContext bc = new BidContext(getUnopposedBids("1C", "2C"),getPatterns("1x", "2x"));
+        assertTrue(bc.matches());
     }
 
     @Test
     public void testNotRaise() {
-        BidContext bc = new BidContext(getUnopposedBids("1C", "2D"));
-        assertFalse(bc.matches(getPatterns("1x", "2x")));
+        BidContext bc = new BidContext(getUnopposedBids("1C", "2D"),getPatterns("1x", "2x"));
+        assertFalse(bc.matches());
     }
 
     @Test
     public void testNotRaise2() {
-        BidContext bc = new BidContext(getUnopposedBids("1C", "2C"));
-        assertFalse(bc.matches(getPatterns("1x", "2y")));
+        BidContext bc = new BidContext(getUnopposedBids("1C", "2C"),getPatterns("1x", "2y"));
+        assertFalse(bc.matches());
     }
 
     @Test
     public void testNotRaise3() {
-        BidContext bc = new BidContext(getUnopposedBids("1C", "2D"));
-        assertTrue(bc.matches(getPatterns("1x", "2y")));
+        BidContext bc = new BidContext(getUnopposedBids("1C", "2D"),getPatterns("1x", "2y"));
+        assertTrue(bc.matches());
     }
 
     @Test
     public void testNotJump() {
-        BidContext bc = new BidContext(getUnopposedBids("1C", "1D"));
-        assertTrue(bc.matches(getPatterns("1x", "NJy")));
+        BidContext bc = new BidContext(getUnopposedBids("1C", "1D"),getPatterns("1x", "NJy"));
+        assertTrue(bc.matches());
     }
 
     @Test
     public void testNotJump2() {
-        BidContext bc = new BidContext(getUnopposedBids("1H", "2C"));
-        assertTrue(bc.matches(getPatterns("1x", "NJy")));
+        BidContext bc = new BidContext(getUnopposedBids("1H", "2C"),getPatterns("1x", "NJy"));
+        assertTrue(bc.matches());
     }
 
     @Test
     public void testNotJump3() {
-        BidContext bc = new BidContext(getUnopposedBids("1H", "2S"));
-        assertFalse(bc.matches(getPatterns("1x", "NJy")));
+        BidContext bc = new BidContext(getUnopposedBids("1H", "2S"),getPatterns("1x", "NJy"));
+        assertFalse(bc.matches());
     }
 
     @Test
     public void testJump() {
-        BidContext bc = new BidContext(getUnopposedBids("1C", "2D"));
-        assertTrue(bc.matches(getPatterns("1x", "Jy")));
+        BidContext bc = new BidContext(getUnopposedBids("1C", "2D"),getPatterns("1x", "Jy"));
+        assertTrue(bc.matches());
     }
 
     @Test
     public void testJump2() {
-        BidContext bc = new BidContext(getUnopposedBids("1H", "3C"));
-        assertTrue(bc.matches(getPatterns("1x", "Jy")));
+        BidContext bc = new BidContext(getUnopposedBids("1H", "3C"),getPatterns("1x", "Jy"));
+        assertTrue(bc.matches());
     }
 
     @Test
     public void testJump3() {
-        BidContext bc = new BidContext(getUnopposedBids("1H", "3S"));
-        assertFalse(bc.matches(getPatterns("1x", "Jy")));
+        BidContext bc = new BidContext(getUnopposedBids("1H", "3S"),getPatterns("1x", "Jy"));
+        assertFalse(bc.matches());
     }
 }
