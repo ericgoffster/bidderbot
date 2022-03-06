@@ -66,6 +66,16 @@ public class OpeningPreempt implements Inference {
             this.suit = suit;
             this.level = level;
         }
+        
+        @Override
+        public boolean negatable() {
+            return false;
+        }
+        
+        @Override
+        public IBoundInference negate() {
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public boolean matches(Hand hand) {

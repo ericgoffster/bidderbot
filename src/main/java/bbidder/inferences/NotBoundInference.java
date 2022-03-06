@@ -19,16 +19,20 @@ public class NotBoundInference implements IBoundInference {
     public String toString() {
         return "(not " + inference + ")";
     }
+    
+    @Override
+    public boolean negatable() {
+        return true;
+    }
+    
+    @Override
+    public IBoundInference negate() {
+        return inference;
+    }
 
     public static IBoundInference create(IBoundInference i) {
-        if (i == ConstBoundInference.T) {
-            return ConstBoundInference.F;
-        }
-        if (i == ConstBoundInference.F) {
-            return ConstBoundInference.T;
-        }
-        if (i instanceof NotBoundInference) {
-            return ((NotBoundInference) i).inference;
+        if (i.negatable()) {
+            return i.negate();
         }
         return new NotBoundInference(i);
     }

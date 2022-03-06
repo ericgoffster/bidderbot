@@ -92,6 +92,16 @@ public class SuitRange implements Inference {
             this.min = imin;
             this.max = imax;
         }
+        
+        @Override
+        public boolean negatable() {
+            return true;
+        }
+        
+        @Override
+        public IBoundInference negate() {
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public boolean matches(Hand hand) {

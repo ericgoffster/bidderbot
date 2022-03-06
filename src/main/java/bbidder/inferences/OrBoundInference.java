@@ -21,6 +21,16 @@ public class OrBoundInference implements IBoundInference {
     public String toString() {
         return "(or " + i1 + " " + i2 + ")";
     }
+    
+    @Override
+    public boolean negatable() {
+        return i1.negatable() && i2.negatable();
+    }
+    
+    @Override
+    public IBoundInference negate() {
+        return AndBoundInference.create(i1.negate(), i2.negate());
+    }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
         if (i1 == ConstBoundInference.T || i2 == ConstBoundInference.T) {

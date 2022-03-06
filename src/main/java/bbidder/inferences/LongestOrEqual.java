@@ -82,6 +82,16 @@ public class LongestOrEqual implements Inference {
             }
             return true;
         }
+        
+        @Override
+        public boolean negatable() {
+            return false;
+        }
+        
+        @Override
+        public IBoundInference negate() {
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public String toString() {

@@ -60,6 +60,16 @@ public class Balanced implements Inference {
             }
             return ndoub <= 1;
         }
+        
+        @Override
+        public boolean negatable() {
+            return false;
+        }
+        
+        @Override
+        public IBoundInference negate() {
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public String toString() {

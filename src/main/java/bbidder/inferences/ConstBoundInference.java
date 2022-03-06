@@ -23,6 +23,15 @@ public class ConstBoundInference implements IBoundInference {
     public static ConstBoundInference T = new ConstBoundInference(true);
     public static ConstBoundInference F = new ConstBoundInference(false);
     
+    @Override
+    public boolean negatable() {
+        return true;
+    }
+    
+    @Override
+    public IBoundInference negate() {
+        return create(!result);
+    }
     public static IBoundInference create(boolean result) {
         return result ? T : F;
     }
