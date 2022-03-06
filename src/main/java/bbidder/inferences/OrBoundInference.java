@@ -1,5 +1,8 @@
 package bbidder.inferences;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bbidder.Hand;
 import bbidder.IBoundInference;
 
@@ -16,10 +19,25 @@ public class OrBoundInference implements IBoundInference {
     public boolean matches(Hand hand) {
         return i1.matches(hand) || i2.matches(hand);
     }
+    
+    void gatherOrs(List<String> l) {
+        if (i1 instanceof OrBoundInference) {
+            ((OrBoundInference) i1).gatherOrs(l);
+        } else {
+            l.add(i1.toString());
+        }
+        if (i2 instanceof OrBoundInference) {
+            ((OrBoundInference) i2).gatherOrs(l);
+        } else {
+            l.add(i2.toString());
+        }
+    }
 
     @Override
     public String toString() {
-        return "(or " + i1 + " " + i2 + ")";
+        List<String> l = new ArrayList<>();
+        gatherOrs(l);
+        return "(" + String.join(" | ", l) + ")";
     }
     
     @Override

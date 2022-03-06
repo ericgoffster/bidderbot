@@ -47,7 +47,7 @@ public class AndBoundInference implements IBoundInference {
     public String toString() {
         List<String> l = new ArrayList<>();
         gatherAnds(l);
-        return "(" + String.join(",", l) + ")";
+        return "(" + String.join(" & ", l) + ")";
     }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
