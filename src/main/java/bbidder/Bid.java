@@ -72,7 +72,7 @@ public enum Bid {
         if (this == XX) {
             return "XX";
         }
-        return String.valueOf(level + 1) + "CDHSN".charAt(strain);
+        return String.valueOf(level + 1) + STR_ALL_SUITS.charAt(strain);
     }
 
     /**
@@ -138,16 +138,16 @@ public enum Bid {
         if (str == null) {
             return null;
         }
-        switch (str.toLowerCase()) {
-        case "c":
+        switch (str.toUpperCase()) {
+        case STR_CLUB:
             return CLUB;
-        case "d":
+        case STR_DIAMOND:
             return DIAMOND;
-        case "h":
+        case STR_HEART:
             return HEART;
-        case "s":
+        case STR_SPADE:
             return SPADE;
-        case "n":
+        case STR_NOTRUMP:
             return NOTRUMP;
         default:
             return null;

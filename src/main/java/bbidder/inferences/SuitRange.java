@@ -1,6 +1,7 @@
 package bbidder.inferences;
 
 import java.util.Objects;
+import static bbidder.Constants.*;
 
 import bbidder.Context;
 import bbidder.Hand;
@@ -106,7 +107,7 @@ public class SuitRange implements Inference {
 
         @Override
         public String toString() {
-            char s = "CDHS".charAt(suit);
+            char s = STR_ALL_SUITS.charAt(suit);
             if (max == null) {
                 return min + "+ in " + s;
             }

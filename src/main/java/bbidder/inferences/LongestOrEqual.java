@@ -1,6 +1,7 @@
 package bbidder.inferences;
 
 import java.util.Objects;
+import static bbidder.Constants.*;
 
 import bbidder.BitUtil;
 import bbidder.Context;
@@ -86,7 +87,7 @@ public class LongestOrEqual implements Inference {
         public String toString() {
             StringBuilder sb = new StringBuilder();
             for (int s : BitUtil.iterate(iamong)) {
-                sb.append("CDHS".charAt(s));
+                sb.append(STR_ALL_SUITS.charAt(s));
             }
             String sm = " among " + sb;
             switch (sm) {
@@ -100,7 +101,7 @@ public class LongestOrEqual implements Inference {
                 sm = " among minors";
                 break;
             }
-            return "longest_or_equal " + "CDHS".charAt(isuit) + sm;
+            return "longest_or_equal " + STR_ALL_SUITS.charAt(isuit) + sm;
         }
     }
 

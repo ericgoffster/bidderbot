@@ -1,6 +1,8 @@
 package bbidder;
 
 import java.util.function.Function;
+import static bbidder.Constants.*;
+
 
 public class SimpleContext implements Context {
 
@@ -25,14 +27,14 @@ public class SimpleContext implements Context {
     @Override
     public int lookupSuit(String s) {
         switch (s.toUpperCase()) {
-        case "C":
-            return 0;
-        case "D":
-            return 1;
-        case "H":
-            return 2;
-        case "S":
-            return 3;
+        case STR_CLUB:
+            return CLUB;
+        case STR_DIAMOND:
+            return DIAMOND;
+        case STR_HEART:
+            return HEART;
+        case STR_SPADE:
+            return SPADE;
         default:
             Integer s2 = lookupSuit.apply(s);
             if (s2 == null) {
@@ -56,29 +58,29 @@ public class SimpleContext implements Context {
             return suits;
         }
         case "MINORS":
-            return 0x3;
+            return (1 << CLUB) | (1 << DIAMOND);
         case "MAJORS":
-            return 0x3 << 2;
+            return (1 << HEART) | (1 << SPADE);
         case "REDS":
-            return (1 << 2) | (1 << 1);
+            return (1 << HEART) | (1 << DIAMOND);
         case "BLACKS":
-            return (1 << 3) | (1 << 0);
+            return (1 << SPADE) | (1 << CLUB);
         case "ROUND":
-            return (1 << 2) | (1 << 0);
+            return (1 << HEART) | (1 << CLUB);
         case "POINTED":
-            return (1 << 3) | (1 << 1);
+            return (1 << SPADE) | (1 << DIAMOND);
         case "ALL":
             return 0xf;
         case "NONE":
             return 0;
-        case "C":
-            return (1 << 0);
-        case "D":
-            return (1 << 1);
-        case "H":
-            return (1 << 2);
-        case "S":
-            return (1 << 3);
+        case STR_CLUB:
+            return (1 << CLUB);
+        case STR_DIAMOND:
+            return (1 << DIAMOND);
+        case STR_HEART:
+            return (1 << HEART);
+        case STR_SPADE:
+            return (1 << SPADE);
         }
         if (s.startsWith("~")) {
             return (short)(~lookupSuitSet(s.substring(1)) & 0xf);

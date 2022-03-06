@@ -1,6 +1,7 @@
 package bbidder.inferences;
 
 import java.util.Objects;
+import static bbidder.Constants.*;
 
 import bbidder.Context;
 import bbidder.Hand;
@@ -86,7 +87,7 @@ public class OpeningPreempt implements Inference {
 
         @Override
         public String toString() {
-            return "opening_preempt " + level + " " + "CDHS".charAt(suit);
+            return "opening_preempt " + level + " " + STR_ALL_SUITS.charAt(suit);
         }
     }
 }
