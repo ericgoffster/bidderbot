@@ -11,6 +11,9 @@ public class BiddingState {
     public final BidList bidding;
     public final int turn;
     public final IBoundInference[] players;
+    public BiddingState(BiddingSystem system) {
+        this(new BiddingSystem[] {system, system}, 0);
+    }
     public BiddingState(BiddingSystem[] systems, int turn) {
         this.systems = systems;
         this.turn = turn;
