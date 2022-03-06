@@ -37,6 +37,14 @@ public class HandList {
         return maxHcp;
     }
 
+    public double avgLenInSuit(int suit) {
+        long sum = 0;
+        for(Hand h: l) {
+            sum += h.numInSuit(suit);
+        }
+        return sum / (double)l.size();
+    } 
+
     public int minInSuit(int suit) {
         Integer minInSuit = null;
         for(Hand h: l) {
@@ -46,8 +54,7 @@ public class HandList {
             }
         }
         return minInSuit;
-    }
-   
+    } 
 
     public int maxInSuit(int suit) {
         Integer maxInSuit = null;

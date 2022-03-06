@@ -108,5 +108,35 @@ public class BiddingSystemTest {
             assertTrue(hands.minInSuit(2) >= 5);
             assertTrue(hands.minInSuit(3) >= 0);
         }
+        {
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1C)), likelyHands);
+            assertFalse(l.matches(Hand.valueOf("AKQ23 2 23 AQ234")));
+            assertTrue(l.matches(Hand.valueOf("AKQ23 2 3 AQ2345")));
+            assertTrue(l.matches(Hand.valueOf("AKQ KQT 234 2345")));
+            assertTrue(l.matches(Hand.valueOf("AKQ KQT2 234 234")));
+            assertFalse(l.matches(Hand.valueOf("AKQ KQ 2345 2345")));
+            
+            HandList hands = HandGenerator.generateHands(l, 100);
+            assertTrue(hands.minHcp() >= 13);
+            assertTrue(hands.minInSuit(0) >= 3);
+            assertTrue(hands.minInSuit(1) >= 0);
+            assertTrue(hands.minInSuit(2) >= 0);
+            assertTrue(hands.minInSuit(3) >= 0);
+        }
+        {
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1D)), likelyHands);
+            assertFalse(l.matches(Hand.valueOf("AKQ23 2 AQ234 23")));
+            assertTrue(l.matches(Hand.valueOf("AKQ23 2 AQ2345 3")));
+            assertTrue(l.matches(Hand.valueOf("AKQ KQT 2345 234")));
+            assertFalse(l.matches(Hand.valueOf("AKQ KQT2 234 234")));
+            assertTrue(l.matches(Hand.valueOf("AKQ KQ 2345 2345")));
+            
+            HandList hands = HandGenerator.generateHands(l, 100);
+            assertTrue(hands.minHcp() >= 13);
+            assertTrue(hands.minInSuit(0) >= 0);
+            assertTrue(hands.minInSuit(1) >= 3);
+            assertTrue(hands.minInSuit(2) >= 0);
+            assertTrue(hands.minInSuit(3) >= 0);
+        }
     }
 }
