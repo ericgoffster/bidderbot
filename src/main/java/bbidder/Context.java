@@ -5,7 +5,7 @@ public interface Context {
 
     int lookupSuit(String s);
 
-    int lookupSuitSet(String s);
+    short lookupSuitSet(String s);
 
     int resolveLength(String s);
 }

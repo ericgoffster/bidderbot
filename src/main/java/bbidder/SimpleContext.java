@@ -43,8 +43,18 @@ public class SimpleContext implements Context {
     }
 
     @Override
-    public int lookupSuitSet(String s) {
+    public short lookupSuitSet(String s) {
         switch (s.toUpperCase()) {
+        case "UNBID": {
+            short suits = 0 ;
+            for(int suit = 0; suit < 4; suit++) {
+                if (likelyHands.lho.avgLenInSuit(suit) < 4 && likelyHands.rho.avgLenInSuit(suit) < 4 &&
+                        likelyHands.partner.avgLenInSuit(suit) < 4 && likelyHands.me.avgLenInSuit(suit) < 4) {
+                    suits |= (1 << suit);
+                }
+            }
+            return suits;
+        }
         case "MINORS":
             return 0x3;
         case "MAJORS":
@@ -71,7 +81,7 @@ public class SimpleContext implements Context {
             return (1 << 3);
         }
         if (s.startsWith("~")) {
-            return ~lookupSuitSet(s.substring(1)) & 0xf;
+            return (short)(~lookupSuitSet(s.substring(1)) & 0xf);
         }
         throw new IllegalArgumentException("unknown suit " + s);
     }
