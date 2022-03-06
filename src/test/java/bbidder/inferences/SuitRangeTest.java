@@ -20,7 +20,7 @@ public class SuitRangeTest {
     public void testToString() {
         Context ctx = new SimpleContext();
         assertEquals("8-10 in s", new SuitRange("s", "8", "10").toString());
-        assertEquals("8-10 in S", new SuitRange("s", "8", "10").bind(ctx).toString());
+        assertEquals("(8+ S & 10- S)", new SuitRange("s", "8", "10").bind(ctx).toString());
     }
 
     @Test

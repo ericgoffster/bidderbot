@@ -1,7 +1,8 @@
 package bbidder.inferences;
 
+import static bbidder.Constants.STR_ALL_SUITS;
+
 import java.util.Objects;
-import static bbidder.Constants.*;
 
 import bbidder.Context;
 import bbidder.Hand;
@@ -60,8 +61,17 @@ public class SuitRange implements Inference {
 
     @Override
     public IBoundInference bind(Context context) {
-        return new BoundInf(context.lookupSuit(suit), min == null ? null : context.resolveLength(min),
-                max == null ? null : context.resolveLength(max));
+        int s = context.lookupSuit(suit);
+        if (min == null) {
+            if (max == null) {
+                return ConstBoundInference.T;
+            }
+            return new BoundInfMax(s, context.resolvePoints(max));
+        }
+        if (max == null) {
+            return new BoundInfMin(s, context.resolvePoints(min));
+        }
+        return AndBoundInference.create(new BoundInfMin(s, context.resolvePoints(min)), new BoundInfMax(s, context.resolvePoints(max)));
     }
 
     @Override
@@ -81,16 +91,18 @@ public class SuitRange implements Inference {
         return Objects.equals(max, other.max) && Objects.equals(min, other.min) && Objects.equals(suit, other.suit);
     }
 
-    static class BoundInf implements IBoundInference {
+    static class BoundInfMin implements IBoundInference {
         final int suit;
-        final Integer min;
-        final Integer max;
+        final int min;
 
-        public BoundInf(int suit, Integer imin, Integer imax) {
-            super();
+        public BoundInfMin(int suit, int min) {
             this.suit = suit;
-            this.min = imin;
-            this.max = imax;
+            this.min = min;
+        }
+
+        @Override
+        public boolean matches(Hand hand) {
+            return hand.numInSuit(suit) >= min;
         }
         
         @Override
@@ -100,34 +112,43 @@ public class SuitRange implements Inference {
         
         @Override
         public IBoundInference negate() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            int len = hand.numInSuit(suit);
-            if (min != null && len < min) {
-                return false;
-            }
-            if (max != null && len > max) {
-                return false;
-            }
-            return true;
+            return new BoundInfMax(suit, min - 1);
         }
 
         @Override
         public String toString() {
-            char s = STR_ALL_SUITS.charAt(suit);
-            if (max == null) {
-                return min + "+ in " + s;
-            }
-            if (min == null) {
-                return max + "- in " + s;
-            }
-            if (min.equals(max)) {
-                return min + " in " + s;
-            }
-            return min + "-" + max + " in " + s;
+            return min + "+ " + STR_ALL_SUITS.charAt(suit);
         }
     }
+
+    static class BoundInfMax implements IBoundInference {
+        final int suit;
+        final int max;
+
+        public BoundInfMax(int suit, int max) {
+            this.suit = suit;
+            this.max = max;
+        }
+
+        @Override
+        public boolean matches(Hand hand) {
+            return hand.numInSuit(suit) <= max;
+        }
+        
+        @Override
+        public boolean negatable() {
+            return true;
+        }
+        
+        @Override
+        public IBoundInference negate() {
+            return new BoundInfMin(suit, max + 1);
+        }
+
+        @Override
+        public String toString() {
+            return max + "- " + STR_ALL_SUITS.charAt(suit);
+        }
+    }
+
 }

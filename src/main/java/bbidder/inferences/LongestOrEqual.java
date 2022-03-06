@@ -26,6 +26,17 @@ public class LongestOrEqual implements Inference {
         return new LongestOrEqual(str, null);
     }
 
+    private static boolean isLongerOrEqual(int isuit, int iamong, Hand hand) {
+        int len = hand.numInSuit(isuit);
+        for (int s : BitUtil.iterate(iamong)) {
+            int len2 = hand.numInSuit(s);
+            if (len2 > len) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return "longest_or_equal " + suit + (among == null ? "" : " among " + among);
@@ -41,7 +52,7 @@ public class LongestOrEqual implements Inference {
     public IBoundInference bind(Context context) {
         int isuit = context.lookupSuit(suit);
         int iamong = among == null ? 0xf : context.lookupSuitSet(among);
-        return new BoundInf(isuit, iamong);
+        return new LongestOrEqualBoundInf(isuit, iamong);
     }
 
     @Override
@@ -61,11 +72,32 @@ public class LongestOrEqual implements Inference {
         return Objects.equals(among, other.among) && Objects.equals(suit, other.suit);
     }
 
-    static class BoundInf implements IBoundInference {
+
+    private static String getAmong(int iamong2) {
+        StringBuilder sb = new StringBuilder();
+        for (int s : BitUtil.iterate(iamong2)) {
+            sb.append(STR_ALL_SUITS.charAt(s));
+        }
+        String sm = " among " + sb;
+        switch (sm) {
+        case " among CDHS":
+            sm = "";
+            break;
+        case " among HS":
+            sm = " among majors";
+            break;
+        case " among CD":
+            sm = " among minors";
+            break;
+        }
+        return sm;
+    }
+
+    static class LongestOrEqualBoundInf implements IBoundInference {
         final int isuit;
         final int iamong;
 
-        public BoundInf(int isuit, int iamong) {
+        public LongestOrEqualBoundInf(int isuit, int iamong) {
             super();
             this.isuit = isuit;
             this.iamong = iamong;
@@ -73,14 +105,38 @@ public class LongestOrEqual implements Inference {
 
         @Override
         public boolean matches(Hand hand) {
-            int len = hand.numInSuit(isuit);
-            for (int s : BitUtil.iterate(iamong)) {
-                int len2 = hand.numInSuit(s);
-                if (len2 > len) {
-                    return false;
-                }
-            }
+            return isLongerOrEqual(isuit, iamong, hand);
+        }
+        
+        @Override
+        public boolean negatable() {
             return true;
+        }
+        
+        @Override
+        public IBoundInference negate() {
+            return new ShorterBoundInf(isuit, iamong);
+        }
+
+        @Override
+        public String toString() {
+            return "longest_or_equal " + STR_ALL_SUITS.charAt(isuit) + getAmong(iamong);
+        }
+    }
+
+    static class ShorterBoundInf implements IBoundInference {
+        final int isuit;
+        final int iamong;
+
+        public ShorterBoundInf(int isuit, int iamong) {
+            super();
+            this.isuit = isuit;
+            this.iamong = iamong;
+        }
+
+        @Override
+        public boolean matches(Hand hand) {
+            return !isLongerOrEqual(isuit, iamong, hand);
         }
         
         @Override
@@ -90,29 +146,12 @@ public class LongestOrEqual implements Inference {
         
         @Override
         public IBoundInference negate() {
-            throw new UnsupportedOperationException();
+            return new LongestOrEqualBoundInf(isuit, iamong);
         }
 
         @Override
         public String toString() {
-            StringBuilder sb = new StringBuilder();
-            for (int s : BitUtil.iterate(iamong)) {
-                sb.append(STR_ALL_SUITS.charAt(s));
-            }
-            String sm = " among " + sb;
-            switch (sm) {
-            case " among CDHS":
-                sm = "";
-                break;
-            case " among HS":
-                sm = " among majors";
-                break;
-            case " among CD":
-                sm = " among minors";
-                break;
-            }
-            return "longest_or_equal " + STR_ALL_SUITS.charAt(isuit) + sm;
+            return "shorter " + STR_ALL_SUITS.charAt(isuit) + getAmong(iamong);
         }
     }
-
 }
