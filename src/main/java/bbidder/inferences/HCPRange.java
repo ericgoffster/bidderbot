@@ -55,7 +55,16 @@ public class HCPRange implements Inference {
 
     @Override
     public IBoundInference bind(Context context) {
-        return new BoundInf(min == null ? null : context.resolvePoints(min), max == null ? null : context.resolvePoints(max));
+        if (min == null) {
+            if (max == null) {
+                return ConstBoundInference.T;
+            }
+            return new BoundInfMax(context.resolvePoints(max));
+        }
+        if (max == null) {
+            return new BoundInfMin(context.resolvePoints(min));
+        }
+        return AndBoundInference.create(new BoundInfMin(context.resolvePoints(min)), new BoundInfMax(context.resolvePoints(max)));
     }
 
     @Override
@@ -75,50 +84,59 @@ public class HCPRange implements Inference {
         return Objects.equals(max, other.max) && Objects.equals(min, other.min);
     }
 
-    static class BoundInf implements IBoundInference {
-        final Integer min;
-        final Integer max;
+    static class BoundInfMin implements IBoundInference {
+        final int min;
 
-        public BoundInf(Integer imin, Integer imax) {
-            super();
-            this.min = imin;
-            this.max = imax;
+        public BoundInfMin(int min) {
+            this.min = min;
         }
 
         @Override
         public boolean matches(Hand hand) {
-            int hcp = hand.numHCP();
-            if (min != null && hcp < min) {
-                return false;
-            }
-            if (max != null && hcp > max) {
-                return false;
-            }
-            return true;
+            return hand.numHCP() >= min;
         }
         
         @Override
         public boolean negatable() {
-            return false;
+            return true;
         }
         
         @Override
         public IBoundInference negate() {
-            throw new UnsupportedOperationException();
+            return new BoundInfMax(min - 1);
         }
 
         @Override
         public String toString() {
-            if (max == null) {
-                return min + "+ hcp";
-            }
-            if (min == null) {
-                return max + "- hcp";
-            }
-            if (min.equals(max)) {
-                return min + " hcp";
-            }
-            return min + "-" + max + " hcp";
+            return min + "+ hcp";
+        }
+    }
+
+    static class BoundInfMax implements IBoundInference {
+        final int max;
+
+        public BoundInfMax(int max) {
+            this.max = max;
+        }
+
+        @Override
+        public boolean matches(Hand hand) {
+            return hand.numHCP() <= max;
+        }
+        
+        @Override
+        public boolean negatable() {
+            return true;
+        }
+        
+        @Override
+        public IBoundInference negate() {
+            return new BoundInfMin(max + 1);
+        }
+
+        @Override
+        public String toString() {
+            return max + "- hcp";
         }
     }
 }

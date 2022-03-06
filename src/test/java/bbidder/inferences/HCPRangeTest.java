@@ -26,13 +26,13 @@ public class HCPRangeTest {
     public void testToString() {
         Context ctx = new SimpleContext();
         assertEquals("8-10 hcp", new HCPRange("8", "10").toString());
-        assertEquals("8-10 hcp", new HCPRange("8", "10").bind(ctx).toString());
+        assertEquals("(8+ hcp,10- hcp)", new HCPRange("8", "10").bind(ctx).toString());
         assertEquals("8+ hcp", new HCPRange("8", null).toString());
         assertEquals("8+ hcp", new HCPRange("8", null).bind(ctx).toString());
         assertEquals("10- hcp", new HCPRange(null, "10").toString());
         assertEquals("10- hcp", new HCPRange(null, "10").bind(ctx).toString());
         assertEquals("10 hcp", new HCPRange("10", "10").toString());
-        assertEquals("10 hcp", new HCPRange("10", "10").bind(ctx).toString());
+        assertEquals("(10+ hcp,10- hcp)", new HCPRange("10", "10").bind(ctx).toString());
     }
 
     @Test
