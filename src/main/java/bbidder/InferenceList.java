@@ -52,7 +52,7 @@ public class InferenceList {
     }
 
     public IBoundInference bind(Context context) {
-        IBoundInference result = new ConstBoundInference(true);
+        IBoundInference result = ConstBoundInference.create(true);
         for (Inference i : inferences) {
             result = AndBoundInference.create(result, i.bind(context));
         }

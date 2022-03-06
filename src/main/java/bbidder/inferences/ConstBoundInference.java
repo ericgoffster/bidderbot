@@ -6,7 +6,7 @@ import bbidder.IBoundInference;
 public class ConstBoundInference implements IBoundInference {
     public final boolean result;
 
-    public ConstBoundInference(boolean result) {
+    private ConstBoundInference(boolean result) {
         super();
         this.result = result;
     }
@@ -18,5 +18,12 @@ public class ConstBoundInference implements IBoundInference {
     @Override
     public String toString() {
         return String.valueOf(result);
+    }
+    
+    public static ConstBoundInference T = new ConstBoundInference(true);
+    public static ConstBoundInference F = new ConstBoundInference(false);
+    
+    public static IBoundInference create(boolean result) {
+        return result ? T : F;
     }
 }

@@ -6,7 +6,7 @@ import bbidder.IBoundInference;
 public class NotBoundInference implements IBoundInference {
     public final IBoundInference inference;
 
-    public NotBoundInference(IBoundInference inference) {
+    private NotBoundInference(IBoundInference inference) {
         super();
         this.inference = inference;
     }
@@ -21,8 +21,11 @@ public class NotBoundInference implements IBoundInference {
     }
 
     public static IBoundInference create(IBoundInference i) {
-        if (i instanceof ConstBoundInference) {
-            return new ConstBoundInference(!((ConstBoundInference) i).result);
+        if (i == ConstBoundInference.T) {
+            return ConstBoundInference.F;
+        }
+        if (i == ConstBoundInference.F) {
+            return ConstBoundInference.T;
         }
         if (i instanceof NotBoundInference) {
             return ((NotBoundInference) i).inference;

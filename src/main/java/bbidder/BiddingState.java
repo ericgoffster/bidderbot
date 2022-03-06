@@ -1,24 +1,34 @@
 package bbidder;
 
+import java.util.Arrays;
+import java.util.List;
+
+import bbidder.inferences.AndBoundInference;
+import bbidder.inferences.ConstBoundInference;
+
 public class BiddingState {
-    public final BiddingSystem we;
-    public final BiddingSystem they;
+    public final BiddingSystem[] systems;
     public final BidList bidding;
     public final int turn;
-    public final IBoundInference lho;
-    public final IBoundInference partner;
-    public final IBoundInference rho;
-    public final IBoundInference me;
-    public BiddingState(BiddingSystem we, BiddingSystem they, BidList bidding, int turn, IBoundInference lho, IBoundInference partner,
-            IBoundInference rho, IBoundInference me) {
+    public final IBoundInference[] players;
+    public BiddingState(BiddingSystem[] systems, int turn) {
+        this.systems = systems;
+        this.turn = turn;
+        this.bidding = new BidList(List.of());
+        this.players = new IBoundInference[] { ConstBoundInference.T, ConstBoundInference.T, ConstBoundInference.T, ConstBoundInference.T };
+    }
+    public BiddingState(BiddingSystem[] systems, BidList bidding, int turn, IBoundInference[] players) {
         super();
-        this.we = we;
-        this.they = they;
+        this.systems = systems;
         this.bidding = bidding;
         this.turn = turn;
-        this.lho = lho;
-        this.partner = partner;
-        this.rho = rho;
-        this.me = me;
+        this.players = players;
+    }
+    
+    public BiddingState addBid(Bid bid) {
+        BidList newBidList = bidding.addBid(bid);
+        IBoundInference[] newPlayers = Arrays.copyOf(players, players.length);
+        newPlayers[turn] = AndBoundInference.create(systems[turn % 2].getInference(newBidList), newPlayers[turn]);
+        return new BiddingState(systems, newBidList, (turn + 1) % 4, newPlayers);
     }
 }

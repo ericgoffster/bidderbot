@@ -10,7 +10,7 @@ public class AndBoundInference implements IBoundInference {
     public final IBoundInference i1;
     public final IBoundInference i2;
 
-    public AndBoundInference(IBoundInference i1, IBoundInference i2) {
+    private AndBoundInference(IBoundInference i1, IBoundInference i2) {
         super();
         this.i1 = i1;
         this.i2 = i2;
@@ -41,16 +41,13 @@ public class AndBoundInference implements IBoundInference {
     }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
-        if (i1 instanceof ConstBoundInference) {
-            if (!((ConstBoundInference) i1).result) {
-                return i1;
-            }
+        if (i1 == ConstBoundInference.F || i2 == ConstBoundInference.F) {
+            return ConstBoundInference.F;
+        }
+        if (i1 == ConstBoundInference.T) {
             return i2;
         }
-        if (i2 instanceof ConstBoundInference) {
-            if (!((ConstBoundInference) i2).result) {
-                return i2;
-            }
+        if (i2 == ConstBoundInference.T) {
             return i1;
         }
         return new AndBoundInference(i1, i2);

@@ -64,8 +64,8 @@ public class BiddingSystem {
     public IBoundInference getInference(BidList bids) {
         Bid lastBid = bids.bids.get(bids.bids.size() - 1);
         BidList exceptLast = new BidList(bids.bids.subList(0, bids.bids.size() - 1));
-        IBoundInference result = new ConstBoundInference(false);
-        IBoundInference negative = new ConstBoundInference(true);
+        IBoundInference result = ConstBoundInference.create(false);
+        IBoundInference negative = ConstBoundInference.create(true);
         for (BidInference i : inferences) {
             BidContext bc = new BidContext(exceptLast, i.bids);
             for (Bid b : bc.getMatchingBids()) {
