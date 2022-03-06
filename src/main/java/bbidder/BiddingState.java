@@ -31,7 +31,8 @@ public class BiddingState {
     public BiddingState addBid(Bid bid) {
         BidList newBidList = bidding.addBid(bid);
         IBoundInference[] newPlayers = Arrays.copyOf(players, players.length);
-        newPlayers[turn] = AndBoundInference.create(systems[turn % 2].getInference(newBidList), newPlayers[turn]);
+        LikelyHands likelyHands = new LikelyHands(newPlayers[(turn + 3) % 4], newPlayers[(turn + 2) % 4], newPlayers[(turn + 1) % 4], newPlayers[turn]);
+        newPlayers[turn] = AndBoundInference.create(systems[turn % 2].getInference(newBidList, likelyHands), newPlayers[turn]);
         return new BiddingState(systems, newBidList, (turn + 1) % 4, newPlayers);
     }
 }

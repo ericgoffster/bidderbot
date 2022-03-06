@@ -5,14 +5,18 @@ import java.util.function.Function;
 public class SimpleContext implements Context {
 
     public final Function<String, Integer> lookupSuit;
+    
+    public final LikelyHands likelyHands;
 
-    public SimpleContext(Function<String, Integer> lookupSuit) {
+    public SimpleContext(LikelyHands likelyHands, Function<String, Integer> lookupSuit) {
         super();
+        this.likelyHands = likelyHands;
         this.lookupSuit = lookupSuit;
     }
 
     public SimpleContext() {
         super();
+        this.likelyHands = new LikelyHands();
         this.lookupSuit = s -> {
             throw new IllegalArgumentException("unknown suit " + s);
         };

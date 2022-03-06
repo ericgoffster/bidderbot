@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import bbidder.Context;
 import bbidder.Hand;
+import bbidder.LikelyHands;
 import bbidder.SimpleContext;
 
 public class LongestOrEqualTest {
@@ -21,7 +22,7 @@ public class LongestOrEqualTest {
 
     @Test
     public void testToString() {
-        Context ctx = new SimpleContext(s -> 1);
+        Context ctx = new SimpleContext(new LikelyHands(), s -> 1);
         assertEquals("longest_or_equal x among all", new LongestOrEqual("x", "all").toString());
         assertEquals("longest_or_equal D", new LongestOrEqual("x", "all").bind(ctx).toString());
         assertEquals("longest_or_equal s", new LongestOrEqual("s", null).toString());

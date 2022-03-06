@@ -61,7 +61,7 @@ public class BiddingSystem {
      *            The list of bids.
      * @return The inference
      */
-    public IBoundInference getInference(BidList bids) {
+    public IBoundInference getInference(BidList bids, LikelyHands likelyHands) {
         Bid lastBid = bids.bids.get(bids.bids.size() - 1);
         BidList exceptLast = new BidList(bids.bids.subList(0, bids.bids.size() - 1));
         IBoundInference result = ConstBoundInference.create(false);
@@ -71,7 +71,7 @@ public class BiddingSystem {
             for (Bid b : bc.getMatchingBids()) {
                 BidContext bc2 = bc.clone();
                 bc2.addWe(b);
-                SimpleContext context = new SimpleContext(s -> bc2.getSuit(s));
+                SimpleContext context = new SimpleContext(likelyHands, s -> bc2.getSuit(s));
                 IBoundInference newInference = i.inferences.bind(context);
                 if (b == lastBid) {
                     result = OrBoundInference.create(AndBoundInference.create(newInference, negative), result);

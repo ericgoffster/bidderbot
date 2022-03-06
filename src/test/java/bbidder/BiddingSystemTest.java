@@ -11,15 +11,17 @@ import org.junit.Test;
 import bbidder.inferences.ConstBoundInference;
 
 public class BiddingSystemTest {
+    LikelyHands likelyHands = new LikelyHands();
+    
     @Test
     public void test1() throws IOException {
         BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/test1.bidding"));
         {
-            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H)));
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H)), likelyHands);
             assertTrue(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
         }
         {
-            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1S)));
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1S)), likelyHands);
             assertFalse(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
         }
     }
@@ -27,21 +29,21 @@ public class BiddingSystemTest {
     @Test
     public void test1n() throws IOException {
         BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/test1.bidding"));
-        IBoundInference l = bs.getInference(new BidList(List.of(Bid._1C)));
+        IBoundInference l = bs.getInference(new BidList(List.of(Bid._1C)), likelyHands);
         assertTrue(l instanceof ConstBoundInference && !((ConstBoundInference) l).result);
     }
 
     @Test
     public void test2() throws IOException {
         BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/test2.bidding"));
-        IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H, Bid._2C)));
+        IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H, Bid._2C)), likelyHands);
         assertTrue(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
     }
 
     @Test
     public void test2n() throws IOException {
         BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/test2.bidding"));
-        IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H, Bid._2H)));
+        IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H, Bid._2H)), likelyHands);
         assertTrue(l instanceof ConstBoundInference && !((ConstBoundInference) l).result);
     }
 
@@ -49,11 +51,11 @@ public class BiddingSystemTest {
     public void test3() throws IOException {
         BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/test3.bidding"));
         {
-            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H)));
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H)), likelyHands);
             assertFalse(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
         }
         {
-            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1S)));
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1S)), likelyHands);
             assertTrue(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
         }
     }
@@ -62,7 +64,7 @@ public class BiddingSystemTest {
     public void test4() throws IOException {
         BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/2over1.bidding"));
         {
-            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1N)));
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1N)), likelyHands);
             assertFalse(l.matches(Hand.valueOf("AKQ KQT 234 2345")));
             assertTrue(l.matches(Hand.valueOf("AKQ KQJ 234 2345")));
             assertTrue(l.matches(Hand.valueOf("AKQ AKJ 234 2345")));
@@ -77,7 +79,7 @@ public class BiddingSystemTest {
             assertTrue(hands.minInSuit(3) >= 2);
         }
         {
-            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1S)));
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1S)), likelyHands);
             assertFalse(l.matches(Hand.valueOf("AKQ KQT 234 2345")));
             assertTrue(l.matches(Hand.valueOf("AQJ32 AQ2 23 456")));
             assertTrue(l.matches(Hand.valueOf("AQJ32 AQ234 2 45")));
@@ -92,7 +94,7 @@ public class BiddingSystemTest {
             assertTrue(hands.minInSuit(3) >= 5);
         }
         {
-            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H)));
+            IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H)), likelyHands);
             assertFalse(l.matches(Hand.valueOf("AKQ KQT 234 2345")));
             assertTrue(l.matches(Hand.valueOf("AQ2 AQJ32 23 456")));
             assertFalse(l.matches(Hand.valueOf("AQJ32 AQ234 2 45")));
