@@ -33,6 +33,9 @@ public class Balanced implements Inference {
     }
 
     public static Balanced valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
         str = str.trim();
         if (str.toLowerCase().equals("balanced")) {
             return new Balanced();

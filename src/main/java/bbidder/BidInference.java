@@ -30,6 +30,9 @@ public class BidInference {
      * @return A BidInference parsed from the string
      */
     public static BidInference valueOf(InferenceRegistry reg, String str) {
+        if (str == null) {
+            return null;
+        }
         int pos = str.indexOf("=>");
         return new BidInference(BidPatternList.valueOf(str.substring(0, pos)), InferenceList.valueOf(reg, str.substring(pos + 2)));
     }

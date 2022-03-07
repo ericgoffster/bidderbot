@@ -24,6 +24,9 @@ public class OpeningPreempt implements Inference {
     }
 
     public static OpeningPreempt valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
         str = str.trim();
         if (!str.toLowerCase().startsWith("opening_preempt")) {
             return null;

@@ -29,6 +29,9 @@ public class LongestOrEqual implements Inference {
     }
 
     public static LongestOrEqual valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
         str = str.trim();
         if (!str.toLowerCase().startsWith("longest_or_equal")) {
             return null;

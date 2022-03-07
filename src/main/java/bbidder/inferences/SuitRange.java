@@ -42,6 +42,9 @@ public class SuitRange implements Inference {
     }
 
     public static SuitRange valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
         str = str.trim();
         int pos = str.indexOf(" in ");
         if (pos < 0) {

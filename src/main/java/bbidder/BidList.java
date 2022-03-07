@@ -59,6 +59,9 @@ public class BidList {
      * @return A bid list parsed from the string
      */
     public static BidList valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
         String[] parts = str.split("\\s+");
         List<Bid> bids = new ArrayList<>();
         for (String part : parts) {

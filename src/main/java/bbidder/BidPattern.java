@@ -51,6 +51,9 @@ public class BidPattern {
      * @return A BidPattern parsed from a string
      */
     public static BidPattern valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
         str = str.trim();
         boolean isOpposition = str.startsWith("(") && str.endsWith(")");
         if (isOpposition) {

@@ -27,6 +27,9 @@ public class InferenceRegistry {
      * @return An inference for the string.
      */
     public Inference valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
         for (Function<String, Inference> item : items) {
             Inference inf = item.apply(str);
             if (inf != null) {

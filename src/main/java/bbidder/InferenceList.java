@@ -34,6 +34,9 @@ public class InferenceList {
     }
 
     public static InferenceList valueOf(InferenceRegistry registry, String str) {
+        if (str == null) {
+            return null;
+        }
         List<Inference> l = new ArrayList<>();
         for (String part : str.trim().split(",")) {
             l.add(registry.valueOf(part));

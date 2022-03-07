@@ -138,10 +138,13 @@ public class Hand {
         return hcp;
     }
 
-    public static Hand valueOf(String s) {
+    public static Hand valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
         int suit = 3;
         short[] suits = new short[4];
-        for (String suitStr : s.trim().split("\\s+")) {
+        for (String suitStr : str.trim().split("\\s+")) {
             suits[suit--] = parseSuit(suitStr);
         }
         return new Hand(suits);

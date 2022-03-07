@@ -32,6 +32,9 @@ public class HCPRange implements Inference {
     }
 
     public static HCPRange valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
         str = str.trim();
         if (!str.toLowerCase().endsWith("hcp")) {
             return null;
