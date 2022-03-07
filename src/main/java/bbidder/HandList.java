@@ -24,7 +24,7 @@ public class HandList {
                 minHcp = hcp;
             }
         }
-        return minHcp;
+        return minHcp == null ? 0 : minHcp;
     }
 
     public int maxHcp() {
@@ -35,7 +35,7 @@ public class HandList {
                 maxHcp = hcp;
             }
         }
-        return maxHcp;
+        return maxHcp == null ? 40 : maxHcp;
     }
 
     public double avgLenInSuit(int suit) {
@@ -54,7 +54,7 @@ public class HandList {
                 minInSuit = len;
             }
         }
-        return minInSuit;
+        return minInSuit == null ? 0 : minInSuit;
     }
 
     public int maxInSuit(int suit) {
@@ -65,7 +65,7 @@ public class HandList {
                 maxInSuit = len;
             }
         }
-        return maxInSuit;
+        return maxInSuit == null ? 13 : maxInSuit;
     }
 
     @Override

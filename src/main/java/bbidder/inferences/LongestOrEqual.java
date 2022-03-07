@@ -93,6 +93,8 @@ public class LongestOrEqual implements Inference {
         case " among CD":
             sm = " among minors";
             break;
+        default:
+            break;
         }
         return sm;
     }

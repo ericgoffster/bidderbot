@@ -46,7 +46,7 @@ public enum Bid {
     _7N(6, NOTRUMP),
     X(2, -1),
     XX(4, -1),
-    P(1, -1);
+    P(1, -1)
     ;
 
     public final int strain;

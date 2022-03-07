@@ -13,7 +13,7 @@ public class Test2Over1 {
 
     @BeforeAll
     public static void setup() throws IOException {
-        bs = BiddingSystem.load("", Test2Over1.class.getResourceAsStream("/2over1.bidding"), ex -> {
+        bs = BiddingSystem.load("", "classpath:2over1.bidding", ex -> {
             ex.printStackTrace();
         });
     }
