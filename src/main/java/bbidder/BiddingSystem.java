@@ -54,6 +54,25 @@ public class BiddingSystem {
         }
     }
 
+    public Bid getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
+        IBoundInference negative = ConstBoundInference.create(true);
+        for (BidInference i : inferences) {
+            BidContext bc = new BidContext(bids, i.bids);
+            for (Bid b : bc.getMatchingBids()) {
+                BidContext bc2 = bc.clone();
+                bc2.addWe(b);
+                SimpleContext context = new SimpleContext(likelyHands, s -> bc2.getSuit(s));
+                IBoundInference newInference = i.inferences.bind(context);
+                IBoundInference inf = AndBoundInference.create(newInference, negative);
+                if (inf.matches(hand)) {
+                    return b;
+                }
+                negative = AndBoundInference.create(negative, NotBoundInference.create(newInference));
+            }
+        }
+        return null;
+    }
+
     /**
      * Retrieves the inference from a list of bids according to the system.
      * 

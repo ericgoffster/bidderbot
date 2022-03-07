@@ -1,5 +1,6 @@
 package bbidder;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -138,5 +139,8 @@ public class BiddingSystemTest {
             assertTrue(hands.minInSuit(2) >= 0);
             assertTrue(hands.minInSuit(3) >= 0);
         }
+        
+        assertEquals(bs.getBid(new BidList(List.of()), likelyHands, Hand.valueOf("AKQ KQJ 234 2345")), Bid._1N);
+        assertEquals(bs.getBid(new BidList(List.of()), likelyHands, Hand.valueOf("AQJ32 AQ2 23 456")), Bid._1S);
     }
 }

@@ -35,4 +35,9 @@ public class BiddingState {
         newPlayers[turn] = AndBoundInference.create(systems[turn % 2].getInference(newBidList, likelyHands), newPlayers[turn]);
         return new BiddingState(systems, newBidList, (turn + 1) % 4, newPlayers);
     }
+    
+    public Bid getBid(Hand h) {
+        LikelyHands likelyHands = new LikelyHands(players[(turn + 3) % 4], players[(turn + 2) % 4], players[(turn + 1) % 4], players[turn]);
+        return systems[turn % 2].getBid(bidding, likelyHands, h);
+    }
 }
