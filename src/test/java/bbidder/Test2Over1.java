@@ -53,8 +53,10 @@ public class Test2Over1 {
             "KQ23 KQ234 23 23:1C P 1H",
             "KQ234 KQ234 23 2:1C P 1S",
             "23 234 KQ23 A234:1D P 1N",
-            "23 234 KQ23 AQ34:1D P 2N",
+            "23 234 KQ234 AQ3:1D P 2N",
+            "23 A23 KQ234 AQ3:1D P 3N",
             "23 23 KQ23 AQ345:1D P 2D",
+            "23 234 KQ23 A234:1C P 1N",
             })
     public void responses1m(String ln) throws IOException {
         testBid(ln);
