@@ -1,6 +1,6 @@
 # Opening bids
 2C => 22+ hcp
-2N => balanced, 21+ hcp
+2N => balanced, 20-21 hcp
 1N => balanced, 15-17 hcp
 1x:down => 5+ in x, 13+ hcp, longest_or_equal x among all
 1m:down => 4 in m, 13+ hcp, longest_or_equal m among minors

@@ -21,9 +21,26 @@ public class Test2Over1 {
             "AQ2 234 AQJ23 23:1D",
             "AQ2 AQJ23 234 23:1H",
             "AQJ23 AQ2 234 23:1S",
-            "AKQ KQJ 234 2345:1N"
+            "AKQ KQJ 234 2345:1N",
+            "AKQ AKQ AKQ 2345:2C",
+            "2 234 KQJ234 234:2D",
+            "2 KQJ234 234 234:2H",
+            "KQJ234 2 234 234:2S",
+            "AKQ AKQ Q234 234:2N",
+            "2 23 234 KQJ2345:3C",
+            "2 23 KQJ2345 234:3D",
+            "2 KQJ2345 23 234:3H",
+            "KQJ2345 2 23 234:3S",
+            "2 23 23 KQJ23456:4C",
+            "2 23 KQJ23456 23:4D",
+            "2 KQJ23456 23 23:4H",
+            "KQJ23456 2 23 23:4S",
+            "2 23 2 KQJ234567:5C",
+            "2 23 KQJ234567 2:5D",
+            "2 KQJ234567 23 2:5H",
+            "KQJ234567 2 23 2:5S"
             })
-    public void test1(String ln) throws IOException {
+    public void openingBids(String ln) throws IOException {
         testBid(ln);
     }
 
