@@ -48,7 +48,7 @@ public class BidInference {
     }
     
     public List<BidCtx> getContexts() {
-        BidCtx ctx = new BidCtx(new BidList(List.of()), null, new HashMap<>());
+        BidCtx ctx = new BidCtx(new BidList(List.of()), new HashMap<>());
         
         // no patterns, then a wide open context.
         if (bids.bids.isEmpty()) {
@@ -60,7 +60,7 @@ public class BidInference {
         // Otherwise, starts with opposition always
         BidPattern pattern = bids.bids.get(0);
         if (!pattern.isOpposition) {
-            getContexts(l, new BidCtx(ctx.boundBidList.addBid(Bid.P), ctx.lastBidSuit, ctx.suits), bids, false);
+            getContexts(l, new BidCtx(ctx.boundBidList.addBid(Bid.P), ctx.suits), bids, false);
             getContexts(l, ctx, bids, false);
         } else {
             getContexts(l, ctx, bids, true);
@@ -79,7 +79,7 @@ public class BidInference {
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = remaining.bids.get(0);
         if (isOpp && !pattern.isOpposition) {
-            getContexts(l, new BidCtx(ctx.boundBidList.addBid(Bid.P), ctx.lastBidSuit, ctx.suits), remaining, !isOpp);
+            getContexts(l, new BidCtx(ctx.boundBidList.addBid(Bid.P), ctx.suits), remaining, !isOpp);
             return;
         }
         
@@ -91,10 +91,18 @@ public class BidInference {
                 if (strain == null) {
                     newSuits.put(symbol, bid.strain);
                 }
-                getContexts(l, new BidCtx(ctx.boundBidList.addBid(bid), bid, newSuits), new BidPatternList(remaining.bids.subList(1, remaining.bids.size())), !isOpp);
+                getContexts(l, new BidCtx(ctx.boundBidList.addBid(bid), newSuits), new BidPatternList(remaining.bids.subList(1, remaining.bids.size())), !isOpp);
             } else {
-                getContexts(l, new BidCtx(ctx.boundBidList.addBid(bid), ctx.lastBidSuit, ctx.suits), new BidPatternList(remaining.bids.subList(1, remaining.bids.size())), !isOpp);
+                getContexts(l, new BidCtx(ctx.boundBidList.addBid(bid), ctx.suits), new BidPatternList(remaining.bids.subList(1, remaining.bids.size())), !isOpp);
             }
         }
+    }
+    
+    public List<BoundBidInference> getBoundInference() {
+        List<BoundBidInference> result = new ArrayList<>();
+        for(BidCtx ctx: getContexts()) {
+            result.add(new BoundBidInference(ctx, inferences));
+        }
+        return result;
     }
 }

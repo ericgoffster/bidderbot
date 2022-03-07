@@ -37,6 +37,15 @@ public class BidList {
         }
         return new BidList(bids);
     }
+    
+    public Bid getLastBidSuit() {
+        for(int i = bids.size() - 1; i >= 0; i--) {
+            if (bids.get(i).isSuitBid()) {
+                return bids.get(i);
+            }
+        }
+        return null;
+    }
 
     @Override
     public int hashCode() {
