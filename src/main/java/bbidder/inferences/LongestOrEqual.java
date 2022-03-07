@@ -4,7 +4,7 @@ import java.util.Objects;
 import static bbidder.Constants.*;
 
 import bbidder.BitUtil;
-import bbidder.Context;
+import bbidder.InferenceContext;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -51,7 +51,7 @@ public class LongestOrEqual implements Inference {
     }
 
     @Override
-    public IBoundInference bind(Context context) {
+    public IBoundInference bind(InferenceContext context) {
         int isuit = context.lookupSuit(suit);
         int iamong = among == null ? 0xf : context.lookupSuitSet(among);
         return new LongestOrEqualBoundInf(isuit, iamong);

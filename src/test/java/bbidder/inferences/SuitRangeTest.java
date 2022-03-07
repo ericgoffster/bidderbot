@@ -6,9 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.Context;
 import bbidder.Hand;
-import bbidder.SimpleContext;
+import bbidder.InferenceContext;
 
 public class SuitRangeTest {
     @Test
@@ -18,14 +17,14 @@ public class SuitRangeTest {
 
     @Test
     public void testToString() {
-        Context ctx = new SimpleContext();
+        InferenceContext ctx = new InferenceContext();
         assertEquals("8-10 in s", new SuitRange("s", "8", "10").toString());
         assertEquals("(8+ S & 10- S)", new SuitRange("s", "8", "10").bind(ctx).toString());
     }
 
     @Test
     public void test() {
-        Context ctx = new SimpleContext();
+        InferenceContext ctx = new InferenceContext();
         assertTrue(new SuitRange("s", "3", "3").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertTrue(new SuitRange("s", "3", "4").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertTrue(new SuitRange("s", null, "3").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));

@@ -2,7 +2,7 @@ package bbidder.inferences;
 
 import java.util.Objects;
 
-import bbidder.Context;
+import bbidder.InferenceContext;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -54,7 +54,7 @@ public class HCPRange implements Inference {
     }
 
     @Override
-    public IBoundInference bind(Context context) {
+    public IBoundInference bind(InferenceContext context) {
         if (min == null) {
             if (max == null) {
                 return ConstBoundInference.T;

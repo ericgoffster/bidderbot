@@ -3,7 +3,7 @@ package bbidder.inferences;
 import java.util.Objects;
 import static bbidder.Constants.*;
 
-import bbidder.Context;
+import bbidder.InferenceContext;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -36,7 +36,7 @@ public class OpeningPreempt implements Inference {
     }
 
     @Override
-    public IBoundInference bind(Context context) {
+    public IBoundInference bind(InferenceContext context) {
         return new BoundInf(context.lookupSuit(suit), level);
     }
 

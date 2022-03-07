@@ -11,10 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import bbidder.BidContext;
 import bbidder.BidList;
-import bbidder.Context;
 import bbidder.Hand;
+import bbidder.InferenceContext;
 import bbidder.LikelyHands;
-import bbidder.SimpleContext;
 
 public class LongestOrEqualTest {
     @Test
@@ -28,7 +27,7 @@ public class LongestOrEqualTest {
     @Test
     public void testToString() {
         BidContext bc = new BidContext(new BidList(List.of()), Map.of("x", 1));
-        Context ctx = new SimpleContext(null, new LikelyHands(), bc);
+        InferenceContext ctx = new InferenceContext(null, new LikelyHands(), bc);
         assertEquals("longest_or_equal x among all", new LongestOrEqual("x", "all").toString());
         assertEquals("longest_or_equal D", new LongestOrEqual("x", "all").bind(ctx).toString());
         assertEquals("longest_or_equal s", new LongestOrEqual("s", null).toString());
@@ -37,7 +36,7 @@ public class LongestOrEqualTest {
 
     @Test
     public void testHigherRanking() {
-        Context ctx = new SimpleContext();
+        InferenceContext ctx = new InferenceContext();
         assertTrue(new LongestOrEqual("s", "all").bind(ctx).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
         assertTrue(new LongestOrEqual("h", "all").bind(ctx).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
         assertFalse(new LongestOrEqual("d", "all").bind(ctx).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
@@ -46,7 +45,7 @@ public class LongestOrEqualTest {
 
     @Test
     public void testHigherRankingOfNotSpades() {
-        Context ctx = new SimpleContext();
+        InferenceContext ctx = new InferenceContext();
         assertTrue(new LongestOrEqual("h", "~S").bind(ctx).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertTrue(new LongestOrEqual("d", "~S").bind(ctx).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertFalse(new LongestOrEqual("c", "~S").bind(ctx).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));

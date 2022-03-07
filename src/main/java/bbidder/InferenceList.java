@@ -51,7 +51,7 @@ public class InferenceList {
         return Objects.equals(inferences, other.inferences);
     }
 
-    public IBoundInference bind(Context context) {
+    public IBoundInference bind(InferenceContext context) {
         IBoundInference result = ConstBoundInference.create(true);
         for (Inference i : inferences) {
             result = AndBoundInference.create(result, i.bind(context));

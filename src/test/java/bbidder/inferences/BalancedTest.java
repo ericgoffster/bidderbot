@@ -6,10 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.Context;
 import bbidder.Hand;
 import bbidder.IBoundInference;
-import bbidder.SimpleContext;
+import bbidder.InferenceContext;
 
 public class BalancedTest {
     @Test
@@ -19,14 +18,14 @@ public class BalancedTest {
 
     @Test
     public void testToString() {
-        Context ctx = new SimpleContext();
+        InferenceContext ctx = new InferenceContext();
         assertEquals("balanced", new Balanced().toString());
         assertEquals("balanced", new Balanced().bind(ctx).toString());
     }
 
     @Test
     public void test() {
-        Context ctx = new SimpleContext();
+        InferenceContext ctx = new InferenceContext();
         IBoundInference inf = new Balanced().bind(ctx);
         assertTrue(inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertTrue(inf.matches(Hand.valueOf("AKQJT 98 765 432")));

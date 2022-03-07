@@ -4,7 +4,7 @@ import static bbidder.Constants.STR_ALL_SUITS;
 
 import java.util.Objects;
 
-import bbidder.Context;
+import bbidder.InferenceContext;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -60,7 +60,7 @@ public class SuitRange implements Inference {
     }
 
     @Override
-    public IBoundInference bind(Context context) {
+    public IBoundInference bind(InferenceContext context) {
         int s = context.lookupSuit(suit);
         if (min == null) {
             if (max == null) {

@@ -6,9 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.Context;
 import bbidder.Hand;
-import bbidder.SimpleContext;
+import bbidder.InferenceContext;
 
 public class HCPRangeTest {
     @Test
@@ -24,7 +23,7 @@ public class HCPRangeTest {
 
     @Test
     public void testToString() {
-        Context ctx = new SimpleContext();
+        InferenceContext ctx = new InferenceContext();
         assertEquals("8-10 hcp", new HCPRange("8", "10").toString());
         assertEquals("(8+ hcp & 10- hcp)", new HCPRange("8", "10").bind(ctx).toString());
         assertEquals("8+ hcp", new HCPRange("8", null).toString());
@@ -37,7 +36,7 @@ public class HCPRangeTest {
 
     @Test
     public void test() {
-        Context ctx = new SimpleContext();
+        InferenceContext ctx = new InferenceContext();
         assertTrue(new HCPRange("10", "10").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertTrue(new HCPRange("10", null).bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertFalse(new HCPRange("11", null).bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));

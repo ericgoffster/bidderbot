@@ -70,7 +70,7 @@ public class BiddingSystem {
                 BidList exceptLast = new BidList(i.ctx.boundBidList.bids.subList(0, bids.bids.size()));
                 if (exceptLast.equals(bids)) {
                     Bid b = i.ctx.boundBidList.bids.get(bids.bids.size());
-                    SimpleContext context = new SimpleContext(exceptLast.getLastBidSuit(), likelyHands, i.ctx);
+                    InferenceContext context = new InferenceContext(exceptLast.getLastBidSuit(), likelyHands, i.ctx);
                     IBoundInference newInference;
                     try {
                         newInference = i.inferences.bind(context);
@@ -104,7 +104,7 @@ public class BiddingSystem {
             if (bids.bids.size() == i.ctx.boundBidList.bids.size()) {
                 BidList exceptLast2 = new BidList(i.ctx.boundBidList.bids.subList(0, bids.bids.size() - 1));
                 if (exceptLast.equals(exceptLast2)) {
-                    SimpleContext context = new SimpleContext(exceptLast2.getLastBidSuit(), likelyHands, i.ctx);
+                    InferenceContext context = new InferenceContext(exceptLast2.getLastBidSuit(), likelyHands, i.ctx);
                     IBoundInference newInference;
                     try {
                         newInference = i.inferences.bind(context);

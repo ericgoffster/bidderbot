@@ -1,7 +1,7 @@
 package bbidder.inferences;
 
 import bbidder.BitUtil;
-import bbidder.Context;
+import bbidder.InferenceContext;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -36,7 +36,7 @@ public class Balanced implements Inference {
     }
 
     @Override
-    public IBoundInference bind(Context context) {
+    public IBoundInference bind(InferenceContext context) {
         return BALANCED;
     }
 

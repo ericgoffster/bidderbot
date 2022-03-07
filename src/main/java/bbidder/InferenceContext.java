@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class SimpleContext implements Context {
+public class InferenceContext {
 
     public final BidContext bc;
 
@@ -23,21 +23,20 @@ public class SimpleContext implements Context {
 
     public final Bid lastBidSuit;
 
-    public SimpleContext(Bid lastBidSuit, LikelyHands likelyHands, BidContext bc) {
+    public InferenceContext(Bid lastBidSuit, LikelyHands likelyHands, BidContext bc) {
         super();
         this.lastBidSuit = lastBidSuit;
         this.likelyHands = likelyHands;
         this.bc = bc;
     }
 
-    public SimpleContext() {
+    public InferenceContext() {
         super();
         this.lastBidSuit = null;
         this.likelyHands = new LikelyHands();
         this.bc = new BidContext(new BidList(List.of()), Map.of());
     }
 
-    @Override
     public int lookupSuit(String s) {
         switch (s.toUpperCase()) {
         case STR_CLUB:
@@ -166,7 +165,6 @@ public class SimpleContext implements Context {
         }
     }
 
-    @Override
     public short lookupSuitSet(String s) {
         try (ReadState state = new ReadState(s)) {
             short suits = state.lookupSuitSet();
@@ -180,7 +178,6 @@ public class SimpleContext implements Context {
         }
     }
 
-    @Override
     public int resolvePoints(String s) {
         if (s.matches("\\d+")) {
             return Integer.parseInt(s);
@@ -188,7 +185,6 @@ public class SimpleContext implements Context {
         throw new IllegalArgumentException("unknown points: " + s);
     }
 
-    @Override
     public int resolveLength(String s) {
         if (s.matches("\\d+")) {
             return Integer.parseInt(s);
