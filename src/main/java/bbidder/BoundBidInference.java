@@ -33,4 +33,8 @@ public class BoundBidInference {
         BoundBidInference other = (BoundBidInference) obj;
         return Objects.equals(ctx, other.ctx) && Objects.equals(inferences, other.inferences);
     }
+    
+    public IBoundInference bind(LikelyHands likelyHands) {
+        return inferences.bind(new InferenceContext(ctx.bids.exceptLast().getLastBidSuit(), likelyHands, ctx));
+    }
 }

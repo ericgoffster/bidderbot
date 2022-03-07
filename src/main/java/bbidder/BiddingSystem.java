@@ -67,24 +67,11 @@ public class BiddingSystem {
     }
 
     public Bid getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
-        IBoundInference negative = ConstBoundInference.create(true);
         for (BoundBidInference i : inferences) {
-            if (i.ctx.bids.bids.size() == bids.bids.size() + 1) {
-                BidList exceptLast = new BidList(i.ctx.bids.bids.subList(0, bids.bids.size()));
-                if (exceptLast.equals(bids)) {
-                    Bid b = i.ctx.bids.getLastBid();
-                    InferenceContext context = new InferenceContext(exceptLast.getLastBidSuit(), likelyHands, i.ctx);
-                    IBoundInference newInference;
-                    try {
-                        newInference = i.inferences.bind(context);
-                    } catch (Exception e) {
-                        throw new IllegalArgumentException("Invalid inference: " + i, e);
-                    }
-                    IBoundInference inf = AndBoundInference.create(newInference, negative);
-                    if (inf.matches(hand)) {
-                        return b;
-                    }
-                    negative = AndBoundInference.create(negative, NotBoundInference.create(newInference));
+            if (i.ctx.bids.bids.size() == bids.bids.size() + 1 && i.ctx.bids.exceptLast().equals(bids)) {
+                IBoundInference newInference = i.bind(likelyHands);
+                if (newInference.matches(hand)) {
+                    return i.ctx.bids.getLastBid();
                 }
             }
         }
@@ -104,14 +91,8 @@ public class BiddingSystem {
         IBoundInference result = ConstBoundInference.create(false);
         IBoundInference negative = ConstBoundInference.create(true);
         for (BoundBidInference i : inferences) {
-            if (i.ctx.bids.sameExceptLast(bids)) {
-                InferenceContext context = new InferenceContext(bids.exceptLast().getLastBidSuit(), likelyHands, i.ctx);
-                IBoundInference newInference;
-                try {
-                    newInference = i.inferences.bind(context);
-                } catch (RuntimeException e) {
-                    throw new IllegalArgumentException("Invalid inference: " + i, e);
-                }
+            if (i.ctx.bids.bids.size() == bids.bids.size() && i.ctx.bids.exceptLast().equals(bids.exceptLast())) {
+                IBoundInference newInference = i.bind(likelyHands);
                 if (i.ctx.bids.equals(bids)) {
                     result = OrBoundInference.create(AndBoundInference.create(newInference, negative), result);
                 }
