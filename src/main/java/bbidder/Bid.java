@@ -64,13 +64,13 @@ public enum Bid {
     @Override
     public String toString() {
         if (this == P) {
-            return "P";
+            return STR_P;
         }
         if (this == X) {
-            return "X";
+            return STR_X;
         }
         if (this == XX) {
-            return "XX";
+            return STR_XX;
         }
         return String.valueOf(level + 1) + STR_ALL_SUITS.charAt(strain);
     }
@@ -93,18 +93,18 @@ public enum Bid {
         if (str == null) {
             return null;
         }
-        if (str.equalsIgnoreCase("P")) {
+        if (str.equalsIgnoreCase(STR_P)) {
             return P;
         }
-        if (str.equalsIgnoreCase("X")) {
+        if (str.equalsIgnoreCase(STR_X)) {
             return X;
         }
-        if (str.equalsIgnoreCase("XX")) {
+        if (str.equalsIgnoreCase(STR_XX)) {
             return XX;
         }
         Integer strain = getStrain(str.substring(1));
         if (strain == null) {
-            throw new IllegalArgumentException("Invalid strain: " + str);
+            throw new IllegalArgumentException("Invalid strain: '" + str + "'");
         }
         return valueOf(Integer.parseInt(str.substring(0, 1)) - 1, strain.intValue());
     }

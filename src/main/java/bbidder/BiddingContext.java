@@ -5,6 +5,8 @@ import java.util.NavigableSet;
 import java.util.Objects;
 import java.util.TreeSet;
 
+import static bbidder.Constants.*;
+
 /**
  * Inferences happen in the context of a series of bids.
  * This represents those bids in addition to a symbol table of suits.
@@ -15,9 +17,6 @@ import java.util.TreeSet;
  *
  */
 public class BiddingContext {
-    private static final short ALL_SUITS = 0xf;
-    private static final short MINORS = 0x3;
-    private static final short MAJORS = MINORS << 2;
     public final BidList bids;
     public final Map<String, Integer> suits;
 

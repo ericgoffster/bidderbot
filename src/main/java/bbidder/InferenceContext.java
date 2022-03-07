@@ -1,13 +1,6 @@
 package bbidder;
 
-import static bbidder.Constants.CLUB;
-import static bbidder.Constants.DIAMOND;
-import static bbidder.Constants.HEART;
-import static bbidder.Constants.SPADE;
-import static bbidder.Constants.STR_CLUB;
-import static bbidder.Constants.STR_DIAMOND;
-import static bbidder.Constants.STR_HEART;
-import static bbidder.Constants.STR_SPADE;
+import static bbidder.Constants.*;
 
 import java.io.CharArrayReader;
 import java.io.Closeable;
@@ -123,19 +116,19 @@ public class InferenceContext {
                     return suits;
                 }
                 case "MINORS":
-                    return (1 << CLUB) | (1 << DIAMOND);
+                    return MINORS;
                 case "MAJORS":
-                    return (1 << HEART) | (1 << SPADE);
+                    return MAJORS;
                 case "REDS":
-                    return (1 << HEART) | (1 << DIAMOND);
+                    return REDS;
                 case "BLACKS":
-                    return (1 << SPADE) | (1 << CLUB);
+                    return BLACKS;
                 case "ROUND":
-                    return (1 << HEART) | (1 << CLUB);
+                    return ROUND;
                 case "POINTED":
-                    return (1 << SPADE) | (1 << DIAMOND);
+                    return POINTED;
                 case "ALL":
-                    return 0xf;
+                    return ALL_SUITS;
                 case "NONE":
                     return 0;
                 case STR_CLUB:

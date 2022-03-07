@@ -1,6 +1,7 @@
 package bbidder;
 
 import java.util.Arrays;
+import static bbidder.Constants.*;
 
 /**
  * Represents a hand in bridge.
@@ -9,16 +10,6 @@ import java.util.Arrays;
  *
  */
 public class Hand {
-    public static final char CH_TEN = 'T';
-    public static final char CH_JACK = 'J';
-    public static final char CH_QUEEN = 'Q';
-    public static final char CH_KING = 'K';
-    public static final char CH_ACE = 'A';
-    public static final int ACE = 12;
-    public static final int KING = 11;
-    public static final int QUEEN = 10;
-    public static final int JACK = 9;
-    public static final int TEN = 8;
     public final short[] suits;
 
     public Hand(short[] suits) {
@@ -29,15 +20,15 @@ public class Hand {
     static char toRank(int rank) {
         switch (rank) {
         case ACE:
-            return CH_ACE;
+            return CHR_ACE;
         case KING:
-            return 'K';
+            return CHR_KING;
         case QUEEN:
-            return 'Q';
+            return CHR_QUEEN;
         case JACK:
-            return 'J';
+            return CHR_JACK;
         case TEN:
-            return 'T';
+            return CHR_TEN;
         case 0:
         case 1:
         case 2:
@@ -54,15 +45,15 @@ public class Hand {
 
     static int getRank(char cRank) {
         switch (Character.toUpperCase(cRank)) {
-        case 'A':
+        case CHR_ACE:
             return ACE;
-        case CH_KING:
+        case CHR_KING:
             return KING;
-        case CH_QUEEN:
+        case CHR_QUEEN:
             return QUEEN;
-        case CH_JACK:
+        case CHR_JACK:
             return JACK;
-        case CH_TEN:
+        case CHR_TEN:
             return TEN;
         case '2':
         case '3':
@@ -179,7 +170,7 @@ public class Hand {
     public int numHCP() {
         int hcp = 0;
         for (int suit = 0; suit < 4; suit++) {
-            for (int rank : BitUtil.iterate(suits[suit] & Hand.aboveRank(Hand.TEN))) {
+            for (int rank : BitUtil.iterate(suits[suit] & Hand.aboveRank(TEN))) {
                 hcp += getHCP(rank);
             }
         }
