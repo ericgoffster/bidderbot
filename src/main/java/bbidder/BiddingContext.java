@@ -46,7 +46,7 @@ public class BiddingContext {
     /**
      * @param symbol
      *            The symbol
-     * @return (0,1,2,3,4) for a given symbol
+     * @return (0,1,2,3,4) for a given symbol, null if not found.
      */
     public Integer getSuit(String symbol) {
         Integer strain = Bid.getStrain(symbol);
@@ -74,8 +74,16 @@ public class BiddingContext {
             return nextLevel(strain).raise();
         case "NJ":
             return nextLevel(strain);
-        default:
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":            
             return Bid.valueOf(level.charAt(0) - '1', strain);
+        default:
+            throw new IllegalArgumentException("Invalid level: '" + level + "'");
         }
     }
 
@@ -85,17 +93,17 @@ public class BiddingContext {
      * @return The set of possible bids for a pattern
      */
     public NavigableSet<Bid> getBids(BidPattern pattern) {
-        if (pattern.str.equalsIgnoreCase("P")) {
+        if (pattern.str.equalsIgnoreCase(STR_P)) {
             TreeSet<Bid> ts = new TreeSet<Bid>();
             ts.add(Bid.P);
             return ts;
         }
-        if (pattern.str.equalsIgnoreCase("X")) {
+        if (pattern.str.equalsIgnoreCase(STR_X)) {
             TreeSet<Bid> ts = new TreeSet<Bid>();
             ts.add(Bid.X);
             return ts;
         }
-        if (pattern.str.equalsIgnoreCase("XX")) {
+        if (pattern.str.equalsIgnoreCase(STR_XX)) {
             TreeSet<Bid> ts = new TreeSet<Bid>();
             ts.add(Bid.XX);
             return ts;
