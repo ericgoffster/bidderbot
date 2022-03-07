@@ -9,31 +9,29 @@ import static bbidder.Constants.STR_DIAMOND;
 import static bbidder.Constants.STR_HEART;
 import static bbidder.Constants.STR_SPADE;
 
-import java.util.function.Function;
+import java.util.List;
 
 
 public class SimpleContext implements Context {
 
-    public final Function<String, Integer> lookupSuit;
+    public final BidContext bc;
     
     public final LikelyHands likelyHands;
     
     public final Bid lastBidSuit;
 
-    public SimpleContext(Bid lastBidSuit, LikelyHands likelyHands, Function<String, Integer> lookupSuit) {
+    public SimpleContext(Bid lastBidSuit, LikelyHands likelyHands, BidContext bc) {
         super();
         this.lastBidSuit = lastBidSuit;
         this.likelyHands = likelyHands;
-        this.lookupSuit = lookupSuit;
+        this.bc = bc;
     }
 
     public SimpleContext() {
         super();
         this.lastBidSuit = null;
         this.likelyHands = new LikelyHands();
-        this.lookupSuit = s -> {
-            throw new IllegalArgumentException("unknown suit " + s);
-        };
+        this.bc = new BidContext(new BidList(List.of()), new BidPatternList(List.of(), false), false);
     }
 
     @Override
@@ -48,11 +46,11 @@ public class SimpleContext implements Context {
         case STR_SPADE:
             return SPADE;
         default:
-            Integer s2 = lookupSuit.apply(s);
+            Integer s2 = bc.getSuit(s);
             if (s2 == null) {
                 throw new IllegalArgumentException("unknown suit: " + s);
             }
-            return lookupSuit.apply(s);
+            return s2;
         }
     }
 

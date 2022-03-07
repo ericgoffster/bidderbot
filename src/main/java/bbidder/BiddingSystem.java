@@ -61,8 +61,13 @@ public class BiddingSystem {
             for (Bid b : bc.getMatchingBids()) {
                 BidContext bc2 = bc.clone();
                 bc2.addWe(b);
-                SimpleContext context = new SimpleContext(bc.lastBidSuit, likelyHands, s -> bc2.getSuit(s));
-                IBoundInference newInference = i.inferences.bind(context);
+                SimpleContext context = new SimpleContext(bc.lastBidSuit, likelyHands, bc2);
+                IBoundInference newInference;
+                try {
+                    newInference = i.inferences.bind(context);
+                } catch (Exception e) {
+                    throw new IllegalArgumentException("Invalid inference: " + i, e);
+                }
                 IBoundInference inf = AndBoundInference.create(newInference, negative);
                 if (inf.matches(hand)) {
                     return b;
@@ -90,7 +95,7 @@ public class BiddingSystem {
             for (Bid b : bc.getMatchingBids()) {
                 BidContext bc2 = bc.clone();
                 bc2.addWe(b);
-                SimpleContext context = new SimpleContext(bc.lastBidSuit, likelyHands, s -> bc2.getSuit(s));
+                SimpleContext context = new SimpleContext(bc.lastBidSuit, likelyHands, bc2);
                 IBoundInference newInference;
                 try {
                     newInference = i.inferences.bind(context);
