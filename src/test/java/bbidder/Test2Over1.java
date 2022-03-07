@@ -38,7 +38,7 @@ public class Test2Over1 {
             "2 23 2 KQJ234567:5C",
             "2 23 KQJ234567 2:5D",
             "2 KQJ234567 23 2:5H",
-            "KQJ234567 2 23 2:5S"
+            "KQJ234567 2 23 2:5S",
             })
     public void openingBids(String ln) throws IOException {
         testBid(ln);
@@ -47,12 +47,18 @@ public class Test2Over1 {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "234 KQ23 A23 234:1C P 1H"
+            "234 KQ23 A23 234:1C P 1H",
+            "KQ23 KQ23 23 234:1C P 1H",
+            "KQ23 234 A23 234:1C P 1S",
+            "KQ23 KQ234 23 23:1C P 1H",
+            "KQ234 KQ234 23 2:1C P 1S",
+            "23 234 KQ23 A234:1D P 1N",
+            "23 234 KQ23 AQ34:1D P 2N",
+            "23 23 KQ23 AQ345:1D P 2D",
             })
     public void responses1m(String ln) throws IOException {
         testBid(ln);
     }
-
 
     private void testBid(String ln) {
         String[] parts = ln.trim().split(":");

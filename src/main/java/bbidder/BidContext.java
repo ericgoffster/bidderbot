@@ -189,7 +189,10 @@ public class BidContext implements Cloneable {
         }
         TreeSet<Bid> result = new TreeSet<>();
         for (int strain : BitUtil.iterate(getStrains(pattern))) {
-            result.add(getBid(pattern, strain));
+            Bid bid = getBid(pattern, strain);
+            if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
+                result.add(bid);
+            }
         }
         return result;
     }
