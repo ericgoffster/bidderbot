@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,12 @@ public class BiddingSystem {
         this.inferences = inferences;
     }
 
+    public static BiddingSystem load(String spec) throws IOException {
+        try(InputStream is = new URL(null, spec, new Handler(BiddingSystem.class.getClassLoader())).openStream()) {
+            return load(is);
+        }
+    }
+
     public static BiddingSystem load(InputStream is) throws IOException {
         List<BidInference> inferences = new ArrayList<>();
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
@@ -38,7 +45,9 @@ public class BiddingSystem {
                     ln = ln.substring(0, pos);
                 }
                 ln = ln.trim();
-                if (!ln.equals("")) {
+                if (ln.startsWith("include")) {
+                    inferences.addAll(load(ln.substring(7).trim()).inferences);
+                } else if (!ln.equals("")) {
                     inferences.add(BidInference.valueOf(reg, ln));
                 }
             }
