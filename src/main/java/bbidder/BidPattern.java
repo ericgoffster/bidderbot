@@ -5,18 +5,24 @@ import java.util.Objects;
 public class BidPattern {
     public final boolean isOpposition;
     public final String str;
+    public final boolean upTheLine;
 
-    public BidPattern(boolean isOpposition, String str) {
+    public BidPattern(boolean isOpposition, String str, boolean upTheLine) {
         this.isOpposition = isOpposition;
         this.str = str;
+        this.upTheLine = upTheLine;
     }
 
     @Override
     public String toString() {
-        if (isOpposition) {
-            return "(" + str + ")";
+        String s = str;
+        if (!upTheLine) {
+            s += ":down";
         }
-        return str;
+        if (isOpposition) {
+            return "(" + s + ")";
+        }
+        return s;
     }
 
     public static BidPattern valueOf(String str) {
@@ -25,12 +31,17 @@ public class BidPattern {
         if (isOpposition) {
             str = str.substring(1, str.length() - 1).trim();
         }
-        return new BidPattern(isOpposition, str);
+        boolean downTheLine = false;
+        if (str.endsWith(":down")) {
+            downTheLine = true;
+            str = str.substring(0, str.length() - 5);
+        }
+        return new BidPattern(isOpposition, str, !downTheLine);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isOpposition, str);
+        return Objects.hash(upTheLine, isOpposition, str);
     }
 
     public String getSuit() {
@@ -56,6 +67,6 @@ public class BidPattern {
         if (getClass() != obj.getClass())
             return false;
         BidPattern other = (BidPattern) obj;
-        return isOpposition == other.isOpposition && Objects.equals(str, other.str);
+        return upTheLine == other.upTheLine && isOpposition == other.isOpposition && Objects.equals(str, other.str);
     }
 }

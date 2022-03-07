@@ -1,5 +1,6 @@
 package bbidder;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class BidInference {
@@ -37,5 +38,17 @@ public class BidInference {
             return false;
         BidInference other = (BidInference) obj;
         return Objects.equals(bids, other.bids) && Objects.equals(inferences, other.inferences);
+    }
+    
+    class BidCtx {
+        final BidList boundBidList;
+        final Bid lastBidSuit;
+        final Map<String, Integer> suits;
+        public BidCtx(BidList boundBidList, Bid lastBidSuit, Map<String, Integer> suits) {
+            super();
+            this.boundBidList = boundBidList;
+            this.lastBidSuit = lastBidSuit;
+            this.suits = suits;
+        }
     }
 }

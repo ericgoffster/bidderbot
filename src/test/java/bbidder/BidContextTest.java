@@ -32,7 +32,7 @@ public class BidContextTest {
         for (String b : bids) {
             l.add(BidPattern.valueOf(b));
         }
-        return new BidPatternList(l, true);
+        return new BidPatternList(l);
     }
 
     @Test

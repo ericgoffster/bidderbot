@@ -27,7 +27,7 @@ public class LongestOrEqualTest {
 
     @Test
     public void testToString() {
-        BidContext bc = new BidContext(new BidList(List.of()), new BidPatternList(List.of(), false), false);
+        BidContext bc = new BidContext(new BidList(List.of()), new BidPatternList(List.of()), false);
         bc.suits.put("x", 1);
         Context ctx = new SimpleContext(null, new LikelyHands(), bc);
         assertEquals("longest_or_equal x among all", new LongestOrEqual("x", "all").toString());

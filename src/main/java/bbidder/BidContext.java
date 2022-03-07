@@ -47,7 +47,7 @@ public class BidContext implements Cloneable {
         }
         BidPattern patt = patterns.bids.get(patternPos);
         TreeSet<Bid> result = getBids(patt);
-        return patterns.upTheLine ? result : result.descendingSet();
+        return patt.upTheLine ? result : result.descendingSet();
     }
 
     /**
@@ -66,7 +66,7 @@ public class BidContext implements Cloneable {
         }
         BidPattern patt = patterns.bids.get(patternPos);
         if (!patt.isOpposition) {
-            add(bid, new BidPattern(true, "P"));
+            add(bid, new BidPattern(true, "P", true));
         } else {
             patternPos++;
             add(bid, patt);

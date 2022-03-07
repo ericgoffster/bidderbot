@@ -33,7 +33,7 @@ public class SimpleContext implements Context {
         super();
         this.lastBidSuit = null;
         this.likelyHands = new LikelyHands();
-        this.bc = new BidContext(new BidList(List.of()), new BidPatternList(List.of(), false), false);
+        this.bc = new BidContext(new BidList(List.of()), new BidPatternList(List.of()), false);
     }
 
     @Override
