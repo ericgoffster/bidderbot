@@ -15,6 +15,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * An inference in the context of other inferences.
+ * 
+ * @author goffster
+ *
+ */
 public class InferenceContext {
 
     public final BiddingContext bc;
@@ -56,7 +62,13 @@ public class InferenceContext {
         }
     }
 
-    class ReadState implements Closeable {
+    /**
+     * Represents the parser state.
+     * 
+     * @author goffster
+     *
+     */
+    private class ReadState implements Closeable {
         int ch;
         CharArrayReader rd;
 
@@ -165,8 +177,12 @@ public class InferenceContext {
         }
     }
 
-    public short lookupSuitSet(String s) {
-        try (ReadState state = new ReadState(s)) {
+    /**
+     * @param str The string to parse
+     * @return The suits bound to the given expression
+     */
+    public short lookupSuitSet(String str) {
+        try (ReadState state = new ReadState(str)) {
             short suits = state.lookupSuitSet();
             state.readWhite();
             if (state.ch != -1) {
@@ -174,21 +190,29 @@ public class InferenceContext {
             }
             return suits;
         } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid Suit Set: '" + s + "'", e);
+            throw new IllegalArgumentException("Invalid Suit Set: '" + str + "'", e);
         }
     }
 
-    public int resolvePoints(String s) {
-        if (s.matches("\\d+")) {
-            return Integer.parseInt(s);
+    /**
+     * @param str The string to parse
+     * @return The high card point range represented by the string.
+     */
+    public int resolvePoints(String str) {
+        if (str.matches("\\d+")) {
+            return Integer.parseInt(str);
         }
-        throw new IllegalArgumentException("Invalid Points: '" + s + "'");
+        throw new IllegalArgumentException("Invalid Points: '" + str + "'");
     }
 
-    public int resolveLength(String s) {
-        if (s.matches("\\d+")) {
-            return Integer.parseInt(s);
+    /**
+     * @param str The string to parse
+     * @return The length represented by the string.
+     */
+    public int resolveLength(String str) {
+        if (str.matches("\\d+")) {
+            return Integer.parseInt(str);
         }
-        throw new IllegalArgumentException("Invalid Length: '" + s + "'");
+        throw new IllegalArgumentException("Invalid Length: '" + str + "'");
     }
 }

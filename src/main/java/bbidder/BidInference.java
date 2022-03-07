@@ -24,6 +24,11 @@ public class BidInference {
         this.inferences = inferences;
     }
 
+    /**
+     * @param reg The inference registry
+     * @param str The string to parse.
+     * @return A BidInference parsed from the string
+     */
     public static BidInference valueOf(InferenceRegistry reg, String str) {
         int pos = str.indexOf("=>");
         return new BidInference(BidPatternList.valueOf(str.substring(0, pos)), InferenceList.valueOf(reg, str.substring(pos + 2)));

@@ -44,7 +44,7 @@ public class BiddingState {
      * @return A new Bidding State with the given bid made.
      */
     public BiddingState withBid(Bid bid) {
-        BidList newBidList = bidding.addBid(bid);
+        BidList newBidList = bidding.withBidAdded(bid);
         IBoundInference[] newPlayers = Arrays.copyOf(players, players.length);
         LikelyHands likelyHands = new LikelyHands(newPlayers[(turn + 3) % 4], newPlayers[(turn + 2) % 4], newPlayers[(turn + 1) % 4],
                 newPlayers[turn]);

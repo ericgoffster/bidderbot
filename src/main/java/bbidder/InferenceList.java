@@ -7,6 +7,12 @@ import java.util.Objects;
 import bbidder.inferences.AndBoundInference;
 import bbidder.inferences.ConstBoundInference;
 
+/**
+ * Represents a list of inferences read in from the notes.
+ *
+ * @author goffster
+ *
+ */
 public class InferenceList {
     public final List<Inference> inferences;
 
@@ -51,6 +57,10 @@ public class InferenceList {
         return Objects.equals(inferences, other.inferences);
     }
 
+    /**
+     * @param context The context for binding
+     * @return A bound inference representing all of the inferences as an "and"
+     */
     public IBoundInference bind(InferenceContext context) {
         IBoundInference result = ConstBoundInference.create(true);
         for (Inference i : inferences) {

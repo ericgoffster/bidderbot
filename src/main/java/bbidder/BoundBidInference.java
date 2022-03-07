@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * Represents inferences bound to an actual bidding sequence.
+ * These are stored into the compiler bidding system.
  * 
  * @author goffster
  *

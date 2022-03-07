@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Generates a set of hands consistent with the inference.
+ * 
+ * @author goffster
+ *
+ */
 public class HandGenerator {
     public static HandList generateHands(IBoundInference inf, int numDesired) {
         Random r = new Random();

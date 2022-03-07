@@ -2,6 +2,12 @@ package bbidder;
 
 import java.util.Arrays;
 
+/**
+ * Represents a hand in bridge.
+ * 
+ * @author goffster
+ *
+ */
 public class Hand {
     public static final char CH_TEN = 'T';
     public static final char CH_JACK = 'J';

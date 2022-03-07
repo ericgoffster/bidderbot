@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A list of bids
+ * 
+ * @author goffster
+ *
+ */
 public class BidList {
     public final List<Bid> bids;
 
@@ -23,12 +29,20 @@ public class BidList {
         return sb.toString();
     }
 
-    public BidList addBid(Bid bid) {
+    /**
+     * @param bid The bid to add
+     * @return A new bid list with the given bid added
+     */
+    public BidList withBidAdded(Bid bid) {
         List<Bid> newBids = new ArrayList<>(bids);
         newBids.add(bid);
         return new BidList(newBids);
     }
 
+    /**
+     * @param str
+     * @return A bid list parsed from the string
+     */
     public static BidList valueOf(String str) {
         String[] parts = str.split("\\s+");
         List<Bid> bids = new ArrayList<>();
@@ -38,10 +52,16 @@ public class BidList {
         return new BidList(bids);
     }
 
+    /**
+     * @return The last bid in the sequence
+     */
     public Bid getLastBid() {
         return bids.get(bids.size() - 1);
     }
 
+    /**
+     * @return The last actual suit bid.  Null if all pass.
+     */
     public Bid getLastBidSuit() {
         for (int i = bids.size() - 1; i >= 0; i--) {
             if (bids.get(i).isSuitBid()) {
@@ -51,6 +71,9 @@ public class BidList {
         return null;
     }
 
+    /**
+     * @return A bid list of everything exception the last bid.
+     */
     public BidList exceptLast() {
         return new BidList(bids.subList(0, bids.size() - 1));
     }

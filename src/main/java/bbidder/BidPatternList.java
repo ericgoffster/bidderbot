@@ -74,7 +74,7 @@ public class BidPatternList {
         // Otherwise, starts with opposition always
         BidPattern pattern = bids.get(0);
         if (!pattern.isOpposition) {
-            getContexts(l, new BiddingContext(ctx.bids.addBid(Bid.P), ctx.suits), false);
+            getContexts(l, new BiddingContext(ctx.bids.withBidAdded(Bid.P), ctx.suits), false);
             getContexts(l, ctx, false);
         } else {
             getContexts(l, ctx, true);
@@ -93,7 +93,7 @@ public class BidPatternList {
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = bids.get(0);
         if (isOpp && !pattern.isOpposition) {
-            getContexts(l, new BiddingContext(ctx.bids.addBid(Bid.P), ctx.suits), !isOpp);
+            getContexts(l, new BiddingContext(ctx.bids.withBidAdded(Bid.P), ctx.suits), !isOpp);
             return;
         }
 
@@ -107,9 +107,9 @@ public class BidPatternList {
                 if (strain == null) {
                     newSuits.put(symbol, bid.strain);
                 }
-                theRest.getContexts(l, new BiddingContext(ctx.bids.addBid(bid), newSuits), !isOpp);
+                theRest.getContexts(l, new BiddingContext(ctx.bids.withBidAdded(bid), newSuits), !isOpp);
             } else {
-                theRest.getContexts(l, new BiddingContext(ctx.bids.addBid(bid), ctx.suits), !isOpp);
+                theRest.getContexts(l, new BiddingContext(ctx.bids.withBidAdded(bid), ctx.suits), !isOpp);
             }
         }
     }

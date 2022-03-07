@@ -2,6 +2,19 @@ package bbidder;
 
 import java.util.Objects;
 
+/**
+ * Represents a matchable bid pattern.
+ * 
+ * Like 1S or 2x or (2M)
+ * 
+ * UpTheline refers to how a variable should be matched,
+ * from lower bids to higher bids, or vice versa.
+ * 
+ * Bid patterns typically last only long enough to be compiled into the notes as actual bids.
+ * 
+ * @author goffster
+ *
+ */
 public class BidPattern {
     public final boolean isOpposition;
     public final String str;
@@ -25,6 +38,10 @@ public class BidPattern {
         return s;
     }
 
+    /**
+     * @param str The string to parse
+     * @return A BidPattern parsed from a string
+     */
     public static BidPattern valueOf(String str) {
         str = str.trim();
         boolean isOpposition = str.startsWith("(") && str.endsWith(")");
@@ -44,6 +61,9 @@ public class BidPattern {
         return Objects.hash(upTheLine, isOpposition, str);
     }
 
+    /**
+     * @return The suit part.
+     */
     public String getSuit() {
         if (str.startsWith("NJ")) {
             return str.substring(2);
@@ -51,6 +71,9 @@ public class BidPattern {
         return str.substring(1);
     }
 
+    /**
+     * @return The level part.
+     */
     public String getLevel() {
         if (str.startsWith("NJ")) {
             return str.substring(0, 2);
