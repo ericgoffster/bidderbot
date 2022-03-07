@@ -76,7 +76,7 @@ public enum Bid {
     }
 
     /**
-     * The next level up.
+     * @return The next level up.
      */
     public Bid raise() {
         return valueOf(level + 1, strain);

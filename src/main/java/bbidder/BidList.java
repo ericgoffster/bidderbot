@@ -55,7 +55,7 @@ public class BidList {
     }
 
     /**
-     * @param str
+     * @param str The string to parse
      * @return A bid list parsed from the string
      */
     public static BidList valueOf(String str) {
