@@ -11,9 +11,9 @@ import java.util.TreeSet;
 public class BidContext implements Cloneable {
     public final BidPatternList patterns;
     public final Map<String, Integer> suits;
-    private static final short ALL_SUITS = 0xf;
-    private static final short MINORS = 0x3;
-    private static final short MAJORS = MINORS << 2;
+    static final short ALL_SUITS = 0xf;
+    static final short MINORS = 0x3;
+    static final short MAJORS = MINORS << 2;
 
     Bid lastBidSuit;
     int patternPos;

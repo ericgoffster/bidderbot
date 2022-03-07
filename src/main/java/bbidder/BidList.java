@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BidList {
     public final List<Bid> bids;
@@ -35,5 +36,22 @@ public class BidList {
             bids.add(Bid.fromStr(part.trim()));
         }
         return new BidList(bids);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bids);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BidList other = (BidList) obj;
+        return Objects.equals(bids, other.bids);
     }
 }
