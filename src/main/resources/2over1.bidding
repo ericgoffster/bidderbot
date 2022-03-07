@@ -21,8 +21,8 @@
 1x NJy:down => 13+ hcp, 5+ in y, longest_or_equal y among unbid
 1x NJy => 13+ hcp, 4 in y, longest_or_equal y among unbid
 
-1x 1y:down => 6+ hcp, 5+ in y, longest_or_equal y among
-1x 1y => 6+ hcp, 4 in y, longest_or_equal y among
+1x 1y:down => 6+ hcp, 5+ in y, longest_or_equal y among same_level
+1x 1y => 6+ hcp, 4 in y, longest_or_equal y among same_level
 
 1m 3N => 13-15 hcp, balanced
 1m 2N => 11-12 hcp, balanced

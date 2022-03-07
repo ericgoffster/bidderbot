@@ -57,11 +57,11 @@ public class BiddingSystem {
     public Bid getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
         IBoundInference negative = ConstBoundInference.create(true);
         for (BidInference i : inferences) {
-            BidContext bc = new BidContext(bids, i.bids);
+            BidContext bc = new BidContext(bids, i.bids, true);
             for (Bid b : bc.getMatchingBids()) {
                 BidContext bc2 = bc.clone();
                 bc2.addWe(b);
-                SimpleContext context = new SimpleContext(likelyHands, s -> bc2.getSuit(s));
+                SimpleContext context = new SimpleContext(bc.lastBidSuit, likelyHands, s -> bc2.getSuit(s));
                 IBoundInference newInference = i.inferences.bind(context);
                 IBoundInference inf = AndBoundInference.create(newInference, negative);
                 if (inf.matches(hand)) {
@@ -70,7 +70,7 @@ public class BiddingSystem {
                 negative = AndBoundInference.create(negative, NotBoundInference.create(newInference));
             }
         }
-        return null;
+        return Bid.P;
     }
 
     /**
@@ -86,17 +86,25 @@ public class BiddingSystem {
         IBoundInference result = ConstBoundInference.create(false);
         IBoundInference negative = ConstBoundInference.create(true);
         for (BidInference i : inferences) {
-            BidContext bc = new BidContext(exceptLast, i.bids);
+            BidContext bc = new BidContext(exceptLast, i.bids, true);
             for (Bid b : bc.getMatchingBids()) {
                 BidContext bc2 = bc.clone();
                 bc2.addWe(b);
-                SimpleContext context = new SimpleContext(likelyHands, s -> bc2.getSuit(s));
-                IBoundInference newInference = i.inferences.bind(context);
+                SimpleContext context = new SimpleContext(bc.lastBidSuit, likelyHands, s -> bc2.getSuit(s));
+                IBoundInference newInference;
+                try {
+                    newInference = i.inferences.bind(context);
+                } catch (RuntimeException e) {
+                    throw new IllegalArgumentException("Invalid inference: " + i, e);
+                }
                 if (b == lastBid) {
                     result = OrBoundInference.create(AndBoundInference.create(newInference, negative), result);
                 }
                 negative = AndBoundInference.create(negative, NotBoundInference.create(newInference));
             }
+        }
+        if (lastBid == Bid.P) {
+            result = OrBoundInference.create(negative, result);
         }
         return result;
     }

@@ -22,7 +22,7 @@ public class LongestOrEqualTest {
 
     @Test
     public void testToString() {
-        Context ctx = new SimpleContext(new LikelyHands(), s -> 1);
+        Context ctx = new SimpleContext(null, new LikelyHands(), s -> 1);
         assertEquals("longest_or_equal x among all", new LongestOrEqual("x", "all").toString());
         assertEquals("longest_or_equal D", new LongestOrEqual("x", "all").bind(ctx).toString());
         assertEquals("longest_or_equal s", new LongestOrEqual("s", null).toString());

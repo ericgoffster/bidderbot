@@ -103,9 +103,9 @@ public class BidContext implements Cloneable {
      * @param patterns
      *            The patterns
      */
-    public BidContext(BidList bids, BidPatternList patterns) {
+    public BidContext(BidList bids, BidPatternList patterns, boolean lastIsOpp) {
         this(patterns, new HashMap<>(), null, 0, true);
-        boolean isOpp = bids.bids.size() % 2 == 0;
+        boolean isOpp = (bids.bids.size() % 2 == 0) ^ lastIsOpp;
         for (Bid bid : bids.bids) {
             if (isOpp) {
                 addThey(bid);

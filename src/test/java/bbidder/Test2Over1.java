@@ -43,6 +43,16 @@ public class Test2Over1 {
     public void openingBids(String ln) throws IOException {
         testBid(ln);
     }
+    
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "234 KQ23 A23 234:1C P 1H"
+            })
+    public void responses1m(String ln) throws IOException {
+        testBid(ln);
+    }
+
 
     private void testBid(String ln) {
         String[] parts = ln.trim().split(":");

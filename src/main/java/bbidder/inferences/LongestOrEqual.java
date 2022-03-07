@@ -43,7 +43,9 @@ public class LongestOrEqual implements Inference {
     }
 
     public LongestOrEqual(String suit, String among) {
-        super();
+        if (among != null && among.trim().equals("")) {
+            throw new IllegalArgumentException("among");
+        }
         this.suit = suit;
         this.among = among;
     }

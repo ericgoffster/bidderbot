@@ -12,6 +12,7 @@ public class HandGenerator {
             cards[i] = i;
         }
         List<Hand> result = new ArrayList<>();
+        int num = 0;
         while(result.size() < numDesired) {
             short[] suits = new short[4];
             for(int i = 0; i < 13; i++) {
@@ -26,6 +27,10 @@ public class HandGenerator {
             Hand h = new Hand(suits);
             if (inf.matches(h)) {
                 result.add(h);
+            }
+            num++;
+            if (num > 1000000 && result.size() == 0) {
+                throw new RuntimeException("no hand found for " + inf);
             }
         }
         return new HandList(result);

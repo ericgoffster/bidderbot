@@ -1,7 +1,15 @@
 package bbidder;
 
+import static bbidder.Constants.CLUB;
+import static bbidder.Constants.DIAMOND;
+import static bbidder.Constants.HEART;
+import static bbidder.Constants.SPADE;
+import static bbidder.Constants.STR_CLUB;
+import static bbidder.Constants.STR_DIAMOND;
+import static bbidder.Constants.STR_HEART;
+import static bbidder.Constants.STR_SPADE;
+
 import java.util.function.Function;
-import static bbidder.Constants.*;
 
 
 public class SimpleContext implements Context {
@@ -9,15 +17,19 @@ public class SimpleContext implements Context {
     public final Function<String, Integer> lookupSuit;
     
     public final LikelyHands likelyHands;
+    
+    public final Bid lastBidSuit;
 
-    public SimpleContext(LikelyHands likelyHands, Function<String, Integer> lookupSuit) {
+    public SimpleContext(Bid lastBidSuit, LikelyHands likelyHands, Function<String, Integer> lookupSuit) {
         super();
+        this.lastBidSuit = lastBidSuit;
         this.likelyHands = likelyHands;
         this.lookupSuit = lookupSuit;
     }
 
     public SimpleContext() {
         super();
+        this.lastBidSuit = null;
         this.likelyHands = new LikelyHands();
         this.lookupSuit = s -> {
             throw new IllegalArgumentException("unknown suit " + s);
@@ -57,6 +69,16 @@ public class SimpleContext implements Context {
             }
             return suits;
         }
+        case "SAME_LEVEL": {
+            if (lastBidSuit == null) {
+                return 0xf;
+            }
+            short suits = 0 ;
+            for(int suit = lastBidSuit.strain + 1; suit < 4; suit++) {
+                suits |= (1 << suit);
+            }
+            return suits;
+        }
         case "MINORS":
             return (1 << CLUB) | (1 << DIAMOND);
         case "MAJORS":
@@ -85,7 +107,7 @@ public class SimpleContext implements Context {
         if (s.startsWith("~")) {
             return (short)(~lookupSuitSet(s.substring(1)) & 0xf);
         }
-        throw new IllegalArgumentException("unknown suit " + s);
+        throw new IllegalArgumentException("unknown suit set: " + s);
     }
 
     @Override
@@ -93,7 +115,7 @@ public class SimpleContext implements Context {
         if (s.matches("\\d+")) {
             return Integer.parseInt(s);
         }
-        throw new IllegalArgumentException("unknown points " + s);
+        throw new IllegalArgumentException("unknown points: " + s);
     }
 
     @Override
@@ -101,6 +123,6 @@ public class SimpleContext implements Context {
         if (s.matches("\\d+")) {
             return Integer.parseInt(s);
         }
-        throw new IllegalArgumentException("unknown length " + s);
+        throw new IllegalArgumentException("unknown length: " + s);
     }
 }
