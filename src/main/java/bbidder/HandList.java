@@ -16,11 +16,6 @@ public class HandList {
         this.l = l;
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(l);
-    }
-
     public int minHcp() {
         Integer minHcp = null;
         for (Hand h : l) {
@@ -71,5 +66,10 @@ public class HandList {
             }
         }
         return maxInSuit;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(l);
     }
 }

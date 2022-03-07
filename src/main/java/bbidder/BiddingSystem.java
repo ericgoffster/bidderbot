@@ -113,7 +113,7 @@ public class BiddingSystem {
     }
 
     /**
-     * Retrieve the bid for a hand starting from the list of bids, likely hands for everyone.
+     * Retrieve the bid for a hand starting from the list of bids and likely hands for everyone.
      * 
      * @param bids
      *            The list of bids

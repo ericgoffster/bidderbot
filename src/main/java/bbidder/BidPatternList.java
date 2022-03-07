@@ -22,6 +22,30 @@ public class BidPatternList {
         this.bids = bids;
     }
 
+    /*
+     * Retrieves the list of bidding contexts for this bid pattern list.
+     */
+    public List<BiddingContext> getContexts() {
+        BiddingContext ctx = new BiddingContext(new BidList(List.of()), new HashMap<>());
+
+        // no patterns, then a wide open context.
+        if (bids.isEmpty()) {
+            return List.of(ctx);
+        }
+
+        List<BiddingContext> l = new ArrayList<>();
+        // If the first pattern is us, then assume we can have an initial pass from the opposition
+        // Otherwise, starts with opposition always
+        BidPattern pattern = bids.get(0);
+        if (!pattern.isOpposition) {
+            getContexts(l, new BiddingContext(ctx.bids.withBidAdded(Bid.P), ctx.suits), false);
+            getContexts(l, ctx, false);
+        } else {
+            getContexts(l, ctx, true);
+        }
+        return l;
+    }
+
     public static BidPatternList valueOf(String str) {
         List<BidPattern> l = new ArrayList<>();
         for (String part : str.trim().split("\\s+")) {
@@ -56,30 +80,6 @@ public class BidPatternList {
             return false;
         BidPatternList other = (BidPatternList) obj;
         return Objects.equals(bids, other.bids);
-    }
-
-    /*
-     * Retrieves the list of bidding contexts for this bid pattern list.
-     */
-    public List<BiddingContext> getContexts() {
-        BiddingContext ctx = new BiddingContext(new BidList(List.of()), new HashMap<>());
-
-        // no patterns, then a wide open context.
-        if (bids.isEmpty()) {
-            return List.of(ctx);
-        }
-
-        List<BiddingContext> l = new ArrayList<>();
-        // If the first pattern is us, then assume we can have an initial pass from the opposition
-        // Otherwise, starts with opposition always
-        BidPattern pattern = bids.get(0);
-        if (!pattern.isOpposition) {
-            getContexts(l, new BiddingContext(ctx.bids.withBidAdded(Bid.P), ctx.suits), false);
-            getContexts(l, ctx, false);
-        } else {
-            getContexts(l, ctx, true);
-        }
-        return l;
     }
 
     private void getContexts(List<BiddingContext> l, BiddingContext ctx, boolean isOpp) {

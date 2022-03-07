@@ -2,6 +2,7 @@ package bbidder.inferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
@@ -34,13 +35,6 @@ public class OrBoundInference implements IBoundInference {
     }
 
     @Override
-    public String toString() {
-        List<String> l = new ArrayList<>();
-        gatherOrs(l);
-        return "(" + String.join(" | ", l) + ")";
-    }
-
-    @Override
     public boolean negatable() {
         return i1.negatable() && i2.negatable();
     }
@@ -61,5 +55,29 @@ public class OrBoundInference implements IBoundInference {
             return i1;
         }
         return new OrBoundInference(i1, i2);
+    }
+
+    @Override
+    public String toString() {
+        List<String> l = new ArrayList<>();
+        gatherOrs(l);
+        return "(" + String.join(" | ", l) + ")";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(i1, i2);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        OrBoundInference other = (OrBoundInference) obj;
+        return Objects.equals(i1, other.i1) && Objects.equals(i2, other.i2);
     }
 }

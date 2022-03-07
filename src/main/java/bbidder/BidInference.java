@@ -34,6 +34,20 @@ public class BidInference {
         return new BidInference(BidPatternList.valueOf(str.substring(0, pos)), InferenceList.valueOf(reg, str.substring(pos + 2)));
     }
 
+    /**
+     * @return The list of inferences bound to actual bidding sequences.
+     */
+    public List<BoundBidInference> getBoundInferences() {
+        List<BoundBidInference> result = new ArrayList<>();
+        for (BiddingContext ctx : bids.getContexts()) {
+            BoundBidInference inference = new BoundBidInference(ctx, inferences);
+            // Catch an errors
+            inference.bind(ALL_HANDS_LIKELY);
+            result.add(inference);
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         return bids + " => " + inferences;
@@ -54,19 +68,5 @@ public class BidInference {
             return false;
         BidInference other = (BidInference) obj;
         return Objects.equals(bids, other.bids) && Objects.equals(inferences, other.inferences);
-    }
-
-    /**
-     * @return The list of inferences bound to actual bidding sequences.
-     */
-    public List<BoundBidInference> getBoundInferences() {
-        List<BoundBidInference> result = new ArrayList<>();
-        for (BiddingContext ctx : bids.getContexts()) {
-            BoundBidInference inference = new BoundBidInference(ctx, inferences);
-            // Catch an errors
-            inference.bind(ALL_HANDS_LIKELY);
-            result.add(inference);
-        }
-        return result;
     }
 }

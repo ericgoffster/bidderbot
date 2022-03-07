@@ -11,6 +11,26 @@ public class HCPRange implements Inference {
     public final String min;
     public final String max;
 
+    public HCPRange(String min, String max) {
+        super();
+        this.min = min;
+        this.max = max;
+    }
+
+    @Override
+    public IBoundInference bind(InferenceContext context) {
+        if (min == null) {
+            if (max == null) {
+                return ConstBoundInference.T;
+            }
+            return new BoundInfMax(context.resolvePoints(max));
+        }
+        if (max == null) {
+            return new BoundInfMin(context.resolvePoints(min));
+        }
+        return AndBoundInference.create(new BoundInfMin(context.resolvePoints(min)), new BoundInfMax(context.resolvePoints(max)));
+    }
+
     public static HCPRange valueOf(String str) {
         str = str.trim();
         if (!str.toLowerCase().endsWith("hcp")) {
@@ -45,26 +65,6 @@ public class HCPRange implements Inference {
             return min + " hcp";
         }
         return min + "-" + max + " hcp";
-    }
-
-    public HCPRange(String min, String max) {
-        super();
-        this.min = min;
-        this.max = max;
-    }
-
-    @Override
-    public IBoundInference bind(InferenceContext context) {
-        if (min == null) {
-            if (max == null) {
-                return ConstBoundInference.T;
-            }
-            return new BoundInfMax(context.resolvePoints(max));
-        }
-        if (max == null) {
-            return new BoundInfMin(context.resolvePoints(min));
-        }
-        return AndBoundInference.create(new BoundInfMin(context.resolvePoints(min)), new BoundInfMax(context.resolvePoints(max)));
     }
 
     @Override

@@ -108,6 +108,36 @@ public class Hand {
         return suit;
     }
 
+    public static short belowSuit(int suit) {
+        return (short) ((1 << suit) - 1);
+    }
+
+    public static short aboveSuit(int suit) {
+        return (short) (0xf & ~belowSuit(suit + 1));
+    }
+
+    public static short belowRank(int rank) {
+        return (short) ((1 << rank) - 1);
+    }
+
+    public static short aboveRank(int rank) {
+        return (short) (0x1fff & ~belowRank(rank + 1));
+    }
+
+    public int numInSuit(int suit) {
+        return BitUtil.size(suits[suit]);
+    }
+
+    public int numHCP() {
+        int hcp = 0;
+        for (int suit = 0; suit < 4; suit++) {
+            for (int rank : BitUtil.iterate(suits[suit] & Hand.aboveRank(TEN))) {
+                hcp += getHCP(rank);
+            }
+        }
+        return hcp;
+    }
+
     public static Hand valueOf(String s) {
         int suit = 3;
         short[] suits = new short[4];
@@ -145,35 +175,5 @@ public class Hand {
             return false;
         Hand other = (Hand) obj;
         return Arrays.equals(suits, other.suits);
-    }
-
-    public static short belowSuit(int suit) {
-        return (short) ((1 << suit) - 1);
-    }
-
-    public static short aboveSuit(int suit) {
-        return (short) (0xf & ~belowSuit(suit + 1));
-    }
-
-    public static short belowRank(int rank) {
-        return (short) ((1 << rank) - 1);
-    }
-
-    public static short aboveRank(int rank) {
-        return (short) (0x1fff & ~belowRank(rank + 1));
-    }
-
-    public int numInSuit(int suit) {
-        return BitUtil.size(suits[suit]);
-    }
-
-    public int numHCP() {
-        int hcp = 0;
-        for (int suit = 0; suit < 4; suit++) {
-            for (int rank : BitUtil.iterate(suits[suit] & Hand.aboveRank(TEN))) {
-                hcp += getHCP(rank);
-            }
-        }
-        return hcp;
     }
 }

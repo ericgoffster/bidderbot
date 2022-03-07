@@ -26,16 +26,24 @@ public class BidPattern {
         this.upTheLine = upTheLine;
     }
 
-    @Override
-    public String toString() {
-        String s = str;
-        if (!upTheLine) {
-            s += ":down";
+    /**
+     * @return The suit part.
+     */
+    public String getSuit() {
+        if (str.startsWith("NJ")) {
+            return str.substring(2);
         }
-        if (isOpposition) {
-            return "(" + s + ")";
+        return str.substring(1);
+    }
+
+    /**
+     * @return The level part.
+     */
+    public String getLevel() {
+        if (str.startsWith("NJ")) {
+            return str.substring(0, 2);
         }
-        return s;
+        return str.substring(0, 1);
     }
 
     /**
@@ -57,28 +65,20 @@ public class BidPattern {
     }
 
     @Override
+    public String toString() {
+        String s = str;
+        if (!upTheLine) {
+            s += ":down";
+        }
+        if (isOpposition) {
+            return "(" + s + ")";
+        }
+        return s;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(upTheLine, isOpposition, str);
-    }
-
-    /**
-     * @return The suit part.
-     */
-    public String getSuit() {
-        if (str.startsWith("NJ")) {
-            return str.substring(2);
-        }
-        return str.substring(1);
-    }
-
-    /**
-     * @return The level part.
-     */
-    public String getLevel() {
-        if (str.startsWith("NJ")) {
-            return str.substring(0, 2);
-        }
-        return str.substring(0, 1);
     }
 
     @Override

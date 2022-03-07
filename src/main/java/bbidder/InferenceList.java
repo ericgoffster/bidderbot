@@ -21,6 +21,18 @@ public class InferenceList {
         this.inferences = inferences;
     }
 
+    /**
+     * @param context The context for binding
+     * @return A bound inference representing all of the inferences as an "and"
+     */
+    public IBoundInference bind(InferenceContext context) {
+        IBoundInference result = ConstBoundInference.create(true);
+        for (Inference i : inferences) {
+            result = AndBoundInference.create(result, i.bind(context));
+        }
+        return result;
+    }
+
     public static InferenceList valueOf(InferenceRegistry registry, String str) {
         List<Inference> l = new ArrayList<>();
         for (String part : str.trim().split(",")) {
@@ -55,17 +67,5 @@ public class InferenceList {
             return false;
         InferenceList other = (InferenceList) obj;
         return Objects.equals(inferences, other.inferences);
-    }
-
-    /**
-     * @param context The context for binding
-     * @return A bound inference representing all of the inferences as an "and"
-     */
-    public IBoundInference bind(InferenceContext context) {
-        IBoundInference result = ConstBoundInference.create(true);
-        for (Inference i : inferences) {
-            result = AndBoundInference.create(result, i.bind(context));
-        }
-        return result;
     }
 }

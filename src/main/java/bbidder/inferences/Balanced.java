@@ -9,14 +9,6 @@ import bbidder.Inference;
 public class Balanced implements Inference {
     private static final BalancedBoundInf BALANCED = new BalancedBoundInf();
 
-    public static Balanced valueOf(String str) {
-        str = str.trim();
-        if (str.toLowerCase().equals("balanced")) {
-            return new Balanced();
-        }
-        return null;
-    }
-
     private static boolean isBalanced(Hand hand) {
         int ndoub = 0;
         for (int s = 0; s < 4; s++) {
@@ -40,6 +32,19 @@ public class Balanced implements Inference {
         return BALANCED;
     }
 
+    public static Balanced valueOf(String str) {
+        str = str.trim();
+        if (str.toLowerCase().equals("balanced")) {
+            return new Balanced();
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "balanced";
+    }
+
     @Override
     public int hashCode() {
         return 0;
@@ -54,11 +59,6 @@ public class Balanced implements Inference {
         if (getClass() != obj.getClass())
             return false;
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "balanced";
     }
 
     private static final class BalancedBoundInf implements IBoundInference {

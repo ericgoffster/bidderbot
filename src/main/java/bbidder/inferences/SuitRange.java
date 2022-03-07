@@ -14,6 +14,33 @@ public class SuitRange implements Inference {
     public final String min;
     public final String max;
 
+    public SuitRange(String suit, String min, String max) {
+        super();
+        this.suit = suit;
+        this.min = min;
+        this.max = max;
+    }
+
+    @Override
+    public IBoundInference bind(InferenceContext context) {
+        int s = context.lookupSuit(suit);
+        if (min == null) {
+            if (max == null) {
+                return ConstBoundInference.T;
+            }
+            return new BoundInfMax(s, context.resolveLength(max));
+        }
+        if (max == null) {
+            return new BoundInfMin(s, context.resolveLength(min));
+        }
+        int imin = context.resolveLength(min);
+        int imax = context.resolveLength(max);
+        if (imin == imax) {
+            return new BoundInfExact(s, imin);
+        }
+        return AndBoundInference.create(new BoundInfMin(s, imin), new BoundInfMax(s, imax));
+    }
+
     public static SuitRange valueOf(String str) {
         str = str.trim();
         int pos = str.indexOf(" in ");
@@ -52,33 +79,6 @@ public class SuitRange implements Inference {
         return min + "-" + max + " in " + suit;
     }
 
-    public SuitRange(String suit, String min, String max) {
-        super();
-        this.suit = suit;
-        this.min = min;
-        this.max = max;
-    }
-
-    @Override
-    public IBoundInference bind(InferenceContext context) {
-        int s = context.lookupSuit(suit);
-        if (min == null) {
-            if (max == null) {
-                return ConstBoundInference.T;
-            }
-            return new BoundInfMax(s, context.resolveLength(max));
-        }
-        if (max == null) {
-            return new BoundInfMin(s, context.resolveLength(min));
-        }
-        int imin = context.resolveLength(min);
-        int imax = context.resolveLength(max);
-        if (imin == imax) {
-            return new BoundInfExact(s, imin);
-        }
-        return AndBoundInference.create(new BoundInfMin(s, imin), new BoundInfMax(s, imax));
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(max, min, suit);
@@ -96,6 +96,7 @@ public class SuitRange implements Inference {
         return Objects.equals(max, other.max) && Objects.equals(min, other.min) && Objects.equals(suit, other.suit);
     }
 
+    
     static class BoundInfExact implements IBoundInference {
         final int suit;
         final int n;

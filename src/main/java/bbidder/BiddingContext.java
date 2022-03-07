@@ -26,23 +26,6 @@ public class BiddingContext {
         this.suits = suits;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(bids, suits);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        BiddingContext other = (BiddingContext) obj;
-        return Objects.equals(bids, other.bids) && Objects.equals(suits, other.suits);
-    }
-
     /**
      * @param symbol
      *            The symbol
@@ -54,37 +37,6 @@ public class BiddingContext {
             return strain;
         }
         return suits.get(symbol);
-    }
-
-    private static short getSuitClass(BidPattern pattern) {
-        switch (pattern.getSuit()) {
-        case "M":
-            return MAJORS;
-        case "m":
-            return MINORS;
-        default:
-            return ALL_SUITS;
-        }
-    }
-
-    private Bid getBid(BidPattern pattern, int strain) {
-        String level = pattern.getLevel();
-        switch (level) {
-        case "J":
-            return nextLevel(strain).raise();
-        case "NJ":
-            return nextLevel(strain);
-        case "1":
-        case "2":
-        case "3":
-        case "4":
-        case "5":
-        case "6":
-        case "7":            
-            return Bid.valueOf(level.charAt(0) - '1', strain);
-        default:
-            throw new IllegalArgumentException("Invalid level: '" + level + "'");
-        }
     }
 
     /**
@@ -122,6 +74,59 @@ public class BiddingContext {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return bids + " where " + suits;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bids, suits);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BiddingContext other = (BiddingContext) obj;
+        return Objects.equals(bids, other.bids) && Objects.equals(suits, other.suits);
+    }
+
+    private static short getSuitClass(BidPattern pattern) {
+        switch (pattern.getSuit()) {
+        case "M":
+            return MAJORS;
+        case "m":
+            return MINORS;
+        default:
+            return ALL_SUITS;
+        }
+    }
+
+    private Bid getBid(BidPattern pattern, int strain) {
+        String level = pattern.getLevel();
+        switch (level) {
+        case "J":
+            return nextLevel(strain).raise();
+        case "NJ":
+            return nextLevel(strain);
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":            
+            return Bid.valueOf(level.charAt(0) - '1', strain);
+        default:
+            throw new IllegalArgumentException("Invalid level: '" + level + "'");
+        }
+    }
+
     private short getStrains(BidPattern pattern) {
         Integer strain = getSuit(pattern.getSuit());
         if (strain != null) {
@@ -141,10 +146,5 @@ public class BiddingContext {
         } else {
             return Bid.valueOf(lastBidSuit.level + 1, strain);
         }
-    }
-
-    @Override
-    public String toString() {
-        return bids + " where " + suits;
     }
 }

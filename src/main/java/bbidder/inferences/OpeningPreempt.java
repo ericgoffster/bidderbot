@@ -12,6 +12,17 @@ public class OpeningPreempt implements Inference {
     private final String suit;
     private final int level;
 
+    public OpeningPreempt(String suit, int level) {
+        super();
+        this.suit = suit;
+        this.level = level;
+    }
+
+    @Override
+    public IBoundInference bind(InferenceContext context) {
+        return new BoundInf(context.lookupSuit(suit), level);
+    }
+
     public static OpeningPreempt valueOf(String str) {
         str = str.trim();
         if (!str.toLowerCase().startsWith("opening_preempt")) {
@@ -27,17 +38,6 @@ public class OpeningPreempt implements Inference {
     @Override
     public String toString() {
         return "opening_preempt " + level + " " + suit;
-    }
-
-    public OpeningPreempt(String suit, int level) {
-        super();
-        this.suit = suit;
-        this.level = level;
-    }
-
-    @Override
-    public IBoundInference bind(InferenceContext context) {
-        return new BoundInf(context.lookupSuit(suit), level);
     }
 
     @Override

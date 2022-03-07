@@ -19,6 +19,10 @@ public class BoundBidInference {
         this.inferences = inferences;
     }
 
+    public IBoundInference bind(LikelyHands likelyHands) {
+        return inferences.bind(new InferenceContext(ctx.bids.exceptLast().getLastBidSuit(), likelyHands, ctx));
+    }
+
     @Override
     public String toString() {
         return ctx + " => " + inferences;
@@ -39,9 +43,5 @@ public class BoundBidInference {
             return false;
         BoundBidInference other = (BoundBidInference) obj;
         return Objects.equals(ctx, other.ctx) && Objects.equals(inferences, other.inferences);
-    }
-
-    public IBoundInference bind(LikelyHands likelyHands) {
-        return inferences.bind(new InferenceContext(ctx.bids.exceptLast().getLastBidSuit(), likelyHands, ctx));
     }
 }
