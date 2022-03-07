@@ -27,4 +27,13 @@ public class BidList {
         newBids.add(bid);
         return new BidList(newBids);
     }
+    
+    public static BidList valueOf(String str) {
+        String[] parts = str.split("\\s+");
+        List<Bid> bids = new ArrayList<>();
+        for(String part: parts) {
+            bids.add(Bid.fromStr(part.trim()));
+        }
+        return new BidList(bids);
+    }
 }
