@@ -13,6 +13,9 @@ public class BidInference {
     static final short ALL_SUITS = 0xf;
     static final short MINORS = 0x3;
     static final short MAJORS = MINORS << 2;
+    
+    static final LikelyHands ALL_HANDS_LIKELY = new LikelyHands();
+
 
     public BidInference(BidPatternList bids, InferenceList inferences) {
         super();
@@ -100,10 +103,13 @@ public class BidInference {
         }
     }
 
-    public List<BoundBidInference> getBoundInference() {
+    public List<BoundBidInference> getBoundInferences() {
         List<BoundBidInference> result = new ArrayList<>();
         for (BiddingContext ctx : getContexts()) {
-            result.add(new BoundBidInference(ctx, inferences));
+            BoundBidInference inference = new BoundBidInference(ctx, inferences);
+            // Catch an errors
+            inference.bind(ALL_HANDS_LIKELY);
+            result.add(inference);
         }
         return result;
     }

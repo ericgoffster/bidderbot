@@ -50,7 +50,7 @@ public class InferenceContext {
         default:
             Integer s2 = bc.getSuit(s);
             if (s2 == null) {
-                throw new IllegalArgumentException("unknown suit: " + s);
+                throw new IllegalArgumentException("Unknown Suit: '" + s + "'");
             }
             return s2;
         }
@@ -76,7 +76,7 @@ public class InferenceContext {
                 short s = lookupSuitSet();
                 readWhite();
                 if (ch != ')') {
-                    throw new IllegalArgumentException("parse exception");
+                    throw new IllegalArgumentException("Expected )");
                 }
                 advance();
                 return s;
@@ -135,7 +135,7 @@ public class InferenceContext {
                 case STR_SPADE:
                     return (1 << SPADE);
                 default:
-                    throw new IllegalArgumentException("unknown suit set: " + sb);
+                    throw new IllegalArgumentException("Unknown Suit Set: '" + sb + "'");
                 }
             }
         }
@@ -170,11 +170,11 @@ public class InferenceContext {
             short suits = state.lookupSuitSet();
             state.readWhite();
             if (state.ch != -1) {
-                throw new IllegalArgumentException("parse exception");
+                throw new IllegalArgumentException("Undecipherable characters at end");
             }
             return suits;
-        } catch (IOException e) {
-            throw new IllegalArgumentException("parse exception");
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid Suit Set: '" + s + "'", e);
         }
     }
 
@@ -182,13 +182,13 @@ public class InferenceContext {
         if (s.matches("\\d+")) {
             return Integer.parseInt(s);
         }
-        throw new IllegalArgumentException("unknown points: " + s);
+        throw new IllegalArgumentException("Invalid Points: '" + s + "'");
     }
 
     public int resolveLength(String s) {
         if (s.matches("\\d+")) {
             return Integer.parseInt(s);
         }
-        throw new IllegalArgumentException("unknown length: " + s);
+        throw new IllegalArgumentException("Invalid Length: '" + s + "'");
     }
 }
