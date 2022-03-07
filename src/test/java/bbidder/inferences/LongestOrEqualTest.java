@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
 import bbidder.BidContext;
 import bbidder.BidList;
-import bbidder.BidPatternList;
 import bbidder.Context;
 import bbidder.Hand;
 import bbidder.LikelyHands;
@@ -27,8 +27,7 @@ public class LongestOrEqualTest {
 
     @Test
     public void testToString() {
-        BidContext bc = new BidContext(new BidList(List.of()), new BidPatternList(List.of()), false);
-        bc.suits.put("x", 1);
+        BidContext bc = new BidContext(new BidList(List.of()), Map.of("x", 1));
         Context ctx = new SimpleContext(null, new LikelyHands(), bc);
         assertEquals("longest_or_equal x among all", new LongestOrEqual("x", "all").toString());
         assertEquals("longest_or_equal D", new LongestOrEqual("x", "all").bind(ctx).toString());

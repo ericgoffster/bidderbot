@@ -13,6 +13,7 @@ import java.io.CharArrayReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class SimpleContext implements Context {
 
@@ -33,7 +34,7 @@ public class SimpleContext implements Context {
         super();
         this.lastBidSuit = null;
         this.likelyHands = new LikelyHands();
-        this.bc = new BidContext(new BidList(List.of()), new BidPatternList(List.of()), false);
+        this.bc = new BidContext(new BidList(List.of()), Map.of());
     }
 
     @Override

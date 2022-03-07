@@ -3,10 +3,10 @@ package bbidder;
 import java.util.Objects;
 
 public class BoundBidInference {
-    public final BidCtx ctx;
+    public final BidContext ctx;
     public final InferenceList inferences;
 
-    public BoundBidInference(BidCtx ctx, InferenceList inferences) {
+    public BoundBidInference(BidContext ctx, InferenceList inferences) {
         super();
         this.ctx = ctx;
         this.inferences = inferences;
