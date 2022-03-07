@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
@@ -62,22 +61,5 @@ public class AndBoundInference implements IBoundInference {
         List<String> l = new ArrayList<>();
         gatherAnds(l);
         return "(" + String.join(" & ", l) + ")";
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(i1, i2);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        AndBoundInference other = (AndBoundInference) obj;
-        return Objects.equals(i1, other.i1) && Objects.equals(i2, other.i2);
     }
 }

@@ -1,7 +1,5 @@
 package bbidder.inferences;
 
-import java.util.Objects;
-
 import bbidder.Hand;
 import bbidder.IBoundInference;
 
@@ -36,22 +34,5 @@ public class ConstBoundInference implements IBoundInference {
     @Override
     public String toString() {
         return String.valueOf(result);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(result);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ConstBoundInference other = (ConstBoundInference) obj;
-        return result == other.result;
     }
 }
