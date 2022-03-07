@@ -17,6 +17,9 @@ import bbidder.inferences.ConstBoundInference;
 import bbidder.inferences.NotBoundInference;
 import bbidder.inferences.OrBoundInference;
 
+/**
+ * Represents a compiled bidding system.
+ */
 public class BiddingSystem {
     public final List<BoundBidInference> inferences;
 
@@ -26,7 +29,7 @@ public class BiddingSystem {
     }
 
     public static BiddingSystem load(String spec) throws IOException {
-        try(InputStream is = new URL(null, spec, new Handler(BiddingSystem.class.getClassLoader())).openStream()) {
+        try (InputStream is = new URL(null, spec, new Handler(BiddingSystem.class.getClassLoader())).openStream()) {
             return load(is);
         }
     }
@@ -66,10 +69,10 @@ public class BiddingSystem {
     public Bid getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
         IBoundInference negative = ConstBoundInference.create(true);
         for (BoundBidInference i : inferences) {
-            if (i.ctx.boundBidList.bids.size() == bids.bids.size() + 1) {
-                BidList exceptLast = new BidList(i.ctx.boundBidList.bids.subList(0, bids.bids.size()));
+            if (i.ctx.bids.bids.size() == bids.bids.size() + 1) {
+                BidList exceptLast = new BidList(i.ctx.bids.bids.subList(0, bids.bids.size()));
                 if (exceptLast.equals(bids)) {
-                    Bid b = i.ctx.boundBidList.bids.get(bids.bids.size());
+                    Bid b = i.ctx.bids.bids.get(bids.bids.size());
                     InferenceContext context = new InferenceContext(exceptLast.getLastBidSuit(), likelyHands, i.ctx);
                     IBoundInference newInference;
                     try {
@@ -101,8 +104,8 @@ public class BiddingSystem {
         IBoundInference result = ConstBoundInference.create(false);
         IBoundInference negative = ConstBoundInference.create(true);
         for (BoundBidInference i : inferences) {
-            if (bids.bids.size() == i.ctx.boundBidList.bids.size()) {
-                BidList exceptLast2 = new BidList(i.ctx.boundBidList.bids.subList(0, bids.bids.size() - 1));
+            if (bids.bids.size() == i.ctx.bids.bids.size()) {
+                BidList exceptLast2 = new BidList(i.ctx.bids.bids.subList(0, bids.bids.size() - 1));
                 if (exceptLast.equals(exceptLast2)) {
                     InferenceContext context = new InferenceContext(exceptLast2.getLastBidSuit(), likelyHands, i.ctx);
                     IBoundInference newInference;
@@ -111,7 +114,7 @@ public class BiddingSystem {
                     } catch (RuntimeException e) {
                         throw new IllegalArgumentException("Invalid inference: " + i, e);
                     }
-                    Bid b = i.ctx.boundBidList.bids.get(bids.bids.size() - 1);
+                    Bid b = i.ctx.bids.bids.get(bids.bids.size() - 1);
                     if (b == lastBid) {
                         result = OrBoundInference.create(AndBoundInference.create(newInference, negative), result);
                     }

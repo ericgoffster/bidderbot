@@ -10,10 +10,12 @@ public class BidPatternListTest {
     @Test
     public void testValueOf() {
         assertEquals(new BidPatternList(List.of(new BidPattern(false, "1S", true))), BidPatternList.valueOf("1S"));
-        assertEquals(new BidPatternList(List.of(new BidPattern(false, "1S", true), new BidPattern(false, "1N", true))), BidPatternList.valueOf("1S 1N"));
+        assertEquals(new BidPatternList(List.of(new BidPattern(false, "1S", true), new BidPattern(false, "1N", true))),
+                BidPatternList.valueOf("1S 1N"));
         assertEquals(new BidPatternList(List.of(new BidPattern(false, "1S", true), new BidPattern(false, "1N", false))),
                 BidPatternList.valueOf("1S 1N:down"));
-        assertEquals(new BidPatternList(List.of(new BidPattern(false, "1S", true), new BidPattern(true, "X", true), new BidPattern(false, "1N", true))),
+        assertEquals(
+                new BidPatternList(List.of(new BidPattern(false, "1S", true), new BidPattern(true, "X", true), new BidPattern(false, "1N", true))),
                 BidPatternList.valueOf("1S (X) 1N"));
     }
 
@@ -23,6 +25,7 @@ public class BidPatternListTest {
         assertEquals("1S:down", new BidPatternList(List.of(new BidPattern(false, "1S", false))).toString());
         assertEquals("1S 1N", new BidPatternList(List.of(new BidPattern(false, "1S", true), new BidPattern(false, "1N", true))).toString());
         assertEquals("1S (X) 1N",
-                new BidPatternList(List.of(new BidPattern(false, "1S", true), new BidPattern(true, "X", true), new BidPattern(false, "1N", true))).toString());
+                new BidPatternList(List.of(new BidPattern(false, "1S", true), new BidPattern(true, "X", true), new BidPattern(false, "1N", true)))
+                        .toString());
     }
 }

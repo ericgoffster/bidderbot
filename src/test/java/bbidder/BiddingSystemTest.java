@@ -12,7 +12,7 @@ import bbidder.inferences.ConstBoundInference;
 
 public class BiddingSystemTest {
     LikelyHands likelyHands = new LikelyHands();
-    
+
     @Test
     public void test1() throws IOException {
         BiddingSystem bs = BiddingSystem.load(BiddingSystemTest.class.getResourceAsStream("/test1.bidding"));
@@ -59,7 +59,7 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
         }
     }
-    
+
     @Test
     public void test4() throws IOException {
         BiddingSystem bs = BiddingSystem.load("classpath:2over1.bidding");
@@ -69,7 +69,7 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AKQ KQJ 234 2345")));
             assertTrue(l.matches(Hand.valueOf("AKQ AKJ 234 2345")));
             assertFalse(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
-            
+
             HandList hands = HandGenerator.generateHands(l, 100);
             assertTrue(hands.minHcp() >= 15);
             assertTrue(hands.maxHcp() <= 17);
@@ -85,7 +85,7 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AQJ32 AQ234 2 45")));
             assertFalse(l.matches(Hand.valueOf("AQJ32 AQ2345 2 4")));
             assertFalse(l.matches(Hand.valueOf("AQJ32 234 23 456")));
-            
+
             HandList hands = HandGenerator.generateHands(l, 100);
             assertTrue(hands.minHcp() >= 13);
             assertTrue(hands.minInSuit(0) >= 0);
@@ -100,7 +100,7 @@ public class BiddingSystemTest {
             assertFalse(l.matches(Hand.valueOf("AQJ32 AQ234 2 45")));
             assertTrue(l.matches(Hand.valueOf("AQJ32 AQ2345 2 4")));
             assertFalse(l.matches(Hand.valueOf("234 AQJ32 23 456")));
-            
+
             HandList hands = HandGenerator.generateHands(l, 100);
             assertTrue(hands.minHcp() >= 13);
             assertTrue(hands.minInSuit(0) >= 0);
@@ -115,7 +115,7 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AKQ KQT 234 2345")));
             assertTrue(l.matches(Hand.valueOf("AKQ KQT2 234 234")));
             assertFalse(l.matches(Hand.valueOf("AKQ KQ 2345 2345")));
-            
+
             HandList hands = HandGenerator.generateHands(l, 100);
             assertTrue(hands.minHcp() >= 13);
             assertTrue(hands.minInSuit(0) >= 3);
@@ -130,7 +130,7 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AKQ KQT 2345 234")));
             assertFalse(l.matches(Hand.valueOf("AKQ KQT2 234 234")));
             assertTrue(l.matches(Hand.valueOf("AKQ KQ 2345 2345")));
-            
+
             HandList hands = HandGenerator.generateHands(l, 100);
             assertTrue(hands.minHcp() >= 13);
             assertTrue(hands.minInSuit(0) >= 0);

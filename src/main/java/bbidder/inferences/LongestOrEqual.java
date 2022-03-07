@@ -74,7 +74,6 @@ public class LongestOrEqual implements Inference {
         return Objects.equals(among, other.among) && Objects.equals(suit, other.suit);
     }
 
-
     private static String getAmong(int iamong2) {
         StringBuilder sb = new StringBuilder();
         for (int s : BitUtil.iterate(iamong2)) {
@@ -109,12 +108,12 @@ public class LongestOrEqual implements Inference {
         public boolean matches(Hand hand) {
             return isLongerOrEqual(isuit, iamong, hand);
         }
-        
+
         @Override
         public boolean negatable() {
             return true;
         }
-        
+
         @Override
         public IBoundInference negate() {
             return new ShorterBoundInf(isuit, iamong);
@@ -140,12 +139,12 @@ public class LongestOrEqual implements Inference {
         public boolean matches(Hand hand) {
             return !isLongerOrEqual(isuit, iamong, hand);
         }
-        
+
         @Override
         public boolean negatable() {
             return false;
         }
-        
+
         @Override
         public IBoundInference negate() {
             return new LongestOrEqualBoundInf(isuit, iamong);

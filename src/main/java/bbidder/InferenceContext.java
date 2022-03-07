@@ -17,13 +17,13 @@ import java.util.Map;
 
 public class InferenceContext {
 
-    public final BidContext bc;
+    public final BiddingContext bc;
 
     public final LikelyHands likelyHands;
 
     public final Bid lastBidSuit;
 
-    public InferenceContext(Bid lastBidSuit, LikelyHands likelyHands, BidContext bc) {
+    public InferenceContext(Bid lastBidSuit, LikelyHands likelyHands, BiddingContext bc) {
         super();
         this.lastBidSuit = lastBidSuit;
         this.likelyHands = likelyHands;
@@ -34,7 +34,7 @@ public class InferenceContext {
         super();
         this.lastBidSuit = null;
         this.likelyHands = new LikelyHands();
-        this.bc = new BidContext(new BidList(List.of()), Map.of());
+        this.bc = new BiddingContext(new BidList(List.of()), Map.of());
     }
 
     public int lookupSuit(String s) {

@@ -109,12 +109,12 @@ public class SuitRange implements Inference {
         public boolean matches(Hand hand) {
             return hand.numInSuit(suit) == n;
         }
-        
+
         @Override
         public boolean negatable() {
             return true;
         }
-        
+
         @Override
         public IBoundInference negate() {
             return new BoundInfExactNot(suit, n);
@@ -139,12 +139,12 @@ public class SuitRange implements Inference {
         public boolean matches(Hand hand) {
             return hand.numInSuit(suit) != n;
         }
-        
+
         @Override
         public boolean negatable() {
             return true;
         }
-        
+
         @Override
         public IBoundInference negate() {
             return new BoundInfExact(suit, n);
@@ -169,12 +169,12 @@ public class SuitRange implements Inference {
         public boolean matches(Hand hand) {
             return hand.numInSuit(suit) >= min;
         }
-        
+
         @Override
         public boolean negatable() {
             return true;
         }
-        
+
         @Override
         public IBoundInference negate() {
             return new BoundInfMax(suit, min - 1);
@@ -199,12 +199,12 @@ public class SuitRange implements Inference {
         public boolean matches(Hand hand) {
             return hand.numInSuit(suit) <= max;
         }
-        
+
         @Override
         public boolean negatable() {
             return true;
         }
-        
+
         @Override
         public IBoundInference negate() {
             return new BoundInfMin(suit, max + 1);

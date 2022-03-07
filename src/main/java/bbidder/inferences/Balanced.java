@@ -66,12 +66,12 @@ public class Balanced implements Inference {
         public boolean matches(Hand hand) {
             return isBalanced(hand);
         }
-        
+
         @Override
         public boolean negatable() {
             return true;
         }
-        
+
         @Override
         public IBoundInference negate() {
             return new UnbalancedBoundInf();
@@ -90,12 +90,12 @@ public class Balanced implements Inference {
         public boolean matches(Hand hand) {
             return !isBalanced(hand);
         }
-        
+
         @Override
         public boolean negatable() {
             return true;
         }
-        
+
         @Override
         public IBoundInference negate() {
             return UNBALANCED;

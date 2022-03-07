@@ -95,12 +95,12 @@ public class HCPRange implements Inference {
         public boolean matches(Hand hand) {
             return hand.numHCP() >= min;
         }
-        
+
         @Override
         public boolean negatable() {
             return true;
         }
-        
+
         @Override
         public IBoundInference negate() {
             return new BoundInfMax(min - 1);
@@ -123,12 +123,12 @@ public class HCPRange implements Inference {
         public boolean matches(Hand hand) {
             return hand.numHCP() <= max;
         }
-        
+
         @Override
         public boolean negatable() {
             return true;
         }
-        
+
         @Override
         public IBoundInference negate() {
             return new BoundInfMin(max + 1);

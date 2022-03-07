@@ -19,12 +19,12 @@ public class NotBoundInference implements IBoundInference {
     public String toString() {
         return "(not " + inference + ")";
     }
-    
+
     @Override
     public boolean negatable() {
         return true;
     }
-    
+
     @Override
     public IBoundInference negate() {
         return inference;

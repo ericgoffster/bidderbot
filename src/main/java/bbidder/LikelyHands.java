@@ -7,9 +7,11 @@ public class LikelyHands {
     public final HandList partner;
     public final HandList rho;
     public final HandList me;
+
     public LikelyHands() {
         this(ConstBoundInference.T, ConstBoundInference.T, ConstBoundInference.T, ConstBoundInference.T);
     }
+
     public LikelyHands(IBoundInference lho, IBoundInference parter, IBoundInference rho, IBoundInference me) {
         super();
         this.lho = HandGenerator.generateHands(lho, 1000);

@@ -11,35 +11,35 @@ public class BidList {
         super();
         this.bids = bids;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         String delim = "";
-        for(Bid bid: bids) {
+        for (Bid bid : bids) {
             sb.append(delim).append(bid);
             delim = " ";
         }
         return sb.toString();
     }
-    
+
     public BidList addBid(Bid bid) {
         List<Bid> newBids = new ArrayList<>(bids);
         newBids.add(bid);
         return new BidList(newBids);
     }
-    
+
     public static BidList valueOf(String str) {
         String[] parts = str.split("\\s+");
         List<Bid> bids = new ArrayList<>();
-        for(String part: parts) {
+        for (String part : parts) {
             bids.add(Bid.fromStr(part.trim()));
         }
         return new BidList(bids);
     }
-    
+
     public Bid getLastBidSuit() {
-        for(int i = bids.size() - 1; i >= 0; i--) {
+        for (int i = bids.size() - 1; i >= 0; i--) {
             if (bids.get(i).isSuitBid()) {
                 return bids.get(i);
             }

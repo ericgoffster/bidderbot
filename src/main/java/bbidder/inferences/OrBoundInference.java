@@ -19,7 +19,7 @@ public class OrBoundInference implements IBoundInference {
     public boolean matches(Hand hand) {
         return i1.matches(hand) || i2.matches(hand);
     }
-    
+
     void gatherOrs(List<String> l) {
         if (i1 instanceof OrBoundInference) {
             ((OrBoundInference) i1).gatherOrs(l);
@@ -39,12 +39,12 @@ public class OrBoundInference implements IBoundInference {
         gatherOrs(l);
         return "(" + String.join(" | ", l) + ")";
     }
-    
+
     @Override
     public boolean negatable() {
         return i1.negatable() && i2.negatable();
     }
-    
+
     @Override
     public IBoundInference negate() {
         return AndBoundInference.create(i1.negate(), i2.negate());

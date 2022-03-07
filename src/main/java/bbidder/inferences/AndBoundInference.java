@@ -19,17 +19,17 @@ public class AndBoundInference implements IBoundInference {
     public boolean matches(Hand hand) {
         return i1.matches(hand) && i2.matches(hand);
     }
-    
+
     @Override
     public boolean negatable() {
         return i1.negatable() && i2.negatable();
     }
-    
+
     @Override
     public IBoundInference negate() {
         return OrBoundInference.create(i1.negate(), i2.negate());
     }
-    
+
     void gatherAnds(List<String> l) {
         if (i1 instanceof AndBoundInference) {
             ((AndBoundInference) i1).gatherAnds(l);

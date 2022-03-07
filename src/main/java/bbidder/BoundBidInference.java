@@ -3,10 +3,10 @@ package bbidder;
 import java.util.Objects;
 
 public class BoundBidInference {
-    public final BidContext ctx;
+    public final BiddingContext ctx;
     public final InferenceList inferences;
 
-    public BoundBidInference(BidContext ctx, InferenceList inferences) {
+    public BoundBidInference(BiddingContext ctx, InferenceList inferences) {
         super();
         this.ctx = ctx;
         this.inferences = inferences;
@@ -21,7 +21,7 @@ public class BoundBidInference {
     public int hashCode() {
         return Objects.hash(ctx, inferences);
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
