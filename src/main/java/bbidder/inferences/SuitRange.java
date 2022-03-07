@@ -66,12 +66,17 @@ public class SuitRange implements Inference {
             if (max == null) {
                 return ConstBoundInference.T;
             }
-            return new BoundInfMax(s, context.resolvePoints(max));
+            return new BoundInfMax(s, context.resolveLength(max));
         }
         if (max == null) {
-            return new BoundInfMin(s, context.resolvePoints(min));
+            return new BoundInfMin(s, context.resolveLength(min));
         }
-        return AndBoundInference.create(new BoundInfMin(s, context.resolvePoints(min)), new BoundInfMax(s, context.resolvePoints(max)));
+        int imin = context.resolveLength(min);
+        int imax = context.resolveLength(max);
+        if (imin == imax) {
+            return new BoundInfExact(s, imin);
+        }
+        return AndBoundInference.create(new BoundInfMin(s, imin), new BoundInfMax(s, imax));
     }
 
     @Override
@@ -89,6 +94,66 @@ public class SuitRange implements Inference {
             return false;
         SuitRange other = (SuitRange) obj;
         return Objects.equals(max, other.max) && Objects.equals(min, other.min) && Objects.equals(suit, other.suit);
+    }
+
+    static class BoundInfExact implements IBoundInference {
+        final int suit;
+        final int n;
+
+        public BoundInfExact(int suit, int n) {
+            this.suit = suit;
+            this.n = n;
+        }
+
+        @Override
+        public boolean matches(Hand hand) {
+            return hand.numInSuit(suit) == n;
+        }
+        
+        @Override
+        public boolean negatable() {
+            return true;
+        }
+        
+        @Override
+        public IBoundInference negate() {
+            return new BoundInfExactNot(suit, n);
+        }
+
+        @Override
+        public String toString() {
+            return n + " " + STR_ALL_SUITS.charAt(suit);
+        }
+    }
+
+    static class BoundInfExactNot implements IBoundInference {
+        final int suit;
+        final int n;
+
+        public BoundInfExactNot(int suit, int n) {
+            this.suit = suit;
+            this.n = n;
+        }
+
+        @Override
+        public boolean matches(Hand hand) {
+            return hand.numInSuit(suit) != n;
+        }
+        
+        @Override
+        public boolean negatable() {
+            return true;
+        }
+        
+        @Override
+        public IBoundInference negate() {
+            return new BoundInfExact(suit, n);
+        }
+
+        @Override
+        public String toString() {
+            return "~" + n + " " + STR_ALL_SUITS.charAt(suit);
+        }
     }
 
     static class BoundInfMin implements IBoundInference {
