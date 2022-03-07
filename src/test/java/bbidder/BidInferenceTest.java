@@ -28,22 +28,21 @@ public class BidInferenceTest {
 
     @Test
     public void testBidContext() {
-        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
-        assertEquals(BidInference.valueOf(reg, "1N => balanced").getContexts(),
+        assertEquals(BidPatternList.valueOf("1N").getContexts(),
                 List.of(new BiddingContext(BidList.valueOf("P 1N"), Map.of()), new BiddingContext(BidList.valueOf("1N"), Map.of())));
-        assertEquals(BidInference.valueOf(reg, "1M => balanced").getContexts(),
+        assertEquals(BidPatternList.valueOf("1M").getContexts(),
                 List.of(new BiddingContext(BidList.valueOf("P 1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf("P 1S"), Map.of("M", 3)),
                         new BiddingContext(BidList.valueOf("1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf("1S"), Map.of("M", 3))));
-        assertEquals(BidInference.valueOf(reg, "1M:down => balanced").getContexts(),
+        assertEquals(BidPatternList.valueOf("1M:down").getContexts(),
                 List.of(new BiddingContext(BidList.valueOf("P 1S"), Map.of("M", 3)), new BiddingContext(BidList.valueOf("P 1H"), Map.of("M", 2)),
                         new BiddingContext(BidList.valueOf("1S"), Map.of("M", 3)), new BiddingContext(BidList.valueOf("1H"), Map.of("M", 2))));
-        assertEquals(BidInference.valueOf(reg, "1S (P) 1N => balanced").getContexts(),
+        assertEquals(BidPatternList.valueOf("1S (P) 1N").getContexts(),
                 List.of(new BiddingContext(BidList.valueOf("P 1S P 1N"), Map.of()), new BiddingContext(BidList.valueOf("1S P 1N"), Map.of())));
 
-        assertEquals(BidInference.valueOf(reg, "1C NJM => balanced").getContexts(), List.of(
+        assertEquals(BidPatternList.valueOf("1C NJM").getContexts(), List.of(
                 new BiddingContext(BidList.valueOf("P 1C P 1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf("P 1C P 1S"), Map.of("M", 3)),
                 new BiddingContext(BidList.valueOf("1C P 1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf("1C P 1S"), Map.of("M", 3))));
-        assertEquals(BidInference.valueOf(reg, "1C P => balanced").getContexts(),
+        assertEquals(BidPatternList.valueOf("1C P").getContexts(),
                 List.of(new BiddingContext(BidList.valueOf("P 1C P P"), Map.of()), new BiddingContext(BidList.valueOf("1C P P"), Map.of())));
     }
 }
