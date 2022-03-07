@@ -3,22 +3,34 @@ package bbidder;
 import java.util.Objects;
 
 public class BoundBidInference {
-    public final BidList bids;
-    public final IBoundInference inference;
+    public final BidCtx ctx;
+    public final InferenceList inferences;
 
-    public BoundBidInference(BidList bids, IBoundInference inference) {
+    public BoundBidInference(BidCtx ctx, InferenceList inferences) {
         super();
-        this.bids = bids;
-        this.inference = inference;
+        this.ctx = ctx;
+        this.inferences = inferences;
     }
 
     @Override
     public String toString() {
-        return bids + " => " + inference;
+        return ctx + " => " + inferences;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bids, inference);
+        return Objects.hash(ctx, inferences);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BoundBidInference other = (BoundBidInference) obj;
+        return Objects.equals(ctx, other.ctx) && Objects.equals(inferences, other.inferences);
     }
 }
