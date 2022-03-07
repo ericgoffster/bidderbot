@@ -1,11 +1,10 @@
 package bbidder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NavigableSet;
 import java.util.Objects;
-import java.util.TreeSet;
 
 public class BidInference {
     public final BidPatternList bids;
@@ -48,141 +47,56 @@ public class BidInference {
         return Objects.equals(bids, other.bids) && Objects.equals(inferences, other.inferences);
     }
     
-    static class BidCtx {
-        final BidList boundBidList;
-        final Bid lastBidSuit;
-        final Map<String, Integer> suits;
-        public BidCtx(BidList boundBidList, Bid lastBidSuit, Map<String, Integer> suits) {
-            super();
-            this.boundBidList = boundBidList;
-            this.lastBidSuit = lastBidSuit;
-            this.suits = suits;
+    public List<BidCtx> getContexts() {
+        BidCtx ctx = new BidCtx(new BidList(List.of()), null, new HashMap<>());
+        
+        // no patterns, then a wide open context.
+        if (bids.bids.isEmpty()) {
+            return List.of(ctx);
         }
-        @Override
-        public int hashCode() {
-            return Objects.hash(boundBidList, lastBidSuit, suits);
+
+        List<BidCtx> l = new ArrayList<>();
+        // If the first pattern is us, then assume we can have an initial pass from the opposition
+        // Otherwise, starts with opposition always
+        BidPattern pattern = bids.bids.get(0);
+        if (!pattern.isOpposition) {
+            getContexts(l, new BidCtx(ctx.boundBidList.addBid(Bid.P), ctx.lastBidSuit, ctx.suits), bids, false);
+            getContexts(l, ctx, bids, false);
+        } else {
+            getContexts(l, ctx, bids, true);
         }
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            BidCtx other = (BidCtx) obj;
-            return Objects.equals(boundBidList, other.boundBidList) && lastBidSuit == other.lastBidSuit && Objects.equals(suits, other.suits);
-        }
+        return l;
     }
-    
-    void getContexts(List<BidCtx> l, BidList boundBidList, Bid lastBidSuit, Map<String, Integer> suits, BidPatternList remaining, boolean isOpp) {
+
+    void getContexts(List<BidCtx> l, BidCtx ctx, BidPatternList remaining, boolean isOpp) {
         if (remaining.bids.isEmpty()) {
             if (!isOpp) {
                 throw new IllegalArgumentException("last bid must be made by 'we'");
             }
-            l.add(new BidCtx(boundBidList, lastBidSuit, suits));
+            l.add(ctx);
             return;
         }
-        BidPattern pattern = remaining.bids.get(0);
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
+        BidPattern pattern = remaining.bids.get(0);
         if (isOpp && !pattern.isOpposition) {
-            getContexts(l, boundBidList.addBid(Bid.P), lastBidSuit, suits, remaining, !isOpp);
+            getContexts(l, new BidCtx(ctx.boundBidList.addBid(Bid.P), ctx.lastBidSuit, ctx.suits), remaining, !isOpp);
             return;
         }
-        for(Bid bid: getBids(pattern, lastBidSuit, suits)) {
-            Bid newLastBidSuit = lastBidSuit;
-            Map<String, Integer> newSuits = new HashMap<String, Integer>(suits);
+        
+        for(Bid bid: ctx.getBids(pattern)) {
             if (bid.isSuitBid()) {
+                Map<String, Integer> newSuits = new HashMap<String, Integer>(ctx.suits);
                 String symbol = pattern.getSuit();
-                Integer strain = getSuit(symbol, newSuits);
+                Integer strain = ctx.getSuit(symbol);
                 if (strain == null) {
                     newSuits.put(symbol, bid.strain);
                 }
-                newLastBidSuit = bid;
+                getContexts(l, new BidCtx(ctx.boundBidList.addBid(bid), bid, newSuits), new BidPatternList(remaining.bids.subList(1, remaining.bids.size())), !isOpp);
+            } else {
+                getContexts(l, new BidCtx(ctx.boundBidList.addBid(bid), ctx.lastBidSuit, ctx.suits), new BidPatternList(remaining.bids.subList(1, remaining.bids.size())), !isOpp);
             }
-            getContexts(l, boundBidList.addBid(bid), newLastBidSuit, newSuits, new BidPatternList(remaining.bids.subList(1, remaining.bids.size())), !isOpp);
         }
     }
     
-     static Integer getSuit(String symbol, Map<String, Integer> suits) {
-        Integer strain = Bid.getStrain(symbol);
-        if (strain != null) {
-            return strain;
-        }
-        return suits.get(symbol);
-    }
-
-    private static short getSuitClass(BidPattern pattern) {
-        switch (pattern.getSuit()) {
-        case "M":
-            return MAJORS;
-        case "m":
-            return MINORS;
-        default:
-            return ALL_SUITS;
-        }
-    }
-
-    private static Bid getBid(BidPattern pattern, int strain, Bid lastBidSuit) {
-        String level = pattern.getLevel();
-        switch (level) {
-        case "J":
-            return nextLevel(strain, lastBidSuit).raise();
-        case "NJ":
-            return nextLevel(strain, lastBidSuit);
-        default:
-            return Bid.valueOf(level.charAt(0) - '1', strain);
-        }
-    }
-    
-    private NavigableSet<Bid> getBids(BidPattern pattern, Bid lastBidSuit, Map<String, Integer> suits) {
-        if (pattern.str.equalsIgnoreCase("P")) {
-            TreeSet<Bid> ts = new TreeSet<Bid>();
-            ts.add(Bid.P);
-            return ts;
-        }
-        if (pattern.str.equalsIgnoreCase("X")) {
-            TreeSet<Bid> ts = new TreeSet<Bid>();
-            ts.add(Bid.X);
-            return ts;
-        }
-        if (pattern.str.equalsIgnoreCase("XX")) {
-            TreeSet<Bid> ts = new TreeSet<Bid>();
-            ts.add(Bid.XX);
-            return ts;
-        }
-        TreeSet<Bid> result = new TreeSet<>();
-        for (int strain : BitUtil.iterate(getStrains(pattern, lastBidSuit, suits))) {
-            Bid bid = getBid(pattern, strain, lastBidSuit);
-            if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
-                result.add(bid);
-            }
-        }
-        if (!pattern.upTheLine) {
-            return result.descendingSet();
-        }
-        return result;
-    }
-
-    private static short getStrains(BidPattern pattern, Bid lastBidSuitl, Map<String, Integer> suits) {
-        Integer strain = getSuit(pattern.getSuit(), suits);
-        if (strain != null) {
-            return (short) (1 << strain);
-        }
-        short values = getSuitClass(pattern);
-        for (int i : suits.values()) {
-            values &= ~(1 << i);
-        }
-        return values;
-    }
-
-    private static Bid nextLevel(int strain, Bid lastBidSuit) {
-        if (strain > lastBidSuit.strain) {
-            return Bid.valueOf(lastBidSuit.level, strain);
-        } else {
-            return Bid.valueOf(lastBidSuit.level + 1, strain);
-        }
-    }
-
 
 }
