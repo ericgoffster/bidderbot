@@ -38,6 +38,9 @@ public class BidList {
         return new BidList(bids);
     }
 
+    public Bid getLastBid() {
+        return bids.get(bids.size() - 1);
+    }
     public Bid getLastBidSuit() {
         for (int i = bids.size() - 1; i >= 0; i--) {
             if (bids.get(i).isSuitBid()) {
@@ -45,6 +48,17 @@ public class BidList {
             }
         }
         return null;
+    }
+    
+    public BidList exceptLast() {
+        return new BidList(bids.subList(0, bids.size() - 1));
+    }
+    
+    public boolean sameExceptLast(BidList other) {
+        if (other.bids.size() != bids.size() || bids.size() < 1) {
+            return false;
+        }
+        return exceptLast().equals(other.exceptLast());
     }
 
     @Override
