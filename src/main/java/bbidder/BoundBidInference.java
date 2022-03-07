@@ -2,6 +2,12 @@ package bbidder;
 
 import java.util.Objects;
 
+/**
+ * Represents inferences bound to an actual bidding sequence.
+ * 
+ * @author goffster
+ *
+ */
 public class BoundBidInference {
     public final BiddingContext ctx;
     public final InferenceList inferences;
@@ -33,7 +39,7 @@ public class BoundBidInference {
         BoundBidInference other = (BoundBidInference) obj;
         return Objects.equals(ctx, other.ctx) && Objects.equals(inferences, other.inferences);
     }
-    
+
     public IBoundInference bind(LikelyHands likelyHands) {
         return inferences.bind(new InferenceContext(ctx.bids.exceptLast().getLastBidSuit(), likelyHands, ctx));
     }

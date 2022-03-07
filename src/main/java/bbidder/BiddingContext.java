@@ -45,7 +45,8 @@ public class BiddingContext {
     }
 
     /**
-     * @param symbol The symbol
+     * @param symbol
+     *            The symbol
      * @return (0,1,2,3,4) for a given symbol
      */
     public Integer getSuit(String symbol) {
@@ -80,7 +81,8 @@ public class BiddingContext {
     }
 
     /**
-     * @param pattern The bid pattern
+     * @param pattern
+     *            The bid pattern
      * @return The set of possible bids for a pattern
      */
     public NavigableSet<Bid> getBids(BidPattern pattern) {

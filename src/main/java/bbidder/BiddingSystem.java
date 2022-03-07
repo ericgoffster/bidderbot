@@ -30,9 +30,20 @@ public class BiddingSystem {
         this.inferences = inferences;
     }
 
-    public static BiddingSystem load(String where, String spec, Consumer<ParseException> reportErrors) {
-        try (InputStream is = new URL(null, spec, new Handler(BiddingSystem.class.getClassLoader())).openStream()) {
-            return load(spec, is, reportErrors);
+    /**
+     * Load a bidding system in from a urlSpec
+     * 
+     * @param where
+     *            Where we are loading from
+     * @param urlSpec
+     *            The url spec
+     * @param reportErrors
+     *            The consumer of parse errors
+     * @return The bidding system.
+     */
+    public static BiddingSystem load(String where, String urlSpec, Consumer<ParseException> reportErrors) {
+        try (InputStream is = new URL(null, urlSpec, new Handler(BiddingSystem.class.getClassLoader())).openStream()) {
+            return load(urlSpec, is, reportErrors);
         } catch (MalformedURLException e) {
             reportErrors.accept(new ParseException(where, e));
             return new BiddingSystem(List.of());
@@ -42,6 +53,17 @@ public class BiddingSystem {
         }
     }
 
+    /**
+     * Load a bidding system in from an input stream.
+     * 
+     * @param where
+     *            Where we are loading from
+     * @param is
+     *            The input stream
+     * @param reportErrors
+     *            The consumer of parse errors
+     * @return The bidding system.
+     */
     public static BiddingSystem load(String where, InputStream is, Consumer<ParseException> reportErrors) {
         List<BoundBidInference> inferences = new ArrayList<>();
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
@@ -74,7 +96,15 @@ public class BiddingSystem {
         return new BiddingSystem(inferences);
     }
 
-    public void spew(OutputStream os) throws IOException {
+    /**
+     * Dump the bidding system
+     * 
+     * @param os
+     *            Where to dump it.
+     * @throws IOException
+     *             an I/O error occurred.
+     */
+    public void dump(OutputStream os) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
             for (BoundBidInference bi : inferences) {
                 bw.write(bi.toString());
@@ -82,6 +112,17 @@ public class BiddingSystem {
         }
     }
 
+    /**
+     * Retrieve the bid for a hand starting from the list of bids, likely hands for everyone.
+     * 
+     * @param bids
+     *            The list of bids
+     * @param likelyHands
+     *            Likely hands fro everyone
+     * @param hand
+     *            The hand to evaluate
+     * @return The right bid
+     */
     public Bid getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
         for (BoundBidInference i : inferences) {
             if (i.ctx.bids.bids.size() == bids.bids.size() + 1 && i.ctx.bids.exceptLast().equals(bids)) {
@@ -91,6 +132,8 @@ public class BiddingSystem {
                 }
             }
         }
+
+        // For now always pass, this will get smarter.
         return Bid.P;
     }
 
@@ -104,23 +147,25 @@ public class BiddingSystem {
      * @return The inference The inference from the bid.
      */
     public IBoundInference getInference(BidList bids, LikelyHands likelyHands) {
-        IBoundInference result = ConstBoundInference.create(false);
+        IBoundInference positive = ConstBoundInference.create(false);
         IBoundInference negative = ConstBoundInference.create(true);
         for (BoundBidInference i : inferences) {
             if (i.ctx.bids.bids.size() == bids.bids.size() && i.ctx.bids.exceptLast().equals(bids.exceptLast())) {
                 IBoundInference newInference = i.bind(likelyHands);
                 if (i.ctx.bids.getLastBid().equals(bids.getLastBid())) {
-                    result = OrBoundInference.create(AndBoundInference.create(newInference, negative), result);
+                    positive = OrBoundInference.create(AndBoundInference.create(newInference, negative), positive);
                 }
                 negative = AndBoundInference.create(negative, NotBoundInference.create(newInference));
             }
         }
+
+        // Pass means... Nothing else works, this will get smarter.
         if (bids.bids.size() > 0) {
             Bid lastBid = bids.getLastBid();
             if (lastBid == Bid.P) {
-                result = OrBoundInference.create(negative, result);
+                positive = OrBoundInference.create(negative, positive);
             }
         }
-        return result;
+        return positive;
     }
 }

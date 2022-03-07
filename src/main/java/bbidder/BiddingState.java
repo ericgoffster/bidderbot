@@ -39,7 +39,8 @@ public class BiddingState {
     }
 
     /**
-     * @param bid The bid to add
+     * @param bid
+     *            The bid to add
      * @return A new Bidding State with the given bid made.
      */
     public BiddingState withBid(Bid bid) {
@@ -52,13 +53,14 @@ public class BiddingState {
     }
 
     /**
-     * @param hand The hand
+     * @param hand
+     *            The hand
      * @return A bid for the given hand.
      */
     public Bid getBid(Hand hand) {
         // Retrieve likeihood of all hands for all players
         LikelyHands likelyHands = new LikelyHands(players[(turn + 3) % 4], players[(turn + 2) % 4], players[(turn + 1) % 4], players[turn]);
-        
+
         // Get the bid from the system.
         return systems[turn % 2].getBid(bidding, likelyHands, hand);
     }

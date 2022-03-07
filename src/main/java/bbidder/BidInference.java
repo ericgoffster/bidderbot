@@ -1,21 +1,22 @@
 package bbidder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Holds the bids and inferences from the notes.
+ * This last only long enough to call getBoundInferences.
+ * The result of this call is what is stored.
+ * 
+ * @author goffster
+ *
+ */
 public class BidInference {
     public final BidPatternList bids;
     public final InferenceList inferences;
 
-    static final short ALL_SUITS = 0xf;
-    static final short MINORS = 0x3;
-    static final short MAJORS = MINORS << 2;
-    
     static final LikelyHands ALL_HANDS_LIKELY = new LikelyHands();
-
 
     public BidInference(BidPatternList bids, InferenceList inferences) {
         super();
@@ -50,62 +51,12 @@ public class BidInference {
         return Objects.equals(bids, other.bids) && Objects.equals(inferences, other.inferences);
     }
 
-    public List<BiddingContext> getContexts() {
-        BiddingContext ctx = new BiddingContext(new BidList(List.of()), new HashMap<>());
-
-        // no patterns, then a wide open context.
-        if (bids.bids.isEmpty()) {
-            return List.of(ctx);
-        }
-
-        List<BiddingContext> l = new ArrayList<>();
-        // If the first pattern is us, then assume we can have an initial pass from the opposition
-        // Otherwise, starts with opposition always
-        BidPattern pattern = bids.bids.get(0);
-        if (!pattern.isOpposition) {
-            getContexts(l, new BiddingContext(ctx.bids.addBid(Bid.P), ctx.suits), bids, false);
-            getContexts(l, ctx, bids, false);
-        } else {
-            getContexts(l, ctx, bids, true);
-        }
-        return l;
-    }
-
-    void getContexts(List<BiddingContext> l, BiddingContext ctx, BidPatternList remaining, boolean isOpp) {
-        if (remaining.bids.isEmpty()) {
-            if (!isOpp) {
-                throw new IllegalArgumentException("last bid must be made by 'we'");
-            }
-            l.add(ctx);
-            return;
-        }
-        // If it is the opps turn and the next bid is not opp, then assume pass for opps
-        BidPattern pattern = remaining.bids.get(0);
-        if (isOpp && !pattern.isOpposition) {
-            getContexts(l, new BiddingContext(ctx.bids.addBid(Bid.P), ctx.suits), remaining, !isOpp);
-            return;
-        }
-
-        for (Bid bid : ctx.getBids(pattern)) {
-            if (bid.isSuitBid()) {
-                Map<String, Integer> newSuits = new HashMap<String, Integer>(ctx.suits);
-                String symbol = pattern.getSuit();
-                Integer strain = ctx.getSuit(symbol);
-                if (strain == null) {
-                    newSuits.put(symbol, bid.strain);
-                }
-                getContexts(l, new BiddingContext(ctx.bids.addBid(bid), newSuits), new BidPatternList(remaining.bids.subList(1, remaining.bids.size())),
-                        !isOpp);
-            } else {
-                getContexts(l, new BiddingContext(ctx.bids.addBid(bid), ctx.suits), new BidPatternList(remaining.bids.subList(1, remaining.bids.size())),
-                        !isOpp);
-            }
-        }
-    }
-
+    /**
+     * @return The list of inferences bound to actual bidding sequences.
+     */
     public List<BoundBidInference> getBoundInferences() {
         List<BoundBidInference> result = new ArrayList<>();
-        for (BiddingContext ctx : getContexts()) {
+        for (BiddingContext ctx : bids.getContexts()) {
             BoundBidInference inference = new BoundBidInference(ctx, inferences);
             // Catch an errors
             inference.bind(ALL_HANDS_LIKELY);

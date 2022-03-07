@@ -41,6 +41,7 @@ public class BidList {
     public Bid getLastBid() {
         return bids.get(bids.size() - 1);
     }
+
     public Bid getLastBidSuit() {
         for (int i = bids.size() - 1; i >= 0; i--) {
             if (bids.get(i).isSuitBid()) {
@@ -49,11 +50,11 @@ public class BidList {
         }
         return null;
     }
-    
+
     public BidList exceptLast() {
         return new BidList(bids.subList(0, bids.size() - 1));
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(bids);

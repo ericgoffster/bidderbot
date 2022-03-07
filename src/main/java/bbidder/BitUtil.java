@@ -4,6 +4,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Fast bit utilities.
+ * 
+ * @author goffster
+ *
+ */
 public class BitUtil {
     private static int set[][] = new int[65536][];
 
