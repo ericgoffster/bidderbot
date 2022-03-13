@@ -1,42 +1,42 @@
 1D NJy:down => gf+, 5+ y, longest_or_equal y among unbid
-test Kxx Ax xxx AQxxx:1D P 2C
-test AQxxx Axxx x Kxx:1D P 1S
+test Kxx Ax xxx AQxxx:1♦ P 2♣
+test AQxxx Axxx x Kxx:1♦ P 1♠
 
 1m 1M => gf+, 4 M, longest_or_equal M among unbid
-test Kxxx Ax xxx AQxx:1D P 1S
-test AQxx Axxx xx Kxx:1D P 1H
+test Kxxx Ax xxx AQxx:1♦ P 1♠
+test AQxx Axxx xx Kxx:1♦ P 1♥
 
 1m 1M:down => min, 5+ M, longest_or_equal M among same_level & unbid
-test Kxxx Ax xx xxxxx:1D P 1S
+test Kxxx Ax xx xxxxx:1♦ P 1♠
 
 1m 1M:down => inv, 5+ M, longest_or_equal M among same_level & unbid
-test Kxxx Ax xx Axxxx:1D P 1S
+test Kxxx Ax xx Axxxx:1♦ P 1♠
 
 1m 1M => min, 4 M, longest_or_equal M among same_level & unbid
-test Kxxxx Axxx xx xx:1D P 1S
-test Kxxx Axxx xx xxx:1D P 1H
+test Kxxxx Axxx xx xx:1♦ P 1♠
+test Kxxx Axxx xx xxx:1♦ P 1♥ 
 
 1m 1M => inv, 4 M, longest_or_equal M among same_level & unbid
-test Kxxxx Axxx xx Ax:1D P 1S
-test Kxxx Axxx xx Axx:1D P 1H
+test Kxxxx Axxx xx Ax:1♦ P 1♠
+test Kxxx Axxx xx Axx:1♦ P 1♥ 
 
 1m 3N => gf, balanced
-test Kxx Kx Axxx Kxxx:1D P 3N
+test Kxx Kx Axxx Kxxx:1♦ P 3N
 
 1m 2N => inv, balanced
-test Kxx Kx Qxxx Kxxx:1D P 2N
+test Kxx Kx Qxxx Kxxx:1♦ P 2N
 
 1m 1N => min, balanced
-test Kxx Kx Qxxx xxxx:1D P 1N
+test Kxx Kx Qxxx xxxx:1♦ P 1N
 
 1m 2m => inv+, 4+ m
-test KQx x Qxxxx Axxx:1D P 2D
+test KQx x Qxxxx Axxx:1♦ P 2♦
 
 1m 3m => min, 5+ m
-test KQx x Qxxxx xxxx:1D P 3D
+test KQx x Qxxxx xxxx:1♦ P 3♦
 
 1m 1y:down => min+, 5+ y, longest_or_equal y among same_level & unbid
-test KQx x Axxxxx xxx:1C P 1D
+test KQx x Axxxxx xxx:1♣ P 1♦
 
 # very hard to get here ith 6+ pts, here just as a catch all
 1m 1y => gf+, 4 y, longest_or_equal y among unbid
