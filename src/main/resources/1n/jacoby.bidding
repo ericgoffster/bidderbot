@@ -32,19 +32,19 @@ test AQx xxx AJx Axxx: 1N P 2♥ P 2♠
 
 
 
-1N 2♦ 1step 2♠ => inv, 5+ ♠
+1N 2♦ 1stepM 2♠ => inv, 5+ ♠
 test AJxxx Axxxx xx x: 1N P 2♦ P 2♥ P 2♠
 
 1N 2♦ 1stepM 3M => inv, 6+ M
 test Axx Kxxxxx xx xx: 1N P 2♦ P 2♥ P 3♥
 
-1N 2♦ 1step 2N => inv
+1N 2♦ 1stepM 2N => inv
 test Axx Axxxx xx Jxx: 1N P 2♦ P 2♥ P 2N
 
-1N 2♦ 1step 3m => gf+, 4+ m
+1N 2♦ 1stepM 3m => gf+, 4+ m
 test Axx Axxxx x Axxx: 1N P 2♦ P 2♥ P 3♣
 
-1N 2♦ 1step 3N => gf
+1N 2♦ 1stepM 3N => gf
 test AJx AQxxx xxx xx: 1N P 2♦ P 2♥ P 3N
 
 1N 2♦ 1stepM Jx => slaminv, 6+ M, 1- x
@@ -55,8 +55,8 @@ test Axx AQxxxx x Axx: 1N P 2♦ P 2♥ P 4♦
 1N 2♦ 1stepM 4M => slaminv, 6+ M
 test Axx AQJxxx Ax xx: 1N P 2♦ P 2♥ P 4♥
 
-1N 2♦ 1step 4N => slaminv
+1N 2♦ 1stepM 4N => slaminv
 test Axx AQxxx AQx xx: 1N P 2♦ P 2♥ P 4N
 
-1N 2♦ 1step 5N => slam, 5 ♥
+1N 2♦ 1stepM 5N => slam, 5 ♥
 test Axx AQxxx AQx Ax: 1N P 2♦ P 2♥ P 5N
