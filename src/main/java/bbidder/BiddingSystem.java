@@ -24,10 +24,12 @@ import bbidder.inferences.OrBoundInference;
  */
 public class BiddingSystem {
     public final List<BoundBidInference> inferences;
+    public final List<BiddingTest> tests;
 
-    public BiddingSystem(List<BoundBidInference> inferences) {
+    public BiddingSystem(List<BoundBidInference> inferences, List<BiddingTest> tests) {
         super();
         this.inferences = inferences;
+        this.tests = tests;
     }
 
     /**
@@ -46,10 +48,10 @@ public class BiddingSystem {
             return load(urlSpec, is, reportErrors);
         } catch (MalformedURLException e) {
             reportErrors.accept(new ParseException(where, e));
-            return new BiddingSystem(List.of());
+            return new BiddingSystem(List.of(), List.of());
         } catch (IOException e) {
             reportErrors.accept(new ParseException(where, e));
-            return new BiddingSystem(List.of());
+            return new BiddingSystem(List.of(), List.of());
         }
     }
 
@@ -66,6 +68,7 @@ public class BiddingSystem {
      */
     public static BiddingSystem load(String where, InputStream is, Consumer<ParseException> reportErrors) {
         List<BoundBidInference> inferences = new ArrayList<>();
+        List<BiddingTest> tests = new ArrayList<>();
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         int lineno = 0;
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
@@ -80,8 +83,11 @@ public class BiddingSystem {
                     ln = ln.substring(0, pos);
                 }
                 ln = ln.trim();
-                if (ln.startsWith("include")) {
-                    inferences.addAll(load(where, ln.substring(7).trim(), reportErrors).inferences);
+                String[] comm = ln.split("\\s+", 2);
+                if (comm.length == 2 && comm[0].equals("include")) {
+                    inferences.addAll(load(where, comm[1].trim(), reportErrors).inferences);
+                } else if (comm.length == 2 && comm[0].equals("test")) {
+                    tests.add(BiddingTest.valueOf(comm[1]));
                 } else if (!ln.equals("")) {
                     try {
                         inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences());
@@ -93,7 +99,7 @@ public class BiddingSystem {
         } catch (IOException e) {
             reportErrors.accept(new ParseException(where, e));
         }
-        return new BiddingSystem(inferences);
+        return new BiddingSystem(inferences, tests);
     }
 
     /**
