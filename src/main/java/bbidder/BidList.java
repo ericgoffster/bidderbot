@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author goffster
  *
  */
-public class BidList {
+public class BidList implements BiddingSequence {
     private final List<Bid> bids;
 
     private BidList(List<Bid> bids) {
@@ -235,5 +235,13 @@ public class BidList {
             return false;
         BidList other = (BidList) obj;
         return Objects.equals(bids, other.bids);
+    }
+
+    @Override
+    public Bid getMatch(BidList list) {
+        if (list.equals(exceptLast())) {
+            return getLastBid();
+        }
+        return null;
     }
 }
