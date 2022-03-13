@@ -45,6 +45,11 @@ public class BiddingContext {
      * @return The set of possible bids for a pattern
      */
     public NavigableSet<Bid> getBids(BidPattern pattern) {
+        if (pattern.simpleBid != null) {
+            TreeSet<Bid> ts = new TreeSet<Bid>();
+            ts.add(pattern.simpleBid);
+            return ts;
+        }
         if (pattern.isSuitBid()) {
             Bid lastBidSuit = bids.getLastBidSuit();
             TreeSet<Bid> result = new TreeSet<>();
@@ -58,21 +63,6 @@ public class BiddingContext {
                 return result.descendingSet();
             }
             return result;
-        }
-        if (pattern.str.equalsIgnoreCase(STR_P)) {
-            TreeSet<Bid> ts = new TreeSet<Bid>();
-            ts.add(Bid.P);
-            return ts;
-        }
-        if (pattern.str.equalsIgnoreCase(STR_X)) {
-            TreeSet<Bid> ts = new TreeSet<Bid>();
-            ts.add(Bid.X);
-            return ts;
-        }
-        if (pattern.str.equalsIgnoreCase(STR_XX)) {
-            TreeSet<Bid> ts = new TreeSet<Bid>();
-            ts.add(Bid.XX);
-            return ts;
         }
         throw new IllegalStateException();
     }

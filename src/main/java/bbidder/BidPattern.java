@@ -21,6 +21,7 @@ public class BidPattern {
     public final boolean upTheLine;
     public final String suit;
     public final String level;
+    public final Bid simpleBid;
 
     public BidPattern(boolean isOpposition, String str, boolean upTheLine) {
         this.isOpposition = isOpposition;
@@ -30,13 +31,17 @@ public class BidPattern {
         if (upper.equals(Constants.STR_X) || upper.equals(Constants.STR_XX) || upper.equals(Constants.STR_P)) {
             suit = null;
             level = null;
+            simpleBid = Bid.fromStr(str);
         } else if (upper.startsWith("NJ") || upper.startsWith("DJ")) {
             level = upper.substring(0, 2);
             suit = str.substring(2);
+            simpleBid = null;
         } else if (upper.startsWith("J")) {
             level = upper.substring(0, 1);
             suit = str.substring(1);
+            simpleBid = null;
         } else {
+            simpleBid = Bid.fromStr(str);
             level = upper.substring(0, 1);
             suit = str.substring(1);
         }
