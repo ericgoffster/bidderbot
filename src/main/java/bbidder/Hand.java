@@ -1,7 +1,18 @@
 package bbidder;
 
+import static bbidder.Constants.ACE;
+import static bbidder.Constants.CHR_ACE;
+import static bbidder.Constants.CHR_JACK;
+import static bbidder.Constants.CHR_KING;
+import static bbidder.Constants.CHR_QUEEN;
+import static bbidder.Constants.CHR_TEN;
+import static bbidder.Constants.JACK;
+import static bbidder.Constants.KING;
+import static bbidder.Constants.NOTRUMP;
+import static bbidder.Constants.QUEEN;
+import static bbidder.Constants.TEN;
+
 import java.util.Arrays;
-import static bbidder.Constants.*;
 
 /**
  * Represents a hand in bridge.
@@ -12,9 +23,23 @@ import static bbidder.Constants.*;
 public class Hand {
     private final short[] suits;
 
-    public Hand(short[] suits) {
+    private Hand(short[] suits) {
         super();
         this.suits = suits;
+    }
+    
+    public Hand() {
+        this(new short[] {0, 0, 0, 0});
+    }
+    
+    public static Hand allCards() {
+        return new Hand(new short[] {0x1fff, 0x1fff, 0x1fff, 0x1fff});
+    }
+    
+    public Hand withCardAdded(int suit, int rank) {
+        short[] newSuits = Arrays.copyOf(suits, 4);
+        newSuits[suit] |= (1 << rank);
+        return new Hand(newSuits);
     }
 
     static char toRank(int rank) {
@@ -214,7 +239,7 @@ public class Hand {
     }
 
     public static Hand valueOf(String str) {
-        return valueOf(str, new Hand(new short[] { 0x1fff, 0x1fff, 0x1fff, 0x1fff }));
+        return valueOf(str, Hand.allCards());
     }
 
     public String toString() {

@@ -20,7 +20,7 @@ public class HandGenerator {
         List<Hand> result = new ArrayList<>();
         int num = 0;
         while (result.size() < numDesired) {
-            short[] suits = new short[4];
+            Hand h = new Hand();
             for (int i = 0; i < 13; i++) {
                 int p = r.nextInt(52 - i) + i;
                 int t = cards[p];
@@ -28,9 +28,9 @@ public class HandGenerator {
                 cards[i] = t;
                 int suit = t % 4;
                 int rank = t / 4;
-                suits[suit] |= (1 << rank);
+                
+                h = h.withCardAdded(suit, rank);
             }
-            Hand h = new Hand(suits);
             if (inf.matches(h)) {
                 result.add(h);
             }
