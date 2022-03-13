@@ -42,46 +42,42 @@ public class AndBoundInference implements IBoundInference {
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
         return create(List.of(i1, i2));
     }
+    
+    public static boolean addAnd(List<IBoundInference> l, IBoundInference rhs) {
+        if (rhs == ConstBoundInference.F) {
+            return false;
+        } else if (rhs != ConstBoundInference.T) {
+            for(int i = 0; i < l.size(); i++) {
+                IBoundInference lhs = l.get(i);
+                IBoundInference comb = lhs.andReduce(rhs);
+                if (comb == null) {
+                    comb = rhs.andReduce(lhs);
+                }
+                if (comb != null) {
+                    l.remove(i);
+                    return addAnd(l, comb);
+                }
+            }
+            l.add(rhs);
+            return true;
+        } else {
+            return true;
+        }
+    }
 
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> l = new ArrayList<>();
         for (IBoundInference i : inferences) {
-            if (i == ConstBoundInference.F) {
-                return ConstBoundInference.F;
-            }
             if (i instanceof AndBoundInference) {
-                l.addAll(((AndBoundInference) i).inferences);
-            } else if (i != ConstBoundInference.T) {
-                l.add(i);
-            }
-        }
-        int i = 0;
-        while (i < l.size()) {
-            IBoundInference lhs = l.get(i);
-            int j = i + 1;
-            donebubble: {
-                while (j < l.size()) {
-                    IBoundInference rhs = l.get(j);
-                    IBoundInference comb = lhs.andReduce(rhs);
-                    if (comb == null) {
-                        comb = rhs.andReduce(lhs);
-                    }
-                    if (comb != null) {
-                        l.remove(j);
-                        if (comb == ConstBoundInference.F) {
-                            return ConstBoundInference.F;
-                        }
-                        if (comb == ConstBoundInference.T) {
-                            l.remove(i);
-                        } else {
-                            l.set(i, comb);
-                        }
-                        break donebubble;
-                    } else {
-                        j++;
+                for(IBoundInference bi: ((AndBoundInference) i).inferences) {
+                    if (!addAnd(l, bi)) {
+                        return ConstBoundInference.F;
                     }
                 }
-                i++;
+            } else {
+                if (!addAnd(l, i)) {
+                    return ConstBoundInference.F;
+                }
             }
         }
         if (l.size() == 0) {
