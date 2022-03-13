@@ -36,8 +36,8 @@ public class BidPatternList {
         List<BiddingContext> l = new ArrayList<>();
         // Add in first hand passing
         BidPattern pattern = bids.get(0);
-        getContexts(l, new BiddingContext(ctx.bids.withBidAdded(Bid.P).withBidAdded(Bid.P), ctx.suits), true);
-        getContexts(l, new BiddingContext(ctx.bids.withBidAdded(Bid.P), ctx.suits), true);
+        getContexts(l, new BiddingContext(new BidList(List.of(Bid.P, Bid.P)), new HashMap<>()), true);
+        getContexts(l, new BiddingContext(new BidList(List.of(Bid.P)), new HashMap<>()), true);
         getContexts(l, ctx, true);
         if (!pattern.isOpposition) {
             getContexts(l, ctx, false);
