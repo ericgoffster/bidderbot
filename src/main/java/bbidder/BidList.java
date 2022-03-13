@@ -137,7 +137,7 @@ public class BidList {
         List<Bid> newBids = new ArrayList<>();
         newBids.add(bid);
         newBids.addAll(bids);
-        return BidList.create(newBids);
+        return create(newBids);
     }
 
     /**

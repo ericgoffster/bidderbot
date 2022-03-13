@@ -28,6 +28,12 @@ public class BiddingContext {
     
     private final Map<String, Integer> suits;
 
+    private BiddingContext(BidList boundBidList, Map<String, Integer> suits) {
+        super();
+        this.bids = boundBidList;
+        this.suits = suits;
+    }
+
     /**
      * @return The list of bids.
      */
@@ -42,26 +48,20 @@ public class BiddingContext {
         return Collections.unmodifiableMap(suits);
     }
 
-    private BiddingContext(BidList boundBidList, Map<String, Integer> suits) {
-        super();
-        this.bids = boundBidList;
-        this.suits = suits;
-    }
-    
-    public BiddingContext withBidAdded(Bid b) {
-        return new BiddingContext(bids.withBidAdded(b), suits);
+    /**
+     * @param bid The bid to add
+     * @return a new bidding context with a new bid added.
+     */
+    public BiddingContext withBidAdded(Bid bid) {
+        return new BiddingContext(bids.withBidAdded(bid), suits);
     }
 
-    public BiddingContext withBidPrepended(Bid b) {
-        return new BiddingContext(bids.withBidPrepended(b), suits);
-    }
-
-    public BiddingContext() {
-        this(BidList.create(List.of()));
-    }
-
-    public BiddingContext(BidList boundBidList) {
-        this(boundBidList, new HashMap<>());
+    /**
+     * @param bid The bid to add
+     * @return a new bidding context with a new bid prepended.
+     */
+    public BiddingContext withBidPrepended(Bid bid) {
+        return new BiddingContext(bids.withBidPrepended(bid), suits);
     }
 
     public List<BiddingContext> withNewBid(BidPattern pattern) {
