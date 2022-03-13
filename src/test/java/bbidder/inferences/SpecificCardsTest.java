@@ -16,7 +16,8 @@ public class SpecificCardsTest {
     @Test
     public void testValueOf() {
         assertEquals(new SpecificCards("S", Set.of((short) (1L << Constants.ACE | 1L << Constants.QUEEN))), SpecificCards.valueOf("AQ in S"));
-        assertEquals(new SpecificCards("S", Set.of((short) ((1L << Constants.ACE) | (1L << Constants.KING)), (short) (1L << Constants.KING), (short) (1L << Constants.ACE))), SpecificCards.valueOf("1 of top 2 in S"));
+        assertEquals(new SpecificCards("S", Set.of((short) ((1L << Constants.ACE) | (1L << Constants.KING)), (short) (1L << Constants.KING), (short) (1L << Constants.ACE))), SpecificCards.valueOf("1+ of top 2 in S"));
+        assertEquals(new SpecificCards("S", Set.of((short) (1L << Constants.KING), (short) (1L << Constants.ACE))), SpecificCards.valueOf("1 of top 2 in S"));
     }
 
     @Test

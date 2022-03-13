@@ -11,5 +11,5 @@ test AKxxxx AKx Ax xx:1♠ 2♠ 4♠
 1♠ 2♠ 2N => inv, 1- x
 test AKxxx Axx Kxxx x:1♠ 2♠ 2N
 
-1♠ 2♠ 3x => inv, 3+ x, 1 of top 3 in x
+1♠ 2♠ 3x => inv, 3+ x, 1-2 of top 3 in x
 test AKxxx AQx Kxx xx:1♠ 2♠ 3D

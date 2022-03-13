@@ -27,7 +27,7 @@ public class SpecificCards implements Inference {
     public final String suit;
     public final Set<Short> cards;
     
-    public static Pattern PATT = Pattern.compile("\\s*(\\d+)\\s+of\\s+top\\s+(\\d+)\\s+in\\s+(.*)\\s*");
+    public static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)");
 
     public SpecificCards(String suit, Set<Short> cards) {
         super();
@@ -70,16 +70,18 @@ public class SpecificCards implements Inference {
         if (str == null) {
             return null;
         }
-        Matcher m = PATT.matcher(str);
-        if (m.matches()) {
-            int n = Integer.parseInt(m.group(1));
-            int top = Integer.parseInt(m.group(2));
-            String suit = m.group(3);
-            if (!BiddingContext.isValidSuit(suit)) {
-                return null;
+        RangeOf rng = RangeOf.valueOf(str);
+        if (rng != null) {
+            Matcher m = PATT.matcher(rng.of);
+            if (m.matches()) {
+                int top = Integer.parseInt(m.group(1));
+                String suit = m.group(2);
+                if (!BiddingContext.isValidSuit(suit)) {
+                    return null;
+                }
+                Set<Short> s = atLeastOneOf(Range.between(rng.min, rng.max, top), top);
+                return new SpecificCards(suit, s);
             }
-            Set<Short> s = atLeastOneOf(Range.atLeast(n, top), top);
-            return new SpecificCards(suit, s);
         }
         String[] parts = SplitUtil.split(str, "\\s+", 3);
         if (parts.length == 3 && parts[1].equalsIgnoreCase("in")) {
