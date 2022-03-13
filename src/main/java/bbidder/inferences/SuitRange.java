@@ -46,11 +46,14 @@ public class SuitRange implements Inference {
             return null;
         }
         str = str.trim();
-        int pos = str.indexOf(" in ");
+        int pos = str.indexOf(" ");
         if (pos < 0) {
             return null;
         }
-        String suit = str.substring(pos + 4).trim();
+        String suit = str.substring(pos + 1).trim();
+        if (suit.equalsIgnoreCase("hcp")) {
+            return null;
+        }
         str = str.substring(0, pos).trim();
         if (str.endsWith("+")) {
             return new SuitRange(suit, str.substring(0, str.length() - 1).trim(), null);
@@ -71,15 +74,15 @@ public class SuitRange implements Inference {
     @Override
     public String toString() {
         if (max == null) {
-            return min + "+ in " + suit;
+            return min + "+ " + suit;
         }
         if (min == null) {
-            return max + "- in " + suit;
+            return max + "- " + suit;
         }
         if (min.equals(max)) {
-            return min + " in " + suit;
+            return min + " " + suit;
         }
-        return min + "-" + max + " in " + suit;
+        return min + "-" + max + " " + suit;
     }
 
     @Override

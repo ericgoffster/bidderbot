@@ -1,30 +1,30 @@
 # Responses to suit bid
 
 # Responses to 1 Major
-1M 2N => 13+ hcp, 4+ in M
-1M 2M => 6-10 hcp, 3+ in M
-1M 3M => 11-12 hcp, 4+ in M
-1M 3m => 11-12 hcp, 6+ in m
-1M 1N => 11-12 hcp, 3 in M
+1M 2N => 13+ hcp, 4+ M
+1M 2M => 6-10 hcp, 3+ M
+1M 3M => 11-12 hcp, 4+ M
+1M 3m => 11-12 hcp, 6+ m
+1M 1N => 11-12 hcp, 3 M
 
 # Responses to a suit with a GF hand
-1x NJy:down => 13+ hcp, 5+ in y, longest_or_equal y among unbid
-1x NJy => 13+ hcp, 4 in y, longest_or_equal y among unbid
+1x NJy:down => 13+ hcp, 5+ y, longest_or_equal y among unbid
+1x NJy => 13+ hcp, 4 y, longest_or_equal y among unbid
 
 # 1/1
-1H 1S:down => 6+ hcp, 4+ in S
-1m 1M:down => 6+ hcp, 5+ in M, longest_or_equal M among same_level & unbid
-1m 1M => 6+ hcp, 4 in M, longest_or_equal M among same_level & unbid
+1H 1S:down => 6+ hcp, 4+ S
+1m 1M:down => 6+ hcp, 5+ M, longest_or_equal M among same_level & unbid
+1m 1M => 6+ hcp, 4 M, longest_or_equal M among same_level & unbid
 
 # minor suit response
 1m 3N => 13-15 hcp, balanced
 1m 2N => 11-12 hcp, balanced
 1m 1N => 6-10 hcp, balanced
-1m 2m => 11+ hcp, 4+ in m
-1m 3m => 6-10 hcp, 5+ in m
+1m 2m => 11+ hcp, 4+ m
+1m 3m => 6-10 hcp, 5+ m
 
 # 1/1
-1C 1D => 6+ hcp, 4+ in D
+1C 1D => 6+ hcp, 4+ D
 
 # Catch all
 1M 1N => 6+ hcp

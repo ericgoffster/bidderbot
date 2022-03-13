@@ -18,6 +18,6 @@ public class InferenceRegistryTest {
         assertEquals(new HCPRange("10", null), reg.valueOf("10+hcp"));
         assertEquals(new LongestOrEqual("s", "all"), reg.valueOf("longest_or_equal s among all"));
         assertEquals(new OpeningPreempt("S", 2), reg.valueOf("opening_preempt 2 S"));
-        assertEquals(new SuitRange("s", "10", null), reg.valueOf("10+ in s"));
+        assertEquals(new SuitRange("s", "10", null), reg.valueOf("10+ s"));
     }
 }

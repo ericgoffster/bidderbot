@@ -12,13 +12,13 @@ import bbidder.InferenceContext;
 public class SuitRangeTest {
     @Test
     public void testValueOf() {
-        assertEquals(new SuitRange("s", "10", null), SuitRange.valueOf("10+ in s"));
+        assertEquals(new SuitRange("s", "10", null), SuitRange.valueOf("10+ s"));
     }
 
     @Test
     public void testToString() {
         InferenceContext ctx = new InferenceContext();
-        assertEquals("8-10 in s", new SuitRange("s", "8", "10").toString());
+        assertEquals("8-10 s", new SuitRange("s", "8", "10").toString());
         assertEquals("(8+ S & 10- S)", new SuitRange("s", "8", "10").bind(ctx).toString());
     }
 
