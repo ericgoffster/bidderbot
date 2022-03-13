@@ -4,10 +4,10 @@ test AQxxxx x AKx Kxx:1N P 2H
 1N 2D => slaminv, 6+ H
 test x AQxxxx AKx Kxx:1N P 2D
 
-1N 4H => 6 S, gf+
+1N 4H => 6+ S, gf+
 test AQxxxx Kxx Qx xx:1N P 4H
 
-1N 4D => 6 H, gf+
+1N 4D => 6+ H, gf+
 test Kxx AQxxxx Qx xx:1N P 4D
 
 1N 2H => 5+ S
