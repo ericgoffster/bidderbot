@@ -26,18 +26,14 @@ public class InferenceContext {
 
     public final Players players;
 
-    public final Bid lastBidSuit;
-
-    public InferenceContext(Bid lastBidSuit, Players players, BiddingContext bc) {
+    public InferenceContext(Players players, BiddingContext bc) {
         super();
-        this.lastBidSuit = lastBidSuit;
         this.players = players;
         this.bc = bc;
     }
 
     public InferenceContext() {
         super();
-        this.lastBidSuit = null;
         this.players = new Players();
         this.bc = BiddingContext.EMPTY;
     }
@@ -49,7 +45,7 @@ public class InferenceContext {
         }
         Map<Integer, InferenceContext> result = new LinkedHashMap<>();
         for (var e : bc.getMappedBiddingContexts(s).entrySet()) {
-            result.put(e.getKey(), new InferenceContext(lastBidSuit, players, e.getValue()));
+            result.put(e.getKey(), new InferenceContext(players, e.getValue()));
         }
         return result;
     }
@@ -87,6 +83,18 @@ public class InferenceContext {
             } else if (ch == '~') {
                 advance();
                 return (short) (0xf & ~lookupSuitSet0());
+            } else if (ch == '>') {
+                advance();
+                StringBuilder sb = new StringBuilder();
+                while (Character.isLetter(ch) || ch == '_' || Character.isDigit(ch)) {
+                    sb.append((char) ch);
+                    advance();
+                }
+                Integer st = bc.getSuit(sb.toString());
+                if (st == null) {
+                    throw new IllegalArgumentException("Unknown Suit: '" + sb + "'");
+                }
+                return (short) (0xf & ~((1 << (st + 1)) - 1));
             } else {
                 StringBuilder sb = new StringBuilder();
                 while (Character.isLetter(ch) || ch == '_' || Character.isDigit(ch)) {
@@ -101,16 +109,6 @@ public class InferenceContext {
                                 && players.partner.infSummary.avgLenInSuit(suit) < 4 && players.me.infSummary.avgLenInSuit(suit) < 4) {
                             suits |= (1 << suit);
                         }
-                    }
-                    return suits;
-                }
-                case "SAME_LEVEL": {
-                    if (lastBidSuit == null) {
-                        return 0xf;
-                    }
-                    short suits = 0;
-                    for (int suit = lastBidSuit.strain + 1; suit < 4; suit++) {
-                        suits |= (1 << suit);
                     }
                     return suits;
                 }
