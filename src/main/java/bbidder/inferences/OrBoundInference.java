@@ -43,45 +43,27 @@ public class OrBoundInference implements IBoundInference {
         return create(List.of(i1, i2));
     }
     
-    /**
-     * Adds a an inference to a list of inferences being or'ed together.
-     * @param orList The list of inferences being and'ed together.
-     * @param rhs inference to add to this list.
-     * @return false If any of the inferences is "T"
-     */
-    public static boolean addOr(List<IBoundInference> orList, IBoundInference rhs) {
-        // One bad apple spoils the rest
-        if (rhs == ConstBoundInference.T) {
-            return false;
-        } else if (rhs != ConstBoundInference.F) {
-            // Attempt to combine the inference with an existing inference.
-            for(int i = 0; i < orList.size(); i++) {
-                IBoundInference lhs = orList.get(i);
-                IBoundInference comb = lhs.orReduce(rhs);
-                if (comb == null) {
-                    comb = rhs.orReduce(lhs);
-                }
-                // Found a combination, remove original, add the combination.
-                if (comb != null) {
-                    // Remove 
-                    orList.remove(i);
-                    return addOr(orList, comb);
-                }
+    public static void addOr(List<IBoundInference> orList, IBoundInference rhs) {
+        // Attempt to combine the inference with an existing inference.
+        for(int i = 0; i < orList.size(); i++) {
+            IBoundInference lhs = orList.get(i);
+            IBoundInference comb = InfUtil.orReduce(rhs, lhs);
+            // Found a combination, remove original, add the combination.
+            if (comb != null) {
+                // Remove 
+                orList.remove(i);
+                addOr(orList, comb);
+                return;
             }
-            // Just add to the end
-            orList.add(rhs);
-            return true;
-        } else {
-            return true;
         }
+        // Just add to the end
+        orList.add(rhs);
     }
 
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> orList = new ArrayList<>();
         for (IBoundInference i : inferences) {
-            if (!addOr(orList, i)) {
-                return ConstBoundInference.T;
-            }
+            addOr(orList, i);
         }
         if (orList.size() == 0) {
             return ConstBoundInference.F;

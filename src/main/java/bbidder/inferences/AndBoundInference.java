@@ -43,45 +43,27 @@ public class AndBoundInference implements IBoundInference {
         return create(List.of(i1, i2));
     }
     
-    /**
-     * Adds a an inference to a list of inferences being anded together.
-     * @param andList The list of inferences being and'ed together.
-     * @param rhs inference to add to this list.
-     * @return false If any of the inferences is "F"
-     */
-    public static boolean addAnd(List<IBoundInference> andList, IBoundInference rhs) {
-        // One bad apple spoils the rest
-        if (rhs == ConstBoundInference.F) {
-            return false;
-        } else if (rhs != ConstBoundInference.T) {
-            // Attempt to combine the inference with an existing inference.
-            for(int i = 0; i < andList.size(); i++) {
-                IBoundInference lhs = andList.get(i);
-                IBoundInference comb = lhs.andReduce(rhs);
-                if (comb == null) {
-                    comb = rhs.andReduce(lhs);
-                }
-                // Found a combination, remove original, add the combination.
-                if (comb != null) {
-                    // Remove 
-                    andList.remove(i);
-                    return addAnd(andList, comb);
-                }
+    public static void addAnd(List<IBoundInference> andList, IBoundInference rhs) {
+        // Attempt to combine the inference with an existing inference.
+        for(int i = 0; i < andList.size(); i++) {
+            IBoundInference lhs = andList.get(i);
+            IBoundInference comb = InfUtil.andReduce(lhs, rhs);
+            // Found a combination, remove original, add the combination.
+            if (comb != null) {
+                // Remove 
+                andList.remove(i);
+                addAnd(andList, comb);
+                return;
             }
-            // Just add to the end
-            andList.add(rhs);
-            return true;
-        } else {
-            return true;
         }
+        // Just add to the end
+        andList.add(rhs);
     }
 
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> andList = new ArrayList<>();
         for (IBoundInference i : inferences) {
-            if (!addAnd(andList, i)) {
-                return ConstBoundInference.F;
-            }
+            addAnd(andList, i);
         }
         if (andList.size() == 0) {
             return ConstBoundInference.T;
