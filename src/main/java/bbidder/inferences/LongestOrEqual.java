@@ -1,13 +1,15 @@
 package bbidder.inferences;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import static bbidder.Constants.*;
 
 import bbidder.BitUtil;
-import bbidder.InferenceContext;
-import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
+import bbidder.Shape;
+import bbidder.ShapeSet;
 
 /**
  * Represents the inference of a suit than is longest or equal among other suits.
@@ -31,7 +33,13 @@ public class LongestOrEqual implements Inference {
     public IBoundInference bind(InferenceContext context) {
         int isuit = context.lookupSuit(suit);
         int iamong = among == null ? 0xf : context.lookupSuitSet(among);
-        return new LongestOrEqualBoundInf(isuit, iamong);
+        List<Shape> shapes = new ArrayList<>();
+        for(Shape shape: Shape.values()) {
+            if (isLongerOrEqual(isuit, iamong, shape)) {
+                shapes.add(shape);
+            }
+        }
+        return ShapeBoundInference.create(new ShapeSet(shapes));
     }
 
     public static LongestOrEqual valueOf(String str) {
@@ -72,7 +80,7 @@ public class LongestOrEqual implements Inference {
         return Objects.equals(among, other.among) && Objects.equals(suit, other.suit);
     }
 
-    private static boolean isLongerOrEqual(int isuit, int iamong, Hand hand) {
+    private static boolean isLongerOrEqual(int isuit, int iamong, Shape hand) {
         int len = hand.numInSuit(isuit);
         for (int s : BitUtil.iterate(iamong)) {
             int len2 = hand.numInSuit(s);
@@ -81,99 +89,5 @@ public class LongestOrEqual implements Inference {
             }
         }
         return true;
-    }
-
-    private static String getAmong(int iamong2) {
-        StringBuilder sb = new StringBuilder();
-        for (int s : BitUtil.iterate(iamong2)) {
-            sb.append(STR_ALL_SUITS.charAt(s));
-        }
-        String sm = " among " + sb;
-        switch (sm) {
-        case " among CDHS":
-            sm = "";
-            break;
-        case " among HS":
-            sm = " among majors";
-            break;
-        case " among CD":
-            sm = " among minors";
-            break;
-        default:
-            break;
-        }
-        return sm;
-    }
-
-    static class LongestOrEqualBoundInf implements IBoundInference {
-        final int isuit;
-        final int iamong;
-
-        public LongestOrEqualBoundInf(int isuit, int iamong) {
-            super();
-            this.isuit = isuit;
-            this.iamong = iamong;
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return isLongerOrEqual(isuit, iamong, hand);
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new ShorterBoundInf(isuit, iamong);
-        }
-
-        @Override
-        public String toString() {
-            return "longest_or_equal " + STR_ALL_SUITS.charAt(isuit) + getAmong(iamong);
-        }
-
-        @Override
-        public IBoundInference andReduce(IBoundInference i) {
-            return null;
-        }
-
-        @Override
-        public IBoundInference orReduce(IBoundInference i) {
-            return null;
-        }
-    }
-
-    static class ShorterBoundInf implements IBoundInference {
-        final int isuit;
-        final int iamong;
-
-        public ShorterBoundInf(int isuit, int iamong) {
-            super();
-            this.isuit = isuit;
-            this.iamong = iamong;
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return !isLongerOrEqual(isuit, iamong, hand);
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new LongestOrEqualBoundInf(isuit, iamong);
-        }
-
-        @Override
-        public String toString() {
-            return "shorter " + STR_ALL_SUITS.charAt(isuit) + getAmong(iamong);
-        }
-
-        @Override
-        public IBoundInference andReduce(IBoundInference i) {
-            return null;
-        }
-
-        @Override
-        public IBoundInference orReduce(IBoundInference i) {
-            return null;
-        }
     }
 }

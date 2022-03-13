@@ -4,16 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
-import bbidder.BiddingContext;
-import bbidder.BidList;
 import bbidder.Hand;
 import bbidder.InferenceContext;
-import bbidder.LikelyHands;
 
 public class LongestOrEqualTest {
     @Test
@@ -26,12 +20,8 @@ public class LongestOrEqualTest {
 
     @Test
     public void testToString() {
-        BiddingContext bc = new BiddingContext(new BidList(List.of()), Map.of("x", 1));
-        InferenceContext ctx = new InferenceContext(null, new LikelyHands(), bc);
         assertEquals("longest_or_equal x among all", new LongestOrEqual("x", "all").toString());
-        assertEquals("longest_or_equal D", new LongestOrEqual("x", "all").bind(ctx).toString());
         assertEquals("longest_or_equal s", new LongestOrEqual("s", null).toString());
-        assertEquals("longest_or_equal S", new LongestOrEqual("s", null).bind(ctx).toString());
     }
 
     @Test
