@@ -8,6 +8,12 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 
+/**
+ * Represents the inference of a premptive hand of varying levels.
+ * 
+ * @author goffster
+ *
+ */
 public class OpeningPreempt implements Inference {
     private final String suit;
     private final int level;

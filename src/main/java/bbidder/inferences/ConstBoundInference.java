@@ -3,6 +3,12 @@ package bbidder.inferences;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 
+/**
+ * Represents a "const" bound inference.  Always matches or always does not.
+ * 
+ * @author goffster
+ *
+ */
 public class ConstBoundInference implements IBoundInference {
     public static ConstBoundInference T = new ConstBoundInference(true);
     public static ConstBoundInference F = new ConstBoundInference(false);
@@ -13,6 +19,7 @@ public class ConstBoundInference implements IBoundInference {
         this.result = result;
     }
 
+    @Override
     public boolean matches(Hand hand) {
         return result;
     }

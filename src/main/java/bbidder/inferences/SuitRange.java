@@ -9,6 +9,12 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 
+/**
+ * Represents the inference of a range of lengths of a suit.
+ * 
+ * @author goffster
+ *
+ */
 public class SuitRange implements Inference {
     public final String suit;
     public final String min;

@@ -6,6 +6,12 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 
+/**
+ * Represents the inference of a "balanced" hand
+ * 
+ * @author goffster
+ *
+ */
 public class Balanced implements Inference {
     private static final BalancedBoundInf BALANCED = new BalancedBoundInf();
 

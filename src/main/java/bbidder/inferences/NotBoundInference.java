@@ -3,6 +3,12 @@ package bbidder.inferences;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 
+/**
+ * Represents the "not" of a bound inference.
+ * 
+ * @author goffster
+ *
+ */
 public class NotBoundInference implements IBoundInference {
     public final IBoundInference inference;
 
@@ -11,6 +17,7 @@ public class NotBoundInference implements IBoundInference {
         this.inference = inference;
     }
 
+    @Override
     public boolean matches(Hand hand) {
         return !inference.matches(hand);
     }

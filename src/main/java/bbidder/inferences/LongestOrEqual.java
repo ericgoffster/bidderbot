@@ -9,6 +9,12 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 
+/**
+ * Represents the inference of a suit than is longest or equal among other suits.
+ * 
+ * @author goffster
+ *
+ */
 public class LongestOrEqual implements Inference {
     public final String suit;
     public final String among;

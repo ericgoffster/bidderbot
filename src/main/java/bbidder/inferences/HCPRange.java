@@ -7,6 +7,12 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 
+/**
+ * Represents the inference for a high card point range.
+ * 
+ * @author goffster
+ *
+ */
 public class HCPRange implements Inference {
     public final String min;
     public final String max;

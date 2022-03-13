@@ -6,6 +6,12 @@ import java.util.List;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 
+/**
+ * Represents the "or" of 2 or more bound inferences.
+ * 
+ * @author goffster
+ *
+ */
 public class OrBoundInference implements IBoundInference {
     public final List<IBoundInference> inferences;
 
@@ -14,6 +20,7 @@ public class OrBoundInference implements IBoundInference {
         this.inferences = inf;
     }
 
+    @Override
     public boolean matches(Hand hand) {
         for(IBoundInference i: inferences) {
             if (i.matches(hand)) {
