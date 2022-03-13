@@ -24,7 +24,7 @@ public class BalancedTest {
     @Test
     public void testAffirmative() {
         InferenceContext ctx = new InferenceContext();
-        IBoundInference inf = new Balanced(BalanceType.regular).bind(ctx);
+        IBoundInference inf = new Balanced(BalanceType.regular).bind(ctx).get(0);
         assertTrue(inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertTrue(inf.matches(Hand.valueOf("AKQJT 98 765 432")));
         assertFalse(inf.matches(Hand.valueOf("AKQJT 98 76 5432")));

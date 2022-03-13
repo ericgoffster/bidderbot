@@ -163,9 +163,10 @@ public class BiddingSystem {
     public BidSource getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
         List<BoundBidInference> possible = byPrefix.getOrDefault(bids, new ArrayList<>());
         for (BoundBidInference i : possible) {
-            IBoundInference newInference = i.bind(likelyHands);
-            if (newInference.matches(hand)) {
-                return new BidSource(i, i.ctx.bids.getLastBid(), possible);
+            for(IBoundInference newInference: i.bind(likelyHands)) {
+                if (newInference.matches(hand)) {
+                    return new BidSource(i, i.ctx.bids.getLastBid(), possible);
+                }
             }
         }
 
@@ -208,11 +209,12 @@ public class BiddingSystem {
         List<IBoundInference> positive = new ArrayList<>();
         List<IBoundInference> negative = new ArrayList<>();
         for (BoundBidInference i : byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
-            IBoundInference newInference = i.bind(likelyHands);
-            if (i.ctx.bids.getLastBid().equals(lastBid)) {
-                positive.add(AndBoundInf.create(newInference, OrBoundInf.create(negative).negate()));
+            for(IBoundInference newInference: i.bind(likelyHands)) {
+                if (i.ctx.bids.getLastBid().equals(lastBid)) {
+                    positive.add(AndBoundInf.create(newInference, OrBoundInf.create(negative).negate()));
+                }
+                negative.add(newInference);
             }
-            negative.add(newInference);
         }
 
         // Pass means... Nothing else works, this will get smarter.

@@ -1,5 +1,6 @@
 package bbidder;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -21,7 +22,7 @@ public class BoundBidInference {
         this.inferences = inferences;
     }
 
-    public IBoundInference bind(LikelyHands likelyHands) {
+    public List<IBoundInference> bind(LikelyHands likelyHands) {
         return inferences.bind(new InferenceContext(ctx.bids.exceptLast().getLastBidSuit(), likelyHands, ctx));
     }
 

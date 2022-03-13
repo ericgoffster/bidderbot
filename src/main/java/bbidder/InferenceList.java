@@ -26,12 +26,19 @@ public class InferenceList {
      *            The context for binding
      * @return A bound inference representing all of the inferences as an "and"
      */
-    public IBoundInference bind(InferenceContext context) {
-        IBoundInference result = ConstBoundInference.create(true);
+    public List<IBoundInference> bind(InferenceContext context) {
+        List<IBoundInference> list = new ArrayList<>();
+        list.add(ConstBoundInference.create(true));
         for (Inference i : inferences) {
-            result = AndBoundInf.create(result, i.bind(context));
+            List<IBoundInference> newList = new ArrayList<>();
+            for(IBoundInference bi: i.bind(context)) {
+                for(IBoundInference bi2: list) {
+                    newList.add(AndBoundInf.create(bi2,bi));
+                }
+            }
+            list = newList;
         }
-        return result;
+        return list;
     }
 
     public static InferenceList valueOf(InferenceRegistry registry, String str) {

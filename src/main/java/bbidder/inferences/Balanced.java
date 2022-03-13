@@ -1,5 +1,6 @@
 package bbidder.inferences;
 
+import java.util.List;
 import java.util.Objects;
 
 import bbidder.IBoundInference;
@@ -23,14 +24,14 @@ public class Balanced implements Inference {
     }
 
     @Override
-    public IBoundInference bind(InferenceContext context) {
+    public List<IBoundInference> bind(InferenceContext context) {
         switch (type) {
         case regular:
-            return ShapeBoundInf.create(new ShapeSet(Shape::isBalanced));
+            return List.of(ShapeBoundInf.create(new ShapeSet(Shape::isBalanced)));
         case un:
-            return ShapeBoundInf.create(new ShapeSet(Shape::isBalanced).not());
+            return List.of(ShapeBoundInf.create(new ShapeSet(Shape::isBalanced).not()));
         case very:
-            return ShapeBoundInf.create(new ShapeSet(Shape::isSuperBalanced));
+            return List.of(ShapeBoundInf.create(new ShapeSet(Shape::isSuperBalanced)));
         default:
             throw new IllegalStateException();
         }

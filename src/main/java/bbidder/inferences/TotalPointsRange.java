@@ -1,5 +1,6 @@
 package bbidder.inferences;
 
+import java.util.List;
 import java.util.Objects;
 
 import bbidder.IBoundInference;
@@ -28,8 +29,8 @@ public class TotalPointsRange implements Inference {
     }
 
     @Override
-    public IBoundInference bind(InferenceContext context) {
-        return TotalPtsBoundInf.create(context.likelyHands.partner, rng);
+    public List<IBoundInference> bind(InferenceContext context) {
+        return List.of(TotalPtsBoundInf.create(context.likelyHands.partner, rng));
     }
 
     public static Inference valueOf(String str) {

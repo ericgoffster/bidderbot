@@ -1,5 +1,6 @@
 package bbidder.inferences;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -31,10 +32,10 @@ public class CombinedTotalPointsRange implements Inference {
     }
 
     @Override
-    public IBoundInference bind(InferenceContext context) {
+    public List<IBoundInference> bind(InferenceContext context) {
         int tpts = context.likelyHands.partner.minTotalPts();
         Range r = new Range(rng.bits >> tpts, 40);
-        return TotalPtsBoundInf.create(context.likelyHands.partner, r);
+        return List.of(TotalPtsBoundInf.create(context.likelyHands.partner, r));
     }
 
     public static Range createRange(String str, Map<String, Integer> m) {

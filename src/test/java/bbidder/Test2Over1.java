@@ -41,14 +41,18 @@ public class Test2Over1 {
                 System.err.println();
                 System.err.println("All bids matching the scenario in order of priority:");
                 for (BoundBidInference b : result.found.possible) {
-                    IBoundInference bound = b.bind(result.state.getLikelyHands());
                     if (b == result.found.inference) {
                         System.err.println("   * " + b);
-                        System.err.println("       * " + bound);
-
                     } else {
                         System.err.println("   " + b);
-                        System.err.println("       " + bound);
+                    }
+                    for(IBoundInference bound: b.bind(result.state.getLikelyHands())) {
+                        if (b == result.found.inference) {
+                            System.err.println("       * " + bound);
+    
+                        } else {
+                            System.err.println("       " + bound);
+                        }
                     }
                 }
                 test.getResult(r, bs);
