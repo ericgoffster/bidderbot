@@ -35,3 +35,4 @@ test Axx Axx AQxx Qxx:2N 5N
 include stayman.bidding
 include jacobyxfer.bidding
 include mss.bidding
+include texasxfer.bidding
