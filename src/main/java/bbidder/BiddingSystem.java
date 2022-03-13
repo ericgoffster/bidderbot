@@ -153,12 +153,11 @@ public class BiddingSystem {
      * @return The right bid
      */
     public Bid getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
-        for (BoundBidInference i : inferences) {
-            if (i.ctx.bids.bids.size() == bids.bids.size() + 1 && i.ctx.bids.exceptLast().equals(bids)) {
-                IBoundInference newInference = i.bind(likelyHands);
-                if (newInference.matches(hand)) {
-                    return i.ctx.bids.getLastBid();
-                }
+        List<BoundBidInference> found = byPrefix.getOrDefault(bids, new ArrayList<>());
+        for (BoundBidInference i : found) {
+            IBoundInference newInference = i.bind(likelyHands);
+            if (newInference.matches(hand)) {
+                return i.ctx.bids.getLastBid();
             }
         }
 
