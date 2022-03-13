@@ -26,20 +26,24 @@ public class BidPattern {
         this.isOpposition = isOpposition;
         this.str = str;
         this.upTheLine = upTheLine;
-        if (str.equals(Constants.STR_X) || str.equals(Constants.STR_XX) || str.equals(Constants.STR_P)) {
+        String upper = str.toUpperCase();
+        if (upper.equals(Constants.STR_X) || upper.equals(Constants.STR_XX) || upper.equals(Constants.STR_P)) {
             suit = null;
             level = null;
-        } else if (str.startsWith("NJ") || str.startsWith("DJ")) {
-            level = str.substring(0, 2);
+        } else if (upper.startsWith("NJ") || upper.startsWith("DJ")) {
+            level = upper.substring(0, 2);
             suit = str.substring(2);
+        } else if (upper.startsWith("J")) {
+            level = upper.substring(0, 1);
+            suit = str.substring(1);
         } else {
-            level = str.substring(0, 1);
+            level = upper.substring(0, 1);
             suit = str.substring(1);
         }
     }
     
     public boolean isSuitBid() {
-        return suit == null;
+        return suit != null;
     }
 
     /**

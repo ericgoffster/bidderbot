@@ -45,6 +45,20 @@ public class BiddingContext {
      * @return The set of possible bids for a pattern
      */
     public NavigableSet<Bid> getBids(BidPattern pattern) {
+        if (pattern.isSuitBid()) {
+            Bid lastBidSuit = bids.getLastBidSuit();
+            TreeSet<Bid> result = new TreeSet<>();
+            for (int strain : BitUtil.iterate(getStrains(pattern))) {
+                Bid bid = getBid(pattern, strain);
+                if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
+                    result.add(bid);
+                }
+            }
+            if (!pattern.upTheLine) {
+                return result.descendingSet();
+            }
+            return result;
+        }
         if (pattern.str.equalsIgnoreCase(STR_P)) {
             TreeSet<Bid> ts = new TreeSet<Bid>();
             ts.add(Bid.P);
@@ -60,18 +74,7 @@ public class BiddingContext {
             ts.add(Bid.XX);
             return ts;
         }
-        Bid lastBidSuit = bids.getLastBidSuit();
-        TreeSet<Bid> result = new TreeSet<>();
-        for (int strain : BitUtil.iterate(getStrains(pattern))) {
-            Bid bid = getBid(pattern, strain);
-            if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
-                result.add(bid);
-            }
-        }
-        if (!pattern.upTheLine) {
-            return result.descendingSet();
-        }
-        return result;
+        throw new IllegalStateException();
     }
 
     @Override
