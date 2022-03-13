@@ -3,7 +3,6 @@ package bbidder.inferences;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 import bbidder.BiddingContext;
 import bbidder.IBoundInference;
@@ -23,8 +22,6 @@ import bbidder.inferences.bound.ShapeBoundInf;
 public class SuitRange implements Inference {
     public final String suit;
     public final Range rng;
-
-    public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)");
 
     public SuitRange(String suit, Integer min, Integer max) {
         super();

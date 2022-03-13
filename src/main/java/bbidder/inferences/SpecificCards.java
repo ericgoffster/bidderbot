@@ -23,7 +23,7 @@ public class SpecificCards implements Inference {
     public final Range rng;
     public final int top;
     
-    public static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)");
+    public static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
     public SpecificCards(String suit, Range rng, int top) {
         super();

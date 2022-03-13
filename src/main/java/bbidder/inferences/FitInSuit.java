@@ -25,7 +25,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
 public class FitInSuit implements Inference {
     public final String suit;
 
-    public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)");
+    public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
     public FitInSuit(String suit) {
         super();
