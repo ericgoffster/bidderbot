@@ -1,29 +1,29 @@
-P 1M 2C => 11+ hcp, 3+ M
-test xxx KJx Kx Axxxx:P P 1H P 2C
+P 1M 2♣ => 11+ hcp, 3+ M
+test xxx KJx Kx Axxxx:P P 1♥ P 2♣
 
 1M 2M => min, 3+ M
-test xxx Kxx Kx xxxxx:1H P 2H
+test xxx Kxx Kx xxxxx:1♥ P 2H
 
 1M 2N => gf+, 4+ M
-test AQx Axxx Kx xxxx:1H P 2N
+test AQx Axxx Kx xxxx:1♥ P 2N
 
 1M 3M => inv, 4+ M
-test xxx Kxxx Kx KQxx:1H P 3H
+test xxx Kxxx Kx KQxx:1♥ P 3♥
 
 1M 3m => inv, 6+ m
-test Qxx x Qxx AQJxxx:1H P 3C
+test Qxx x Qxx AQJxxx:1♥ P 3♣
 
 1M 1N => inv, 3 M
-test Kx KJx xxx Axxxx :1H P 1N
+test Kx KJx xxx Axxxx :1♥ P 1N
 
 1M NJy:down => gf+, 5+ y, longest_or_equal y among unbid
 1M NJy => gf+, 4 y, longest_or_equal y among unbid
-test AQxxx xx Axx Kxx :1H P 1S
-test Kxx xx Axx AQxxx :1H P 2C
+test AQxxx xx Axx Kxx :1♥ P 1♠
+test Kxx xx Axx AQxxx :1♥ P 2♣
 
-1H 1S:down => min+, 4+ S
-test Kxxx xx Axx Qxxx :1H P 1S
+1♥ 1♠:down => min+, 4+ ♠
+test Kxxx xx Axx Qxxx :1♥ P 1♠
 
 # Catch all
 1M 1N => min+
-test xxx xx AKxx Qxxx :1H P 1N
+test xxx xx AKxx Qxxx :1♥ P 1N

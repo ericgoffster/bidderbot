@@ -1,26 +1,26 @@
-1N 2H => slaminv, 6+ S
-test AQxxxx x AKx Kxx:1N P 2H
+1N 2♥ => slaminv, 6+ ♠
+test AQxxxx x AKx Kxx:1N P 2♥
 
-1N 2D => slaminv, 6+ H
-test x AQxxxx AKx Kxx:1N P 2D
+1N 2♦ => slaminv, 6+ ♥
+test x AQxxxx AKx Kxx:1N P 2♦
 
-1N 4H => 6+ S, gf+
-test AQxxxx Kxx Qx xx:1N P 4H
+1N 4♥ => 6+ ♠, gf+
+test AQxxxx Kxx Qx xx:1N P 4♥
 
-1N 4D => 6+ H, gf+
-test Kxx AQxxxx Qx xx:1N P 4D
+1N 4♦ => 6+ ♥, gf+
+test Kxx AQxxxx Qx xx:1N P 4♦
 
-1N 2H => 5+ S
-test Axxxx xxx Qxx xx:1N P 2H
+1N 2♥ => 5+ ♠
+test Axxxx xxx Qxx xx:1N P 2♥
 
-1N 2D => 5+ H
-test xxx Axxxx Qxx xx:1N P 2D
+1N 2♦ => 5+ ♥
+test xxx Axxxx Qxx xx:1N P 2♦
 
-1N 2C => inv+, 4 H
-test Axx AJxx xxxx xx:1N P 2C
+1N 2♣ => inv+, 4 ♥
+test Axx AJxx xxxx xx:1N P 2♣
 
-1N 2C => inv+, 4 S
-test Axxx AJx xxxx xx:1N P 2C
+1N 2♣ => inv+, 4 ♠
+test Axxx AJx xxxx xx:1N P 2♣
 
 1N 3N => gf
 test Axx Axx Qxxxx Kx:1N P 3N
@@ -31,13 +31,13 @@ test Axx Axx Axxx Kxx:1N P 3N
 1N 6N => slam
 test Axx Axx AKxx Kxx:1N P 6N
 
-1N 2C => inv+
-test Axxx AJx xxxx xx:1N P 2C
+1N 2♣ => inv+
+test Axxx AJx xxxx xx:1N P 2♣
 
-1N 3C => 6+ D
-test x xxx QJxxxx xxx:1N P 3C
+1N 3♣ => 6+ ♦
+test x xxx QJxxxx xxx:1N P 3♣
 
-1N 2N => 6+ C
+1N 2N => 6+ ♣
 test x xxx xxx QJxxxx:1N P 2N
 
 include classpath:stayman1_resp.bidding
