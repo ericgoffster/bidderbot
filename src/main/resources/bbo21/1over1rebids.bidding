@@ -17,6 +17,7 @@ test AKxx AKxx x xxxx:1♣ 1♦ 1♥
 
 1x 1y 1N => 12-14 tpts
 test Qxx Axx Ax Axxxx:1♣ 1♦ 1N
+test Qxx Axxx A Axxxx:1♣ 1♠ 1N
 
 1x 1y 2N => 18-19 tpts
 test AQx Axx Ax Axxxx:1♣ 1♦ 2N
