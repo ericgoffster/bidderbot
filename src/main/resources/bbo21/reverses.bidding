@@ -41,3 +41,4 @@ test x AKJx AKxxx KQx:1♦ 1♠ 2♥ 2N 3N
 
 1x 1y RVz 2N 3♣ =>
 test x AQxx KQx AQxxx:1♣ 1♠ 2♥ 2N 3♣
+test Kx AKJx AKxxx Qx:1♦ 1♠ 2♥ 2N 3♣
