@@ -47,10 +47,8 @@ test AJxx AQx AQx xxx: 1N P 2♣ P 2♥ P 4N
 1N 2♣ 2♦ =>
 test Axx AQx KJxx Qxx: 1N P 2♣ P 2♦
 
-1N 2♣ 2♦ 2♥ => inv, 5+♥
+1N 2♣ 2♦ 2M => inv, 5+M
 test AJxx Axxxx xx xx: 1N P 2♣ P 2♦ P 2♥
-
-1N 2♣ 2♦ 2♠ => inv, 5+♠
 test AJxxx Axxx xx xx: 1N P 2♣ P 2♦ P 2♠
 
 1N 2♣ 2♦ 2N => inv
