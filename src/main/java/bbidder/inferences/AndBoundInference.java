@@ -7,59 +7,72 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 
 public class AndBoundInference implements IBoundInference {
-    public final IBoundInference i1;
-    public final IBoundInference i2;
+    public final List<IBoundInference> inferences;
 
-    private AndBoundInference(IBoundInference i1, IBoundInference i2) {
+    private AndBoundInference(List<IBoundInference> inf) {
         super();
-        this.i1 = i1;
-        this.i2 = i2;
+        this.inferences = inf;
     }
 
     public boolean matches(Hand hand) {
-        return i1.matches(hand) && i2.matches(hand);
+        for(IBoundInference i: inferences) {
+            if (!i.matches(hand)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean negatable() {
-        return i1.negatable() && i2.negatable();
+        for(IBoundInference i: inferences) {
+            if (!i.negatable()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public IBoundInference negate() {
-        return OrBoundInference.create(i1.negate(), i2.negate());
-    }
-
-    void gatherAnds(List<String> l) {
-        if (i1 instanceof AndBoundInference) {
-            ((AndBoundInference) i1).gatherAnds(l);
-        } else {
-            l.add(i1.toString());
+        List<IBoundInference> inf = new ArrayList<>();
+        for(IBoundInference i: inferences) {
+            inf.add(i.negate());
         }
-        if (i2 instanceof AndBoundInference) {
-            ((AndBoundInference) i2).gatherAnds(l);
-        } else {
-            l.add(i2.toString());
-        }
+        return OrBoundInference.create(inf);
     }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
-        if (i1 == ConstBoundInference.F || i2 == ConstBoundInference.F) {
-            return ConstBoundInference.F;
+        return create(List.of(i1, i2));
+    }
+    
+    public static IBoundInference create(List<IBoundInference> inferences) {
+        List<IBoundInference> l = new ArrayList<>();
+        for(IBoundInference i: inferences) {
+            if (i == ConstBoundInference.F) {
+                return ConstBoundInference.F;
+            }
+            if (i instanceof AndBoundInference) {
+                l.addAll(((AndBoundInference) i).inferences);
+            } else if (i != ConstBoundInference.T) {
+                l.add(i);
+            }
         }
-        if (i1 == ConstBoundInference.T) {
-            return i2;
+        if (l.size() == 0) {
+            return ConstBoundInference.T;
         }
-        if (i2 == ConstBoundInference.T) {
-            return i1;
+        if (l.size() == 1) {
+            return l.get(0);
         }
-        return new AndBoundInference(i1, i2);
+        return new AndBoundInference(l);
     }
 
     @Override
     public String toString() {
         List<String> l = new ArrayList<>();
-        gatherAnds(l);
+        for(IBoundInference i: inferences) {
+            l.add(i.toString());
+        }
         return "(" + String.join(" & ", l) + ")";
     }
 }
