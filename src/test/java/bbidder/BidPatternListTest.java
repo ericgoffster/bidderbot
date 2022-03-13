@@ -54,18 +54,4 @@ public class BidPatternListTest {
         return newL;
     }
 
-    @Test
-    public void testBidContext() {
-        assertEquals(BidPatternList.valueOf("(P) 1N").getContexts(), add2(BiddingContext.EMPTY.withBidAdded(Bid.P).withBidAdded(Bid._1N)));
-        assertEquals(BidPatternList.valueOf("1N").getContexts(), add3(BiddingContext.EMPTY.withBidAdded(Bid._1N)));
-        assertEquals(BidPatternList.valueOf("1M").getContexts(), add3(BiddingContext.EMPTY.withNewBid(Bid._1H, BidPattern.valueOf("1M")),
-                BiddingContext.EMPTY.withNewBid(Bid._1S, BidPattern.valueOf("1M"))));
-        assertEquals(BidPatternList.valueOf("1S (P) 1N").getContexts(),
-                add3(BiddingContext.EMPTY.withBidAdded(Bid._1S).withBidAdded(Bid.P).withBidAdded(Bid._1N)));
-        assertEquals(BidPatternList.valueOf("1C NJM").getContexts(),
-                add3(BiddingContext.EMPTY.withBidAdded(Bid._1C).withBidAdded(Bid.P).withNewBid(Bid._1H, BidPattern.valueOf("NJM")),
-                        BiddingContext.EMPTY.withBidAdded(Bid._1C).withBidAdded(Bid.P).withNewBid(Bid._1S, BidPattern.valueOf("NJM"))));
-        assertEquals(BidPatternList.valueOf("1C P").getContexts(),
-                add3(BiddingContext.EMPTY.withBidAdded(Bid._1C).withBidAdded(Bid.P).withBidAdded(Bid.P)));
-    }
 }

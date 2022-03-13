@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -70,25 +71,10 @@ public final class BiddingContext {
      */
     public List<BiddingContext> withNewBid(BidPattern pattern) {
         List<BiddingContext> l = new ArrayList<>();
-        for (var e : getBids(pattern).entrySet()) {
+        for (Entry<Bid, BiddingContext> e : getBids(pattern).entrySet()) {
             l.add(new BiddingContext(bids.withBidAdded(e.getKey()), e.getValue().suits));
         }
         return l;
-    }
-
-    /**
-     * 
-     * @param bid The bid
-     * @param pattern The bid pattern
-     * @return A new bidding pattern with the bid pattern matched to the bid.
-     */
-    public BiddingContext withNewBid(Bid bid, BidPattern pattern) {
-        Map<Bid, BiddingContext> acceptable = getBids(pattern);
-        BiddingContext bc = acceptable.get(bid);
-        if (bc == null) {
-            throw new IllegalArgumentException(bid + " is incompatible with " + pattern);
-        }
-        return new BiddingContext(bids.withBidAdded(bid), bc.suits);
     }
 
     /**
@@ -127,7 +113,7 @@ public final class BiddingContext {
         }
         return suits.get(symbol);
     }
-
+    
     /**
      * @param pattern
      *            The bid pattern
@@ -143,8 +129,8 @@ public final class BiddingContext {
         Bid partnerLastBid = theBids.size() >= 2 ? theBids.get(theBids.size() - 2) : null;
         Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
         Map<Bid, BiddingContext> result = new LinkedHashMap<>();
-        var m = getMappedBiddingContexts(pattern.getSuit());
-        for (var e : m.entrySet()) {
+        Map<Integer, BiddingContext> m = getMappedBiddingContexts(pattern.getSuit());
+        for (Entry<Integer, BiddingContext> e : m.entrySet()) {
             Bid bid = getBid(pattern, e.getKey());
             if (myRebid != null && bid.isSuitBid()) {
                 boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
