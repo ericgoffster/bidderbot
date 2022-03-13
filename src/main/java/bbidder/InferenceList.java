@@ -38,7 +38,7 @@ public class InferenceList {
             return null;
         }
         List<Inference> l = new ArrayList<>();
-        for (String part : str.trim().split(",")) {
+        for (String part : SplitUtil.split(str, ",")) {
             l.add(registry.valueOf(part));
         }
         return new InferenceList(l);

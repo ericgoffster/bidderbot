@@ -5,6 +5,7 @@ import static bbidder.Constants.STR_ALL_SUITS;
 import java.util.Objects;
 
 import bbidder.InferenceContext;
+import bbidder.SplitUtil;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -51,7 +52,7 @@ public class SuitRange implements Inference {
         if (str == null) {
             return null;
         }
-        String[] bidParts = str.trim().split("\\s+", 2);
+        String[] bidParts = SplitUtil.split(str, "\\s+", 2);
         if (bidParts.length != 2) {
             return null;
         }
@@ -66,14 +67,14 @@ public class SuitRange implements Inference {
         if (str.endsWith("-")) {
             return new SuitRange(suit, null, str.substring(0, str.length() - 1).trim());
         }
-        String[] parts = str.split("-", 2);
+        String[] parts = SplitUtil.split(str, "-", 2);
         if (parts.length == 1) {
-            return new SuitRange(suit, parts[0].trim(), parts[0].trim());
+            return new SuitRange(suit, parts[0], parts[0]);
         }
         if (parts.length != 2) {
             return null;
         }
-        return new SuitRange(suit, parts[0].trim(), parts[1].trim());
+        return new SuitRange(suit, parts[0], parts[1]);
     }
 
     @Override

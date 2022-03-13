@@ -82,12 +82,12 @@ public class BiddingSystem {
                     ln = ln.substring(0, pos);
                 }
                 ln = ln.trim();
-                String[] comm = ln.split("\\s+", 2);
-                if (comm.length == 2 && comm[0].equals("include")) {
-                    BiddingSystem bs = load(where, comm[1].trim(), reportErrors);
+                String[] comm = SplitUtil.split(ln, "\\s+", 2);
+                if (comm.length == 2 && comm[0].equalsIgnoreCase("include")) {
+                    BiddingSystem bs = load(where, comm[1], reportErrors);
                     inferences.addAll(bs.inferences);
                     tests.addAll(bs.tests);
-                } else if (comm.length == 2 && comm[0].equals("test")) {
+                } else if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
                     try {
                         tests.add(BiddingTest.valueOf(comm[1]));
                     } catch (Exception e) {

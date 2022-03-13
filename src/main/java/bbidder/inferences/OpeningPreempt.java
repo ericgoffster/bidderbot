@@ -4,6 +4,7 @@ import java.util.Objects;
 import static bbidder.Constants.*;
 
 import bbidder.InferenceContext;
+import bbidder.SplitUtil;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -33,12 +34,11 @@ public class OpeningPreempt implements Inference {
         if (str == null) {
             return null;
         }
-        str = str.trim();
-        if (!str.toLowerCase().startsWith("opening_preempt")) {
+        String[] parts = SplitUtil.split(str, "\\s+", 3);
+        if (parts.length != 3) {
             return null;
         }
-        String[] parts = str.split("\\s+", 3);
-        if (parts.length != 3) {
+        if (!parts[0].equalsIgnoreCase("opening_preempt")) {
             return null;
         }
         return new OpeningPreempt(parts[2], Integer.parseInt(parts[1]));

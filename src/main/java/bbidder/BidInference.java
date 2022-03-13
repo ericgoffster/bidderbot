@@ -33,11 +33,11 @@ public class BidInference {
         if (str == null) {
             return null;
         }
-        String[] parts = str.split("=>", 2);
+        String[] parts = SplitUtil.split(str, "=>", 2);
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        return new BidInference(BidPatternList.valueOf(parts[0].trim()), InferenceList.valueOf(reg, parts[1].trim()));
+        return new BidInference(BidPatternList.valueOf(parts[0]), InferenceList.valueOf(reg, parts[1]));
     }
 
     /**

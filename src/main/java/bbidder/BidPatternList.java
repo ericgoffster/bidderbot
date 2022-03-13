@@ -51,7 +51,7 @@ public class BidPatternList {
             return null;
         }
         List<BidPattern> l = new ArrayList<>();
-        for (String part : str.trim().split("\\s+")) {
+        for (String part : SplitUtil.split(str, "\\s+")) {
             l.add(BidPattern.valueOf(part));
         }
         return new BidPatternList(l);

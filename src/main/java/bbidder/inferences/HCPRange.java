@@ -2,10 +2,11 @@ package bbidder.inferences;
 
 import java.util.Objects;
 
-import bbidder.InferenceContext;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
+import bbidder.SplitUtil;
 
 /**
  * Represents the inference for a high card point range.
@@ -41,8 +42,8 @@ public class HCPRange implements Inference {
         if (str == null) {
             return null;
         }
-        String[] hcpParts = str.trim().split("\\s+", 2);
-        if (hcpParts.length != 2 || !hcpParts[1].trim().equalsIgnoreCase("hcp")) {
+        String[] hcpParts = SplitUtil.split(str, "\\s+", 2);
+        if (hcpParts.length != 2 || !hcpParts[1].equalsIgnoreCase("hcp")) {
             return null;
         }
         str = hcpParts[0].trim();
@@ -52,14 +53,14 @@ public class HCPRange implements Inference {
         if (str.endsWith("-")) {
             return new HCPRange(null, str.substring(0, str.length() - 1).trim());
         }
-        String[] parts = str.split("-", 2);
+        String[] parts = SplitUtil.split(str, "-", 2);
         if (parts.length == 1) {
-            return new HCPRange(parts[0].trim(), parts[0].trim());
+            return new HCPRange(parts[0], parts[0]);
         }
         if (parts.length != 2) {
             return null;
         }
-        return new HCPRange(parts[0].trim(), parts[1].trim());
+        return new HCPRange(parts[0], parts[1]);
     }
 
     @Override
