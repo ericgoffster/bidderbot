@@ -1,9 +1,5 @@
 package bbidder;
 
-import static bbidder.Constants.ALL_SUITS;
-import static bbidder.Constants.MAJORS;
-import static bbidder.Constants.MINORS;
-
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -88,32 +84,6 @@ public class BiddingContext {
         return Objects.equals(bids, other.bids) && Objects.equals(suits, other.suits);
     }
 
-    private short getSuitClass(BidPattern pattern) {
-        if (pattern.getSuit() == null) {
-            return 0x1f;
-        }
-        if (pattern.isSuitSet()) {
-            String[] parts = pattern.getSuit().split("/");
-            short result = 0;
-            for(String p: parts) {
-                Integer strain = getSuit(p);
-                if (strain == null) {
-                    throw new IllegalArgumentException("invalud suit in this context");
-                }
-                result |= 1 << strain;
-            }
-            return result;
-        }
-        switch (pattern.getSuit()) {
-        case "M":
-            return MAJORS;
-        case "m":
-            return MINORS;
-        default:
-            return ALL_SUITS;
-        }
-    }
-
     private Bid getBid(BidPattern pattern, int strain) {
         if (pattern.isStep()) {
             return getSteppedBid(pattern.getNumberOfSteps());
@@ -152,7 +122,7 @@ public class BiddingContext {
         if (strain != null) {
             return (short) (1 << strain);
         }
-        short values = getSuitClass(pattern);
+        short values = pattern.getSuitClass();
         for (int i : suits.values()) {
             values &= ~(1 << i);
         }

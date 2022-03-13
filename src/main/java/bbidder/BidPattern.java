@@ -1,5 +1,9 @@
 package bbidder;
 
+import static bbidder.Constants.ALL_SUITS;
+import static bbidder.Constants.MAJORS;
+import static bbidder.Constants.MINORS;
+
 import java.util.Objects;
 
 /**
@@ -59,6 +63,32 @@ public class BidPattern {
                 level = upper.substring(0, 1);
                 suit = str.substring(1);
             }
+        }
+    }
+    
+    public short getSuitClass() {
+        if (getSuit() == null) {
+            return 0x1f;
+        }
+        if (isSuitSet()) {
+            String[] parts = getSuit().split("/");
+            short result = 0;
+            for(String p: parts) {
+                Integer strain = Strain.getStrain(p);
+                if (strain == null) {
+                    throw new IllegalArgumentException("invalud suit in this context");
+                }
+                result |= 1 << strain;
+            }
+            return result;
+        }
+        switch (getSuit()) {
+        case "M":
+            return MAJORS;
+        case "m":
+            return MINORS;
+        default:
+            return ALL_SUITS;
         }
     }
     
