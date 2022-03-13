@@ -203,6 +203,9 @@ public class BidPattern {
     }
     
     public BidPattern resolveSuit(int strain) {
+        if (level != null) {
+            return BidPattern.createSimpleBid(Bid.valueOf(level, strain));
+        }
         return new BidPattern(isOpposition, String.valueOf(Constants.STR_ALL_SUITS.charAt(strain)), level, simpleBid, jumpLevel, reverse, notreverse);
     }
 
