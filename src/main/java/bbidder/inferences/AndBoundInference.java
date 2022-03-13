@@ -44,20 +44,22 @@ public class AndBoundInference implements IBoundInference {
     }
     
     public static void addAnd(List<IBoundInference> andList, IBoundInference rhs) {
-        // Attempt to combine the inference with an existing inference.
-        for(int i = 0; i < andList.size(); i++) {
-            IBoundInference lhs = andList.get(i);
-            IBoundInference comb = AndBoundInference.andReduce(lhs, rhs);
-            // Found a combination, remove original, add the combination.
-            if (comb != null) {
-                // Remove 
-                andList.remove(i);
-                addAnd(andList, comb);
-                return;
+        again: for(;;) {
+            // Attempt to combine the inference with an existing inference.
+            for(int i = 0; i < andList.size(); i++) {
+                IBoundInference comb = AndBoundInference.andReduce(andList.get(i), rhs);
+                // Found a combination, remove original, add the combination.
+                if (comb != null) {
+                    // Remove 
+                    andList.remove(i);
+                    rhs = comb;
+                    continue again;
+                }
             }
+            // Just add to the end
+            andList.add(rhs);
+            return;
         }
-        // Just add to the end
-        andList.add(rhs);
     }
 
     public static IBoundInference create(List<IBoundInference> inferences) {

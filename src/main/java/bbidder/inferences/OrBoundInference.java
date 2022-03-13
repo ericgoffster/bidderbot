@@ -45,19 +45,21 @@ public class OrBoundInference implements IBoundInference {
     
     public static void addOr(List<IBoundInference> orList, IBoundInference rhs) {
         // Attempt to combine the inference with an existing inference.
-        for(int i = 0; i < orList.size(); i++) {
-            IBoundInference lhs = orList.get(i);
-            IBoundInference comb = OrBoundInference.orReduce(rhs, lhs);
-            // Found a combination, remove original, add the combination.
-            if (comb != null) {
-                // Remove 
-                orList.remove(i);
-                addOr(orList, comb);
-                return;
+        again: for(;;) {
+            for(int i = 0; i < orList.size(); i++) {
+                IBoundInference comb = OrBoundInference.orReduce(rhs, orList.get(i));
+                // Found a combination, remove original, add the combination.
+                if (comb != null) {
+                    // Remove 
+                    orList.remove(i);
+                    rhs = comb;
+                    continue again;
+                }
             }
+            // Just add to the end
+            orList.add(rhs);
+            return;
         }
-        // Just add to the end
-        orList.add(rhs);
     }
 
     public static IBoundInference create(List<IBoundInference> inferences) {
