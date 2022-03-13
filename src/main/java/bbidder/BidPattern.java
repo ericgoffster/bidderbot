@@ -3,7 +3,6 @@ package bbidder;
 import static bbidder.Constants.ALL_SUITS;
 import static bbidder.Constants.MAJORS;
 import static bbidder.Constants.MINORS;
-import static bbidder.Constants.NOTRUMP;
 
 import java.util.Objects;
 
@@ -37,13 +36,13 @@ public class BidPattern {
         String upper = str.toUpperCase();
         if (upper.startsWith("NJ") || upper.startsWith("DJ")) {
             level = upper.substring(0, 2);
-            suit = getSuit(str.substring(2));
+            suit = str.substring(2);
             simpleBid = null;
             step = -1;
             suitClass = getSuitClass(str.substring(2));
         } else if (upper.startsWith("J")) {
             level = upper.substring(0, 1);
-            suit = getSuit(str.substring(1));
+            suit = str.substring(1);
             simpleBid = null;
             step = -1;
             suitClass = getSuitClass(str.substring(2));
@@ -51,8 +50,8 @@ public class BidPattern {
             int pos = upper.indexOf("STEP");
             step = Integer.parseInt(upper.substring(0, pos));
             level = upper.substring(0, pos + 4);
-            suit = getSuit(str.substring(pos + 4));
-            suitClass = getSuitClass(str.substring(pos + 4));
+            suit = null;
+            suitClass = 0x1f;
             simpleBid = null;
         } else {
             step = -1;
@@ -63,44 +62,38 @@ public class BidPattern {
                 suitClass = 0;
             } else {
                 level = upper.substring(0, 1);
-                suit = getSuit(str.substring(1));
+                suit = str.substring(1);
                 suitClass = getSuitClass(str.substring(1));
             }
         }
     }
     
-    public static String getSuit(String str) {
-        str = str.trim();
-        if (str.contains("/")) {
-            return null;
-        }
-        if (str.equals("")) {
-            return null;
-        }
-        return str;
+    public static short rotateDown(short s) {
+        return (short)((s >> 1) | ((s & 1) << 5));
     }
     
     public static short getSuitClass(String str) {
-        if (str.contains("/")) {
-            String[] parts = str.split("/");
-            short result = 0;
-            for(String p: parts) {
-                Integer strain = Strain.getStrain(p);
-                if (strain == null) {
-                    throw new IllegalArgumentException("invalud suit in this context");
-                }
-                result |= 1 << strain;
-            }
-            return result;
-        }
         switch (str) {
-        case "N":
-        case "n":
-            return 1 << NOTRUMP;
         case "M":
             return MAJORS;
+        case "M-1":
+            return rotateDown(MAJORS);
+        case "M-2":
+            return rotateDown(rotateDown(MAJORS));
+        case "M-3":
+            return rotateDown(rotateDown(rotateDown(MAJORS)));
+        case "M-4":
+            return rotateDown(rotateDown(rotateDown(rotateDown(MAJORS))));
         case "m":
             return MINORS;
+        case "m-1":
+            return rotateDown(MINORS);
+        case "m-2":
+            return rotateDown(rotateDown(MINORS));
+        case "m-3":
+            return rotateDown(rotateDown(rotateDown(MINORS)));
+        case "m-4":
+            return rotateDown(rotateDown(rotateDown(rotateDown(MINORS))));
         default:
             return ALL_SUITS;
         }
