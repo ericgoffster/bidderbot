@@ -47,7 +47,7 @@ public class OrBoundInference implements IBoundInference {
         // Attempt to combine the inference with an existing inference.
         for(int i = 0; i < orList.size(); i++) {
             IBoundInference lhs = orList.get(i);
-            IBoundInference comb = InfUtil.orReduce(rhs, lhs);
+            IBoundInference comb = OrBoundInference.orReduce(rhs, lhs);
             // Found a combination, remove original, add the combination.
             if (comb != null) {
                 // Remove 
@@ -97,5 +97,22 @@ public class OrBoundInference implements IBoundInference {
             return create(orList);
         }
         return null;
+    }
+
+    public static IBoundInference orReduce(IBoundInference a, IBoundInference b) {
+        if (a == ConstBoundInference.T || b == ConstBoundInference.T) {
+            return ConstBoundInference.T;
+        }
+        if (a == ConstBoundInference.F) {
+            return b;
+        }
+        if (b == ConstBoundInference.F) {
+            return a;
+        }
+        IBoundInference comb = a.orReduce(b);
+        if (comb == null) {
+            return b.orReduce(a);
+        }
+        return comb;
     }
 }

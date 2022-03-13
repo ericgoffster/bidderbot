@@ -47,7 +47,7 @@ public class AndBoundInference implements IBoundInference {
         // Attempt to combine the inference with an existing inference.
         for(int i = 0; i < andList.size(); i++) {
             IBoundInference lhs = andList.get(i);
-            IBoundInference comb = InfUtil.andReduce(lhs, rhs);
+            IBoundInference comb = AndBoundInference.andReduce(lhs, rhs);
             // Found a combination, remove original, add the combination.
             if (comb != null) {
                 // Remove 
@@ -108,5 +108,22 @@ public class AndBoundInference implements IBoundInference {
     @Override
     public IBoundInference orReduce(IBoundInference i) {
         return null;
+    }
+
+    public static IBoundInference andReduce(IBoundInference a, IBoundInference b) {
+        if (a == ConstBoundInference.F || b == ConstBoundInference.F) {
+            return ConstBoundInference.F;
+        }
+        if (a == ConstBoundInference.T) {
+            return b;
+        }
+        if (b == ConstBoundInference.T) {
+            return a;
+        }
+        IBoundInference comb = a.andReduce(b);
+        if (comb == null) {
+            return b.andReduce(a);
+        }
+        return comb;
     }
 }
