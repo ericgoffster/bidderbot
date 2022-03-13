@@ -55,6 +55,32 @@ public class AndBoundInference implements IBoundInference {
                 l.add(i);
             }
         }
+        int i = 0;
+        while(i < l.size()) {
+            IBoundInference lhs = l.get(i);
+            int j = i + 1;
+            donebubble: {
+                while(j < l.size()) {
+                    IBoundInference rhs = l.get(j);
+                    IBoundInference comb = lhs.andReduce(rhs);
+                    if (comb != null) {
+                        l.remove(j);
+                        if (comb == ConstBoundInference.F) {
+                            return ConstBoundInference.F;
+                        }
+                        if (comb == ConstBoundInference.T) {
+                            l.remove(i);
+                        } else {
+                            l.set(i, comb);
+                        }
+                        break donebubble;
+                    } else {
+                        j++;
+                    }
+                }
+                i++;
+            }
+        }
         if (l.size() == 0) {
             return ConstBoundInference.T;
         }
