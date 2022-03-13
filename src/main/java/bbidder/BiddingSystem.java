@@ -30,6 +30,14 @@ public class BiddingSystem {
         this.inferences = inferences;
         this.tests = tests;
     }
+    
+    public static BiddingSystem load(String urlSpec, Consumer<ParseException> reportErrors) {
+        List<BoundBidInference> inferences = new ArrayList<>();
+        List<BiddingTest> tests = new ArrayList<>();
+        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
+        load("", urlSpec, reportErrors, inferences, tests, reg);
+        return new BiddingSystem(inferences, tests);
+    }
 
     /**
      * Load a bidding system in from a urlSpec
@@ -40,17 +48,14 @@ public class BiddingSystem {
      *            The url spec
      * @param reportErrors
      *            The consumer of parse errors
-     * @return The bidding system.
      */
-    public static BiddingSystem load(String where, String urlSpec, Consumer<ParseException> reportErrors) {
+    private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, List<BoundBidInference> inferences, List<BiddingTest> tests , InferenceRegistry reg) {
         try (InputStream is = new URL(null, urlSpec, new Handler(BiddingSystem.class.getClassLoader())).openStream()) {
-            return load(urlSpec, is, reportErrors);
+            load(urlSpec, is, reportErrors, inferences, tests, reg);
         } catch (MalformedURLException e) {
             reportErrors.accept(new ParseException(where, e));
-            return new BiddingSystem(List.of(), List.of());
         } catch (IOException e) {
             reportErrors.accept(new ParseException(where, e));
-            return new BiddingSystem(List.of(), List.of());
         }
     }
 
@@ -63,12 +68,8 @@ public class BiddingSystem {
      *            The input stream
      * @param reportErrors
      *            The consumer of parse errors
-     * @return The bidding system.
      */
-    public static BiddingSystem load(String where, InputStream is, Consumer<ParseException> reportErrors) {
-        List<BoundBidInference> inferences = new ArrayList<>();
-        List<BiddingTest> tests = new ArrayList<>();
-        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
+    private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, List<BoundBidInference> inferences, List<BiddingTest> tests , InferenceRegistry reg) {
         int lineno = 0;
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             for (;;) {
@@ -84,9 +85,7 @@ public class BiddingSystem {
                 ln = ln.trim();
                 String[] comm = SplitUtil.split(ln, "\\s+", 2);
                 if (comm.length == 2 && comm[0].equalsIgnoreCase("include")) {
-                    BiddingSystem bs = load(where, comm[1], reportErrors);
-                    inferences.addAll(bs.inferences);
-                    tests.addAll(bs.tests);
+                    load(where, comm[1], reportErrors, inferences, tests, reg);
                 } else if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
                     try {
                         tests.add(BiddingTest.valueOf(where + ":" + lineno, comm[1]));
@@ -104,7 +103,6 @@ public class BiddingSystem {
         } catch (IOException e) {
             reportErrors.accept(new ParseException(where, e));
         }
-        return new BiddingSystem(inferences, tests);
     }
 
     /**

@@ -14,7 +14,7 @@ public class Test2Over1 {
     @Test
     public void test() throws Throwable {
         MyClass collector = new MyClass();
-        BiddingSystem bs = BiddingSystem.load("", "classpath:2over1.bidding", ex -> {
+        BiddingSystem bs = BiddingSystem.load("classpath:2over1.bidding", ex -> {
             collector.addError(ex);
         });
         Random r = new Random();

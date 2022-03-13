@@ -16,7 +16,7 @@ public class BiddingSystemTest {
 
     @Test
     public void test1() throws IOException {
-        BiddingSystem bs = BiddingSystem.load("", "classpath:test1.bidding", ex -> {
+        BiddingSystem bs = BiddingSystem.load("classpath:test1.bidding", ex -> {
             ex.printStackTrace();
         });
         {
@@ -31,7 +31,7 @@ public class BiddingSystemTest {
 
     @Test
     public void test1n() throws IOException {
-        BiddingSystem bs = BiddingSystem.load("", "classpath:test1.bidding", ex -> {
+        BiddingSystem bs = BiddingSystem.load("classpath:test1.bidding", ex -> {
             ex.printStackTrace();
         });
         IBoundInference l = bs.getInference(new BidList(List.of(Bid._1C)), likelyHands);
@@ -40,7 +40,7 @@ public class BiddingSystemTest {
 
     @Test
     public void test2() throws IOException {
-        BiddingSystem bs = BiddingSystem.load("", "classpath:test2.bidding", ex -> {
+        BiddingSystem bs = BiddingSystem.load("classpath:test2.bidding", ex -> {
             ex.printStackTrace();
         });
         IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H, Bid.P, Bid._2C)), likelyHands);
@@ -49,7 +49,7 @@ public class BiddingSystemTest {
 
     @Test
     public void test2n() throws IOException {
-        BiddingSystem bs = BiddingSystem.load("", "classpath:test2.bidding", ex -> {
+        BiddingSystem bs = BiddingSystem.load("classpath:test2.bidding", ex -> {
             ex.printStackTrace();
         });
         IBoundInference l = bs.getInference(new BidList(List.of(Bid._1H, Bid.P, Bid._2H)), likelyHands);
@@ -58,7 +58,7 @@ public class BiddingSystemTest {
 
     @Test
     public void test3() throws IOException {
-        BiddingSystem bs = BiddingSystem.load("", "classpath:test3.bidding", ex -> {
+        BiddingSystem bs = BiddingSystem.load("classpath:test3.bidding", ex -> {
             ex.printStackTrace();
         });
         {
@@ -73,7 +73,7 @@ public class BiddingSystemTest {
 
     @Test
     public void test4() throws IOException {
-        BiddingSystem bs = BiddingSystem.load("", "classpath:2over1.bidding", ex -> {
+        BiddingSystem bs = BiddingSystem.load("classpath:2over1.bidding", ex -> {
             ex.printStackTrace();
         });
         {
