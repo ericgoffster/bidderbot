@@ -11,10 +11,10 @@ import java.util.Objects;
  * @author goffster
  *
  */
-public class BidList implements BiddingSequence {
+public class BidList {
     private final List<Bid> bids;
 
-    private BidList(List<Bid> bids) {
+    public BidList(List<Bid> bids) {
         super();
         this.bids = bids;
     }
@@ -55,6 +55,41 @@ public class BidList implements BiddingSequence {
             return Bid.valueOf(contract.winningBid.level + 1, strain);
         }
     }
+    
+    public boolean isLegalBid(Bid bid) {
+        Contract contract = getContract();
+        if (contract.winningBid != Bid.P && bid.isSuitBid() && bid.ordinal() < contract.winningBid.ordinal()) {
+            return false;
+        }
+
+        if (bid == Bid.XX) {
+            if (contract.redoubled) {
+                return false;
+            }
+            if (!contract.doubled) {
+                return false;
+            }
+            if (contract.position % 2 != bids.size() % 2) {
+                return false;
+            }
+        }
+        if (bid == Bid.X) {
+            if (contract.redoubled || contract.doubled) {
+                return false;
+            }
+            if (contract.winningBid == Bid.P) {
+                return false;
+            }
+            if (contract.position % 2 == bids.size() % 2) {
+                return false;
+            }
+        }
+
+        if (isCompleted()) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * @param bid
@@ -63,38 +98,9 @@ public class BidList implements BiddingSequence {
      * @throws IllegalArgumentException If the auction is not valid.
      */
     public BidList withBidAdded(Bid bid) {
-        Contract contract = getContract();
-        if (contract.winningBid != Bid.P && bid.isSuitBid() && bid.ordinal() < contract.winningBid.ordinal()) {
+        if (!isLegalBid(bid)) {
             throw new IllegalArgumentException("Invalid bid '" + bid + "'");
         }
-
-        if (bid == Bid.XX) {
-            if (contract.redoubled) {
-                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
-            }
-            if (!contract.doubled) {
-                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
-            }
-            if (contract.position % 2 != bids.size() % 2) {
-                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
-            }
-        }
-        if (bid == Bid.X) {
-            if (contract.redoubled || contract.doubled) {
-                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
-            }
-            if (contract.winningBid == Bid.P) {
-                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
-            }
-            if (contract.position % 2 == bids.size() % 2) {
-                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
-            }
-        }
-
-        if (isCompleted()) {
-            throw new IllegalArgumentException("Invalid bid '" + bid + "'");
-        }
-
         List<Bid> newBids = new ArrayList<>(bids);
         newBids.add(bid);
         return new BidList(newBids);
@@ -237,14 +243,6 @@ public class BidList implements BiddingSequence {
         return Objects.equals(bids, other.bids);
     }
 
-    @Override
-    public Bid getMatch(BidList list) {
-        if (list.equals(exceptLast())) {
-            return getLastBid();
-        }
-        return null;
-    }
-    
     public boolean isReverse(Bid bid) {
         Bid myLastBid = bids.size() >= 4 ? bids.get(bids.size() - 4) : null;
         Bid partnerLastBid = bids.size() >= 2 ? bids.get(bids.size() - 2) : null;
@@ -271,5 +269,23 @@ public class BidList implements BiddingSequence {
             }
         }
         return true;
+    }
+    
+    public Bid nextLevel(int strain) {
+        Bid lastBidSuit = getLastSuitBid();
+        if (strain > lastBidSuit.strain) {
+            return Bid.valueOf(lastBidSuit.level, strain);
+        } else {
+            return Bid.valueOf(lastBidSuit.level + 1, strain);
+        }
+    }
+    
+    public Bid getBid(int jl, int strain) {
+        Bid b = nextLevel(strain);
+        while (jl > 0) {
+            b = b.raise();
+            jl--;
+        }
+        return b;
     }
 }

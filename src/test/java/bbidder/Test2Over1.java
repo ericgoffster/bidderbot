@@ -30,6 +30,7 @@ public class Test2Over1 {
                 hadError.set(true);
                 System.err.println("At " + test.where);
                 System.err.println("Could not generate a hand");
+                e.printStackTrace();
                 continue;
             }
             if (!result.found.possibility.bid.equals(result.expected)) {

@@ -22,13 +22,13 @@ import java.util.regex.Pattern;
  *
  */
 public final class BiddingContext {
-    public static final BiddingContext EMPTY = new BiddingContext(BidList.create(List.of()), Map.of());
+    public static final BiddingContext EMPTY = new BiddingContext(new BidPatternList(List.of()), Map.of());
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
-    private final BidList bids;
+    private final BidPatternList bids;
     
     private final Map<String, Integer> suits;
 
-    private BiddingContext(BidList boundBidList, Map<String, Integer> suits) {
+    private BiddingContext(BidPatternList boundBidList, Map<String, Integer> suits) {
         super();
         this.bids = boundBidList;
         this.suits = suits;
@@ -37,11 +37,11 @@ public final class BiddingContext {
     /**
      * @return The list of bids.
      */
-    public BidList getBids() {
+    public BidPatternList getBids() {
         return bids;
     }
     
-    public static BiddingContext create(BidList bidList) {
+    public static BiddingContext create(BidPatternList bidList) {
         return new BiddingContext(bidList, Map.of());
     }
 
@@ -58,6 +58,9 @@ public final class BiddingContext {
      * @return (0,1,2,3,4) for a given symbol, null if not found.
      */
     public Integer getSuit(String symbol) {
+        if (symbol.endsWith(":down")) {
+            return getSuit(symbol.substring(0, symbol.length() - 5));
+        }
         {
             Matcher m = SUIT_PATTERN.matcher(symbol);
             if (m.matches()) {
@@ -96,23 +99,13 @@ public final class BiddingContext {
      */
     public List<BiddingContext> getBids(BidPattern pattern) {
         if (pattern.simpleBid != null) {
-            return List.of(new BiddingContext(bids.withBidAdded(pattern.simpleBid), suits));
+            return List.of(new BiddingContext(bids.withBidAdded(pattern), suits));
         }
-        Bid lastBidSuit = bids.getLastSuitBid();
         List<BiddingContext> result = new ArrayList<>();
         Map<Integer, BiddingContext> m = getMappedBiddingContexts(pattern.getSuit());
         for (Entry<Integer, BiddingContext> e : m.entrySet()) {
-            Bid bid = getBid(pattern, e.getKey());
-            if (pattern.reverse && !bids.isReverse(bid)) {
-                continue;
-            }
-            if (pattern.notreverse && !bids.isNonReverse(bid)) {
-                continue;
-            }
-            if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
-                BiddingContext bc = e.getValue();
-                result.add(new BiddingContext(bc.bids.withBidAdded(bid), bc.suits));
-            }
+            BiddingContext bc = e.getValue();
+            result.add(new BiddingContext(bc.bids.withBidAdded(pattern), bc.suits));
         }
         return result;
     }
@@ -250,25 +243,54 @@ public final class BiddingContext {
         }
     }
 
-    private Bid getBid(BidPattern pattern, int strain) {
-        Integer jl = pattern.getJumpLevel();
-        if (jl != null) {
-            Bid b = nextLevel(strain);
-            while (jl > 0) {
-                b = b.raise();
-                jl--;
+    public Bid theNextBid(BidList bl, BidPattern pattern) {
+        if (pattern.simpleBid != null) {
+            return pattern.simpleBid;
+        }
+        Integer strain = getSuit(pattern.suit);
+        if (strain == null) {
+            throw new IllegalStateException();
+        }
+        if (pattern.reverse) {
+            Bid b = bl.nextLevel(strain);
+            if (!bl.isReverse(b)) {
+                return null;
+            } else {
+                return b;
             }
-            return b;
+        }
+        if (pattern.notreverse) {
+            Bid b = bl.nextLevel(strain);
+            if (!bl.isNonReverse(b)) {
+                return null;
+            } else {
+                return b;
+            }
+        }
+        if (pattern.getJumpLevel() != null) {
+            return bl.getBid(pattern.getJumpLevel(), strain);
         }
         return Bid.valueOf(pattern.getLevel(), strain);
     }
 
-    private Bid nextLevel(int strain) {
-        Bid lastBidSuit = bids.getLastSuitBid();
-        if (strain > lastBidSuit.strain) {
-            return Bid.valueOf(lastBidSuit.level, strain);
-        } else {
-            return Bid.valueOf(lastBidSuit.level + 1, strain);
+    public Bid getMatch(BidList list) {
+        List<BidPattern> bidPatterns = bids.getBids();
+        List<Bid> theBids = list.getBids();
+        if (theBids.size() != bidPatterns.size() - 1) {
+            return null;
         }
+        for(int i = 0; i < bidPatterns.size() - 1; i++) {
+            BidPattern pattern = bidPatterns.get(i);
+            Bid bid = theBids.get(i);
+            Bid expected = theNextBid(new BidList(theBids.subList(0, i)), pattern);
+            if (bid != expected) {
+                return null;
+            }
+        }
+        Bid theNextBid = theNextBid(list, bidPatterns.get(bidPatterns.size() - 1));
+        if (theNextBid == null || !list.isLegalBid(theNextBid)) {
+            return null;
+        }
+        return theNextBid;
     }
 }

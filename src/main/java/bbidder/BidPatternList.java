@@ -24,6 +24,12 @@ public class BidPatternList {
     public List<BidPattern> getBids() {
         return Collections.unmodifiableList(bids);
     }
+    
+    public BidPatternList withBidAdded(BidPattern patt) {
+        List<BidPattern> nbids = new ArrayList<>(bids);
+        nbids.add(patt);
+        return new BidPatternList(nbids);
+    }
 
     /*
      * Retrieves the list of bidding contexts for this bid pattern list.
@@ -37,11 +43,12 @@ public class BidPatternList {
         List<BiddingContext> l = new ArrayList<>();
         // Add in first hand passing
         BidPattern pattern = bids.get(0);
-        getContexts(l, BiddingContext.create(BidList.create(List.of(Bid.P, Bid.P))), true);
-        getContexts(l, BiddingContext.create(BidList.create(List.of(Bid.P))), true);
-        getContexts(l, BiddingContext.create(BidList.create(List.of())), true);
+        BidPattern pass = BidPattern.createSimpleBid(Bid.P);
+        getContexts(l, BiddingContext.create(new BidPatternList(List.of(pass, pass))), true);
+        getContexts(l, BiddingContext.create(new BidPatternList(List.of(pass))), true);
+        getContexts(l, BiddingContext.create(new BidPatternList(List.of())), true);
         if (!pattern.isOpposition) {
-            getContexts(l, BiddingContext.create(BidList.create(List.of())), false);
+            getContexts(l, BiddingContext.create(new BidPatternList(List.of())), false);
         }
         return l;
     }
@@ -111,4 +118,14 @@ public class BidPatternList {
             theRest.getContexts(l, newCtx, !isOpp);
         }
     }
+    
+    public boolean isCompleted() {
+        BidPattern pass = BidPattern.createSimpleBid(Bid.P);
+        return bids.size() >= 4 &&
+                bids.get(bids.size() - 1).equals(pass) &&
+                bids.get(bids.size() - 2).equals(pass) &&
+                bids.get(bids.size() - 3).equals(pass) &&
+                bids.get(bids.size() - 4).equals(pass);
+    }
+    
 }
