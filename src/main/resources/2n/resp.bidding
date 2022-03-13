@@ -33,3 +33,4 @@ test xx Axx AQxxx Qxx:2N 4N
 test Axx Axx AQxx Qxx:2N 5N
 
 include stayman.bidding
+include jacobyxfer.bidding
