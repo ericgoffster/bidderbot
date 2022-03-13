@@ -1,13 +1,14 @@
 package bbidder.inferences;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.Range;
 import bbidder.ShapeSet;
-import bbidder.SplitUtil;
 
 /**
  * Represents the inference of a range of lengths of a suit.
@@ -18,11 +19,21 @@ import bbidder.SplitUtil;
 public class SuitRange implements Inference {
     public final String suit;
     public final Range rng;
+    
+    public static Pattern PATT1 = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
+    public static Pattern PATT2 = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(.*)");
+    public static Pattern PATT3 = Pattern.compile("\\s*(\\d+)\\s*\\+\\s*(.*)");
+    public static Pattern PATT4 = Pattern.compile("\\s*(\\d+)\\s*(.*)");
 
     public SuitRange(String suit, Integer min, Integer max) {
         super();
         this.suit = suit;
         this.rng = Range.between(min, max, 13);
+    }
+    public SuitRange(String suit, Range r) {
+        super();
+        this.suit = suit;
+        this.rng = r;
     }
 
     @Override
@@ -34,33 +45,46 @@ public class SuitRange implements Inference {
         return ShapeBoundInference.create(new ShapeSet(shape -> shape.isSuitInRange(s, r)));
     }
 
-    public static SuitRange valueOf(String str) {
+    public static Inference valueOf(String str) {
         if (str == null) {
             return null;
         }
-        String[] bidParts = SplitUtil.split(str, "\\s+", 2);
-        if (bidParts.length != 2) {
-            return null;
+        final String suit;
+        final Integer min;
+        final Integer max;
+        Matcher m = PATT1.matcher(str);
+        if (m.matches()) {
+            suit = m.group(3).trim();
+            min = Integer.parseInt(m.group(1));
+            max = Integer.parseInt(m.group(2));
+        } else {
+            m = PATT2.matcher(str);
+            if (m.matches()) {
+                suit = m.group(2).trim();
+                min = null;
+                max = Integer.parseInt(m.group(1));
+            } else {
+                m = PATT3.matcher(str);
+                if (m.matches()) {
+                    suit = m.group(2).trim();
+                    min = Integer.parseInt(m.group(1));
+                    max = null;
+                } else {
+                    m = PATT4.matcher(str);
+                    if (m.matches()) {
+                        suit = m.group(2).trim();
+                        min = max = Integer.parseInt(m.group(1));
+                    } else {
+                        return null;
+                    }
+                }
+            }
         }
-        String suit = bidParts[1].trim();
         if (suit.equalsIgnoreCase("hcp")) {
-            return null;
+            return new HCPRange(Range.between(min, max, 40));
+        } else {
+            return new SuitRange(suit, Range.between(min, max, 13));
         }
-        str = bidParts[0].trim();
-        if (str.endsWith("+")) {
-            return new SuitRange(suit, Integer.parseInt(str.substring(0, str.length() - 1).trim()), null);
-        }
-        if (str.endsWith("-")) {
-            return new SuitRange(suit, null, Integer.parseInt(str.substring(0, str.length() - 1).trim()));
-        }
-        String[] parts = SplitUtil.split(str, "-", 2);
-        if (parts.length == 1) {
-            return new SuitRange(suit, Integer.parseInt(parts[0]), Integer.parseInt(parts[0]));
-        }
-        if (parts.length != 2) {
-            return null;
-        }
-        return new SuitRange(suit, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
     }
 
     @Override

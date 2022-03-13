@@ -7,7 +7,6 @@ import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.Range;
-import bbidder.SplitUtil;
 
 /**
  * Represents the inference for a high card point range.
@@ -21,6 +20,10 @@ public class HCPRange implements Inference {
     public HCPRange(Integer min, Integer max) {
         super();
         this.rng = Range.between(min, max, 40);
+    }
+    public HCPRange(Range r) {
+        super();
+        this.rng = r;
     }
 
     @Override
@@ -38,29 +41,8 @@ public class HCPRange implements Inference {
         return new BoundInf(r);
     }
 
-    public static HCPRange valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        String[] hcpParts = SplitUtil.split(str, "\\s+", 2);
-        if (hcpParts.length != 2 || !hcpParts[1].equalsIgnoreCase("hcp")) {
-            return null;
-        }
-        str = hcpParts[0].trim();
-        if (str.endsWith("+")) {
-            return new HCPRange(Integer.parseInt(str.substring(0, str.length() - 1).trim()), null);
-        }
-        if (str.endsWith("-")) {
-            return new HCPRange(null, Integer.parseInt(str.substring(0, str.length() - 1).trim()));
-        }
-        String[] parts = SplitUtil.split(str, "-", 2);
-        if (parts.length == 1) {
-            return new HCPRange(Integer.parseInt(parts[0]), Integer.parseInt(parts[0]));
-        }
-        if (parts.length != 2) {
-            return null;
-        }
-        return new HCPRange(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+    public static Inference valueOf(String str) {
+        return SuitRange.valueOf(str);
     }
 
     @Override
