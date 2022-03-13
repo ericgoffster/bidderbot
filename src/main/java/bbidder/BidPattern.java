@@ -28,11 +28,7 @@ public class BidPattern {
         this.str = str;
         this.upTheLine = upTheLine;
         String upper = str.toUpperCase();
-        if (upper.equals(Constants.STR_X) || upper.equals(Constants.STR_XX) || upper.equals(Constants.STR_P)) {
-            suit = null;
-            level = null;
-            simpleBid = Bid.fromStr(str);
-        } else if (upper.startsWith("NJ") || upper.startsWith("DJ")) {
+        if (upper.startsWith("NJ") || upper.startsWith("DJ")) {
             level = upper.substring(0, 2);
             suit = str.substring(2);
             simpleBid = null;
@@ -42,8 +38,13 @@ public class BidPattern {
             simpleBid = null;
         } else {
             simpleBid = Bid.fromStr(str);
-            level = upper.substring(0, 1);
-            suit = str.substring(1);
+            if (simpleBid != null && !simpleBid.isSuitBid()) {
+                level = null;
+                suit = null;
+            } else {
+                level = upper.substring(0, 1);
+                suit = str.substring(1);
+            }
         }
     }
     
