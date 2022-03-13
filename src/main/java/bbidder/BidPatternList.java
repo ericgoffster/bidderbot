@@ -13,7 +13,7 @@ import java.util.Objects;
  *
  */
 public class BidPatternList {
-    public final List<BidPattern> bids;
+    private final List<BidPattern> bids;
 
     public BidPatternList(List<BidPattern> bids) {
         super();
