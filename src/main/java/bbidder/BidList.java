@@ -80,8 +80,12 @@ public class BidList {
         String[] parts = SplitUtil.split(str, "\\s+");
         List<Bid> bids = new ArrayList<>();
         boolean we = false;
+        boolean first = true;
         for (String part : parts) {
             if (part.startsWith("(") && part.endsWith(")")) {
+                if (!first && !we) {
+                    bids.add(Bid.P);
+                }
                 Bid b = Bid.fromStr(part.substring(1,part.length() - 1));
                 if (b == null) {
                     throw new IllegalArgumentException("Illegal bid: '" + part + "'");
@@ -89,7 +93,7 @@ public class BidList {
                 bids.add(b);
                 we = false;
             } else {
-                if (we) {
+                if (!first && we) {
                     bids.add(Bid.P);
                 }
                 Bid b = Bid.fromStr(part);
@@ -99,6 +103,7 @@ public class BidList {
                 bids.add(b);
                 we = true;
             }
+            first = false;
         }
         return new BidList(bids);
     }
