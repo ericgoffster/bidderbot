@@ -43,7 +43,7 @@ public class Hand {
         }
     }
 
-    static int getRank(char cRank) {
+    static int getRank(char cRank, short avail) {
         switch (Character.toUpperCase(cRank)) {
         case CHR_ACE:
             return ACE;
@@ -64,6 +64,8 @@ public class Hand {
         case '8':
         case '9':
             return cRank - '2';
+        case 'X':
+            return BitUtil.iterate(avail).iterator().next();
         default:
             throw new IllegalArgumentException("Invalid rank: " + cRank);
         }
@@ -96,13 +98,24 @@ public class Hand {
         return sb.toString();
     }
 
-    public static short parseSuit(String suitStr) {
+    public static short parseSuit(String suitStr, int suitIndex, Hand avail) {
         if (suitStr.equals("-")) {
             return 0;
         }
         short suit = 0;
+        int numX = 0;
         for (int i = 0; i < suitStr.length(); i++) {
-            int rank = getRank(suitStr.charAt(i));
+            if (suitStr.charAt(i) == 'x' || suitStr.charAt(i) == 'X') {
+                numX++;
+            } else {
+                int rank = getRank(suitStr.charAt(i), avail.suits[suitIndex]);
+                avail.suits[suitIndex] &= ~(1 << rank);
+                suit |= (1 << rank);
+            }
+        }
+        while(numX > 0) {
+            int rank = getRank('X', avail.suits[suitIndex]);
+            avail.suits[suitIndex] &= ~(1 << rank);
             suit |= (1 << rank);
         }
         return suit;
@@ -142,7 +155,7 @@ public class Hand {
         return hcp;
     }
 
-    public static Hand valueOf(String str) {
+    public static Hand valueOf(String str, Hand avail) {
         if (str == null) {
             return null;
         }
@@ -153,9 +166,14 @@ public class Hand {
             throw new IllegalArgumentException("Expected 4 suits: '" + str + '"');
         }
         for (String suitStr : suit_parts) {
-            suits[suit--] = parseSuit(suitStr);
+            short parseSuit = parseSuit(suitStr, suit, avail);
+            suits[suit--] = parseSuit;
         }
         return new Hand(suits);
+    }
+
+    public static Hand valueOf(String str) {
+        return valueOf(str, new Hand(new short[] {0x1fff, 0x1fff, 0x1fff, 0x1fff}));
     }
 
     public String toString() {
