@@ -1,10 +1,20 @@
 package bbidder;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 public class BidTest {
+    @Test
+    public void testIsSuitBid() {
+        assertTrue(Bid._1C.isSuitBid());
+
+        assertFalse(Bid.P.isSuitBid());
+        assertFalse(Bid.X.isSuitBid());
+        assertFalse(Bid.XX.isSuitBid());
+    }
     @Test
     public void testFromStr() {
         assertEquals(Bid._1C, Bid.fromStr("1C"));
