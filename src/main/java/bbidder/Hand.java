@@ -233,6 +233,14 @@ public class Hand {
         }
         return pts > 40 ? 40 : pts;
     }
+    
+    public boolean haveStopper(int suit) {
+        int highest = BitUtil.highestBit(getAllInSuit(suit));
+        if (highest >= 0) {
+            return numInSuit(suit) >= 13 - highest;
+        }
+        return false;
+    }
 
     public int totalPoints(int suit) {
         int pts = numHCP();

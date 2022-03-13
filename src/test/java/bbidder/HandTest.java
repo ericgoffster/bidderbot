@@ -51,4 +51,12 @@ public class HandTest {
         assertFalse(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 4), Range.all(40), StopperSet.ALL), 1));
         assertFalse(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 3), Range.all(40), StopperSet.ALL), 0));
     }
+
+    @Test
+    public void testStoppers() {
+        assertFalse(Hand.valueOf("A Kxxxx Qx xxxxx").haveStopper(0));
+        assertFalse(Hand.valueOf("A Kxxxx Qx xxxxx").haveStopper(1));
+        assertTrue(Hand.valueOf("A Kxxxx Qx xxxxx").haveStopper(2));
+        assertTrue(Hand.valueOf("A Kxxxx Qx xxxxx").haveStopper(3));
+    }
 }
