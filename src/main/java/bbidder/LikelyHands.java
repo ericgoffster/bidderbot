@@ -1,7 +1,5 @@
 package bbidder;
 
-import bbidder.inferences.ConstBoundInference;
-
 public class LikelyHands {
     public final IHandList lho;
     public final IHandList partner;
@@ -9,7 +7,15 @@ public class LikelyHands {
     public final IHandList me;
 
     public LikelyHands() {
-        this(ConstBoundInference.T, ConstBoundInference.T, ConstBoundInference.T, ConstBoundInference.T);
+        this(new AllPossibleHands(), new AllPossibleHands(), new AllPossibleHands(), new AllPossibleHands());
+    }
+
+    public LikelyHands(IHandList lho, IHandList parter, IHandList rho, IHandList me) {
+        super();
+        this.lho = lho;
+        this.partner = parter;
+        this.rho = rho;
+        this.me = me;
     }
 
     public LikelyHands(IBoundInference lho, IBoundInference parter, IBoundInference rho, IBoundInference me) {

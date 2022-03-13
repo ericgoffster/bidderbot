@@ -95,7 +95,7 @@ public class BiddingSystem {
                     }
                 } else if (!ln.equals("")) {
                     try {
-                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences());
+                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences(new LikelyHands()));
                     } catch (Exception e) {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }

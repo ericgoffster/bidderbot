@@ -16,8 +16,6 @@ public class BidInference {
     public final BidPatternList bids;
     public final InferenceList inferences;
 
-    static final LikelyHands ALL_HANDS_LIKELY = new LikelyHands();
-
     public BidInference(BidPatternList bids, InferenceList inferences) {
         super();
         this.bids = bids;
@@ -43,14 +41,15 @@ public class BidInference {
     }
 
     /**
+     * @param likelyHands Likely hands
      * @return The list of inferences bound to actual bidding sequences.
      */
-    public List<BoundBidInference> getBoundInferences() {
+    public List<BoundBidInference> getBoundInferences(LikelyHands likelyHands) {
         List<BoundBidInference> result = new ArrayList<>();
         for (BiddingContext ctx : bids.getContexts()) {
             BoundBidInference inference = new BoundBidInference(ctx, inferences);
-            // Catch an errors
-            inference.bind(ALL_HANDS_LIKELY);
+            // Catch any errors
+            inference.bind(likelyHands);
             result.add(inference);
         }
         return result;
