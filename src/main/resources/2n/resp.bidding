@@ -31,3 +31,5 @@ test xx Axx AQxxx Qxx:2N 4N
 
 2N 5N => grandinv
 test Axx Axx AQxx Qxx:2N 5N
+
+include stayman.bidding
