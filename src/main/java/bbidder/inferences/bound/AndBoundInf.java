@@ -49,6 +49,18 @@ public class AndBoundInf implements IBoundInference {
         return OrBoundInf.create(l);
     }
     
+    private static void addAnd(List<IBoundInference> l, IBoundInference inf) {
+        for(int i = 0; i < l.size(); i++) {
+            IBoundInference comb = inf.andWith(l.get(i));
+            if (comb != null) {
+                l.remove(i);
+                addAnd(l, comb);
+                return;
+            }
+        }
+        l.add(inf);
+    }
+    
     @Override
     public IBoundInference andWith(InfSummary summary) {
         List<IBoundInference> l = new ArrayList<>();
@@ -56,6 +68,21 @@ public class AndBoundInf implements IBoundInference {
             l.add(i.andWith(summary));
         }
         return create(l);
+    }
+    
+    @Override
+    public IBoundInference andWith(IBoundInference other) {
+        if (other instanceof AndBoundInf) {
+            List<IBoundInference> andList = new ArrayList<>();
+            for (IBoundInference i : inferences) {
+                addAnd(andList, i);
+            }
+            for (IBoundInference i : ((AndBoundInf) other).inferences) {
+                addAnd(andList, i);
+            }
+            return create(andList);
+        }
+        return null;
     }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
@@ -65,13 +92,7 @@ public class AndBoundInf implements IBoundInference {
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> andList = new ArrayList<>();
         for (IBoundInference i : inferences) {
-            if (i == ConstBoundInference.F) {
-                return ConstBoundInference.F;
-            }
-            if (i == ConstBoundInference.T) {
-                continue;
-            }
-            andList.add(i);
+            addAnd(andList, i);
         }
         if (andList.size() == 0) {
             return ConstBoundInference.T;

@@ -26,6 +26,11 @@ public class ConstBoundInference implements IBoundInference {
     }
     
     @Override
+    public IBoundInference andWith(IBoundInference other) {
+        return result ? other : F;
+    }
+    
+    @Override
     public IBoundInference negate() {
         return result ? F : T;
     }

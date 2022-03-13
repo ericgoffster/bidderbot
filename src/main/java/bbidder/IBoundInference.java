@@ -19,4 +19,6 @@ public interface IBoundInference  {
     
     IBoundInference andWith(InfSummary summary);
     IBoundInference negate();
+    
+    IBoundInference andWith(IBoundInference other);
 }

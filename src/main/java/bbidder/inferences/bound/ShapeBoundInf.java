@@ -30,6 +30,15 @@ public class ShapeBoundInf implements IBoundInference {
     }
     
     @Override
+    public IBoundInference andWith(IBoundInference other) {
+        if (other instanceof ShapeBoundInf) {
+            return create(((ShapeBoundInf)other).shapes.and(shapes));
+        }
+        return null;
+    }
+    
+    
+    @Override
     public IBoundInference andWith(InfSummary summary) {
         return create(shapes.and(summary.shape));
     }

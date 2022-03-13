@@ -29,6 +29,11 @@ public class OrBoundInf implements IBoundInference {
         }
         return s;
     }
+    
+    @Override
+    public IBoundInference andWith(IBoundInference other) {
+        return null;
+    }
 
     @Override
     public IBoundInference andWith(InfSummary summary) {

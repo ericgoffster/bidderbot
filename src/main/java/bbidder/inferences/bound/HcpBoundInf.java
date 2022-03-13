@@ -25,6 +25,14 @@ public class HcpBoundInf implements IBoundInference {
     }
     
     @Override
+    public IBoundInference andWith(IBoundInference other) {
+        if (other instanceof HcpBoundInf) {
+            return create(((HcpBoundInf)other).r.and(r));
+        }
+        return null;
+    }
+    
+    @Override
     public InfSummary getSummary() {
         return new InfSummary(ShapeSet.ALL, Range.all(40));
     }
