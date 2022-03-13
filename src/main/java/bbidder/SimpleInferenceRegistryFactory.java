@@ -12,6 +12,8 @@ import bbidder.inferences.SpecificCards;
 import bbidder.inferences.StoppersInSuits;
 import bbidder.inferences.SuitRange;
 import bbidder.inferences.TotalPointsRange;
+import bbidder.inferences.UnBalanced;
+import bbidder.inferences.VeryBalanced;
 
 public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistry> {
 
@@ -19,6 +21,8 @@ public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistr
     public InferenceRegistry get() {
         InferenceRegistry reg = new InferenceRegistry();
         reg.add(Balanced::valueOf);
+        reg.add(VeryBalanced::valueOf);
+        reg.add(UnBalanced::valueOf);
         reg.add(HCPRange::valueOf);
         reg.add(OpeningPreempt::valueOf);
         reg.add(LongestOrEqual::valueOf);

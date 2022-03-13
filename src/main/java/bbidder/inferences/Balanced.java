@@ -1,7 +1,6 @@
 package bbidder.inferences;
 
 import java.util.List;
-import java.util.Objects;
 
 import bbidder.Inference;
 import bbidder.InferenceContext;
@@ -17,24 +16,12 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public class Balanced implements Inference {
-    final BalanceType type;
-
-    public Balanced(BalanceType type) {
-        this.type = type;
+    public Balanced() {
     }
 
     @Override
     public List<MappedInference> bind(InferenceContext context) {
-        switch (type) {
-        case regular:
             return List.of(new MappedInference(ShapeBoundInf.create(new ShapeSet(Shape::isBalanced)), context));
-        case un:
-            return List.of(new MappedInference(ShapeBoundInf.create(new ShapeSet(Shape::isBalanced).not()), context));
-        case very:
-            return List.of(new MappedInference(ShapeBoundInf.create(new ShapeSet(Shape::isSuperBalanced)), context));
-        default:
-            throw new IllegalStateException();
-        }
     }
 
     public static Balanced valueOf(String str) {
@@ -43,34 +30,19 @@ public class Balanced implements Inference {
         }
         str = str.trim();
         if (str.toLowerCase().equals("balanced")) {
-            return new Balanced(BalanceType.regular);
-        }
-        if (str.toLowerCase().equals("unbalanced")) {
-            return new Balanced(BalanceType.un);
-        }
-        if (str.toLowerCase().equals("superbalanced")) {
-            return new Balanced(BalanceType.very);
+            return new Balanced();
         }
         return null;
     }
 
     @Override
     public String toString() {
-        switch (type) {
-        case regular:
-            return "balanced";
-        case un:
-            return "unbalanced";
-        case very:
-            return "superbalanced";
-        default:
-            throw new IllegalStateException();
-        }
+        return "balanced";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type);
+        return 0;
     }
 
     @Override
@@ -81,7 +53,6 @@ public class Balanced implements Inference {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Balanced other = (Balanced) obj;
-        return type == other.type;
+        return true;
     }
 }
