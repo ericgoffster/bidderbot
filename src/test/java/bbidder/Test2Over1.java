@@ -3,18 +3,15 @@ package bbidder;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ErrorCollector;
 
 public class Test2Over1 {
     public static BiddingSystem bs;
     
-    @Rule
-    public MyClass collector = new MyClass();
-
     @Test
     public void test() throws Throwable {
+        MyClass collector = new MyClass();
         BiddingSystem bs = BiddingSystem.load("", "classpath:2over1.bidding", ex -> {
             collector.addError(ex);
         });
