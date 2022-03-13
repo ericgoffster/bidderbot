@@ -43,15 +43,21 @@ public class Range {
     }
 
     public static Range atLeast(Integer n, int max) {
-        if (n == null) {
-            return new Range((1L << (max + 1)) - 1, max);
+        if (n == null || n <= 0) {
+            return all(max);
+        }
+        if (n > max) {
+            return none(max);
         }
         return atMost(n - 1, max).not();
     }
 
     public static Range atMost(Integer n, int max) {
-        if (n == null) {
-            return new Range((1L << (max + 1)) - 1, max);
+        if (n == null || n >= max) {
+            return all(max);
+        }
+        if (n < 0) {
+            return none(max);
         }
         return new Range((1L << (n + 1)) - 1, max);
     }
@@ -77,8 +83,8 @@ public class Range {
     }
 
     public boolean contains(int pos) {
-        if (unBounded()) {
-            return true;
+        if (pos < 0 || pos > max) {
+            return false;
         }
         return (bits & (1L << pos)) != 0L;
     }
