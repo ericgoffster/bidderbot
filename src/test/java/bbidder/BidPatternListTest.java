@@ -2,7 +2,6 @@ package bbidder;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -22,36 +21,4 @@ public class BidPatternListTest {
         assertEquals("1S 1N", BidPatternList.valueOf("1S 1N").toString());
         assertEquals("1S (X) 1N", BidPatternList.valueOf("1S (X) 1N").toString());
     }
-
-    List<BiddingContext> add2(BiddingContext... l) {
-        List<BiddingContext> newL = new ArrayList<>();
-        for (BiddingContext bc : l) {
-            newL.add(bc.withBidPrepended(Bid.P).withBidPrepended(Bid.P));
-        }
-        for (BiddingContext bc : l) {
-            newL.add(bc.withBidPrepended(Bid.P));
-        }
-        for (BiddingContext bc : l) {
-            newL.add(bc);
-        }
-        return newL;
-    }
-
-    List<BiddingContext> add3(BiddingContext... l) {
-        List<BiddingContext> newL = new ArrayList<>();
-        for (BiddingContext bc : l) {
-            newL.add(bc.withBidPrepended(Bid.P).withBidPrepended(Bid.P).withBidPrepended(Bid.P));
-        }
-        for (BiddingContext bc : l) {
-            newL.add(bc.withBidPrepended(Bid.P).withBidPrepended(Bid.P));
-        }
-        for (BiddingContext bc : l) {
-            newL.add(bc.withBidPrepended(Bid.P));
-        }
-        for (BiddingContext bc : l) {
-            newL.add(bc);
-        }
-        return newL;
-    }
-
 }
