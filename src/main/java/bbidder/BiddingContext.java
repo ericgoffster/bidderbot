@@ -41,6 +41,10 @@ public final class BiddingContext {
     public BidList getBids() {
         return bids;
     }
+    
+    public static BiddingContext create(BidList bidList) {
+        return new BiddingContext(bidList, Map.of());
+    }
 
     /**
      * @return The immutable symbol table.
@@ -55,14 +59,6 @@ public final class BiddingContext {
      */
     public BiddingContext withBidAdded(Bid bid) {
         return new BiddingContext(bids.withBidAdded(bid), suits);
-    }
-
-    /**
-     * @param bid The bid to add
-     * @return a new bidding context with a new bid prepended.
-     */
-    public BiddingContext withBidPrepended(Bid bid) {
-        return new BiddingContext(bids.withBidPrepended(bid), suits);
     }
 
     /**

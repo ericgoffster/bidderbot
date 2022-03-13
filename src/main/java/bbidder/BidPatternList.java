@@ -29,21 +29,19 @@ public class BidPatternList {
      * Retrieves the list of bidding contexts for this bid pattern list.
      */
     public List<BiddingContext> getContexts() {
-        BiddingContext ctx = BiddingContext.EMPTY;
-
         // no patterns, then a wide open context.
         if (bids.isEmpty()) {
-            return List.of(ctx);
+            return List.of(BiddingContext.EMPTY);
         }
 
         List<BiddingContext> l = new ArrayList<>();
         // Add in first hand passing
         BidPattern pattern = bids.get(0);
-        getContexts(l, BiddingContext.EMPTY.withBidAdded(Bid.P).withBidAdded(Bid.P), true);
-        getContexts(l, BiddingContext.EMPTY.withBidAdded(Bid.P), true);
-        getContexts(l, ctx, true);
+        getContexts(l, BiddingContext.create(BidList.create(List.of(Bid.P, Bid.P))), true);
+        getContexts(l, BiddingContext.create(BidList.create(List.of(Bid.P))), true);
+        getContexts(l, BiddingContext.create(BidList.create(List.of())), true);
         if (!pattern.isOpposition) {
-            getContexts(l, ctx, false);
+            getContexts(l, BiddingContext.create(BidList.create(List.of())), false);
         }
         return l;
     }
