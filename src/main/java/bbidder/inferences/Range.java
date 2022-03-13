@@ -30,9 +30,7 @@ public class Range {
     }
 
     public static Range between(Integer lhs, Integer rhs, int max) {
-        Range atl = atLeast(lhs, max);
-        Range atm = atMost(rhs, max);
-        return new Range(atl.bits & atm.bits, max);
+        return atLeast(lhs, max).and(atMost(rhs, max));
     }
     
     public boolean unBounded() {
@@ -41,6 +39,14 @@ public class Range {
 
     public Range not() {
         return new Range((~bits) & ((1L << (max + 1)) - 1), max);
+    }
+    
+    public Range and(Range other) {
+        return new Range(bits & other.bits, max);
+    }
+
+    public Range or(Range other) {
+        return new Range(bits | other.bits, max);
     }
 
     public boolean contains(int pos) {

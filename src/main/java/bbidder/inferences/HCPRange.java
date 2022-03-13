@@ -27,8 +27,15 @@ public class HCPRange implements Inference {
     @Override
     public IBoundInference bind(InferenceContext context) {
         Range r = Range.between(min == null ? null : context.resolvePoints(min), max == null ? null : context.resolvePoints(max), 40);
+        return createBound(r);
+    }
+
+    private static IBoundInference createBound(Range r) {
         if (r.unBounded()) {
             return ConstBoundInference.T;
+        }
+        if (r.bits == 0) {
+            return ConstBoundInference.F;
         }
         return new BoundInf(r);
     }
@@ -114,12 +121,7 @@ public class HCPRange implements Inference {
         @Override
         public IBoundInference andReduce(IBoundInference i) {
             if (i instanceof BoundInf) {
-                Range r2 = ((BoundInf) i).r;
-                Range newR = new Range(r.bits & r2.bits, r.max);
-                if (newR.bits == 0) {
-                    return ConstBoundInference.F;
-                }
-                return new BoundInf(newR);
+                return createBound(r.and(((BoundInf) i).r));
             }
             return null;
         }

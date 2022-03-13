@@ -67,8 +67,15 @@ public class CombinedTotalPointsRange implements Inference {
         }
         tp[4] = new Characteristic(context.likelyHands.partner.minTotalPoints(4), 0);
         Range r = Range.between(min, max, 40);
+        return createBounded(tp, r);
+    }
+
+    private static IBoundInference createBounded(Characteristic[] tp, Range r) {
         if (r.unBounded()) {
             return ConstBoundInference.T;
+        }
+        if (r.bits == 0) {
+            return ConstBoundInference.F;
         }
         return new BoundInf(tp, r);
     }
@@ -189,12 +196,7 @@ public class CombinedTotalPointsRange implements Inference {
         @Override
         public IBoundInference andReduce(IBoundInference i) {
             if (i instanceof BoundInf && Arrays.equals(tp, ((BoundInf) i).tp)) {
-                Range r2 = ((BoundInf) i).r;
-                Range newR = new Range(r.bits & r2.bits, r.max);
-                if (newR.bits == 0) {
-                    return ConstBoundInference.F;
-                }
-                return new BoundInf(tp, newR);
+                return createBounded(tp, new Range(r.bits & ((BoundInf) i).r.bits, r.max));
             }
             return null;
         }

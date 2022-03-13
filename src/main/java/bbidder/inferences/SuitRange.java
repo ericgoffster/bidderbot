@@ -31,10 +31,17 @@ public class SuitRange implements Inference {
     @Override
     public IBoundInference bind(InferenceContext context) {
         Range r = Range.between(min == null ? null : context.resolveLength(min), max == null ? null : context.resolveLength(max), 13);
+        return createBound(context.lookupSuit(suit), r);
+    }
+
+    private static IBoundInference createBound(int s, Range r) {
         if (r.unBounded()) {
             return ConstBoundInference.T;
         }
-        return new BoundInf(context.lookupSuit(suit), r);
+        if (r.bits == 0) {
+            return ConstBoundInference.F;
+        }
+        return new BoundInf(s, r);
     }
 
     public static SuitRange valueOf(String str) {
@@ -120,17 +127,11 @@ public class SuitRange implements Inference {
         public String toString() {
             return r + " " + STR_ALL_SUITS.charAt(suit);
         }
-        
-        
+
         @Override
         public IBoundInference andReduce(IBoundInference i) {
             if (i instanceof BoundInf && suit == ((BoundInf) i).suit) {
-                Range r2 = ((BoundInf) i).r;
-                Range newR = new Range(r.bits & r2.bits, r.max);
-                if (newR.bits == 0) {
-                    return ConstBoundInference.F;
-                }
-                return new BoundInf(suit, newR);
+                return createBound(suit, r.and(((BoundInf) i).r));
             }
             return null;
         }
