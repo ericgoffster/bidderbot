@@ -6,7 +6,6 @@ import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.Range;
-import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.HcpBoundInf;
 
 /**
@@ -29,17 +28,7 @@ public class HCPRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        return createBound(rng);
-    }
-
-    public static IBoundInference createBound(Range r) {
-        if (r.unBounded()) {
-            return ConstBoundInference.T;
-        }
-        if (r.bits == 0) {
-            return ConstBoundInference.F;
-        }
-        return new HcpBoundInf(r);
+        return HcpBoundInf.create(rng);
     }
 
     public static Inference valueOf(String str) {

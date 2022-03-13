@@ -31,7 +31,7 @@ public class CombinedTotalPointsRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        return CombinedTotalPointsBoundInf.createBounded(context.likelyHands.partner.getSummary(), rng);
+        return CombinedTotalPointsBoundInf.create(context.likelyHands.partner.getSummary(), rng);
     }
     
     public static Range createRange(String str, Map<String, Integer> m) {

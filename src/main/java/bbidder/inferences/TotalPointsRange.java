@@ -28,7 +28,7 @@ public class TotalPointsRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        return TotalPtsBoundInf.createBounded(context.likelyHands.partner.getSummary(), rng);
+        return TotalPtsBoundInf.create(context.likelyHands.partner.getSummary(), rng);
     }
     
     public static Inference valueOf(String str) {

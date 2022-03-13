@@ -20,7 +20,7 @@ public class ShapeBoundInf implements IBoundInference {
         return create(shapes.not());
     }  
 
-    public ShapeBoundInf(ShapeSet shapes) {
+    private ShapeBoundInf(ShapeSet shapes) {
         this.shapes = shapes;
     }
 

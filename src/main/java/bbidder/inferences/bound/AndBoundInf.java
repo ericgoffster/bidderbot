@@ -53,34 +53,24 @@ public class AndBoundInf implements IBoundInference {
     public IBoundInference andWith(InfSummary summary) {
         List<IBoundInference> l = new ArrayList<>();
         for(IBoundInference i : inferences) {
-            IBoundInference t = i.andWith(summary);
-            if (t == ConstBoundInference.F) {
-                return ConstBoundInference.F;
-            }
-            if (t == ConstBoundInference.T) {
-                continue;
-            }
-            l.add(t);
+            l.add(i.andWith(summary));
         }
         return create(l);
     }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
-        if (i1 == ConstBoundInference.T) {
-            return i2;
-        }
-        if (i2 == ConstBoundInference.T) {
-            return i1;
-        }
-        if (i1 == ConstBoundInference.F || i2 == ConstBoundInference.F) {
-            return ConstBoundInference.F;
-        }
         return create(List.of(i1, i2));
     }
     
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> andList = new ArrayList<>();
         for (IBoundInference i : inferences) {
+            if (i == ConstBoundInference.F) {
+                return ConstBoundInference.F;
+            }
+            if (i == ConstBoundInference.T) {
+                continue;
+            }
             andList.add(i);
         }
         if (andList.size() == 0) {

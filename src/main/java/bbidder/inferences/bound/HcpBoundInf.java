@@ -29,7 +29,7 @@ public class HcpBoundInf implements IBoundInference {
         return new InfSummary(ShapeSet.ALL, r, Range.all(40), Range.all(40));
     }
     
-    public HcpBoundInf(Range r) {
+    private HcpBoundInf(Range r) {
         this.r = r;
     }
     

@@ -13,7 +13,7 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
     
     @Override
     public IBoundInference negate() {
-        return createBounded(partnerSummary, r.not());
+        return create(partnerSummary, r.not());
     }
     
     @Override
@@ -23,17 +23,7 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
     
     @Override
     public IBoundInference andWith(InfSummary summary) {
-        return createBounded(partnerSummary, summary.ctpts.and(r));
-    }
-    
-    public static IBoundInference createBounded(LikelyHandSummary partnerSummary, Range r) {
-        if (r.unBounded()) {
-            return ConstBoundInference.T;
-        }
-        if (r.bits == 0) {
-            return ConstBoundInference.F;
-        }
-        return new CombinedTotalPointsBoundInf(partnerSummary, r);
+        return create(partnerSummary, summary.ctpts.and(r));
     }
     
     public static IBoundInference create(LikelyHandSummary tp, Range r) {
@@ -46,7 +36,7 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
         return new CombinedTotalPointsBoundInf(tp, r);
     }
     
-    public CombinedTotalPointsBoundInf(LikelyHandSummary tp, Range r) {
+    private CombinedTotalPointsBoundInf(LikelyHandSummary tp, Range r) {
         this.partnerSummary = tp;
         this.r = r;
     }

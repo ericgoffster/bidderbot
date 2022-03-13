@@ -13,7 +13,7 @@ public class TotalPtsBoundInf implements IBoundInference {
     
     @Override
     public IBoundInference negate() {
-        return createBounded(partnerSummary, r.not());
+        return create(partnerSummary, r.not());
     }  
 
     @Override
@@ -23,10 +23,10 @@ public class TotalPtsBoundInf implements IBoundInference {
     
     @Override
     public IBoundInference andWith(InfSummary summary) {
-        return createBounded(partnerSummary, r.and(summary.tpts));
+        return create(partnerSummary, r.and(summary.tpts));
     }
     
-    public static IBoundInference createBounded(LikelyHandSummary partnerSummary, Range r) {
+    public static IBoundInference create(LikelyHandSummary partnerSummary, Range r) {
         if (r.unBounded()) {
             return ConstBoundInference.T;
         }
@@ -36,7 +36,7 @@ public class TotalPtsBoundInf implements IBoundInference {
         return new TotalPtsBoundInf(partnerSummary, r);
     }
     
-    public TotalPtsBoundInf(LikelyHandSummary tp, Range r) {
+    private TotalPtsBoundInf(LikelyHandSummary tp, Range r) {
         this.partnerSummary = tp;
         this.r = r;
     }

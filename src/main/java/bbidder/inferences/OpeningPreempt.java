@@ -10,6 +10,7 @@ import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.SplitUtil;
 import bbidder.inferences.bound.AndBoundInf;
+import bbidder.inferences.bound.HcpBoundInf;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -31,7 +32,7 @@ public class OpeningPreempt implements Inference {
     @Override
     public IBoundInference bind(InferenceContext context) {
         int s = context.lookupSuit(suit);
-        return AndBoundInf.create(HCPRange.createBound(Range.between(5, 10, 40)), ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(s, level, shape))));
+        return AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)), ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(s, level, shape))));
     }
 
     public static OpeningPreempt valueOf(String str) {
