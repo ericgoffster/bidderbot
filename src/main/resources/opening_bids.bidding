@@ -1,4 +1,3 @@
-# Opening bids
 2C => 22+ hcp
 test AKQxx AKQ AK xxx:2C
 
@@ -7,6 +6,9 @@ test AKQx AQxx AQ xxx:2N
 
 1N => balanced, 15-17 hcp
 test AQxx KQxx AQ xxx:1N
+
+P 1M:down => 5+ M, 8+ hcp, longest_or_equal M among majors
+test KQJxx xxx Axx xx:P P 1S
 
 1x:down => 5+ x, 13+ hcp, longest_or_equal x among all
 test AQxxx Axxx Kx xx:1S
