@@ -1,4 +1,11 @@
 # 1N responses
+
+1N 2♣ => inv+, 5+♠, 4♥
+test AJxxx Axxx xx xx:1N 2♣
+
+1N 2♣ => inv+, 5+♥, 4♠
+test AJxx Axxxx xx xx:1N 2♣
+
 1N 2M-1 => slaminv, 6+M
 test AQxxxx x AKx Jxx:1N 2♥
 test x AQxxxx AKx Jxx:1N 2♦
@@ -6,12 +13,6 @@ test x AQxxxx AKx Jxx:1N 2♦
 1N 4M-1 => 6+M, gf+
 test AQxxxx Kxx Qx xx:1N 4♥
 test Kxx AQxxxx Qx xx:1N 4♦
-
-1N 2♣ => inv+, 5+♠, 4♥
-test AJxxx Axxx xx xx:1N 2♣
-
-1N 2♣ => inv+, 5+♥, 4♠
-test AJxx Axxxx xx xx:1N 2♣
 
 1N 2M-1 => 5+M
 test Axxxx xxx Qxx xx:1N 2♥
