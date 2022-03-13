@@ -18,20 +18,17 @@ import bbidder.SplitUtil;
  */
 public class SuitRange implements Inference {
     public final String suit;
-    public final Integer min;
-    public final Integer max;
+    public final Range rng;
 
     public SuitRange(String suit, Integer min, Integer max) {
         super();
         this.suit = suit;
-        this.min = min;
-        this.max = max;
+        this.rng = Range.between(min, max, 13);
     }
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        Range r = Range.between(min, max, 13);
-        return createBound(context.lookupSuit(suit), r);
+        return createBound(context.lookupSuit(suit), rng);
     }
 
     private static IBoundInference createBound(int s, Range r) {
@@ -75,21 +72,12 @@ public class SuitRange implements Inference {
 
     @Override
     public String toString() {
-        if (max == null) {
-            return min + "+ " + suit;
-        }
-        if (min == null) {
-            return max + "- " + suit;
-        }
-        if (min.equals(max)) {
-            return min + " " + suit;
-        }
-        return min + "-" + max + " " + suit;
+        return rng + " " + suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(max, min, suit);
+        return Objects.hash(rng, suit);
     }
 
     @Override
@@ -101,7 +89,7 @@ public class SuitRange implements Inference {
         if (getClass() != obj.getClass())
             return false;
         SuitRange other = (SuitRange) obj;
-        return Objects.equals(max, other.max) && Objects.equals(min, other.min) && Objects.equals(suit, other.suit);
+        return Objects.equals(rng, other.rng) && Objects.equals(suit, other.suit);
     }
 
     static class BoundInf implements IBoundInference {
