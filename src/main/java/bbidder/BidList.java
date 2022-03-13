@@ -60,13 +60,17 @@ public class BidList {
            }
        }
        
-       if (bids.size() >= 4 && contract.winningBid == Bid.P) {
+       if (isCompleted()) {
            throw new IllegalArgumentException("Invalid bid '"+bid+"'");
        }
             
         List<Bid> newBids = new ArrayList<>(bids);
         newBids.add(bid);
         return new BidList(newBids);
+    }
+    
+    public boolean isCompleted() {
+        return bids.size() >= 4 && getContract().winningBid == Bid.P;
     }
     
     public Contract getContract() {
