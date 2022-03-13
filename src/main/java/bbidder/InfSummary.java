@@ -18,7 +18,7 @@ public class InfSummary {
         this.stoppers = stoppers;
         this.partialStoppers = partialStoppers;
     }
-    
+
     public InfSummary withShapes(ShapeSet shape) {
         return new InfSummary(shape, tpts, stoppers, partialStoppers);
     }
@@ -45,7 +45,7 @@ public class InfSummary {
 
     @Override
     public String toString() {
-        return shape + "," + tpts + " tpts" + ",stoppers:" + stoppers+ ",partial stoppers:" + partialStoppers;
+        return shape + "," + tpts + " tpts" + ",stoppers:" + stoppers + ",partial stoppers:" + partialStoppers;
     }
 
     public boolean isEmpty() {
