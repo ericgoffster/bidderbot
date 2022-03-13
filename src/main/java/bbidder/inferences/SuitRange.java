@@ -66,7 +66,7 @@ public class SuitRange implements Inference {
         if (str.endsWith("-")) {
             return new SuitRange(suit, null, str.substring(0, str.length() - 1).trim());
         }
-        String[] parts = str.split("-");
+        String[] parts = str.split("-", 2);
         if (parts.length == 1) {
             return new SuitRange(suit, parts[0].trim(), parts[0].trim());
         }

@@ -37,7 +37,7 @@ public class OpeningPreempt implements Inference {
         if (!str.toLowerCase().startsWith("opening_preempt")) {
             return null;
         }
-        String[] parts = str.split("\\s+");
+        String[] parts = str.split("\\s+", 3);
         if (parts.length != 3) {
             return null;
         }

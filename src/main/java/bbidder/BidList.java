@@ -73,7 +73,7 @@ public class BidList {
         if (str == null) {
             return null;
         }
-        String[] parts = str.split("\\s+");
+        String[] parts = str.trim().split("\\s+");
         List<Bid> bids = new ArrayList<>();
         for (String part : parts) {
             bids.add(Bid.fromStr(part.trim()));

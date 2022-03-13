@@ -52,7 +52,7 @@ public class HCPRange implements Inference {
         if (str.endsWith("-")) {
             return new HCPRange(null, str.substring(0, str.length() - 1).trim());
         }
-        String[] parts = str.split("-");
+        String[] parts = str.split("-", 2);
         if (parts.length == 1) {
             return new HCPRange(parts[0].trim(), parts[0].trim());
         }
