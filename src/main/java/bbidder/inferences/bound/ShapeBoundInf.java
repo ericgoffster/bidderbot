@@ -43,7 +43,7 @@ public class ShapeBoundInf implements IBoundInference {
         if (r.isEmpty()) {
             return ConstBoundInference.F;
         }
-        if (r.isFull()) {
+        if (r.unBounded()) {
             return ConstBoundInference.T;
         }
         return new ShapeBoundInf(r);

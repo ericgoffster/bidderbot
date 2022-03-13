@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 public class ShapeSet implements Iterable<Shape> {
     public final BitSet shapes;
 
-    public ShapeSet(BitSet shapes) {
+    private ShapeSet(BitSet shapes) {
         this.shapes = shapes;
     }
 
@@ -61,7 +61,7 @@ public class ShapeSet implements Iterable<Shape> {
         return shapes.cardinality();
     }
 
-    public boolean isFull() {
+    public boolean unBounded() {
         return size() == Shape.values().length;
     }
 
