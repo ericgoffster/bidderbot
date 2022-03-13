@@ -21,6 +21,9 @@ test x AKxx Axx AQxxx:1♣ 1♠ 2♥
 1x 1y 1z => 4+z
 test AKxx AKxx x xxxx:1♣ 1♦ 1♥
 
+1x 1y 3x => 6+x, 17-20 tpts
+test AKx Kxx x AKxxxx:1♣ 1♦ 3♣
+
 1x 1y 1N => 12-14 tpts
 test Qxx Axx Ax Axxxx:1♣ 1♦ 1N
 test Qx Axxx Ax Axxxx:1♣ 1♠ 1N
@@ -31,4 +34,5 @@ test AQx Axx Ax Axxxx:1♣ 1♦ 2N
 1x 1y 3N => 20+ tpts
 test x AKxx AQxx AKxx:1♦ 1♠ 3N
 
+include 1over1resprebids.bidding
 include reverses.bidding
