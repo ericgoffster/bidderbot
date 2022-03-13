@@ -35,9 +35,10 @@ public class BidPattern {
         this.reverse = reverse;
         this.notreverse = notreverse;
     }
-    
+
     /**
-     * @param isOpposition true, if is an opposition bid
+     * @param isOpposition
+     *            true, if is an opposition bid
      * @return A Bid Pattern with isOpposition set.
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
@@ -50,7 +51,7 @@ public class BidPattern {
 
     public static short getSuitClass(String str) {
         if (str.startsWith("~")) {
-            return (short)(0xf ^ getSuitClass(str.substring(1)));
+            return (short) (0xf ^ getSuitClass(str.substring(1)));
         }
         int pos = str.indexOf("-");
         if (pos >= 0) {
@@ -68,7 +69,7 @@ public class BidPattern {
                 if (strain < 0 || strain > 3) {
                     throw new IllegalArgumentException("Invalid strain");
                 }
-                return (short)(1 << strain);
+                return (short) (1 << strain);
             }
         }
 
@@ -87,7 +88,7 @@ public class BidPattern {
     }
 
     /**
-     * @return The number of jumps.   Null if N/A
+     * @return The number of jumps. Null if N/A
      */
     public Integer getJumpLevel() {
         return jumpLevel;
@@ -162,24 +163,42 @@ public class BidPattern {
             return "NR" + suit;
         }
         if (jumpLevel != null) {
-            switch(jumpLevel.intValue()) {
-            case 0: return "NJ" + suit;
-            case 1: return "J" + suit;
-            case 2: return "DJ" + suit;
-            default: throw new IllegalStateException();
+            switch (jumpLevel.intValue()) {
+            case 0:
+                return "NJ" + suit;
+            case 1:
+                return "J" + suit;
+            case 2:
+                return "DJ" + suit;
+            default:
+                throw new IllegalStateException();
             }
         }
         return (level + 1) + suit;
     }
-    
+
     public static BidPattern createJump(String suit, int jumpLevel) {
         return new BidPattern(false, suit, null, null, jumpLevel, false, false);
     }
+
     public static BidPattern createReverse(String suit) {
         return new BidPattern(false, suit, null, null, 0, true, false);
     }
+
     public static BidPattern createNonReverse(String suit) {
         return new BidPattern(false, suit, null, null, 0, false, true);
+    }
+
+    public static BidPattern createSimpleBid(Bid simpleBid) {
+        if (simpleBid.isSuitBid()) {
+            return new BidPattern(false, String.valueOf(Constants.STR_ALL_SUITS.charAt(simpleBid.strain)), simpleBid.level, simpleBid, null, false,
+                    false);
+        }
+        return new BidPattern(false, null, null, simpleBid, null, false, false);
+    }
+    
+    public static BidPattern createBid(int level, String suit) {
+        return new BidPattern(false, suit, level, null, null, false, false);
     }
 
     private static BidPattern create(String str) {
@@ -197,19 +216,16 @@ public class BidPattern {
         } else {
             Bid simpleBid = Bid.fromStr(str);
             if (simpleBid != null) {
-                if (simpleBid.isSuitBid()) {
-                    return new BidPattern(false, String.valueOf(Constants.STR_ALL_SUITS.charAt(simpleBid.strain)), simpleBid.level, simpleBid, null, false, false);
-                }
-                return new BidPattern(false, null, null, simpleBid, null, false, false);
+                return createSimpleBid(simpleBid);
             } else {
-                final Integer level = Integer.parseInt(upper.substring(0, 1)) - 1;
+                final int level = Integer.parseInt(upper.substring(0, 1)) - 1;
                 if (level < 0 || level > 6) {
                     throw new IllegalArgumentException("Invalid bid: '" + str + "'");
                 }
                 if (!BiddingContext.isValidSuit(str.substring(1))) {
-                    throw new IllegalArgumentException("Invalid suit: " + str.substring(1));
+                    throw new IllegalArgumentException("Invalid bid: " + str);
                 }
-                return new BidPattern(false, str.substring(1), level, null, null, false, false);
+                return createBid(level, str.substring(1));
             }
         }
     }
