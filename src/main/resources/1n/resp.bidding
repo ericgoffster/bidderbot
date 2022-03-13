@@ -62,3 +62,4 @@ include classpath:1n/stayman.bidding
 include classpath:1n/jacobyxfer.bidding
 include classpath:1n/mss.bidding
 include classpath:1n/minorxfer.bidding
+include classpath:1n/texasxfer.bidding
