@@ -28,11 +28,15 @@ public class BidPattern {
     public final Bid simpleBid;
     private final short suitClass;
     private final Integer jumpLevel;
+    private final boolean reverse;
+    private final boolean notreverse;
     
-    public BidPattern(boolean isOpposition, String str, boolean upTheLine) {
+    public BidPattern(boolean isOpposition, String str, boolean upTheLine, boolean reverse, boolean notreverse) {
         this.isOpposition = isOpposition;
         this.str = str;
         this.upTheLine = upTheLine;
+        this.reverse = reverse;
+        this.notreverse = notreverse;
         String upper = str.toUpperCase();
         if (upper.startsWith("NJ")) {
             simpleBid = null;
@@ -136,14 +140,20 @@ public class BidPattern {
         }
         String[] parts = SplitUtil.split(str, ":");
         boolean downTheLine = false;
+        boolean reverse = false;
+        boolean notreverse = false;
         for(int i = 1; i < parts.length; i++) {
-            if (parts[i].equals("down")) {
+            if (parts[i].equalsIgnoreCase("down")) {
                 downTheLine = true;
-            } else {
+            } else if (parts[i].equalsIgnoreCase("reverse")) {
+                reverse = true;
+            } else if (parts[i].equalsIgnoreCase("nonreverse")) {
+                reverse = true;
+            }  else {
                 throw new IllegalArgumentException("Uknown qualifier: " + parts[i]);
             }
         }
-        return new BidPattern(isOpposition, parts[0].trim(), !downTheLine);
+        return new BidPattern(isOpposition, parts[0].trim(), !downTheLine, reverse, notreverse);
     }
 
     @Override
@@ -151,6 +161,12 @@ public class BidPattern {
         String s = str;
         if (!upTheLine) {
             s += ":down";
+        }
+        if (notreverse) {
+            s += ":nonreverse";
+        }
+        if (reverse) {
+            s += ":reverse";
         }
         if (isOpposition) {
             return "(" + s + ")";
@@ -160,7 +176,7 @@ public class BidPattern {
 
     @Override
     public int hashCode() {
-        return Objects.hash(upTheLine, isOpposition, str);
+        return Objects.hash(upTheLine, isOpposition, str, reverse, notreverse);
     }
 
     @Override
@@ -172,6 +188,6 @@ public class BidPattern {
         if (getClass() != obj.getClass())
             return false;
         BidPattern other = (BidPattern) obj;
-        return upTheLine == other.upTheLine && isOpposition == other.isOpposition && Objects.equals(str, other.str);
+        return upTheLine == other.upTheLine && isOpposition == other.isOpposition && Objects.equals(str, other.str) && Objects.equals(reverse, other.reverse) && Objects.equals(notreverse, other.notreverse);
     }
 }
