@@ -108,7 +108,7 @@ public class BidPatternList {
             return getContexts(ctx, pattern, new BidPatternList(bids.subList(1, bids.size())), false);
         }
         if (isOpp && !pattern.isOpposition) {
-            return getContexts(ctx, BidPattern.PASS, this, false);
+            return getContexts(ctx, BidPattern.PASS, this, !isOpp);
         }
         return getContexts(ctx, pattern, new BidPatternList(bids.subList(1, bids.size())), !isOpp);
     }
