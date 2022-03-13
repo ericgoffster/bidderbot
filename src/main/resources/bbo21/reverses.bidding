@@ -1,0 +1,22 @@
+# Reverses
+
+1x 1y RVz 2y => 5+ y, 7- tpts
+test KQJxx xx xxxx xx:1♣ 1♠ 2♥ 2♠
+
+1x 1y RVz 3y => 6+ y, gf
+test KQJxxx xx Axx xx:1♣ 1♠ 2♥ 3♠
+
+1x 1y RVz NJx => fit x, gf
+test KQxx x xxxx Axxx:1♣ 1♠ 2♥ 3♣
+
+1x 1y RVz Jx => fit x, slaminv+
+test KQxx x Kxxx AKxx:1♣ 1♠ 2♥ 4♣
+
+1x 1y RVz NJz => fit z, gf
+test x KQxx xxxx Axxx:1♣ 1♠ 2♥ 3♣
+
+1x 1y RVz 2N =>
+test KQJx xx xxxx xxx:1♣ 1♠ 2♥ 2N
+
+1x 1y RVz 2N 3C =>
+test x AQxx KQx AKxxx:1♣ 1♠ 2♥ 2N 3C
