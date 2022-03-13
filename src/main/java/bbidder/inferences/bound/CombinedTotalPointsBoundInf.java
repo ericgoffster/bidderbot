@@ -6,13 +6,13 @@ import bbidder.Constants;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Range;
-import bbidder.inferences.LikelyHandSummary;
+import bbidder.inferences.LikelySuitSummary;
 
 public class CombinedTotalPointsBoundInf implements IBoundInference {
-    final LikelyHandSummary[] tp;
+    final LikelySuitSummary[] tp;
     final Range r;
     
-    public static IBoundInference createBounded(LikelyHandSummary[] tp, Range r) {
+    public static IBoundInference createBounded(LikelySuitSummary[] tp, Range r) {
         if (r.unBounded()) {
             return ConstBoundInference.T;
         }
@@ -22,7 +22,7 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
         return new CombinedTotalPointsBoundInf(tp, r);
     }
     
-    static int getTotalPoints(Hand hand, LikelyHandSummary[] tp) {
+    static int getTotalPoints(Hand hand, LikelySuitSummary[] tp) {
         int pts = hand.totalPoints(Constants.NOTRUMP) + tp[Constants.NOTRUMP].minTotalPoints;
         for (int s = 0; s < 4; s++) {
             if (hand.numInSuit(s) + tp[s].minLength >= 8) {
@@ -37,7 +37,7 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
         return 1;
     }
 
-    public CombinedTotalPointsBoundInf(LikelyHandSummary[] tp, Range r) {
+    public CombinedTotalPointsBoundInf(LikelySuitSummary[] tp, Range r) {
         this.tp = tp;
         this.r = r;
     }

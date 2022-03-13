@@ -31,12 +31,12 @@ public class CombinedTotalPointsRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        LikelyHandSummary[] tp = new LikelyHandSummary[5];
+        LikelySuitSummary[] summary = new LikelySuitSummary[5];
         for (int i = 0; i < 4; i++) {
-            tp[i] = new LikelyHandSummary(context.likelyHands.partner.minTotalPoints(i), context.likelyHands.partner.minInSuit(i));
+            summary[i] = new LikelySuitSummary(context.likelyHands.partner.minTotalPoints(i), context.likelyHands.partner.minInSuit(i));
         }
-        tp[4] = new LikelyHandSummary(context.likelyHands.partner.minTotalPoints(4), 0);
-        return CombinedTotalPointsBoundInf.createBounded(tp, rng);
+        summary[4] = new LikelySuitSummary(context.likelyHands.partner.minTotalPoints(4), 0);
+        return CombinedTotalPointsBoundInf.createBounded(summary, rng);
     }
     
     public static Range createRange(String str, Map<String, Integer> m) {

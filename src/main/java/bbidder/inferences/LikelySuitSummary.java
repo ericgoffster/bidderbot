@@ -2,11 +2,11 @@ package bbidder.inferences;
 
 import java.util.Objects;
 
-public class LikelyHandSummary {
+public class LikelySuitSummary {
     public final int minTotalPoints;
     public final int minLength;
 
-    public LikelyHandSummary(int minTotalPoints, int minLength) {
+    public LikelySuitSummary(int minTotalPoints, int minLength) {
         super();
         this.minTotalPoints = minTotalPoints;
         this.minLength = minLength;
@@ -30,7 +30,7 @@ public class LikelyHandSummary {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        LikelyHandSummary other = (LikelyHandSummary) obj;
+        LikelySuitSummary other = (LikelySuitSummary) obj;
         return minLength == other.minLength && minTotalPoints == other.minTotalPoints;
     }
 }
