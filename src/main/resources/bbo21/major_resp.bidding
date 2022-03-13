@@ -13,6 +13,9 @@ test xxx Kxx Kx xxxxx:1♥ 2♥
 test x Kxxx Axx Axxxx:1♥ 3♠
 test Kxxx x Axx Axxxx:1♠ 4♥
 
+1H 2S => 5+ S, 4+H, 15-18 tpts
+test KQJ98 Q963 A4 A6:1♥ 2♠
+
 1M 2N => gf+, 4+ M
 test AQx Axxx Kx xxxx:1♥ 2N
 
