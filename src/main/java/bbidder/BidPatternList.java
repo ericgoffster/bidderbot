@@ -41,14 +41,14 @@ public class BidPatternList {
             return List.of(BiddingContext.EMPTY);
         }
 
-        List<BiddingContext> l = new ArrayList<>();
         // Add in first hand passing
         BidPattern pattern = bids.get(0);
-        getContexts(l, BiddingContext.create(new BidPatternList(List.of(BidPattern.PASS, BidPattern.PASS))), true);
-        getContexts(l, BiddingContext.create(new BidPatternList(List.of(BidPattern.PASS))), true);
-        getContexts(l, BiddingContext.create(new BidPatternList(List.of())), true);
+        List<BiddingContext> l = new ArrayList<>();
+        l.addAll(getContexts(BiddingContext.create(new BidPatternList(List.of(BidPattern.PASS, BidPattern.PASS))), true));
+        l.addAll(getContexts(BiddingContext.create(new BidPatternList(List.of(BidPattern.PASS))), true));
+        l.addAll(getContexts(BiddingContext.create(new BidPatternList(List.of())), true));
         if (!pattern.isOpposition) {
-            getContexts(l, BiddingContext.create(new BidPatternList(List.of())), false);
+            l.addAll(getContexts(BiddingContext.create(new BidPatternList(List.of())), false));
         }
         return l;
     }
@@ -92,39 +92,34 @@ public class BidPatternList {
         return Objects.equals(bids, other.bids);
     }
 
-    private void getContexts(List<BiddingContext> l, BiddingContext ctx, boolean isOpp) {
+    private List<BiddingContext> getContexts(BiddingContext ctx, boolean isOpp) {
         if (bids.isEmpty()) {
             if (!isOpp) {
                 throw new IllegalArgumentException("last bid must be made by 'we'");
             }
-            l.add(ctx);
-            return;
+            return List.of(ctx);
         }
         if (ctx.getBids().isCompleted()) {
-            return;
+            return List.of();
         }
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = bids.get(0);
         if (pattern.wild) {
-            BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
-
-            for (BiddingContext newCtx : ctx.getBids(pattern)) {
-                theRest.getContexts(l, newCtx, false);
-            }
-            return;
+            return getContexts(ctx, pattern, new BidPatternList(bids.subList(1, bids.size())), false);
         }
         if (isOpp && !pattern.isOpposition) {
-            for(BiddingContext bc: ctx.getBids(BidPattern.PASS)) {
-                getContexts(l, bc, !isOpp);                
-            }
-            return;
+            return getContexts(ctx, BidPattern.PASS, this, false);
         }
+        return getContexts(ctx, pattern, new BidPatternList(bids.subList(1, bids.size())), !isOpp);
+    }
 
-        BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
+    private List<BiddingContext> getContexts(BiddingContext ctx, BidPattern pattern, BidPatternList theRest, boolean isOpp) {
+        List<BiddingContext> l = new ArrayList<>();
 
         for (BiddingContext newCtx : ctx.getBids(pattern)) {
-            theRest.getContexts(l, newCtx, !isOpp);
+            l.addAll(theRest.getContexts(newCtx, isOpp));
         }
+        return l;
     }
     
     public boolean isCompleted() {
