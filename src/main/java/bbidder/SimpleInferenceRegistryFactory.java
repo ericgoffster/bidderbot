@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import bbidder.inferences.Balanced;
 import bbidder.inferences.CombinedTotalPointsRange;
+import bbidder.inferences.FitInSuit;
 import bbidder.inferences.HCPRange;
 import bbidder.inferences.LongestOrEqual;
 import bbidder.inferences.OpeningPreempt;
@@ -22,6 +23,7 @@ public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistr
         reg.add(OpeningPreempt::valueOf);
         reg.add(LongestOrEqual::valueOf);
         reg.add(SuitRange::valueOf);
+        reg.add(FitInSuit::valueOf);
         reg.add(TotalPointsRange::valueOf);
         reg.add(CombinedTotalPointsRange::valueOf);
         reg.add(SpecificCards::valueOf);

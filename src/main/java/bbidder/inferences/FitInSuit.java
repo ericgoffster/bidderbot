@@ -3,9 +3,9 @@ package bbidder.inferences;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import bbidder.BiddingContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
@@ -20,29 +20,22 @@ import bbidder.inferences.bound.ShapeBoundInf;
  * @author goffster
  *
  */
-public class SuitRange implements Inference {
+public class FitInSuit implements Inference {
     public final String suit;
-    public final Range rng;
 
     public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)");
 
-    public SuitRange(String suit, Integer min, Integer max) {
+    public FitInSuit(String suit) {
         super();
         this.suit = suit;
-        this.rng = Range.between(min, max, 13);
-    }
-
-    public SuitRange(String suit, Range r) {
-        super();
-        this.suit = suit;
-        this.rng = r;
     }
 
     @Override
     public List<MappedInference> bind(InferenceContext context) {
         List<MappedInference> l = new ArrayList<>();
         for (var e : context.lookupSuits(suit).entrySet()) {
-            l.add(new MappedInference(createBound(e.getKey(), rng), e.getValue()));
+            l.add(new MappedInference(createBound(e.getKey(), Range.atLeast(8 - context.players.partner.infSummary.getSuit(e.getKey()).lowest(), 13)),
+                    e.getValue()));
         }
         return l;
     }
@@ -55,25 +48,21 @@ public class SuitRange implements Inference {
         if (str == null) {
             return null;
         }
-        RangeOf rng = RangeOf.valueOf(str);
-        if (rng == null) {
-            return null;
+        Matcher m = PATT_FIT.matcher(str);
+        if (m.matches()) {
+            return new FitInSuit(m.group(1).trim());
         }
-        if (BiddingContext.isValidSuit(rng.of)) {
-            return new SuitRange(rng.of, Range.between(rng.min, rng.max, 13));
-        } else {
-            return null;
-        }
+        return null;
     }
 
     @Override
     public String toString() {
-        return rng + " " + suit;
+        return "fit " + suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rng, suit);
+        return Objects.hash(suit);
     }
 
     @Override
@@ -84,7 +73,7 @@ public class SuitRange implements Inference {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        SuitRange other = (SuitRange) obj;
-        return Objects.equals(rng, other.rng) && Objects.equals(suit, other.suit);
+        FitInSuit other = (FitInSuit) obj;
+        return Objects.equals(suit, other.suit);
     }
 }
