@@ -10,6 +10,7 @@ import bbidder.inferences.OpeningPreempt;
 import bbidder.inferences.SpecificCards;
 import bbidder.inferences.StoppersInSuits;
 import bbidder.inferences.SuitRange;
+import bbidder.inferences.TotalPointsRange;
 
 public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistry> {
 
@@ -21,6 +22,7 @@ public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistr
         reg.add(OpeningPreempt::valueOf);
         reg.add(LongestOrEqual::valueOf);
         reg.add(SuitRange::valueOf);
+        reg.add(TotalPointsRange::valueOf);
         reg.add(CombinedTotalPointsRange::valueOf);
         reg.add(SpecificCards::valueOf);
         reg.add(StoppersInSuits::valueOf);

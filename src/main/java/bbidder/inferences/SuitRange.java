@@ -27,10 +27,6 @@ public class SuitRange implements Inference {
     public final boolean isFit;
 
     public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)");
-    public static Pattern PATT_MIN_TO_MAX = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
-    public static Pattern PATT_MAX = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(.*)");
-    public static Pattern PATT_MIN = Pattern.compile("\\s*(\\d+)\\s*\\+\\s*(.*)");
-    public static Pattern PATT_EXACT = Pattern.compile("\\s*(\\d+)\\s*(.*)");
 
     public SuitRange(String suit, Integer min, Integer max) {
         super();
@@ -79,43 +75,12 @@ public class SuitRange implements Inference {
         if (m.matches()) {
             return new SuitRange(m.group(1).trim());
         }
-        final String suit;
-        final Integer min;
-        final Integer max;
-        m = PATT_MIN_TO_MAX.matcher(str);
-        if (m.matches()) {
-            suit = m.group(3).trim();
-            min = Integer.parseInt(m.group(1));
-            max = Integer.parseInt(m.group(2));
-        } else {
-            m = PATT_MAX.matcher(str);
-            if (m.matches()) {
-                suit = m.group(2).trim();
-                min = null;
-                max = Integer.parseInt(m.group(1));
-            } else {
-                m = PATT_MIN.matcher(str);
-                if (m.matches()) {
-                    suit = m.group(2).trim();
-                    min = Integer.parseInt(m.group(1));
-                    max = null;
-                } else {
-                    m = PATT_EXACT.matcher(str);
-                    if (m.matches()) {
-                        suit = m.group(2).trim();
-                        min = max = Integer.parseInt(m.group(1));
-                    } else {
-                        return null;
-                    }
-                }
-            }
+        RangeOf rng = RangeOf.valueOf(str);
+        if (rng == null) {
+            return null;
         }
-        if (suit.equalsIgnoreCase("hcp")) {
-            return new HCPRange(Range.between(min, max, 40));
-        } else if (suit.equalsIgnoreCase("tpts")) {
-            return new TotalPointsRange(Range.between(min, max, 40));
-        } else if (BiddingContext.isValidSuit(suit)) {
-            return new SuitRange(suit, Range.between(min, max, 13));
+        if (BiddingContext.isValidSuit(rng.of)) {
+            return new SuitRange(rng.of, Range.between(rng.min, rng.max, 13));
         } else {
             return null;
         }

@@ -34,7 +34,15 @@ public class TotalPointsRange implements Inference {
     }
 
     public static Inference valueOf(String str) {
-        return SuitRange.valueOf(str);
+        RangeOf rng = RangeOf.valueOf(str);
+        if (rng == null) {
+            return null;
+        }
+        if (rng.of.equalsIgnoreCase("tpts")) {
+            return new TotalPointsRange(Range.between(rng.min, rng.max, 40));
+        } else {
+            return null;
+        }
     }
 
     @Override
