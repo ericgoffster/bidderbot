@@ -47,10 +47,7 @@ public class HCPRangeTest {
         assertEquals("8-10 hcp", b1.andReduce(b1).toString());
         assertEquals("false", b1.andReduce(b2).toString());
         assertEquals("9-10 hcp", b1.andReduce(b3).toString());
-
     }
-
-
 
     @Test
     public void testAffirmative() {
