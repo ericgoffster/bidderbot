@@ -104,7 +104,7 @@ public enum Bid {
         }
         Integer strain = Strain.getStrain(str.substring(1));
         if (strain == null) {
-            throw new IllegalArgumentException("Invalid strain: '" + str + "'");
+            return null;
         }
         return valueOf(Integer.parseInt(str.substring(0, 1)) - 1, strain.intValue());
     }

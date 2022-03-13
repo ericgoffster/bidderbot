@@ -76,7 +76,11 @@ public class BidList {
         String[] parts = SplitUtil.split(str, "\\s+");
         List<Bid> bids = new ArrayList<>();
         for (String part : parts) {
-            bids.add(Bid.fromStr(part));
+            Bid b = Bid.fromStr(part);
+            if (b == null) {
+                throw new IllegalArgumentException("Illegal bid: '"+part+"'");
+            }
+            bids.add(b);
         }
         return new BidList(bids);
     }
