@@ -56,7 +56,7 @@ public class Range {
         if (n < 0 || n > max) {
             throw new IllegalArgumentException();
         }
-        return atMost(n - 1, max).not();
+        return new Range(~bitMask(n - 1) & bitMask(max), max);
     }
 
     public static Range atMost(Integer n, int max) {
@@ -66,7 +66,7 @@ public class Range {
         if (n < 0 || n > max) {
             throw new IllegalArgumentException();
         }
-        return new Range((1L << (n + 1)) - 1, max);
+        return new Range(bitMask(n), max);
     }
 
     public static Range between(Integer lhs, Integer rhs, int max) {
@@ -74,7 +74,7 @@ public class Range {
     }
 
     public boolean unBounded() {
-        return bits == ((1L << (max + 1)) - 1);
+        return bits == bitMask(max);
     }
 
     public Range not() {
@@ -82,10 +82,16 @@ public class Range {
     }
 
     public Range and(Range other) {
+        if (max != other.max) {
+            throw new IllegalArgumentException();
+        }
         return new Range(bits & other.bits, max);
     }
 
     public Range or(Range other) {
+        if (max != other.max) {
+            throw new IllegalArgumentException();
+        }
         return new Range(bits | other.bits, max);
     }
 
