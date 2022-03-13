@@ -22,6 +22,7 @@ public class BidPattern {
     public final String suit;
     public final String level;
     public final Bid simpleBid;
+    public final int step;
 
     public BidPattern(boolean isOpposition, String str, boolean upTheLine) {
         this.isOpposition = isOpposition;
@@ -32,11 +33,24 @@ public class BidPattern {
             level = upper.substring(0, 2);
             suit = str.substring(2);
             simpleBid = null;
+            step = -1;
         } else if (upper.startsWith("J")) {
             level = upper.substring(0, 1);
             suit = str.substring(1);
             simpleBid = null;
+            step = -1;
+        } else if (upper.contains("STEP")) {
+            int pos = upper.indexOf("STEP");
+            step = Integer.parseInt(upper.substring(0, pos));
+            level = upper.substring(0, pos + 4);
+            if (pos + 4 >= str.length()) {
+                suit = null;
+            } else {
+                suit = str.substring(pos + 4);
+            }
+            simpleBid = null;
         } else {
+            step = -1;
             simpleBid = Bid.fromStr(str);
             if (simpleBid != null && !simpleBid.isSuitBid()) {
                 level = null;
@@ -46,6 +60,14 @@ public class BidPattern {
                 suit = str.substring(1);
             }
         }
+    }
+
+    public int getNumberOfSteps() {
+        return step;
+    }
+
+    public boolean isStep() {
+        return step > 0;
     }
 
     public boolean isNonJump() {
