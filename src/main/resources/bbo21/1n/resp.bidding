@@ -18,10 +18,8 @@ test xxx Axxxx Qxx xx:1N 2♦
 1N 3♦ => gf+, 1-♦, 4+♣, 4♥, 4♠
 test Axxx Axxx x Axxx:1N 3♦
 
-1N 3♥ => gf+, 1-♥, 4+♣, 4+♦, 4♠
+1N 3M => gf+, 1-M, 4+♣, 4+♦, 4OM
 test Axxx x Axxx Axxx:1N 3♥
-
-1N 3♠ => gf+, 1-♠, 4+♣, 4+♦, 4♥
 test x Axxx Axxx Axxx:1N 3♠
 
 1N 2♣ => inv+, 4M
