@@ -15,9 +15,6 @@ public interface IBoundInference {
      */
     public boolean matches(Hand hand);
     
-    public ShapeSet getShapes();
-    public ShapeSet getNotShapes();
-    
-    public Range getHcp();
-    public Range getNotHcp();
+    public InfSummary getSummary();
+    public InfSummary getNotSummary();
 }

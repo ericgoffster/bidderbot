@@ -2,8 +2,7 @@ package bbidder.inferences.bound;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
-import bbidder.Range;
-import bbidder.ShapeSet;
+import bbidder.InfSummary;
 
 /**
  * Represents a "const" bound inference. Always matches or always does not.
@@ -17,25 +16,15 @@ public class ConstBoundInference implements IBoundInference {
     public final boolean result;
     
     @Override
-    public ShapeSet getShapes() {
-        return result ? ShapeSet.ALL : ShapeSet.NONE;
+    public InfSummary getSummary() {
+        return result ? InfSummary.ALL : InfSummary.NONE;
     } 
     
     @Override
-    public ShapeSet getNotShapes() {
-        return result ? ShapeSet.NONE : ShapeSet.ALL;
+    public InfSummary getNotSummary() {
+        return result ? InfSummary.NONE : InfSummary.ALL;
     }
     
-    @Override
-    public Range getHcp() {
-        return result ? Range.all(40) : Range.none(40);
-    }
-    
-    @Override
-    public Range getNotHcp() {
-        return result ? Range.none(40) : Range.all(40);
-    }
-
     private ConstBoundInference(boolean result) {
         super();
         this.result = result;

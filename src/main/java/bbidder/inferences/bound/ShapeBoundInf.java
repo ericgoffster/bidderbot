@@ -2,6 +2,7 @@ package bbidder.inferences.bound;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
+import bbidder.InfSummary;
 import bbidder.Range;
 import bbidder.ShapeSet;
 
@@ -19,25 +20,15 @@ public class ShapeBoundInf implements IBoundInference {
     }
 
     @Override
-    public ShapeSet getShapes() {
-        return shapes;
+    public InfSummary getSummary() {
+        return new InfSummary(shapes, Range.all(40));
     }
     
     @Override
-    public ShapeSet getNotShapes() {
-        return shapes.not();
+    public InfSummary getNotSummary() {
+        return new InfSummary(shapes.not(), Range.all(40));
     }
     
-    @Override
-    public Range getHcp() {
-        return Range.all(40);
-    }
-    
-    @Override
-    public Range getNotHcp() {
-        return Range.all(40);
-    }
-
     public static IBoundInference create(ShapeSet r) {
         if (r.isEmpty()) {
             return ConstBoundInference.F;

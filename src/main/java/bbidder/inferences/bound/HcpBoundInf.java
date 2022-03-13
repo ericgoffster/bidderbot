@@ -2,6 +2,7 @@ package bbidder.inferences.bound;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
+import bbidder.InfSummary;
 import bbidder.Range;
 import bbidder.ShapeSet;
 
@@ -9,23 +10,13 @@ public class HcpBoundInf implements IBoundInference {
     final Range r;
     
     @Override
-    public ShapeSet getShapes() {
-        return ShapeSet.ALL;
+    public InfSummary getSummary() {
+        return new InfSummary(ShapeSet.ALL, r);
     }
     
     @Override
-    public ShapeSet getNotShapes() {
-        return ShapeSet.ALL;
-    }
-    
-    @Override
-    public Range getHcp() {
-        return r;
-    }
-    
-    @Override
-    public Range getNotHcp() {
-        return r.not();
+    public InfSummary getNotSummary() {
+        return new InfSummary(ShapeSet.ALL, r.not());
     }
     
     public HcpBoundInf(Range r) {

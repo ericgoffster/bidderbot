@@ -5,8 +5,7 @@ import java.util.List;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
-import bbidder.Range;
-import bbidder.ShapeSet;
+import bbidder.InfSummary;
 
 /**
  * Represents the "or" of 2 or more bound inferences.
@@ -33,41 +32,23 @@ public class NorBoundInf implements IBoundInference {
     }
     
     @Override
-    public ShapeSet getShapes() {
-        ShapeSet s = ShapeSet.ALL;
+    public InfSummary getSummary() {
+        InfSummary s = InfSummary.ALL;
         for(IBoundInference i: inferences) {
-            s = s.and(i.getNotShapes());
+            s = s.and(i.getNotSummary());
         }
         return s;
     }
     
     @Override
-    public ShapeSet getNotShapes() {
-        ShapeSet s = ShapeSet.NONE;
+    public InfSummary getNotSummary() {
+        InfSummary s = InfSummary.NONE;
         for(IBoundInference i: inferences) {
-            s = s.or(i.getShapes());
+            s = s.or(i.getSummary());
         }
         return s;
     }
     
-    @Override
-    public Range getHcp() {
-        Range s = Range.all(40);
-        for(IBoundInference i: inferences) {
-            s = s.and(i.getNotHcp());
-        }
-        return s;
-    }
-    
-    @Override
-    public Range getNotHcp() {
-        Range s = Range.none(40);
-        for(IBoundInference i: inferences) {
-            s = s.or(i.getHcp());
-        }
-        return s;
-    }
-
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
         return create(List.of(i1, i2));
     }
