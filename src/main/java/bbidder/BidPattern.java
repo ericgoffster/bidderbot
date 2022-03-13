@@ -62,27 +62,21 @@ public class BidPattern {
     }
     
     public static short getSuitClass(String str) {
+        int pos = str.indexOf("-");
+        if (pos >= 0) {
+            int n = Integer.parseInt(str.substring(pos + 1));
+            short suits = getSuitClass(str.substring(0, pos));
+            while(n > 0) {
+                suits = rotateDown(suits);
+                n--;
+            }
+            return suits;
+        }
         switch (str) {
         case "M":
             return MAJORS;
-        case "M-1":
-            return rotateDown(MAJORS);
-        case "M-2":
-            return rotateDown(rotateDown(MAJORS));
-        case "M-3":
-            return rotateDown(rotateDown(rotateDown(MAJORS)));
-        case "M-4":
-            return rotateDown(rotateDown(rotateDown(rotateDown(MAJORS))));
         case "m":
             return MINORS;
-        case "m-1":
-            return rotateDown(MINORS);
-        case "m-2":
-            return rotateDown(rotateDown(MINORS));
-        case "m-3":
-            return rotateDown(rotateDown(rotateDown(MINORS)));
-        case "m-4":
-            return rotateDown(rotateDown(rotateDown(rotateDown(MINORS))));
         default:
             return ALL_SUITS;
         }
