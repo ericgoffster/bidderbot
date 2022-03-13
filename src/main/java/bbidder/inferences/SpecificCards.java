@@ -15,6 +15,7 @@ import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.MappedInference;
+import bbidder.Range;
 import bbidder.SplitUtil;
 import bbidder.inferences.bound.OrBoundInf;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
@@ -55,10 +56,10 @@ public class SpecificCards implements Inference {
         return SpecificCardsBoundInf.create(hand);
     }
     
-    public static Set<Short> atLeastOneOf(int n, int top) {
+    public static Set<Short> atLeastOneOf(Range r, int top) {
         Set<Short> cards = new HashSet<>();
         for(int i = 0; i < (1L << top); i++) {
-            if (BitUtil.size(i) >= n) {
+            if (r.contains(BitUtil.size(i))) {
                 cards.add((short)(i << (13 - top)));
             }
         }
@@ -77,7 +78,7 @@ public class SpecificCards implements Inference {
             if (!BiddingContext.isValidSuit(suit)) {
                 return null;
             }
-            Set<Short> s = atLeastOneOf(n, top);
+            Set<Short> s = atLeastOneOf(Range.atLeast(n, top), top);
             return new SpecificCards(suit, s);
         }
         String[] parts = SplitUtil.split(str, "\\s+", 3);
