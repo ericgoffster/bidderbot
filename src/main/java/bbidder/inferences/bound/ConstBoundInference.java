@@ -18,12 +18,23 @@ public class ConstBoundInference implements IBoundInference {
     @Override
     public InfSummary getSummary() {
         return result ? InfSummary.ALL : InfSummary.NONE;
-    } 
+    }
+    
+    @Override
+    public IBoundInference andWith(InfSummary summary) {
+        return this;
+    }
     
     @Override
     public InfSummary getNotSummary() {
         return result ? InfSummary.NONE : InfSummary.ALL;
     }
+    
+    @Override
+    public IBoundInference negate() {
+        return result ? F : T;
+    }
+    
     
     private ConstBoundInference(boolean result) {
         super();

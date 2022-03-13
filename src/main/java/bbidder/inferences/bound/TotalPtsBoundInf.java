@@ -12,6 +12,11 @@ public class TotalPtsBoundInf implements IBoundInference {
     final Range r;
     
     @Override
+    public IBoundInference negate() {
+        return createBounded(partnerSummary, r.not());
+    }  
+
+    @Override
     public InfSummary getSummary() {
         return new InfSummary(ShapeSet.ALL, Range.all(40), Range.all(40), r);
     }
@@ -21,11 +26,16 @@ public class TotalPtsBoundInf implements IBoundInference {
         return new InfSummary(ShapeSet.ALL, Range.all(40), Range.all(40), r.not());
     }
     
+    @Override
+    public IBoundInference andWith(InfSummary summary) {
+        return createBounded(partnerSummary, r.and(summary.tpts));
+    }
+    
     public static IBoundInference createBounded(LikelyHandSummary partnerSummary, Range r) {
         if (r.unBounded()) {
             return ConstBoundInference.T;
         }
-        if (r.bits == 0) {
+        if (r.isEmpty()) {
             return ConstBoundInference.F;
         }
         return new TotalPtsBoundInf(partnerSummary, r);

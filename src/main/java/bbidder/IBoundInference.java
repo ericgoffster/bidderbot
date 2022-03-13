@@ -7,7 +7,7 @@ package bbidder;
  * @author goffster
  *
  */
-public interface IBoundInference {
+public interface IBoundInference  {
     /**
      * @param hand
      *            The hand
@@ -17,4 +17,7 @@ public interface IBoundInference {
     
     public InfSummary getSummary();
     public InfSummary getNotSummary();
+    
+    IBoundInference andWith(InfSummary summary);
+    IBoundInference negate();
 }

@@ -18,7 +18,6 @@ import java.util.function.Consumer;
 
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.ConstBoundInference;
-import bbidder.inferences.bound.NorBoundInf;
 import bbidder.inferences.bound.OrBoundInf;
 
 /**
@@ -207,14 +206,14 @@ public class BiddingSystem {
         for(BoundBidInference i: byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
             IBoundInference newInference = i.bind(likelyHands);
             if (i.ctx.bids.getLastBid().equals(lastBid)) {
-                positive.add(AndBoundInf.create(newInference, NorBoundInf.create(negative)));
+                positive.add(AndBoundInf.create(newInference, OrBoundInf.create(negative).negate()));
             }
             negative.add(newInference);            
         }
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
-            positive.add(NorBoundInf.create(negative));
+            positive.add(OrBoundInf.create(negative).negate());
         }
         return OrBoundInf.create(positive);
     }

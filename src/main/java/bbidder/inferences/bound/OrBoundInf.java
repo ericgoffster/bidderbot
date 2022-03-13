@@ -40,6 +40,31 @@ public class OrBoundInf implements IBoundInference {
     }
     
     @Override
+    public IBoundInference andWith(InfSummary summary) {
+        List<IBoundInference> l = new ArrayList<>();
+        for(IBoundInference i : inferences) {
+            IBoundInference t = i.andWith(summary);
+            if (t == ConstBoundInference.T) {
+                return ConstBoundInference.T;
+            }
+            if (t == ConstBoundInference.F) {
+                continue;
+            }
+            l.add(t);
+        }
+        return create(l);
+    }
+    
+    @Override
+    public IBoundInference negate() {
+        List<IBoundInference> l = new ArrayList<>();
+        for(IBoundInference i : inferences) {
+            l.add(i.negate());
+        }
+        return AndBoundInf.create(l);
+    }
+    
+    @Override
     public boolean matches(Hand hand) {
         for (IBoundInference i : inferences) {
             if (i.matches(hand)) {

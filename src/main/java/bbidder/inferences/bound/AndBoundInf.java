@@ -39,7 +39,7 @@ public class AndBoundInf implements IBoundInference {
         }
         return s;
     }
-    
+        
     @Override
     public InfSummary getNotSummary() {
         InfSummary s = InfSummary.NONE;
@@ -47,6 +47,31 @@ public class AndBoundInf implements IBoundInference {
             s = s.or(i.getNotSummary());
         }
         return s;
+    }
+    
+    @Override
+    public IBoundInference negate() {
+        List<IBoundInference> l = new ArrayList<>();
+        for(IBoundInference i : inferences) {
+            l.add(i.negate());
+        }
+        return OrBoundInf.create(l);
+    }
+    
+    @Override
+    public IBoundInference andWith(InfSummary summary) {
+        List<IBoundInference> l = new ArrayList<>();
+        for(IBoundInference i : inferences) {
+            IBoundInference t = i.andWith(summary);
+            if (t == ConstBoundInference.F) {
+                return ConstBoundInference.F;
+            }
+            if (t == ConstBoundInference.T) {
+                continue;
+            }
+            l.add(t);
+        }
+        return create(l);
     }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {

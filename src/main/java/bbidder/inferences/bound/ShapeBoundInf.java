@@ -15,6 +15,11 @@ import bbidder.ShapeSet;
 public class ShapeBoundInf implements IBoundInference {
     final ShapeSet shapes;
 
+    @Override
+    public IBoundInference negate() {
+        return create(shapes.not());
+    }  
+
     public ShapeBoundInf(ShapeSet shapes) {
         this.shapes = shapes;
     }
@@ -27,6 +32,11 @@ public class ShapeBoundInf implements IBoundInference {
     @Override
     public InfSummary getNotSummary() {
         return new InfSummary(shapes.not(), Range.all(40), Range.all(40), Range.all(40));
+    }
+    
+    @Override
+    public IBoundInference andWith(InfSummary summary) {
+        return create(shapes.and(summary.shape));
     }
     
     public static IBoundInference create(ShapeSet r) {

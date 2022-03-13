@@ -10,6 +10,21 @@ public class HcpBoundInf implements IBoundInference {
     final Range r;
     
     @Override
+    public IBoundInference negate() {
+        return create(r.not());
+    }  
+
+    public static IBoundInference create(Range r) {
+        if (r.isEmpty()) {
+            return ConstBoundInference.F;
+        }
+        if (r.unBounded()) {
+            return ConstBoundInference.T;
+        }
+        return new HcpBoundInf(r);
+    }
+    
+    @Override
     public InfSummary getSummary() {
         return new InfSummary(ShapeSet.ALL, r, Range.all(40), Range.all(40));
     }
@@ -21,6 +36,11 @@ public class HcpBoundInf implements IBoundInference {
     
     public HcpBoundInf(Range r) {
         this.r = r;
+    }
+    
+    @Override
+    public IBoundInference andWith(InfSummary summary) {
+        return create(r.and(summary.hcp));
     }
 
     @Override
