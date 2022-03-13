@@ -591,4 +591,34 @@ public enum Shape {
         }
         return shape;
     }
+    
+    public boolean isBalanced() {
+        int ndoub = 0;
+        for (int suit = 0; suit < 4; suit++) {
+            int len = numInSuit(suit);
+            if (len < 2) {
+                return false;
+            }
+            if (len == 2) {
+                ndoub++;
+            }
+        }
+        return ndoub <= 1;
+    }
+    
+    public boolean isSuitInRange(int suit, Range rng) {
+        return rng.contains(numInSuit(suit));
+    }
+    
+
+    public boolean isLongerOrEqual(int suit, int among) {
+        int len = numInSuit(suit);
+        for (int s : BitUtil.iterate(among)) {
+            int len2 = numInSuit(s);
+            if (len2 > len) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

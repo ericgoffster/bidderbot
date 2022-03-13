@@ -1,14 +1,11 @@
 package bbidder.inferences;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.Range;
-import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.SplitUtil;
 
@@ -34,13 +31,7 @@ public class SuitRange implements Inference {
     }
 
     private static IBoundInference createBound(int s, Range r) {
-        List<Shape> shapes = new ArrayList<>();
-        for(Shape shape: Shape.values()) {
-            if (r.contains(shape.numInSuit(s))) {
-                shapes.add(shape);
-            }
-        }
-        return ShapeBoundInference.create(new ShapeSet(shapes));
+        return ShapeBoundInference.create(new ShapeSet(shape -> shape.isSuitInRange(s, r)));
     }
 
     public static SuitRange valueOf(String str) {

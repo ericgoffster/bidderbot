@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.function.Predicate;
 
 public class ShapeSet {
     public final BitSet shapes;
@@ -14,6 +15,15 @@ public class ShapeSet {
         shapes = new BitSet(Shape.values().length);
         for(Shape s: list) {
             shapes.set(s.ordinal());
+        }
+    }
+    
+    public ShapeSet(Predicate<Shape> pred) {
+        shapes = new BitSet(Shape.values().length);
+        for(Shape s: Shape.values()) {
+            if (pred.test(s)) {
+                shapes.set(s.ordinal());
+            }
         }
     }
     
@@ -34,14 +44,7 @@ public class ShapeSet {
     }
     
     public ShapeSet not() {
-        BitSet n = new BitSet(Shape.values().length);
-        Shape[] allShapes = Shape.values();
-        for(int i = 0; i < allShapes.length; i++) {
-            if (!contains(allShapes[i])) {
-                n.set(i);
-            }
-        }
-        return new ShapeSet(n);
+        return new ShapeSet(shape -> !contains(shape));
     }
 
     public boolean isEmpty() {

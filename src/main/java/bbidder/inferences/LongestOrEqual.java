@@ -1,14 +1,10 @@
 package bbidder.inferences;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import bbidder.BitUtil;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
-import bbidder.Shape;
 import bbidder.ShapeSet;
 
 /**
@@ -33,13 +29,7 @@ public class LongestOrEqual implements Inference {
     public IBoundInference bind(InferenceContext context) {
         int isuit = context.lookupSuit(suit);
         int iamong = among == null ? 0xf : context.lookupSuitSet(among);
-        List<Shape> shapes = new ArrayList<>();
-        for(Shape shape: Shape.values()) {
-            if (isLongerOrEqual(isuit, iamong, shape)) {
-                shapes.add(shape);
-            }
-        }
-        return ShapeBoundInference.create(new ShapeSet(shapes));
+        return ShapeBoundInference.create(new ShapeSet(shape -> shape.isLongerOrEqual(isuit, iamong)));
     }
 
     public static LongestOrEqual valueOf(String str) {
@@ -78,16 +68,5 @@ public class LongestOrEqual implements Inference {
             return false;
         LongestOrEqual other = (LongestOrEqual) obj;
         return Objects.equals(among, other.among) && Objects.equals(suit, other.suit);
-    }
-
-    private static boolean isLongerOrEqual(int isuit, int iamong, Shape hand) {
-        int len = hand.numInSuit(isuit);
-        for (int s : BitUtil.iterate(iamong)) {
-            int len2 = hand.numInSuit(s);
-            if (len2 > len) {
-                return false;
-            }
-        }
-        return true;
     }
 }

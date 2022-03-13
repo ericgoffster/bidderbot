@@ -1,8 +1,5 @@
 package bbidder.inferences;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
@@ -16,33 +13,13 @@ import bbidder.ShapeSet;
  *
  */
 public class Balanced implements Inference {
-    private static boolean isBalanced(Shape hand) {
-        int ndoub = 0;
-        for (int s = 0; s < 4; s++) {
-            int len = hand.numInSuit(s);
-            if (len < 2) {
-                return false;
-            }
-            if (len == 2) {
-                ndoub++;
-            }
-        }
-        return ndoub <= 1;
-    }
-
     public Balanced() {
         super();
     }
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        List<Shape> shapes = new ArrayList<>();
-        for(Shape shape: Shape.values()) {
-            if (isBalanced(shape)) {
-                shapes.add(shape);
-            }
-        }
-        return ShapeBoundInference.create(new ShapeSet(shapes));
+        return ShapeBoundInference.create(new ShapeSet(Shape::isBalanced));
     }
 
     public static Balanced valueOf(String str) {
