@@ -101,14 +101,17 @@ public class BiddingContext {
         for (int strain : BitUtil.iterate(getStrains(pattern))) {
             Bid bid = getBid(pattern, strain);
             Bid myLastBid = bids.bids.size() >= 4 ? bids.bids.get(bids.bids.size() - 4) : null;
+            Bid partnerLastBid = bids.bids.size() >= 2 ? bids.bids.get(bids.bids.size() - 2) : null;
+            boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() &&  bid.strain == partnerLastBid.strain;
             if (myLastBid != null && myLastBid.isSuitBid() && bid.isSuitBid()) {
+                Bid rebid = myLastBid.raise();
                 if (pattern.reverse) {
-                    if (bid.strain < myLastBid.strain || bid.level != myLastBid.level + 1) {
+                    if (bid.ordinal() <= rebid.ordinal() || supportedPartner) {
                         continue;
                     }
-                }
+                 }
                 if (pattern.notreverse) {
-                    if (bid.strain > myLastBid.strain || bid.level != myLastBid.level + 1) {
+                    if (bid.ordinal() >= rebid.ordinal() || supportedPartner) {
                         continue;
                     }
                 }

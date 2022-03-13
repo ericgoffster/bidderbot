@@ -116,6 +116,15 @@ public class BiddingContextTest {
     }
 
     @Test
+    public void testReverse() {
+        BiddingContext bc = new BiddingContext().withNewBid(Bid._1D, BidPattern.valueOf("1D"))
+                .withNewBid(Bid.P, BidPattern.valueOf("P"))
+                .withNewBid(Bid._1S, BidPattern.valueOf("1S"))
+                .withNewBid(Bid.P, BidPattern.valueOf("P"));
+        assertEquals(bc.getBids(BidPattern.valueOf("2x:reverse")), Set.of(Bid._2H));
+    }
+
+    @Test
     public void testCombo() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1C, BidPattern.valueOf("1x")).withNewBid(Bid._1H, BidPattern.valueOf("1M"));
         assertEquals(bc.getSuit("M").intValue(), 2);
