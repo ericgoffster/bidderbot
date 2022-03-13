@@ -43,6 +43,7 @@ public class InferenceContext {
         }
         Integer suit = bc.getSuit(s);
         if (suit == null) {
+            bc.getSuit(s);
             throw new IllegalArgumentException("Unknown Suit: '" + s + "'");
         }
         return suit;

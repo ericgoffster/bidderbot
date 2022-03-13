@@ -91,10 +91,10 @@ public class BiddingContext {
             return strain;
         }
         if (symbol.equals("OM")) {
-            return otherMajor(suits.get(symbol));
+            return otherMajor(suits.get("M"));
         }
         if (symbol.equals("om")) {
-            return otherMinor(suits.get(symbol));
+            return otherMinor(suits.get("m"));
         }
         return suits.get(symbol);
     }
