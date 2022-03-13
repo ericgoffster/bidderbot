@@ -26,10 +26,7 @@ public class HandGenerator {
                 int t = cards[p];
                 cards[p] = cards[i];
                 cards[i] = t;
-                int suit = t % 4;
-                int rank = t / 4;
-                
-                h = h.withCardAdded(suit, rank);
+                h = h.withCardAdded(t % 4, t / 4);
             }
             if (inf.matches(h)) {
                 result.add(h);

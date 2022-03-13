@@ -41,6 +41,11 @@ public class Hand {
         newSuits[suit] |= (1 << rank);
         return new Hand(newSuits);
     }
+    public Hand withCardEemoved(int suit, int rank) {
+        short[] newSuits = Arrays.copyOf(suits, 4);
+        newSuits[suit] &= ~(1 << rank);
+        return new Hand(newSuits);
+    }
 
     static char toRank(int rank) {
         switch (rank) {
@@ -137,13 +142,13 @@ public class Hand {
             if (suitStr.charAt(i) == 'x' || suitStr.charAt(i) == 'X') {
                 numX++;
             } else {
-                int rank = getRank(suitStr.charAt(i), avail.suits[suitIndex]);
+                int rank = getRank(suitStr.charAt(i), avail.getAllInSuit(suitIndex));
                 avail.suits[suitIndex] &= ~(1 << rank);
                 suit |= (1 << rank);
             }
         }
         while (numX > 0) {
-            int rank = getRank('X', avail.suits[suitIndex]);
+            int rank = getRank('X', avail.getAllInSuit(suitIndex));
             avail.suits[suitIndex] &= ~(1 << rank);
             suit |= (1 << rank);
             numX--;
@@ -168,7 +173,7 @@ public class Hand {
     }
 
     public int numInSuit(int suit) {
-        return BitUtil.size(suits[suit]);
+        return BitUtil.size(getAllInSuit(suit));
     }
 
     public int size() {
@@ -177,7 +182,7 @@ public class Hand {
 
     public int pointsInSuit(int suit) {
         int pts = 0;
-        for (int rank : BitUtil.iterate(suits[suit] & Hand.aboveRank(TEN))) {
+        for (int rank : BitUtil.iterate(getAllInSuit(suit) & Hand.aboveRank(TEN))) {
             pts += getHCP(rank);
         }
         return pts;
@@ -246,7 +251,7 @@ public class Hand {
         StringBuilder sb = new StringBuilder();
         String delim = "";
         for (int suit = 3; suit >= 0; suit--) {
-            sb.append(delim).append(printSuit(suits[suit]));
+            sb.append(delim).append(printSuit(getAllInSuit(suit)));
             delim = " ";
         }
         return sb.toString();
