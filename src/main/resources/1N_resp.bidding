@@ -1,8 +1,8 @@
 1N 2♥ => slaminv, 6+ ♠
-test AQxxxx x AKx Kxx:1N P 2♥
+test AQxxxx x AKx Jxx:1N P 2♥
 
 1N 2♦ => slaminv, 6+ ♥
-test x AQxxxx AKx Kxx:1N P 2♦
+test x AQxxxx AKx Jxx:1N P 2♦
 
 1N 4♥ => 6+ ♠, gf+
 test AQxxxx Kxx Qx xx:1N P 4♥

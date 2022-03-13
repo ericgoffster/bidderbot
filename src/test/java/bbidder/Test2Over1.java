@@ -18,6 +18,9 @@ public class Test2Over1 {
         for(BiddingTest test: bs.tests) {
             TestResult result = test.getResult(bs);
             collector.checkThat(result.hand + ":" + result.bids, result.found, equalTo(result.expected));
+            if (!result.found.equals(result.expected)) {
+                test.getResult(bs);
+            }
         }
         
         assertTrue(bs.tests.size() > 0);

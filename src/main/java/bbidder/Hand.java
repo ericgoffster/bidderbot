@@ -167,7 +167,7 @@ public class Hand {
         if (suit != NOTRUMP) {
             for(int s = 0; s < 4; s++) {
                 if (s != suit) {
-                    switch(numInSuit(suit)) {
+                    switch(numInSuit(s)) {
                     case 0:
                         pts += 3;
                         break;
