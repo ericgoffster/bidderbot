@@ -33,9 +33,9 @@ public class CombinedTotalPointsRange implements Inference {
 
     @Override
     public List<MappedInference> bind(InferenceContext context) {
-        int tpts = context.likelyHands.partner.minTotalPts();
+        int tpts = context.players.partner.infSummary.minTotalPts();
         Range r = new Range(rng.bits >> tpts, 40);
-        return List.of(new MappedInference(TotalPtsBoundInf.create(context.likelyHands.partner, r), context));
+        return List.of(new MappedInference(TotalPtsBoundInf.create(context.players.partner.infSummary, r), context));
     }
 
     public static Range createRange(String str, Map<String, Integer> m) {

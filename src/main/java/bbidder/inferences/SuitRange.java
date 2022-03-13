@@ -54,7 +54,7 @@ public class SuitRange implements Inference {
         List<MappedInference> l = new ArrayList<>();
         for (var e : context.lookupSuits(suit).entrySet()) {
             if (isFit) {
-                l.add(new MappedInference(createBound(e.getKey(), Range.atLeast(8 - context.likelyHands.partner.getSuit(e.getKey()).lowest(), 13)),
+                l.add(new MappedInference(createBound(e.getKey(), Range.atLeast(8 - context.players.partner.infSummary.getSuit(e.getKey()).lowest(), 13)),
                         e.getValue()));
             } else {
                 l.add(new MappedInference(createBound(e.getKey(), rng), e.getValue()));

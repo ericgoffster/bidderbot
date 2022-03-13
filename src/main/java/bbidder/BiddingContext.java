@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * @author goffster
  *
  */
-public class BiddingContext {
+public final class BiddingContext {
     public static final BiddingContext EMPTY = new BiddingContext(BidList.create(List.of()), Map.of());
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     private final BidList bids;

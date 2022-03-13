@@ -32,10 +32,10 @@ public class Test2Over1 {
             }
             if (!result.found.bid.equals(result.expected)) {
                 hadError.set(true);
-                InfSummary partnerSummary = result.state.partner.likelyHand;
+                InfSummary partnerSummary = result.state.players.partner.infSummary;
                 System.err
                         .println("You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
-                System.err.println("My summary " + result.state.me.likelyHand);
+                System.err.println("My summary " + result.state.players.me.infSummary);
                 System.err.println("Partner summary " + partnerSummary);
                 System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
                 if (result.found.inference != null) {
@@ -51,7 +51,7 @@ public class Test2Over1 {
                     } else {
                         System.err.println("   " + b);
                     }
-                    for (MappedInference bound : b.bind(result.state.getLikelyHands())) {
+                    for (MappedInference bound : b.bind(result.state.players)) {
                         if (b == result.found.inference) {
                             System.err.println("       * " + bound.inf + ", " + bound.ctx.bc.getSuits());
 

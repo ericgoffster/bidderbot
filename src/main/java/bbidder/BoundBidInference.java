@@ -22,8 +22,8 @@ public class BoundBidInference {
         this.inferences = inferences;
     }
 
-    public List<MappedInference> bind(LikelyHands likelyHands) {
-        return inferences.bind(new InferenceContext(ctx.getBids().exceptLast().getLastSuitBid(), likelyHands, ctx));
+    public List<MappedInference> bind(Players players) {
+        return inferences.bind(new InferenceContext(ctx.getBids().exceptLast().getLastSuitBid(), players, ctx));
     }
 
     @Override

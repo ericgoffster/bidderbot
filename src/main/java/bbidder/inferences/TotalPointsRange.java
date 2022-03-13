@@ -30,7 +30,7 @@ public class TotalPointsRange implements Inference {
 
     @Override
     public List<MappedInference> bind(InferenceContext context) {
-        return List.of(new MappedInference(TotalPtsBoundInf.create(context.likelyHands.partner, rng), context));
+        return List.of(new MappedInference(TotalPtsBoundInf.create(context.players.partner.infSummary, rng), context));
     }
 
     public static Inference valueOf(String str) {

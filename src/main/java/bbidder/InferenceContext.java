@@ -24,21 +24,21 @@ public class InferenceContext {
 
     public final BiddingContext bc;
 
-    public final LikelyHands likelyHands;
+    public final Players players;
 
     public final Bid lastBidSuit;
 
-    public InferenceContext(Bid lastBidSuit, LikelyHands likelyHands, BiddingContext bc) {
+    public InferenceContext(Bid lastBidSuit, Players players, BiddingContext bc) {
         super();
         this.lastBidSuit = lastBidSuit;
-        this.likelyHands = likelyHands;
+        this.players = players;
         this.bc = bc;
     }
 
     public InferenceContext() {
         super();
         this.lastBidSuit = null;
-        this.likelyHands = new LikelyHands();
+        this.players = new Players();
         this.bc = BiddingContext.EMPTY;
     }
 
@@ -49,7 +49,7 @@ public class InferenceContext {
         }
         Map<Integer, InferenceContext> result = new LinkedHashMap<>();
         for (var e : bc.getMappedBiddingContexts(s).entrySet()) {
-            result.put(e.getKey(), new InferenceContext(lastBidSuit, likelyHands, e.getValue()));
+            result.put(e.getKey(), new InferenceContext(lastBidSuit, players, e.getValue()));
         }
         return result;
     }
@@ -97,8 +97,8 @@ public class InferenceContext {
                 case "UNBID": {
                     short suits = 0;
                     for (int suit = 0; suit < 4; suit++) {
-                        if (likelyHands.lho.avgLenInSuit(suit) < 4 && likelyHands.rho.avgLenInSuit(suit) < 4
-                                && likelyHands.partner.avgLenInSuit(suit) < 4 && likelyHands.me.avgLenInSuit(suit) < 4) {
+                        if (players.lho.infSummary.avgLenInSuit(suit) < 4 && players.rho.infSummary.avgLenInSuit(suit) < 4
+                                && players.partner.infSummary.avgLenInSuit(suit) < 4 && players.me.infSummary.avgLenInSuit(suit) < 4) {
                             suits |= (1 << suit);
                         }
                     }

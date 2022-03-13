@@ -108,7 +108,7 @@ public class BiddingSystem {
                     }
                 } else if (!ln.equals("")) {
                     try {
-                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences(where + ":" + lineno, new LikelyHands()));
+                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences(where + ":" + lineno, new Players()));
                     } catch (Exception e) {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }
@@ -154,16 +154,16 @@ public class BiddingSystem {
      * 
      * @param bids
      *            The list of bids
-     * @param likelyHands
+     * @param players
      *            Likely hands fro everyone
      * @param hand
      *            The hand to evaluate
      * @return The right bid
      */
-    public BidSource getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
+    public BidSource getBid(BidList bids, Players players, Hand hand) {
         List<BoundBidInference> possible = byPrefix.getOrDefault(bids, new ArrayList<>());
         for (BoundBidInference i : possible) {
-            for (MappedInference newInference : i.bind(likelyHands)) {
+            for (MappedInference newInference : i.bind(players)) {
                 if (newInference.inf.matches(hand)) {
                     return new BidSource(i, i.ctx.getBids().getLastBid(), possible);
                 }
@@ -197,11 +197,11 @@ public class BiddingSystem {
      * 
      * @param bids
      *            The list of bids.
-     * @param likelyHands
+     * @param players
      *            The like hands for everyone so far.
      * @return The inference The inference from the bid.
      */
-    public IBoundInference getInference(BidList bids, LikelyHands likelyHands) {
+    public IBoundInference getInference(BidList bids, Players players) {
         if (bids.getBids().size() == 0) {
             return ConstBoundInference.create(false);
         }
@@ -209,7 +209,7 @@ public class BiddingSystem {
         List<IBoundInference> positive = new ArrayList<>();
         List<IBoundInference> negative = new ArrayList<>();
         for (BoundBidInference i : byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
-            for (MappedInference newInference : i.bind(likelyHands)) {
+            for (MappedInference newInference : i.bind(players)) {
                 if (i.ctx.getBids().getLastBid().equals(lastBid)) {
                     positive.add(AndBoundInf.create(newInference.inf, OrBoundInf.create(negative).negate()));
                 }
