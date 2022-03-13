@@ -32,7 +32,7 @@ public class BiddingState {
         this.r = r;
         this.we = we;
         this.they = they;
-        this.bidding = new BidList(List.of());
+        this.bidding = BidList.create(List.of());
         this.lho = new Player();
         this.partner = new Player();
         this.me = new Player();

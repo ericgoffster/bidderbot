@@ -26,7 +26,7 @@ public class BidPatternList {
      */
     public List<BiddingContext> getContexts() {
         HashMap<String, Integer> suits = new HashMap<>();
-        BiddingContext ctx = new BiddingContext(new BidList(List.of()), suits);
+        BiddingContext ctx = new BiddingContext(BidList.create(List.of()), suits);
 
         // no patterns, then a wide open context.
         if (bids.isEmpty()) {
@@ -36,8 +36,8 @@ public class BidPatternList {
         List<BiddingContext> l = new ArrayList<>();
         // Add in first hand passing
         BidPattern pattern = bids.get(0);
-        getContexts(l, new BiddingContext(new BidList(List.of(Bid.P, Bid.P)), suits), true);
-        getContexts(l, new BiddingContext(new BidList(List.of(Bid.P)), suits), true);
+        getContexts(l, new BiddingContext(BidList.create(List.of(Bid.P, Bid.P)), suits), true);
+        getContexts(l, new BiddingContext(BidList.create(List.of(Bid.P)), suits), true);
         getContexts(l, ctx, true);
         if (!pattern.isOpposition) {
             getContexts(l, ctx, false);

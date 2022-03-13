@@ -33,7 +33,7 @@ public class InferenceContext {
         super();
         this.lastBidSuit = null;
         this.likelyHands = new LikelyHands();
-        this.bc = new BiddingContext(new BidList(List.of()), Map.of());
+        this.bc = new BiddingContext(BidList.create(List.of()), Map.of());
     }
 
     public int lookupSuit(String s) {

@@ -1,7 +1,6 @@
 package bbidder;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,9 +13,17 @@ import java.util.Objects;
 public class BidList {
     public final List<Bid> bids;
 
-    public BidList(List<Bid> bids) {
+    private BidList(List<Bid> bids) {
         super();
-        this.bids = Collections.unmodifiableList(bids);
+        this.bids = bids;
+    }
+    
+    public static BidList create(List<Bid> bids) {
+        BidList bl = new BidList(List.of());
+        for(Bid b: bids) {
+            bl = bl.withBidAdded(b);
+        }
+        return bl;
     }
 
     /**
@@ -25,10 +32,37 @@ public class BidList {
      * @return A new bid list with the given bid added
      */
     public BidList withBidAdded(Bid bid) {
-        Bid lastBid = getLastBidSuit();
-        if (lastBid != null && bid.isSuitBid() && bid.ordinal() < lastBid.ordinal()) {
+        Contract contract = getContract();
+        if (contract.winningBid != Bid.P && bid.isSuitBid() && bid.ordinal() < contract.winningBid.ordinal()) {
             throw new IllegalArgumentException("Invalid bid '"+bid+"'");
         }
+        
+       if (bid == Bid.XX) {
+           if (contract.redoubled) {
+               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
+           }
+           if (!contract.doubled) {
+               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
+           }
+           if (contract.position % 2 != bids.size() % 2) {
+               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
+           }
+       }
+       if (bid == Bid.X) {
+           if (contract.redoubled || contract.doubled) {
+               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
+           }
+           if (contract.winningBid == Bid.P) {
+               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
+           }
+           if (contract.position % 2 == bids.size() % 2) {
+               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
+           }
+       }
+       
+       if (bids.size() >= 4 && contract.winningBid == Bid.P) {
+           throw new IllegalArgumentException("Invalid bid '"+bid+"'");
+       }
             
         List<Bid> newBids = new ArrayList<>(bids);
         newBids.add(bid);
@@ -62,7 +96,7 @@ public class BidList {
         List<Bid> newBids = new ArrayList<>();
         newBids.add(bid);
         newBids.addAll(bids);
-        return new BidList(newBids);
+        return BidList.create(newBids);
     }
 
     /**
@@ -124,7 +158,7 @@ public class BidList {
             }
             first = false;
         }
-        return new BidList(bids);
+        return create(bids);
     }
 
 
