@@ -176,10 +176,4 @@ public class BiddingSystem {
         }
         return positive;
     }
-    
-    public void runTests(Consumer<TestFailure> failures) {
-        for(BiddingTest test: tests) {
-            test.validate(this, failures);
-        }
-    }
 }

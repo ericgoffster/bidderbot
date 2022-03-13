@@ -1,9 +1,15 @@
 # Opening bids
 2C => 22+ hcp
+test AKQ23 AKQ AK 234:2C
+
 2N => balanced, 20-21 hcp
+
 1N => balanced, 15-17 hcp
+
 1x:down => 5+ x, 13+ hcp, longest_or_equal x among all
+
 1m:down => 4 m, 13+ hcp, longest_or_equal m among minors
+
 1m => 3 m, 13+ hcp, longest_or_equal m among minors
 
 # Preempts
