@@ -29,8 +29,8 @@ public class BiddingContext {
         Map<String, Integer> newSuits;
         if (bid.isSuitBid()) {
             newSuits = new HashMap<String, Integer>(suits);
-            if (pattern.getSuit() != null && !pattern.isSuitSet()) {
-                String symbol = pattern.getSuit();
+            String symbol = pattern.getSuit();
+            if (symbol != null) {
                 Integer strain = getSuit(symbol);
                 if (strain == null) {
                     newSuits.put(symbol, bid.strain);
