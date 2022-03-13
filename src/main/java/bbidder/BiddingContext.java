@@ -3,7 +3,6 @@ package bbidder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -54,18 +53,6 @@ public final class BiddingContext {
     }
 
     /**
-     * @param pattern The bid pattern
-     * @return a list of bidding contexts given a new bid pattern
-     */
-    public List<BiddingContext> withNewBid(BidPattern pattern) {
-        List<BiddingContext> l = new ArrayList<>();
-        for (Entry<Bid, BiddingContext> e : getBids(pattern).entrySet()) {
-            l.add(new BiddingContext(bids.withBidAdded(e.getKey()), e.getValue().suits));
-        }
-        return l;
-    }
-
-    /**
      * @param symbol
      *            The symbol
      * @return (0,1,2,3,4) for a given symbol, null if not found.
@@ -107,16 +94,16 @@ public final class BiddingContext {
      *            The bid pattern
      * @return The set of possible bids for a pattern
      */
-    public Map<Bid, BiddingContext> getBids(BidPattern pattern) {
+    public List<BiddingContext> getBids(BidPattern pattern) {
         if (pattern.simpleBid != null) {
-            return Map.of(pattern.simpleBid, this);
+            return List.of(new BiddingContext(bids.withBidAdded(pattern.simpleBid), suits));
         }
         Bid lastBidSuit = bids.getLastSuitBid();
         List<Bid> theBids = bids.getBids();
         Bid myLastBid = theBids.size() >= 4 ? theBids.get(theBids.size() - 4) : null;
         Bid partnerLastBid = theBids.size() >= 2 ? theBids.get(theBids.size() - 2) : null;
         Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
-        Map<Bid, BiddingContext> result = new LinkedHashMap<>();
+        List<BiddingContext> result = new ArrayList<>();
         Map<Integer, BiddingContext> m = getMappedBiddingContexts(pattern.getSuit());
         for (Entry<Integer, BiddingContext> e : m.entrySet()) {
             Bid bid = getBid(pattern, e.getKey());
@@ -136,7 +123,8 @@ public final class BiddingContext {
                 }
             }
             if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
-                result.put(bid, e.getValue());
+                BiddingContext bc = e.getValue();
+                result.add(new BiddingContext(bc.bids.withBidAdded(bid), bc.suits));
             }
         }
         return result;
