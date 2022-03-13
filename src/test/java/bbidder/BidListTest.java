@@ -32,8 +32,8 @@ public class BidListTest {
     @Test
     public void testGetLastBid() {
         assertEquals(BidList.valueOf("1C (1D) 1H (X) XX").getLastBid(), Bid.XX);
-        assertEquals(BidList.valueOf("1C (1D) 1H (X) XX").getLastBidSuit(), Bid._1H);
-        assertNull(BidList.valueOf("P").getLastBidSuit());
+        assertEquals(BidList.valueOf("1C (1D) 1H (X) XX").getLastSuitBid(), Bid._1H);
+        assertNull(BidList.valueOf("P").getLastSuitBid());
     }
 
     @Test

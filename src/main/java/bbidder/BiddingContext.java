@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 /**
  * Inferences happen in the context of a series of bids.
  * This represents those bids in addition to a symbol table of suits.
+ * Note this is an immutable class.
  * i.e.
  * 1M 2M (M would get bound to hearts or spades)
  * 
@@ -21,25 +22,31 @@ import java.util.regex.Pattern;
  *
  */
 public class BiddingContext {
+    public static final BiddingContext EMPTY = new BiddingContext(BidList.create(List.of()), Map.of());
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     private final BidList bids;
     
     private final Map<String, Integer> suits;
 
+    /**
+     * @return The list of bids.
+     */
     public BidList getBids() {
         return bids;
     }
 
+    /**
+     * @return The immutable symbol table.
+     */
     public Map<String, Integer> getSuits() {
         return Collections.unmodifiableMap(suits);
     }
 
-
-    public BiddingContext(BidList boundBidList, Map<String, Integer> suits) {
+    private BiddingContext(BidList boundBidList, Map<String, Integer> suits) {
         super();
         this.bids = boundBidList;
         this.suits = suits;
-    }  
+    }
     
     public BiddingContext withBidAdded(Bid b) {
         return new BiddingContext(bids.withBidAdded(b), suits);
@@ -123,7 +130,7 @@ public class BiddingContext {
         if (pattern.simpleBid != null) {
             return Map.of(pattern.simpleBid, this);
         }
-        Bid lastBidSuit = bids.getLastBidSuit();
+        Bid lastBidSuit = bids.getLastSuitBid();
         List<Bid> theBids = bids.getBids();
         Bid myLastBid = theBids.size() >= 4 ? theBids.get(theBids.size() - 4) : null;
         Bid partnerLastBid = theBids.size() >= 2 ? theBids.get(theBids.size() - 2) : null;
@@ -290,7 +297,7 @@ public class BiddingContext {
     }
 
     private Bid nextLevel(int strain) {
-        Bid lastBidSuit = bids.getLastBidSuit();
+        Bid lastBidSuit = bids.getLastSuitBid();
         if (strain > lastBidSuit.strain) {
             return Bid.valueOf(lastBidSuit.level, strain);
         } else {

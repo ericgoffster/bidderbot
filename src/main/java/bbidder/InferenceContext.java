@@ -12,7 +12,6 @@ import java.io.CharArrayReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,7 +39,7 @@ public class InferenceContext {
         super();
         this.lastBidSuit = null;
         this.likelyHands = new LikelyHands();
-        this.bc = new BiddingContext(BidList.create(List.of()), Map.of());
+        this.bc = BiddingContext.EMPTY;
     }
 
     public Map<Integer, InferenceContext> lookupSuits(String s) {
