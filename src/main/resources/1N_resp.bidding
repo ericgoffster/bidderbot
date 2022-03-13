@@ -31,8 +31,17 @@ test Axx AJxx xxxx xx:1N P 2♣
 1N 2♣ => inv+, 4 ♠
 test Axxx AJx xxxx xx:1N P 2♣
 
+1N 2♠ => gf+, 5+ ♣, 4+ ♦
+test Axx x AKxxx AKxx:1N P 2♠
+
+1N 2♠ => gf+, 4+ ♣, 5+ ♦
+test Axx x AKxx AKxxx:1N P 2♠
+
 1N 3N => gf
 test Axx Axx Qxxxx Kx:1N P 3N
+
+1N 2♠ => gf+, 4+ ♣, 4+ ♦
+test Axx xx AKxx AKxx:1N P 2♠
 
 1N 4N => slaminv
 test Axx Axx Axxx Kxx:1N P 3N
