@@ -28,10 +28,7 @@ public class HandGenerator {
                 cards[i] = t;
                 h = h.withCardAdded(t % 4, t / 4);
             }
-            if (summary.shape.contains(h.getShape()) && inf.matches(h)) {
-                if (!summary.hcp.contains(h.numHCP())) {
-                    throw new RuntimeException();
-                }
+            if (summary.shape.contains(h.getShape()) && summary.hcp.contains(h.numHCP()) && inf.matches(h)) {
                 result.add(h);
             }
             num++;
