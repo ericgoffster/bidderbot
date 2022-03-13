@@ -79,15 +79,17 @@ public class BiddingContext {
      * @return (0,1,2,3,4) for a given symbol, null if not found.
      */
     public Integer getSuit(String symbol) {
-        Matcher m = SUIT_PATTERN.matcher(symbol);
-        if (m.matches()) {
-            String lhs = m.group(1);
-            int delta = Integer.parseInt(m.group(2));
-            Integer s = getSuit(lhs);
-            if (s == null) {
-                return null;
+        {
+            Matcher m = SUIT_PATTERN.matcher(symbol);
+            if (m.matches()) {
+                String lhs = m.group(1);
+                int delta = Integer.parseInt(m.group(2));
+                Integer s = getSuit(lhs);
+                if (s == null) {
+                    return null;
+                }
+                return (s + 5 - delta) % 5;
             }
-            return (s + 5 - delta) % 5;
         }
         Integer strain = Strain.getStrain(symbol);
         if (strain != null) {
@@ -104,6 +106,9 @@ public class BiddingContext {
         }
         if (symbol.equals("om") && suits.containsKey("m")) {
             return otherMinor(suits.get("m"));
+        }
+        if (suits.containsKey(symbol)) {
+            return suits.get(symbol);
         }
         return suits.get(symbol);
     }
