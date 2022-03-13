@@ -1,5 +1,6 @@
 package bbidder.inferences;
 
+import java.util.Map;
 import java.util.Objects;
 
 import bbidder.IBoundInference;
@@ -16,68 +17,86 @@ import bbidder.inferences.bound.CombinedTotalPointsBoundInf;
  *
  */
 public class CombinedTotalPointsRange implements Inference {
+    private static final Map<String, Integer> STD = Map.of("min", 19, "inv", 24, "gf", 26, "slaminv", 31, "slam", 33, "grandinv", 35, "grand", 37);
     public final Range rng;
 
     public CombinedTotalPointsRange(Integer min, Integer max) {
         super();
         this.rng = Range.between(min, max, 40);
     }
+    public CombinedTotalPointsRange(Range rng) {
+        super();
+        this.rng = rng;
+    }
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        Characteristic[] tp = new Characteristic[5];
+        LikelyHandSummary[] tp = new LikelyHandSummary[5];
         for (int i = 0; i < 4; i++) {
-            tp[i] = new Characteristic(context.likelyHands.partner.minTotalPoints(i), context.likelyHands.partner.minInSuit(i));
+            tp[i] = new LikelyHandSummary(context.likelyHands.partner.minTotalPoints(i), context.likelyHands.partner.minInSuit(i));
         }
-        tp[4] = new Characteristic(context.likelyHands.partner.minTotalPoints(4), 0);
+        tp[4] = new LikelyHandSummary(context.likelyHands.partner.minTotalPoints(4), 0);
         return CombinedTotalPointsBoundInf.createBounded(tp, rng);
     }
+    
+    public static Range createRange(String str, Map<String, Integer> m) {
+        final int dir;
+        if (str.endsWith("+")) {
+            str = str.substring(0, str.length() - 1);
+            dir = 1;
+        } else if (str.endsWith("-")) {
+            str = str.substring(0, str.length() - 1);
+            dir = -1;
+        } else {
+            dir = 0;
+        }
+        
+        if (!m.containsKey(str)) {
+            return null;
+        }
+        
+        int pts = m.get(str);
+        if (dir > 0) {
+            return Range.between(pts, null, 40);
+        }
+        if (dir < 0) {
+            return Range.between(null, pts - 1, 40);
+        }
+        
+        Integer diff = null;
+        for(var e: m.entrySet()) {
+            if (e.getValue() > pts && (diff == null || e.getValue() - pts < diff)) {
+                diff = e.getValue() - pts;
+            }
+        }
+        
+        if (diff == null) {
+            return Range.between(pts, null, 40);
+        }
+        
+        return Range.between(pts, pts + diff - 1, 40);
+    }
+    
+     public static Range createRange(String str) {
+        return createRange(str, STD);
+    }
+
 
     public static CombinedTotalPointsRange makeRange(String str) {
         String[] parts = SplitUtil.split(str, "-", 2);
         if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
             CombinedTotalPointsRange r1 = makeRange(parts[0]);
             CombinedTotalPointsRange r2 = makeRange(parts[1]);
+            if (r1 == null || r2 == null) {
+                return null;
+            }
             return new CombinedTotalPointsRange(r1.rng.lowest(), r2.rng.highest());
         }
-        switch (str) {
-        case "min":
-            return new CombinedTotalPointsRange(19, 23);
-        case "min+":
-            return new CombinedTotalPointsRange(19, null);
-        case "inv":
-            return new CombinedTotalPointsRange(24, 25);
-        case "inv+":
-            return new CombinedTotalPointsRange(24, null);
-        case "inv-":
-            return new CombinedTotalPointsRange(null, 25);
-        case "gf":
-            return new CombinedTotalPointsRange(26, 30);
-        case "gf+":
-            return new CombinedTotalPointsRange(26, null);
-        case "gf-":
-            return new CombinedTotalPointsRange(null, 30);
-        case "slaminv":
-            return new CombinedTotalPointsRange(31, 32);
-        case "slaminv+":
-            return new CombinedTotalPointsRange(31, null);
-        case "slaminv-":
-            return new CombinedTotalPointsRange(null, 32);
-        case "slam":
-            return new CombinedTotalPointsRange(33, 36);
-        case "slam+":
-            return new CombinedTotalPointsRange(33, null);
-        case "slam-":
-            return new CombinedTotalPointsRange(null, 36);
-        case "grandinv-":
-            return new CombinedTotalPointsRange(null, 36);
-        case "grandinv":
-            return new CombinedTotalPointsRange(35, 36);
-        case "grand":
-            return new CombinedTotalPointsRange(37, null);
-        default:
+        Range createRange = createRange(str);
+        if (createRange == null) {
             return null;
         }
+        return new CombinedTotalPointsRange(createRange);
     }
 
     public static CombinedTotalPointsRange valueOf(String str) {

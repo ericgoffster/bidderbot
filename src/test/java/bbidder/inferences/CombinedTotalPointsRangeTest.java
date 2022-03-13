@@ -17,7 +17,7 @@ public class CombinedTotalPointsRangeTest {
         assertEquals(new CombinedTotalPointsRange(24, 25), CombinedTotalPointsRange.valueOf("inv"));
         assertEquals(new CombinedTotalPointsRange(26, 30), CombinedTotalPointsRange.valueOf("gf"));
         assertEquals(new CombinedTotalPointsRange(31, 32), CombinedTotalPointsRange.valueOf("slaminv"));
-        assertEquals(new CombinedTotalPointsRange(33, 36), CombinedTotalPointsRange.valueOf("slam"));
+        assertEquals(new CombinedTotalPointsRange(33, 34), CombinedTotalPointsRange.valueOf("slam"));
         assertEquals(new CombinedTotalPointsRange(37, null), CombinedTotalPointsRange.valueOf("grand"));
     }
 
