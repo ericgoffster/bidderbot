@@ -20,7 +20,7 @@ public class AndBoundInf implements IBoundInference {
         super();
         this.inferences = inf;
     }
-    
+
     @Override
     public boolean matches(Hand hand) {
         for (IBoundInference i : inferences) {
@@ -30,25 +30,25 @@ public class AndBoundInf implements IBoundInference {
         }
         return true;
     }
-    
+
     @Override
     public InfSummary getSummary() {
         InfSummary s = InfSummary.ALL;
-        for(IBoundInference i: inferences) {
+        for (IBoundInference i : inferences) {
             s = s.and(i.getSummary());
         }
         return s;
     }
-        
+
     @Override
     public IBoundInference negate() {
         List<IBoundInference> l = new ArrayList<>();
-        for(IBoundInference i : inferences) {
+        for (IBoundInference i : inferences) {
             l.add(i.negate());
         }
         return OrBoundInf.create(l);
     }
-    
+
     private static void addAnd(List<IBoundInference> l, IBoundInference inf) {
         if (inf == ConstBoundInference.T) {
             return;
@@ -59,12 +59,12 @@ public class AndBoundInf implements IBoundInference {
             return;
         }
         if (inf instanceof AndBoundInf) {
-            for(IBoundInference i: ((AndBoundInf) inf).inferences) {
+            for (IBoundInference i : ((AndBoundInf) inf).inferences) {
                 addAnd(l, i);
             }
             return;
         }
-        for(int i = 0; i < l.size(); i++) {
+        for (int i = 0; i < l.size(); i++) {
             IBoundInference comb = inf.andWith(l.get(i));
             if (comb != null) {
                 l.remove(i);
@@ -74,7 +74,7 @@ public class AndBoundInf implements IBoundInference {
         }
         l.add(inf);
     }
-    
+
     @Override
     public IBoundInference andWith(IBoundInference other) {
         return null;
@@ -83,7 +83,7 @@ public class AndBoundInf implements IBoundInference {
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
         return create(List.of(i1, i2));
     }
-    
+
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> andList = new ArrayList<>();
         for (IBoundInference i : inferences) {

@@ -7,17 +7,17 @@ package bbidder;
  * @author goffster
  *
  */
-public interface IBoundInference  {
+public interface IBoundInference {
     /**
      * @param hand
      *            The hand
      * @return True if it matches the hand
      */
     public boolean matches(Hand hand);
-    
+
     public InfSummary getSummary();
-    
+
     IBoundInference negate();
-    
+
     IBoundInference andWith(IBoundInference other);
 }

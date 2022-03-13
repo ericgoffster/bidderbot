@@ -19,6 +19,7 @@ public class BidListTest {
         assertEquals(BidList.valueOf("1C (1D) 1H (X)"), BidList.create(List.of(Bid._1C, Bid._1D, Bid._1H, Bid.X)));
         assertEquals(BidList.valueOf("1C (1D) 1H (X) XX"), BidList.create(List.of(Bid._1C, Bid._1D, Bid._1H, Bid.X, Bid.XX)));
     }
+
     @Test
     public void testLegailty() {
         assertEquals(BidList.valueOf("P").getContract(), new Contract(0, Bid.P, false, false));
@@ -33,7 +34,7 @@ public class BidListTest {
         assertEquals(BidList.valueOf("1C 1D (X)").getContract(), new Contract(2, Bid._1D, true, false));
         assertEquals(BidList.valueOf("1C (X) XX").getContract(), new Contract(0, Bid._1C, true, true));
         assertEquals(BidList.valueOf("1C 1D (X) XX").getContract(), new Contract(2, Bid._1D, true, true));
-        
+
         assertThrows(IllegalArgumentException.class, () -> BidList.valueOf("X"));
         assertThrows(IllegalArgumentException.class, () -> BidList.valueOf("XX"));
         assertThrows(IllegalArgumentException.class, () -> BidList.valueOf("1C X"));

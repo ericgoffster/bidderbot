@@ -18,7 +18,7 @@ public class ShapeBoundInf implements IBoundInference {
     @Override
     public IBoundInference negate() {
         return create(shapes.not());
-    }  
+    }
 
     private ShapeBoundInf(ShapeSet shapes) {
         this.shapes = shapes;
@@ -28,16 +28,15 @@ public class ShapeBoundInf implements IBoundInference {
     public InfSummary getSummary() {
         return new InfSummary(shapes, Range.all(40));
     }
-    
+
     @Override
     public IBoundInference andWith(IBoundInference other) {
         if (other instanceof ShapeBoundInf) {
-            return create(((ShapeBoundInf)other).shapes.and(shapes));
+            return create(((ShapeBoundInf) other).shapes.and(shapes));
         }
         return null;
     }
-    
-    
+
     public static IBoundInference create(ShapeSet r) {
         if (r.isEmpty()) {
             return ConstBoundInference.F;

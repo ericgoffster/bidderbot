@@ -24,6 +24,7 @@ public class CombinedTotalPointsRange implements Inference {
         super();
         this.rng = Range.between(min, max, 40);
     }
+
     public CombinedTotalPointsRange(Range rng) {
         super();
         this.rng = rng;
@@ -35,7 +36,7 @@ public class CombinedTotalPointsRange implements Inference {
         Range r = new Range(rng.bits >> tpts, 40);
         return TotalPtsBoundInf.create(context.likelyHands.partner, r);
     }
-    
+
     public static Range createRange(String str, Map<String, Integer> m) {
         final int dir;
         if (str.endsWith("+")) {
@@ -47,11 +48,11 @@ public class CombinedTotalPointsRange implements Inference {
         } else {
             dir = 0;
         }
-        
+
         if (!m.containsKey(str)) {
             return null;
         }
-        
+
         int pts = m.get(str);
         if (dir > 0) {
             return Range.between(pts, null, 40);
@@ -59,25 +60,24 @@ public class CombinedTotalPointsRange implements Inference {
         if (dir < 0) {
             return Range.between(null, pts - 1, 40);
         }
-        
+
         Integer diff = null;
-        for(var e: m.entrySet()) {
+        for (var e : m.entrySet()) {
             if (e.getValue() > pts && (diff == null || e.getValue() - pts < diff)) {
                 diff = e.getValue() - pts;
             }
         }
-        
+
         if (diff == null) {
             return Range.between(pts, null, 40);
         }
-        
+
         return Range.between(pts, pts + diff - 1, 40);
     }
-    
-     public static Range createRange(String str) {
+
+    public static Range createRange(String str) {
         return createRange(str, STD);
     }
-
 
     public static CombinedTotalPointsRange makeRange(String str) {
         String[] parts = SplitUtil.split(str, "-", 2);

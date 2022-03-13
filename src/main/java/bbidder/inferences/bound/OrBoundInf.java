@@ -20,16 +20,16 @@ public class OrBoundInf implements IBoundInference {
         super();
         this.inferences = inf;
     }
-    
+
     @Override
     public InfSummary getSummary() {
         InfSummary s = InfSummary.NONE;
-        for(IBoundInference i: inferences) {
+        for (IBoundInference i : inferences) {
             s = s.or(i.getSummary());
         }
         return s;
     }
-    
+
     @Override
     public IBoundInference andWith(IBoundInference other) {
         return null;
@@ -38,12 +38,12 @@ public class OrBoundInf implements IBoundInference {
     @Override
     public IBoundInference negate() {
         List<IBoundInference> l = new ArrayList<>();
-        for(IBoundInference i : inferences) {
+        for (IBoundInference i : inferences) {
             l.add(i.negate());
         }
         return AndBoundInf.create(l);
     }
-    
+
     @Override
     public boolean matches(Hand hand) {
         for (IBoundInference i : inferences) {
@@ -57,7 +57,7 @@ public class OrBoundInf implements IBoundInference {
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
         return create(List.of(i1, i2));
     }
-    
+
     private static void addOr(List<IBoundInference> l, IBoundInference inf) {
         if (inf == ConstBoundInference.F) {
             return;
@@ -68,16 +68,14 @@ public class OrBoundInf implements IBoundInference {
             return;
         }
         if (inf instanceof OrBoundInf) {
-            for(IBoundInference i: ((AndBoundInf) inf).inferences) {
+            for (IBoundInference i : ((AndBoundInf) inf).inferences) {
                 addOr(l, i);
             }
             return;
         }
         l.add(inf);
     }
-    
 
-    
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> orList = new ArrayList<>();
         for (IBoundInference i : inferences) {

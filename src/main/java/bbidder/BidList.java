@@ -17,10 +17,10 @@ public class BidList {
         super();
         this.bids = bids;
     }
-    
+
     public static BidList create(List<Bid> bids) {
         BidList bl = new BidList(List.of());
-        for(Bid b: bids) {
+        for (Bid b : bids) {
             bl = bl.withBidAdded(b);
         }
         return bl;
@@ -34,45 +34,45 @@ public class BidList {
     public BidList withBidAdded(Bid bid) {
         Contract contract = getContract();
         if (contract.winningBid != Bid.P && bid.isSuitBid() && bid.ordinal() < contract.winningBid.ordinal()) {
-            throw new IllegalArgumentException("Invalid bid '"+bid+"'");
+            throw new IllegalArgumentException("Invalid bid '" + bid + "'");
         }
-        
-       if (bid == Bid.XX) {
-           if (contract.redoubled) {
-               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
-           }
-           if (!contract.doubled) {
-               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
-           }
-           if (contract.position % 2 != bids.size() % 2) {
-               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
-           }
-       }
-       if (bid == Bid.X) {
-           if (contract.redoubled || contract.doubled) {
-               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
-           }
-           if (contract.winningBid == Bid.P) {
-               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
-           }
-           if (contract.position % 2 == bids.size() % 2) {
-               throw new IllegalArgumentException("Invalid bid '"+bid+"'");
-           }
-       }
-       
-       if (isCompleted()) {
-           throw new IllegalArgumentException("Invalid bid '"+bid+"'");
-       }
-            
+
+        if (bid == Bid.XX) {
+            if (contract.redoubled) {
+                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
+            }
+            if (!contract.doubled) {
+                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
+            }
+            if (contract.position % 2 != bids.size() % 2) {
+                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
+            }
+        }
+        if (bid == Bid.X) {
+            if (contract.redoubled || contract.doubled) {
+                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
+            }
+            if (contract.winningBid == Bid.P) {
+                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
+            }
+            if (contract.position % 2 == bids.size() % 2) {
+                throw new IllegalArgumentException("Invalid bid '" + bid + "'");
+            }
+        }
+
+        if (isCompleted()) {
+            throw new IllegalArgumentException("Invalid bid '" + bid + "'");
+        }
+
         List<Bid> newBids = new ArrayList<>(bids);
         newBids.add(bid);
         return new BidList(newBids);
     }
-    
+
     public boolean isCompleted() {
         return bids.size() >= 4 && getContract().winningBid == Bid.P;
     }
-    
+
     public Contract getContract() {
         boolean redoubled = false;
         boolean doubled = false;
@@ -117,7 +117,7 @@ public class BidList {
         Contract contract = getContract();
         return contract.winningBid == Bid.P ? null : contract.winningBid;
     }
-    
+
     /**
      * @return A bid list of everything exception the last bid.
      */
@@ -143,7 +143,7 @@ public class BidList {
                 if (!first && !we) {
                     bids.add(Bid.P);
                 }
-                Bid b = Bid.fromStr(part.substring(1,part.length() - 1));
+                Bid b = Bid.fromStr(part.substring(1, part.length() - 1));
                 if (b == null) {
                     throw new IllegalArgumentException("Illegal bid: '" + part + "'");
                 }
@@ -164,7 +164,6 @@ public class BidList {
         }
         return create(bids);
     }
-
 
     @Override
     public String toString() {

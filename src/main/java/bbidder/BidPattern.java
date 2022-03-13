@@ -30,7 +30,7 @@ public class BidPattern {
     private final Integer jumpLevel;
     public final boolean reverse;
     public final boolean notreverse;
-    
+
     public BidPattern(boolean isOpposition, String str, boolean upTheLine, boolean reverse, boolean notreverse) {
         this.isOpposition = isOpposition;
         this.str = str;
@@ -70,17 +70,17 @@ public class BidPattern {
             }
         }
     }
-    
+
     public static short rotateDown(short s) {
-        return (short)((s >> 1) | ((s & 1) << 5));
+        return (short) ((s >> 1) | ((s & 1) << 5));
     }
-    
+
     public static short getSuitClass(String str) {
         int pos = str.indexOf("-");
         if (pos >= 0) {
             int n = Integer.parseInt(str.substring(pos + 1));
             short suits = getSuitClass(str.substring(0, pos));
-            while(n > 0) {
+            while (n > 0) {
                 suits = rotateDown(suits);
                 n--;
             }
@@ -97,11 +97,11 @@ public class BidPattern {
             return ALL_SUITS;
         }
     }
-    
+
     public short getSuitClass() {
         return suitClass;
     }
-        
+
     public Integer getJumpLevel() {
         return jumpLevel;
     }
@@ -138,14 +138,14 @@ public class BidPattern {
         boolean downTheLine = false;
         boolean reverse = false;
         boolean notreverse = false;
-        for(int i = 1; i < parts.length; i++) {
+        for (int i = 1; i < parts.length; i++) {
             if (parts[i].equalsIgnoreCase("down")) {
                 downTheLine = true;
             } else if (parts[i].equalsIgnoreCase("reverse")) {
                 reverse = true;
             } else if (parts[i].equalsIgnoreCase("nonreverse")) {
                 notreverse = true;
-            }  else {
+            } else {
                 throw new IllegalArgumentException("Uknown qualifier: " + parts[i]);
             }
         }
@@ -184,6 +184,7 @@ public class BidPattern {
         if (getClass() != obj.getClass())
             return false;
         BidPattern other = (BidPattern) obj;
-        return upTheLine == other.upTheLine && isOpposition == other.isOpposition && Objects.equals(str, other.str) && Objects.equals(reverse, other.reverse) && Objects.equals(notreverse, other.notreverse);
+        return upTheLine == other.upTheLine && isOpposition == other.isOpposition && Objects.equals(str, other.str)
+                && Objects.equals(reverse, other.reverse) && Objects.equals(notreverse, other.notreverse);
     }
 }

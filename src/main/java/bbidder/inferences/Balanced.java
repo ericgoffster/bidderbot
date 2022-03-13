@@ -17,17 +17,22 @@ import bbidder.inferences.bound.ShapeBoundInf;
  */
 public class Balanced implements Inference {
     final BalanceType type;
+
     public Balanced(BalanceType type) {
         this.type = type;
     }
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        switch(type) {
-        case regular: return ShapeBoundInf.create(new ShapeSet(Shape::isBalanced));
-        case un: return ShapeBoundInf.create(new ShapeSet(Shape::isBalanced).not());
-        case very: return ShapeBoundInf.create(new ShapeSet(Shape::isSuperBalanced));
-        default: throw new IllegalStateException();
+        switch (type) {
+        case regular:
+            return ShapeBoundInf.create(new ShapeSet(Shape::isBalanced));
+        case un:
+            return ShapeBoundInf.create(new ShapeSet(Shape::isBalanced).not());
+        case very:
+            return ShapeBoundInf.create(new ShapeSet(Shape::isSuperBalanced));
+        default:
+            throw new IllegalStateException();
         }
     }
 
@@ -50,11 +55,15 @@ public class Balanced implements Inference {
 
     @Override
     public String toString() {
-        switch(type) {
-        case regular: return "balanced";
-        case un: return "unbalanced";
-        case very: return "superbalanced";
-        default: throw new IllegalStateException();
+        switch (type) {
+        case regular:
+            return "balanced";
+        case un:
+            return "unbalanced";
+        case very:
+            return "superbalanced";
+        default:
+            throw new IllegalStateException();
         }
     }
 

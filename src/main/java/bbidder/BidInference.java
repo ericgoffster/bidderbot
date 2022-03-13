@@ -41,7 +41,8 @@ public class BidInference {
     }
 
     /**
-     * @param where Where it came from
+     * @param where
+     *            Where it came from
      * @param likelyHands
      *            Likely hands
      * @return The list of inferences bound to actual bidding sequences.

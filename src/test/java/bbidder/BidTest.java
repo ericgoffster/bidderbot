@@ -15,6 +15,7 @@ public class BidTest {
         assertFalse(Bid.X.isSuitBid());
         assertFalse(Bid.XX.isSuitBid());
     }
+
     @Test
     public void testValueOf() {
         assertEquals(Bid._1C, Bid.valueOf(0, Constants.CLUB));

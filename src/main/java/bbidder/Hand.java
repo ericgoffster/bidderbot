@@ -27,18 +27,19 @@ public class Hand {
         super();
         this.cards = cards;
     }
-    
+
     public Hand() {
         this(0);
     }
-    
+
     public static Hand allCards() {
         return new Hand((1L << 52) - 1);
     }
-    
+
     public Hand withCardAdded(int suit, int rank) {
         return new Hand(cards | (1L << (13 * suit + rank)));
     }
+
     public Hand withCardEemoved(int suit, int rank) {
         return new Hand(cards & ~(1L << (13 * suit + rank)));
     }
@@ -111,9 +112,9 @@ public class Hand {
             return 0;
         }
     }
-    
+
     public short getAllInSuit(int suit) {
-        return (short)((cards >> (13 * suit)) & 0x1fff);
+        return (short) ((cards >> (13 * suit)) & 0x1fff);
     }
 
     public static String printSuit(short suit) {
@@ -127,11 +128,11 @@ public class Hand {
         sb.reverse();
         return sb.toString();
     }
-    
+
     private static class ParsedHand {
         Hand current = new Hand();
-        Hand avail; 
-        
+        Hand avail;
+
         public ParsedHand(Hand avail) {
             super();
             this.avail = avail;
@@ -158,7 +159,7 @@ public class Hand {
                 numX--;
             }
         }
-        
+
         public void parseHand(String str) {
             String[] suit_parts = SplitUtil.split(str, "\\s+", 4);
             if (suit_parts.length != 4) {
@@ -190,7 +191,7 @@ public class Hand {
     public int numInSuit(int suit) {
         return BitUtil.size(getAllInSuit(suit));
     }
-    
+
     public Shape getShape() {
         return Shape.getShape(numInSuit(0), numInSuit(1), numInSuit(2), numInSuit(3));
     }
@@ -214,11 +215,11 @@ public class Hand {
         }
         return hcp;
     }
-    
+
     public boolean haveFit(InfSummary partnerSummary, int suit) {
         return numInSuit(suit) + partnerSummary.minInSuit(suit) >= 8;
     }
-    
+
     public int getTotalPoints(InfSummary partnerSummary) {
         int pts = totalPoints(Constants.NOTRUMP);
         for (int s = 0; s < 4; s++) {

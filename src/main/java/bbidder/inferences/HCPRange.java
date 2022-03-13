@@ -21,6 +21,7 @@ public class HCPRange implements Inference {
         super();
         this.rng = Range.between(min, max, 40);
     }
+
     public HCPRange(Range r) {
         super();
         this.rng = r;

@@ -20,7 +20,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
 public class SuitRange implements Inference {
     public final String suit;
     public final Range rng;
-    
+
     public static Pattern PATT1 = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
     public static Pattern PATT2 = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(.*)");
     public static Pattern PATT3 = Pattern.compile("\\s*(\\d+)\\s*\\+\\s*(.*)");
@@ -31,6 +31,7 @@ public class SuitRange implements Inference {
         this.suit = suit;
         this.rng = Range.between(min, max, 13);
     }
+
     public SuitRange(String suit, Range r) {
         super();
         this.suit = suit;

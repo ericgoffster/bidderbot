@@ -32,7 +32,7 @@ public class BiddingSystem {
         super();
         this.inferences = inferences;
         this.tests = tests;
-        for(BoundBidInference i: inferences) {
+        for (BoundBidInference i : inferences) {
             BidList bids = i.ctx.bids.exceptLast();
             List<BoundBidInference> l = byPrefix.get(bids);
             if (l == null) {
@@ -42,7 +42,7 @@ public class BiddingSystem {
             l.add(i);
         }
     }
-    
+
     public static BiddingSystem load(String urlSpec, Consumer<ParseException> reportErrors) {
         List<BoundBidInference> inferences = new ArrayList<>();
         List<BiddingTest> tests = new ArrayList<>();
@@ -61,7 +61,8 @@ public class BiddingSystem {
      * @param reportErrors
      *            The consumer of parse errors
      */
-    private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, List<BoundBidInference> inferences, List<BiddingTest> tests , InferenceRegistry reg) {
+    private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, List<BoundBidInference> inferences,
+            List<BiddingTest> tests, InferenceRegistry reg) {
         try (InputStream is = new URL(null, urlSpec, new Handler(BiddingSystem.class.getClassLoader())).openStream()) {
             load(urlSpec, is, reportErrors, inferences, tests, reg);
         } catch (MalformedURLException e) {
@@ -81,7 +82,8 @@ public class BiddingSystem {
      * @param reportErrors
      *            The consumer of parse errors
      */
-    private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, List<BoundBidInference> inferences, List<BiddingTest> tests , InferenceRegistry reg) {
+    private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, List<BoundBidInference> inferences,
+            List<BiddingTest> tests, InferenceRegistry reg) {
         int lineno = 0;
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             for (;;) {
@@ -170,12 +172,12 @@ public class BiddingSystem {
         // For now always pass, this will get smarter.
         return new BidSource(null, Bid.P, possible);
     }
-    
+
     public static class BidSource {
         public final Bid bid;
-        public final List<BoundBidInference> possible ;
-        public final BoundBidInference inference ;
-        
+        public final List<BoundBidInference> possible;
+        public final BoundBidInference inference;
+
         public BidSource(BoundBidInference newInference, Bid bid, List<BoundBidInference> possible) {
             super();
             this.bid = bid;
@@ -188,7 +190,7 @@ public class BiddingSystem {
             return inference.toString();
         }
     }
-    
+
     /**
      * Retrieves the inference from a list of bids according to the system.
      * 
@@ -205,12 +207,12 @@ public class BiddingSystem {
         Bid lastBid = bids.getLastBid();
         List<IBoundInference> positive = new ArrayList<>();
         List<IBoundInference> negative = new ArrayList<>();
-        for(BoundBidInference i: byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
+        for (BoundBidInference i : byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
             IBoundInference newInference = i.bind(likelyHands);
             if (i.ctx.bids.getLastBid().equals(lastBid)) {
                 positive.add(AndBoundInf.create(newInference, OrBoundInf.create(negative).negate()));
             }
-            negative.add(newInference);            
+            negative.add(newInference);
         }
 
         // Pass means... Nothing else works, this will get smarter.

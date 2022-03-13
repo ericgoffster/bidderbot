@@ -21,6 +21,7 @@ public class TotalPointsRange implements Inference {
         super();
         this.rng = Range.between(min, max, 40);
     }
+
     public TotalPointsRange(Range rng) {
         super();
         this.rng = rng;
@@ -30,7 +31,7 @@ public class TotalPointsRange implements Inference {
     public IBoundInference bind(InferenceContext context) {
         return TotalPtsBoundInf.create(context.likelyHands.partner, rng);
     }
-    
+
     public static Inference valueOf(String str) {
         return SuitRange.valueOf(str);
     }

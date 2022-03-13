@@ -32,7 +32,8 @@ public class OpeningPreempt implements Inference {
     @Override
     public IBoundInference bind(InferenceContext context) {
         int s = context.lookupSuit(suit);
-        return AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)), ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(s, level, shape))));
+        return AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
+                ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(s, level, shape))));
     }
 
     public static OpeningPreempt valueOf(String str) {
@@ -64,7 +65,6 @@ public class OpeningPreempt implements Inference {
             throw new IllegalStateException("Invalid level");
         }
     }
-    
 
     @Override
     public String toString() {

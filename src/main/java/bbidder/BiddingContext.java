@@ -28,14 +28,15 @@ public class BiddingContext {
         this.bids = boundBidList;
         this.suits = suits;
     }
-    
+
     public BiddingContext() {
         this(BidList.create(List.of()));
     }
+
     public BiddingContext(BidList boundBidList) {
         this(boundBidList, new HashMap<>());
     }
-    
+
     public BiddingContext withNewBid(Bid bid, BidPattern pattern) {
         Set<Bid> acceptable = getBids(pattern);
         if (!acceptable.contains(bid)) {
@@ -56,7 +57,7 @@ public class BiddingContext {
         }
         return new BiddingContext(bids.withBidAdded(bid), newSuits);
     }
-    
+
     /**
      * @param symbol
      *            The symbol
@@ -160,7 +161,7 @@ public class BiddingContext {
         } else if (symbol.equals("om")) {
             suits.put("m", otherMinor(strain));
         } else {
-            suits.put(symbol, strain);            
+            suits.put(symbol, strain);
         }
     }
 
@@ -168,10 +169,13 @@ public class BiddingContext {
         if (strain == null) {
             return null;
         }
-        switch(strain.intValue()) {
-        case Constants.HEART: return Constants.SPADE;
-        case Constants.SPADE: return Constants.HEART;
-        default: throw new IllegalArgumentException("invalid major");
+        switch (strain.intValue()) {
+        case Constants.HEART:
+            return Constants.SPADE;
+        case Constants.SPADE:
+            return Constants.HEART;
+        default:
+            throw new IllegalArgumentException("invalid major");
         }
     }
 
@@ -179,10 +183,13 @@ public class BiddingContext {
         if (strain == null) {
             return null;
         }
-        switch(strain.intValue()) {
-        case Constants.CLUB: return Constants.DIAMOND;
-        case Constants.DIAMOND: return Constants.CLUB;
-        default: throw new IllegalArgumentException("invalid minor");
+        switch (strain.intValue()) {
+        case Constants.CLUB:
+            return Constants.DIAMOND;
+        case Constants.DIAMOND:
+            return Constants.CLUB;
+        default:
+            throw new IllegalArgumentException("invalid minor");
         }
     }
 
@@ -190,14 +197,14 @@ public class BiddingContext {
         Integer jl = pattern.getJumpLevel();
         if (jl != null) {
             Bid b = nextLevel(strain);
-            while(jl > 0) {
+            while (jl > 0) {
                 b = b.raise();
                 jl--;
             }
             return b;
         }
         return Bid.valueOf(pattern.getLevel(), strain);
-     }
+    }
 
     private short getStrains(BidPattern pattern) {
         if (pattern.getSuit() != null) {

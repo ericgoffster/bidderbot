@@ -20,7 +20,7 @@ public class Range {
         this.bits = bits;
         this.max = max;
     }
-    
+
     public boolean isEmpty() {
         return bits == 0;
     }
@@ -33,11 +33,11 @@ public class Range {
         int leastBit = BitUtil.leastBit(bits);
         return leastBit < 0 ? max + 1 : leastBit;
     }
-    
+
     public static Range all(int max) {
         return new Range((1L << (max + 1)) - 1, max);
     }
-    
+
     public static Range none(int max) {
         return new Range(0, max);
     }
