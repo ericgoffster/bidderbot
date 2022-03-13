@@ -99,7 +99,9 @@ public class BidPatternList {
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = bids.get(0);
         if (isOpp && !pattern.isOpposition) {
-            getContexts(l, ctx.withBidAdded(Bid.P), !isOpp);
+            for(BiddingContext bc: ctx.withNewBid(BidPattern.createSimpleBid(Bid.P))) {
+                getContexts(l, bc, !isOpp);                
+            }
             return;
         }
 
