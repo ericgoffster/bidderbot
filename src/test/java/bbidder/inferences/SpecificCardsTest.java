@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
 import bbidder.Constants;
@@ -13,7 +15,8 @@ import bbidder.InferenceContext;
 public class SpecificCardsTest {
     @Test
     public void testValueOf() {
-        assertEquals(new SpecificCards("S", new short[] { (short) (1L << Constants.ACE | 1L << Constants.QUEEN) }), SpecificCards.valueOf("AQ in S"));
+        assertEquals(new SpecificCards("S", Set.of((short) (1L << Constants.ACE | 1L << Constants.QUEEN))), SpecificCards.valueOf("AQ in S"));
+        assertEquals(new SpecificCards("S", Set.of((short) ((1L << Constants.ACE) | (1L << Constants.KING)), (short) (1L << Constants.KING), (short) (1L << Constants.ACE))), SpecificCards.valueOf("1 of top 2 in S"));
     }
 
     @Test

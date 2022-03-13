@@ -1,10 +1,14 @@
 package bbidder.inferences;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import bbidder.BiddingContext;
 import bbidder.BitUtil;
 import bbidder.Hand;
 import bbidder.IBoundInference;
@@ -20,9 +24,11 @@ import bbidder.inferences.bound.SpecificCardsBoundInf;
  */
 public class SpecificCards implements Inference {
     public final String suit;
-    public final short[] cards;
+    public final Set<Short> cards;
+    
+    public static Pattern PATT = Pattern.compile("\\s*(\\d+)\\s+of\\s+top\\s+(\\d+)\\s+in\\s+(.*)\\s*");
 
-    public SpecificCards(String suit, short[] cards) {
+    public SpecificCards(String suit, Set<Short> cards) {
         super();
         this.suit = suit;
         this.cards = cards;
@@ -48,25 +54,50 @@ public class SpecificCards implements Inference {
         }
         return SpecificCardsBoundInf.create(hand);
     }
+    
+    public static Set<Short> atLeastOneOf(int n, int top) {
+        Set<Short> cards = new HashSet<>();
+        for(int i = 0; i < (1L << top); i++) {
+            if (BitUtil.size(i) >= n) {
+                cards.add((short)(i << (13 - top)));
+            }
+        }
+        return cards;
+    }
 
     public static Inference valueOf(String str) {
         if (str == null) {
             return null;
         }
+        Matcher m = PATT.matcher(str);
+        if (m.matches()) {
+            int n = Integer.parseInt(m.group(1));
+            int top = Integer.parseInt(m.group(2));
+            String suit = m.group(3);
+            if (!BiddingContext.isValidSuit(suit)) {
+                return null;
+            }
+            Set<Short> s = atLeastOneOf(n, top);
+            return new SpecificCards(suit, s);
+        }
         String[] parts = SplitUtil.split(str, "\\s+", 3);
         if (parts.length == 3 && parts[1].equalsIgnoreCase("in")) {
             String suit = parts[2];
+            if (!BiddingContext.isValidSuit(suit)) {
+                return null;
+            }
             String cardsS = parts[0].toUpperCase();
             String[] patterns = cardsS.split("\\|");
-            short[] cards = new short[patterns.length];
+            Set<Short> cards = new HashSet<>();
             for (int j = 0; j < patterns.length; j++) {
                 String patt = patterns[j];
+                short crd = 0;
                 for (int i = 0; i < patt.length(); i++) {
                     char c = patt.charAt(i);
                     int rank = Hand.getRank(c, (short) 0x1ff);
-                    cards[j] |= 1 << rank;
+                    crd |= (short)(1 << rank);
                 }
-
+                cards.add(crd);
             }
             return new SpecificCards(suit, cards);
         } else {
@@ -85,11 +116,7 @@ public class SpecificCards implements Inference {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + Arrays.hashCode(cards);
-        result = prime * result + Objects.hash(suit);
-        return result;
+        return Objects.hash(cards, suit);
     }
 
     @Override
@@ -101,6 +128,6 @@ public class SpecificCards implements Inference {
         if (getClass() != obj.getClass())
             return false;
         SpecificCards other = (SpecificCards) obj;
-        return Arrays.equals(cards, other.cards) && Objects.equals(suit, other.suit);
+        return Objects.equals(cards, other.cards) && Objects.equals(suit, other.suit);
     }
 }

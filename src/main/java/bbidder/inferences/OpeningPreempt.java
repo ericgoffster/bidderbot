@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import bbidder.BiddingContext;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.MappedInference;
@@ -50,6 +51,9 @@ public class OpeningPreempt implements Inference {
             return null;
         }
         if (!parts[0].equalsIgnoreCase("opening_preempt")) {
+            return null;
+        }
+        if (!BiddingContext.isValidSuit(parts[2])) {
             return null;
         }
         return new OpeningPreempt(parts[2], Integer.parseInt(parts[1]));

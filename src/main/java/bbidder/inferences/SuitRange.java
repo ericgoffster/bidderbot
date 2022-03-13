@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import bbidder.BiddingContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
@@ -113,8 +114,10 @@ public class SuitRange implements Inference {
             return new HCPRange(Range.between(min, max, 40));
         } else if (suit.equalsIgnoreCase("tpts")) {
             return new TotalPointsRange(Range.between(min, max, 40));
-        } else {
+        } else if (BiddingContext.isValidSuit(suit)) {
             return new SuitRange(suit, Range.between(min, max, 13));
+        } else {
+            return null;
         }
     }
 

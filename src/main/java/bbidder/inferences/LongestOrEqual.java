@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import bbidder.BiddingContext;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.MappedInference;
@@ -50,6 +51,9 @@ public class LongestOrEqual implements Inference {
         int pos = str.indexOf("among");
         if (pos >= 0) {
             return new LongestOrEqual(str.substring(0, pos).trim(), str.substring(pos + 5).trim());
+        }
+        if (!BiddingContext.isValidSuit(str)) {
+            return null;
         }
         return new LongestOrEqual(str, null);
     }

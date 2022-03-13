@@ -271,4 +271,28 @@ public class BiddingContext {
             return Bid.valueOf(lastBidSuit.level + 1, strain);
         }
     }
+    
+    public static boolean isValidSuit(String symbol) {
+        {
+            Matcher m = SUIT_PATTERN.matcher(symbol);
+            if (m.matches()) {
+                String lhs = m.group(1);
+                return isValidSuit(lhs);
+            }
+        }
+        if (symbol.startsWith("~")) {
+            return isValidSuit(symbol.substring(1));
+        }
+        if (symbol.equals("om")) {
+            return true;
+        }
+        if (symbol.equals("OM")) {
+            return true;
+        }
+        Integer strain = Strain.getStrain(symbol);
+        if (strain != null) {
+            return true;
+        }
+        return symbol.length() == 1;
+    }
 }
