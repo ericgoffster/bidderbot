@@ -29,6 +29,17 @@ public class BidList {
     }
 
     /**
+     * @param bid The bid to add
+     * @return A new bid list with the given bid prepended
+     */
+    public BidList withBidPrepended(Bid bid) {
+        List<Bid> newBids = new ArrayList<>();
+        newBids.add(bid);
+        newBids.addAll(bids);
+        return new BidList(newBids);
+    }
+
+    /**
      * @return The last bid in the sequence
      */
     public Bid getLastBid() {

@@ -37,11 +37,11 @@ public class BidPatternList {
         // If the first pattern is us, then assume we can have an initial pass from the opposition
         // Otherwise, starts with opposition always
         BidPattern pattern = bids.get(0);
+        getContexts(l, new BiddingContext(ctx.bids.withBidAdded(Bid.P).withBidAdded(Bid.P), ctx.suits), true);
+        getContexts(l, new BiddingContext(ctx.bids.withBidAdded(Bid.P), ctx.suits), true);
+        getContexts(l, ctx, true);
         if (!pattern.isOpposition) {
-            getContexts(l, new BiddingContext(ctx.bids.withBidAdded(Bid.P), ctx.suits), false);
             getContexts(l, ctx, false);
-        } else {
-            getContexts(l, ctx, true);            
         }
         return l;
     }
