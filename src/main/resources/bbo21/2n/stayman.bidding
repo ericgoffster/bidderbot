@@ -1,5 +1,10 @@
 # Stayman over 2N
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 2N 3♣ 3M => 4+M
 test Axx AQxx KJx AQx: 2N 3♣ 3♥
 test Axxx AQxx KJx AQ: 2N 3♣ 3♥

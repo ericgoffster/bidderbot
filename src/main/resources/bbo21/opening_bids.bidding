@@ -1,5 +1,10 @@
 # Opening Bids
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 2♣ => 19+ hcp, 23+ tpts
 test AKQxx AKQ AK xxx:2♣
 

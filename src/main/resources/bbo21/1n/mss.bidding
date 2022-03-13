@@ -1,5 +1,10 @@
 # Minor Suit Stayman over 1N
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 1N 2♠ 2N => superbalanced
 test AQx QJx AJx Qxxx: 1N 2♠ 2N
 

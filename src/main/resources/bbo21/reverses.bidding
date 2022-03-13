@@ -1,5 +1,10 @@
 # Lebensohl over reverses
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 # Jump rebid first suit with gf hand and a powerful suit
 1x 1y RVz 3y => 6+ y, 9+ tpts
 test KQJxxx xx Axx xx:1♣ 1♠ 2♥ 3♠

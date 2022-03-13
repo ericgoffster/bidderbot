@@ -1,19 +1,24 @@
 # inverted minors
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 1m 2m 4M => 14+ hcp, 6+ m, 5+ M
-test x AKJxx AQJxxx x: 1D 2D 4H
+test x AKJxx AQJxxx x: 1♦ 2♦ 4♥
 
 1m 2m 2N => 12-14 tpts, balanced, partial_stoppers unbid
-test AKx QJx Kxx xxxx: 1C 2C 2N
+test AKx QJx Kxx xxxx: 1♣ 2♣ 2N
 
 1m 2m 3N => 18-19 tpts, balanced, partial_stoppers unbid
-test AKx QJx Kxx AJxx: 1C 2C 3N
+test AKx QJx Kxx AJxx: 1♣ 2♣ 3N
 
 1m 2m NJx => 12-14 tpts,stoppers x
-test AKx QJx Kxx xxxx: 1C 2C 2N
+test AKx QJx Kxx xxxx: 1♣ 2♣ 2N
 
 1m 2m Jx => gf,1- x
-test x AKxx KQxx Axxx: 1C 2C 3S
+test x AKxx KQxx Axxx: 1♣ 2♣ 3♠
 
 1m 2m 4m => gf
-test x AKxx KQxx Axxx: 1C 2C 3S
+test x AKxx KQxx Axxx: 1♣ 2♣ 3♠

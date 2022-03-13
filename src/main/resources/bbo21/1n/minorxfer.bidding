@@ -1,5 +1,10 @@
 # Minor Suit Transfers over 1N
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 1N 2N 3♣ =>
 test AQX KJxx AJxx xx: 1N 2N 3♣
 1N 3C 3♦ =>

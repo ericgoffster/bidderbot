@@ -1,5 +1,10 @@
 # Jacoby Transfers over 2N
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 2N 3M-1 3M => 20- tpts
 test AQJx Qx AKxx Axx: 2N 3♥ 3♠
 test Qx AQJx AKxx Axx: 2N 3♦ 3♥

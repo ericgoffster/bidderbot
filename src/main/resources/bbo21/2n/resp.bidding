@@ -1,5 +1,10 @@
 # 2N responses over 2N
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 2N 3♣ => gf+, 4M
 test AJxxx Axxx xx xx:2N 3♣
 test AJxx Axxxx xx xx:2N 3♣

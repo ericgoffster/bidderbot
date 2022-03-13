@@ -1,5 +1,10 @@
 # 1 over 1 rebids
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 1x 1y 2y => min, 4+y
 test AQxx Axxx xx Kxx:1♣ 1♥ 2♥
 

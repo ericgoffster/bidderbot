@@ -1,5 +1,10 @@
 # Texas Transfers over 1N
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 1N 4M-1 4M =>
 test AQxx AJxx Ax xxx: 1N 4♦ 4♥
 test AQxx AJxx Ax xxx: 1N 4♥ 4♠

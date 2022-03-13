@@ -1,5 +1,10 @@
 # Stayman over 1N
 
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
 # 2M rebid
 1N 2♣ 2M => 4+M
 test Axx AQxx KJxx Qx: 1N 2♣ 2♥
