@@ -21,3 +21,5 @@ test x xxx QJxxxx xxx:1N P 3C
 
 1N 2N => 6+ C
 test x xxx xxx QJxxxx:1N P 2N
+
+include classpath:stayman1_resp.bidding

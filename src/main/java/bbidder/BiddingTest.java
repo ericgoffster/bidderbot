@@ -30,7 +30,7 @@ public class BiddingTest {
     public static BiddingTest valueOf(String str) {
         String[] parts = SplitUtil.split(str, ":", 2);
         if (parts.length != 2) {
-            throw new IllegalArgumentException("Invalid test '" + str + "'");
+            throw new IllegalArgumentException("Expected <hand>:<bids> '" + str + "'");
         }
         return new BiddingTest(Hand.valueOf(parts[0]), BidList.valueOf(parts[1]));
     }

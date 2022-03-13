@@ -1,0 +1,9 @@
+1N 2C 2H => 4+ H
+test Axx AQxx KJxx Qx: 1N P 2C P 2H
+test Axxx AQxx KJx Qx: 1N P 2C P 2H
+
+1N 2C 2S => 4+ S
+test Axxx AQx KJxx Qx: 1N P 2C P 2S
+
+1N 2C 2D =>
+test Axx AQx KJxx Qxx: 1N P 2C P 2D

@@ -1,4 +1,1 @@
 include classpath:opening_bids.bidding
-include classpath:major_resp.bidding
-include classpath:minor_resp.bidding
-include classpath:1N_resp.bidding
