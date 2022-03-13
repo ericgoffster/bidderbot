@@ -3,6 +3,8 @@ package bbidder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.util.Set;
+
 import org.junit.Test;
 
 public class BiddingContextTest {
@@ -95,5 +97,23 @@ public class BiddingContextTest {
         bc = bc.withNewBid(Bid._1H, BidPattern.valueOf("1M"));
         assertEquals(bc.getSuit("M").intValue(), 2);
         assertEquals(bc.getSuit("x").intValue(), 0);
+    }
+    @Test
+    public void testGetBids() {
+        BiddingContext bc = new BiddingContext();
+        bc = bc.withNewBid(Bid._1C, BidPattern.valueOf("1x"));
+        assertEquals(bc.getBids(BidPattern.valueOf("1y")), Set.of(Bid._1D, Bid._1H, Bid._1S));
+    }
+    @Test
+    public void testGetBids2() {
+        BiddingContext bc = new BiddingContext();
+        bc = bc.withNewBid(Bid._1C, BidPattern.valueOf("1x"));
+        assertEquals(bc.getBids(BidPattern.valueOf("1M")), Set.of(Bid._1H, Bid._1S));
+    }
+    @Test
+    public void testGetBids3() {
+        BiddingContext bc = new BiddingContext();
+        bc = bc.withNewBid(Bid._1C, BidPattern.valueOf("1x"));
+        assertEquals(bc.getBids(BidPattern.valueOf("1m")), Set.of(Bid._1D));
     }
 }
