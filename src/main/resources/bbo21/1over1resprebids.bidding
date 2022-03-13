@@ -28,4 +28,4 @@ test AKx Ax xxxxx Kxx:1♣ 1♦ 1♥ 3N
 test AKxx x xxxxx AKx:1♣ 1♦ 1♥ 2♠
 
 1x 1y NRz NJw => gf+
-test AKxxxx x xxx AKx:1D 1S 2C 2H
+test AKxxxx x xxx AKx:1♦ 1♠ 2♣ 2♥
