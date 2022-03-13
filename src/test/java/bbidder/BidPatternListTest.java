@@ -29,25 +29,32 @@ public class BidPatternListTest {
                 new BidPatternList(List.of(new BidPattern(false, "1S", true), new BidPattern(true, "X", true), new BidPattern(false, "1N", true)))
                         .toString());
     }
-
+    
+    BiddingContext makeBC(String str) {
+        return new BiddingContext(BidList.valueOf(str), Map.of());
+    }
+    BiddingContext makeBC(String str, String sym, Integer v) {
+        return new BiddingContext(BidList.valueOf(str), Map.of(sym, v));
+    }
+    
     @Test
     public void testBidContext() {
         assertEquals(BidPatternList.valueOf("(P) 1N").getContexts(),
-                List.of(new BiddingContext(BidList.valueOf("P 1N"), Map.of())));
+                List.of(makeBC("P 1N")));
         assertEquals(BidPatternList.valueOf("1N").getContexts(),
-                List.of(new BiddingContext(BidList.valueOf("P 1N"), Map.of()), new BiddingContext(BidList.valueOf("1N"), Map.of())));
+                List.of(makeBC("P 1N"),makeBC("1N")));
         assertEquals(BidPatternList.valueOf("1M").getContexts(),
-                List.of(new BiddingContext(BidList.valueOf("P 1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf("P 1S"), Map.of("M", 3)),
-                        new BiddingContext(BidList.valueOf("1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf("1S"), Map.of("M", 3))));
+                List.of(makeBC("P 1H", "M", 2), makeBC("P 1S", "M", 3),
+                        makeBC("1H", "M", 2), makeBC("1S", "M", 3)));
         assertEquals(BidPatternList.valueOf("1M:down").getContexts(),
-                List.of(new BiddingContext(BidList.valueOf("P 1S"), Map.of("M", 3)), new BiddingContext(BidList.valueOf("P 1H"), Map.of("M", 2)),
-                        new BiddingContext(BidList.valueOf("1S"), Map.of("M", 3)), new BiddingContext(BidList.valueOf("1H"), Map.of("M", 2))));
+                List.of(makeBC("P 1S", "M", 3), makeBC("P 1H","M", 2),
+                        makeBC("1S", "M", 3), makeBC("1H", "M", 2)));
         assertEquals(BidPatternList.valueOf("1S (P) 1N").getContexts(),
-                List.of(new BiddingContext(BidList.valueOf("P 1S P 1N"), Map.of()), new BiddingContext(BidList.valueOf("1S P 1N"), Map.of())));
+                List.of(makeBC("P 1S P 1N"), makeBC("1S P 1N")));
 
-        assertEquals(BidPatternList.valueOf("1C NJM").getContexts(), List.of(
-                new BiddingContext(BidList.valueOf("P 1C P 1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf("P 1C P 1S"), Map.of("M", 3)),
-                new BiddingContext(BidList.valueOf("1C P 1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf("1C P 1S"), Map.of("M", 3))));
+        assertEquals(BidPatternList.valueOf("1C NJM").getContexts(), List.of(new BiddingContext(BidList.valueOf("P 1C P 1H"), Map.of("M", 2)),
+                new BiddingContext(BidList.valueOf("P 1C P 1S"), Map.of("M", 3)), new BiddingContext(BidList.valueOf("1C P 1H"), Map.of("M", 2)),
+                new BiddingContext(BidList.valueOf("1C P 1S"), Map.of("M", 3))));
         assertEquals(BidPatternList.valueOf("1C P").getContexts(),
                 List.of(new BiddingContext(BidList.valueOf("P 1C P P"), Map.of()), new BiddingContext(BidList.valueOf("1C P P"), Map.of())));
     }
