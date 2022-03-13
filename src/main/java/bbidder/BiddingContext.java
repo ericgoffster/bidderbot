@@ -126,9 +126,6 @@ public class BiddingContext {
     }
 
     private Bid getBid(BidPattern pattern, int strain) {
-        if (pattern.isStep()) {
-            return getSteppedBid(pattern.getNumberOfSteps());
-        }
         if (pattern.isDoubleJump()) {
             return nextLevel(strain).raise().raise();
         }
@@ -151,11 +148,6 @@ public class BiddingContext {
         default:
             throw new IllegalArgumentException("Invalid level: '" + level + "'");
         }
-    }
-
-    private Bid getSteppedBid(int numberOfSteps) {
-        Bid lastBidSuit = bids.getLastBidSuit();
-        return Bid.values()[lastBidSuit.ordinal() + numberOfSteps];
     }
 
     private short getStrains(BidPattern pattern) {
