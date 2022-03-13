@@ -1,11 +1,13 @@
 package bbidder;
 
-import java.util.Map;
-import java.util.NavigableSet;
-import java.util.Objects;
-import java.util.TreeSet;
+import static bbidder.Constants.ALL_SUITS;
+import static bbidder.Constants.MAJORS;
+import static bbidder.Constants.MINORS;
 
-import static bbidder.Constants.*;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Inferences happen in the context of a series of bids.
@@ -44,27 +46,22 @@ public class BiddingContext {
      *            The bid pattern
      * @return The set of possible bids for a pattern
      */
-    public NavigableSet<Bid> getBids(BidPattern pattern) {
+    public Set<Bid> getBids(BidPattern pattern) {
         if (pattern.simpleBid != null) {
-            TreeSet<Bid> ts = new TreeSet<Bid>();
-            ts.add(pattern.simpleBid);
-            return ts;
+            return Set.of(pattern.simpleBid);
         }
-        if (pattern.isSuitBid()) {
-            Bid lastBidSuit = bids.getLastBidSuit();
-            TreeSet<Bid> result = new TreeSet<>();
-            for (int strain : BitUtil.iterate(getStrains(pattern))) {
-                Bid bid = getBid(pattern, strain);
-                if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
-                    result.add(bid);
-                }
+        Bid lastBidSuit = bids.getLastBidSuit();
+        TreeSet<Bid> result = new TreeSet<>();
+        for (int strain : BitUtil.iterate(getStrains(pattern))) {
+            Bid bid = getBid(pattern, strain);
+            if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
+                result.add(bid);
             }
-            if (!pattern.upTheLine) {
-                return result.descendingSet();
-            }
-            return result;
         }
-        throw new IllegalStateException();
+        if (!pattern.upTheLine) {
+            return result.descendingSet();
+        }
+        return result;
     }
 
     @Override
@@ -101,14 +98,17 @@ public class BiddingContext {
     }
 
     private Bid getBid(BidPattern pattern, int strain) {
+        if (pattern.isDoubleJump()) {
+            return nextLevel(strain).raise().raise();
+        }
+        if (pattern.isNonJump()) {
+            return nextLevel(strain);
+        }
+        if (pattern.isJump()) {
+            return nextLevel(strain).raise();
+        }
         String level = pattern.getLevel();
         switch (level) {
-        case "DJ":
-            return nextLevel(strain).raise().raise();
-        case "J":
-            return nextLevel(strain).raise();
-        case "NJ":
-            return nextLevel(strain);
         case "1":
         case "2":
         case "3":

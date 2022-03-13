@@ -48,10 +48,16 @@ public class BidPattern {
         }
     }
     
-    public boolean isSuitBid() {
-        return suit != null;
+    public boolean isNonJump() {
+        return "NJ".equals(level);
     }
-
+    public boolean isDoubleJump() {
+        return "DJ".equals(level);
+    }
+    public boolean isJump() {
+        return "J".equals(level);
+    }
+    
     /**
      * @return The suit part.
      */
