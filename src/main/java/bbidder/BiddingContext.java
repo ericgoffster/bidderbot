@@ -166,6 +166,20 @@ public class BiddingContext {
         } else if (symbol.equals("om")) {
             suits.put("m", otherMinor(strain));
         } else {
+            switch(symbol) {
+            case "m":
+            case "om":
+                otherMinor(strain);
+                break;
+            case "M":
+            case "OM":
+                otherMajor(strain);
+                break;
+            default:
+                if (strain == Constants.NOTRUMP) {
+                    throw new IllegalArgumentException("invalid strain");
+                }
+            }
             suits.put(symbol, strain);            
         }
     }
