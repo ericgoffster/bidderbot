@@ -13,3 +13,21 @@ test AJxx Axxxx xx xx: 1N P 2♣ P 2♦ P 2♥
 
 1N 2♣ 2♦ 2♠ => inv, 5+ ♠
 test AJxxx Axxx xx xx: 1N P 2♣ P 2♦ P 2♠
+
+1N 2♣ 2♦ 2N => inv
+test AJxx Axxx xxx xx: 1N P 2♣ P 2♦ P 2N
+
+1N 2♣ 2♦ 3♥ => gf+, 4 ♥, 5 ♠
+test AJxxx AQxx xx xx: 1N P 2♣ P 2♦ P 3♥
+
+1N 2♣ 2♦ 3♠ => gf+, 4 ♠, 5 ♥
+test AJxx AQxxx xx xx: 1N P 2♣ P 2♦ P 3♠
+
+1N 2♣ 2♦ 3N => gf
+test AJxx AQxx xxx xx: 1N P 2♣ P 2♦ P 3N
+
+1N 2♣ 2♦ 3m => slaminv+, 5+ m
+test AJxx AQ AQxxx xx: 1N P 2♣ P 2♦ P 3♦
+
+1N 2♣ 2♦ 4N => slaminv
+test AJxx AQxx AQx xx: 1N P 2♣ P 2♦ P 4N
