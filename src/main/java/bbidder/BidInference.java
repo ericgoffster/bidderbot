@@ -33,8 +33,11 @@ public class BidInference {
         if (str == null) {
             return null;
         }
-        int pos = str.indexOf("=>");
-        return new BidInference(BidPatternList.valueOf(str.substring(0, pos)), InferenceList.valueOf(reg, str.substring(pos + 2)));
+        String[] parts = str.split("=>", 2);
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
+        }
+        return new BidInference(BidPatternList.valueOf(parts[0].trim()), InferenceList.valueOf(reg, parts[1].trim()));
     }
 
     /**
