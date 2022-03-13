@@ -11,12 +11,12 @@ public class HcpBoundInf implements IBoundInference {
     
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(ShapeSet.ALL, r);
+        return new InfSummary(ShapeSet.ALL, r, Range.all(40));
     }
     
     @Override
     public InfSummary getNotSummary() {
-        return new InfSummary(ShapeSet.ALL, r.not());
+        return new InfSummary(ShapeSet.ALL, r.not(), Range.all(40));
     }
     
     public HcpBoundInf(Range r) {

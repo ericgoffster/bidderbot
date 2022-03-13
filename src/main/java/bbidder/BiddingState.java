@@ -75,7 +75,7 @@ public class BiddingState {
     public BiddingState withBid(Bid bid) {
         BidList newBidList = bidding.withBidAdded(bid);
         IBoundInference newInf = AndBoundInf.create(we.getInference(newBidList, getLikelyHands()), me.inf);
-        IHandList newHands = HandGenerator.generateHands(r, newInf, 1000);
+        IHandList newHands = HandGenerator.generateHands(r, newInf, 1000, partner.likelyHand.getSummary());
         Player newMe = new Player(newInf, newHands);
         return new BiddingState(r, they, we, newBidList, partner, rho, newMe, lho);
     }
