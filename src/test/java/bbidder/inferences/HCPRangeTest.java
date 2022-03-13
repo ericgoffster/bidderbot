@@ -35,12 +35,22 @@ public class HCPRangeTest {
     }
 
     @Test
-    public void test() {
+    public void testAffirmative() {
         InferenceContext ctx = new InferenceContext();
         assertTrue(new HCPRange("10", "10").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertTrue(new HCPRange("10", null).bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertFalse(new HCPRange("11", null).bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertTrue(new HCPRange(null, "10").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertFalse(new HCPRange(null, "9").bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
+    }
+
+    @Test
+    public void testNegative() {
+        InferenceContext ctx = new InferenceContext();
+        assertFalse(new HCPRange("10", "10").bind(ctx).negate().matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new HCPRange("10", null).bind(ctx).negate().matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange("11", null).bind(ctx).negate().matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new HCPRange(null, "10").bind(ctx).negate().matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange(null, "9").bind(ctx).negate().matches(Hand.valueOf("AKQ JT9 876 5432")));
     }
 }

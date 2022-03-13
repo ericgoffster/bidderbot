@@ -44,6 +44,23 @@ public class OpeningPreempt implements Inference {
         return new OpeningPreempt(parts[2], Integer.parseInt(parts[1]));
     }
 
+    private static boolean isPremptive(int suit, int level, Hand hand) {
+        int hcp = hand.numHCP();
+        int len = hand.numInSuit(suit);
+        switch (level) {
+        case 2:
+            return hcp >= 5 && hcp <= 10 && len == 6;
+        case 3:
+            return hcp >= 5 && hcp <= 10 && len == 7;
+        case 4:
+            return hcp >= 5 && hcp <= 10 && len == 8;
+        case 5:
+            return hcp >= 5 && hcp <= 10 && len > 8;
+        default:
+            throw new IllegalStateException("Invalid level");
+        }
+    }
+
     @Override
     public String toString() {
         return "opening_preempt " + level + " " + suit;
@@ -77,36 +94,44 @@ public class OpeningPreempt implements Inference {
         }
 
         @Override
-        public boolean negatable() {
-            return false;
-        }
-
-        @Override
         public IBoundInference negate() {
-            throw new UnsupportedOperationException();
+            return new NotBoundInf(suit, level);
         }
 
         @Override
         public boolean matches(Hand hand) {
-            int hcp = hand.numHCP();
-            int len = hand.numInSuit(suit);
-            switch (level) {
-            case 2:
-                return hcp >= 5 && hcp <= 10 && len == 6;
-            case 3:
-                return hcp >= 5 && hcp <= 10 && len == 7;
-            case 4:
-                return hcp >= 5 && hcp <= 10 && len == 8;
-            case 5:
-                return hcp >= 5 && hcp <= 10 && len > 8;
-            default:
-                throw new IllegalStateException("Invalid level");
-            }
+            return isPremptive(suit, level, hand);
         }
 
         @Override
         public String toString() {
             return "opening_preempt " + level + " " + STR_ALL_SUITS.charAt(suit);
+        }
+    }
+
+    static class NotBoundInf implements IBoundInference {
+        final int suit;
+        final int level;
+
+        public NotBoundInf(int suit, int level) {
+            super();
+            this.suit = suit;
+            this.level = level;
+        }
+
+        @Override
+        public IBoundInference negate() {
+            return new BoundInf(suit, level);
+        }
+
+        @Override
+        public boolean matches(Hand hand) {
+            return !isPremptive(suit, level, hand);
+        }
+
+        @Override
+        public String toString() {
+            return "non_opening_preempt " + level + " " + STR_ALL_SUITS.charAt(suit);
         }
     }
 }

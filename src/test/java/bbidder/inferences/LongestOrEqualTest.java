@@ -44,10 +44,27 @@ public class LongestOrEqualTest {
     }
 
     @Test
+    public void testHigherRankingNegate() {
+        InferenceContext ctx = new InferenceContext();
+        assertFalse(new LongestOrEqual("s", "all").bind(ctx).negate().matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertFalse(new LongestOrEqual("h", "all").bind(ctx).negate().matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertTrue(new LongestOrEqual("d", "all").bind(ctx).negate().matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertTrue(new LongestOrEqual("c", "all").bind(ctx).negate().matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+    }
+
+    @Test
     public void testHigherRankingOfNotSpades() {
         InferenceContext ctx = new InferenceContext();
         assertTrue(new LongestOrEqual("h", "~S").bind(ctx).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertTrue(new LongestOrEqual("d", "~S").bind(ctx).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertFalse(new LongestOrEqual("c", "~S").bind(ctx).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+    }
+
+    @Test
+    public void testHigherRankingOfNotSpadesNegate() {
+        InferenceContext ctx = new InferenceContext();
+        assertFalse(new LongestOrEqual("h", "~S").bind(ctx).negate().matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+        assertFalse(new LongestOrEqual("d", "~S").bind(ctx).negate().matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+        assertTrue(new LongestOrEqual("c", "~S").bind(ctx).negate().matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
     }
 }

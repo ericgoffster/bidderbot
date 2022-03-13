@@ -15,11 +15,6 @@ public interface IBoundInference {
     public boolean matches(Hand hand);
 
     /**
-     * @return True if the inference is naturally negatable.
-     */
-    public boolean negatable();
-
-    /**
      * @return The negated inference.
      */
     public IBoundInference negate();

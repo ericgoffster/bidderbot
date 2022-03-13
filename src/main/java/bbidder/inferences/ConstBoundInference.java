@@ -25,11 +25,6 @@ public class ConstBoundInference implements IBoundInference {
     }
 
     @Override
-    public boolean negatable() {
-        return true;
-    }
-
-    @Override
     public IBoundInference negate() {
         return create(!result);
     }

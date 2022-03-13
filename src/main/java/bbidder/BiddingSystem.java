@@ -16,7 +16,6 @@ import java.util.function.Consumer;
 
 import bbidder.inferences.AndBoundInference;
 import bbidder.inferences.ConstBoundInference;
-import bbidder.inferences.NotBoundInference;
 import bbidder.inferences.OrBoundInference;
 
 /**
@@ -167,7 +166,7 @@ public class BiddingSystem {
                 if (i.ctx.bids.getLastBid().equals(bids.getLastBid())) {
                     positive = OrBoundInference.create(AndBoundInference.create(newInference, negative), positive);
                 }
-                negative = AndBoundInference.create(negative, NotBoundInference.create(newInference));
+                negative = AndBoundInference.create(negative, newInference.negate());
             }
         }
 

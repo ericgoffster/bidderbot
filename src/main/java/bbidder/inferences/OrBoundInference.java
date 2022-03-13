@@ -31,16 +31,6 @@ public class OrBoundInference implements IBoundInference {
     }
 
     @Override
-    public boolean negatable() {
-        for(IBoundInference i: inferences) {
-            if (!i.negatable()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
     public IBoundInference negate() {
         List<IBoundInference> inf = new ArrayList<>();
         for(IBoundInference i: inferences) {

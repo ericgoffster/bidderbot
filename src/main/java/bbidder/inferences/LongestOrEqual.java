@@ -121,11 +121,6 @@ public class LongestOrEqual implements Inference {
         }
 
         @Override
-        public boolean negatable() {
-            return true;
-        }
-
-        @Override
         public IBoundInference negate() {
             return new ShorterBoundInf(isuit, iamong);
         }
@@ -149,11 +144,6 @@ public class LongestOrEqual implements Inference {
         @Override
         public boolean matches(Hand hand) {
             return !isLongerOrEqual(isuit, iamong, hand);
-        }
-
-        @Override
-        public boolean negatable() {
-            return false;
         }
 
         @Override
