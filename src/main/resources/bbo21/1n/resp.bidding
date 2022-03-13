@@ -31,10 +31,10 @@ test x Axxx Axxx Axxx:1N 3♠
 test Axx AJxx xxxx xx:1N 2♣
 test Axxx AJx xxxx xx:1N 2♣
 
-1N 2♠ => gf+, 5+♣, 4+♦
+1N 2♠ => gf+, 5+m, 4+om
 test Axx x AKxxx AKxx:1N 2♠
 
-1N 2♠ => gf+, 4+♣, 5+♦
+1N 2♠ => gf+, 4+m, 5+om
 test Axx x AKxx AKxxx:1N 2♠
 
 1N 3N => gf

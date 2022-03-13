@@ -118,6 +118,8 @@ public class BidPattern {
             return MAJORS;
         case "m":
             return MINORS;
+        case "om":
+            return MINORS;
         default:
             return ALL_SUITS;
         }
