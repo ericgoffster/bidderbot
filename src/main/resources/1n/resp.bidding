@@ -64,5 +64,5 @@ test x xxx QJxxxx xxx:1N P 3♣
 1N 2N => 6+ ♣
 test x xxx xxx QJxxxx:1N P 2N
 
-include classpath:1n/stayman_resp.bidding
-include classpath:1n/stayman_jacoby.bidding
+include classpath:1n/stayman.bidding
+include classpath:1n/jacoby.bidding
