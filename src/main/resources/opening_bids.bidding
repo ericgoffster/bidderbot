@@ -1,5 +1,5 @@
-2C => 22+ hcp
-test AKQxx AKQ AK xxx:2C
+2♣ => 22+ hcp
+test AKQxx AKQ AK xxx:2♣
 
 2N => balanced, 20-21 hcp
 test AKQx AQxx AQ xxx:2N
@@ -8,33 +8,33 @@ test AKQx AQxx AQ xxx:2N
 test AQxx KQxx AQ xxx:1N
 
 P 1M:down => 5+ M, 8+ hcp, longest_or_equal M among majors
-test KQJxx xxx Axx xx:P P 1S
+test KQJxx xxx Axx xx:P P 1♠
 
 1x:down => 5+ x, 13+ hcp, longest_or_equal x among all
-test AQxxx Axxx Kx xx:1S
-test Axxx AQxxx Kx xx:1H
-test AQxxx Axxxx K2 2:1S
-test AQxxx AKxxxx x x:1H
-test Axxx Kx AQxxx xx:1D
+test AQxxx Axxx Kx xx:1♠
+test Axxx AQxxx Kx xx:1♥
+test AQxxx Axxxx K2 2:1♠
+test AQxxx AKxxxx x x:1♥
+test Axxx Kx AQxxx xx:1♦
 
 1m:down => 4 m, 13+ hcp, longest_or_equal m among minors
-test Axxx x AQxx Kxxx:1D
+test Axxx x AQxx Kxxx:1♦
 
 1m => 3 m, 13+ hcp, longest_or_equal m among minors
-test Axxx xxx AQx Kxx:1C
+test Axxx xxx AQx Kxx:1♣
 
 # Preempts
 2x => opening_preempt 2 x
-test KQJxxx xxx x xxx:2S
+test KQJxxx xxx x xxx:2♠
 
 3x => opening_preempt 3 x
-test KQJxxxx xx x xxx:3S
+test KQJxxxx xx x xxx:3♠
 
 4x => opening_preempt 4 x
-test KQJxxxxx xx x xx:4S
+test KQJxxxxx xx x xx:4♠
 
 5x => opening_preempt 5 x
-test xx x KQJxxxxxx x:5D
+test xx x KQJxxxxxx x:5♦
 
 include classpath:major_resp.bidding
 include classpath:minor_resp.bidding
