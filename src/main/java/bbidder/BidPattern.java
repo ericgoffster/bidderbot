@@ -24,33 +24,43 @@ public class BidPattern {
     public final String str;
     public final boolean upTheLine;
     public final String suit;
-    public final String level;
+    public final Integer level;
     public final Bid simpleBid;
     private final short suitClass;
-
+    private final Integer jumpLevel;
+    
     public BidPattern(boolean isOpposition, String str, boolean upTheLine) {
         this.isOpposition = isOpposition;
         this.str = str;
         this.upTheLine = upTheLine;
         String upper = str.toUpperCase();
-        if (upper.startsWith("NJ") || upper.startsWith("DJ")) {
-            level = upper.substring(0, 2);
+        if (upper.startsWith("NJ")) {
+            simpleBid = null;
+            jumpLevel = 0;
+            level = null;
+            suit = str.substring(2);
+            suitClass = getSuitClass(str.substring(2));
+        } else if (upper.startsWith("DJ")) {
+            jumpLevel = 2;
+            level = null;
             suit = str.substring(2);
             simpleBid = null;
             suitClass = getSuitClass(str.substring(2));
         } else if (upper.startsWith("J")) {
-            level = upper.substring(0, 1);
+            jumpLevel = 1;
+            level = null;
             suit = str.substring(1);
             simpleBid = null;
             suitClass = getSuitClass(str.substring(2));
         } else {
+            jumpLevel = null;
             simpleBid = Bid.fromStr(str);
             if (simpleBid != null && !simpleBid.isSuitBid()) {
                 level = null;
                 suit = null;
                 suitClass = 0;
             } else {
-                level = upper.substring(0, 1);
+                level = Integer.parseInt(upper.substring(0, 1)) - 1;
                 suit = str.substring(1);
                 suitClass = getSuitClass(str.substring(1));
             }
@@ -91,17 +101,9 @@ public class BidPattern {
     public boolean isSuitSet() {
         return suit != null && suit.contains("/");
     }
-
-    public boolean isNonJump() {
-        return "NJ".equals(level);
-    }
-
-    public boolean isDoubleJump() {
-        return "DJ".equals(level);
-    }
-
-    public boolean isJump() {
-        return "J".equals(level);
+    
+    public Integer getJumpLevel() {
+        return jumpLevel;
     }
 
     /**
@@ -114,7 +116,7 @@ public class BidPattern {
     /**
      * @return The level part.
      */
-    public String getLevel() {
+    public Integer getLevel() {
         return level;
     }
 

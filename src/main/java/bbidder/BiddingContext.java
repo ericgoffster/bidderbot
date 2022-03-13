@@ -145,29 +145,17 @@ public class BiddingContext {
     }
 
     private Bid getBid(BidPattern pattern, int strain) {
-        if (pattern.isDoubleJump()) {
-            return nextLevel(strain).raise().raise();
+        Integer jl = pattern.getJumpLevel();
+        if (jl != null) {
+            Bid b = nextLevel(strain);
+            while(jl > 0) {
+                b = b.raise();
+                jl--;
+            }
+            return b;
         }
-        if (pattern.isNonJump()) {
-            return nextLevel(strain);
-        }
-        if (pattern.isJump()) {
-            return nextLevel(strain).raise();
-        }
-        String level = pattern.getLevel();
-        switch (level) {
-        case "1":
-        case "2":
-        case "3":
-        case "4":
-        case "5":
-        case "6":
-        case "7":
-            return Bid.valueOf(level.charAt(0) - '1', strain);
-        default:
-            throw new IllegalArgumentException("Invalid level: '" + level + "'");
-        }
-    }
+        return Bid.valueOf(pattern.getLevel(), strain);
+     }
 
     private short getStrains(BidPattern pattern) {
         if (pattern.getSuit() != null) {
