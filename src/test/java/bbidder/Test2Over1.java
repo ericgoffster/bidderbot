@@ -46,12 +46,12 @@ public class Test2Over1 {
                     } else {
                         System.err.println("   " + b);
                     }
-                    for(IBoundInference bound: b.bind(result.state.getLikelyHands())) {
+                    for(MappedInference bound: b.bind(result.state.getLikelyHands())) {
                         if (b == result.found.inference) {
-                            System.err.println("       * " + bound);
+                            System.err.println("       * " + bound.inf);
     
                         } else {
-                            System.err.println("       " + bound);
+                            System.err.println("       " + bound.inf);
                         }
                     }
                 }

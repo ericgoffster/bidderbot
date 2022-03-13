@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInference;
 import bbidder.Range;
 import bbidder.ShapeSet;
 import bbidder.inferences.bound.ShapeBoundInf;
@@ -52,13 +53,14 @@ public class SuitRange implements Inference {
     }
 
     @Override
-    public List<IBoundInference> bind(InferenceContext context) {
-        List<IBoundInference> l = new ArrayList<>();
-        for(int isuit: context.lookupSuits(suit).keySet()) {
+    public List<MappedInference> bind(InferenceContext context) {
+        List<MappedInference> l = new ArrayList<>();
+        for (var e : context.lookupSuits(suit).entrySet()) {
             if (isFit) {
-                l.add(createBound(isuit, Range.atLeast(8 - context.likelyHands.partner.getSuit(isuit).lowest(), 13)));
+                l.add(new MappedInference(createBound(e.getKey(), Range.atLeast(8 - context.likelyHands.partner.getSuit(e.getKey()).lowest(), 13)),
+                        context));
             } else {
-                l.add(createBound(isuit, rng));
+                l.add(new MappedInference(createBound(e.getKey(), rng), context));
             }
         }
         return l;

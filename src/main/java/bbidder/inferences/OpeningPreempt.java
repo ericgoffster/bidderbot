@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInference;
 import bbidder.Range;
 import bbidder.Shape;
 import bbidder.ShapeSet;
@@ -32,11 +32,11 @@ public class OpeningPreempt implements Inference {
     }
 
     @Override
-    public List<IBoundInference> bind(InferenceContext context) {
-        List<IBoundInference> l = new ArrayList<>();
-        for(int isuit: context.lookupSuits(suit).keySet()) {
-            l.add( AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
-                    ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(isuit, level, shape)))));
+    public List<MappedInference> bind(InferenceContext context) {
+        List<MappedInference> l = new ArrayList<>();
+        for (var e : context.lookupSuits(suit).entrySet()) {
+            l.add(new MappedInference(AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
+                    ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(e.getKey(), level, shape)))), e.getValue()));
         }
         return l;
     }

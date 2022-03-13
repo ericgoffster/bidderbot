@@ -26,14 +26,14 @@ public class InferenceList {
      *            The context for binding
      * @return A bound inference representing all of the inferences as an "and"
      */
-    public List<IBoundInference> bind(InferenceContext context) {
-        List<IBoundInference> list = new ArrayList<>();
-        list.add(ConstBoundInference.create(true));
+    public List<MappedInference> bind(InferenceContext context) {
+        List<MappedInference> list = new ArrayList<>();
+        list.add(new MappedInference(ConstBoundInference.create(true), context));
         for (Inference i : inferences) {
-            List<IBoundInference> newList = new ArrayList<>();
-            for(IBoundInference bi: i.bind(context)) {
-                for(IBoundInference bi2: list) {
-                    newList.add(AndBoundInf.create(bi2,bi));
+            List<MappedInference> newList = new ArrayList<>();
+            for(MappedInference bi2: list) {
+                for(MappedInference bi: i.bind(bi2.ctx)) {
+                    newList.add(new MappedInference(AndBoundInf.create(bi2.inf,bi.inf), bi.ctx));
                 }
             }
             list = newList;

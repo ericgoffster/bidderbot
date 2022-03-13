@@ -3,9 +3,9 @@ package bbidder.inferences;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInference;
 import bbidder.Range;
 import bbidder.inferences.bound.TotalPtsBoundInf;
 
@@ -29,8 +29,8 @@ public class TotalPointsRange implements Inference {
     }
 
     @Override
-    public List<IBoundInference> bind(InferenceContext context) {
-        return List.of(TotalPtsBoundInf.create(context.likelyHands.partner, rng));
+    public List<MappedInference> bind(InferenceContext context) {
+        return List.of(new MappedInference(TotalPtsBoundInf.create(context.likelyHands.partner, rng), context));
     }
 
     public static Inference valueOf(String str) {

@@ -25,22 +25,22 @@ public class HCPRangeTest {
     public void testToString() {
         InferenceContext ctx = new InferenceContext();
         assertEquals("8-10 hcp", new HCPRange(8, 10).toString());
-        assertEquals("8-10 hcp", new HCPRange(8, 10).bind(ctx).get(0).toString());
+        assertEquals("8-10 hcp", new HCPRange(8, 10).bind(ctx).get(0).inf.toString());
         assertEquals("8+ hcp", new HCPRange(8, null).toString());
-        assertEquals("8+ hcp", new HCPRange(8, null).bind(ctx).get(0).toString());
+        assertEquals("8+ hcp", new HCPRange(8, null).bind(ctx).get(0).inf.toString());
         assertEquals("10- hcp", new HCPRange(null, 10).toString());
-        assertEquals("10- hcp", new HCPRange(null, 10).bind(ctx).get(0).toString());
+        assertEquals("10- hcp", new HCPRange(null, 10).bind(ctx).get(0).inf.toString());
         assertEquals("10 hcp", new HCPRange(10, 10).toString());
-        assertEquals("10 hcp", new HCPRange(10, 10).bind(ctx).get(0).toString());
+        assertEquals("10 hcp", new HCPRange(10, 10).bind(ctx).get(0).inf.toString());
     }
 
     @Test
     public void testAffirmative() {
         InferenceContext ctx = new InferenceContext();
-        assertTrue(new HCPRange(10, 10).bind(ctx).get(0).matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new HCPRange(10, null).bind(ctx).get(0).matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new HCPRange(11, null).bind(ctx).get(0).matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new HCPRange(null, 10).bind(ctx).get(0).matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new HCPRange(null, 9).bind(ctx).get(0).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange(10, 10).bind(ctx).get(0).inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange(10, null).bind(ctx).get(0).inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new HCPRange(11, null).bind(ctx).get(0).inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange(null, 10).bind(ctx).get(0).inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new HCPRange(null, 9).bind(ctx).get(0).inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
     }
 }

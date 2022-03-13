@@ -163,8 +163,8 @@ public class BiddingSystem {
     public BidSource getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
         List<BoundBidInference> possible = byPrefix.getOrDefault(bids, new ArrayList<>());
         for (BoundBidInference i : possible) {
-            for(IBoundInference newInference: i.bind(likelyHands)) {
-                if (newInference.matches(hand)) {
+            for(MappedInference newInference: i.bind(likelyHands)) {
+                if (newInference.inf.matches(hand)) {
                     return new BidSource(i, i.ctx.bids.getLastBid(), possible);
                 }
             }
@@ -209,11 +209,11 @@ public class BiddingSystem {
         List<IBoundInference> positive = new ArrayList<>();
         List<IBoundInference> negative = new ArrayList<>();
         for (BoundBidInference i : byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
-            for(IBoundInference newInference: i.bind(likelyHands)) {
+            for(MappedInference newInference: i.bind(likelyHands)) {
                 if (i.ctx.bids.getLastBid().equals(lastBid)) {
-                    positive.add(AndBoundInf.create(newInference, OrBoundInf.create(negative).negate()));
+                    positive.add(AndBoundInf.create(newInference.inf, OrBoundInf.create(negative).negate()));
                 }
-                negative.add(newInference);
+                negative.add(newInference.inf);
             }
         }
 

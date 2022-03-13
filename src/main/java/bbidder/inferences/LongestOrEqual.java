@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInference;
 import bbidder.ShapeSet;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -29,11 +29,11 @@ public class LongestOrEqual implements Inference {
     }
 
     @Override
-    public List<IBoundInference> bind(InferenceContext context) {
+    public List<MappedInference> bind(InferenceContext context) {
         int iamong = among == null ? 0xf : context.lookupSuitSet(among);
-        List<IBoundInference> l = new ArrayList<>();
-        for(int isuit: context.lookupSuits(suit).keySet()) {
-            l.add(ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(isuit, iamong))));
+        List<MappedInference> l = new ArrayList<>();
+        for (var e : context.lookupSuits(suit).entrySet()) {
+            l.add(new MappedInference(ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(e.getKey(), iamong))), e.getValue()));
         }
         return l;
     }

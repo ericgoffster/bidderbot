@@ -6,5 +6,5 @@ import java.util.List;
  * A Bridge inference.
  */
 public interface Inference {
-    public List<IBoundInference> bind(InferenceContext context);
+    public List<MappedInference> bind(InferenceContext context);
 }
