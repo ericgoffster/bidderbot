@@ -64,6 +64,10 @@ public class BiddingContext {
         return new BiddingContext(bids.withBidPrepended(bid), suits);
     }
 
+    /**
+     * @param pattern The bid pattern
+     * @return a list of bidding contexts given a new bid pattern
+     */
     public List<BiddingContext> withNewBid(BidPattern pattern) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : getBids(pattern).entrySet()) {
@@ -72,6 +76,12 @@ public class BiddingContext {
         return l;
     }
 
+    /**
+     * 
+     * @param bid The bid
+     * @param pattern The bid pattern
+     * @return A new bidding pattern with the bid pattern matched to the bid.
+     */
     public BiddingContext withNewBid(Bid bid, BidPattern pattern) {
         Map<Bid, BiddingContext> acceptable = getBids(pattern);
         BiddingContext bc = acceptable.get(bid);
@@ -115,9 +125,6 @@ public class BiddingContext {
         if (symbol.equals("om") && suits.containsKey("m")) {
             return otherMinor(suits.get("m"));
         }
-        if (suits.containsKey(symbol)) {
-            return suits.get(symbol);
-        }
         return suits.get(symbol);
     }
 
@@ -136,7 +143,7 @@ public class BiddingContext {
         Bid partnerLastBid = theBids.size() >= 2 ? theBids.get(theBids.size() - 2) : null;
         Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
         Map<Bid, BiddingContext> result = new LinkedHashMap<>();
-        var m = getSuits(pattern.getSuit());
+        var m = getMappedBiddingContexts(pattern.getSuit());
         for (var e : m.entrySet()) {
             Bid bid = getBid(pattern, e.getKey());
             if (myRebid != null && bid.isSuitBid()) {
@@ -161,7 +168,11 @@ public class BiddingContext {
         return result;
     }
 
-    public Map<Integer, BiddingContext> getSuits(String suit) {
+    /**
+     * @param suit The suit to match.
+     * @return a map of strains to new bidding contexts
+     */
+    public Map<Integer, BiddingContext> getMappedBiddingContexts(String suit) {
         boolean reverse = false;
         if (suit.endsWith(":down")) {
             reverse = true;
@@ -187,6 +198,10 @@ public class BiddingContext {
         return reverse ? m.descendingMap() : m;
     }
 
+    /**
+     * @param symbol The symbol to test
+     * @return true, if the symbol is syntactically a valid suit.
+     */
     public static boolean isValidSuit(String symbol) {
         {
             Matcher m = SUIT_PATTERN.matcher(symbol);
