@@ -3,7 +3,6 @@ package bbidder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -103,19 +102,7 @@ public class BidPatternList {
         BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
 
         for (Bid bid : ctx.getBids(pattern)) {
-            if (bid.isSuitBid()) {
-                Map<String, Integer> newSuits = new HashMap<String, Integer>(ctx.suits);
-                if (pattern.getSuit() != null && !pattern.isSuitSet()) {
-                    String symbol = pattern.getSuit();
-                    Integer strain = ctx.getSuit(symbol);
-                    if (strain == null) {
-                        newSuits.put(symbol, bid.strain);
-                    }
-                }
-                theRest.getContexts(l, new BiddingContext(ctx.bids.withBidAdded(bid), newSuits), !isOpp);
-            } else {
-                theRest.getContexts(l, new BiddingContext(ctx.bids.withBidAdded(bid), ctx.suits), !isOpp);
-            }
+            theRest.getContexts(l, ctx.withNewBid(bid, pattern), !isOpp);
         }
     }
 }

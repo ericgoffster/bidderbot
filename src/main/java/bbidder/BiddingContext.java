@@ -1,5 +1,6 @@
 package bbidder;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -22,6 +23,23 @@ public class BiddingContext {
         super();
         this.bids = boundBidList;
         this.suits = suits;
+    }
+    
+    public BiddingContext withNewBid(Bid bid, BidPattern pattern) {
+        Map<String, Integer> newSuits;
+        if (bid.isSuitBid()) {
+            newSuits = new HashMap<String, Integer>(suits);
+            if (pattern.getSuit() != null && !pattern.isSuitSet()) {
+                String symbol = pattern.getSuit();
+                Integer strain = getSuit(symbol);
+                if (strain == null) {
+                    newSuits.put(symbol, bid.strain);
+                }
+            }
+        } else {
+            newSuits = suits;
+        }
+        return new BiddingContext(bids.withBidAdded(bid), newSuits);
     }
 
     /**
