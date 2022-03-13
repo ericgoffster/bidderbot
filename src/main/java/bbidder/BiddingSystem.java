@@ -201,20 +201,20 @@ public class BiddingSystem {
             return ConstBoundInference.create(false);
         }
         Bid lastBid = bids.getLastBid();
-        IBoundInference positive = ConstBoundInference.create(false);
+        List<IBoundInference> positive = new ArrayList<>();
         IBoundInference negative = ConstBoundInference.create(true);
         for(BoundBidInference i: byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
             IBoundInference newInference = i.bind(likelyHands);
             if (i.ctx.bids.getLastBid().equals(lastBid)) {
-                positive = OrBoundInf.create(AndBoundInf.create(newInference, negative), positive);
+                positive.add(AndBoundInf.create(newInference, negative));
             }
             negative = AndBoundInf.create(negative, newInference.negate());            
         }
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
-            positive = OrBoundInf.create(negative, positive);
+            positive.add(negative);
         }
-        return positive;
+        return OrBoundInf.create(positive);
     }
 }
