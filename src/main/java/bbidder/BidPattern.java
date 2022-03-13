@@ -134,12 +134,16 @@ public class BidPattern {
         if (isOpposition) {
             str = str.substring(1, str.length() - 1).trim();
         }
+        String[] parts = SplitUtil.split(str, ":");
         boolean downTheLine = false;
-        if (str.endsWith(":down")) {
-            downTheLine = true;
-            str = str.substring(0, str.length() - 5);
+        for(int i = 1; i < parts.length; i++) {
+            if (parts[i].equals("down")) {
+                downTheLine = true;
+            } else {
+                throw new IllegalArgumentException("Uknown qualifier: " + parts[i]);
+            }
         }
-        return new BidPattern(isOpposition, str, !downTheLine);
+        return new BidPattern(isOpposition, parts[0].trim(), !downTheLine);
     }
 
     @Override
