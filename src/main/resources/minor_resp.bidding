@@ -1,8 +1,8 @@
-1D NJy:down => 13+ hcp, 5+ y, longest_or_equal y among unbid
+1D NJy:down => gf+, 5+ y, longest_or_equal y among unbid
 test Kxx Ax xxx AQxxx:1D P 2C
 test AQxxx Axxx x Kxx:1D P 1S
 
-1m 1M => 13+ hcp, 4 M, longest_or_equal M among unbid
+1m 1M => gf+, 4 M, longest_or_equal M among unbid
 test Kxxx Ax xxx AQxx:1D P 1S
 test AQxx Axxx xx Kxx:1D P 1H
 
@@ -13,26 +13,26 @@ test Kxxx Ax xx xxxxx:1D P 1S
 test Kxxxx Axxx xx xx:1D P 1S
 test Kxxx Axxx xx xxx:1D P 1H
 
-1m 3N => 13-15 hcp, balanced
+1m 3N => gf, balanced
 test Kxx Kx Axxx Kxxx:1D P 3N
 
-1m 2N => 11-12 hcp, balanced
+1m 2N => inv, balanced
 test Kxx Kx Qxxx Kxxx:1D P 2N
 
-1m 1N => 6-10 hcp, balanced
+1m 1N => min, balanced
 test Kxx Kx Qxxx xxxx:1D P 1N
 
-1m 2m => 11+ hcp, 4+ m
+1m 2m => inv+, 4+ m
 test KQx x Qxxxx Axxx:1D P 2D
 
-1m 3m => 6-10 hcp, 5+ m
+1m 3m => min, 5+ m
 test KQx x Qxxxx xxxx:1D P 3D
 
-1m 1y:down => 6+ hcp, 5+ y, longest_or_equal y among same_level & unbid
+1m 1y:down => min+, 5+ y, longest_or_equal y among same_level & unbid
 test KQx x Axxxxx xxx:1C P 1D
 
 # very hard to get here ith 6+ pts, here just as a catch all
-1m 1y => 13+ hcp, 4 y, longest_or_equal y among unbid
-1m 1y => 6+ hcp, 4 y, longest_or_equal y among same_level & unbid
-1m 1N => 6-10 hcp
+1m 1y => gf+, 4 y, longest_or_equal y among unbid
+1m 1y => min+, 4 y, longest_or_equal y among same_level & unbid
+1m 1N => min
 test KQx x xxx Axxxxx:1D P 1N
