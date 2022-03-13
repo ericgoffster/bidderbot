@@ -73,7 +73,7 @@ public class BiddingSystemTest {
 
     @Test
     public void test4() throws IOException {
-        BiddingSystem bs = BiddingSystem.load("classpath:2over1.bidding", ex -> {
+        BiddingSystem bs = BiddingSystem.load("classpath:bbo21/2over1.bidding", ex -> {
             ex.printStackTrace();
         });
         {
