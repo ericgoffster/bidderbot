@@ -1,0 +1,16 @@
+# Responses to 1 Major
+1M 2N => 13+ hcp, 4+ M
+1M 2M => 6-10 hcp, 3+ M
+1M 3M => 11-12 hcp, 4+ M
+1M 3m => 11-12 hcp, 6+ m
+1M 1N => 11-12 hcp, 3 M
+
+# Responses to a suit with a GF hand
+1M NJy:down => 13+ hcp, 5+ y, longest_or_equal y among unbid
+1M NJy => 13+ hcp, 4 y, longest_or_equal y among unbid
+
+# 1/1
+1H 1S:down => 6+ hcp, 4+ S
+
+# Catch all
+1M 1N => 6+ hcp

@@ -1,2 +1,3 @@
 include classpath:opening_bids.bidding
-include classpath:responses_suit_1level.bidding
+include classpath:major_resp.bidding
+include classpath:minor_resp.bidding
