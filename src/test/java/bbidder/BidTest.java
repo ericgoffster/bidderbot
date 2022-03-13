@@ -16,6 +16,15 @@ public class BidTest {
         assertFalse(Bid.XX.isSuitBid());
     }
     @Test
+    public void testValueOf() {
+        assertEquals(Bid._1C, Bid.valueOf(0, Constants.CLUB));
+        assertEquals(Bid._2D, Bid.valueOf(1, Constants.DIAMOND));
+        assertEquals(Bid._3H, Bid.valueOf(2, Constants.HEART));
+        assertEquals(Bid._4S, Bid.valueOf(3, Constants.SPADE));
+        assertEquals(Bid._5N, Bid.valueOf(4, Constants.NOTRUMP));
+    }
+
+    @Test
     public void testFromStr() {
         assertEquals(Bid._1C, Bid.fromStr("1C"));
         assertEquals(Bid._2C, Bid.fromStr("2C"));
