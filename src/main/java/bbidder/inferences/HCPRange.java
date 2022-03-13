@@ -26,16 +26,11 @@ public class HCPRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        if (min == null) {
-            if (max == null) {
-                return ConstBoundInference.T;
-            }
-            return new BoundInfMax(context.resolvePoints(max));
+        Range r = Range.between(min == null ? null : context.resolvePoints(min), max == null ? null : context.resolvePoints(max), 40);
+        if (r.unBounded()) {
+            return ConstBoundInference.T;
         }
-        if (max == null) {
-            return new BoundInfMin(context.resolvePoints(min));
-        }
-        return AndBoundInference.create(new BoundInfMin(context.resolvePoints(min)), new BoundInfMax(context.resolvePoints(max)));
+        return new BoundInf(r);
     }
 
     public static HCPRange valueOf(String str) {
@@ -94,49 +89,26 @@ public class HCPRange implements Inference {
         return Objects.equals(max, other.max) && Objects.equals(min, other.min);
     }
 
-    static class BoundInfMin implements IBoundInference {
-        final int min;
+    static class BoundInf implements IBoundInference {
+        final Range r;
 
-        public BoundInfMin(int min) {
-            this.min = min;
+        public BoundInf(Range r) {
+            this.r = r;
         }
 
         @Override
         public boolean matches(Hand hand) {
-            return hand.numHCP() >= min;
+            return r.contains(hand.numHCP());
         }
 
         @Override
         public IBoundInference negate() {
-            return new BoundInfMax(min - 1);
+            return new BoundInf(r.not());
         }
 
         @Override
         public String toString() {
-            return min + "+ hcp";
-        }
-    }
-
-    static class BoundInfMax implements IBoundInference {
-        final int max;
-
-        public BoundInfMax(int max) {
-            this.max = max;
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return hand.numHCP() <= max;
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new BoundInfMin(max + 1);
-        }
-
-        @Override
-        public String toString() {
-            return max + "- hcp";
+            return r + " hcp";
         }
     }
 }
