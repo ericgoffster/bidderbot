@@ -1,13 +1,12 @@
 package bbidder;
 
 import java.util.List;
-import java.util.Random;
 
 import bbidder.BiddingSystem.BidSource;
 import bbidder.inferences.bound.AndBoundInf;
 
 /**
- * Represents the entre state of an entire bidding auction
+ * Represents the entire state of an entire bidding auction
  * for all players.
  * 
  * @author goffster
@@ -18,24 +17,33 @@ public final class BiddingState {
     public final BiddingSystem they;
     public final BidList bidding;
     public final Players players;
-    
-    public BiddingState(Random r, BiddingSystem system) {
-        this(system, system);
-    }
 
-    public BiddingState(BiddingSystem we, BiddingSystem they) {
-        this.we = we;
-        this.they = they;
-        this.bidding = BidList.create(List.of());
-        this.players = new Players();
-    }
-
-    public BiddingState(BiddingSystem we, BiddingSystem they, BidList bidding, Players players) {
+    private BiddingState(BiddingSystem we, BiddingSystem they, BidList bidding, Players players) {
         super();
         this.we = we;
         this.they = they;
         this.bidding = bidding;
         this.players = players;
+    }
+
+    /**
+     * Constructs an initial bidding state with everyone playing the given system
+     * @param system The global system
+     */
+    public BiddingState(BiddingSystem system) {
+        this(system, system);
+    }
+
+    /**
+     * Constructs an initial bidding state with everyone playing their own system
+     * @param we The bidding system for "we"
+     * @param they  The bidding system for "they"
+     */
+    public BiddingState(BiddingSystem we, BiddingSystem they) {
+        this.we = we;
+        this.they = they;
+        this.bidding = BidList.create(List.of());
+        this.players = new Players();
     }
 
     /**
@@ -57,7 +65,6 @@ public final class BiddingState {
      * @return A bid for the given hand.
      */
     public BidSource getBid(Hand hand) {
-        // Get the bid from the system.
         return we.getBid(bidding, players, hand);
     }
 }

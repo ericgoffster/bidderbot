@@ -20,7 +20,7 @@ public class BiddingTest {
     }
 
     public TestResult getResult(Random r, BiddingSystem bs) {
-        BiddingState state = new BiddingState(r, bs);
+        BiddingState state = new BiddingState(bs);
         BidList exceptLast = bids.exceptLast();
         for (Bid bid : exceptLast.getBids()) {
             state = state.withBid(bid);
