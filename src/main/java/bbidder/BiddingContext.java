@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Inferences happen in the context of a series of bids.
@@ -33,13 +35,26 @@ public class BiddingContext {
             if (symbol != null) {
                 Integer strain = getSuit(symbol);
                 if (strain == null) {
-                    newSuits.put(symbol, bid.strain);
+                    putSuit(newSuits, symbol, bid.strain);
                 }
             }
         } else {
             newSuits = suits;
         }
         return new BiddingContext(bids.withBidAdded(bid), newSuits);
+    }
+    
+    public static Pattern PATT = Pattern.compile("(.*)\\-(\\d+)");
+    
+    public static void putSuit(Map<String, Integer> suits, String symbol, int strain) {
+        Matcher m = PATT.matcher(symbol);
+        if (m.matches()) {
+            String lhs = m.group(1);
+            int delta = Integer.parseInt(m.group(2));
+            putSuit(suits, lhs, strain + delta);
+            return;
+        }
+        suits.put(symbol, strain);
     }
 
     /**
@@ -48,6 +63,16 @@ public class BiddingContext {
      * @return (0,1,2,3,4) for a given symbol, null if not found.
      */
     public Integer getSuit(String symbol) {
+        Matcher m = PATT.matcher(symbol);
+        if (m.matches()) {
+            String lhs = m.group(1);
+            int delta = Integer.parseInt(m.group(2));
+            Integer s = getSuit(lhs);
+            if (s == null) {
+                return null;
+            }
+            return s - delta;
+        }
         Integer strain = Strain.getStrain(symbol);
         if (strain != null) {
             return strain;
