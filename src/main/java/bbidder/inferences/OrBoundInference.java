@@ -23,7 +23,7 @@ public class OrBoundInference implements IBoundInference {
         for(IBoundInference i: inf) {
             sz += i.size();
         }
-        size = sz + 1;
+        size = sz + inf.size();
     }
     
     @Override
@@ -104,8 +104,7 @@ public class OrBoundInference implements IBoundInference {
             result.add(AndBoundInference.create(j, i));
         }
         IBoundInference res = OrBoundInference.create(result);
-        int sizeJustAdding = size + i.size() + 1;
-        if (res.size() < sizeJustAdding) {
+        if (res.size() < size + i.size() + 1) {
             return res;
         }
 

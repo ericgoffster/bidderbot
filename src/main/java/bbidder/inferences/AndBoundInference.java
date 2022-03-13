@@ -23,7 +23,7 @@ public class AndBoundInference implements IBoundInference {
         for(IBoundInference i: inf) {
             sz += i.size();
         }
-        size = sz + 1;
+        size = sz + inf.size();
     }
     
     @Override
