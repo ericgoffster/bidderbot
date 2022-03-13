@@ -49,22 +49,23 @@ public class BiddingState {
         this.rho = rho;
         this.me = me;
     }
-    
+
     public static class Player {
         final IBoundInference inf;
         final IHandList likelyHand;
+
         public Player(IBoundInference inf, IHandList likelyHand) {
             super();
             this.inf = inf;
             this.likelyHand = likelyHand;
         }
-        
+
         public Player() {
             this.inf = ConstBoundInference.T;
             this.likelyHand = new AllPossibleHands();
         }
     }
-    
+
     /**
      * @param bid
      *            The bid to add
@@ -79,8 +80,7 @@ public class BiddingState {
     }
 
     private LikelyHands getLikelyHands() {
-        return new LikelyHands(lho.likelyHand, partner.likelyHand, rho.likelyHand,
-                me.likelyHand);
+        return new LikelyHands(lho.likelyHand, partner.likelyHand, rho.likelyHand, me.likelyHand);
     }
 
     /**

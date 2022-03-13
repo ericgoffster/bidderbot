@@ -27,20 +27,21 @@ public class Hand {
         super();
         this.suits = suits;
     }
-    
+
     public Hand() {
-        this(new short[] {0, 0, 0, 0});
+        this(new short[] { 0, 0, 0, 0 });
     }
-    
+
     public static Hand allCards() {
-        return new Hand(new short[] {0x1fff, 0x1fff, 0x1fff, 0x1fff});
+        return new Hand(new short[] { 0x1fff, 0x1fff, 0x1fff, 0x1fff });
     }
-    
+
     public Hand withCardAdded(int suit, int rank) {
         short[] newSuits = Arrays.copyOf(suits, 4);
         newSuits[suit] |= (1 << rank);
         return new Hand(newSuits);
     }
+
     public Hand withCardEemoved(int suit, int rank) {
         short[] newSuits = Arrays.copyOf(suits, 4);
         newSuits[suit] &= ~(1 << rank);
@@ -115,7 +116,7 @@ public class Hand {
             return 0;
         }
     }
-    
+
     public short getAllInSuit(int suit) {
         return suits[suit];
     }
@@ -131,11 +132,11 @@ public class Hand {
         sb.reverse();
         return sb.toString();
     }
-    
+
     private static class ParsedHand {
         Hand current = new Hand();
-        Hand avail; 
-        
+        Hand avail;
+
         public ParsedHand(Hand avail) {
             super();
             this.avail = avail;
@@ -162,7 +163,7 @@ public class Hand {
                 numX--;
             }
         }
-        
+
         public void parseHand(String str) {
             String[] suit_parts = SplitUtil.split(str, "\\s+", 4);
             if (suit_parts.length != 4) {

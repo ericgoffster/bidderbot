@@ -41,7 +41,8 @@ public class BidInference {
     }
 
     /**
-     * @param likelyHands Likely hands
+     * @param likelyHands
+     *            Likely hands
      * @return The list of inferences bound to actual bidding sequences.
      */
     public List<BoundBidInference> getBoundInferences(LikelyHands likelyHands) {

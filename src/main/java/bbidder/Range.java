@@ -20,7 +20,7 @@ public class Range {
         this.bits = bits;
         this.max = max;
     }
-    
+
     public int highest() {
         return BitUtil.highestBit(bits);
     }

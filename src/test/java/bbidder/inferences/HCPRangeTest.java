@@ -34,7 +34,7 @@ public class HCPRangeTest {
         assertEquals("10 hcp", new HCPRange(10, 10).toString());
         assertEquals("10 hcp", new HCPRange(10, 10).bind(ctx).toString());
     }
-    
+
     @Test
     public void testReduce() {
         InferenceContext ctx = new InferenceContext();

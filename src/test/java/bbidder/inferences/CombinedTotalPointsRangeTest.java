@@ -33,7 +33,7 @@ public class CombinedTotalPointsRangeTest {
         assertEquals("10 tpts", new CombinedTotalPointsRange(10, 10).toString());
         assertEquals("10 tpts", new CombinedTotalPointsRange(10, 10).bind(ctx).toString());
     }
-    
+
     @Test
     public void testReduce() {
         InferenceContext ctx = new InferenceContext();

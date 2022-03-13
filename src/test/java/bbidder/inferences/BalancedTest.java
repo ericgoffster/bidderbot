@@ -23,7 +23,7 @@ public class BalancedTest {
         assertEquals("balanced", new Balanced().bind(ctx).toString());
         assertEquals("unbalanced", new Balanced().bind(ctx).negate().toString());
     }
-    
+
     @Test
     public void testReduce() {
         InferenceContext ctx = new InferenceContext();
