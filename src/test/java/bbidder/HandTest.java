@@ -27,4 +27,11 @@ public class HandTest {
         Hand hand = Hand.valueOf("    AKQJ  -  765    432");
         assertEquals(10, hand.numHCP());
     }
+
+    @Test
+    public void testTotalPts() {
+        Hand hand = Hand.valueOf("    AKQJ  -  T7658    9432");
+        assertEquals(13, hand.totalPoints(0));
+        assertEquals(10, hand.totalPoints(2));
+    }
 }
