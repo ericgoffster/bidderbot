@@ -85,7 +85,9 @@ public class BiddingSystem {
                 ln = ln.trim();
                 String[] comm = ln.split("\\s+", 2);
                 if (comm.length == 2 && comm[0].equals("include")) {
-                    inferences.addAll(load(where, comm[1].trim(), reportErrors).inferences);
+                    BiddingSystem bs = load(where, comm[1].trim(), reportErrors);
+                    inferences.addAll(bs.inferences);
+                    tests.addAll(bs.tests);
                 } else if (comm.length == 2 && comm[0].equals("test")) {
                     tests.add(BiddingTest.valueOf(comm[1]));
                 } else if (!ln.equals("")) {
@@ -173,5 +175,11 @@ public class BiddingSystem {
             }
         }
         return positive;
+    }
+    
+    public void runTests(Consumer<TestFailure> failures) {
+        for(BiddingTest test: tests) {
+            test.validate(this, failures);
+        }
     }
 }
