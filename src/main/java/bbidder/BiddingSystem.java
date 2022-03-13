@@ -11,7 +11,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import bbidder.inferences.AndBoundInference;
@@ -24,11 +26,29 @@ import bbidder.inferences.OrBoundInference;
 public class BiddingSystem {
     public final List<BoundBidInference> inferences;
     public final List<BiddingTest> tests;
+    public final Map<BidList, List<BoundBidInference>> byPrefix = new LinkedHashMap<>();
 
     public BiddingSystem(List<BoundBidInference> inferences, List<BiddingTest> tests) {
         super();
         this.inferences = inferences;
         this.tests = tests;
+        for(BoundBidInference i: inferences) {
+            BidList bids = i.ctx.bids.exceptLast();
+            List<BoundBidInference> l = byPrefix.get(bids);
+            if (l == null) {
+                l = new ArrayList<>();
+                byPrefix.put(bids, l);
+            }
+            l.add(i);
+        }
+        int n = 0;
+        for(var e: byPrefix.entrySet()) {
+            System.out.println(e.getKey()+":"+e.getValue().size());
+            for(BoundBidInference i: e.getValue()) {
+                System.out.println("    "+i.ctx.bids);
+            }
+        }
+        System.out.println(n);
     }
     
     public static BiddingSystem load(String urlSpec, Consumer<ParseException> reportErrors) {
@@ -160,16 +180,16 @@ public class BiddingSystem {
             return ConstBoundInference.create(false);
         }
         Bid lastBid = bids.getLastBid();
+        List<BoundBidInference> found = byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>());
+        
         IBoundInference positive = ConstBoundInference.create(false);
         IBoundInference negative = ConstBoundInference.create(true);
-        for (BoundBidInference i : inferences) {
-            if (i.ctx.bids.bids.size() == bids.bids.size() && i.ctx.bids.exceptLast().equals(bids.exceptLast())) {
-                IBoundInference newInference = i.bind(likelyHands);
-                if (i.ctx.bids.getLastBid().equals(lastBid)) {
-                    positive = OrBoundInference.create(AndBoundInference.create(newInference, negative), positive);
-                }
-                negative = AndBoundInference.create(negative, newInference.negate());
+        for(BoundBidInference i: found) {
+            IBoundInference newInference = i.bind(likelyHands);
+            if (i.ctx.bids.getLastBid().equals(lastBid)) {
+                positive = OrBoundInference.create(AndBoundInference.create(newInference, negative), positive);
             }
+            negative = AndBoundInference.create(negative, newInference.negate());            
         }
 
         // Pass means... Nothing else works, this will get smarter.

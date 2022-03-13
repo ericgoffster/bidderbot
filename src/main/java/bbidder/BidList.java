@@ -1,6 +1,7 @@
 package bbidder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ public class BidList {
 
     public BidList(List<Bid> bids) {
         super();
-        this.bids = bids;
+        this.bids = Collections.unmodifiableList(bids);
     }
 
     /**
