@@ -72,7 +72,7 @@ public class BiddingContext {
             if (s == null) {
                 return null;
             }
-            return s - delta;
+            return (s + 5 - delta) % 5;
         }
         Integer strain = Strain.getStrain(symbol);
         if (strain != null) {
@@ -153,7 +153,7 @@ public class BiddingContext {
         if (m.matches()) {
             String lhs = m.group(1);
             int delta = Integer.parseInt(m.group(2));
-            putSuit(suits, lhs, strain + delta);
+            putSuit(suits, lhs, (strain + delta) % 5);
             return;
         }
         if (strain < 0 || strain > 4) {
