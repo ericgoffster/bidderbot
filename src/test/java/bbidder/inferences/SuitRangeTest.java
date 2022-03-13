@@ -19,7 +19,7 @@ public class SuitRangeTest {
     public void testToString() {
         InferenceContext ctx = new InferenceContext();
         assertEquals("8-10 s", new SuitRange("s", "8", "10").toString());
-        assertEquals("(8+ S & 10- S)", new SuitRange("s", "8", "10").bind(ctx).toString());
+        assertEquals("8-10 S", new SuitRange("s", "8", "10").bind(ctx).toString());
     }
 
     @Test

@@ -30,22 +30,11 @@ public class SuitRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        int s = context.lookupSuit(suit);
-        if (min == null) {
-            if (max == null) {
-                return ConstBoundInference.T;
-            }
-            return new BoundInfMax(s, context.resolveLength(max));
+        Range r = Range.between(min == null ? null : context.resolveLength(min), max == null ? null : context.resolveLength(max), 13);
+        if (r.unBounded()) {
+            return ConstBoundInference.T;
         }
-        if (max == null) {
-            return new BoundInfMin(s, context.resolveLength(min));
-        }
-        int imin = context.resolveLength(min);
-        int imax = context.resolveLength(max);
-        if (imin == imax) {
-            return new BoundInfExact(s, imin);
-        }
-        return AndBoundInference.create(new BoundInfMin(s, imin), new BoundInfMax(s, imax));
+        return new BoundInf(context.lookupSuit(suit), r);
     }
 
     public static SuitRange valueOf(String str) {
@@ -108,104 +97,28 @@ public class SuitRange implements Inference {
         return Objects.equals(max, other.max) && Objects.equals(min, other.min) && Objects.equals(suit, other.suit);
     }
 
-    static class BoundInfExact implements IBoundInference {
+    static class BoundInf implements IBoundInference {
         final int suit;
-        final int n;
+        final Range range;
 
-        public BoundInfExact(int suit, int n) {
+        public BoundInf(int suit, Range range) {
             this.suit = suit;
-            this.n = n;
+            this.range = range;
         }
 
         @Override
         public boolean matches(Hand hand) {
-            return hand.numInSuit(suit) == n;
+            return (range.bits & (1L << hand.numInSuit(suit))) != 0;
         }
 
         @Override
-        public IBoundInference negate() {
-            return new BoundInfExactNot(suit, n);
-        }
-
-        @Override
-        public String toString() {
-            return n + " " + STR_ALL_SUITS.charAt(suit);
-        }
-    }
-
-    static class BoundInfExactNot implements IBoundInference {
-        final int suit;
-        final int n;
-
-        public BoundInfExactNot(int suit, int n) {
-            this.suit = suit;
-            this.n = n;
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return hand.numInSuit(suit) != n;
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new BoundInfExact(suit, n);
+        public BoundInf negate() {
+            return new BoundInf(suit, range.not());
         }
 
         @Override
         public String toString() {
-            return "~" + n + " " + STR_ALL_SUITS.charAt(suit);
+            return range + " " + STR_ALL_SUITS.charAt(suit);
         }
     }
-
-    static class BoundInfMin implements IBoundInference {
-        final int suit;
-        final int min;
-
-        public BoundInfMin(int suit, int min) {
-            this.suit = suit;
-            this.min = min;
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return hand.numInSuit(suit) >= min;
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new BoundInfMax(suit, min - 1);
-        }
-
-        @Override
-        public String toString() {
-            return min + "+ " + STR_ALL_SUITS.charAt(suit);
-        }
-    }
-
-    static class BoundInfMax implements IBoundInference {
-        final int suit;
-        final int max;
-
-        public BoundInfMax(int suit, int max) {
-            this.suit = suit;
-            this.max = max;
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return hand.numInSuit(suit) <= max;
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new BoundInfMin(suit, max + 1);
-        }
-
-        @Override
-        public String toString() {
-            return max + "- " + STR_ALL_SUITS.charAt(suit);
-        }
-    }
-
 }
