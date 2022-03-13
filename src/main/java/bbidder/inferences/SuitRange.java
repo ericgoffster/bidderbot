@@ -20,27 +20,42 @@ import bbidder.inferences.bound.ShapeBoundInf;
 public class SuitRange implements Inference {
     public final String suit;
     public final Range rng;
+    public final boolean isFit;
 
-    public static Pattern PATT1 = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
-    public static Pattern PATT2 = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(.*)");
-    public static Pattern PATT3 = Pattern.compile("\\s*(\\d+)\\s*\\+\\s*(.*)");
-    public static Pattern PATT4 = Pattern.compile("\\s*(\\d+)\\s*(.*)");
+    public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)");
+    public static Pattern PATT_MIN_TO_MAX = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
+    public static Pattern PATT_MAX = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(.*)");
+    public static Pattern PATT_MIN = Pattern.compile("\\s*(\\d+)\\s*\\+\\s*(.*)");
+    public static Pattern PATT_EXACT = Pattern.compile("\\s*(\\d+)\\s*(.*)");
 
     public SuitRange(String suit, Integer min, Integer max) {
         super();
         this.suit = suit;
         this.rng = Range.between(min, max, 13);
+        isFit = false;
     }
 
     public SuitRange(String suit, Range r) {
         super();
         this.suit = suit;
         this.rng = r;
+        isFit = false;
+    }
+    
+    public SuitRange(String suit) {
+        super();
+        this.suit = suit;
+        this.rng = null;
+        isFit = true;
     }
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        return createBound(context.lookupSuit(suit), rng);
+        int s = context.lookupSuit(suit);
+        if (isFit) {
+            return createBound(s, Range.atLeast(8 - context.likelyHands.partner.getSuit(s).lowest(), 13));
+        }
+        return createBound(s, rng);
     }
 
     private static IBoundInference createBound(int s, Range r) {
@@ -51,28 +66,32 @@ public class SuitRange implements Inference {
         if (str == null) {
             return null;
         }
+        Matcher m = PATT_FIT.matcher(str);
+        if (m.matches()) {
+            return new SuitRange(m.group(1).trim());
+        }
         final String suit;
         final Integer min;
         final Integer max;
-        Matcher m = PATT1.matcher(str);
+        m = PATT_MIN_TO_MAX.matcher(str);
         if (m.matches()) {
             suit = m.group(3).trim();
             min = Integer.parseInt(m.group(1));
             max = Integer.parseInt(m.group(2));
         } else {
-            m = PATT2.matcher(str);
+            m = PATT_MAX.matcher(str);
             if (m.matches()) {
                 suit = m.group(2).trim();
                 min = null;
                 max = Integer.parseInt(m.group(1));
             } else {
-                m = PATT3.matcher(str);
+                m = PATT_MIN.matcher(str);
                 if (m.matches()) {
                     suit = m.group(2).trim();
                     min = Integer.parseInt(m.group(1));
                     max = null;
                 } else {
-                    m = PATT4.matcher(str);
+                    m = PATT_EXACT.matcher(str);
                     if (m.matches()) {
                         suit = m.group(2).trim();
                         min = max = Integer.parseInt(m.group(1));
@@ -93,7 +112,7 @@ public class SuitRange implements Inference {
 
     @Override
     public String toString() {
-        return rng + " " + suit;
+        return isFit ? ("fit "+ suit) : (rng + " " + suit);
     }
 
     @Override
