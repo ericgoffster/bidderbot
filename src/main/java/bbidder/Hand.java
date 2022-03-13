@@ -144,7 +144,11 @@ public class Hand {
         }
         int suit = 3;
         short[] suits = new short[4];
-        for (String suitStr : str.trim().split("\\s+")) {
+        String[] suit_parts = str.trim().split("\\s+");
+        if (suit_parts.length != 4) {
+            throw new IllegalArgumentException("Expected 4 suits: '" + str + '"');
+        }
+        for (String suitStr : suit_parts) {
             suits[suit--] = parseSuit(suitStr);
         }
         return new Hand(suits);

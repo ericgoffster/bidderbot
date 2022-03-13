@@ -3,17 +3,33 @@
 test AKQ23 AKQ AK 234:2C
 
 2N => balanced, 20-21 hcp
+test AKQ2 AQ23 AQ 234:2N
 
 1N => balanced, 15-17 hcp
+test AQ23 KQ23 AQ 234:1N
 
 1x:down => 5+ x, 13+ hcp, longest_or_equal x among all
+test AQ234 A234 K2 23:1S
+test A234 AQ345 K2 23:1H
+test AQ234 A2345 K2 2:1S
+test AQ234 AK3456 2 2:1H
+test A234 K2 AQ345 23:1D
 
 1m:down => 4 m, 13+ hcp, longest_or_equal m among minors
+test A234 2 AQ35 K345:1D
 
 1m => 3 m, 13+ hcp, longest_or_equal m among minors
+test A234 234 AQ3 K34:1C
 
 # Preempts
 2x => opening_preempt 2 x
+test KQJ234 234 2 345:2S
+
 3x => opening_preempt 3 x
+test KQJ2345 23 2 345:3S
+
 4x => opening_preempt 4 x
+test KQJ23456 23 2 34:4S
+
 5x => opening_preempt 5 x
+test 23 2 KQJ234567 2:5D
