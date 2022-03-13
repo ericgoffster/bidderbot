@@ -1,7 +1,7 @@
 package bbidder;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import bbidder.inferences.AndBoundInference;
 import bbidder.inferences.ConstBoundInference;
@@ -14,28 +14,40 @@ import bbidder.inferences.ConstBoundInference;
  *
  */
 public class BiddingState {
-    public final BiddingSystem[] systems;
+    public final BiddingSystem we;
+    public final BiddingSystem they;
     public final BidList bidding;
-    public final int turn;
-    public final Player[] players;
+    public final Player lho;
+    public final Player partner;
+    public final Player rho;
+    public final Player me;
+    public final Random r;
 
-    public BiddingState(BiddingSystem system) {
-        this(new BiddingSystem[] { system, system }, 0);
+    public BiddingState(Random r, BiddingSystem system) {
+        this(r, system, system);
     }
 
-    public BiddingState(BiddingSystem[] systems, int turn) {
-        this.systems = systems;
-        this.turn = turn;
+    public BiddingState(Random r, BiddingSystem we, BiddingSystem they) {
+        this.r = r;
+        this.we = we;
+        this.they = they;
         this.bidding = new BidList(List.of());
-        this.players = new Player[] { new Player(), new Player(), new Player(), new Player() };
+        this.lho = new Player();
+        this.partner = new Player();
+        this.me = new Player();
+        this.rho = new Player();
     }
 
-    public BiddingState(BiddingSystem[] systems, BidList bidding, int turn, Player[] players) {
+    public BiddingState(Random r, BiddingSystem we, BiddingSystem they, BidList bidding, Player lho, Player partner, Player rho, Player me) {
         super();
-        this.systems = systems;
+        this.r = r;
+        this.we = we;
+        this.they = they;
         this.bidding = bidding;
-        this.turn = turn;
-        this.players = players;
+        this.lho = lho;
+        this.partner = partner;
+        this.rho = rho;
+        this.me = me;
     }
     
     public static class Player {
@@ -53,10 +65,6 @@ public class BiddingState {
         }
     }
     
-    public static IHandList getHandList(IBoundInference inf) {
-        return HandGenerator.generateHands(inf, 1000);
-    }
-
     /**
      * @param bid
      *            The bid to add
@@ -64,17 +72,15 @@ public class BiddingState {
      */
     public BiddingState withBid(Bid bid) {
         BidList newBidList = bidding.withBidAdded(bid);
-        LikelyHands likelyHands = getLikelyHands();
-        IBoundInference newInf = AndBoundInference.create(systems[turn % 2].getInference(newBidList, likelyHands), players[turn].inf);
-        Player[] newPlayers = Arrays.copyOf(players, players.length);
-        IHandList newHands = HandGenerator.generateHands(newInf, 1000);
-        newPlayers[turn] = new Player(newInf, newHands);
-        return new BiddingState(systems, newBidList, (turn + 1) % 4, newPlayers);
+        IBoundInference newInf = AndBoundInference.create(we.getInference(newBidList, getLikelyHands()), me.inf);
+        IHandList newHands = HandGenerator.generateHands(r, newInf, 1000);
+        Player newMe = new Player(newInf, newHands);
+        return new BiddingState(r, they, we, newBidList, partner, rho, newMe, lho);
     }
 
     private LikelyHands getLikelyHands() {
-        return new LikelyHands(players[(turn + 3) % 4].likelyHand, players[(turn + 2) % 4].likelyHand, players[(turn + 1) % 4].likelyHand,
-                players[turn].likelyHand);
+        return new LikelyHands(lho.likelyHand, partner.likelyHand, rho.likelyHand,
+                me.likelyHand);
     }
 
     /**
@@ -84,7 +90,6 @@ public class BiddingState {
      */
     public Bid getBid(Hand hand) {
         // Get the bid from the system.
-        LikelyHands likelyHands = getLikelyHands();
-        return systems[turn % 2].getBid(bidding, likelyHands, hand);
+        return we.getBid(bidding, getLikelyHands(), hand);
     }
 }

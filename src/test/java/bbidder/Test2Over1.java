@@ -3,6 +3,8 @@ package bbidder;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ErrorCollector;
 
@@ -15,11 +17,12 @@ public class Test2Over1 {
         BiddingSystem bs = BiddingSystem.load("", "classpath:2over1.bidding", ex -> {
             collector.addError(ex);
         });
+        Random r = new Random();
         for (BiddingTest test : bs.tests) {
-            TestResult result = test.getResult(bs);
+            TestResult result = test.getResult(r, bs);
             collector.checkThat(result.where + ":" + result.hand + ":" + result.bids, result.found, equalTo(result.expected));
             if (!result.found.equals(result.expected)) {
-                test.getResult(bs);
+                test.getResult(r, bs);
             }
         }
 

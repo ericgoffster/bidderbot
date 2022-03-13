@@ -11,8 +11,7 @@ import java.util.Random;
  *
  */
 public class HandGenerator {
-    public static HandList generateHands(IBoundInference inf, int numDesired) {
-        Random r = new Random();
+    public static HandList generateHands(Random r, IBoundInference inf, int numDesired) {
         int[] cards = new int[52];
         for (int i = 0; i < 52; i++) {
             cards[i] = i;

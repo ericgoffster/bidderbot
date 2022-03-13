@@ -1,5 +1,7 @@
 package bbidder;
 
+import java.util.Random;
+
 public class BiddingTest {
     public final Hand hand;
     public final BidList bids;
@@ -15,8 +17,8 @@ public class BiddingTest {
         this.bids = bids;
     }
 
-    public TestResult getResult(BiddingSystem bs) {
-        BiddingState state = new BiddingState(bs);
+    public TestResult getResult(Random r, BiddingSystem bs) {
+        BiddingState state = new BiddingState(r, bs);
         BidList exceptLast = bids.exceptLast();
         for (Bid bid : exceptLast.bids) {
             state = state.withBid(bid);
