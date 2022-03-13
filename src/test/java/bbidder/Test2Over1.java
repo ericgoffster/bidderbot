@@ -19,7 +19,13 @@ public class Test2Over1 {
         });
         Random r = new Random();
         for (BiddingTest test : bs.tests) {
-            TestResult result = test.getResult(r, bs);
+            TestResult result;
+            try {
+                result = test.getResult(r, bs);
+            } catch (Exception e) {
+                collector.checkThat(test.where + " : could not generate hand", true, equalTo(false));
+                continue;
+            }
             collector.checkThat(result.where + ":" + result.hand + ":" + result.bids + " conflicted with " + result.found, result.found.bid, equalTo(result.expected));
             if (!result.found.bid.equals(result.expected)) {
                 test.getResult(r, bs);
