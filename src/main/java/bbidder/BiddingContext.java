@@ -156,6 +156,9 @@ public class BiddingContext {
             putSuit(suits, lhs, strain + delta);
             return;
         }
+        if (strain < 0 || strain > 4) {
+            throw new IllegalArgumentException("Invalid strain");
+        }
         if (symbol.equals("OM")) {
             suits.put("M", otherMajor(strain));
         } else if (symbol.equals("om")) {
@@ -210,6 +213,9 @@ public class BiddingContext {
         if (pattern.getSuit() != null) {
             Integer strain = getSuit(pattern.getSuit());
             if (strain != null) {
+                if (strain < 0 || strain > 4) {
+                    throw new IllegalArgumentException("Invalid strain");
+                }
                 return (short) (1 << strain);
             }
         }

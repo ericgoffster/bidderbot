@@ -118,6 +118,12 @@ public enum Bid {
      * @return a Bid
      */
     public static Bid valueOf(int level, int strain) {
+        if (level < 0 || level > 6) {
+            throw new IllegalArgumentException("invalid level " + level);
+        }
+        if (strain < 0 || strain > 4) {
+            throw new IllegalArgumentException("invalid strain " + strain);
+        }
         return ALL_BIDS[strain][level];
     }
 

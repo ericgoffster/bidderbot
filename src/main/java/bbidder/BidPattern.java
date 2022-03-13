@@ -65,6 +65,9 @@ public class BidPattern {
                 suitClass = 0;
             } else {
                 level = Integer.parseInt(upper.substring(0, 1)) - 1;
+                if (level < 0 || level > 6) {
+                    throw new IllegalArgumentException("Invalid bid: '"+str+"'");
+                }
                 suit = str.substring(1);
                 suitClass = getSuitClass(str.substring(1));
             }
@@ -72,7 +75,7 @@ public class BidPattern {
     }
 
     public static short rotateDown(short s) {
-        return (short) ((s >> 1) | ((s & 1) << 5));
+        return (short) ((s >> 1) | ((s & 1) << 4));
     }
 
     public static short getSuitClass(String str) {

@@ -92,6 +92,12 @@ public class BiddingContextTest {
     }
 
     @Test
+    public void testxm1() {
+        BiddingContext bc = new BiddingContext().withNewBid(Bid._1D, BidPattern.valueOf("1x-1"));
+        assertEquals(bc.getSuit("x").intValue(), 2);
+    }
+
+    @Test
     public void testCombo() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1C, BidPattern.valueOf("1x")).withNewBid(Bid._1H, BidPattern.valueOf("1M"));
         assertEquals(bc.getSuit("M").intValue(), 2);
