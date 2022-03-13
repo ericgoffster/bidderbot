@@ -41,14 +41,6 @@ public class BiddingSystem {
             }
             l.add(i);
         }
-        int n = 0;
-        for(var e: byPrefix.entrySet()) {
-            System.out.println(e.getKey()+":"+e.getValue().size());
-            for(BoundBidInference i: e.getValue()) {
-                System.out.println("    "+i.ctx.bids);
-            }
-        }
-        System.out.println(n);
     }
     
     public static BiddingSystem load(String urlSpec, Consumer<ParseException> reportErrors) {
@@ -153,8 +145,7 @@ public class BiddingSystem {
      * @return The right bid
      */
     public Bid getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
-        List<BoundBidInference> found = byPrefix.getOrDefault(bids, new ArrayList<>());
-        for (BoundBidInference i : found) {
+        for (BoundBidInference i : byPrefix.getOrDefault(bids, new ArrayList<>())) {
             IBoundInference newInference = i.bind(likelyHands);
             if (newInference.matches(hand)) {
                 return i.ctx.bids.getLastBid();
@@ -179,11 +170,9 @@ public class BiddingSystem {
             return ConstBoundInference.create(false);
         }
         Bid lastBid = bids.getLastBid();
-        List<BoundBidInference> found = byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>());
-        
         IBoundInference positive = ConstBoundInference.create(false);
         IBoundInference negative = ConstBoundInference.create(true);
-        for(BoundBidInference i: found) {
+        for(BoundBidInference i: byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
             IBoundInference newInference = i.bind(likelyHands);
             if (i.ctx.bids.getLastBid().equals(lastBid)) {
                 positive = OrBoundInference.create(AndBoundInference.create(newInference, negative), positive);
