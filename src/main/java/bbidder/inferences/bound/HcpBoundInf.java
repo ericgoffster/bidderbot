@@ -42,11 +42,6 @@ public class HcpBoundInf implements IBoundInference {
     }
     
     @Override
-    public IBoundInference andWith(InfSummary summary) {
-        return this;
-    }
-
-    @Override
     public boolean matches(Hand hand) {
         return r.contains(hand.numHCP());
     }

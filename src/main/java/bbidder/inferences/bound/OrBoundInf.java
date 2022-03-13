@@ -36,15 +36,6 @@ public class OrBoundInf implements IBoundInference {
     }
 
     @Override
-    public IBoundInference andWith(InfSummary summary) {
-        List<IBoundInference> l = new ArrayList<>();
-        for(IBoundInference i : inferences) {
-            l.add(i.andWith(summary));
-        }
-        return create(l);
-    }
-    
-    @Override
     public IBoundInference negate() {
         List<IBoundInference> l = new ArrayList<>();
         for(IBoundInference i : inferences) {

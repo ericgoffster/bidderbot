@@ -42,8 +42,6 @@ public class Test2Over1 {
                 System.err.println("All bids matching the scenario in order of priority:");
                 for(BoundBidInference b: result.found.possible) {
                     IBoundInference bound = b.bind(result.state.getLikelyHands());
-                    InfSummary summ = bound.getSummary();
-                    bound = bound.andWith(summ);
                     if (b == result.found.inference) {
                         System.err.println("   * "+b);
                         System.err.println("       * "+bound);

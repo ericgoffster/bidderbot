@@ -21,11 +21,6 @@ public class ConstBoundInference implements IBoundInference {
     }
     
     @Override
-    public IBoundInference andWith(InfSummary summary) {
-        return this;
-    }
-    
-    @Override
     public IBoundInference andWith(IBoundInference other) {
         return result ? other : F;
     }

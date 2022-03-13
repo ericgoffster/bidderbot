@@ -21,14 +21,11 @@ public class TotalPtsBoundInf implements IBoundInference {
     }
     
     @Override
-    public IBoundInference andWith(InfSummary summary) {
-        return create(partnerSummary, r.and(summary.tpts));
-    }
-    
-    @Override
     public IBoundInference andWith(IBoundInference other) {
         if (other instanceof TotalPtsBoundInf) {
-            return create(partnerSummary, ((TotalPtsBoundInf)other).r.and(r));
+            if (partnerSummary.equals(((TotalPtsBoundInf) other).partnerSummary)) {
+                return create(partnerSummary, ((TotalPtsBoundInf)other).r.and(r));
+            }
         }
         return null;
     }

@@ -38,11 +38,6 @@ public class ShapeBoundInf implements IBoundInference {
     }
     
     
-    @Override
-    public IBoundInference andWith(InfSummary summary) {
-        return create(shapes.and(summary.shape));
-    }
-    
     public static IBoundInference create(ShapeSet r) {
         if (r.isEmpty()) {
             return ConstBoundInference.F;

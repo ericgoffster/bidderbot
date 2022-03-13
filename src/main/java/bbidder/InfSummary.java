@@ -1,5 +1,7 @@
 package bbidder;
 
+import java.util.Objects;
+
 public class InfSummary {
     public final ShapeSet shape;
     public final Range tpts;
@@ -40,5 +42,22 @@ public class InfSummary {
 
     public double avgLenInSuit(int suit) {
         return shape.avgLenInSuit(suit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shape, tpts);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        InfSummary other = (InfSummary) obj;
+        return Objects.equals(shape, other.shape) && Objects.equals(tpts, other.tpts);
     }
 }

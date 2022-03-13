@@ -17,7 +17,6 @@ public interface IBoundInference  {
     
     public InfSummary getSummary();
     
-    IBoundInference andWith(InfSummary summary);
     IBoundInference negate();
     
     IBoundInference andWith(IBoundInference other);
