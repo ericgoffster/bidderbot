@@ -210,6 +210,9 @@ public final class BiddingContext {
                 return isValidSuit(lhs);
             }
         }
+        if (symbol.endsWith(":down")) {
+            return isValidSuit(symbol.substring(0, symbol.length() - 5));
+        }
         if (symbol.startsWith("~")) {
             return isValidSuit(symbol.substring(1));
         }

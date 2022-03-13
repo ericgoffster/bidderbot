@@ -24,60 +24,51 @@ public class BidPattern {
     private final Integer jumpLevel;
     public final boolean reverse;
     public final boolean notreverse;
+    
+    
 
-    public BidPattern(boolean isOpposition, String str) {
+    private BidPattern(boolean isOpposition, String suit, Integer level, Bid simpleBid, Integer jumpLevel, boolean reverse, boolean notreverse) {
+        super();
         this.isOpposition = isOpposition;
+        this.suit = suit;
+        this.level = level;
+        this.simpleBid = simpleBid;
+        this.jumpLevel = jumpLevel;
+        this.reverse = reverse;
+        this.notreverse = notreverse;
+    }
+    
+    public BidPattern withIsOpposition(boolean isOpposition) {
+        return new BidPattern(isOpposition, suit, level, simpleBid, jumpLevel, reverse, notreverse);
+    }
+
+
+    public static BidPattern create(String str) {
         String upper = str.toUpperCase();
         if (upper.startsWith("NJ")) {
-            simpleBid = null;
-            jumpLevel = 0;
-            level = null;
-            suit = str.substring(2);
-            reverse = false;
-            notreverse = false;
+            return new BidPattern(false, str.substring(2), null, null, 0, false, false);
         } else if (upper.startsWith("DJ")) {
-            jumpLevel = 2;
-            level = null;
-            suit = str.substring(2);
-            simpleBid = null;
-            reverse = false;
-            notreverse = false;
+            return new BidPattern(false, str.substring(2), null, null, 2, false, false);
         } else if (upper.startsWith("J")) {
-            jumpLevel = 1;
-            level = null;
-            suit = str.substring(1);
-            simpleBid = null;
-            reverse = false;
-            notreverse = false;
+             return new BidPattern(false, str.substring(1), null, null, 1, false, false);
         } else if (upper.startsWith("RV")) {
-            jumpLevel = 0;
-            level = null;
-            suit = str.substring(2);
-            simpleBid = null;
-            reverse = true;
-            notreverse = false;
+            return new BidPattern(false, str.substring(2), null, null, 0, true, false);
         } else if (upper.startsWith("NR")) {
-            jumpLevel = 0;
-            level = null;
-            suit = str.substring(2);
-            simpleBid = null;
-            reverse = false;
-            notreverse = true;
+            return new BidPattern(false, str.substring(2), null, null, 0, false, true);
         } else {
-            jumpLevel = null;
-            simpleBid = Bid.fromStr(str);
+            Bid simpleBid = Bid.fromStr(str);
             if (simpleBid != null && !simpleBid.isSuitBid()) {
-                level = null;
-                suit = null;
+                return new BidPattern(false, null, null, simpleBid, null, false, false);
             } else {
-                level = Integer.parseInt(upper.substring(0, 1)) - 1;
+                final Integer level = Integer.parseInt(upper.substring(0, 1)) - 1;
                 if (level < 0 || level > 6) {
                     throw new IllegalArgumentException("Invalid bid: '" + str + "'");
                 }
-                suit = str.substring(1);
+                if (!BiddingContext.isValidSuit(str.substring(1))) {
+                    throw new IllegalArgumentException("Invalid suit: " + str.substring(1));
+                }
+                return new BidPattern(false, str.substring(1), level, null, null, false, false);
             }
-            reverse = false;
-            notreverse = false;
         }
     }
 
@@ -158,7 +149,7 @@ public class BidPattern {
         if (isOpposition) {
             str = str.substring(1, str.length() - 1).trim();
         }
-        return new BidPattern(isOpposition, str);
+        return BidPattern.create(str).withIsOpposition(isOpposition);
     }
 
     @Override
@@ -174,6 +165,12 @@ public class BidPattern {
         if (simpleBid != null) {
             return simpleBid.toString();
         }
+        if (reverse) {
+            return "RV" + suit;
+        }
+        if (notreverse) {
+            return "NR" + suit;
+        }
         if (jumpLevel != null) {
             switch(jumpLevel.intValue()) {
             case 0: return "NJ" + suit;
@@ -182,13 +179,7 @@ public class BidPattern {
             default: throw new IllegalStateException();
             }
         }
-        if (reverse) {
-            return "RV" + suit;
-        }
-        if (notreverse) {
-            return "NR" + suit;
-        }
-        return level + suit;
+        return (level + 1) + suit;
     }
 
     @Override
