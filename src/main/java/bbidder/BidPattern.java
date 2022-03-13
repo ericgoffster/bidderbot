@@ -171,19 +171,29 @@ public class BidPattern {
         }
         return (level + 1) + suit;
     }
+    
+    public static BidPattern createJump(String suit, int jumpLevel) {
+        return new BidPattern(false, suit, null, null, jumpLevel, false, false);
+    }
+    public static BidPattern createReverse(String suit) {
+        return new BidPattern(false, suit, null, null, 0, true, false);
+    }
+    public static BidPattern createNonReverse(String suit) {
+        return new BidPattern(false, suit, null, null, 0, false, true);
+    }
 
     private static BidPattern create(String str) {
         String upper = str.toUpperCase();
         if (upper.startsWith("NJ")) {
-            return new BidPattern(false, str.substring(2), null, null, 0, false, false);
+            return createJump(str.substring(2), 0);
         } else if (upper.startsWith("DJ")) {
-            return new BidPattern(false, str.substring(2), null, null, 2, false, false);
+            return createJump(str.substring(2), 2);
         } else if (upper.startsWith("J")) {
-             return new BidPattern(false, str.substring(1), null, null, 1, false, false);
+            return createJump(str.substring(1), 1);
         } else if (upper.startsWith("RV")) {
-            return new BidPattern(false, str.substring(2), null, null, 0, true, false);
+            return createReverse(str.substring(2));
         } else if (upper.startsWith("NR")) {
-            return new BidPattern(false, str.substring(2), null, null, 0, false, true);
+            return createNonReverse(str.substring(2));
         } else {
             Bid simpleBid = Bid.fromStr(str);
             if (simpleBid != null) {
