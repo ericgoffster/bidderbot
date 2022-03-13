@@ -16,6 +16,15 @@ test Axxxx xxx Qxx xx:1N P 2♥
 1N 2♦ => 5+ ♥
 test xxx Axxxx Qxx xx:1N P 2♦
 
+1N 3♦ => gf+, 1- ♦, 4+ ♣, 4 ♥, 4 ♠
+test Axxx Axxx x Axxx:1N P 3♦
+
+1N 3♥ => gf+, 1- ♥, 4+ ♣, 4+ ♦, 4 ♠
+test Axxx x Axxx Axxx:1N P 3♥
+
+1N 3♠ => gf+, 1- ♠, 4+ ♣, 4+ ♦, 4 ♥
+test x Axxx Axxx Axxx:1N P 3♠
+
 1N 2♣ => inv+, 4 ♥
 test Axx AJxx xxxx xx:1N P 2♣
 
