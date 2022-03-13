@@ -18,8 +18,7 @@ public class TotalPtsBoundInfTest {
         assertEquals(TotalPtsBoundInf.create(InfSummary.ALL, Range.none(40)), ConstBoundInference.F);
         assertTrue(TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40)).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
         assertFalse(TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40)).matches(Hand.valueOf("AKxx Qxx xxx xxx")));
-        assertTrue(TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40)).matches(Hand.valueOf("AKxx KJx xxx xxx")))
-        ;
+        assertTrue(TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40)).matches(Hand.valueOf("AKxx KJx xxx xxx")));
         InfSummary summary = TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40)).getSummary();
         assertEquals(summary, new InfSummary(ShapeSet.ALL, Range.between(10, 11, 40)));
     }
