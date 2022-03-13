@@ -93,10 +93,16 @@ public class BiddingContext {
         if (strain != null) {
             return strain;
         }
-        if (symbol.equals("OM")) {
+        if (symbol.equals("M") && suits.containsKey("OM")) {
+            return otherMajor(suits.get("OM"));
+        }
+        if (symbol.equals("m") && suits.containsKey("om")) {
+            return otherMinor(suits.get("om"));
+        }
+        if (symbol.equals("OM") && suits.containsKey("M")) {
             return otherMajor(suits.get("M"));
         }
-        if (symbol.equals("om")) {
+        if (symbol.equals("om") && suits.containsKey("m")) {
             return otherMinor(suits.get("m"));
         }
         return suits.get(symbol);
