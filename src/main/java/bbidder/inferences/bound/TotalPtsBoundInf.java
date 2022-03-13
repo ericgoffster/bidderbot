@@ -17,7 +17,7 @@ public class TotalPtsBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40), r);
+        return new InfSummary(ShapeSet.ALL, r);
     }
     
     @Override
