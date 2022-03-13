@@ -1,9 +1,13 @@
 package bbidder.inferences;
 
-import bbidder.Hand;
+import java.util.ArrayList;
+import java.util.List;
+
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.Shape;
+import bbidder.ShapeSet;
 
 /**
  * Represents the inference of a "balanced" hand
@@ -12,7 +16,7 @@ import bbidder.InferenceContext;
  *
  */
 public class Balanced implements Inference {
-    private static boolean isBalanced(Hand hand) {
+    private static boolean isBalanced(Shape hand) {
         int ndoub = 0;
         for (int s = 0; s < 4; s++) {
             int len = hand.numInSuit(s);
@@ -32,7 +36,13 @@ public class Balanced implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        return new BoundInf(true);
+        List<Shape> shapes = new ArrayList<>();
+        for(Shape shape: Shape.values()) {
+            if (isBalanced(shape)) {
+                shapes.add(shape);
+            }
+        }
+        return ShapeBoundInference.create(new ShapeSet(shapes));
     }
 
     public static Balanced valueOf(String str) {
@@ -65,70 +75,5 @@ public class Balanced implements Inference {
         if (getClass() != obj.getClass())
             return false;
         return true;
-    }
-
-    private static final class BoundInf implements IBoundInference {
-        final boolean bal;
-
-        public BoundInf(boolean bal) {
-            super();
-            this.bal = bal;
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return isBalanced(hand) == bal;
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new BoundInf(!bal);
-        }
-
-        @Override
-        public String toString() {
-            return bal ? "balanced" : "unbalanced";
-        }
-
-        @Override
-        public IBoundInference orReduce(IBoundInference i) {
-            if (i instanceof BoundInf) {
-                if (bal == ((BoundInf) i).bal) {
-                    return this;
-                }
-                if (bal != ((BoundInf) i).bal) {
-                    return ConstBoundInference.T;
-                }
-                return this;
-            }
-            return null;
-        }
-
-        @Override
-        public IBoundInference andReduce(IBoundInference i) {
-            if (i instanceof BoundInf) {
-                if (bal != ((BoundInf) i).bal) {
-                    return ConstBoundInference.F;
-                }
-                return this;
-            }
-            if (i instanceof SuitRange.BoundInf) {
-                if (((SuitRange.BoundInf) i).r.highest() <= 1 || ((SuitRange.BoundInf) i).r.highest() >= 6) {
-                    if (bal) {
-                        return ConstBoundInference.F;
-                    } else {
-                        return i;
-                    }
-                }
-            }
-            if (i instanceof OpeningPreempt.BoundInf) {
-                if (bal) {
-                    return ConstBoundInference.F;
-                } else {
-                    return i;
-                }
-            }
-            return null;
-        }
     }
 }

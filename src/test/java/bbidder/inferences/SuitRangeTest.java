@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
-import bbidder.IBoundInference;
 import bbidder.InferenceContext;
 
 public class SuitRangeTest {
@@ -18,23 +17,7 @@ public class SuitRangeTest {
 
     @Test
     public void testToString() {
-        InferenceContext ctx = new InferenceContext();
         assertEquals("8-10 s", new SuitRange("s", 8, 10).toString());
-        assertEquals("8-10 S", new SuitRange("s", 8, 10).bind(ctx).toString());
-    }
-
-    @Test
-    public void testReduce() {
-        InferenceContext ctx = new InferenceContext();
-        IBoundInference b1 = new SuitRange("s", 2, 4).bind(ctx);
-        IBoundInference b2 = new SuitRange("s", 5, 7).bind(ctx);
-        IBoundInference b3 = new SuitRange("s", 3, 8).bind(ctx);
-        assertEquals("2-4 S", b1.orReduce(b1).toString());
-        assertEquals("2-7 S", b1.orReduce(b2).toString());
-        assertEquals("2-8 S", b1.orReduce(b3).toString());
-        assertEquals("2-4 S", b1.andReduce(b1).toString());
-        assertEquals("false", b1.andReduce(b2).toString());
-        assertEquals("3-4 S", b1.andReduce(b3).toString());
     }
 
     @Test
