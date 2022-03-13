@@ -14,7 +14,7 @@ public class Test2Over1 {
     @Test
     public void test() throws Throwable {
         AtomicBoolean hadError = new AtomicBoolean(false);
-        BiddingSystem bs = BiddingSystem.load("classpath:bbo21/2over1.bidding", ex -> {
+        BiddingSystem bs = BiddingSystem.load("classpath:bbo21/index.bidding", ex -> {
             hadError.set(true);
             ex.printStackTrace();
         });
