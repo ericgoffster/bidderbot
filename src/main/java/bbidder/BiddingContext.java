@@ -54,8 +54,10 @@ public class BiddingContext {
         TreeSet<Bid> result = new TreeSet<>();
         for (int strain : BitUtil.iterate(getStrains(pattern))) {
             Bid bid = getBid(pattern, strain);
-            if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
-                result.add(bid);
+            if (strain == bid.strain) {
+                if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
+                    result.add(bid);
+                }
             }
         }
         if (!pattern.upTheLine) {
@@ -90,24 +92,24 @@ public class BiddingContext {
         if (pattern.getSuit() == null) {
             return 0x1f;
         }
+        if (pattern.isSuitSet()) {
+            String[] parts = pattern.getSuit().split("/");
+            short result = 0;
+            for(String p: parts) {
+                Integer strain = getSuit(p);
+                if (strain == null) {
+                    throw new IllegalArgumentException("invalud suit in this context");
+                }
+                result |= 1 << strain;
+            }
+            return result;
+        }
         switch (pattern.getSuit()) {
         case "M":
             return MAJORS;
         case "m":
             return MINORS;
         default:
-            String[] parts = pattern.getSuit().split("/");
-            if (parts.length > 1) {
-                short result = 0;
-                for(String p: parts) {
-                    Integer strain = getSuit(p);
-                    if (strain == null) {
-                        throw new IllegalArgumentException("invalud suit in this context");
-                    }
-                    result |= 1 << strain;
-                }
-                return result;
-            }
             return ALL_SUITS;
         }
     }

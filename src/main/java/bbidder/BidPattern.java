@@ -61,6 +61,10 @@ public class BidPattern {
             }
         }
     }
+    
+    public boolean isSuitSet() {
+        return suit != null && suit.contains("/");
+    }
 
     public int getNumberOfSteps() {
         return step;

@@ -105,7 +105,7 @@ public class BidPatternList {
         for (Bid bid : ctx.getBids(pattern)) {
             if (bid.isSuitBid()) {
                 Map<String, Integer> newSuits = new HashMap<String, Integer>(ctx.suits);
-                {
+                if (pattern.getSuit() != null && !pattern.isSuitSet()) {
                     String symbol = pattern.getSuit();
                     Integer strain = ctx.getSuit(symbol);
                     if (strain == null) {

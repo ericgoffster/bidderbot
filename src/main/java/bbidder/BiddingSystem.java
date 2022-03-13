@@ -106,7 +106,7 @@ public class BiddingSystem {
                     }
                 } else if (!ln.equals("")) {
                     try {
-                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences(where, new LikelyHands()));
+                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences(where + ":" + lineno, new LikelyHands()));
                     } catch (Exception e) {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }
@@ -145,7 +145,8 @@ public class BiddingSystem {
      * @return The right bid
      */
     public BidSource getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
-        for (BoundBidInference i : byPrefix.getOrDefault(bids, new ArrayList<>())) {
+        List<BoundBidInference> possible = byPrefix.getOrDefault(bids, new ArrayList<>());
+        for (BoundBidInference i : possible) {
             IBoundInference newInference = i.bind(likelyHands);
             if (newInference.matches(hand)) {
                 return new BidSource(i.where, i.ctx.bids.getLastBid());

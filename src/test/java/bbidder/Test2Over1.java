@@ -20,7 +20,7 @@ public class Test2Over1 {
         Random r = new Random();
         for (BiddingTest test : bs.tests) {
             TestResult result = test.getResult(r, bs);
-            collector.checkThat(result.where + ":" + result.hand + ":" + result.bids + " conflicted with " + result.found.bid, result.found.bid, equalTo(result.expected));
+            collector.checkThat(result.where + ":" + result.hand + ":" + result.bids + " conflicted with " + result.found, result.found.bid, equalTo(result.expected));
             if (!result.found.bid.equals(result.expected)) {
                 test.getResult(r, bs);
             }
