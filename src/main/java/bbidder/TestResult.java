@@ -8,14 +8,16 @@ public class TestResult {
     public final BidList bids;
     public final Bid expected;
     public final BidSource found;
+    public final BiddingState state;
 
-    public TestResult(String where, Hand hand, BidList bids, Bid expected, BidSource found) {
+    public TestResult(String where, Hand hand, BidList bids, Bid expected, BidSource found, BiddingState state) {
         super();
         this.where = where;
         this.hand = hand;
         this.bids = bids;
         this.expected = expected;
         this.found = found;
+        this.state = state;
     }
 
     @Override

@@ -40,6 +40,7 @@ public class Test2Over1 {
                 System.err.println("All bids matching the scenario");
                 for(var b: result.found.possible) {
                     System.err.println("   "+b);
+                    System.err.println("       "+b.bind(result.state.getLikelyHands()));
                 }
                 test.getResult(r, bs);
             }

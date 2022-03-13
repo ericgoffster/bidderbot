@@ -81,7 +81,7 @@ public class BiddingState {
         return new BiddingState(r, they, we, newBidList, partner, rho, newMe, lho);
     }
 
-    private LikelyHands getLikelyHands() {
+    public LikelyHands getLikelyHands() {
         return new LikelyHands(lho.likelyHand, partner.likelyHand, rho.likelyHand, me.likelyHand);
     }
 

@@ -27,7 +27,7 @@ public class BiddingTest {
         }
         Bid expected = bids.getLastBid();
         BidSource found = state.getBid(hand);
-        return new TestResult(where, hand, exceptLast, expected, found);
+        return new TestResult(where, hand, exceptLast, expected, found, state);
     }
 
     @Override
