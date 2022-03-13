@@ -45,7 +45,7 @@ public class Test2Over1 {
                 }
                 System.err.println();
                 System.err.println("All bids matching the scenario in order of priority:");
-                for (BoundBidInference b : result.found.possible) {
+                for (BoundBidInference b : result.found.getPossible()) {
                     if (b == result.found.inference) {
                         System.err.println("   * " + b);
                     } else {

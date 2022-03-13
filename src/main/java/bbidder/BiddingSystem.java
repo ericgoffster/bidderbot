@@ -44,6 +44,13 @@ public class BiddingSystem {
         }
     }
 
+    /**
+     * Loads a bidding system from a url.
+     * 
+     * @param urlSpec The url specification
+     * @param reportErrors A consumer or parse exceptions
+     * @return The bidding system
+     */
     public static BiddingSystem load(String urlSpec, Consumer<ParseException> reportErrors) {
         List<BoundBidInference> inferences = new ArrayList<>();
         List<BiddingTest> tests = new ArrayList<>();
@@ -52,8 +59,84 @@ public class BiddingSystem {
         return new BiddingSystem(inferences, tests);
     }
     
+    /**
+     * @return The tests for this bidding system
+     */
     public List<BiddingTest> getTests() {
         return Collections.unmodifiableList(tests);
+    }
+
+    /**
+     * Dump the bidding system
+     * 
+     * @param os
+     *            Where to dump it.
+     * @throws IOException
+     *             an I/O error occurred.
+     */
+    public void dump(OutputStream os) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
+            for (BoundBidInference bi : inferences) {
+                bw.write(bi.toString());
+            }
+        }
+    }
+
+    /**
+     * Retrieve the bid for a hand starting from the list of bids and likely hands for everyone.
+     * 
+     * @param bids
+     *            The list of bids
+     * @param players
+     *            Likely hands fro everyone
+     * @param hand
+     *            The hand to evaluate
+     * @return The right bid
+     */
+    public BidSource getBid(BidList bids, Players players, Hand hand) {
+        List<BoundBidInference> possible = byPrefix.getOrDefault(bids, new ArrayList<>());
+        for (BoundBidInference i : possible) {
+            for (MappedInference newInference : i.bind(players)) {
+                if (newInference.inf.matches(hand)) {
+                    return new BidSource(i, i.ctx.getBids().getLastBid(), possible);
+                }
+            }
+        }
+
+        // For now always pass, this will get smarter.
+        return new BidSource(null, Bid.P, possible);
+    }
+
+    /**
+     * Retrieves the inference from a list of bids according to the system.
+     * 
+     * @param bids
+     *            The list of bids.
+     * @param players
+     *            The like hands for everyone so far.
+     * @return The inference The inference from the bid.
+     */
+    public IBoundInference getInference(BidList bids, Players players) {
+        if (bids.getBids().size() == 0) {
+            return ConstBoundInference.create(false);
+        }
+        Bid lastBid = bids.getLastBid();
+        List<IBoundInference> positive = new ArrayList<>();
+        List<IBoundInference> negative = new ArrayList<>();
+        for (BoundBidInference i : byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
+            for (MappedInference newInference : i.bind(players)) {
+                if (i.ctx.getBids().getLastBid().equals(lastBid)) {
+                    positive.add(AndBoundInf.create(newInference.inf, OrBoundInf.create(negative).negate()));
+                }
+                negative.add(newInference.inf);
+            }
+        }
+    
+        // Pass means... Nothing else works, this will get smarter.
+        if (lastBid == Bid.P) {
+            positive.add(OrBoundInf.create(negative).negate());
+        }
+        return OrBoundInf.create(positive);
     }
 
     /**
@@ -138,53 +221,16 @@ public class BiddingSystem {
         return urlSpec;
     }
 
-    /**
-     * Dump the bidding system
-     * 
-     * @param os
-     *            Where to dump it.
-     * @throws IOException
-     *             an I/O error occurred.
-     */
-    public void dump(OutputStream os) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
-            for (BoundBidInference bi : inferences) {
-                bw.write(bi.toString());
-            }
-        }
-    }
-
-    /**
-     * Retrieve the bid for a hand starting from the list of bids and likely hands for everyone.
-     * 
-     * @param bids
-     *            The list of bids
-     * @param players
-     *            Likely hands fro everyone
-     * @param hand
-     *            The hand to evaluate
-     * @return The right bid
-     */
-    public BidSource getBid(BidList bids, Players players, Hand hand) {
-        List<BoundBidInference> possible = byPrefix.getOrDefault(bids, new ArrayList<>());
-        for (BoundBidInference i : possible) {
-            for (MappedInference newInference : i.bind(players)) {
-                if (newInference.inf.matches(hand)) {
-                    return new BidSource(i, i.ctx.getBids().getLastBid(), possible);
-                }
-            }
-        }
-
-        // For now always pass, this will get smarter.
-        return new BidSource(null, Bid.P, possible);
-    }
-
     public static class BidSource {
         public final Bid bid;
-        public final List<BoundBidInference> possible;
+        private final List<BoundBidInference> possible;
         public final BoundBidInference inference;
+        
+        public List<BoundBidInference> getPossible() {
+            return Collections.unmodifiableList(possible);
+        }
 
-        public BidSource(BoundBidInference newInference, Bid bid, List<BoundBidInference> possible) {
+        private BidSource(BoundBidInference newInference, Bid bid, List<BoundBidInference> possible) {
             super();
             this.bid = bid;
             this.possible = possible;
@@ -195,37 +241,5 @@ public class BiddingSystem {
         public String toString() {
             return inference.toString();
         }
-    }
-
-    /**
-     * Retrieves the inference from a list of bids according to the system.
-     * 
-     * @param bids
-     *            The list of bids.
-     * @param players
-     *            The like hands for everyone so far.
-     * @return The inference The inference from the bid.
-     */
-    public IBoundInference getInference(BidList bids, Players players) {
-        if (bids.getBids().size() == 0) {
-            return ConstBoundInference.create(false);
-        }
-        Bid lastBid = bids.getLastBid();
-        List<IBoundInference> positive = new ArrayList<>();
-        List<IBoundInference> negative = new ArrayList<>();
-        for (BoundBidInference i : byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
-            for (MappedInference newInference : i.bind(players)) {
-                if (i.ctx.getBids().getLastBid().equals(lastBid)) {
-                    positive.add(AndBoundInf.create(newInference.inf, OrBoundInf.create(negative).negate()));
-                }
-                negative.add(newInference.inf);
-            }
-        }
-
-        // Pass means... Nothing else works, this will get smarter.
-        if (lastBid == Bid.P) {
-            positive.add(OrBoundInf.create(negative).negate());
-        }
-        return OrBoundInf.create(positive);
     }
 }
