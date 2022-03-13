@@ -158,12 +158,16 @@ public class BiddingSystem {
      * @return The inference The inference from the bid.
      */
     public IBoundInference getInference(BidList bids, LikelyHands likelyHands) {
+        if (bids.bids.size() == 0) {
+            return ConstBoundInference.create(false);
+        }
+        Bid lastBid = bids.getLastBid();
         IBoundInference positive = ConstBoundInference.create(false);
         IBoundInference negative = ConstBoundInference.create(true);
         for (BoundBidInference i : inferences) {
             if (i.ctx.bids.bids.size() == bids.bids.size() && i.ctx.bids.exceptLast().equals(bids.exceptLast())) {
                 IBoundInference newInference = i.bind(likelyHands);
-                if (i.ctx.bids.getLastBid().equals(bids.getLastBid())) {
+                if (i.ctx.bids.getLastBid().equals(lastBid)) {
                     positive = OrBoundInference.create(AndBoundInference.create(newInference, negative), positive);
                 }
                 negative = AndBoundInference.create(negative, newInference.negate());
@@ -171,11 +175,8 @@ public class BiddingSystem {
         }
 
         // Pass means... Nothing else works, this will get smarter.
-        if (bids.bids.size() > 0) {
-            Bid lastBid = bids.getLastBid();
-            if (lastBid == Bid.P) {
-                positive = OrBoundInference.create(negative, positive);
-            }
+        if (lastBid == Bid.P) {
+            positive = OrBoundInference.create(negative, positive);
         }
         return positive;
     }

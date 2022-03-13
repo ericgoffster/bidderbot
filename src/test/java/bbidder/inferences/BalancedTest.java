@@ -21,6 +21,20 @@ public class BalancedTest {
         InferenceContext ctx = new InferenceContext();
         assertEquals("balanced", new Balanced().toString());
         assertEquals("balanced", new Balanced().bind(ctx).toString());
+        assertEquals("unbalanced", new Balanced().bind(ctx).negate().toString());
+    }
+    
+    @Test
+    public void testReduce() {
+        InferenceContext ctx = new InferenceContext();
+        IBoundInference b1 = new Balanced().bind(ctx);
+        IBoundInference b2 = new Balanced().bind(ctx).negate();
+        assertEquals(b1.orReduce(b1), b1);
+        assertEquals(b1.andReduce(b1), b1);
+        assertEquals(b1.andReduce(b2), ConstBoundInference.F);
+        assertEquals(b2.andReduce(b1), ConstBoundInference.F);
+        assertEquals(b1.orReduce(b2), ConstBoundInference.T);
+        assertEquals(b2.orReduce(b1), ConstBoundInference.T);
     }
 
     @Test

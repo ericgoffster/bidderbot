@@ -88,7 +88,7 @@ public class Balanced implements Inference {
 
         @Override
         public String toString() {
-            return "balanced";
+            return bal ? "balanced" : "unbalanced";
         }
 
         @Override
