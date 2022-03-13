@@ -1,41 +1,48 @@
-# 2H rebid
-1N 2♣ 2♥ => 4+ ♥
+# 2M rebid
+1N 2♣ 2M => 4+ M
 test Axx AQxx KJxx Qx: 1N P 2♣ P 2♥
 test Axxx AQxx KJx Qx: 1N P 2♣ P 2♥
+test Axxx AQx KJxx Qx: 1N P 2♣ P 2♠
 
-1N 2♣ 2♥ 4m => gf+, 4+ H, 1- m
-test AJx AQxx AQxxx x: 1N P 2♣ P 2♥ P 4♣
-
-1N 2♣ 2♥ 3♥ => inv, 4 ♥
+1N 2♣ 2M 3M => inv, 4 M
 test AJx Axxx xxx xxx: 1N P 2♣ P 2♥ P 3♥
 
-1N 2♣ 2♥ 4♥ => gf, 4 ♥
+1N 2♣ 2M 4M => gf, 4 M
 test AJx Axxx Axx xxx: 1N P 2♣ P 2♥ P 4♥
+
+
+1N 2♣ 2M 4m => gf+, 4+ M, 1- m
+test AJx AQxx AQxxx x: 1N P 2♣ P 2♥ P 4♣
+
+1N 2♣ 2♠ 4♥ => gf+, 4+ ♠, 1- ♥
+test AJxx x AQx AQxxx: 1N P 2♣ P 2♠ P 4♥
 
 1N 2♣ 2♥ 3♠ => slaminv+, 4 ♥
 test AJx Axxx Axx Axx: 1N P 2♣ P 2♥ P 3♠
 
+1N 2♣ 2♠ 3♥ => slaminv+, 4 ♠
+test AJxx Axx Axx Axx: 1N P 2♣ P 2♠ P 3♥
+
+
 1N 2♣ 2♥ 2♠ => inv, 4 S
 test AJxx Axx xxx xxx: 1N P 2♣ P 2♥ P 2♠
 
-1N 2♣ 2♥ 2N => inv
+1N 2♣ 2M 2N => inv
 test AJx Axx xxxx xxx: 1N P 2♣ P 2♥ P 2N
 
-1N 2♣ 2♥ 3N => gf
+1N 2♣ 2M 3N => gf
 test AJxx AQx xxx xxx: 1N P 2♣ P 2♥ P 3N
 
-1N 2♣ 2♥ 3m => gf+, 5+ m
+1N 2♣ 2M 3m => gf+, 5+ m
 test AJx AQx AQxxx xx: 1N P 2♣ P 2♥ P 3♦
 
-1N 2♣ 2♥ 4N => slaminv
+1N 2♣ 2M 4N => slaminv
 test AJxx AQx AQx xxx: 1N P 2♣ P 2♥ P 4N
 
+
+
+
 # 2S rebid
-1N 2♣ 2♠ => 4+ ♠
-test Axxx AQx KJxx Qx: 1N P 2♣ P 2♠
-
-
-
 
 
 # 2D rebid
