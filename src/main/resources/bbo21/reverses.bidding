@@ -34,7 +34,10 @@ test KQJx xx xxxx xxx:1♣ 1♠ 2♥ 2N
 test - AQxxx KQ AKxxxx:1♣ 1♠ 2♥ 2N 3♥
 
 1x 1y RVz 2N 3x => 6+ x
-test - AQxx  AKxxxx KQx:1♦ 1♠ 2♥ 2N 3♦
+test - AQxx AKxxxx KQx:1♦ 1♠ 2♥ 2N 3♦
+
+1x 1y RVz 2N 3N => gf, stoppers unbid
+test x AKJx AKxxx KQx:1♦ 1♠ 2♥ 2N 3N
 
 1x 1y RVz 2N 3♣ =>
-test x AQxx KQx AKxxx:1♣ 1♠ 2♥ 2N 3♣
+test x AQxx KQx AQxxx:1♣ 1♠ 2♥ 2N 3♣
