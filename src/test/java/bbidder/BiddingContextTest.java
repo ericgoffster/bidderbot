@@ -78,4 +78,22 @@ public class BiddingContextTest {
         assertEquals(bc.getSuit("M").intValue(), 2);
         assertEquals(bc.getSuit("OM").intValue(), 3);
     }
+    @Test
+    public void testx() {
+        BiddingContext bc = new BiddingContext();
+        bc = bc.withNewBid(Bid._1C, BidPattern.valueOf("1x"));
+        assertNull(bc.getSuit("M"));
+        assertNull(bc.getSuit("OM"));
+        assertNull(bc.getSuit("m"));
+        assertNull(bc.getSuit("om"));
+        assertEquals(bc.getSuit("x").intValue(), 0);
+    }
+    @Test
+    public void testCombo() {
+        BiddingContext bc = new BiddingContext();
+        bc = bc.withNewBid(Bid._1C, BidPattern.valueOf("1x"));
+        bc = bc.withNewBid(Bid._1H, BidPattern.valueOf("1M"));
+        assertEquals(bc.getSuit("M").intValue(), 2);
+        assertEquals(bc.getSuit("x").intValue(), 0);
+    }
 }
