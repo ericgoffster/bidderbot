@@ -63,6 +63,9 @@ public class AndBoundInference implements IBoundInference {
                 while (j < l.size()) {
                     IBoundInference rhs = l.get(j);
                     IBoundInference comb = lhs.andReduce(rhs);
+                    if (comb == null) {
+                        comb = rhs.andReduce(lhs);
+                    }
                     if (comb != null) {
                         l.remove(j);
                         if (comb == ConstBoundInference.F) {

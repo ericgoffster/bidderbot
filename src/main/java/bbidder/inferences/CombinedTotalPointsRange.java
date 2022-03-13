@@ -3,7 +3,6 @@ package bbidder.inferences;
 import java.util.Arrays;
 import java.util.Objects;
 
-import bbidder.BitUtil;
 import bbidder.Constants;
 import bbidder.Hand;
 import bbidder.IBoundInference;
@@ -83,7 +82,7 @@ public class CombinedTotalPointsRange implements Inference {
         if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
             CombinedTotalPointsRange r1 = makeRange(parts[0]);
             CombinedTotalPointsRange r2 = makeRange(parts[1]);
-            return new CombinedTotalPointsRange(BitUtil.leastBit(r1.rng.bits), BitUtil.highestBit(r2.rng.bits));
+            return new CombinedTotalPointsRange(r1.rng.lowest(), r2.rng.highest());
         }
         switch (str) {
         case "min":

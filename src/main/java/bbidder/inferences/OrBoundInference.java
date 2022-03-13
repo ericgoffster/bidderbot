@@ -63,6 +63,9 @@ public class OrBoundInference implements IBoundInference {
                 while (j < l.size()) {
                     IBoundInference rhs = l.get(j);
                     IBoundInference comb = lhs.orReduce(rhs);
+                    if (comb == null) {
+                        comb = rhs.orReduce(lhs);
+                    }
                     if (comb != null) {
                         l.remove(j);
                         if (comb == ConstBoundInference.T) {

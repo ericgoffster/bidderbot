@@ -116,6 +116,22 @@ public class Balanced implements Inference {
                 }
                 return this;
             }
+            if (i instanceof SuitRange.BoundInf) {
+                if (((SuitRange.BoundInf) i).r.highest() <= 1 || ((SuitRange.BoundInf) i).r.highest() >= 6) {
+                    if (bal) {
+                        return ConstBoundInference.F;
+                    } else {
+                        return i;
+                    }
+                }
+            }
+            if (i instanceof OpeningPreempt.BoundInf) {
+                if (bal) {
+                    return ConstBoundInference.F;
+                } else {
+                    return i;
+                }
+            }
             return null;
         }
     }

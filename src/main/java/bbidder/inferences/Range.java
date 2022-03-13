@@ -15,6 +15,14 @@ public class Range {
         this.bits = bits;
         this.max = max;
     }
+    
+    public int highest() {
+        return BitUtil.highestBit(bits);
+    }
+
+    public int lowest() {
+        return BitUtil.leastBit(bits);
+    }
 
     public static Range atLeast(Integer n, int max) {
         if (n == null) {
