@@ -12,7 +12,7 @@ import static bbidder.Constants.NOTRUMP;
 import static bbidder.Constants.QUEEN;
 import static bbidder.Constants.TEN;
 
-import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Represents a hand in bridge.
@@ -21,31 +21,26 @@ import java.util.Arrays;
  *
  */
 public class Hand {
-    private final short[] suits;
+    private final long cards;
 
-    private Hand(short[] suits) {
+    private Hand(long cards) {
         super();
-        this.suits = suits;
+        this.cards = cards;
     }
-
+    
     public Hand() {
-        this(new short[] { 0, 0, 0, 0 });
+        this(0);
     }
-
+    
     public static Hand allCards() {
-        return new Hand(new short[] { 0x1fff, 0x1fff, 0x1fff, 0x1fff });
+        return new Hand((1L << 52) - 1);
     }
-
+    
     public Hand withCardAdded(int suit, int rank) {
-        short[] newSuits = Arrays.copyOf(suits, 4);
-        newSuits[suit] |= (1 << rank);
-        return new Hand(newSuits);
+        return new Hand(cards | (1L << (13 * suit + rank)));
     }
-
-    public Hand withCardRemoved(int suit, int rank) {
-        short[] newSuits = Arrays.copyOf(suits, 4);
-        newSuits[suit] &= ~(1 << rank);
-        return new Hand(newSuits);
+    public Hand withCardEemoved(int suit, int rank) {
+        return new Hand(cards & ~(1L << (13 * suit + rank)));
     }
 
     static char toRank(int rank) {
@@ -116,9 +111,9 @@ public class Hand {
             return 0;
         }
     }
-
+    
     public short getAllInSuit(int suit) {
-        return suits[suit];
+        return (short)((cards >> (13 * suit)) & 0x1fff);
     }
 
     public static String printSuit(short suit) {
@@ -132,11 +127,11 @@ public class Hand {
         sb.reverse();
         return sb.toString();
     }
-
+    
     private static class ParsedHand {
         Hand current = new Hand();
-        Hand avail;
-
+        Hand avail; 
+        
         public ParsedHand(Hand avail) {
             super();
             this.avail = avail;
@@ -152,18 +147,18 @@ public class Hand {
                     numX++;
                 } else {
                     int rank = getRank(suitStr.charAt(i), avail.getAllInSuit(suitIndex));
-                    avail = avail.withCardRemoved(suitIndex, rank);
+                    avail = avail.withCardEemoved(suitIndex, rank);
                     current = current.withCardAdded(suitIndex, rank);
                 }
             }
             while (numX > 0) {
                 int rank = getRank('X', avail.getAllInSuit(suitIndex));
-                avail = avail.withCardRemoved(suitIndex, rank);
+                avail = avail.withCardEemoved(suitIndex, rank);
                 current = current.withCardAdded(suitIndex, rank);
                 numX--;
             }
         }
-
+        
         public void parseHand(String str) {
             String[] suit_parts = SplitUtil.split(str, "\\s+", 4);
             if (suit_parts.length != 4) {
@@ -271,10 +266,7 @@ public class Hand {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + Arrays.hashCode(suits);
-        return result;
+        return Objects.hash(cards);
     }
 
     @Override
@@ -286,6 +278,6 @@ public class Hand {
         if (getClass() != obj.getClass())
             return false;
         Hand other = (Hand) obj;
-        return Arrays.equals(suits, other.suits);
+        return cards == other.cards;
     }
 }
