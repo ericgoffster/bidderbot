@@ -27,7 +27,7 @@ test AQxx xxx xxxx Ax:1♣ 1♠ 2♥ 3♦
 
 # 2N artficial weak
 1x 1y RVz 2N =>
-test KQJx xx xxxx xxx:1♣ 1♠ 2♥ 2N
+test KQxx xx xxxx xxx:1♣ 1♠ 2♥ 2N
 test KQxxx xxx xxx xx:1♣ 1♠ 2♥ 2N
 
 1x 1y RVz 2N 3z => 5+ z
