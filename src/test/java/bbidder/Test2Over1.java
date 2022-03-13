@@ -32,22 +32,25 @@ public class Test2Over1 {
             }
             if (!result.found.bid.equals(result.expected)) {
                 hadError.set(true);
-                System.err.println("Test at " + result.where + "claims I should have bid "+result.expected);
-                if (result.found == null) {
-                    System.err.println("But "+result.found.inference.where + " dictates I suhould bid " + result.found.bid);
+                System.err.println("Test at " + result.where + " claims I should have bid "+result.expected);
+                if (result.found != null) {
+                    System.err.println("But "+result.found.inference.where + " dictates I should bid " + result.found.bid);
                 } else {
                     System.err.println("But no systemic bid matched so "+result.found.bid + " was chosen");
                 }
                 System.err.println();
                 System.err.println("All bids matching the scenario in order of priority:");
                 for(BoundBidInference b: result.found.possible) {
+                    IBoundInference bound = b.bind(result.state.getLikelyHands());
+                    InfSummary summ = bound.getSummary();
+                    bound = bound.andWith(summ);
                     if (b == result.found.inference) {
                         System.err.println("   * "+b);
-                        System.err.println("       * "+b.bind(result.state.getLikelyHands()));
+                        System.err.println("       * "+bound);
 
                     } else {
                         System.err.println("   "+b);
-                        System.err.println("       "+b.bind(result.state.getLikelyHands()));
+                        System.err.println("       "+bound);
                     }
                 }
                 test.getResult(r, bs);

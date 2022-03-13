@@ -124,6 +124,9 @@ public class BiddingContext {
 
     @Override
     public String toString() {
+        if (suits.isEmpty()) {
+            return bids.toString();
+        }
         return bids + " where " + suits;
     }
 
