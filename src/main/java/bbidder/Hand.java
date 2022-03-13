@@ -145,15 +145,51 @@ public class Hand {
     public int size() {
         return numInSuit(0) + numInSuit(1) + numInSuit(2) + numInSuit(3);
     }
+    
+    public int pointsInSuit(int suit) {
+        int pts = 0;
+        for (int rank : BitUtil.iterate(suits[suit] & Hand.aboveRank(TEN))) {
+            pts += getHCP(rank);
+        }
+        return pts;
+    }
 
     public int numHCP() {
         int hcp = 0;
         for (int suit = 0; suit < 4; suit++) {
-            for (int rank : BitUtil.iterate(suits[suit] & Hand.aboveRank(TEN))) {
-                hcp += getHCP(rank);
-            }
+            hcp += pointsInSuit(suit);
         }
         return hcp;
+    }
+    
+    public int totalPoints(int suit) {
+        int pts = numHCP();
+        if (suit != NOTRUMP) {
+            for(int s = 0; s < 4; s++) {
+                if (s != suit) {
+                    switch(numInSuit(suit)) {
+                    case 0:
+                        pts += 3;
+                        break;
+                    case 1:
+                        pts += 2;
+                        if (pointsInSuit(s) > 0) {
+                            pts--;
+                        }
+                        break;
+                    case 2:
+                        pts += 1;
+                        if (pointsInSuit(s) > 0) {
+                            pts--;
+                        }
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+        }
+        return pts;
     }
 
     public static Hand valueOf(String str, Hand avail) {

@@ -107,7 +107,6 @@ public class SuitRange implements Inference {
         SuitRange other = (SuitRange) obj;
         return Objects.equals(max, other.max) && Objects.equals(min, other.min) && Objects.equals(suit, other.suit);
     }
-
     
     static class BoundInfExact implements IBoundInference {
         final int suit;
