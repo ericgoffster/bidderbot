@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +25,9 @@ import bbidder.inferences.bound.OrBoundInf;
  * Represents a compiled bidding system.
  */
 public class BiddingSystem {
-    public final List<BoundBidInference> inferences;
-    public final List<BiddingTest> tests;
-    public final Map<BidList, List<BoundBidInference>> byPrefix = new LinkedHashMap<>();
+    private final List<BoundBidInference> inferences;
+    private final List<BiddingTest> tests;
+    private final Map<BidList, List<BoundBidInference>> byPrefix = new LinkedHashMap<>();
 
     public BiddingSystem(List<BoundBidInference> inferences, List<BiddingTest> tests) {
         super();
@@ -49,6 +50,10 @@ public class BiddingSystem {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         load("", urlSpec, reportErrors, inferences, tests, reg);
         return new BiddingSystem(inferences, tests);
+    }
+    
+    public List<BiddingTest> getTests() {
+        return Collections.unmodifiableList(tests);
     }
 
     /**

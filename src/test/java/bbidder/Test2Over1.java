@@ -20,7 +20,7 @@ public class Test2Over1 {
         });
         assertFalse(hadError.get());
         Random r = new Random();
-        for (BiddingTest test : bs.tests) {
+        for (BiddingTest test : bs.getTests()) {
             TestResult result;
             try {
                 result = test.getResult(r, bs);
@@ -63,8 +63,8 @@ public class Test2Over1 {
                 test.getResult(r, bs);
             }
         }
-        System.out.println("tests = " + bs.tests.size());
-        assertTrue(bs.tests.size() > 0);
+        System.out.println("tests = " + bs.getTests().size());
+        assertTrue(bs.getTests().size() > 0);
         assertFalse(hadError.get());
     }
 }
