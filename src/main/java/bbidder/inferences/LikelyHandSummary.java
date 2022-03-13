@@ -25,9 +25,7 @@ public class LikelyHandSummary {
         list.add("tpts="+minTotalPoints);
         list.add("hcp="+minHcp);
         for(int i = 0; i < 5; i++) {
-            if (!suitSummaries[i].isEmpty()) {
-                list.add(Constants.STR_ALL_SUITS.charAt(i) + ":" + suitSummaries[i]);
-            }
+            list.add(Constants.STR_ALL_SUITS.charAt(i) + ":" + suitSummaries[i]);
         }
         return String.join(",", list);
     }

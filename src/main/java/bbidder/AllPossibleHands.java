@@ -46,11 +46,10 @@ public class AllPossibleHands implements IHandList {
     }
 
     private static LikelyHandSummary getAllPossibleSummary() {
-        LikelySuitSummary[] summary = new LikelySuitSummary[5];
+        LikelySuitSummary[] summary = new LikelySuitSummary[4];
         for (int i = 0; i < 4; i++) {
-            summary[i] = new LikelySuitSummary(0, 0);
+            summary[i] = new LikelySuitSummary(0);
         }
-        summary[4] = new LikelySuitSummary(0, 0);
         return new LikelyHandSummary(0, 0, summary);
     }
 }
