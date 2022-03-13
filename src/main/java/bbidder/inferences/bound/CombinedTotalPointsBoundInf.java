@@ -3,11 +3,22 @@ package bbidder.inferences.bound;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Range;
+import bbidder.ShapeSet;
 import bbidder.inferences.LikelyHandSummary;
 
 public class CombinedTotalPointsBoundInf implements IBoundInference {
     final LikelyHandSummary partnerSummary;
     final Range r;
+    
+    @Override
+    public ShapeSet getShapes() {
+        return ShapeSet.ALL;
+    }
+    
+    @Override
+    public ShapeSet getNotShapes() {
+        return ShapeSet.ALL;
+    }
     
     public static IBoundInference createBounded(LikelyHandSummary partnerSummary, Range r) {
         if (r.unBounded()) {
@@ -27,11 +38,6 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
     @Override
     public boolean matches(Hand hand) {
         return r.contains(hand.getCombinedTotalPoints(partnerSummary));
-    }
-
-    @Override
-    public IBoundInference negate() {
-        return new CombinedTotalPointsBoundInf(partnerSummary, r.not());
     }
 
     @Override

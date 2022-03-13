@@ -2,7 +2,6 @@ package bbidder.inferences.bound;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
-import bbidder.Shape;
 import bbidder.ShapeSet;
 
 /**
@@ -12,12 +11,22 @@ import bbidder.ShapeSet;
  *
  */
 public class ShapeBoundInf implements IBoundInference {
-    final ShapeSet r;
+    final ShapeSet shapes;
 
-    public ShapeBoundInf(ShapeSet r) {
-        this.r = r;
+    public ShapeBoundInf(ShapeSet shapes) {
+        this.shapes = shapes;
+    }
+
+    @Override
+    public ShapeSet getShapes() {
+        return shapes;
     }
     
+    @Override
+    public ShapeSet getNotShapes() {
+        return shapes.not();
+    }
+
     public static IBoundInference create(ShapeSet r) {
         if (r.isEmpty()) {
             return ConstBoundInference.F;
@@ -30,17 +39,11 @@ public class ShapeBoundInf implements IBoundInference {
 
     @Override
     public boolean matches(Hand hand) {
-        Shape s = Shape.getShape(hand.numInSuit(0), hand.numInSuit(1), hand.numInSuit(2), hand.numInSuit(3));
-        return r.contains(s);
-    }
-
-    @Override
-    public IBoundInference negate() {
-        return new ShapeBoundInf(r.not());
+        return shapes.contains(hand.getShape());
     }
 
     @Override
     public String toString() {
-        return r.toString();
+        return shapes.toString();
     }
 }

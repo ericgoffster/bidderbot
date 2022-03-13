@@ -14,9 +14,7 @@ public interface IBoundInference {
      * @return True if it matches the hand
      */
     public boolean matches(Hand hand);
-
-    /**
-     * @return The negated inference.
-     */
-    public IBoundInference negate();
+    
+    public ShapeSet getShapes();
+    public ShapeSet getNotShapes();
 }

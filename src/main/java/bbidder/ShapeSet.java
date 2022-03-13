@@ -1,7 +1,7 @@
 package bbidder;
 
 import java.util.BitSet;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -11,8 +11,11 @@ public class ShapeSet {
     public ShapeSet(BitSet shapes) {
         this.shapes = shapes;
     }
+    
+    public static final ShapeSet ALL = new ShapeSet(List.of(Shape.values()));
+    public static final ShapeSet NONE = new ShapeSet(List.of());
 
-    public ShapeSet(Collection<Shape> list) {
+    public ShapeSet(Iterable<Shape> list) {
         shapes = new BitSet(Shape.values().length);
         for(Shape s: list) {
             shapes.set(s.ordinal());
@@ -68,14 +71,18 @@ public class ShapeSet {
             }
         }
         String[] str = new String[4];
+        boolean isEmpty = false;
         for(int s = 0; s < 4; s++) {
+            if (max[s] < min[s]) {
+                isEmpty = true;
+            }
             if (min[s] == max[s]) {
                 str[s] = min[s] + "" + Constants.STR_ALL_SUITS.charAt(s);
             } else {
                 str[s] = min[s] + "-" + max[s] + Constants.STR_ALL_SUITS.charAt(s);
             }
         }
-        return String.join(",",  str);
+        return isEmpty ? "{}" : String.join(",",  str);
     }
 
     @Override

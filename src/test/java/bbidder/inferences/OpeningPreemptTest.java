@@ -30,14 +30,6 @@ public class OpeningPreemptTest {
     }
 
     @Test
-    public void test2Negate() {
-        InferenceContext ctx = new InferenceContext();
-        assertFalse(new OpeningPreempt("S", 2).bind(ctx).negate().matches(Hand.valueOf("KQJ234 J 876 543")));
-        assertTrue(new OpeningPreempt("S", 3).bind(ctx).negate().matches(Hand.valueOf("KQJ234 J 876 543")));
-        assertTrue(new OpeningPreempt("S", 2).bind(ctx).negate().matches(Hand.valueOf("KQJ234 J A76 543")));
-    }
-
-    @Test
     public void test3() {
         InferenceContext ctx = new InferenceContext();
         assertTrue(new OpeningPreempt("S", 3).bind(ctx).matches(Hand.valueOf("KQJ2345 J 87 543")));

@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import bbidder.inferences.NorBoundInf;
-import bbidder.inferences.OrBoundInf;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.ConstBoundInference;
+import bbidder.inferences.bound.NorBoundInf;
+import bbidder.inferences.bound.OrBoundInf;
 
 /**
  * Represents a compiled bidding system.
@@ -187,7 +187,7 @@ public class BiddingSystem {
             return where + ":" + bid;
         }
     }
-
+    
     /**
      * Retrieves the inference from a list of bids according to the system.
      * 

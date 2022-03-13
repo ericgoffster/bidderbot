@@ -1,12 +1,11 @@
-package bbidder.inferences;
+package bbidder.inferences.bound;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
-import bbidder.inferences.bound.AndBoundInf;
-import bbidder.inferences.bound.ConstBoundInference;
+import bbidder.ShapeSet;
 
 /**
  * Represents the "or" of 2 or more bound inferences.
@@ -14,10 +13,10 @@ import bbidder.inferences.bound.ConstBoundInference;
  * @author goffster
  *
  */
-public class OrBoundInf implements IBoundInference {
+public class NorBoundInf implements IBoundInference {
     public final List<IBoundInference> inferences;
 
-    private OrBoundInf(List<IBoundInference> inf) {
+    private NorBoundInf(List<IBoundInference> inf) {
         super();
         this.inferences = inf;
     }
@@ -26,19 +25,28 @@ public class OrBoundInf implements IBoundInference {
     public boolean matches(Hand hand) {
         for (IBoundInference i : inferences) {
             if (i.matches(hand)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
-
+    
     @Override
-    public IBoundInference negate() {
-        List<IBoundInference> inf = new ArrayList<>();
-        for (IBoundInference i : inferences) {
-            inf.add(i.negate());
+    public ShapeSet getShapes() {
+        ShapeSet s = ShapeSet.ALL;
+        for(IBoundInference i: inferences) {
+            s = s.and(i.getNotShapes());
         }
-        return AndBoundInf.create(inf);
+        return s;
+    }
+    
+    @Override
+    public ShapeSet getNotShapes() {
+        ShapeSet s = ShapeSet.NONE;
+        for(IBoundInference i: inferences) {
+            s = s.or(i.getShapes());
+        }
+        return s;
     }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
@@ -51,12 +59,9 @@ public class OrBoundInf implements IBoundInference {
             orList.add(i);
         }
         if (orList.size() == 0) {
-            return ConstBoundInference.F;
+            return ConstBoundInference.T;
         }
-        if (orList.size() == 1) {
-            return orList.get(0);
-        }
-        return new OrBoundInf(orList);
+        return new NorBoundInf(orList);
     }
 
     @Override
@@ -65,6 +70,6 @@ public class OrBoundInf implements IBoundInference {
         for (IBoundInference i : inferences) {
             l.add(i.toString());
         }
-        return "(" + String.join(" | ", l) + ")";
+        return "~(" + String.join(" | ", l) + ")";
     }
 }

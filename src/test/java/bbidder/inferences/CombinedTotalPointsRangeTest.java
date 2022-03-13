@@ -34,14 +34,4 @@ public class CombinedTotalPointsRangeTest {
         assertTrue(new CombinedTotalPointsRange(null, 10).bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
         assertFalse(new CombinedTotalPointsRange(null, 9).bind(ctx).matches(Hand.valueOf("AKQ JT9 876 5432")));
     }
-
-    @Test
-    public void testNegative() {
-        InferenceContext ctx = new InferenceContext();
-        assertFalse(new CombinedTotalPointsRange(10, 10).bind(ctx).negate().matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new CombinedTotalPointsRange(10, null).bind(ctx).negate().matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new CombinedTotalPointsRange(11, null).bind(ctx).negate().matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new CombinedTotalPointsRange(null, 10).bind(ctx).negate().matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new CombinedTotalPointsRange(null, 9).bind(ctx).negate().matches(Hand.valueOf("AKQ JT9 876 5432")));
-    }
 }
