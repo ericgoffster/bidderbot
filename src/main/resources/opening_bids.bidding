@@ -40,5 +40,6 @@ test xx x KQJxxxxxx x:5♦
 
 include major_resp.bidding
 include minor_resp.bidding
+include 1over1rebids.bidding
 include 1n/resp.bidding
 include 2n/resp.bidding

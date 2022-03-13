@@ -22,7 +22,7 @@ public class CombinedTotalPointsRangeTest {
 
     @Test
     public void testToString() {
-        assertEquals("8-10 tpts", new CombinedTotalPointsRange(8, 10).toString());
+        assertEquals("8-10 combined tpts", new CombinedTotalPointsRange(8, 10).toString());
     }
 
     @Test

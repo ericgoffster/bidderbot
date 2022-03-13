@@ -28,12 +28,7 @@ public class TotalPointsRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        LikelySuitSummary[] summary = new LikelySuitSummary[5];
-        for (int i = 0; i < 4; i++) {
-            summary[i] = new LikelySuitSummary(context.likelyHands.partner.minTotalPoints(i), context.likelyHands.partner.minInSuit(i));
-        }
-        summary[4] = new LikelySuitSummary(context.likelyHands.partner.minTotalPoints(4), 0);
-        return TotalPtsBoundInf.createBounded(new LikelyHandSummary(summary), rng);
+        return TotalPtsBoundInf.createBounded(context.likelyHands.partner.getSummary(), rng);
     }
     
     public static Inference valueOf(String str) {
