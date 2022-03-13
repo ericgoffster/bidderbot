@@ -40,6 +40,6 @@ public class BiddingTest {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Expected <hand>:<bids> '" + str + "'");
         }
-        return new BiddingTest(where, Hand.valueOf(parts[0]), BidList.valueOf2(parts[1]));
+        return new BiddingTest(where, Hand.valueOf(parts[0]), BidList.valueOf(parts[1]));
     }
 }

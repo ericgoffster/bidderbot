@@ -79,27 +79,6 @@ public class BidList {
         }
         String[] parts = SplitUtil.split(str, "\\s+");
         List<Bid> bids = new ArrayList<>();
-        for (String part : parts) {
-            Bid b = Bid.fromStr(part);
-            if (b == null) {
-                throw new IllegalArgumentException("Illegal bid: '" + part + "'");
-            }
-            bids.add(b);
-        }
-        return new BidList(bids);
-    }
-    
-    /**
-     * @param str
-     *            The string to parse
-     * @return A bid list parsed from the string
-     */
-    public static BidList valueOf2(String str) {
-        if (str == null) {
-            return null;
-        }
-        String[] parts = SplitUtil.split(str, "\\s+");
-        List<Bid> bids = new ArrayList<>();
         boolean we = false;
         for (String part : parts) {
             if (part.startsWith("(") && part.endsWith(")")) {

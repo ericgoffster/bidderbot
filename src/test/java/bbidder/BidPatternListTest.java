@@ -32,11 +32,11 @@ public class BidPatternListTest {
     }
 
     BiddingContext makeBC(String str) {
-        return new BiddingContext(BidList.valueOf2(str), Map.of());
+        return new BiddingContext(BidList.valueOf(str), Map.of());
     }
 
     BiddingContext makeBC(String str, String sym, Integer v) {
-        return new BiddingContext(BidList.valueOf2(str), Map.of(sym, v));
+        return new BiddingContext(BidList.valueOf(str), Map.of(sym, v));
     }
 
     List<BiddingContext> add2(BiddingContext... l) {
@@ -78,7 +78,7 @@ public class BidPatternListTest {
         assertEquals(BidPatternList.valueOf("1M:down").getContexts(), add3(makeBC("1S", "M", 3), makeBC("1H", "M", 2)));
         assertEquals(BidPatternList.valueOf("1S (P) 1N").getContexts(), add3(makeBC("1S 1N")));
         assertEquals(BidPatternList.valueOf("1C NJM").getContexts(),
-                add3(new BiddingContext(BidList.valueOf2("1C 1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf2("1C 1S"), Map.of("M", 3))));
-        assertEquals(BidPatternList.valueOf("1C P").getContexts(), add3(new BiddingContext(BidList.valueOf2("1C P"), Map.of())));
+                add3(new BiddingContext(BidList.valueOf("1C 1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf("1C 1S"), Map.of("M", 3))));
+        assertEquals(BidPatternList.valueOf("1C P").getContexts(), add3(new BiddingContext(BidList.valueOf("1C P"), Map.of())));
     }
 }
