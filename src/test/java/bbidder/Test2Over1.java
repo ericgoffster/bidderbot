@@ -1,30 +1,37 @@
 package bbidder;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import org.junit.Rule;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ErrorCollector;
 
 public class Test2Over1 {
     public static BiddingSystem bs;
+    
+    @Rule
+    public MyClass collector = new MyClass();
 
     @Test
-    public void test() throws IOException {
-        List<String> exes = new ArrayList<>();
+    public void test() throws Throwable {
         BiddingSystem bs = BiddingSystem.load("", "classpath:2over1.bidding", ex -> {
-            exes.add(ex.getMessage());
-            ex.printStackTrace();
+            collector.addError(ex);
         });
-        assertEquals(List.of(), exes);
         for(BiddingTest test: bs.tests) {
             TestResult result = test.getResult(bs);
-            assertEquals(result.hand + ":" + result.bids, result.expected, result.found);
+            collector.checkThat(result.hand + ":" + result.bids, result.found, equalTo(result.expected));
         }
         
         assertTrue(bs.tests.size() > 0);
+        
+        collector.verify();
+    }
+    
+    static class MyClass extends ErrorCollector {
+        @Override
+        public void verify() throws Throwable {
+            super.verify();
+        }
     }
 }
