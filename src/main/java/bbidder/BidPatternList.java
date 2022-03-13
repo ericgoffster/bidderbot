@@ -44,9 +44,8 @@ public class BidPatternList {
         List<BiddingContext> l = new ArrayList<>();
         // Add in first hand passing
         BidPattern pattern = bids.get(0);
-        BidPattern pass = BidPattern.createSimpleBid(Bid.P);
-        getContexts(l, BiddingContext.create(new BidPatternList(List.of(pass, pass))), true);
-        getContexts(l, BiddingContext.create(new BidPatternList(List.of(pass))), true);
+        getContexts(l, BiddingContext.create(new BidPatternList(List.of(BidPattern.PASS, BidPattern.PASS))), true);
+        getContexts(l, BiddingContext.create(new BidPatternList(List.of(BidPattern.PASS))), true);
         getContexts(l, BiddingContext.create(new BidPatternList(List.of())), true);
         if (!pattern.isOpposition) {
             getContexts(l, BiddingContext.create(new BidPatternList(List.of())), false);
@@ -107,7 +106,7 @@ public class BidPatternList {
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = bids.get(0);
         if (isOpp && !pattern.isOpposition) {
-            for(BiddingContext bc: ctx.getBids(BidPattern.createSimpleBid(Bid.P))) {
+            for(BiddingContext bc: ctx.getBids(BidPattern.PASS)) {
                 getContexts(l, bc, !isOpp);                
             }
             return;
@@ -121,12 +120,11 @@ public class BidPatternList {
     }
     
     public boolean isCompleted() {
-        BidPattern pass = BidPattern.createSimpleBid(Bid.P);
         return bids.size() >= 4 &&
-                bids.get(bids.size() - 1).equals(pass) &&
-                bids.get(bids.size() - 2).equals(pass) &&
-                bids.get(bids.size() - 3).equals(pass) &&
-                bids.get(bids.size() - 4).equals(pass);
+                bids.get(bids.size() - 1).equals(BidPattern.PASS) &&
+                bids.get(bids.size() - 2).equals(BidPattern.PASS) &&
+                bids.get(bids.size() - 3).equals(BidPattern.PASS) &&
+                bids.get(bids.size() - 4).equals(BidPattern.PASS);
     }
     
 }

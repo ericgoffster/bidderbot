@@ -17,6 +17,7 @@ import java.util.Objects;
  *
  */
 public class BidPattern {
+    public static final BidPattern PASS = createSimpleBid(Bid.P);
     public final boolean isOpposition;
     public final String suit;
     public final Integer level;
