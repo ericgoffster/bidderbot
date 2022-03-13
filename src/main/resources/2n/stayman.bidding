@@ -22,6 +22,9 @@ test AJxx Axxxx xx xx: 2N 3♣ 3♦ 3♠
 test Axx Ax Axxxx xxx: 2N 3♣ 3♥ 4♦
 test Axx Ax xxx Axxxx: 2N 3♣ 3♥ 4♣
 
+2N 3♣ 3♦ 4N => slaminv
+test Axx Ax Axxx xxxx: 2N 3♣ 3♥ 4N
+
 2N 3♣ 3M 4M => gf, 4+M
 test Axx Axxx Axx xxx: 2N 3♣ 3♥ 3♠
 test Axxx Axx Axx xxx: 2N 3♣ 3♠ 4♥
