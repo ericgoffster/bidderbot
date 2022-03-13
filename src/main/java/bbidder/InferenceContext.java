@@ -37,22 +37,15 @@ public class InferenceContext {
     }
 
     public int lookupSuit(String s) {
-        switch (s.toUpperCase()) {
-        case STR_CLUB:
-            return CLUB;
-        case STR_DIAMOND:
-            return DIAMOND;
-        case STR_HEART:
-            return HEART;
-        case STR_SPADE:
-            return SPADE;
-        default:
-            Integer s2 = bc.getSuit(s);
-            if (s2 == null) {
-                throw new IllegalArgumentException("Unknown Suit: '" + s + "'");
-            }
-            return s2;
+        Integer strain = Strain.getSuit(s);
+        if (strain != null) {
+            return strain;
         }
+        Integer suit = bc.getSuit(s);
+        if (suit == null) {
+            throw new IllegalArgumentException("Unknown Suit: '" + s + "'");
+        }
+        return suit;
     }
 
     /**
@@ -131,15 +124,11 @@ public class InferenceContext {
                     return ALL_SUITS;
                 case "NONE":
                     return 0;
-                case STR_CLUB:
-                    return (1 << CLUB);
-                case STR_DIAMOND:
-                    return (1 << DIAMOND);
-                case STR_HEART:
-                    return (1 << HEART);
-                case STR_SPADE:
-                    return (1 << SPADE);
                 default:
+                    Integer st = Strain.getSuit(sb.toString());
+                    if (st != null) {
+                        return (short)(1 << st);
+                    }
                     throw new IllegalArgumentException("Unknown Suit Set: '" + sb + "'");
                 }
             }

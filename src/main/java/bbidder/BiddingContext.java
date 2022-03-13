@@ -32,7 +32,7 @@ public class BiddingContext {
      * @return (0,1,2,3,4) for a given symbol, null if not found.
      */
     public Integer getSuit(String symbol) {
-        Integer strain = Bid.getStrain(symbol);
+        Integer strain = Strain.getStrain(symbol);
         if (strain != null) {
             return strain;
         }

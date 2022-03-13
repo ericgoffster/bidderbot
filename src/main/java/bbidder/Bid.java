@@ -102,7 +102,7 @@ public enum Bid {
         if (str.equalsIgnoreCase(STR_XX)) {
             return XX;
         }
-        Integer strain = getStrain(str.substring(1));
+        Integer strain = Strain.getStrain(str.substring(1));
         if (strain == null) {
             throw new IllegalArgumentException("Invalid strain: '" + str + "'");
         }
@@ -125,33 +125,6 @@ public enum Bid {
     private Bid(int level, int strain) {
         this.strain = strain;
         this.level = level;
-    }
-
-    /**
-     * Parses a strain
-     * 
-     * @param str
-     *            The string to parse
-     * @return The strain, null if not recognized.
-     */
-    public static Integer getStrain(String str) {
-        if (str == null) {
-            return null;
-        }
-        switch (str.toUpperCase()) {
-        case STR_CLUB:
-            return CLUB;
-        case STR_DIAMOND:
-            return DIAMOND;
-        case STR_HEART:
-            return HEART;
-        case STR_SPADE:
-            return SPADE;
-        case STR_NOTRUMP:
-            return NOTRUMP;
-        default:
-            return null;
-        }
     }
 
     private static final Bid[][] ALL_BIDS = { { _1C, _2C, _3C, _4C, _5C, _6C, _7C }, { _1D, _2D, _3D, _4D, _5D, _6D, _7D },
