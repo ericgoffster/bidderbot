@@ -38,4 +38,4 @@ test xx x KQJxxxxxx x:5♦
 
 include classpath:major_resp.bidding
 include classpath:minor_resp.bidding
-include classpath:1N_resp.bidding
+include classpath:1n/resp.bidding
