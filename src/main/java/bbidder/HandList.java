@@ -97,11 +97,14 @@ public class HandList implements IHandList {
     }
 
     private LikelyHandSummary createSummary() {
+        int hcp = minTotalPoints(4);
+        int tpts = hcp;
         LikelySuitSummary[] summary = new LikelySuitSummary[5];
         for (int i = 0; i < 4; i++) {
+            tpts = Math.max(tpts, minTotalPoints(i));
             summary[i] = new LikelySuitSummary(minTotalPoints(i), minInSuit(i));
         }
         summary[4] = new LikelySuitSummary(minTotalPoints(4), 0);
-        return new LikelyHandSummary(summary);
+        return new LikelyHandSummary(tpts, hcp, summary);
     }
 }

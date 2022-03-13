@@ -51,6 +51,6 @@ public class AllPossibleHands implements IHandList {
             summary[i] = new LikelySuitSummary(0, 0);
         }
         summary[4] = new LikelySuitSummary(0, 0);
-        return new LikelyHandSummary(summary);
+        return new LikelyHandSummary(0, 0, summary);
     }
 }
