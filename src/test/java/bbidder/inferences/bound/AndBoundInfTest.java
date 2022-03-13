@@ -29,4 +29,11 @@ public class AndBoundInfTest {
         assertTrue(i3.matches(Hand.valueOf("AKQ Jxx xxx xxxx")));
         assertFalse(i3.matches(Hand.valueOf("AKQ Jxx xxxx xxx")));
     }
+    @Test
+    public void test1() {
+        IBoundInference i1 = ShapeBoundInf.create(new ShapeSet(List.of(Shape._04030303, Shape._03040303)));
+        IBoundInference i2 = ShapeBoundInf.create(new ShapeSet(List.of(Shape._04030303, Shape._03030403)));
+        IBoundInference i3 = AndBoundInf.create(AndBoundInf.create(i1, i2), ConstBoundInference.T);
+        assertEquals(i3, ShapeBoundInf.create(new ShapeSet(List.of(Shape._04030303))));
+    }
 }
