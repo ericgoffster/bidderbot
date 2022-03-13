@@ -18,6 +18,10 @@ test Jxxx AJxxxx x xx: 2N 3♣ 3♦ 4♥
 test AJxxx Axxx xx xx: 2N 3♣ 3♦ 3♥
 test AJxx Axxxx xx xx: 2N 3♣ 3♦ 3♠
 
+2N 3♣ 3♦ 4m => slaminv+, 5+m
+test Axx Ax Axxxx xxx: 2N 3♣ 3♥ 4♦
+test Axx Ax xxx Axxxx: 2N 3♣ 3♥ 4♣
+
 2N 3♣ 3M 4M => gf, 4+M
 test Axx Axxx Axx xxx: 2N 3♣ 3♥ 3♠
 test Axxx Axx Axx xxx: 2N 3♣ 3♠ 4♥
@@ -27,8 +31,8 @@ test Axx Axxx Axx xxx: 2N 3♣ 3♥ 3♠
 test Axxx Axx Axx xxx: 2N 3♣ 3♠ 4♥
 
 2N 3♣ 3M 4m => slaminv+, 5+m
-test Axx Ax Axxxx xxx: 2N 3♣ 3♥ 4♦
-test Axx Ax xxx Axxxx: 2N 3♣ 3♥ 4♣
+test Axxx Ax Axxxx xx: 2N 3♣ 3♥ 4♦
+test Axxx Ax xx Axxxx: 2N 3♣ 3♥ 4♣
 
 2N 3♣ 3M 4N => slaminv
 test Axxx Ax Axxx xxx: 2N 3♣ 3♥ 4N
