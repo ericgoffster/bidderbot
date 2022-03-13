@@ -66,7 +66,7 @@ public class InfSummary {
 
     @Override
     public int hashCode() {
-        return Objects.hash(shape, stoppers, tpts);
+        return Objects.hash(partialStoppers, shape, stoppers, tpts);
     }
 
     @Override
@@ -78,6 +78,7 @@ public class InfSummary {
         if (getClass() != obj.getClass())
             return false;
         InfSummary other = (InfSummary) obj;
-        return Objects.equals(shape, other.shape) && Objects.equals(stoppers, other.stoppers) && Objects.equals(tpts, other.tpts);
+        return Objects.equals(partialStoppers, other.partialStoppers) && Objects.equals(shape, other.shape)
+                && Objects.equals(stoppers, other.stoppers) && Objects.equals(tpts, other.tpts);
     }
 }
