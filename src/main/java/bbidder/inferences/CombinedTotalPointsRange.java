@@ -69,6 +69,10 @@ public class CombinedTotalPointsRange implements Inference {
             return new CombinedTotalPointsRange(33, null);
         case "slam-":
             return new CombinedTotalPointsRange(null, 36);
+        case "grandinv-":
+            return new CombinedTotalPointsRange(null, 36);
+        case "grandinv":
+            return new CombinedTotalPointsRange(35, 36);
         case "grand":
             return new CombinedTotalPointsRange(37, null);
         default:
