@@ -163,22 +163,24 @@ public class BiddingSystem {
         for (BoundBidInference i : possible) {
             IBoundInference newInference = i.bind(likelyHands);
             if (newInference.matches(hand)) {
-                return new BidSource(i.where, i.ctx.bids.getLastBid());
+                return new BidSource(i.where, i.ctx.bids.getLastBid(), possible);
             }
         }
 
         // For now always pass, this will get smarter.
-        return new BidSource("system", Bid.P);
+        return new BidSource("system", Bid.P, possible);
     }
     
     public static class BidSource {
         public final String where;
         public final Bid bid;
+        public final List<BoundBidInference> possible ;
 
-        public BidSource(String where, Bid bid) {
+        public BidSource(String where, Bid bid, List<BoundBidInference> possible) {
             super();
             this.where = where;
             this.bid = bid;
+            this.possible = possible;
         }
 
         @Override

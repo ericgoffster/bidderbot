@@ -37,6 +37,10 @@ public class Test2Over1 {
                 System.err.println("But "+result.found.where);
                 System.err.println("Dictates "+result.found.bid);
                 System.err.println();
+                System.err.println("All bids matching the scenario");
+                for(var b: result.found.possible) {
+                    System.err.println("   "+b);
+                }
                 test.getResult(r, bs);
             }
         }
