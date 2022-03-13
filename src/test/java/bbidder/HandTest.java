@@ -10,6 +10,7 @@ public class HandTest {
     public void testBasic() {
         Hand hand = Hand.valueOf("AKQJ    T98   765   432");
         assertEquals("AKQJ T98 765 432", hand.toString());
+        assertEquals(hand.getShape(), Shape._03030304);
         assertTrue(hand.getAllInSuit(0) == 0x7);
         assertTrue(hand.getAllInSuit(1) >> 3 == 0x7);
         assertTrue(hand.getAllInSuit(2) >> 6 == 0x7);
@@ -31,6 +32,7 @@ public class HandTest {
     @Test
     public void testTotalPts() {
         Hand hand = Hand.valueOf("    AKQJ  -  T7658    9432");
+        assertEquals(hand.getShape(), Shape._04050004);
         assertEquals(13, hand.totalPoints(0));
         assertEquals(10, hand.totalPoints(2));
     }

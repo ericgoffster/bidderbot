@@ -3,6 +3,9 @@ package bbidder;
 import java.util.Objects;
 
 public class InfSummary {
+    public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, Range.all(40));
+    public static final InfSummary NONE = new InfSummary(ShapeSet.NONE, Range.none(40));
+
     public final ShapeSet shape;
     public final Range tpts;
 
@@ -11,9 +14,6 @@ public class InfSummary {
         this.shape = shape;
         this.tpts = tpts;
     }
-
-    public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, Range.all(40));
-    public static final InfSummary NONE = new InfSummary(ShapeSet.NONE, Range.none(40));
 
     public InfSummary and(InfSummary other) {
         return new InfSummary(shape.and(other.shape), tpts.and(other.tpts));
