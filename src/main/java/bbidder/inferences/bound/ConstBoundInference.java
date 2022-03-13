@@ -1,4 +1,4 @@
-package bbidder.inferences;
+package bbidder.inferences.bound;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;

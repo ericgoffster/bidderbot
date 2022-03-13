@@ -9,7 +9,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import bbidder.inferences.ConstBoundInference;
+import bbidder.inferences.bound.ConstBoundInference;
 
 public class BiddingSystemTest {
     LikelyHands likelyHands = new LikelyHands();

@@ -6,6 +6,7 @@ import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.ShapeSet;
+import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
  * Represents the inference of a suit than is longest or equal among other suits.
@@ -29,7 +30,7 @@ public class LongestOrEqual implements Inference {
     public IBoundInference bind(InferenceContext context) {
         int isuit = context.lookupSuit(suit);
         int iamong = among == null ? 0xf : context.lookupSuitSet(among);
-        return ShapeBoundInference.create(new ShapeSet(shape -> shape.isLongerOrEqual(isuit, iamong)));
+        return ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(isuit, iamong)));
     }
 
     public static LongestOrEqual valueOf(String str) {

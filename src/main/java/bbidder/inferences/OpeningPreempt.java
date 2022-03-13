@@ -9,6 +9,8 @@ import bbidder.Range;
 import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.SplitUtil;
+import bbidder.inferences.bound.AndBoundInf;
+import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
  * Represents the inference of a premptive hand of varying levels.
@@ -29,7 +31,7 @@ public class OpeningPreempt implements Inference {
     @Override
     public IBoundInference bind(InferenceContext context) {
         int s = context.lookupSuit(suit);
-        return AndBoundInference.create(HCPRange.createBound(Range.between(5, 10, 40)), ShapeBoundInference.create(new ShapeSet(shape -> isPremptive(s, level, shape))));
+        return AndBoundInf.create(HCPRange.createBound(Range.between(5, 10, 40)), ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(s, level, shape))));
     }
 
     public static OpeningPreempt valueOf(String str) {

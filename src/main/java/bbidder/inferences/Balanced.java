@@ -7,6 +7,7 @@ import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.Shape;
 import bbidder.ShapeSet;
+import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
  * Represents the inference of a "balanced" hand
@@ -15,10 +16,6 @@ import bbidder.ShapeSet;
  *
  */
 public class Balanced implements Inference {
-    public enum BalanceType {
-        un, regular, very;
-    }
-    
     final BalanceType type;
     public Balanced(BalanceType type) {
         this.type = type;
@@ -27,9 +24,9 @@ public class Balanced implements Inference {
     @Override
     public IBoundInference bind(InferenceContext context) {
         switch(type) {
-        case regular: return ShapeBoundInference.create(new ShapeSet(Shape::isBalanced));
-        case un: return ShapeBoundInference.create(new ShapeSet(Shape::isBalanced).not());
-        case very: return ShapeBoundInference.create(new ShapeSet(Shape::isSuperBalanced));
+        case regular: return ShapeBoundInf.create(new ShapeSet(Shape::isBalanced));
+        case un: return ShapeBoundInf.create(new ShapeSet(Shape::isBalanced).not());
+        case very: return ShapeBoundInf.create(new ShapeSet(Shape::isSuperBalanced));
         default: throw new IllegalStateException();
         }
     }

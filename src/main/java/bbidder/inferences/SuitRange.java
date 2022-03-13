@@ -9,6 +9,7 @@ import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
  * Represents the inference of a range of lengths of a suit.
@@ -42,7 +43,7 @@ public class SuitRange implements Inference {
     }
 
     private static IBoundInference createBound(int s, Range r) {
-        return ShapeBoundInference.create(new ShapeSet(shape -> shape.isSuitInRange(s, r)));
+        return ShapeBoundInf.create(new ShapeSet(shape -> shape.isSuitInRange(s, r)));
     }
 
     public static Inference valueOf(String str) {

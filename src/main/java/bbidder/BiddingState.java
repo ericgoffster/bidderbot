@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Random;
 
 import bbidder.BiddingSystem.BidSource;
-import bbidder.inferences.AndBoundInference;
-import bbidder.inferences.ConstBoundInference;
+import bbidder.inferences.bound.AndBoundInf;
+import bbidder.inferences.bound.ConstBoundInference;
 
 /**
  * Represents the entre state of an entire bidding auction
@@ -74,7 +74,7 @@ public class BiddingState {
      */
     public BiddingState withBid(Bid bid) {
         BidList newBidList = bidding.withBidAdded(bid);
-        IBoundInference newInf = AndBoundInference.create(we.getInference(newBidList, getLikelyHands()), me.inf);
+        IBoundInference newInf = AndBoundInf.create(we.getInference(newBidList, getLikelyHands()), me.inf);
         IHandList newHands = HandGenerator.generateHands(r, newInf, 1000);
         Player newMe = new Player(newInf, newHands);
         return new BiddingState(r, they, we, newBidList, partner, rho, newMe, lho);

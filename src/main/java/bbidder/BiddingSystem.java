@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import bbidder.inferences.AndBoundInference;
-import bbidder.inferences.ConstBoundInference;
-import bbidder.inferences.OrBoundInference;
+import bbidder.inferences.OrBoundInf;
+import bbidder.inferences.bound.AndBoundInf;
+import bbidder.inferences.bound.ConstBoundInference;
 
 /**
  * Represents a compiled bidding system.
@@ -206,14 +206,14 @@ public class BiddingSystem {
         for(BoundBidInference i: byPrefix.getOrDefault(bids.exceptLast(), new ArrayList<>())) {
             IBoundInference newInference = i.bind(likelyHands);
             if (i.ctx.bids.getLastBid().equals(lastBid)) {
-                positive = OrBoundInference.create(AndBoundInference.create(newInference, negative), positive);
+                positive = OrBoundInf.create(AndBoundInf.create(newInference, negative), positive);
             }
-            negative = AndBoundInference.create(negative, newInference.negate());            
+            negative = AndBoundInf.create(negative, newInference.negate());            
         }
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
-            positive = OrBoundInference.create(negative, positive);
+            positive = OrBoundInf.create(negative, positive);
         }
         return positive;
     }

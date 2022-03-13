@@ -4,12 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.inferences.BalanceType;
 import bbidder.inferences.Balanced;
 import bbidder.inferences.HCPRange;
 import bbidder.inferences.LongestOrEqual;
 import bbidder.inferences.OpeningPreempt;
 import bbidder.inferences.SuitRange;
-import bbidder.inferences.Balanced.BalanceType;
 
 public class InferenceRegistryTest {
     @Test

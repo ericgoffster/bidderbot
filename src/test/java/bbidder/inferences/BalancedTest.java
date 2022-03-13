@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InferenceContext;
-import bbidder.inferences.Balanced.BalanceType;
 
 public class BalancedTest {
     @Test

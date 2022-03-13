@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.inferences.BalanceType;
 import bbidder.inferences.Balanced;
 import bbidder.inferences.SuitRange;
-import bbidder.inferences.Balanced.BalanceType;
 
 public class InferenceListTest {
     @Test

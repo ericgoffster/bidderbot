@@ -5,6 +5,8 @@ import java.util.List;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
+import bbidder.inferences.bound.AndBoundInf;
+import bbidder.inferences.bound.ConstBoundInference;
 
 /**
  * Represents the "or" of 2 or more bound inferences.
@@ -12,11 +14,11 @@ import bbidder.IBoundInference;
  * @author goffster
  *
  */
-public class OrBoundInference implements IBoundInference {
+public class OrBoundInf implements IBoundInference {
     public final List<IBoundInference> inferences;
     public final int size;
 
-    private OrBoundInference(List<IBoundInference> inf) {
+    private OrBoundInf(List<IBoundInference> inf) {
         super();
         this.inferences = inf;
         int sz = 0;
@@ -47,7 +49,7 @@ public class OrBoundInference implements IBoundInference {
         for (IBoundInference i : inferences) {
             inf.add(i.negate());
         }
-        return AndBoundInference.create(inf);
+        return AndBoundInf.create(inf);
     }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
@@ -58,7 +60,7 @@ public class OrBoundInference implements IBoundInference {
         // Attempt to combine the inference with an existing inference.
         again: for(;;) {
             for(int i = 0; i < orList.size(); i++) {
-                IBoundInference comb = OrBoundInference.orReduce(rhs, orList.get(i));
+                IBoundInference comb = OrBoundInf.orReduce(rhs, orList.get(i));
                 // Found a combination, remove original, add the combination.
                 if (comb != null) {
                     // Remove 
@@ -84,7 +86,7 @@ public class OrBoundInference implements IBoundInference {
         if (orList.size() == 1) {
             return orList.get(0);
         }
-        return new OrBoundInference(orList);
+        return new OrBoundInf(orList);
     }
 
     @Override
@@ -101,9 +103,9 @@ public class OrBoundInference implements IBoundInference {
         // (a + b) * c = ab + bc
         List<IBoundInference> result = new ArrayList<>();
         for(IBoundInference j: inferences) {
-            result.add(AndBoundInference.create(j, i));
+            result.add(AndBoundInf.create(j, i));
         }
-        IBoundInference res = OrBoundInference.create(result);
+        IBoundInference res = OrBoundInf.create(result);
         if (res.size() < size + i.size() + 1) {
             return res;
         }
@@ -114,9 +116,9 @@ public class OrBoundInference implements IBoundInference {
     @Override
     public IBoundInference orReduce(IBoundInference i) {
         // (a + b) + (c + d) = (a + b + c + d)
-        if (i instanceof OrBoundInference) {
+        if (i instanceof OrBoundInf) {
             List<IBoundInference> orList = new ArrayList<>(inferences);
-            orList.addAll(((OrBoundInference) i).inferences);
+            orList.addAll(((OrBoundInf) i).inferences);
             return create(orList);
         }
         return null;

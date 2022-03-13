@@ -1,4 +1,4 @@
-package bbidder.inferences;
+package bbidder.inferences.bound;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
@@ -11,10 +11,10 @@ import bbidder.ShapeSet;
  * @author goffster
  *
  */
-public class ShapeBoundInference implements IBoundInference {
+public class ShapeBoundInf implements IBoundInference {
     final ShapeSet r;
 
-    public ShapeBoundInference(ShapeSet r) {
+    public ShapeBoundInf(ShapeSet r) {
         this.r = r;
     }
     
@@ -30,7 +30,7 @@ public class ShapeBoundInference implements IBoundInference {
         if (r.isFull()) {
             return ConstBoundInference.T;
         }
-        return new ShapeBoundInference(r);
+        return new ShapeBoundInf(r);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class ShapeBoundInference implements IBoundInference {
 
     @Override
     public IBoundInference negate() {
-        return new ShapeBoundInference(r.not());
+        return new ShapeBoundInf(r.not());
     }
 
     @Override
@@ -51,16 +51,16 @@ public class ShapeBoundInference implements IBoundInference {
 
     @Override
     public IBoundInference andReduce(IBoundInference i) {
-        if (i instanceof ShapeBoundInference) {
-            return create(r.and(((ShapeBoundInference) i).r));
+        if (i instanceof ShapeBoundInf) {
+            return create(r.and(((ShapeBoundInf) i).r));
         }
         return null;
     }
 
     @Override
     public IBoundInference orReduce(IBoundInference i) {
-        if (i instanceof ShapeBoundInference) {
-            return create(r.or(((ShapeBoundInference) i).r));
+        if (i instanceof ShapeBoundInf) {
+            return create(r.or(((ShapeBoundInf) i).r));
         }
         return null;
     }

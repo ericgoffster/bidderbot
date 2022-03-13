@@ -1,15 +1,13 @@
 package bbidder.inferences;
 
-import java.util.Arrays;
 import java.util.Objects;
 
-import bbidder.Constants;
-import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.Range;
 import bbidder.SplitUtil;
+import bbidder.inferences.bound.CombinedTotalPointsBoundInf;
 
 /**
  * Represents the inference of the total points in a suit.
@@ -25,39 +23,6 @@ public class CombinedTotalPointsRange implements Inference {
         this.rng = Range.between(min, max, 40);
     }
 
-    static class Characteristic {
-        final int minTotalPoints;
-        final int minLength;
-
-        public Characteristic(int minTotalPoints, int minLength) {
-            super();
-            this.minTotalPoints = minTotalPoints;
-            this.minLength = minLength;
-        }
-
-        @Override
-        public String toString() {
-            return "minTotalPoints=" + minTotalPoints + ", minLength=" + minLength;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(minLength, minTotalPoints);
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            Characteristic other = (Characteristic) obj;
-            return minLength == other.minLength && minTotalPoints == other.minTotalPoints;
-        }
-    }
-
     @Override
     public IBoundInference bind(InferenceContext context) {
         Characteristic[] tp = new Characteristic[5];
@@ -65,17 +30,7 @@ public class CombinedTotalPointsRange implements Inference {
             tp[i] = new Characteristic(context.likelyHands.partner.minTotalPoints(i), context.likelyHands.partner.minInSuit(i));
         }
         tp[4] = new Characteristic(context.likelyHands.partner.minTotalPoints(4), 0);
-        return createBounded(tp, rng);
-    }
-
-    private static IBoundInference createBounded(Characteristic[] tp, Range r) {
-        if (r.unBounded()) {
-            return ConstBoundInference.T;
-        }
-        if (r.bits == 0) {
-            return ConstBoundInference.F;
-        }
-        return new BoundInf(tp, r);
+        return CombinedTotalPointsBoundInf.createBounded(tp, rng);
     }
 
     public static CombinedTotalPointsRange makeRange(String str) {
@@ -128,16 +83,6 @@ public class CombinedTotalPointsRange implements Inference {
         return makeRange(str.trim());
     }
 
-    private static int getTotalPoints(Hand hand, Characteristic[] tp) {
-        int pts = hand.totalPoints(Constants.NOTRUMP) + tp[Constants.NOTRUMP].minTotalPoints;
-        for (int s = 0; s < 4; s++) {
-            if (hand.numInSuit(s) + tp[s].minLength >= 8) {
-                pts = Math.max(pts, hand.totalPoints(s) + tp[s].minTotalPoints);
-            }
-        }
-        return pts > 40 ? 40 : pts;
-    }
-
     @Override
     public String toString() {
         return rng + " tpts";
@@ -158,53 +103,5 @@ public class CombinedTotalPointsRange implements Inference {
             return false;
         CombinedTotalPointsRange other = (CombinedTotalPointsRange) obj;
         return Objects.equals(rng, other.rng);
-    }
-
-    static class BoundInf implements IBoundInference {
-        final Characteristic[] tp;
-        final Range r;
-
-        @Override
-        public int size() {
-            return 1;
-        }
-
-        public BoundInf(Characteristic[] tp, Range r) {
-            this.tp = tp;
-            this.r = r;
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            int tpts = getTotalPoints(hand, tp);
-            return r.contains(tpts);
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new BoundInf(tp, r.not());
-        }
-
-        @Override
-        public String toString() {
-            return r + " tpts";
-        }
-
-        @Override
-        public IBoundInference orReduce(IBoundInference i) {
-            if (i instanceof BoundInf && Arrays.equals(tp, ((BoundInf) i).tp)) {
-                return createBounded(tp, r.or(((BoundInf) i).r));
-            }
-            return null;
-        }
-
-        @Override
-        public IBoundInference andReduce(IBoundInference i) {
-            if (i instanceof BoundInf && Arrays.equals(tp, ((BoundInf) i).tp)) {
-                return createBounded(tp, r.and(((BoundInf) i).r));
-            }
-            return null;
-        }
-
     }
 }

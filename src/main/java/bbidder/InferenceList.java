@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.inferences.AndBoundInference;
-import bbidder.inferences.ConstBoundInference;
+import bbidder.inferences.bound.AndBoundInf;
+import bbidder.inferences.bound.ConstBoundInference;
 
 /**
  * Represents a list of inferences read in from the notes.
@@ -29,7 +29,7 @@ public class InferenceList {
     public IBoundInference bind(InferenceContext context) {
         IBoundInference result = ConstBoundInference.create(true);
         for (Inference i : inferences) {
-            result = AndBoundInference.create(result, i.bind(context));
+            result = AndBoundInf.create(result, i.bind(context));
         }
         return result;
     }

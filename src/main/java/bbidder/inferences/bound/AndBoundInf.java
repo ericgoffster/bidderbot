@@ -1,10 +1,11 @@
-package bbidder.inferences;
+package bbidder.inferences.bound;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
+import bbidder.inferences.OrBoundInf;
 
 /**
  * Represents the "and" of 2 or more bound inferences
@@ -12,11 +13,11 @@ import bbidder.IBoundInference;
  * @author goffster
  *
  */
-public class AndBoundInference implements IBoundInference {
+public class AndBoundInf implements IBoundInference {
     public final List<IBoundInference> inferences;
     public final int size;
 
-    private AndBoundInference(List<IBoundInference> inf) {
+    private AndBoundInf(List<IBoundInference> inf) {
         super();
         this.inferences = inf;
         int sz = 0;
@@ -47,7 +48,7 @@ public class AndBoundInference implements IBoundInference {
         for (IBoundInference i : inferences) {
             inf.add(i.negate());
         }
-        return OrBoundInference.create(inf);
+        return OrBoundInf.create(inf);
     }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
@@ -59,7 +60,7 @@ public class AndBoundInference implements IBoundInference {
             // Attempt to combine the inference with an existing inference.
             for(int i = 0; i < andList.size(); i++) {
                 IBoundInference lhs = andList.get(i);
-                IBoundInference comb = AndBoundInference.andReduce(lhs, rhs);
+                IBoundInference comb = AndBoundInf.andReduce(lhs, rhs);
                 // Found a combination, remove original, add the combination.
                 if (comb != null) {
                     // Remove 
@@ -85,7 +86,7 @@ public class AndBoundInference implements IBoundInference {
         if (andList.size() == 1) {
             return andList.get(0);
         }
-        return new AndBoundInference(andList);
+        return new AndBoundInf(andList);
     }
 
     @Override
@@ -100,9 +101,9 @@ public class AndBoundInference implements IBoundInference {
     @Override
     public IBoundInference andReduce(IBoundInference i) {
         // ab * cd = (abcd)
-        if (i instanceof AndBoundInference) {
+        if (i instanceof AndBoundInf) {
             List<IBoundInference> andList = new ArrayList<>(inferences);
-            andList.addAll(((AndBoundInference) i).inferences);
+            andList.addAll(((AndBoundInf) i).inferences);
             return create(andList);
         }
         

@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.inferences.BalanceType;
 import bbidder.inferences.Balanced;
-import bbidder.inferences.Balanced.BalanceType;
 import bbidder.inferences.HCPRange;
 
 public class BidInferenceTest {

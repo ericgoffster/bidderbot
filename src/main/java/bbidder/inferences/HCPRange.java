@@ -2,11 +2,12 @@ package bbidder.inferences;
 
 import java.util.Objects;
 
-import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.Range;
+import bbidder.inferences.bound.ConstBoundInference;
+import bbidder.inferences.bound.HcpBoundInf;
 
 /**
  * Represents the inference for a high card point range.
@@ -38,7 +39,7 @@ public class HCPRange implements Inference {
         if (r.bits == 0) {
             return ConstBoundInference.F;
         }
-        return new BoundInf(r);
+        return new HcpBoundInf(r);
     }
 
     public static Inference valueOf(String str) {
@@ -65,49 +66,5 @@ public class HCPRange implements Inference {
             return false;
         HCPRange other = (HCPRange) obj;
         return Objects.equals(rng, other.rng);
-    }
-
-    static class BoundInf implements IBoundInference {
-        final Range r;
-        
-        @Override
-        public int size() {
-            return 1;
-        }
-
-        public BoundInf(Range r) {
-            this.r = r;
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return r.contains(hand.numHCP());
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new BoundInf(r.not());
-        }
-
-        @Override
-        public String toString() {
-            return r + " hcp";
-        }
-
-        @Override
-        public IBoundInference andReduce(IBoundInference i) {
-            if (i instanceof BoundInf) {
-                return createBound(r.and(((BoundInf) i).r));
-            }
-            return null;
-        }
-
-        @Override
-        public IBoundInference orReduce(IBoundInference i) {
-            if (i instanceof BoundInf) {
-                return createBound(r.or(((BoundInf) i).r));
-            }
-            return null;
-        }
     }
 }

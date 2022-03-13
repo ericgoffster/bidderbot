@@ -24,3 +24,7 @@ test xx Axx Axxxx Jxx:2N 3N
 
 2N 3♠ => gf+, 4+C, 4+D
 test Axx x Axxxx Axxx:2N 3♠
+
+2N 4N => slaminv
+test Axx xx AQxxx Qxx:2N 4N
+test xx Axx AQxxx Qxx:2N 4N
