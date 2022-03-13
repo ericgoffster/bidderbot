@@ -1,11 +1,12 @@
 package bbidder;
 
 import java.util.BitSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public class ShapeSet {
+public class ShapeSet implements Iterable<Shape> {
     public final BitSet shapes;
 
     public ShapeSet(BitSet shapes) {
@@ -102,5 +103,31 @@ public class ShapeSet {
         return Objects.equals(shapes, other.shapes);
     }
     
+    public int minInSuit(int suit) {
+        int num = 14;
+        for(Shape s: this) {
+            num = Math.min(s.numInSuit(suit), num);
+        }
+        return num;
+    }
+    
+    @Override
+    public Iterator<Shape> iterator() {
+        return new Iterator<>() {
+            int i = shapes.nextSetBit(0);
+            @Override
+            public boolean hasNext() {
+                return i >= 0;
+            }
+
+            @Override
+            public Shape next() {
+                Shape shape = Shape.values()[i];
+                i = shapes.nextSetBit(i+1);
+                return shape;
+            }
+            
+        };
+    }
     
 }

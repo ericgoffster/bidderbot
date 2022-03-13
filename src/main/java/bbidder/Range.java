@@ -30,7 +30,8 @@ public class Range {
     }
 
     public int lowest() {
-        return BitUtil.leastBit(bits);
+        int leastBit = BitUtil.leastBit(bits);
+        return leastBit < 0 ? max + 1 : leastBit;
     }
     
     public static Range all(int max) {

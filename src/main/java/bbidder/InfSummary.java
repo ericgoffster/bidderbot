@@ -31,4 +31,12 @@ public class InfSummary {
     public boolean isEmpty() {
         return shape.isEmpty() || hcp.isEmpty() || tpts.isEmpty();
     }
+    
+    public int minInSuit(int suit) {
+        return shape.minInSuit(suit);
+    }
+
+    public int minTotalPts() {
+        return tpts.lowest();
+    }
 }
