@@ -36,6 +36,6 @@ test KQJxxxxx xx x xx:4♠
 5x => opening_preempt 5 x
 test xx x KQJxxxxxx x:5♦
 
-include classpath:major_resp.bidding
-include classpath:minor_resp.bidding
-include classpath:1n/resp.bidding
+include major_resp.bidding
+include minor_resp.bidding
+include 1n/resp.bidding

@@ -1,1 +1,1 @@
-include classpath:opening_bids.bidding
+include opening_bids.bidding

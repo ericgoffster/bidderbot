@@ -97,7 +97,7 @@ public class BiddingSystem {
                 ln = ln.trim();
                 String[] comm = SplitUtil.split(ln, "\\s+", 2);
                 if (comm.length == 2 && comm[0].equalsIgnoreCase("include")) {
-                    load(where, comm[1], reportErrors, inferences, tests, reg);
+                    load(where, resolveUrlSpec(where, comm[1]), reportErrors, inferences, tests, reg);
                 } else if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
                     try {
                         tests.add(BiddingTest.valueOf(where + ":" + lineno, comm[1]));
@@ -115,6 +115,20 @@ public class BiddingSystem {
         } catch (IOException e) {
             reportErrors.accept(new ParseException(where, e));
         }
+    }
+
+    private static String resolveUrlSpec(String where, String urlSpec) {
+        if (!urlSpec.startsWith("/") && !urlSpec.contains(":")) {
+            int ps = where.lastIndexOf("/");
+            if (ps >= 0) {
+                return where.substring(0, ps + 1) + urlSpec;
+            }
+            ps = where.lastIndexOf(":");
+            if (ps >= 0) {
+                return where.substring(0, ps + 1) + urlSpec;
+            }
+        }
+        return urlSpec;
     }
 
     /**
