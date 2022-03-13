@@ -5,8 +5,6 @@ import java.util.Objects;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
-import bbidder.Range;
-import bbidder.ShapeSet;
 import bbidder.StopperSet;
 
 /**
@@ -29,7 +27,7 @@ public class StoppersBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40), stoppers);
+        return InfSummary.ALL.withStoppers(stoppers);
     }
 
     @Override

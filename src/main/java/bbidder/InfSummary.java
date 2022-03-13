@@ -3,35 +3,53 @@ package bbidder;
 import java.util.Objects;
 
 public class InfSummary {
-    public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, Range.all(40), StopperSet.ALL);
-    public static final InfSummary NONE = new InfSummary(ShapeSet.NONE, Range.none(40), StopperSet.NONE);
+    public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, Range.all(40), StopperSet.ALL, StopperSet.ALL);
+    public static final InfSummary NONE = new InfSummary(ShapeSet.NONE, Range.none(40), StopperSet.NONE, StopperSet.NONE);
 
     public final ShapeSet shape;
     public final Range tpts;
     public final StopperSet stoppers;
+    public final StopperSet partialStoppers;
 
-    public InfSummary(ShapeSet shape, Range tpts, StopperSet stoppers) {
+    public InfSummary(ShapeSet shape, Range tpts, StopperSet stoppers, StopperSet partialStoppers) {
         super();
         this.shape = shape;
         this.tpts = tpts;
         this.stoppers = stoppers;
+        this.partialStoppers = partialStoppers;
+    }
+    
+    public InfSummary withShapes(ShapeSet shape) {
+        return new InfSummary(shape, tpts, stoppers, partialStoppers);
+    }
+
+    public InfSummary withStoppers(StopperSet stoppers) {
+        return new InfSummary(shape, tpts, stoppers, partialStoppers);
+    }
+
+    public InfSummary withPartialStoppers(StopperSet partialStoppers) {
+        return new InfSummary(shape, tpts, stoppers, partialStoppers);
+    }
+
+    public InfSummary withTotalPoints(Range tpts) {
+        return new InfSummary(shape, tpts, stoppers, partialStoppers);
     }
 
     public InfSummary and(InfSummary other) {
-        return new InfSummary(shape.and(other.shape), tpts.and(other.tpts), stoppers.and(other.stoppers));
+        return new InfSummary(shape.and(other.shape), tpts.and(other.tpts), stoppers.and(other.stoppers), partialStoppers.and(other.partialStoppers));
     }
 
     public InfSummary or(InfSummary other) {
-        return new InfSummary(shape.or(other.shape), tpts.or(other.tpts), stoppers.or(other.stoppers));
+        return new InfSummary(shape.or(other.shape), tpts.or(other.tpts), stoppers.or(other.stoppers), partialStoppers.or(other.partialStoppers));
     }
 
     @Override
     public String toString() {
-        return shape + "," + tpts + " tpts" + "," + stoppers;
+        return shape + "," + tpts + " tpts" + ",stoppers:" + stoppers+ ",partial stoppers:" + partialStoppers;
     }
 
     public boolean isEmpty() {
-        return shape.isEmpty() || tpts.isEmpty();
+        return shape.isEmpty() || tpts.isEmpty() || stoppers.isEmpty() || partialStoppers.isEmpty();
     }
 
     public Range getSuit(int suit) {

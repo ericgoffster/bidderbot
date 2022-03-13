@@ -243,6 +243,17 @@ public class Hand {
         return stoppers;
     }
 
+    public Stoppers getPartialStoppers() {
+        Stoppers stoppers = Stoppers.EMPTY;
+        for (int suit = 0; suit < 4; suit++) {
+            int highest = BitUtil.highestBit(getAllInSuit(suit));
+            if (highest >= 0 && numInSuit(suit) >= 12 - highest) {
+                stoppers = stoppers.withStopperIn(suit);
+            }
+        }
+        return stoppers;
+    }
+
     public int totalPoints(int suit) {
         int pts = numHCP();
         if (suit != NOTRUMP) {

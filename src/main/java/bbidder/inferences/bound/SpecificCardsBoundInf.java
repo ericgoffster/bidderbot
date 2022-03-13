@@ -5,9 +5,6 @@ import java.util.Objects;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
-import bbidder.Range;
-import bbidder.ShapeSet;
-import bbidder.StopperSet;
 
 public class SpecificCardsBoundInf implements IBoundInference {
     final Hand specificCards;
@@ -34,7 +31,7 @@ public class SpecificCardsBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40), StopperSet.ALL);
+        return InfSummary.ALL;
     }
 
     private SpecificCardsBoundInf(Hand specificCards, boolean have) {

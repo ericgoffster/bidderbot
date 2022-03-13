@@ -47,13 +47,15 @@ public class HandTest {
     public void testFit() {
         Hand hand = Hand.valueOf("    AKQJ  xxx  xx    9432");
         assertFalse(hand.haveFit(InfSummary.ALL, 0));
-        assertTrue(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 4), Range.all(40), StopperSet.ALL), 0));
-        assertFalse(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 4), Range.all(40), StopperSet.ALL), 1));
-        assertFalse(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 3), Range.all(40), StopperSet.ALL), 0));
+        assertTrue(hand.haveFit(InfSummary.ALL.withShapes(new ShapeSet(shape -> shape.numInSuit(0) >= 4)), 0));
+        assertFalse(hand.haveFit(InfSummary.ALL.withShapes(new ShapeSet(shape -> shape.numInSuit(0) >= 4)), 1));
+        assertFalse(hand.haveFit(InfSummary.ALL.withShapes(new ShapeSet(shape -> shape.numInSuit(0) >= 3)), 0));
     }
 
     @Test
     public void testStoppers() {
         assertEquals(Hand.valueOf("A Kxxxx Qx xxxxx").getStoppers(), Stoppers.EMPTY.withStopperIn(3).withStopperIn(2));
+        assertEquals(Hand.valueOf("A Kxxxx Qx xxxxx").getPartialStoppers(), Stoppers.EMPTY.withStopperIn(1).withStopperIn(3).withStopperIn(2));
+        assertEquals(Hand.valueOf("A Kxxxx Qx xxxxx").getPartialStoppers(), Stoppers.EMPTY.withStopperIn(1).withStopperIn(3).withStopperIn(2));
     }
 }

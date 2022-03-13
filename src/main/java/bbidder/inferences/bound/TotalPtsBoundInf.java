@@ -6,8 +6,6 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Range;
-import bbidder.ShapeSet;
-import bbidder.StopperSet;
 
 public class TotalPtsBoundInf implements IBoundInference {
     final InfSummary partnerSummary;
@@ -20,7 +18,7 @@ public class TotalPtsBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(ShapeSet.ALL, r, StopperSet.ALL);
+        return InfSummary.ALL.withTotalPoints(r);
     }
 
     @Override

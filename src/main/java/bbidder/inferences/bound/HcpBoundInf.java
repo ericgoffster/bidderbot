@@ -6,8 +6,6 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Range;
-import bbidder.ShapeSet;
-import bbidder.StopperSet;
 
 public class HcpBoundInf implements IBoundInference {
     final Range r;
@@ -45,7 +43,7 @@ public class HcpBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.atLeast(r.lowest(), 40), StopperSet.ALL);
+        return InfSummary.ALL.withTotalPoints(Range.atLeast(r.lowest(), 40));
     }
 
     private HcpBoundInf(Range r) {

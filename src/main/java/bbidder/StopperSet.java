@@ -108,7 +108,7 @@ public class StopperSet implements Iterable<Stoppers> {
         if (strNoStoppers.size() == 0) {
             return "stoppers in " + String.join(",", strStoppers);
         }
-        return "stoppers in " + String.join(",", strStoppers) + ", no stoppers in " + String.join(",", strNoStoppers);
+        return " in " + String.join(",", strStoppers) + ", not in " + String.join(",", strNoStoppers);
     }
 
     @Override

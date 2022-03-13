@@ -21,6 +21,6 @@ public class HcpBoundInfTest {
         assertFalse(HcpBoundInf.create(Range.between(10, 11, 40)).matches(Hand.valueOf("AKxx Qxx xxx xxx")));
         assertTrue(HcpBoundInf.create(Range.between(10, 11, 40)).matches(Hand.valueOf("AKxx KJx xxx xxx")));
         InfSummary summary = HcpBoundInf.create(Range.between(10, 11, 40)).getSummary();
-        assertEquals(summary, new InfSummary(ShapeSet.ALL, Range.atLeast(10, 40), StopperSet.ALL));
+        assertEquals(summary, new InfSummary(ShapeSet.ALL, Range.atLeast(10, 40), StopperSet.ALL, StopperSet.ALL));
     }
 }
