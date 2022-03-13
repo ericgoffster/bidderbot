@@ -8,10 +8,8 @@ test AQxx AJxx Ax xxx: 1N 2♥ 3♠
 test AQx Axxx Axx Qxx: 1N 2♦ 2N
 test AQxx Axx Axx Qxx: 1N 2♥ 2N
 
-1N 2♦ 2♠ => 4+♥, 2-♠
+1N 2M-1 NJx => 4+M, 2-x
 test Ax Axxx AJxx Axx: 1N 2♦ 2♠
-
-1N 2M-1 3m => 4+M, 2-m
 test Axxx Axx AJxx Ax: 1N 2♥ 3♣
 test Axxx Axx Ax AJxx: 1N 2♥ 3♦
 test Axx Axxx AJxx Ax: 1N 2♦ 3♣
