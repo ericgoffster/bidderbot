@@ -46,3 +46,4 @@ test Kxxx xx Axx Qxxx :1♥ 1♠
 test xxx xx AKxx Qxxx :1♥ 1N
 
 include simple_major_raise.bidding
+include j2n_rebids.bidding
