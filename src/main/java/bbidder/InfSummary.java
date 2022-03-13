@@ -32,8 +32,8 @@ public class InfSummary {
         return shape.isEmpty() || tpts.isEmpty();
     }
 
-    public int minInSuit(int suit) {
-        return shape.minInSuit(suit);
+    public Range getSuit(int suit) {
+        return shape.getSuit(suit);
     }
 
     public int minTotalPts() {

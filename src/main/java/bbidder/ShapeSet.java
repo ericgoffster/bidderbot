@@ -8,14 +8,14 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public class ShapeSet implements Iterable<Shape> {
-    public final BitSet shapes;
+    public static final ShapeSet ALL = new ShapeSet(List.of(Shape.values()));
+    public static final ShapeSet NONE = new ShapeSet(List.of());
+
+    private final BitSet shapes;
 
     private ShapeSet(BitSet shapes) {
         this.shapes = shapes;
     }
-
-    public static final ShapeSet ALL = new ShapeSet(List.of(Shape.values()));
-    public static final ShapeSet NONE = new ShapeSet(List.of());
 
     public ShapeSet(Iterable<Shape> list) {
         shapes = new BitSet(Shape.values().length);
@@ -109,14 +109,13 @@ public class ShapeSet implements Iterable<Shape> {
         return Objects.equals(shapes, other.shapes);
     }
 
-    public int minInSuit(int suit) {
-        int num = 14;
+    public Range getSuit(int suit) {
+        long bits = 0;
         for (Shape s : this) {
-            num = Math.min(s.numInSuit(suit), num);
+            bits |= (1L << s.numInSuit(suit));
         }
-        return num;
+        return new Range(bits, 13);
     }
-
     @Override
     public Iterator<Shape> iterator() {
         return new Iterator<>() {
