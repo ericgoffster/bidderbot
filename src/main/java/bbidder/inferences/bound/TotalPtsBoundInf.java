@@ -13,12 +13,12 @@ public class TotalPtsBoundInf implements IBoundInference {
     
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40), Range.all(40));
+        return new InfSummary(ShapeSet.ALL, Range.all(40), Range.all(40), r);
     }
     
     @Override
     public InfSummary getNotSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40), Range.all(40));
+        return new InfSummary(ShapeSet.ALL, Range.all(40), Range.all(40), r.not());
     }
     
     public static IBoundInference createBounded(LikelyHandSummary partnerSummary, Range r) {

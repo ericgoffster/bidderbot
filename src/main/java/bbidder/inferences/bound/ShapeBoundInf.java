@@ -21,12 +21,12 @@ public class ShapeBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(shapes, Range.all(40), Range.all(40));
+        return new InfSummary(shapes, Range.all(40), Range.all(40), Range.all(40));
     }
     
     @Override
     public InfSummary getNotSummary() {
-        return new InfSummary(shapes.not(), Range.all(40), Range.all(40));
+        return new InfSummary(shapes.not(), Range.all(40), Range.all(40), Range.all(40));
     }
     
     public static IBoundInference create(ShapeSet r) {

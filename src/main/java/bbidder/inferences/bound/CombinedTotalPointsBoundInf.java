@@ -13,12 +13,12 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
     
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40), r);
+        return new InfSummary(ShapeSet.ALL, Range.all(40), r, Range.all(40));
     }
     
     @Override
     public InfSummary getNotSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40), r.not());
+        return new InfSummary(ShapeSet.ALL, Range.all(40), r.not(), Range.all(40));
     }
     
     public static IBoundInference createBounded(LikelyHandSummary partnerSummary, Range r) {
