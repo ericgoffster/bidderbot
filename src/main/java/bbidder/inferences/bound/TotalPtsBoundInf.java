@@ -19,11 +19,6 @@ public class TotalPtsBoundInf implements IBoundInference {
         return new TotalPtsBoundInf(partnerSummary, r);
     }
     
-    @Override
-    public int size() {
-        return 1;
-    }
-
     public TotalPtsBoundInf(LikelyHandSummary tp, Range r) {
         this.partnerSummary = tp;
         this.r = r;

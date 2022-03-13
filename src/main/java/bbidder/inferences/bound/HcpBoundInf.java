@@ -7,11 +7,6 @@ import bbidder.Range;
 public class HcpBoundInf implements IBoundInference {
     final Range r;
     
-    @Override
-    public int size() {
-        return 1;
-    }
-
     public HcpBoundInf(Range r) {
         this.r = r;
     }

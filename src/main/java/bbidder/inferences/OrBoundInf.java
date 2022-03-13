@@ -16,23 +16,12 @@ import bbidder.inferences.bound.ConstBoundInference;
  */
 public class OrBoundInf implements IBoundInference {
     public final List<IBoundInference> inferences;
-    public final int size;
 
     private OrBoundInf(List<IBoundInference> inf) {
         super();
         this.inferences = inf;
-        int sz = 0;
-        for(IBoundInference i: inf) {
-            sz += i.size();
-        }
-        size = sz + inf.size();
     }
     
-    @Override
-    public int size() {
-        return size;
-    }
-
     @Override
     public boolean matches(Hand hand) {
         for (IBoundInference i : inferences) {

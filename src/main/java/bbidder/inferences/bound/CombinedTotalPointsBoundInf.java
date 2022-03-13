@@ -19,11 +19,6 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
         return new CombinedTotalPointsBoundInf(partnerSummary, r);
     }
     
-    @Override
-    public int size() {
-        return 1;
-    }
-
     public CombinedTotalPointsBoundInf(LikelyHandSummary tp, Range r) {
         this.partnerSummary = tp;
         this.r = r;

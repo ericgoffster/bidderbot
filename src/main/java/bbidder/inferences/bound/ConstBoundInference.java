@@ -14,11 +14,6 @@ public class ConstBoundInference implements IBoundInference {
     public static ConstBoundInference F = new ConstBoundInference(false);
     public final boolean result;
     
-    @Override
-    public int size() {
-        return 1;
-    }
-
     private ConstBoundInference(boolean result) {
         super();
         this.result = result;
