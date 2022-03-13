@@ -1,5 +1,6 @@
 package bbidder;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
@@ -105,6 +106,13 @@ public class BiddingContextTest {
     public void testxm3() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1H, BidPattern.valueOf("1x-3"));
         assertEquals(bc.getSuit("x").intValue(), 0);
+    }
+
+    @Test
+    public void testDown() {
+        BiddingContext bc = new BiddingContext();
+        assertArrayEquals(bc.getBids(BidPattern.valueOf("1M:down")).toArray(new Bid[0]), new Bid[] {Bid._1S, Bid._1H});
+        assertArrayEquals(bc.getBids(BidPattern.valueOf("1M")).toArray(new Bid[0]), new Bid[] {Bid._1H, Bid._1S});
     }
 
     @Test
