@@ -104,6 +104,16 @@ public class BidPattern {
             }
             return suits;
         }
+        {
+            Integer strain = Strain.getStrain(str);
+            if (strain != null) {
+                if (strain < 0 || strain > 3) {
+                    throw new IllegalArgumentException("Invalid strain");
+                }
+                return (short)(1 << strain);
+            }
+        }
+
         switch (str) {
         case "M":
             return MAJORS;
