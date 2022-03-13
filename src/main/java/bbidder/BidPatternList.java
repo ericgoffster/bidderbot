@@ -14,9 +14,10 @@ import java.util.Objects;
  *
  */
 public class BidPatternList {
+    public static final BidPatternList EMPTY = new BidPatternList(List.of());
     private final List<BidPattern> bids;
 
-    public BidPatternList(List<BidPattern> bids) {
+    private BidPatternList(List<BidPattern> bids) {
         super();
         this.bids = bids;
     }

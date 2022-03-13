@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  *
  */
 public final class BiddingContext {
-    public static final BiddingContext EMPTY = new BiddingContext(new BidPatternList(List.of()), Map.of());
+    public static final BiddingContext EMPTY = new BiddingContext(BidPatternList.EMPTY, Map.of());
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     private final BidPatternList bids;
     
