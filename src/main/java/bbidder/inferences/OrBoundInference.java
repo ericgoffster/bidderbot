@@ -72,4 +72,9 @@ public class OrBoundInference implements IBoundInference {
         }
         return "(" + String.join(" | ", l) + ")";
     }
+       
+    @Override
+    public IBoundInference andReduce(IBoundInference i) {
+        return null;
+    }
 }

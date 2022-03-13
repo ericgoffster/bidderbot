@@ -85,6 +85,17 @@ public class Balanced implements Inference {
         public String toString() {
             return "balanced";
         }
+
+        @Override
+        public IBoundInference andReduce(IBoundInference i) {
+            if (i instanceof BalancedBoundInf) {
+                return this;
+            }
+            if (i instanceof UnbalancedBoundInf) {
+                return ConstBoundInference.F;
+            }
+            return null;
+        }
     }
 
     private static final class UnbalancedBoundInf implements IBoundInference {
@@ -103,6 +114,17 @@ public class Balanced implements Inference {
         @Override
         public String toString() {
             return "unbalanced";
+        }
+
+        @Override
+        public IBoundInference andReduce(IBoundInference i) {
+            if (i instanceof UnbalancedBoundInf) {
+                return this;
+            }
+            if (i instanceof BalancedBoundInf) {
+                return ConstBoundInference.F;
+            }
+            return null;
         }
     }
 }

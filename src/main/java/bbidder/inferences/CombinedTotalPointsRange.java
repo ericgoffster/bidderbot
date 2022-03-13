@@ -1,5 +1,6 @@
 package bbidder.inferences;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import bbidder.Constants;
@@ -184,5 +185,19 @@ public class CombinedTotalPointsRange implements Inference {
         public String toString() {
             return r + "+ tpts";
         }
+        
+        @Override
+        public IBoundInference andReduce(IBoundInference i) {
+            if (i instanceof BoundInf && Arrays.equals(tp, ((BoundInf) i).tp)) {
+                Range r2 = ((BoundInf) i).r;
+                Range newR = new Range(r.bits & r2.bits, r.max);
+                if (newR.bits == 0) {
+                    return ConstBoundInference.F;
+                }
+                return new BoundInf(tp, newR);
+            }
+            return null;
+        }
+
     }
 }

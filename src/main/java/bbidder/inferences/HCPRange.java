@@ -110,5 +110,18 @@ public class HCPRange implements Inference {
         public String toString() {
             return r + " hcp";
         }
+               
+        @Override
+        public IBoundInference andReduce(IBoundInference i) {
+            if (i instanceof BoundInf) {
+                Range r2 = ((BoundInf) i).r;
+                Range newR = new Range(r.bits & r2.bits, r.max);
+                if (newR.bits == 0) {
+                    return ConstBoundInference.F;
+                }
+                return new BoundInf(newR);
+            }
+            return null;
+        }
     }
 }

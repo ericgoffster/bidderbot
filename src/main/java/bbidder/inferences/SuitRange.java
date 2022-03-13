@@ -4,11 +4,11 @@ import static bbidder.Constants.STR_ALL_SUITS;
 
 import java.util.Objects;
 
-import bbidder.InferenceContext;
-import bbidder.SplitUtil;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
+import bbidder.SplitUtil;
 
 /**
  * Represents the inference of a range of lengths of a suit.
@@ -99,26 +99,40 @@ public class SuitRange implements Inference {
 
     static class BoundInf implements IBoundInference {
         final int suit;
-        final Range range;
+        final Range r;
 
-        public BoundInf(int suit, Range range) {
+        public BoundInf(int suit, Range r) {
             this.suit = suit;
-            this.range = range;
+            this.r = r;
         }
 
         @Override
         public boolean matches(Hand hand) {
-            return (range.bits & (1L << hand.numInSuit(suit))) != 0;
+            return (r.bits & (1L << hand.numInSuit(suit))) != 0;
         }
 
         @Override
         public BoundInf negate() {
-            return new BoundInf(suit, range.not());
+            return new BoundInf(suit, r.not());
         }
 
         @Override
         public String toString() {
-            return range + " " + STR_ALL_SUITS.charAt(suit);
+            return r + " " + STR_ALL_SUITS.charAt(suit);
+        }
+        
+        
+        @Override
+        public IBoundInference andReduce(IBoundInference i) {
+            if (i instanceof BoundInf && suit == ((BoundInf) i).suit) {
+                Range r2 = ((BoundInf) i).r;
+                Range newR = new Range(r.bits & r2.bits, r.max);
+                if (newR.bits == 0) {
+                    return ConstBoundInference.F;
+                }
+                return new BoundInf(suit, newR);
+            }
+            return null;
         }
     }
 }

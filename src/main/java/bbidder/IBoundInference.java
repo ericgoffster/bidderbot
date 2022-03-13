@@ -19,4 +19,6 @@ public interface IBoundInference {
      * @return The negated inference.
      */
     public IBoundInference negate();
+    
+    public IBoundInference andReduce(IBoundInference i);
 }

@@ -37,4 +37,9 @@ public class ConstBoundInference implements IBoundInference {
     public String toString() {
         return String.valueOf(result);
     }
+
+    @Override
+    public IBoundInference andReduce(IBoundInference i) {
+        return null;
+    }
 }
