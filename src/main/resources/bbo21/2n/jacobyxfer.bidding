@@ -1,0 +1,17 @@
+# Jacoby Transfers
+
+2N 3M-1 3M => 20- tpts
+test AQJx Qx AKxx Axx: 2N 3♥ 3♠
+test Qx AQJx AKxx Axx: 2N 3♦ 3♥
+
+2N 3M-1 3N => 4+M, superbalanced
+test AKx AJxx Axx AJx: 2N 3♦ 3N
+
+2N 3M-1 NJx => 4+M, 2-x
+test AKxx AKxx xx AKx: 2N 3♦ 4♦
+test AKxx AKxx AKx xx: 2N 3♦ 4♣
+test xx AKxx AKx AKxx: 2N 3♦ 3♠
+
+2N 3M-1 3M =>
+test xx AQJx AKxx AKx: 2N 3♥ 3♠
+test AQJx xx AKxx AKx: 2N 3♦ 3♥

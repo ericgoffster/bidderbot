@@ -1,0 +1,25 @@
+# 1 over 1 rebids
+
+1x 1y 2y => min, 4+y
+test AQxx Axxx xx Kxx:1♣ 1♥ 2♥
+
+1x 1y 3y => inv, 4+y
+test AKxx Axxx xx AKx:1♣ 1♥ 3♥
+
+1x 1M 4M => gf, 4+M
+test AKxx AKxx x AQxx:1♣ 1♥ 4♥
+
+1x 1y Jz => 4+z, 5+x, 20+ tpts
+test AKx AKxx x AQxxx:1♣ 1♦ 2♥
+
+1x 1y 1z => 4+z
+test AKxx AKxx x xxxx:1♣ 1♦ 1♥
+
+1x 1y 1N => 12-14 tpts
+test Qxx Axx Ax Axxxx:1♣ 1♦ 1N
+
+1x 1y 2N => 18-19 tpts
+test AQx Axx Ax Axxxx:1♣ 1♦ 2N
+
+1x 1y 3N => 20+ tpts
+test x AKxx AQxx AKxx:1♦ 1♠ 3N

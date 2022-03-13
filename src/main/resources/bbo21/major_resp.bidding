@@ -1,0 +1,38 @@
+# Responses to a major suit opening
+
+P 1M 2♣ => 11+ tpts, 3+ M
+test xxx KJx Kx Axxxx:P 1♥ 2♣
+
+P 1M 2M => 6-10 tpts, 3+ M
+test xxx Kxx Kx xxxxx:P 1♥ 2♥
+
+1M 2M => min, 3+ M
+test xxx Kxx Kx xxxxx:1♥ 2♥
+
+1M DJy => gf+, 1- y, 4+ M
+test x Kxxx Axx Axxxx:1♥ 3♠
+test Kxxx x Axx Axxxx:1♠ 4♥
+
+1M 2N => gf+, 4+ M
+test AQx Axxx Kx xxxx:1♥ 2N
+
+1M 3M => inv, 4+ M
+test xxx Kxxx Kx KQxx:1♥ 3♥
+
+1M 3m => inv, 6+ m
+test Qxx x Qxx AQJxxx:1♥ 3♣
+
+1M 1N => inv, 3 M
+test Kx KJx xxx Axxxx :1♥ 1N
+
+1M NJy:down => gf+, 5+ y, longest_or_equal y among unbid
+1M NJy => gf+, 4 y, longest_or_equal y among unbid
+test AQxxx xx Axx Kxx :1♥ 1♠
+test Kxx xx Axx AQxxx :1♥ 2♣
+
+1♥ 1♠:down => min+, 4+ ♠
+test Kxxx xx Axx Qxxx :1♥ 1♠
+
+# Catch all
+1M 1N => min+
+test xxx xx AKxx Qxxx :1♥ 1N
