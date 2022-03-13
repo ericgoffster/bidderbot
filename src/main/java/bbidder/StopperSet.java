@@ -17,21 +17,29 @@ public class StopperSet implements Iterable<Stoppers> {
     }
 
     public StopperSet(Iterable<Stoppers> list) {
-        short stop = 0;
+        stoppers = createStoppers(list);
+    }
+
+    private static short createStoppers(Iterable<Stoppers> list) {
+        short stoppers = 0;
         for (Stoppers s : list) {
-            stop |= 1 << s.ordinal();
+            stoppers |= 1 << s.ordinal();
         }
-        stoppers = stop;
+        return stoppers;
     }
 
     public StopperSet(Predicate<Stoppers> pred) {
-        short stop = 0;
+        stoppers = createStoppers(pred);
+    }
+
+    private static short createStoppers(Predicate<Stoppers> pred) {
+        short stoppers = 0;
         for (Stoppers s : Stoppers.values()) {
             if (pred.test(s)) {
-                stop |= 1 << s.ordinal();
+                stoppers |= 1 << s.ordinal();
             }
         }
-        stoppers = stop;
+        return stoppers;
     }
 
     public boolean contains(Stoppers s) {
@@ -47,8 +55,9 @@ public class StopperSet implements Iterable<Stoppers> {
     }
 
     public StopperSet not() {
-        return new StopperSet(shape -> !contains(shape));
+        return new StopperSet((short)(stoppers ^ ALL.stoppers));
     }
+
 
     public boolean isEmpty() {
         return stoppers == 0;
@@ -59,7 +68,7 @@ public class StopperSet implements Iterable<Stoppers> {
     }
 
     public boolean unBounded() {
-        return stoppers == 0xffff;
+        return stoppers == ALL.stoppers;
     }
 
     @Override
@@ -70,10 +79,10 @@ public class StopperSet implements Iterable<Stoppers> {
         boolean[] haveStopper = { true, true, true, true };
         boolean[] haveNoStopper = { true, true, true, true };
 
-        for (Stoppers shape : this) {
+        for (Stoppers stoppers : this) {
             for (int s = 0; s < 4; s++) {
-                haveStopper[s] &= shape.stopperIn(s);
-                haveNoStopper[s] &= !shape.stopperIn(s);
+                haveStopper[s] &= stoppers.stopperIn(s);
+                haveNoStopper[s] &= !stoppers.stopperIn(s);
             }
         }
         List<String> strNoStoppers = new ArrayList<>();
@@ -135,8 +144,9 @@ public class StopperSet implements Iterable<Stoppers> {
 
     @Override
     public Iterator<Stoppers> iterator() {
+        Iterable<Integer> iterable = BitUtil.iterate(stoppers);
         return new Iterator<>() {
-            Iterator<Integer> i = BitUtil.iterate(stoppers).iterator();
+            Iterator<Integer> i = iterable.iterator();
 
             @Override
             public boolean hasNext() {

@@ -18,19 +18,29 @@ public class ShapeSet implements Iterable<Shape> {
     }
 
     public ShapeSet(Iterable<Shape> list) {
-        shapes = new BitSet(Shape.values().length);
+        this.shapes = createShapes(list);
+    }
+
+    private static BitSet createShapes(Iterable<Shape> list) {
+        BitSet shp = new BitSet(Shape.values().length);
         for (Shape s : list) {
-            shapes.set(s.ordinal());
+            shp.set(s.ordinal());
         }
+        return shp;
     }
 
     public ShapeSet(Predicate<Shape> pred) {
-        shapes = new BitSet(Shape.values().length);
+        this.shapes = createShapes(pred);
+    }
+
+    private static BitSet createShapes(Predicate<Shape> pred) {
+        BitSet shp = new BitSet(Shape.values().length);
         for (Shape s : Shape.values()) {
             if (pred.test(s)) {
-                shapes.set(s.ordinal());
+                shp.set(s.ordinal());
             }
         }
+        return shp;
     }
 
     public boolean contains(Shape s) {
@@ -50,7 +60,9 @@ public class ShapeSet implements Iterable<Shape> {
     }
 
     public ShapeSet not() {
-        return new ShapeSet(shape -> !contains(shape));
+        BitSet a = (BitSet) shapes.clone();
+        a.xor(ALL.shapes);
+        return new ShapeSet(a);
     }
 
     public boolean isEmpty() {
