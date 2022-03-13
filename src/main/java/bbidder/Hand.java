@@ -213,11 +213,21 @@ public class Hand {
         return hcp;
     }
     
-    public int getTotalPoints(LikelyHandSummary partnerSummary) {
+    public int getCombinedTotalPoints(LikelyHandSummary partnerSummary) {
         int pts = totalPoints(Constants.NOTRUMP) + partnerSummary.suitSummaries[Constants.NOTRUMP].minTotalPoints;
         for (int s = 0; s < 4; s++) {
             if (numInSuit(s) + partnerSummary.suitSummaries[s].minLength >= 8) {
                 pts = Math.max(pts, totalPoints(s) + partnerSummary.suitSummaries[s].minTotalPoints);
+            }
+        }
+        return pts > 40 ? 40 : pts;
+    }
+
+    public int getTotalPoints(LikelyHandSummary partnerSummary) {
+        int pts = totalPoints(Constants.NOTRUMP);
+        for (int s = 0; s < 4; s++) {
+            if (numInSuit(s) + partnerSummary.suitSummaries[s].minLength >= 8) {
+                pts = Math.max(pts, totalPoints(s));
             }
         }
         return pts > 40 ? 40 : pts;

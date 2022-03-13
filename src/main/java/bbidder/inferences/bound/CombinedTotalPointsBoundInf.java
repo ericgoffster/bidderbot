@@ -31,7 +31,7 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
 
     @Override
     public boolean matches(Hand hand) {
-        return r.contains(hand.getTotalPoints(partnerSummary));
+        return r.contains(hand.getCombinedTotalPoints(partnerSummary));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
 
     @Override
     public String toString() {
-        return r + " tpts" + ", partner=" + partnerSummary;
+        return r + " combined tpts" + ", partner=" + partnerSummary;
     }
 
     @Override

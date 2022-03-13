@@ -83,6 +83,8 @@ public class SuitRange implements Inference {
         }
         if (suit.equalsIgnoreCase("hcp")) {
             return new HCPRange(Range.between(min, max, 40));
+        } else if (suit.equalsIgnoreCase("tpts")) {
+            return new TotalPointsRange(Range.between(min, max, 40));
         } else {
             return new SuitRange(suit, Range.between(min, max, 13));
         }
