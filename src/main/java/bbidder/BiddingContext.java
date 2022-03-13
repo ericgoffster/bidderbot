@@ -37,18 +37,12 @@ public class BiddingContext {
     }
     
     public BiddingContext withNewBid(Bid bid, BidPattern pattern) {
-        Map<String, Integer> newSuits;
-        if (pattern.simpleBid != null) {
-            if (bid != pattern.simpleBid) {
-                throw new IllegalArgumentException(bid + " is incomptabile with " + pattern);
-            }
+        Set<Bid> acceptable = getBids(pattern);
+        if (!acceptable.contains(bid)) {
+            throw new IllegalArgumentException(bid + " is incomptabile with " + pattern);
         }
+        Map<String, Integer> newSuits;
         if (bid.isSuitBid()) {
-            if (pattern.level != null) {
-                if (bid.level != pattern.level.intValue()) {
-                    throw new IllegalArgumentException(bid + " is incomptabile with " + pattern);
-                }
-            }
             newSuits = new HashMap<String, Integer>(suits);
             String symbol = pattern.getSuit();
             if (symbol != null) {
@@ -58,9 +52,6 @@ public class BiddingContext {
                 }
             }
         } else {
-            if (pattern.simpleBid == null) {
-                throw new IllegalArgumentException(bid + " is incomptabile with " + pattern);
-            }
             newSuits = suits;
         }
         return new BiddingContext(bids.withBidAdded(bid), newSuits);
@@ -169,20 +160,6 @@ public class BiddingContext {
         } else if (symbol.equals("om")) {
             suits.put("m", otherMinor(strain));
         } else {
-            switch(symbol) {
-            case "m":
-            case "om":
-                otherMinor(strain);
-                break;
-            case "M":
-            case "OM":
-                otherMajor(strain);
-                break;
-            default:
-                if (strain == Constants.NOTRUMP) {
-                    throw new IllegalArgumentException("invalid strain");
-                }
-            }
             suits.put(symbol, strain);            
         }
     }
