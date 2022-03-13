@@ -6,15 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.Test;
 
 import bbidder.Hand;
+import bbidder.NOfTop;
+import bbidder.Range;
 
 public class SpecificCardsBoundInfTest {
     @Test
     public void test() {
-        assertTrue(SpecificCardsBoundInf.create(Hand.valueOf("AK - - -")).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
-        assertTrue(SpecificCardsBoundInf.create(Hand.valueOf("A - - -")).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
-        assertFalse(SpecificCardsBoundInf.create(Hand.valueOf("AKQ - - -")).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
-
-        assertFalse(SpecificCardsBoundInf.create(Hand.valueOf("AK - - -")).negate().matches(Hand.valueOf("AKxx Kxx xxx xxx")));
-        assertTrue(SpecificCardsBoundInf.create(Hand.valueOf("AKQ - - -")).negate().matches(Hand.valueOf("AKxx Kxx xxx xxx")));
+        assertTrue(SpecificCardsBoundInf.create(new NOfTop(Range.exactly(2, 3), 3, 3)).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
+        assertFalse(SpecificCardsBoundInf.create(new NOfTop(Range.exactly(1, 3), 3, 3)).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
+        assertFalse(SpecificCardsBoundInf.create(new NOfTop(Range.exactly(2, 3), 3, 2)).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
     }
 }

@@ -1,23 +1,18 @@
 package bbidder.inferences;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bbidder.BiddingContext;
-import bbidder.BitUtil;
-import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.MappedInference;
+import bbidder.NOfTop;
 import bbidder.Range;
-import bbidder.SplitUtil;
-import bbidder.inferences.bound.OrBoundInf;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
 
 /**
@@ -25,47 +20,31 @@ import bbidder.inferences.bound.SpecificCardsBoundInf;
  */
 public class SpecificCards implements Inference {
     public final String suit;
-    public final Set<Short> cards;
+    public final Range rng;
+    public final int top;
     
     public static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)");
 
-    public SpecificCards(String suit, Set<Short> cards) {
+    public SpecificCards(String suit, Range rng, int top) {
         super();
         this.suit = suit;
-        this.cards = cards;
+        this.rng = rng;
+        this.top = top;
     }
 
     @Override
     public List<MappedInference> bind(InferenceContext context) {
         List<MappedInference> l = new ArrayList<>();
         for (var e : context.lookupSuits(suit).entrySet()) {
-            List<IBoundInference> orList = new ArrayList<>();
-            for (short crd : cards) {
-                orList.add(createBound(e.getKey(), crd));
-            }
-            l.add(new MappedInference(OrBoundInf.create(orList), e.getValue()));
+            l.add(new MappedInference(createBound(new NOfTop(rng, top, e.getKey())), e.getValue()));
         }
         return l;
     }
 
-    private static IBoundInference createBound(int s, short cards) {
-        Hand hand = new Hand();
-        for (int r : BitUtil.iterate(cards)) {
-            hand = hand.withCardAdded(s, r);
-        }
-        return SpecificCardsBoundInf.create(hand);
+    private static IBoundInference createBound(NOfTop spec) {
+        return SpecificCardsBoundInf.create(spec);
     }
     
-    public static Set<Short> atLeastOneOf(Range r, int top) {
-        Set<Short> cards = new HashSet<>();
-        for(int i = 0; i < (1L << top); i++) {
-            if (r.contains(BitUtil.size(i))) {
-                cards.add((short)(i << (13 - top)));
-            }
-        }
-        return cards;
-    }
-
     public static Inference valueOf(String str) {
         if (str == null) {
             return null;
@@ -79,47 +58,20 @@ public class SpecificCards implements Inference {
                 if (!BiddingContext.isValidSuit(suit)) {
                     return null;
                 }
-                Set<Short> s = atLeastOneOf(Range.between(rng.min, rng.max, top), top);
-                return new SpecificCards(suit, s);
+                return new SpecificCards(suit, Range.between(rng.min, rng.max, top), top);
             }
         }
-        String[] parts = SplitUtil.split(str, "\\s+", 3);
-        if (parts.length == 3 && parts[1].equalsIgnoreCase("in")) {
-            String suit = parts[2];
-            if (!BiddingContext.isValidSuit(suit)) {
-                return null;
-            }
-            String cardsS = parts[0].toUpperCase();
-            String[] patterns = cardsS.split("\\|");
-            Set<Short> cards = new HashSet<>();
-            for (int j = 0; j < patterns.length; j++) {
-                String patt = patterns[j];
-                short crd = 0;
-                for (int i = 0; i < patt.length(); i++) {
-                    char c = patt.charAt(i);
-                    int rank = Hand.getRank(c, (short) 0x1ff);
-                    crd |= (short)(1 << rank);
-                }
-                cards.add(crd);
-            }
-            return new SpecificCards(suit, cards);
-        } else {
-            return null;
-        }
+        return null;
     }
 
     @Override
     public String toString() {
-        List<String> l = new ArrayList<>();
-        for (short c : cards) {
-            l.add(Hand.printSuit(c));
-        }
-        return String.join("|", l) + " " + suit;
+        return rng + " of top " + top + " in " + suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cards, suit);
+        return Objects.hash(rng, suit, top);
     }
 
     @Override
@@ -131,6 +83,6 @@ public class SpecificCards implements Inference {
         if (getClass() != obj.getClass())
             return false;
         SpecificCards other = (SpecificCards) obj;
-        return Objects.equals(cards, other.cards) && Objects.equals(suit, other.suit);
+        return Objects.equals(rng, other.rng) && Objects.equals(suit, other.suit) && top == other.top;
     }
 }

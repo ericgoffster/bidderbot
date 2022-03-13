@@ -26,7 +26,7 @@ test x AKxx Kxx AQxxx:1♣ 1♠ 2♥
 1x 1y 1z => 4+z
 test AKxx AKxx x xxxx:1♣ 1♦ 1♥
 
-1x 1y 3N => 7+ x, AKQ in x, partial_stoppers unbid
+1x 1y 3N => 7+ x, 3 of top 3 in x, partial_stoppers unbid
 test x Qxx AKQxxxx Qx:1♦ 1♠ 3N 
 
 1x 1y 3x => 6+x, 17-20 tpts

@@ -13,3 +13,6 @@ test AKxxx Axx Kxxx x:1♠ 2♠ 2N
 
 1♠ 2♠ 3x => inv, 3+ x, 1 of top 3 in x
 test AKxxx AQx Kxx xx:1♠ 2♠ 3D
+
+1♠ 2♠ 3♠ => inv
+test AKxxxx AQx Kx xx:1♠ 2♠ 3♠

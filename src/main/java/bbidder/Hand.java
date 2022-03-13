@@ -44,8 +44,10 @@ public class Hand {
         return new Hand(cards & ~(1L << (13 * suit + rank)));
     }
 
-    public boolean haveCards(Hand specificCards) {
-        return (specificCards.cards & cards) == specificCards.cards;
+    public boolean haveCards(NOfTop spec) {
+        long bits = ((1L << spec.top) - 1);
+        int cnt = BitUtil.size(bits & (getAllInSuit(spec.suit) >> (13 - spec.top)));
+        return spec.r.contains(cnt);
     }
 
     static char toRank(int rank) {

@@ -5,18 +5,25 @@ import java.util.Objects;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
+import bbidder.NOfTop;
 
 public class SpecificCardsBoundInf implements IBoundInference {
-    final Hand specificCards;
+    final NOfTop spec;
     final boolean have;
-
+    
     @Override
     public IBoundInference negate() {
-        return new SpecificCardsBoundInf(specificCards, !have);
+        return new SpecificCardsBoundInf(spec, !have);
     }
 
-    public static IBoundInference create(Hand hand) {
-        return new SpecificCardsBoundInf(hand, true);
+    public static IBoundInference create(NOfTop spec) {
+        if (spec.isEmpty()) {
+            return ConstBoundInference.F;
+        }
+        if (spec.isFull()) {
+            return ConstBoundInference.T;
+        }
+        return new SpecificCardsBoundInf(spec, true);
     }
 
     @Override
@@ -34,24 +41,25 @@ public class SpecificCardsBoundInf implements IBoundInference {
         return InfSummary.ALL;
     }
 
-    private SpecificCardsBoundInf(Hand specificCards, boolean have) {
-        this.specificCards = specificCards;
+    private SpecificCardsBoundInf(NOfTop spec, boolean have) {
+        super();
+        this.spec = spec;
         this.have = have;
     }
 
     @Override
     public boolean matches(Hand hand) {
-        return have ? hand.haveCards(specificCards) : !hand.haveCards(specificCards);
+        return have ? hand.haveCards(spec) : !hand.haveCards(spec);
     }
 
     @Override
     public String toString() {
-        return have ? ("have " + specificCards) : ("not have " + specificCards);
+        return have ? ("have " + spec) : ("not have " + spec);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(have, specificCards);
+        return Objects.hash(have, spec);
     }
 
     @Override
@@ -63,6 +71,6 @@ public class SpecificCardsBoundInf implements IBoundInference {
         if (getClass() != obj.getClass())
             return false;
         SpecificCardsBoundInf other = (SpecificCardsBoundInf) obj;
-        return have == other.have && Objects.equals(specificCards, other.specificCards);
+        return have == other.have && Objects.equals(spec, other.spec);
     }
 }
