@@ -14,9 +14,10 @@ public class Test2Over1 {
 
     @Test
     public void test() throws IOException {
-        List<ParseException> exes = new ArrayList<>();
+        List<String> exes = new ArrayList<>();
         BiddingSystem bs = BiddingSystem.load("", "classpath:2over1.bidding", ex -> {
-            exes.add(ex);
+            exes.add(ex.getMessage());
+            ex.printStackTrace();
         });
         assertEquals(List.of(), exes);
         for(BiddingTest test: bs.tests) {
