@@ -28,7 +28,7 @@ public class HCPRange implements Inference {
         return createBound(rng);
     }
 
-    private static IBoundInference createBound(Range r) {
+    public static IBoundInference createBound(Range r) {
         if (r.unBounded()) {
             return ConstBoundInference.T;
         }

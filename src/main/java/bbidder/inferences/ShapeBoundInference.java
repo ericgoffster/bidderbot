@@ -41,7 +41,7 @@ public class ShapeBoundInference implements IBoundInference {
 
     @Override
     public String toString() {
-        return "shapes";
+        return r.toString();
     }
 
     @Override

@@ -18,9 +18,7 @@ public class OpeningPreemptTest {
 
     @Test
     public void testToString() {
-        InferenceContext ctx = new InferenceContext();
         assertEquals("opening_preempt 2 S", new OpeningPreempt("S", 2).toString());
-        assertEquals("opening_preempt 2 S", new OpeningPreempt("s", 2).bind(ctx).toString());
     }
 
     @Test

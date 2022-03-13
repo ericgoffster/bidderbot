@@ -1,13 +1,14 @@
 package bbidder.inferences;
 
 import java.util.Objects;
-import static bbidder.Constants.*;
 
-import bbidder.InferenceContext;
-import bbidder.SplitUtil;
-import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
+import bbidder.Range;
+import bbidder.Shape;
+import bbidder.ShapeSet;
+import bbidder.SplitUtil;
 
 /**
  * Represents the inference of a premptive hand of varying levels.
@@ -27,7 +28,8 @@ public class OpeningPreempt implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        return new BoundInf(context.lookupSuit(suit), level);
+        int s = context.lookupSuit(suit);
+        return AndBoundInference.create(HCPRange.createBound(Range.between(5, 10, 40)), ShapeBoundInference.create(new ShapeSet(shape -> isPremptive(s, level, shape))));
     }
 
     public static OpeningPreempt valueOf(String str) {
@@ -44,22 +46,22 @@ public class OpeningPreempt implements Inference {
         return new OpeningPreempt(parts[2], Integer.parseInt(parts[1]));
     }
 
-    private static boolean isPremptive(int suit, int level, Hand hand) {
-        int hcp = hand.numHCP();
+    private static boolean isPremptive(int suit, int level, Shape hand) {
         int len = hand.numInSuit(suit);
         switch (level) {
         case 2:
-            return hcp >= 5 && hcp <= 10 && len == 6;
+            return len == 6;
         case 3:
-            return hcp >= 5 && hcp <= 10 && len == 7;
+            return len == 7;
         case 4:
-            return hcp >= 5 && hcp <= 10 && len == 8;
+            return len == 8;
         case 5:
-            return hcp >= 5 && hcp <= 10 && len > 8;
+            return len > 8;
         default:
             throw new IllegalStateException("Invalid level");
         }
     }
+    
 
     @Override
     public String toString() {
@@ -81,77 +83,5 @@ public class OpeningPreempt implements Inference {
             return false;
         OpeningPreempt other = (OpeningPreempt) obj;
         return level == other.level && Objects.equals(suit, other.suit);
-    }
-
-    static class BoundInf implements IBoundInference {
-        final int suit;
-        final int level;
-
-        public BoundInf(int suit, int level) {
-            super();
-            this.suit = suit;
-            this.level = level;
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new NotBoundInf(suit, level);
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return isPremptive(suit, level, hand);
-        }
-
-        @Override
-        public String toString() {
-            return "opening_preempt " + level + " " + STR_ALL_SUITS.charAt(suit);
-        }
-
-        @Override
-        public IBoundInference andReduce(IBoundInference i) {
-            return null;
-        }
-
-        @Override
-        public IBoundInference orReduce(IBoundInference i) {
-            return null;
-        }
-    }
-
-    static class NotBoundInf implements IBoundInference {
-        final int suit;
-        final int level;
-
-        public NotBoundInf(int suit, int level) {
-            super();
-            this.suit = suit;
-            this.level = level;
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new BoundInf(suit, level);
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return !isPremptive(suit, level, hand);
-        }
-
-        @Override
-        public String toString() {
-            return "non_opening_preempt " + level + " " + STR_ALL_SUITS.charAt(suit);
-        }
-
-        @Override
-        public IBoundInference andReduce(IBoundInference i) {
-            return null;
-        }
-
-        @Override
-        public IBoundInference orReduce(IBoundInference i) {
-            return null;
-        }
     }
 }

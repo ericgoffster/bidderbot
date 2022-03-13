@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public class ShapeSet {
@@ -54,4 +55,45 @@ public class ShapeSet {
     public boolean isFull() {
         return not().isEmpty();
     }
+
+    @Override
+    public String toString() {
+        int[] min = {13,13,13,13};
+        int[] max = {0,0,0,0};
+        for (int i = shapes.nextSetBit(0); i != -1; i = shapes.nextSetBit(i + 1)) {
+            Shape shape = Shape.values()[i];
+            for(int s = 0; s < 4; s++) {
+                min[s] = Math.min(min[s], shape.numInSuit(s));
+                max[s] = Math.max(max[s], shape.numInSuit(s));
+            }
+        }
+        String[] str = new String[4];
+        for(int s = 0; s < 4; s++) {
+            if (min[s] == max[s]) {
+                str[s] = min[s] + "" + Constants.STR_ALL_SUITS.charAt(s);
+            } else {
+                str[s] = min[s] + "-" + max[s] + Constants.STR_ALL_SUITS.charAt(s);
+            }
+        }
+        return String.join(",",  str);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shapes);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ShapeSet other = (ShapeSet) obj;
+        return Objects.equals(shapes, other.shapes);
+    }
+    
+    
 }
