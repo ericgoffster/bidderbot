@@ -3,11 +3,9 @@
 2N 3M-1 3N => 4+M, 21 hcp, superbalanced
 test AKx AJxx Axx AJx: 2N 3♦ 3N
 
-2N 3M-1 4m => 4+M, 21 hcp, 2-m
+2N 3M-1 NJx => 4+M, 21 hcp, 2-x
 test AKxx AJxx Ax AJx: 2N 3♦ 4♦
 test AKxx AJxx AJx Ax: 2N 3♦ 4♣
-
-2N 3M-1 NJOM => 4+M, 21 hcp, 2-OM
 test xx AQJx AKxx AKx: 2N 3♦ 3♠
 test AQJx xx AKxx AKx: 2N 3♥ 4♥
 
