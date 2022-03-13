@@ -1,0 +1,6 @@
+# Stayman
+
+2N 3♣ 3M => 4+M
+test Axx AQxx KJx AQx: 2N 3♣ 3♥
+test Axxx AQxx KJx AQ: 2N 3♣ 3♥
+test Axxx AQx KJxx AQ: 2N 3♣ 3♠
