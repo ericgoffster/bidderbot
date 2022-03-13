@@ -1,16 +1,29 @@
 # Responses to 1 Major
 1M 2N => 13+ hcp, 4+ M
+test AQx Axxx Kx xxxx:1H P 2N
+
 1M 2M => 6-10 hcp, 3+ M
+test xxx Kxx Kx xxxxx:1H P 2H
+
 1M 3M => 11-12 hcp, 4+ M
+test xxx Kxxx Kx KQxx:1H P 3H
+
 1M 3m => 11-12 hcp, 6+ m
+test Qxx x Qxx AQJxxx:1H P 3C
+
 1M 1N => 11-12 hcp, 3 M
+test Kx KJx xxx Axxxx :1H P 1N
 
 # Responses to a suit with a GF hand
 1M NJy:down => 13+ hcp, 5+ y, longest_or_equal y among unbid
 1M NJy => 13+ hcp, 4 y, longest_or_equal y among unbid
+test AQxxx xx Axx Kxx :1H P 1S
+test Kxx xx Axx AQxxx :1H P 2C
 
 # 1/1
 1H 1S:down => 6+ hcp, 4+ S
+test Kxxx xx Axx Qxxx :1H P 1S
 
 # Catch all
 1M 1N => 6+ hcp
+test xxx xx AKxx Qxxx :1H P 1N

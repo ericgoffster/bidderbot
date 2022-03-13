@@ -16,7 +16,7 @@ test AQxxx AKxxxx x x:1H
 test Axxx Kx AQxxx xx:1D
 
 1m:down => 4 m, 13+ hcp, longest_or_equal m among minors
-test Axxx s AQxx Kxxx:1D
+test Axxx x AQxx Kxxx:1D
 
 1m => 3 m, 13+ hcp, longest_or_equal m among minors
 test Axxx xxx AQx Kxx:1C
