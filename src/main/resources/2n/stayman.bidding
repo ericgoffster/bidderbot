@@ -9,3 +9,7 @@ test Axxx AQx KJxx AQ: 2N 3♣ 3♠
 test Axx AQx KJxx AQx: 2N 3♣ 3♦
 test Axx AQx KJxx AQx: 2N 3♣ 3♦
 test Axx AQ KJxxx AQx: 2N 3♣ 3♦
+
+2N 3♣ 3♦ 3M => gf+, 4M, 5+OM
+test AJxxx Axxx xx xx: 2N 3♣ 3♦ 3♥
+test AJxx Axxxx xx xx: 2N 3♣ 3♦ 3♠
