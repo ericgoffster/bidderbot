@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Range {
     public final long bits;
     public final int max;
-    
+
     public static long bitMask(int max) {
         return (1L << (max + 1)) - 1;
     }
@@ -68,7 +68,7 @@ public class Range {
         }
         return new Range(bitMask(n), max);
     }
-    
+
     public Range add(int pos) {
         if (pos < 0 || pos > max) {
             throw new IllegalArgumentException();

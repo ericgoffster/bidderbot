@@ -31,7 +31,7 @@ public class TotalPtsBoundInf implements IBoundInference {
         }
         return null;
     }
-    
+
     @Override
     public IBoundInference orWith(IBoundInference other) {
         if (other instanceof TotalPtsBoundInf) {

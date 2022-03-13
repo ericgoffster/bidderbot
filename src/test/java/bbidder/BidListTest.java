@@ -13,14 +13,14 @@ public class BidListTest {
     public void testExceptLast() {
         assertEquals(BidList.valueOf("1C (1D) 1H (X) XX").exceptLast(), BidList.valueOf("1C (1D) 1H (X)"));
     }
-    
+
     @Test
     public void testNextLegalBid() {
         assertEquals(BidList.valueOf("1C (1D) 1H (X) XX").nextLegalBidOf(0), Bid._2C);
         assertEquals(BidList.valueOf("1C (1D) 1H (X) XX").nextLegalBidOf(3), Bid._1S);
         assertEquals(BidList.valueOf("1C (1D) 1H (X) XX").nextLegalBidOf(4), Bid._1N);
     }
-    
+
     @Test
     public void testGetContract() {
         assertEquals(BidList.valueOf("1C (1D) 1H (X) XX").getContract(), new Contract(2, Bid._1H, true, true));
@@ -28,14 +28,14 @@ public class BidListTest {
         assertEquals(BidList.valueOf("1C (1D) 1H").getContract(), new Contract(2, Bid._1H, false, false));
         assertEquals(BidList.valueOf("1C (1D) 1H P").getContract(), new Contract(2, Bid._1H, false, false));
     }
-    
+
     @Test
     public void testGetLastBid() {
         assertEquals(BidList.valueOf("1C (1D) 1H (X) XX").getLastBid(), Bid.XX);
         assertEquals(BidList.valueOf("1C (1D) 1H (X) XX").getLastBidSuit(), Bid._1H);
         assertNull(BidList.valueOf("P").getLastBidSuit());
     }
-    
+
     @Test
     public void testValueOf() {
         assertEquals(BidList.valueOf("P"), BidList.create(List.of(Bid.P)));

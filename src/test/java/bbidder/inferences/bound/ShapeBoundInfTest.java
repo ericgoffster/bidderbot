@@ -21,7 +21,7 @@ public class ShapeBoundInfTest {
         assertEquals(ShapeBoundInf.create(ShapeSet.NONE), ConstBoundInference.F);
         assertTrue(ShapeBoundInf.create(new ShapeSet(List.of(Shape._00030307, Shape._01000507))).matches(Hand.valueOf("xxxxxxx xxxxx - x")));
         assertFalse(ShapeBoundInf.create(new ShapeSet(List.of(Shape._00030307, Shape._01000507))).matches(Hand.valueOf("xxxxxxx xxxx x x")));
-        
+
         InfSummary summary = ShapeBoundInf.create(new ShapeSet(List.of(Shape._00030307, Shape._01000507))).getSummary();
         assertEquals(summary, new InfSummary(new ShapeSet(List.of(Shape._00030307, Shape._01000507)), Range.all(40)));
     }

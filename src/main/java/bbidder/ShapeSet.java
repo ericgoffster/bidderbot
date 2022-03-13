@@ -116,6 +116,7 @@ public class ShapeSet implements Iterable<Shape> {
         }
         return new Range(bits, 13);
     }
+
     @Override
     public Iterator<Shape> iterator() {
         return new Iterator<>() {

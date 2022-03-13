@@ -77,7 +77,7 @@ public class BidPattern {
             } else {
                 level = Integer.parseInt(upper.substring(0, 1)) - 1;
                 if (level < 0 || level > 6) {
-                    throw new IllegalArgumentException("Invalid bid: '"+str+"'");
+                    throw new IllegalArgumentException("Invalid bid: '" + str + "'");
                 }
                 suit = str.substring(1);
             }
@@ -173,7 +173,7 @@ public class BidPattern {
         if (getClass() != obj.getClass())
             return false;
         BidPattern other = (BidPattern) obj;
-        return isOpposition == other.isOpposition && Objects.equals(str, other.str)
-                && Objects.equals(reverse, other.reverse) && Objects.equals(notreverse, other.notreverse);
+        return isOpposition == other.isOpposition && Objects.equals(str, other.str) && Objects.equals(reverse, other.reverse)
+                && Objects.equals(notreverse, other.notreverse);
     }
 }

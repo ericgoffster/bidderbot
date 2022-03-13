@@ -49,7 +49,7 @@ public class InferenceContext {
             return Map.of(strain, this);
         }
         Map<Integer, InferenceContext> result = new LinkedHashMap<>();
-        for(var e: bc.getSuits(s).entrySet()) {
+        for (var e : bc.getSuits(s).entrySet()) {
             result.put(e.getKey(), new InferenceContext(lastBidSuit, likelyHands, e.getValue()));
         }
         return result;

@@ -25,13 +25,14 @@ public class OrBoundInfTest {
         IBoundInference i2 = TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40));
         IBoundInference i3 = OrBoundInf.create(i1, i2);
         assertEquals(i3.getSummary(), InfSummary.ALL);
-        
+
         assertTrue(i3.matches(Hand.valueOf("AKQ xxx xxx xxxx")));
         assertTrue(i3.matches(Hand.valueOf("AKQ Jxx xxx xxxx")));
         assertTrue(i3.matches(Hand.valueOf("AKQ Jxx xxxx xxx")));
         assertFalse(i3.matches(Hand.valueOf("AKQ xxx xxxxx xx")));
 
     }
+
     @Test
     public void test1() {
         IBoundInference i1 = ShapeBoundInf.create(new ShapeSet(List.of(Shape._04030303, Shape._03040303)));

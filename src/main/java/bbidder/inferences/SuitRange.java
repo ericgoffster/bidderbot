@@ -44,7 +44,7 @@ public class SuitRange implements Inference {
         this.rng = r;
         isFit = false;
     }
-    
+
     public SuitRange(String suit) {
         super();
         this.suit = suit;
@@ -120,7 +120,7 @@ public class SuitRange implements Inference {
 
     @Override
     public String toString() {
-        return isFit ? ("fit "+ suit) : (rng + " " + suit);
+        return isFit ? ("fit " + suit) : (rng + " " + suit);
     }
 
     @Override

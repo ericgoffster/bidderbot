@@ -18,17 +18,17 @@ public class RangeTest {
         assertTrue(r.unBounded());
         assertThrows(IllegalArgumentException.class, () -> r.contains(6));
     }
-    
+
     @Test
     public void testExtremes() {
         Range r = Range.between(2, 4, 5);
         assertEquals(r.highest(), 4);
         assertEquals(r.lowest(), 2);
-        
+
         assertEquals(Range.atLeast(null, 5), Range.all(5));
         assertThrows(IllegalArgumentException.class, () -> Range.atLeast(-1, 5));
         assertThrows(IllegalArgumentException.class, () -> Range.atLeast(6, 5));
-        
+
         assertEquals(Range.atMost(null, 5), Range.all(5));
         assertThrows(IllegalArgumentException.class, () -> Range.atMost(6, 5));
         assertThrows(IllegalArgumentException.class, () -> Range.atMost(-1, 5));
@@ -58,7 +58,7 @@ public class RangeTest {
         assertFalse(r.unBounded());
         assertThrows(IllegalArgumentException.class, () -> r.contains(6));
     }
-    
+
     @Test
     public void testAdd() {
         Range r = Range.none(5).add(1).add(2);
@@ -70,16 +70,16 @@ public class RangeTest {
         Range r = Range.atMost(1, 5).or(Range.atLeast(4, 5));
         assertEquals(r.not(), Range.between(2, 3, 5));
     }
-    
+
     @Test
     public void testAnd() {
         Range r = Range.atMost(4, 5).and(Range.atLeast(3, 5));
         assertEquals(r, Range.between(3, 4, 5));
     }
-    
+
     @Test
     public void testOr() {
-        Range r = Range.between(2, 4, 5).or( Range.between(3, 5, 5));
+        Range r = Range.between(2, 4, 5).or(Range.between(3, 5, 5));
         assertEquals(r, Range.between(2, 5, 5));
     }
 }

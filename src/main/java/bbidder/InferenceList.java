@@ -31,9 +31,9 @@ public class InferenceList {
         list.add(new MappedInference(ConstBoundInference.create(true), context));
         for (Inference i : inferences) {
             List<MappedInference> newList = new ArrayList<>();
-            for(MappedInference bi2: list) {
-                for(MappedInference bi: i.bind(bi2.ctx)) {
-                    newList.add(new MappedInference(AndBoundInf.create(bi2.inf,bi.inf), bi.ctx));
+            for (MappedInference bi2 : list) {
+                for (MappedInference bi : i.bind(bi2.ctx)) {
+                    newList.add(new MappedInference(AndBoundInf.create(bi2.inf, bi.inf), bi.ctx));
                 }
             }
             list = newList;

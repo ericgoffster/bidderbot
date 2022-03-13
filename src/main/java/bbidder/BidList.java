@@ -25,7 +25,7 @@ public class BidList {
         }
         return bl;
     }
-    
+
     public Bid nextLegalBidOf(int strain) {
         Contract contract = getContract();
         if (contract.winningBid == Bid.P) {

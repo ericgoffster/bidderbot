@@ -35,7 +35,7 @@ public class OrBoundInf implements IBoundInference {
     public IBoundInference andWith(IBoundInference other) {
         return null;
     }
-    
+
     @Override
     public IBoundInference orWith(IBoundInference other) {
         // TODO Auto-generated method stub

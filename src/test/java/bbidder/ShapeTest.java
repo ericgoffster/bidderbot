@@ -16,6 +16,7 @@ public class ShapeTest {
         assertFalse(Shape._05040202.isBalanced());
         assertFalse(Shape._05040301.isBalanced());
     }
+
     @Test
     public void testLongestOrEquals() {
         assertTrue(Shape._04040302.isLongerOrEqual(1, Constants.MINORS));
@@ -23,6 +24,7 @@ public class ShapeTest {
         assertFalse(Shape._03040402.isLongerOrEqual(0, Constants.MINORS));
         assertTrue(Shape._03040402.isLongerOrEqual(1, Constants.MINORS));
     }
+
     @Test
     public void testNumInSuit() {
         assertEquals(Shape._04040302.numInSuit(0), 4);
@@ -30,11 +32,13 @@ public class ShapeTest {
         assertEquals(Shape._04040302.numInSuit(2), 3);
         assertEquals(Shape._04040302.numInSuit(3), 2);
     }
+
     @Test
     public void testSuitInRange() {
         assertTrue(Shape._04040302.isSuitInRange(0, Range.between(3, 5, 13)));
         assertFalse(Shape._04040302.isSuitInRange(0, Range.between(5, 6, 13)));
     }
+
     @Test
     public void testGetShape() {
         assertEquals(Shape._04040302, Shape.getShape(4, 4, 3, 2));

@@ -37,15 +37,14 @@ public class BiddingContext {
     public BiddingContext(BidList boundBidList) {
         this(boundBidList, new HashMap<>());
     }
-    
+
     public List<BiddingContext> withNewBid(BidPattern pattern) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : getBids(pattern).entrySet()) {
-            l.add(new BiddingContext(bids.withBidAdded(e.getKey()),e.getValue().suits));
+            l.add(new BiddingContext(bids.withBidAdded(e.getKey()), e.getValue().suits));
         }
         return l;
     }
-
 
     public BiddingContext withNewBid(Bid bid, BidPattern pattern) {
         Map<Bid, BiddingContext> acceptable = getBids(pattern);
@@ -100,17 +99,19 @@ public class BiddingContext {
         Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
         Map<Bid, BiddingContext> result = new LinkedHashMap<>();
         var m = getSuits(pattern.getSuit());
-        for (var e: m.entrySet()) {
+        for (var e : m.entrySet()) {
             Bid bid = getBid(pattern, e.getKey());
             if (myRebid != null && bid.isSuitBid()) {
                 boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
                 if (pattern.reverse) {
-                    if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() <= myRebid.ordinal() || supportedPartner || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
+                    if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() <= myRebid.ordinal() || supportedPartner
+                            || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
                         continue;
                     }
                 }
                 if (pattern.notreverse) {
-                    if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() >= myRebid.ordinal() || supportedPartner || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
+                    if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() >= myRebid.ordinal() || supportedPartner
+                            || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
                         continue;
                     }
                 }
@@ -158,11 +159,11 @@ public class BiddingContext {
         if (strain < 0 || strain > 4) {
             throw new IllegalArgumentException("Invalid strain");
         }
-        
+
         if (symbol.endsWith(":down")) {
             throw new IllegalArgumentException();
         }
-        
+
         if (symbol.equals("OM")) {
             symbol = "M";
             strain = otherMajor(strain);
@@ -213,7 +214,7 @@ public class BiddingContext {
         }
         return Bid.valueOf(pattern.getLevel(), strain);
     }
-    
+
     public Map<Integer, BiddingContext> getSuits(String suit) {
         boolean reverse = false;
         if (suit.endsWith(":down")) {
@@ -230,7 +231,7 @@ public class BiddingContext {
             }
         }
         TreeMap<Integer, BiddingContext> m = new TreeMap<>();
-        for(int strain: BitUtil.iterate(BidPattern.getSuitClass(suit))) {
+        for (int strain : BitUtil.iterate(BidPattern.getSuitClass(suit))) {
             if (!suits.containsValue(strain)) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
                 putSuit(newSuits, suit, strain);

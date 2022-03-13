@@ -97,11 +97,13 @@ public class BiddingContextTest {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1D, BidPattern.valueOf("1x-1"));
         assertEquals(bc.getSuit("x").intValue(), 2);
     }
+
     @Test
     public void testxm2() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1D, BidPattern.valueOf("1x-2"));
         assertEquals(bc.getSuit("x").intValue(), 3);
     }
+
     @Test
     public void testxm3() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1H, BidPattern.valueOf("1x-3"));
@@ -111,8 +113,8 @@ public class BiddingContextTest {
     @Test
     public void testDown() {
         BiddingContext bc = new BiddingContext();
-        assertArrayEquals(bc.getBids(BidPattern.valueOf("1M:down")).keySet().toArray(new Bid[0]), new Bid[] {Bid._1S, Bid._1H});
-        assertArrayEquals(bc.getBids(BidPattern.valueOf("1M")).keySet().toArray(new Bid[0]), new Bid[] {Bid._1H, Bid._1S});
+        assertArrayEquals(bc.getBids(BidPattern.valueOf("1M:down")).keySet().toArray(new Bid[0]), new Bid[] { Bid._1S, Bid._1H });
+        assertArrayEquals(bc.getBids(BidPattern.valueOf("1M")).keySet().toArray(new Bid[0]), new Bid[] { Bid._1H, Bid._1S });
     }
 
     @Test
@@ -124,7 +126,7 @@ public class BiddingContextTest {
         assertEquals(bc.getBids(BidPattern.valueOf("RVx")).keySet(), Set.of(Bid._2H));
         assertEquals(bc.getBids(BidPattern.valueOf("NRx")).keySet(), Set.of(Bid._2C));
     }
-    
+
     @Test
     public void testReverse11() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1C, BidPattern.valueOf("1C"))
@@ -134,7 +136,7 @@ public class BiddingContextTest {
         assertEquals(bc.getBids(BidPattern.valueOf("RVx")).keySet(), Set.of());
         assertEquals(bc.getBids(BidPattern.valueOf("NRx")).keySet(), Set.of());
     }
-    
+
     @Test
     public void testHighReverse() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1S, BidPattern.valueOf("1S"))

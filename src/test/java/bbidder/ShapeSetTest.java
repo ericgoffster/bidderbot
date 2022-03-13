@@ -15,10 +15,10 @@ public class ShapeSetTest {
         assertTrue(ss.contains(Shape._00030307));
         assertTrue(ss.contains(Shape._01000507));
         assertFalse(ss.contains(Shape._02000209));
-        assertEquals(ss.getSuit(0),Range.between(0, 1, 13));
-        assertEquals(ss.getSuit(1),Range.none(13).add(0).add(3));
-        assertEquals(ss.getSuit(2),Range.none(13).add(3).add(5));
-        assertEquals(ss.getSuit(3),Range.none(13).add(7));
+        assertEquals(ss.getSuit(0), Range.between(0, 1, 13));
+        assertEquals(ss.getSuit(1), Range.none(13).add(0).add(3));
+        assertEquals(ss.getSuit(2), Range.none(13).add(3).add(5));
+        assertEquals(ss.getSuit(3), Range.none(13).add(7));
 
         assertTrue(ss.contains(Shape.getShape(1, 0, 5, 7)));
         assertFalse(ss.contains(Shape.getShape(2, 0, 5, 6)));
