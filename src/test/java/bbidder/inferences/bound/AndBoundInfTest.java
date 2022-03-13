@@ -14,6 +14,7 @@ import bbidder.InfSummary;
 import bbidder.Range;
 import bbidder.Shape;
 import bbidder.ShapeSet;
+import bbidder.StopperSet;
 
 public class AndBoundInfTest {
     @Test
@@ -24,7 +25,7 @@ public class AndBoundInfTest {
         IBoundInference i1 = ShapeBoundInf.create(new ShapeSet(List.of(Shape._04030303)));
         IBoundInference i2 = TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40));
         IBoundInference i3 = AndBoundInf.create(i1, i2);
-        assertEquals(i3.getSummary(), new InfSummary(new ShapeSet(List.of(Shape._04030303)), Range.between(10, 11, 40)));
+        assertEquals(i3.getSummary(), new InfSummary(new ShapeSet(List.of(Shape._04030303)), Range.between(10, 11, 40), StopperSet.ALL));
         assertFalse(i3.matches(Hand.valueOf("AKQ xxx xxx xxxx")));
         assertTrue(i3.matches(Hand.valueOf("AKQ Jxx xxx xxxx")));
         assertFalse(i3.matches(Hand.valueOf("AKQ Jxx xxxx xxx")));

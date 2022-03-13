@@ -7,6 +7,7 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.StopperSet;
 
 public class HcpBoundInf implements IBoundInference {
     final Range r;
@@ -44,7 +45,7 @@ public class HcpBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40));
+        return new InfSummary(ShapeSet.ALL, Range.all(40), StopperSet.ALL);
     }
 
     private HcpBoundInf(Range r) {

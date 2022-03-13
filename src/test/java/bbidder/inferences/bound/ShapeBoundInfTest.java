@@ -13,6 +13,7 @@ import bbidder.InfSummary;
 import bbidder.Range;
 import bbidder.Shape;
 import bbidder.ShapeSet;
+import bbidder.StopperSet;
 
 public class ShapeBoundInfTest {
     @Test
@@ -23,6 +24,6 @@ public class ShapeBoundInfTest {
         assertFalse(ShapeBoundInf.create(new ShapeSet(List.of(Shape._00030307, Shape._01000507))).matches(Hand.valueOf("xxxxxxx xxxx x x")));
 
         InfSummary summary = ShapeBoundInf.create(new ShapeSet(List.of(Shape._00030307, Shape._01000507))).getSummary();
-        assertEquals(summary, new InfSummary(new ShapeSet(List.of(Shape._00030307, Shape._01000507)), Range.all(40)));
+        assertEquals(summary, new InfSummary(new ShapeSet(List.of(Shape._00030307, Shape._01000507)), Range.all(40), StopperSet.ALL));
     }
 }

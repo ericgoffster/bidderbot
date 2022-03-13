@@ -10,6 +10,7 @@ import bbidder.Hand;
 import bbidder.InfSummary;
 import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.StopperSet;
 
 public class TotalPtsBoundInfTest {
     @Test
@@ -20,6 +21,6 @@ public class TotalPtsBoundInfTest {
         assertFalse(TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40)).matches(Hand.valueOf("AKxx Qxx xxx xxx")));
         assertTrue(TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40)).matches(Hand.valueOf("AKxx KJx xxx xxx")));
         InfSummary summary = TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40)).getSummary();
-        assertEquals(summary, new InfSummary(ShapeSet.ALL, Range.between(10, 11, 40)));
+        assertEquals(summary, new InfSummary(ShapeSet.ALL, Range.between(10, 11, 40), StopperSet.ALL));
     }
 }

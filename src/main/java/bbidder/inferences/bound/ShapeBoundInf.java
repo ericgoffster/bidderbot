@@ -7,6 +7,7 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.StopperSet;
 
 /**
  * Represents the inference for a high card point range.
@@ -28,7 +29,7 @@ public class ShapeBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(shapes, Range.all(40));
+        return new InfSummary(shapes, Range.all(40), StopperSet.ALL);
     }
 
     @Override

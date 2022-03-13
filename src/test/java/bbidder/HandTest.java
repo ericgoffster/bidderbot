@@ -47,8 +47,8 @@ public class HandTest {
     public void testFit() {
         Hand hand = Hand.valueOf("    AKQJ  xxx  xx    9432");
         assertFalse(hand.haveFit(InfSummary.ALL, 0));
-        assertTrue(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 4), Range.all(40)), 0));
-        assertFalse(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 4), Range.all(40)), 1));
-        assertFalse(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 3), Range.all(40)), 0));
+        assertTrue(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 4), Range.all(40), StopperSet.ALL), 0));
+        assertFalse(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 4), Range.all(40), StopperSet.ALL), 1));
+        assertFalse(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 3), Range.all(40), StopperSet.ALL), 0));
     }
 }
