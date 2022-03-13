@@ -9,7 +9,7 @@ test AKxx Axxx xx AKx:1♣ 1♥ 3♥
 1x 1M 4M => gf, 4+M
 test AKxx AKxx x AQxx:1♣ 1♥ 4♥
 
-1x 1y Jz => 4+z, 5+x, 20+ tpts
+1x 1y Jz => 4+z, 5+x, gf
 test AKx AKxx x AQxxx:1♣ 1♦ 2♥
 
 1x 1y NRz => 4+z, 5+x

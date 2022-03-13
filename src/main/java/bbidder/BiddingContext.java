@@ -105,14 +105,13 @@ public class BiddingContext {
             Bid bid = getBid(pattern, strain);
             if (myRebid != null && bid.isSuitBid()) {
                 boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
-                boolean supportedMyself = myLastBid != null && myLastBid.isSuitBid() && bid.strain == myLastBid.strain;
                 if (pattern.reverse) {
-                    if (bid.ordinal() <= myRebid.ordinal() || supportedPartner || supportedMyself) {
+                    if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() <= myRebid.ordinal() || supportedPartner || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
                         continue;
                     }
-                 }
+                }
                 if (pattern.notreverse) {
-                    if (bid.ordinal() >= myRebid.ordinal() || supportedPartner || supportedMyself) {
+                    if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() >= myRebid.ordinal() || supportedPartner || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
                         continue;
                     }
                 }

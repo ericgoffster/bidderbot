@@ -126,6 +126,16 @@ public class BiddingContextTest {
     }
     
     @Test
+    public void testReverse11() {
+        BiddingContext bc = new BiddingContext().withNewBid(Bid._1C, BidPattern.valueOf("1C"))
+                .withNewBid(Bid.P, BidPattern.valueOf("P"))
+                .withNewBid(Bid._1D, BidPattern.valueOf("1D"))
+                .withNewBid(Bid.P, BidPattern.valueOf("P"));
+        assertEquals(bc.getBids(BidPattern.valueOf("RVx")), Set.of());
+        assertEquals(bc.getBids(BidPattern.valueOf("NRx")), Set.of());
+    }
+    
+    @Test
     public void testHighReverse() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1S, BidPattern.valueOf("1S"))
                 .withNewBid(Bid.P, BidPattern.valueOf("P"))
