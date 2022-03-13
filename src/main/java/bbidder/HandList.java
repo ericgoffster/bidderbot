@@ -8,7 +8,7 @@ import java.util.List;
  * @author goffster
  *
  */
-public class HandList {
+public class HandList implements IHandList {
     public final List<Hand> l;
 
     public HandList(List<Hand> l) {

@@ -3,10 +3,10 @@ package bbidder;
 import bbidder.inferences.ConstBoundInference;
 
 public class LikelyHands {
-    public final HandList lho;
-    public final HandList partner;
-    public final HandList rho;
-    public final HandList me;
+    public final IHandList lho;
+    public final IHandList partner;
+    public final IHandList rho;
+    public final IHandList me;
 
     public LikelyHands() {
         this(ConstBoundInference.T, ConstBoundInference.T, ConstBoundInference.T, ConstBoundInference.T);
