@@ -25,9 +25,32 @@ public class BidList {
      * @return A new bid list with the given bid added
      */
     public BidList withBidAdded(Bid bid) {
+        Bid lastBid = getLastBidSuit();
+        if (lastBid != null && bid.isSuitBid() && bid.ordinal() < lastBid.ordinal()) {
+            throw new IllegalArgumentException("Invalid bid '"+bid+"'");
+        }
+            
         List<Bid> newBids = new ArrayList<>(bids);
         newBids.add(bid);
         return new BidList(newBids);
+    }
+    
+    public Contract getContract() {
+        boolean redoubled = false;
+        boolean doubled = false;
+        for (int i = bids.size() - 1; i >= 0; i--) {
+            Bid bid = bids.get(i);
+            if (bid.isSuitBid()) {
+                return new Contract(i, bid, doubled, redoubled);
+            }
+            if (bid == Bid.X) {
+                doubled = true;
+            }
+            if (bid == Bid.XX) {
+                redoubled = true;
+            }
+        }
+        return new Contract(0, Bid.P, false, false);
     }
 
     /**
@@ -53,14 +76,10 @@ public class BidList {
      * @return The last actual suit bid. Null if all pass.
      */
     public Bid getLastBidSuit() {
-        for (int i = bids.size() - 1; i >= 0; i--) {
-            if (bids.get(i).isSuitBid()) {
-                return bids.get(i);
-            }
-        }
-        return null;
+        Contract contract = getContract();
+        return contract.winningBid == Bid.P ? null : contract.winningBid;
     }
-
+    
     /**
      * @return A bid list of everything exception the last bid.
      */
