@@ -36,40 +36,12 @@ public class BidPattern {
         this.notreverse = notreverse;
     }
     
+    /**
+     * @param isOpposition true, if is an opposition bid
+     * @return A Bid Pattern with isOpposition set.
+     */
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, suit, level, simpleBid, jumpLevel, reverse, notreverse);
-    }
-
-    public static BidPattern create(String str) {
-        String upper = str.toUpperCase();
-        if (upper.startsWith("NJ")) {
-            return new BidPattern(false, str.substring(2), null, null, 0, false, false);
-        } else if (upper.startsWith("DJ")) {
-            return new BidPattern(false, str.substring(2), null, null, 2, false, false);
-        } else if (upper.startsWith("J")) {
-             return new BidPattern(false, str.substring(1), null, null, 1, false, false);
-        } else if (upper.startsWith("RV")) {
-            return new BidPattern(false, str.substring(2), null, null, 0, true, false);
-        } else if (upper.startsWith("NR")) {
-            return new BidPattern(false, str.substring(2), null, null, 0, false, true);
-        } else {
-            Bid simpleBid = Bid.fromStr(str);
-            if (simpleBid != null) {
-                if (simpleBid.isSuitBid()) {
-                    return new BidPattern(false, ""+Constants.STR_ALL_SUITS.charAt(simpleBid.strain), simpleBid.level, simpleBid, null, false, false);
-                }
-                return new BidPattern(false, null, null, simpleBid, null, false, false);
-            } else {
-                final Integer level = Integer.parseInt(upper.substring(0, 1)) - 1;
-                if (level < 0 || level > 6) {
-                    throw new IllegalArgumentException("Invalid bid: '" + str + "'");
-                }
-                if (!BiddingContext.isValidSuit(str.substring(1))) {
-                    throw new IllegalArgumentException("Invalid suit: " + str.substring(1));
-                }
-                return new BidPattern(false, str.substring(1), level, null, null, false, false);
-            }
-        }
     }
 
     public static short rotateDown(short s) {
@@ -145,11 +117,11 @@ public class BidPattern {
             return null;
         }
         str = str.trim();
-        boolean isOpposition = str.startsWith("(") && str.endsWith(")");
-        if (isOpposition) {
-            str = str.substring(1, str.length() - 1).trim();
+        if (str.startsWith("(") && str.endsWith(")")) {
+            return BidPattern.create(str.substring(1, str.length() - 1).trim()).withIsOpposition(true);
+        } else {
+            return BidPattern.create(str);
         }
-        return BidPattern.create(str).withIsOpposition(isOpposition);
     }
 
     @Override
@@ -159,6 +131,24 @@ public class BidPattern {
             return "(" + s + ")";
         }
         return s;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isOpposition, jumpLevel, level, notreverse, reverse, simpleBid, suit);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BidPattern other = (BidPattern) obj;
+        return isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
+                && notreverse == other.notreverse && reverse == other.reverse && simpleBid == other.simpleBid && Objects.equals(suit, other.suit);
     }
 
     private String _getString() {
@@ -182,21 +172,35 @@ public class BidPattern {
         return (level + 1) + suit;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(isOpposition, jumpLevel, level, notreverse, reverse, simpleBid, suit);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        BidPattern other = (BidPattern) obj;
-        return isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
-                && notreverse == other.notreverse && reverse == other.reverse && simpleBid == other.simpleBid && Objects.equals(suit, other.suit);
+    private static BidPattern create(String str) {
+        String upper = str.toUpperCase();
+        if (upper.startsWith("NJ")) {
+            return new BidPattern(false, str.substring(2), null, null, 0, false, false);
+        } else if (upper.startsWith("DJ")) {
+            return new BidPattern(false, str.substring(2), null, null, 2, false, false);
+        } else if (upper.startsWith("J")) {
+             return new BidPattern(false, str.substring(1), null, null, 1, false, false);
+        } else if (upper.startsWith("RV")) {
+            return new BidPattern(false, str.substring(2), null, null, 0, true, false);
+        } else if (upper.startsWith("NR")) {
+            return new BidPattern(false, str.substring(2), null, null, 0, false, true);
+        } else {
+            Bid simpleBid = Bid.fromStr(str);
+            if (simpleBid != null) {
+                if (simpleBid.isSuitBid()) {
+                    return new BidPattern(false, String.valueOf(Constants.STR_ALL_SUITS.charAt(simpleBid.strain)), simpleBid.level, simpleBid, null, false, false);
+                }
+                return new BidPattern(false, null, null, simpleBid, null, false, false);
+            } else {
+                final Integer level = Integer.parseInt(upper.substring(0, 1)) - 1;
+                if (level < 0 || level > 6) {
+                    throw new IllegalArgumentException("Invalid bid: '" + str + "'");
+                }
+                if (!BiddingContext.isValidSuit(str.substring(1))) {
+                    throw new IllegalArgumentException("Invalid suit: " + str.substring(1));
+                }
+                return new BidPattern(false, str.substring(1), level, null, null, false, false);
+            }
+        }
     }
 }
