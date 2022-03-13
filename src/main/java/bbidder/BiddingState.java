@@ -3,6 +3,7 @@ package bbidder;
 import java.util.List;
 import java.util.Random;
 
+import bbidder.BiddingSystem.BidSource;
 import bbidder.inferences.AndBoundInference;
 import bbidder.inferences.ConstBoundInference;
 
@@ -88,7 +89,7 @@ public class BiddingState {
      *            The hand
      * @return A bid for the given hand.
      */
-    public Bid getBid(Hand hand) {
+    public BidSource getBid(Hand hand) {
         // Get the bid from the system.
         return we.getBid(bidding, getLikelyHands(), hand);
     }

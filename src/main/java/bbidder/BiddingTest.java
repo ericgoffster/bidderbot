@@ -2,6 +2,8 @@ package bbidder;
 
 import java.util.Random;
 
+import bbidder.BiddingSystem.BidSource;
+
 public class BiddingTest {
     public final Hand hand;
     public final BidList bids;
@@ -24,7 +26,7 @@ public class BiddingTest {
             state = state.withBid(bid);
         }
         Bid expected = bids.getLastBid();
-        Bid found = state.getBid(hand);
+        BidSource found = state.getBid(hand);
         return new TestResult(where, hand, exceptLast, expected, found);
     }
 

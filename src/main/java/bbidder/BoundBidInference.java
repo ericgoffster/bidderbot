@@ -10,11 +10,13 @@ import java.util.Objects;
  *
  */
 public class BoundBidInference {
+    public final String where;
     public final BiddingContext ctx;
     public final InferenceList inferences;
 
-    public BoundBidInference(BiddingContext ctx, InferenceList inferences) {
+    public BoundBidInference(String where, BiddingContext ctx, InferenceList inferences) {
         super();
+        this.where = where;
         this.ctx = ctx;
         this.inferences = inferences;
     }

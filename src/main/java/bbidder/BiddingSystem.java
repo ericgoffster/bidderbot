@@ -106,7 +106,7 @@ public class BiddingSystem {
                     }
                 } else if (!ln.equals("")) {
                     try {
-                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences(new LikelyHands()));
+                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences(where, new LikelyHands()));
                     } catch (Exception e) {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }
@@ -144,16 +144,32 @@ public class BiddingSystem {
      *            The hand to evaluate
      * @return The right bid
      */
-    public Bid getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
+    public BidSource getBid(BidList bids, LikelyHands likelyHands, Hand hand) {
         for (BoundBidInference i : byPrefix.getOrDefault(bids, new ArrayList<>())) {
             IBoundInference newInference = i.bind(likelyHands);
             if (newInference.matches(hand)) {
-                return i.ctx.bids.getLastBid();
+                return new BidSource(i.where, i.ctx.bids.getLastBid());
             }
         }
 
         // For now always pass, this will get smarter.
-        return Bid.P;
+        return new BidSource("system", Bid.P);
+    }
+    
+    public static class BidSource {
+        public final String where;
+        public final Bid bid;
+
+        public BidSource(String where, Bid bid) {
+            super();
+            this.where = where;
+            this.bid = bid;
+        }
+
+        @Override
+        public String toString() {
+            return where + ":" + bid;
+        }
     }
 
     /**

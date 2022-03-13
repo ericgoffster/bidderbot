@@ -1,13 +1,15 @@
 package bbidder;
 
+import bbidder.BiddingSystem.BidSource;
+
 public class TestResult {
     public final String where;
     public final Hand hand;
     public final BidList bids;
     public final Bid expected;
-    public final Bid found;
+    public final BidSource found;
 
-    public TestResult(String where, Hand hand, BidList bids, Bid expected, Bid found) {
+    public TestResult(String where, Hand hand, BidList bids, Bid expected, BidSource found) {
         super();
         this.where = where;
         this.hand = hand;

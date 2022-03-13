@@ -41,14 +41,15 @@ public class BidInference {
     }
 
     /**
+     * @param where Where it came from
      * @param likelyHands
      *            Likely hands
      * @return The list of inferences bound to actual bidding sequences.
      */
-    public List<BoundBidInference> getBoundInferences(LikelyHands likelyHands) {
+    public List<BoundBidInference> getBoundInferences(String where, LikelyHands likelyHands) {
         List<BoundBidInference> result = new ArrayList<>();
         for (BiddingContext ctx : bids.getContexts()) {
-            BoundBidInference inference = new BoundBidInference(ctx, inferences);
+            BoundBidInference inference = new BoundBidInference(where, ctx, inferences);
             // Catch any errors
             inference.bind(likelyHands);
             result.add(inference);
