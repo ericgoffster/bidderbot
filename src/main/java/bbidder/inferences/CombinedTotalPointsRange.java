@@ -8,7 +8,7 @@ import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.Range;
 import bbidder.SplitUtil;
-import bbidder.inferences.bound.CombinedTotalPointsBoundInf;
+import bbidder.inferences.bound.TotalPtsBoundInf;
 
 /**
  * Represents the inference of the total points in a suit.
@@ -31,7 +31,9 @@ public class CombinedTotalPointsRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        return CombinedTotalPointsBoundInf.create(context.likelyHands.partner.getSummary(), rng);
+        int tpts = context.likelyHands.partner.getSummary().minTotalPoints;
+        Range r = new Range(rng.bits >> tpts, 40);
+        return TotalPtsBoundInf.create(context.likelyHands.partner.getSummary(), r);
     }
     
     public static Range createRange(String str, Map<String, Integer> m) {
