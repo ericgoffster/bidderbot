@@ -5,6 +5,9 @@ public class BiddingTest {
     public final BidList bids;
     public BiddingTest(Hand hand, BidList bids) {
         super();
+        if (hand.size() != 13) {
+            throw new IllegalArgumentException("Hand does not have 13 cards: '" + hand + '"');
+        }
         this.hand = hand;
         this.bids = bids;
     }

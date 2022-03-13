@@ -127,6 +127,10 @@ public class Hand {
     public int numInSuit(int suit) {
         return BitUtil.size(suits[suit]);
     }
+    
+    public int size() {
+        return numInSuit(0) + numInSuit(1) + numInSuit(2) + numInSuit(3);
+    }
 
     public int numHCP() {
         int hcp = 0;
