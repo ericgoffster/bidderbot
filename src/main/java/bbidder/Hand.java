@@ -42,7 +42,7 @@ public class Hand {
         return new Hand(newSuits);
     }
 
-    public Hand withCardEemoved(int suit, int rank) {
+    public Hand withCardRemoved(int suit, int rank) {
         short[] newSuits = Arrays.copyOf(suits, 4);
         newSuits[suit] &= ~(1 << rank);
         return new Hand(newSuits);
@@ -152,13 +152,13 @@ public class Hand {
                     numX++;
                 } else {
                     int rank = getRank(suitStr.charAt(i), avail.getAllInSuit(suitIndex));
-                    avail = avail.withCardEemoved(suitIndex, rank);
+                    avail = avail.withCardRemoved(suitIndex, rank);
                     current = current.withCardAdded(suitIndex, rank);
                 }
             }
             while (numX > 0) {
                 int rank = getRank('X', avail.getAllInSuit(suitIndex));
-                avail = avail.withCardEemoved(suitIndex, rank);
+                avail = avail.withCardRemoved(suitIndex, rank);
                 current = current.withCardAdded(suitIndex, rank);
                 numX--;
             }
