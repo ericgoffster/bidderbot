@@ -1,11 +1,11 @@
 package bbidder;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,24 +38,12 @@ public class BiddingContext {
     }
 
     public BiddingContext withNewBid(Bid bid, BidPattern pattern) {
-        Set<Bid> acceptable = getBids(pattern);
-        if (!acceptable.contains(bid)) {
-            throw new IllegalArgumentException(bid + " is incomptabile with " + pattern);
+        Map<Bid, BiddingContext> acceptable = getBids(pattern);
+        BiddingContext bc = acceptable.get(bid);
+        if (bc == null) {
+            throw new IllegalArgumentException(bid + " is incompatible with " + pattern);
         }
-        Map<String, Integer> newSuits;
-        if (bid.isSuitBid()) {
-            newSuits = new HashMap<String, Integer>(suits);
-            String symbol = pattern.getSuit();
-            if (symbol != null) {
-                Integer strain = getSuit(symbol);
-                if (strain == null) {
-                    putSuit(newSuits, symbol, bid.strain);
-                }
-            }
-        } else {
-            newSuits = suits;
-        }
-        return new BiddingContext(bids.withBidAdded(bid), newSuits);
+        return new BiddingContext(bids.withBidAdded(bid), bc.suits);
     }
 
     /**
@@ -92,17 +80,18 @@ public class BiddingContext {
      *            The bid pattern
      * @return The set of possible bids for a pattern
      */
-    public Set<Bid> getBids(BidPattern pattern) {
+    public Map<Bid, BiddingContext> getBids(BidPattern pattern) {
         if (pattern.simpleBid != null) {
-            return Set.of(pattern.simpleBid);
+            return Map.of(pattern.simpleBid, this);
         }
         Bid lastBidSuit = bids.getLastBidSuit();
         Bid myLastBid = bids.bids.size() >= 4 ? bids.bids.get(bids.bids.size() - 4) : null;
         Bid partnerLastBid = bids.bids.size() >= 2 ? bids.bids.get(bids.bids.size() - 2) : null;
         Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
-        TreeSet<Bid> result = new TreeSet<>();
-        for (int strain : BitUtil.iterate(getStrains(pattern))) {
-            Bid bid = getBid(pattern, strain);
+        Map<Bid, BiddingContext> result = new LinkedHashMap<>();
+        var m = getSuits(pattern.getSuit());
+        for (var e: m.entrySet()) {
+            Bid bid = getBid(pattern, e.getKey());
             if (myRebid != null && bid.isSuitBid()) {
                 boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
                 if (pattern.reverse) {
@@ -117,11 +106,8 @@ public class BiddingContext {
                 }
             }
             if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
-                result.add(bid);
+                result.put(bid, e.getValue());
             }
-        }
-        if (!pattern.upTheLine) {
-            return result.descendingSet();
         }
         return result;
     }
@@ -162,13 +148,19 @@ public class BiddingContext {
         if (strain < 0 || strain > 4) {
             throw new IllegalArgumentException("Invalid strain");
         }
-        if (symbol.equals("OM")) {
-            suits.put("M", otherMajor(strain));
-        } else if (symbol.equals("om")) {
-            suits.put("m", otherMinor(strain));
-        } else {
-            suits.put(symbol, strain);
+        
+        if (symbol.endsWith(":down")) {
+            throw new IllegalArgumentException();
         }
+        
+        if (symbol.equals("OM")) {
+            symbol = "M";
+            strain = otherMajor(strain);
+        } else if (symbol.equals("om")) {
+            symbol = "m";
+            strain = otherMinor(strain);
+        }
+        suits.put(symbol, strain);
     }
 
     private static Integer otherMajor(Integer strain) {
@@ -212,8 +204,13 @@ public class BiddingContext {
         return Bid.valueOf(pattern.getLevel(), strain);
     }
     
-    public Map<Integer, BiddingContext> getSuits(String suit) {        
-        if (suit != null) {
+    public Map<Integer, BiddingContext> getSuits(String suit) {
+        boolean reverse = false;
+        if (suit.endsWith(":down")) {
+            reverse = true;
+            suit = suit.substring(0, suit.length() - 5);
+        }
+        {
             Integer strain = getSuit(suit);
             if (strain != null) {
                 if (strain < 0 || strain > 4) {
@@ -222,30 +219,15 @@ public class BiddingContext {
                 return Map.of(strain, this);
             }
         }
-        Map<Integer, BiddingContext> m = new HashMap<>();
+        TreeMap<Integer, BiddingContext> m = new TreeMap<>();
         for(int strain: BitUtil.iterate(BidPattern.getSuitClass(suit))) {
-            Map<String, Integer> newSuits = new HashMap<>(suits);
-            putSuit(newSuits, suit, strain);
-            m.put(strain, new BiddingContext(bids, newSuits));
-        }
-        return m;
-    }
-
-    private short getStrains(BidPattern pattern) {
-        if (pattern.getSuit() != null) {
-            Integer strain = getSuit(pattern.getSuit());
-            if (strain != null) {
-                if (strain < 0 || strain > 4) {
-                    throw new IllegalArgumentException("Invalid strain");
-                }
-                return (short) (1 << strain);
+            if (!suits.containsValue(strain)) {
+                Map<String, Integer> newSuits = new HashMap<>(suits);
+                putSuit(newSuits, suit, strain);
+                m.put(strain, new BiddingContext(bids, newSuits));
             }
         }
-        short values = pattern.getSuitClass();
-        for (int i : suits.values()) {
-            values &= ~(1 << i);
-        }
-        return values;
+        return reverse ? m.descendingMap() : m;
     }
 
     private Bid nextLevel(int strain) {

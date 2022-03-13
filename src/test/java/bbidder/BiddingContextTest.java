@@ -111,8 +111,8 @@ public class BiddingContextTest {
     @Test
     public void testDown() {
         BiddingContext bc = new BiddingContext();
-        assertArrayEquals(bc.getBids(BidPattern.valueOf("1M:down")).toArray(new Bid[0]), new Bid[] {Bid._1S, Bid._1H});
-        assertArrayEquals(bc.getBids(BidPattern.valueOf("1M")).toArray(new Bid[0]), new Bid[] {Bid._1H, Bid._1S});
+        assertArrayEquals(bc.getBids(BidPattern.valueOf("1M:down")).keySet().toArray(new Bid[0]), new Bid[] {Bid._1S, Bid._1H});
+        assertArrayEquals(bc.getBids(BidPattern.valueOf("1M")).keySet().toArray(new Bid[0]), new Bid[] {Bid._1H, Bid._1S});
     }
 
     @Test
@@ -121,8 +121,8 @@ public class BiddingContextTest {
                 .withNewBid(Bid.P, BidPattern.valueOf("P"))
                 .withNewBid(Bid._1S, BidPattern.valueOf("1S"))
                 .withNewBid(Bid.P, BidPattern.valueOf("P"));
-        assertEquals(bc.getBids(BidPattern.valueOf("RVx")), Set.of(Bid._2H));
-        assertEquals(bc.getBids(BidPattern.valueOf("NRx")), Set.of(Bid._2C));
+        assertEquals(bc.getBids(BidPattern.valueOf("RVx")).keySet(), Set.of(Bid._2H));
+        assertEquals(bc.getBids(BidPattern.valueOf("NRx")).keySet(), Set.of(Bid._2C));
     }
     
     @Test
@@ -131,8 +131,8 @@ public class BiddingContextTest {
                 .withNewBid(Bid.P, BidPattern.valueOf("P"))
                 .withNewBid(Bid._1D, BidPattern.valueOf("1D"))
                 .withNewBid(Bid.P, BidPattern.valueOf("P"));
-        assertEquals(bc.getBids(BidPattern.valueOf("RVx")), Set.of());
-        assertEquals(bc.getBids(BidPattern.valueOf("NRx")), Set.of());
+        assertEquals(bc.getBids(BidPattern.valueOf("RVx")).keySet(), Set.of());
+        assertEquals(bc.getBids(BidPattern.valueOf("NRx")).keySet(), Set.of());
     }
     
     @Test
@@ -141,8 +141,8 @@ public class BiddingContextTest {
                 .withNewBid(Bid.P, BidPattern.valueOf("P"))
                 .withNewBid(Bid._2H, BidPattern.valueOf("2H"))
                 .withNewBid(Bid.P, BidPattern.valueOf("P"));
-        assertEquals(bc.getBids(BidPattern.valueOf("RVx")), Set.of(Bid._3C, Bid._3D));
-        assertEquals(bc.getBids(BidPattern.valueOf("NRx")), Set.of());
+        assertEquals(bc.getBids(BidPattern.valueOf("RVx")).keySet(), Set.of(Bid._3C, Bid._3D));
+        assertEquals(bc.getBids(BidPattern.valueOf("NRx")).keySet(), Set.of());
     }
 
     @Test
@@ -155,27 +155,27 @@ public class BiddingContextTest {
     @Test
     public void testGetBids() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1C, BidPattern.valueOf("1x"));
-        assertEquals(bc.getBids(BidPattern.valueOf("1y")), Set.of(Bid._1D, Bid._1H, Bid._1S));
+        assertEquals(bc.getBids(BidPattern.valueOf("1y")).keySet(), Set.of(Bid._1D, Bid._1H, Bid._1S));
     }
 
     @Test
     public void testGetBids2() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1C, BidPattern.valueOf("1x"));
-        assertEquals(bc.getBids(BidPattern.valueOf("1M")), Set.of(Bid._1H, Bid._1S));
+        assertEquals(bc.getBids(BidPattern.valueOf("1M")).keySet(), Set.of(Bid._1H, Bid._1S));
     }
 
     @Test
     public void testGetBids3() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1C, BidPattern.valueOf("1x"));
-        assertEquals(bc.getBids(BidPattern.valueOf("1m")), Set.of(Bid._1D));
+        assertEquals(bc.getBids(BidPattern.valueOf("1m")).keySet(), Set.of(Bid._1D));
     }
 
     @Test
     public void testGetBids4() {
         BiddingContext bc = new BiddingContext().withNewBid(Bid._1H, BidPattern.valueOf("1x"));
-        assertEquals(bc.getBids(BidPattern.valueOf("NJy")), Set.of(Bid._2C, Bid._2D, Bid._1S));
-        assertEquals(bc.getBids(BidPattern.valueOf("Jy")), Set.of(Bid._3C, Bid._3D, Bid._2S));
-        assertEquals(bc.getBids(BidPattern.valueOf("DJy")), Set.of(Bid._4C, Bid._4D, Bid._3S));
+        assertEquals(bc.getBids(BidPattern.valueOf("NJy")).keySet(), Set.of(Bid._2C, Bid._2D, Bid._1S));
+        assertEquals(bc.getBids(BidPattern.valueOf("Jy")).keySet(), Set.of(Bid._3C, Bid._3D, Bid._2S));
+        assertEquals(bc.getBids(BidPattern.valueOf("DJy")).keySet(), Set.of(Bid._4C, Bid._4D, Bid._3S));
     }
 
     @Test
