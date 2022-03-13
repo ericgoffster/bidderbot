@@ -1,5 +1,7 @@
 package bbidder.inferences.bound;
 
+import java.util.Objects;
+
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
@@ -56,5 +58,22 @@ public class TotalPtsBoundInf implements IBoundInference {
             return r + " tpts";
         }
         return r + " tpts" + ", partner=" + partnerSummary.shape;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(partnerSummary, r);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        TotalPtsBoundInf other = (TotalPtsBoundInf) obj;
+        return Objects.equals(partnerSummary, other.partnerSummary) && Objects.equals(r, other.r);
     }
 }

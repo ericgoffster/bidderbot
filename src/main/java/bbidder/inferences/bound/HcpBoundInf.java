@@ -1,5 +1,7 @@
 package bbidder.inferences.bound;
 
+import java.util.Objects;
+
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
@@ -49,5 +51,22 @@ public class HcpBoundInf implements IBoundInference {
     @Override
     public String toString() {
         return r + " hcp";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(r);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        HcpBoundInf other = (HcpBoundInf) obj;
+        return Objects.equals(r, other.r);
     }
 }

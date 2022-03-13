@@ -1,5 +1,7 @@
 package bbidder.inferences.bound;
 
+import java.util.Objects;
+
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
@@ -55,5 +57,22 @@ public class ShapeBoundInf implements IBoundInference {
     @Override
     public String toString() {
         return shapes.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shapes);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ShapeBoundInf other = (ShapeBoundInf) obj;
+        return Objects.equals(shapes, other.shapes);
     }
 }
