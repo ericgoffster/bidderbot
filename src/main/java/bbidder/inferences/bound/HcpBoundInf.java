@@ -45,7 +45,7 @@ public class HcpBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40), StopperSet.ALL);
+        return new InfSummary(ShapeSet.ALL, Range.atLeast(r.lowest(), 40), StopperSet.ALL);
     }
 
     private HcpBoundInf(Range r) {

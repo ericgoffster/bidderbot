@@ -9,6 +9,8 @@ import org.junit.Test;
 import bbidder.Hand;
 import bbidder.InfSummary;
 import bbidder.Range;
+import bbidder.ShapeSet;
+import bbidder.StopperSet;
 
 public class HcpBoundInfTest {
     @Test
@@ -19,6 +21,6 @@ public class HcpBoundInfTest {
         assertFalse(HcpBoundInf.create(Range.between(10, 11, 40)).matches(Hand.valueOf("AKxx Qxx xxx xxx")));
         assertTrue(HcpBoundInf.create(Range.between(10, 11, 40)).matches(Hand.valueOf("AKxx KJx xxx xxx")));
         InfSummary summary = HcpBoundInf.create(Range.between(10, 11, 40)).getSummary();
-        assertEquals(summary, InfSummary.ALL);
+        assertEquals(summary, new InfSummary(ShapeSet.ALL, Range.atLeast(10, 40), StopperSet.ALL));
     }
 }
