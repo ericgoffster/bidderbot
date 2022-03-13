@@ -117,6 +117,7 @@ public class Hand {
             int rank = getRank('X', avail.suits[suitIndex]);
             avail.suits[suitIndex] &= ~(1 << rank);
             suit |= (1 << rank);
+            numX--;
         }
         return suit;
     }

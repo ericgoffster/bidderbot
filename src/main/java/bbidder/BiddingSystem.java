@@ -89,7 +89,11 @@ public class BiddingSystem {
                     inferences.addAll(bs.inferences);
                     tests.addAll(bs.tests);
                 } else if (comm.length == 2 && comm[0].equals("test")) {
-                    tests.add(BiddingTest.valueOf(comm[1]));
+                    try {
+                        tests.add(BiddingTest.valueOf(comm[1]));
+                    } catch (Exception e) {
+                        reportErrors.accept(new ParseException(where + ":" + lineno, e));
+                    }
                 } else if (!ln.equals("")) {
                     try {
                         inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences());
