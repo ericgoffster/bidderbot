@@ -58,6 +58,12 @@ public class RangeTest {
         assertFalse(r.unBounded());
         assertThrows(IllegalArgumentException.class, () -> r.contains(6));
     }
+    
+    @Test
+    public void testAdd() {
+        Range r = Range.none(5).add(1).add(2);
+        assertEquals(r, Range.between(1, 2, 5));
+    }
 
     @Test
     public void testNot() {

@@ -68,6 +68,13 @@ public class Range {
         }
         return new Range(bitMask(n), max);
     }
+    
+    public Range add(int pos) {
+        if (pos < 0 || pos > max) {
+            throw new IllegalArgumentException();
+        }
+        return new Range(bits | (1L << pos), max);
+    }
 
     public static Range between(Integer lhs, Integer rhs, int max) {
         return atLeast(lhs, max).and(atMost(rhs, max));
