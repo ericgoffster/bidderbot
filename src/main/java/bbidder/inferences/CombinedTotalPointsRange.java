@@ -36,7 +36,7 @@ public class CombinedTotalPointsRange implements Inference {
             summary[i] = new LikelySuitSummary(context.likelyHands.partner.minTotalPoints(i), context.likelyHands.partner.minInSuit(i));
         }
         summary[4] = new LikelySuitSummary(context.likelyHands.partner.minTotalPoints(4), 0);
-        return CombinedTotalPointsBoundInf.createBounded(summary, rng);
+        return CombinedTotalPointsBoundInf.createBounded(new LikelyHandSummary(summary), rng);
     }
     
     public static Range createRange(String str, Map<String, Integer> m) {
