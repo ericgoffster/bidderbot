@@ -29,7 +29,7 @@ public class BiddingSystem {
     private final List<BiddingTest> tests;
     private final Map<BidList, List<BoundBidInference>> byPrefix = new LinkedHashMap<>();
 
-    public BiddingSystem(List<BoundBidInference> inferences, List<BiddingTest> tests) {
+    private BiddingSystem(List<BoundBidInference> inferences, List<BiddingTest> tests) {
         super();
         this.inferences = inferences;
         this.tests = tests;
