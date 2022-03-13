@@ -13,7 +13,7 @@ import bbidder.InferenceContext;
 public class SpecificCardsTest {
     @Test
     public void testValueOf() {
-        assertEquals(new SpecificCards("S", new short[] {(short)(1L << Constants.ACE | 1L << Constants.QUEEN)}), SpecificCards.valueOf("AQ in S"));
+        assertEquals(new SpecificCards("S", new short[] { (short) (1L << Constants.ACE | 1L << Constants.QUEEN) }), SpecificCards.valueOf("AQ in S"));
     }
 
     @Test

@@ -33,7 +33,7 @@ public class SpecificCards implements Inference {
         List<MappedInference> l = new ArrayList<>();
         for (var e : context.lookupSuits(suit).entrySet()) {
             List<IBoundInference> orList = new ArrayList<>();
-            for(short crd: cards) {
+            for (short crd : cards) {
                 orList.add(createBound(e.getKey(), crd));
             }
             l.add(new MappedInference(OrBoundInf.create(orList), e.getValue()));
@@ -59,11 +59,11 @@ public class SpecificCards implements Inference {
             String cardsS = parts[0].toUpperCase();
             String[] patterns = cardsS.split("\\|");
             short[] cards = new short[patterns.length];
-            for(int j = 0; j < patterns.length; j++) {
+            for (int j = 0; j < patterns.length; j++) {
                 String patt = patterns[j];
                 for (int i = 0; i < patt.length(); i++) {
                     char c = patt.charAt(i);
-                    int rank = Hand.getRank(c, (short)0x1ff);
+                    int rank = Hand.getRank(c, (short) 0x1ff);
                     cards[j] |= 1 << rank;
                 }
 
@@ -77,7 +77,7 @@ public class SpecificCards implements Inference {
     @Override
     public String toString() {
         List<String> l = new ArrayList<>();
-        for(short c: cards) {
+        for (short c : cards) {
             l.add(Hand.printSuit(c));
         }
         return String.join("|", l) + " " + suit;

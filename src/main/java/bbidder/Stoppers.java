@@ -3,28 +3,26 @@ package bbidder;
 import java.util.Objects;
 
 public class Stoppers {
-    public static Stoppers EMPTY = new Stoppers((byte)0);
-    private final byte patt;  
-    
+    public static Stoppers EMPTY = new Stoppers((byte) 0);
+    private final byte patt;
+
     public Stoppers(byte patt) {
         super();
         this.patt = patt;
     }
 
-
     public boolean stopperIn(int suit) {
         return ((1 << suit) & patt) != 0;
     }
-    
+
     public Stoppers withStopperIn(int suit) {
-        return new Stoppers((byte)(patt | (1 << suit)));
+        return new Stoppers((byte) (patt | (1 << suit)));
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(patt);
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -37,27 +35,27 @@ public class Stoppers {
         Stoppers other = (Stoppers) obj;
         return patt == other.patt;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(int i: BitUtil.iterate(patt)) {
+        for (int i : BitUtil.iterate(patt)) {
             sb.append(Constants.STR_ALL_SUITS.charAt(i));
         }
         return sb.toString();
     }
-    
+
     public int ordinal() {
         return patt;
     }
-    
+
     public static Stoppers[] values = new Stoppers[16];
     static {
-        for(int i = 0; i < 16; i++) {
-            values[i] = new Stoppers((byte)i);
+        for (int i = 0; i < 16; i++) {
+            values[i] = new Stoppers((byte) i);
         }
     }
-    
+
     public static Stoppers[] values() {
         return values;
     }

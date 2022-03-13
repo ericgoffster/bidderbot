@@ -54,9 +54,6 @@ public class HandTest {
 
     @Test
     public void testStoppers() {
-        assertFalse(Hand.valueOf("A Kxxxx Qx xxxxx").haveStopper(0));
-        assertFalse(Hand.valueOf("A Kxxxx Qx xxxxx").haveStopper(1));
-        assertTrue(Hand.valueOf("A Kxxxx Qx xxxxx").haveStopper(2));
-        assertTrue(Hand.valueOf("A Kxxxx Qx xxxxx").haveStopper(3));
+        assertEquals(Hand.valueOf("A Kxxxx Qx xxxxx").getStoppers(), Stoppers.EMPTY.withStopperIn(3).withStopperIn(2));
     }
 }

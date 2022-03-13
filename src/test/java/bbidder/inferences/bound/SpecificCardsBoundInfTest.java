@@ -13,7 +13,7 @@ public class SpecificCardsBoundInfTest {
         assertTrue(SpecificCardsBoundInf.create(Hand.valueOf("AK - - -")).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
         assertTrue(SpecificCardsBoundInf.create(Hand.valueOf("A - - -")).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
         assertFalse(SpecificCardsBoundInf.create(Hand.valueOf("AKQ - - -")).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
-        
+
         assertFalse(SpecificCardsBoundInf.create(Hand.valueOf("AK - - -")).negate().matches(Hand.valueOf("AKxx Kxx xxx xxx")));
         assertTrue(SpecificCardsBoundInf.create(Hand.valueOf("AKQ - - -")).negate().matches(Hand.valueOf("AKxx Kxx xxx xxx")));
     }

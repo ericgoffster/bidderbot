@@ -47,17 +47,16 @@ public class StopperSet implements Iterable<Stoppers> {
     }
 
     public StopperSet and(StopperSet other) {
-        return new StopperSet((short)(stoppers & other.stoppers));
+        return new StopperSet((short) (stoppers & other.stoppers));
     }
 
     public StopperSet or(StopperSet other) {
-        return new StopperSet((short)(stoppers | other.stoppers));
+        return new StopperSet((short) (stoppers | other.stoppers));
     }
 
     public StopperSet not() {
-        return new StopperSet((short)(stoppers ^ ALL.stoppers));
+        return new StopperSet((short) (stoppers ^ ALL.stoppers));
     }
-
 
     public boolean isEmpty() {
         return stoppers == 0;
@@ -89,10 +88,10 @@ public class StopperSet implements Iterable<Stoppers> {
         List<String> strStoppers = new ArrayList<>();
         for (int s = 0; s < 4; s++) {
             if (haveStopper[s]) {
-                strStoppers.add(""+Constants.STR_ALL_SUITS.charAt(s));
+                strStoppers.add("" + Constants.STR_ALL_SUITS.charAt(s));
             }
             if (haveNoStopper[s]) {
-                strNoStoppers.add(""+Constants.STR_ALL_SUITS.charAt(s));
+                strNoStoppers.add("" + Constants.STR_ALL_SUITS.charAt(s));
             }
         }
         if (strStoppers.size() == 0 && strNoStoppers.size() == 0) {

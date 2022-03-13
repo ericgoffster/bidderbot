@@ -43,11 +43,11 @@ public class Hand {
     public Hand withCardEemoved(int suit, int rank) {
         return new Hand(cards & ~(1L << (13 * suit + rank)));
     }
-    
+
     public boolean haveCards(Hand specificCards) {
         return (specificCards.cards & cards) == specificCards.cards;
     }
-    
+
     static char toRank(int rank) {
         switch (rank) {
         case ACE:
@@ -233,13 +233,16 @@ public class Hand {
         }
         return pts > 40 ? 40 : pts;
     }
-    
-    public boolean haveStopper(int suit) {
-        int highest = BitUtil.highestBit(getAllInSuit(suit));
-        if (highest >= 0) {
-            return numInSuit(suit) >= 13 - highest;
+
+    public Stoppers getStoppers() {
+        Stoppers stoppers = Stoppers.EMPTY;
+        for (int suit = 0; suit < 4; suit++) {
+            int highest = BitUtil.highestBit(getAllInSuit(suit));
+            if (highest >= 0 && numInSuit(suit) >= 13 - highest) {
+                stoppers = stoppers.withStopperIn(suit);
+            }
         }
-        return false;
+        return stoppers;
     }
 
     public int totalPoints(int suit) {
