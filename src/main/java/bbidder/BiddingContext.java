@@ -188,13 +188,6 @@ public class BiddingContext {
             throw new IllegalArgumentException();
         }
 
-        if (symbol.equals("OM")) {
-            symbol = "M";
-            strain = otherMajor(strain);
-        } else if (symbol.equals("om")) {
-            symbol = "m";
-            strain = otherMinor(strain);
-        }
         suits.put(symbol, strain);
     }
 
