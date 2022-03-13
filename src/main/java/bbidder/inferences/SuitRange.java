@@ -51,16 +51,15 @@ public class SuitRange implements Inference {
         if (str == null) {
             return null;
         }
-        str = str.trim();
-        int pos = str.indexOf(" ");
-        if (pos < 0) {
+        String[] bidParts = str.trim().split("\\s+", 2);
+        if (bidParts.length != 2) {
             return null;
         }
-        String suit = str.substring(pos + 1).trim();
+        String suit = bidParts[1].trim();
         if (suit.equalsIgnoreCase("hcp")) {
             return null;
         }
-        str = str.substring(0, pos).trim();
+        str = bidParts[0].trim();
         if (str.endsWith("+")) {
             return new SuitRange(suit, str.substring(0, str.length() - 1).trim(), null);
         }

@@ -41,11 +41,11 @@ public class HCPRange implements Inference {
         if (str == null) {
             return null;
         }
-        str = str.trim();
-        if (!str.toLowerCase().endsWith("hcp")) {
+        String[] hcpParts = str.trim().split("\\s+", 2);
+        if (hcpParts.length != 2 || !hcpParts[1].trim().equalsIgnoreCase("hcp")) {
             return null;
         }
-        str = str.substring(0, str.length() - 3).trim();
+        str = hcpParts[0].trim();
         if (str.endsWith("+")) {
             return new HCPRange(str.substring(0, str.length() - 1).trim(), null);
         }
