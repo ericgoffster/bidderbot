@@ -31,6 +31,16 @@ public class TotalPtsBoundInf implements IBoundInference {
         }
         return null;
     }
+    
+    @Override
+    public IBoundInference orWith(IBoundInference other) {
+        if (other instanceof TotalPtsBoundInf) {
+            if (partnerSummary.equals(((TotalPtsBoundInf) other).partnerSummary)) {
+                return create(partnerSummary, ((TotalPtsBoundInf) other).r.or(r));
+            }
+        }
+        return null;
+    }
 
     public static IBoundInference create(InfSummary partnerSummary, Range r) {
         if (r.unBounded()) {

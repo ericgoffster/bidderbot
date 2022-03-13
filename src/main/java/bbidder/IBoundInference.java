@@ -20,4 +20,5 @@ public interface IBoundInference {
     IBoundInference negate();
 
     IBoundInference andWith(IBoundInference other);
+    IBoundInference orWith(IBoundInference other);
 }

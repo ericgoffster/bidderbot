@@ -33,6 +33,14 @@ public class HcpBoundInf implements IBoundInference {
         }
         return null;
     }
+    
+    @Override
+    public IBoundInference orWith(IBoundInference other) {
+        if (other instanceof HcpBoundInf) {
+            return create(((HcpBoundInf) other).r.or(r));
+        }
+        return null;
+    }
 
     @Override
     public InfSummary getSummary() {

@@ -80,6 +80,11 @@ public class AndBoundInf implements IBoundInference {
     public IBoundInference andWith(IBoundInference other) {
         return null;
     }
+    
+    @Override
+    public IBoundInference orWith(IBoundInference other) {
+        return null;
+    }
 
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
         return create(List.of(i1, i2));

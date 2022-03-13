@@ -38,6 +38,14 @@ public class ShapeBoundInf implements IBoundInference {
         }
         return null;
     }
+    
+    @Override
+    public IBoundInference orWith(IBoundInference other) {
+        if (other instanceof ShapeBoundInf) {
+            return create(((ShapeBoundInf) other).shapes.or(shapes));
+        }
+        return null;
+    }
 
     public static IBoundInference create(ShapeSet r) {
         if (r.isEmpty()) {

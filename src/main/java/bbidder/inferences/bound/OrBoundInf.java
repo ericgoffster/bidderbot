@@ -35,6 +35,12 @@ public class OrBoundInf implements IBoundInference {
     public IBoundInference andWith(IBoundInference other) {
         return null;
     }
+    
+    @Override
+    public IBoundInference orWith(IBoundInference other) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     @Override
     public IBoundInference negate() {
@@ -73,6 +79,14 @@ public class OrBoundInf implements IBoundInference {
                 addOr(l, i);
             }
             return;
+        }
+        for (int i = 0; i < l.size(); i++) {
+            IBoundInference comb = inf.orWith(l.get(i));
+            if (comb != null) {
+                l.remove(i);
+                addOr(l, comb);
+                return;
+            }
         }
         l.add(inf);
     }

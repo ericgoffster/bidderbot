@@ -24,7 +24,12 @@ public class ConstBoundInference implements IBoundInference {
 
     @Override
     public IBoundInference andWith(IBoundInference other) {
-        return result ? other : F;
+        return null;
+    }
+    
+    @Override
+    public IBoundInference orWith(IBoundInference other) {
+        return null;
     }
 
     @Override
