@@ -14,9 +14,16 @@ import java.util.Objects;
 public class Range {
     public final long bits;
     public final int max;
+    
+    public static long bitMask(int max) {
+        return (1L << (max + 1)) - 1;
+    }
 
     public Range(long bits, int max) {
         super();
+        if ((bits & ~bitMask(max)) != 0) {
+            throw new IllegalArgumentException();
+        }
         this.bits = bits;
         this.max = max;
     }
@@ -35,7 +42,7 @@ public class Range {
     }
 
     public static Range all(int max) {
-        return new Range((1L << (max + 1)) - 1, max);
+        return new Range(bitMask(max), max);
     }
 
     public static Range none(int max) {
@@ -43,21 +50,21 @@ public class Range {
     }
 
     public static Range atLeast(Integer n, int max) {
-        if (n == null || n <= 0) {
+        if (n == null) {
             return all(max);
         }
-        if (n > max) {
-            return none(max);
+        if (n < 0 || n > max) {
+            throw new IllegalArgumentException();
         }
         return atMost(n - 1, max).not();
     }
 
     public static Range atMost(Integer n, int max) {
-        if (n == null || n >= max) {
+        if (n == null) {
             return all(max);
         }
-        if (n < 0) {
-            return none(max);
+        if (n < 0 || n > max) {
+            throw new IllegalArgumentException();
         }
         return new Range((1L << (n + 1)) - 1, max);
     }
@@ -71,7 +78,7 @@ public class Range {
     }
 
     public Range not() {
-        return new Range((~bits) & ((1L << (max + 1)) - 1), max);
+        return new Range((~bits) & bitMask(max), max);
     }
 
     public Range and(Range other) {
@@ -84,7 +91,7 @@ public class Range {
 
     public boolean contains(int pos) {
         if (pos < 0 || pos > max) {
-            return false;
+            throw new IllegalArgumentException();
         }
         return (bits & (1L << pos)) != 0L;
     }
