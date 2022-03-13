@@ -171,11 +171,25 @@ public class BiddingContext {
     }
 
     private static Integer otherMajor(Integer strain) {
-        return strain == null ? null : strain == Constants.HEART ? Constants.SPADE : Constants.HEART;
+        if (strain == null) {
+            return null;
+        }
+        switch(strain.intValue()) {
+        case Constants.HEART: return Constants.SPADE;
+        case Constants.SPADE: return Constants.HEART;
+        default: throw new IllegalArgumentException("invalid major");
+        }
     }
 
     private static Integer otherMinor(Integer strain) {
-        return strain == null ? null : strain == Constants.CLUB ? Constants.DIAMOND : Constants.CLUB;
+        if (strain == null) {
+            return null;
+        }
+        switch(strain.intValue()) {
+        case Constants.CLUB: return Constants.DIAMOND;
+        case Constants.DIAMOND: return Constants.CLUB;
+        default: throw new IllegalArgumentException("invalid minor");
+        }
     }
 
     private Bid getBid(BidPattern pattern, int strain) {
