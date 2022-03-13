@@ -56,7 +56,7 @@ public class BidPattern {
             Bid simpleBid = Bid.fromStr(str);
             if (simpleBid != null) {
                 if (simpleBid.isSuitBid()) {
-                    return new BidPattern(false, ""+Constants.STR_ALL_SUITS.charAt(simpleBid.strain), simpleBid.level, null, null, false, false);
+                    return new BidPattern(false, ""+Constants.STR_ALL_SUITS.charAt(simpleBid.strain), simpleBid.level, simpleBid, null, false, false);
                 }
                 return new BidPattern(false, null, null, simpleBid, null, false, false);
             } else {
