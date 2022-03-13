@@ -1,5 +1,7 @@
 package bbidder.inferences;
 
+import java.util.Objects;
+
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
@@ -13,13 +15,23 @@ import bbidder.ShapeSet;
  *
  */
 public class Balanced implements Inference {
-    public Balanced() {
-        super();
+    public enum BalanceType {
+        un, regular, very;
+    }
+    
+    final BalanceType type;
+    public Balanced(BalanceType type) {
+        this.type = type;
     }
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        return ShapeBoundInference.create(new ShapeSet(Shape::isBalanced));
+        switch(type) {
+        case regular: return ShapeBoundInference.create(new ShapeSet(Shape::isBalanced));
+        case un: return ShapeBoundInference.create(new ShapeSet(Shape::isBalanced).not());
+        case very: return ShapeBoundInference.create(new ShapeSet(Shape::isSuperBalanced));
+        default: throw new IllegalStateException();
+        }
     }
 
     public static Balanced valueOf(String str) {
@@ -28,19 +40,30 @@ public class Balanced implements Inference {
         }
         str = str.trim();
         if (str.toLowerCase().equals("balanced")) {
-            return new Balanced();
+            return new Balanced(BalanceType.regular);
+        }
+        if (str.toLowerCase().equals("unbalanced")) {
+            return new Balanced(BalanceType.un);
+        }
+        if (str.toLowerCase().equals("superbalanced")) {
+            return new Balanced(BalanceType.very);
         }
         return null;
     }
 
     @Override
     public String toString() {
-        return "balanced";
+        switch(type) {
+        case regular: return "balanced";
+        case un: return "unbalanced";
+        case very: return "superbalanced";
+        default: throw new IllegalStateException();
+        }
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return Objects.hash(type);
     }
 
     @Override
@@ -51,6 +74,7 @@ public class Balanced implements Inference {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        return true;
+        Balanced other = (Balanced) obj;
+        return type == other.type;
     }
 }

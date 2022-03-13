@@ -606,6 +606,16 @@ public enum Shape {
         return ndoub <= 1;
     }
     
+    public boolean isSuperBalanced() {
+        for (int suit = 0; suit < 4; suit++) {
+            int len = numInSuit(suit);
+            if (len < 3) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     public boolean isSuitInRange(int suit, Range rng) {
         return rng.contains(numInSuit(suit));
     }

@@ -65,3 +65,4 @@ test x xxx QJxxxx xxx:1N P 3♣
 test x xxx xxx QJxxxx:1N P 2N
 
 include classpath:stayman1_resp.bidding
+include classpath:stayman1_jacoby.bidding
