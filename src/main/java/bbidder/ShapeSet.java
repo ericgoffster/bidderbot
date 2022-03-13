@@ -129,5 +129,14 @@ public class ShapeSet implements Iterable<Shape> {
             
         };
     }
-    
+
+    public double avgLenInSuit(int suit) {
+        double tot = 0;
+        double sum = 0 ;
+        for(Shape s: this) {
+            sum += s.numInSuit(suit) * s.p;
+            tot += s.p;
+        }
+        return sum / tot;
+    }
 }

@@ -5,10 +5,9 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Range;
 import bbidder.ShapeSet;
-import bbidder.inferences.LikelyHandSummary;
 
 public class TotalPtsBoundInf implements IBoundInference {
-    final LikelyHandSummary partnerSummary;
+    final InfSummary partnerSummary;
     final Range r;
     
     @Override
@@ -26,7 +25,7 @@ public class TotalPtsBoundInf implements IBoundInference {
         return create(partnerSummary, r.and(summary.tpts));
     }
     
-    public static IBoundInference create(LikelyHandSummary partnerSummary, Range r) {
+    public static IBoundInference create(InfSummary partnerSummary, Range r) {
         if (r.unBounded()) {
             return ConstBoundInference.T;
         }
@@ -36,7 +35,7 @@ public class TotalPtsBoundInf implements IBoundInference {
         return new TotalPtsBoundInf(partnerSummary, r);
     }
     
-    private TotalPtsBoundInf(LikelyHandSummary tp, Range r) {
+    private TotalPtsBoundInf(InfSummary tp, Range r) {
         this.partnerSummary = tp;
         this.r = r;
     }

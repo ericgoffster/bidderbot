@@ -1,16 +1,16 @@
 package bbidder;
 
 public class LikelyHands {
-    public final IHandList lho;
-    public final IHandList partner;
-    public final IHandList rho;
-    public final IHandList me;
+    public final InfSummary lho;
+    public final InfSummary partner;
+    public final InfSummary rho;
+    public final InfSummary me;
 
     public LikelyHands() {
-        this(new AllPossibleHands(), new AllPossibleHands(), new AllPossibleHands(), new AllPossibleHands());
+        this(InfSummary.ALL, InfSummary.ALL, InfSummary.ALL, InfSummary.ALL);
     }
 
-    public LikelyHands(IHandList lho, IHandList parter, IHandList rho, IHandList me) {
+    public LikelyHands(InfSummary lho, InfSummary parter, InfSummary rho, InfSummary me) {
         super();
         this.lho = lho;
         this.partner = parter;

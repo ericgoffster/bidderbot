@@ -31,9 +31,9 @@ public class CombinedTotalPointsRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        int tpts = context.likelyHands.partner.getSummary().minTotalPoints;
+        int tpts = context.likelyHands.partner.minTotalPts();
         Range r = new Range(rng.bits >> tpts, 40);
-        return TotalPtsBoundInf.create(context.likelyHands.partner.getSummary(), r);
+        return TotalPtsBoundInf.create(context.likelyHands.partner, r);
     }
     
     public static Range createRange(String str, Map<String, Integer> m) {

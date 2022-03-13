@@ -1,7 +1,5 @@
 package bbidder;
 
-import bbidder.inferences.LikelyHandSummary;
-
 /**
  * Represents a list of hands that have been created in the hand generator.
  * 
@@ -20,6 +18,4 @@ public interface IHandList {
     public int minInSuit(int suit);
 
     public int maxInSuit(int suit);
-    
-    public LikelyHandSummary getSummary();
 }

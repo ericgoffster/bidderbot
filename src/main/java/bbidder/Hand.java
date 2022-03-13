@@ -14,8 +14,6 @@ import static bbidder.Constants.TEN;
 
 import java.util.Objects;
 
-import bbidder.inferences.LikelyHandSummary;
-
 /**
  * Represents a hand in bridge.
  * 
@@ -217,10 +215,10 @@ public class Hand {
         return hcp;
     }
     
-    public int getTotalPoints(LikelyHandSummary partnerSummary) {
+    public int getTotalPoints(InfSummary partnerSummary) {
         int pts = totalPoints(Constants.NOTRUMP);
         for (int s = 0; s < 4; s++) {
-            if (numInSuit(s) + partnerSummary.suitSummaries[s].minLength >= 8) {
+            if (numInSuit(s) + partnerSummary.minInSuit(s) >= 8) {
                 pts = Math.max(pts, totalPoints(s));
             }
         }

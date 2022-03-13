@@ -2,9 +2,6 @@ package bbidder;
 
 import java.util.List;
 
-import bbidder.inferences.LikelyHandSummary;
-import bbidder.inferences.LikelySuitSummary;
-
 /**
  * Represents a list of hands that have been created in the hand generator.
  * 
@@ -13,7 +10,6 @@ import bbidder.inferences.LikelySuitSummary;
  */
 public class HandList implements IHandList {
     public final List<Hand> l;
-    LikelyHandSummary summary ;
 
     public HandList(List<Hand> l) {
         super();
@@ -86,24 +82,5 @@ public class HandList implements IHandList {
     @Override
     public String toString() {
         return String.valueOf(l);
-    }
-
-    @Override
-    public LikelyHandSummary getSummary() {
-        if (summary == null) {
-            summary = createSummary();
-        }
-        return summary;
-    }
-
-    private LikelyHandSummary createSummary() {
-        int hcp = minTotalPoints(4);
-        int tpts = hcp;
-        LikelySuitSummary[] summary = new LikelySuitSummary[4];
-        for (int i = 0; i < 4; i++) {
-            tpts = Math.max(tpts, minTotalPoints(i));
-            summary[i] = new LikelySuitSummary(minInSuit(i));
-        }
-        return new LikelyHandSummary(tpts, hcp, summary);
     }
 }

@@ -53,17 +53,17 @@ public class BiddingState {
 
     public static class Player {
         final IBoundInference inf;
-        final IHandList likelyHand;
+        final InfSummary likelyHand;
 
-        public Player(IBoundInference inf, IHandList likelyHand) {
+        public Player(IBoundInference inf) {
             super();
             this.inf = inf;
-            this.likelyHand = likelyHand;
+            this.likelyHand = inf.getSummary();
         }
 
         public Player() {
             this.inf = ConstBoundInference.T;
-            this.likelyHand = new AllPossibleHands();
+            this.likelyHand = InfSummary.ALL;
         }
     }
 
@@ -75,8 +75,7 @@ public class BiddingState {
     public BiddingState withBid(Bid bid) {
         BidList newBidList = bidding.withBidAdded(bid);
         IBoundInference newInf = AndBoundInf.create(we.getInference(newBidList, getLikelyHands()), me.inf);
-        IHandList newHands = HandGenerator.generateHands(r, newInf, 1000, partner.likelyHand.getSummary());
-        Player newMe = new Player(newInf, newHands);
+        Player newMe = new Player(newInf);
         return new BiddingState(r, they, we, newBidList, partner, rho, newMe, lho);
     }
 

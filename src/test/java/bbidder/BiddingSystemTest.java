@@ -83,7 +83,7 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AKQ AKJ 234 2345")));
             assertFalse(l.matches(Hand.valueOf("AKQ AKQ 234 2345")));
 
-            HandList hands = HandGenerator.generateHands(new Random(), l, 100, likelyHands.partner.getSummary());
+            HandList hands = HandGenerator.generateHands(new Random(), l, 100, likelyHands.partner);
             assertTrue(hands.minHcp() >= 15);
             assertTrue(hands.maxHcp() <= 17);
             assertTrue(hands.minInSuit(0) >= 2);
@@ -99,7 +99,7 @@ public class BiddingSystemTest {
             assertFalse(l.matches(Hand.valueOf("AQJ32 AQ2345 2 4")));
             assertFalse(l.matches(Hand.valueOf("AQJ32 234 23 456")));
 
-            HandList hands = HandGenerator.generateHands(new Random(), l, 100, likelyHands.partner.getSummary());
+            HandList hands = HandGenerator.generateHands(new Random(), l, 100, likelyHands.partner);
             assertTrue(hands.minHcp() >= 13);
             assertTrue(hands.minInSuit(0) >= 0);
             assertTrue(hands.minInSuit(1) >= 0);
@@ -114,7 +114,7 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AQJ32 AQ2345 2 4")));
             assertFalse(l.matches(Hand.valueOf("234 AQJ32 23 456")));
 
-            HandList hands = HandGenerator.generateHands(new Random(), l, 100, likelyHands.partner.getSummary());
+            HandList hands = HandGenerator.generateHands(new Random(), l, 100, likelyHands.partner);
             assertTrue(hands.minHcp() >= 13);
             assertTrue(hands.minInSuit(0) >= 0);
             assertTrue(hands.minInSuit(1) >= 0);
@@ -129,7 +129,7 @@ public class BiddingSystemTest {
             assertTrue(l.matches(Hand.valueOf("AKQ KQT2 234 234")));
             assertFalse(l.matches(Hand.valueOf("AKQ KQ 2345 2345")));
 
-            HandList hands = HandGenerator.generateHands(new Random(), l, 100, likelyHands.partner.getSummary());
+            HandList hands = HandGenerator.generateHands(new Random(), l, 100, likelyHands.partner);
             assertTrue(hands.minHcp() >= 13);
             assertTrue(hands.minInSuit(0) >= 3);
             assertTrue(hands.minInSuit(1) >= 0);
@@ -144,7 +144,7 @@ public class BiddingSystemTest {
             assertFalse(l.matches(Hand.valueOf("AKQ KQT2 234 234")));
             assertTrue(l.matches(Hand.valueOf("AKQ KQ 2345 2345")));
 
-            HandList hands = HandGenerator.generateHands(new Random(), l, 100, likelyHands.partner.getSummary());
+            HandList hands = HandGenerator.generateHands(new Random(), l, 100, likelyHands.partner);
             assertTrue(hands.minHcp() >= 13);
             assertTrue(hands.minInSuit(0) >= 0);
             assertTrue(hands.minInSuit(1) >= 3);

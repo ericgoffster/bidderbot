@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import bbidder.inferences.LikelyHandSummary;
-
 /**
  * Generates a set of hands consistent with the inference.
  * 
@@ -13,7 +11,7 @@ import bbidder.inferences.LikelyHandSummary;
  *
  */
 public class HandGenerator {
-    public static HandList generateHands(Random r, IBoundInference inf, int numDesired, LikelyHandSummary partner) {
+    public static HandList generateHands(Random r, IBoundInference inf, int numDesired, InfSummary partner) {
         int[] cards = new int[52];
         for (int i = 0; i < 52; i++) {
             cards[i] = i;

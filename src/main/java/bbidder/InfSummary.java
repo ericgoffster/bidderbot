@@ -39,4 +39,8 @@ public class InfSummary {
     public int minTotalPts() {
         return tpts.lowest();
     }
+
+    public double avgLenInSuit(int suit) {
+        return shape.avgLenInSuit(suit);
+    }
 }
