@@ -54,14 +54,6 @@ public final class BiddingContext {
     }
 
     /**
-     * @param bid The bid to add
-     * @return a new bidding context with a new bid added.
-     */
-    public BiddingContext withBidAdded(Bid bid) {
-        return new BiddingContext(bids.withBidAdded(bid), suits);
-    }
-
-    /**
      * @param pattern The bid pattern
      * @return a list of bidding contexts given a new bid pattern
      */
