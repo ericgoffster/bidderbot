@@ -38,6 +38,11 @@ public class BiddingContext {
     
     public BiddingContext withNewBid(Bid bid, BidPattern pattern) {
         Map<String, Integer> newSuits;
+        if (pattern.simpleBid != null) {
+            if (bid != pattern.simpleBid) {
+                throw new IllegalArgumentException("bid - pattern mismatch");
+            }
+        }
         if (bid.isSuitBid()) {
             newSuits = new HashMap<String, Integer>(suits);
             String symbol = pattern.getSuit();
