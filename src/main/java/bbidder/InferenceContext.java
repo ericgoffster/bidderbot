@@ -1,10 +1,17 @@
 package bbidder;
 
-import static bbidder.Constants.*;
+import static bbidder.Constants.ALL_SUITS;
+import static bbidder.Constants.BLACKS;
+import static bbidder.Constants.MAJORS;
+import static bbidder.Constants.MINORS;
+import static bbidder.Constants.POINTED;
+import static bbidder.Constants.REDS;
+import static bbidder.Constants.ROUND;
 
 import java.io.CharArrayReader;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,17 +43,16 @@ public class InferenceContext {
         this.bc = new BiddingContext(BidList.create(List.of()), Map.of());
     }
 
-    public int lookupSuit(String s) {
+    public Map<Integer, InferenceContext> lookupSuits(String s) {
         Integer strain = Strain.getSuit(s);
         if (strain != null) {
-            return strain;
+            return Map.of(strain, this);
         }
-        Integer suit = bc.getSuit(s);
-        if (suit == null) {
-            bc.getSuit(s);
-            throw new IllegalArgumentException("Unknown Suit: '" + s + "'");
+        Map<Integer, InferenceContext> result = new LinkedHashMap<>();
+        for(var e: bc.getSuits(s).entrySet()) {
+            result.put(e.getKey(), new InferenceContext(lastBidSuit, likelyHands, e.getValue()));
         }
-        return suit;
+        return result;
     }
 
     /**

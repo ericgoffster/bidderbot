@@ -1,5 +1,6 @@
 package bbidder.inferences;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -52,11 +53,15 @@ public class SuitRange implements Inference {
 
     @Override
     public List<IBoundInference> bind(InferenceContext context) {
-        int s = context.lookupSuit(suit);
-        if (isFit) {
-            return List.of(createBound(s, Range.atLeast(8 - context.likelyHands.partner.getSuit(s).lowest(), 13)));
+        List<IBoundInference> l = new ArrayList<>();
+        for(int isuit: context.lookupSuits(suit).keySet()) {
+            if (isFit) {
+                l.add(createBound(isuit, Range.atLeast(8 - context.likelyHands.partner.getSuit(isuit).lowest(), 13)));
+            } else {
+                l.add(createBound(isuit, rng));
+            }
         }
-        return List.of(createBound(s, rng));
+        return l;
     }
 
     private static IBoundInference createBound(int s, Range r) {

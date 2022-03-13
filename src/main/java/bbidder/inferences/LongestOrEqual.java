@@ -1,5 +1,6 @@
 package bbidder.inferences;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,9 +30,12 @@ public class LongestOrEqual implements Inference {
 
     @Override
     public List<IBoundInference> bind(InferenceContext context) {
-        int isuit = context.lookupSuit(suit);
         int iamong = among == null ? 0xf : context.lookupSuitSet(among);
-        return List.of(ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(isuit, iamong))));
+        List<IBoundInference> l = new ArrayList<>();
+        for(int isuit: context.lookupSuits(suit).keySet()) {
+            l.add(ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(isuit, iamong))));
+        }
+        return l;
     }
 
     public static LongestOrEqual valueOf(String str) {

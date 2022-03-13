@@ -1,5 +1,6 @@
 package bbidder.inferences;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,9 +33,12 @@ public class OpeningPreempt implements Inference {
 
     @Override
     public List<IBoundInference> bind(InferenceContext context) {
-        int s = context.lookupSuit(suit);
-        return List.of( AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
-                ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(s, level, shape)))));
+        List<IBoundInference> l = new ArrayList<>();
+        for(int isuit: context.lookupSuits(suit).keySet()) {
+            l.add( AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
+                    ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(isuit, level, shape)))));
+        }
+        return l;
     }
 
     public static OpeningPreempt valueOf(String str) {

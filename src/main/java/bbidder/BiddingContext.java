@@ -211,6 +211,25 @@ public class BiddingContext {
         }
         return Bid.valueOf(pattern.getLevel(), strain);
     }
+    
+    public Map<Integer, BiddingContext> getSuits(String suit) {        
+        if (suit != null) {
+            Integer strain = getSuit(suit);
+            if (strain != null) {
+                if (strain < 0 || strain > 4) {
+                    throw new IllegalArgumentException("Invalid strain");
+                }
+                return Map.of(strain, this);
+            }
+        }
+        Map<Integer, BiddingContext> m = new HashMap<>();
+        for(int strain: BitUtil.iterate(BidPattern.getSuitClass(suit))) {
+            Map<String, Integer> newSuits = new HashMap<>(suits);
+            putSuit(newSuits, suit, strain);
+            m.put(strain, new BiddingContext(bids, newSuits));
+        }
+        return m;
+    }
 
     private short getStrains(BidPattern pattern) {
         if (pattern.getSuit() != null) {
