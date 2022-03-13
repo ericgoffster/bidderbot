@@ -91,6 +91,9 @@ public class BidPattern {
     }
 
     public static short getSuitClass(String str) {
+        if (str.startsWith("~")) {
+            return (short)(0xf ^ getSuitClass(str.substring(1)));
+        }
         int pos = str.indexOf("-");
         if (pos >= 0) {
             int n = Integer.parseInt(str.substring(pos + 1));

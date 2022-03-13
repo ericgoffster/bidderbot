@@ -36,10 +36,10 @@ public class BidPatternListTest {
     List<BiddingContext> add2(BiddingContext... l) {
         List<BiddingContext> newL = new ArrayList<>();
         for (BiddingContext bc : l) {
-            newL.add(new BiddingContext(bc.bids.withBidPrepended(Bid.P).withBidPrepended(Bid.P), bc.suits));
+            newL.add(bc.withBidPrepended(Bid.P).withBidPrepended(Bid.P));
         }
         for (BiddingContext bc : l) {
-            newL.add(new BiddingContext(bc.bids.withBidPrepended(Bid.P), bc.suits));
+            newL.add(bc.withBidPrepended(Bid.P));
         }
         for (BiddingContext bc : l) {
             newL.add(bc);
@@ -50,13 +50,13 @@ public class BidPatternListTest {
     List<BiddingContext> add3(BiddingContext... l) {
         List<BiddingContext> newL = new ArrayList<>();
         for (BiddingContext bc : l) {
-            newL.add(new BiddingContext(bc.bids.withBidPrepended(Bid.P).withBidPrepended(Bid.P).withBidPrepended(Bid.P), bc.suits));
+            newL.add(bc.withBidPrepended(Bid.P).withBidPrepended(Bid.P).withBidPrepended(Bid.P));
         }
         for (BiddingContext bc : l) {
-            newL.add(new BiddingContext(bc.bids.withBidPrepended(Bid.P).withBidPrepended(Bid.P), bc.suits));
+            newL.add(bc.withBidPrepended(Bid.P).withBidPrepended(Bid.P));
         }
         for (BiddingContext bc : l) {
-            newL.add(new BiddingContext(bc.bids.withBidPrepended(Bid.P), bc.suits));
+            newL.add(bc.withBidPrepended(Bid.P));
         }
         for (BiddingContext bc : l) {
             newL.add(bc);

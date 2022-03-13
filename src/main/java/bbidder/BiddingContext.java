@@ -21,13 +21,31 @@ import java.util.regex.Pattern;
  */
 public class BiddingContext {
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
-    public final BidList bids;
-    public final Map<String, Integer> suits;
+    private final BidList bids;
+    
+    public BidList getBids() {
+        return bids;
+    }
+
+    private final Map<String, Integer> suits;
+
+    protected Map<String, Integer> getSuits() {
+        return suits;
+    }
+
 
     public BiddingContext(BidList boundBidList, Map<String, Integer> suits) {
         super();
         this.bids = boundBidList;
         this.suits = suits;
+    }  
+    
+    public BiddingContext withBidAdded(Bid b) {
+        return new BiddingContext(bids.withBidAdded(b), suits);
+    }
+
+    public BiddingContext withBidPrepended(Bid b) {
+        return new BiddingContext(bids.withBidPrepended(b), suits);
     }
 
     public BiddingContext() {
