@@ -7,11 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bbidder.IBoundInference;
+import bbidder.InfSummary;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.MappedInference;
 import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -34,13 +36,17 @@ public class FitInSuit implements Inference {
     public List<MappedInference> bind(InferenceContext context) {
         List<MappedInference> l = new ArrayList<>();
         for (var e : context.lookupSuits(suit).entrySet()) {
-            l.add(new MappedInference(createBound(e.getKey(), Range.atLeast(8 - context.players.partner.infSummary.getSuit(e.getKey()).lowest(), 13)),
-                    e.getValue()));
+            l.add(new MappedInference(createrBound(e.getKey(), context.players.partner.infSummary), e.getValue()));
         }
         return l;
     }
 
-    private static IBoundInference createBound(int s, Range r) {
+    private IBoundInference createrBound(int s, InfSummary partnerSummary) {
+        int n = 8 - partnerSummary.getSuit(s).lowest();
+        if (n <= 0) {
+            return ConstBoundInference.T;
+        }
+        Range r = Range.atLeast(n, 13);
         return ShapeBoundInf.create(new ShapeSet(shape -> shape.isSuitInRange(s, r)));
     }
 
