@@ -16,7 +16,7 @@ import java.util.Objects;
 public class BidPatternList {
     private final List<BidPattern> bids;
 
-    private BidPatternList(List<BidPattern> bids) {
+    public BidPatternList(List<BidPattern> bids) {
         super();
         this.bids = bids;
     }

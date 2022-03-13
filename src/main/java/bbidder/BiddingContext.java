@@ -89,36 +89,6 @@ public final class BiddingContext {
         return suits.get(symbol);
     }
     
-    public boolean isReverse(Bid bid) {
-        List<Bid> theBids = bids.getBids();
-        Bid myLastBid = theBids.size() >= 4 ? theBids.get(theBids.size() - 4) : null;
-        Bid partnerLastBid = theBids.size() >= 2 ? theBids.get(theBids.size() - 2) : null;
-        Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
-        if (myRebid != null && bid.isSuitBid()) {
-            boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
-            if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() <= myRebid.ordinal() || supportedPartner
-                    || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public boolean isNonReverse(Bid bid) {
-        List<Bid> theBids = bids.getBids();
-        Bid myLastBid = theBids.size() >= 4 ? theBids.get(theBids.size() - 4) : null;
-        Bid partnerLastBid = theBids.size() >= 2 ? theBids.get(theBids.size() - 2) : null;
-        Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
-        if (myRebid != null && bid.isSuitBid()) {
-            boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
-            if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() >= myRebid.ordinal() || supportedPartner
-                    || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
     /**
      * @param pattern
      *            The bid pattern
@@ -133,10 +103,10 @@ public final class BiddingContext {
         Map<Integer, BiddingContext> m = getMappedBiddingContexts(pattern.getSuit());
         for (Entry<Integer, BiddingContext> e : m.entrySet()) {
             Bid bid = getBid(pattern, e.getKey());
-            if (pattern.reverse && !isReverse(bid)) {
+            if (pattern.reverse && !bids.isReverse(bid)) {
                 continue;
             }
-            if (pattern.notreverse && !isNonReverse(bid)) {
+            if (pattern.notreverse && !bids.isNonReverse(bid)) {
                 continue;
             }
             if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {

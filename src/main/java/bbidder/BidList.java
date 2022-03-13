@@ -244,4 +244,32 @@ public class BidList implements BiddingSequence {
         }
         return null;
     }
+    
+    public boolean isReverse(Bid bid) {
+        Bid myLastBid = bids.size() >= 4 ? bids.get(bids.size() - 4) : null;
+        Bid partnerLastBid = bids.size() >= 2 ? bids.get(bids.size() - 2) : null;
+        Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? nextLegalBidOf(myLastBid.strain) : null;
+        if (myRebid != null && bid.isSuitBid()) {
+            boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
+            if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() <= myRebid.ordinal() || supportedPartner
+                    || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isNonReverse(Bid bid) {
+        Bid myLastBid = bids.size() >= 4 ? bids.get(bids.size() - 4) : null;
+        Bid partnerLastBid = bids.size() >= 2 ? bids.get(bids.size() - 2) : null;
+        Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? nextLegalBidOf(myLastBid.strain) : null;
+        if (myRebid != null && bid.isSuitBid()) {
+            boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
+            if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() >= myRebid.ordinal() || supportedPartner
+                    || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
