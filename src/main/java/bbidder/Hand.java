@@ -43,7 +43,11 @@ public class Hand {
     public Hand withCardEemoved(int suit, int rank) {
         return new Hand(cards & ~(1L << (13 * suit + rank)));
     }
-
+    
+    public boolean haveCards(Hand specificCards) {
+        return (specificCards.cards & cards) == specificCards.cards;
+    }
+    
     static char toRank(int rank) {
         switch (rank) {
         case ACE:
@@ -70,7 +74,7 @@ public class Hand {
         }
     }
 
-    static int getRank(char cRank, short avail) {
+    public static int getRank(char cRank, short avail) {
         switch (Character.toUpperCase(cRank)) {
         case CHR_ACE:
             return ACE;
