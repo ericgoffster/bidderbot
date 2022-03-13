@@ -25,3 +25,7 @@ test Axxx Axx Axx xxx: 2N 3♣ 3♠ 4♥
 2N 3♣ 3M 4m => slaminv+, 5+m
 test Axx Ax Axxxx xxx: 2N 3♣ 3♥ 4♦
 test Axx Ax xxx Axxxx: 2N 3♣ 3♥ 4♣
+
+2N 3♣ 3M 4N => slaminv
+test Axxx Ax Axxx xxx: 2N 3♣ 3♥ 4N
+test Ax Axxx Axxx xxx: 2N 3♣ 3♠ 4N
