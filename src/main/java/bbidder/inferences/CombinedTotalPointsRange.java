@@ -24,23 +24,27 @@ public class CombinedTotalPointsRange implements Inference {
         this.min = min;
         this.max = max;
     }
-    
+
     static class Characteristic {
         final int minTotalPoints;
         final int minLength;
+
         public Characteristic(int minTotalPoints, int minLength) {
             super();
             this.minTotalPoints = minTotalPoints;
             this.minLength = minLength;
         }
+
         @Override
         public String toString() {
             return "minTotalPoints=" + minTotalPoints + ", minLength=" + minLength;
         }
+
         @Override
         public int hashCode() {
             return Objects.hash(minLength, minTotalPoints);
         }
+
         @Override
         public boolean equals(Object obj) {
             if (this == obj)
@@ -57,7 +61,7 @@ public class CombinedTotalPointsRange implements Inference {
     @Override
     public IBoundInference bind(InferenceContext context) {
         Characteristic[] tp = new Characteristic[5];
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             tp[i] = new Characteristic(context.likelyHands.partner.minTotalPoints(i), context.likelyHands.partner.minInSuit(i));
         }
         tp[4] = new Characteristic(context.likelyHands.partner.minTotalPoints(4), 0);
@@ -72,7 +76,7 @@ public class CombinedTotalPointsRange implements Inference {
         }
         return AndBoundInference.create(new BoundInfMin(tp, min), new BoundInfMax(tp, max));
     }
-    
+
     public static CombinedTotalPointsRange makeRange(String str) {
         String[] parts = SplitUtil.split(str, "-", 2);
         if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
@@ -80,7 +84,7 @@ public class CombinedTotalPointsRange implements Inference {
             CombinedTotalPointsRange r2 = makeRange(parts[1]);
             return new CombinedTotalPointsRange(r1.min, r2.max);
         }
-        switch(str) {
+        switch (str) {
         case "min":
             return new CombinedTotalPointsRange(19, 23);
         case "min+":
@@ -113,9 +117,9 @@ public class CombinedTotalPointsRange implements Inference {
             return new CombinedTotalPointsRange(37, null);
         default:
             return null;
-        }       
+        }
     }
-    
+
     public static CombinedTotalPointsRange valueOf(String str) {
         if (str == null) {
             return null;
@@ -125,9 +129,9 @@ public class CombinedTotalPointsRange implements Inference {
 
     private static int getTotalPoints(Hand hand, Characteristic[] tp) {
         int pts = hand.totalPoints(Constants.NOTRUMP) + tp[Constants.NOTRUMP].minTotalPoints;
-        for(int s = 0; s < 4; s++) {
+        for (int s = 0; s < 4; s++) {
             if (hand.numInSuit(s) + tp[s].minLength >= 8) {
-                pts = Math.max(pts, hand.totalPoints(s) + tp[s].minTotalPoints);                    
+                pts = Math.max(pts, hand.totalPoints(s) + tp[s].minTotalPoints);
             }
         }
         return pts;
@@ -160,7 +164,7 @@ public class CombinedTotalPointsRange implements Inference {
         CombinedTotalPointsRange other = (CombinedTotalPointsRange) obj;
         return Objects.equals(max, other.max) && Objects.equals(min, other.min);
     }
-    
+
     static class BoundInfMin implements IBoundInference {
         final Characteristic[] tp;
         final int min;

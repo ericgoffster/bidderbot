@@ -8,26 +8,26 @@ import org.junit.rules.ErrorCollector;
 
 public class Test2Over1 {
     public static BiddingSystem bs;
-    
+
     @Test
     public void test() throws Throwable {
         MyClass collector = new MyClass();
         BiddingSystem bs = BiddingSystem.load("", "classpath:2over1.bidding", ex -> {
             collector.addError(ex);
         });
-        for(BiddingTest test: bs.tests) {
+        for (BiddingTest test : bs.tests) {
             TestResult result = test.getResult(bs);
-            collector.checkThat(result.hand + ":" + result.bids, result.found, equalTo(result.expected));
+            collector.checkThat(result.where + ":" + result.hand + ":" + result.bids, result.found, equalTo(result.expected));
             if (!result.found.equals(result.expected)) {
                 test.getResult(bs);
             }
         }
-        
+
         assertTrue(bs.tests.size() > 0);
-        
+
         collector.verify();
     }
-    
+
     static class MyClass extends ErrorCollector {
         @Override
         public void verify() throws Throwable {

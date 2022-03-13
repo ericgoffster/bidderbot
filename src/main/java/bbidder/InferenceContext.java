@@ -127,7 +127,7 @@ public class InferenceContext {
                 default:
                     Integer st = Strain.getSuit(sb.toString());
                     if (st != null) {
-                        return (short)(1 << st);
+                        return (short) (1 << st);
                     }
                     throw new IllegalArgumentException("Unknown Suit Set: '" + sb + "'");
                 }
@@ -160,7 +160,8 @@ public class InferenceContext {
     }
 
     /**
-     * @param str The string to parse
+     * @param str
+     *            The string to parse
      * @return The suits bound to the given expression
      */
     public short lookupSuitSet(String str) {
@@ -177,7 +178,8 @@ public class InferenceContext {
     }
 
     /**
-     * @param str The string to parse
+     * @param str
+     *            The string to parse
      * @return The high card point range represented by the string.
      */
     public int resolvePoints(String str) {
@@ -188,7 +190,8 @@ public class InferenceContext {
     }
 
     /**
-     * @param str The string to parse
+     * @param str
+     *            The string to parse
      * @return The length represented by the string.
      */
     public int resolveLength(String str) {

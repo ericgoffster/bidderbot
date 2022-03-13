@@ -47,17 +47,19 @@ public class BidPattern {
             }
         }
     }
-    
+
     public boolean isNonJump() {
         return "NJ".equals(level);
     }
+
     public boolean isDoubleJump() {
         return "DJ".equals(level);
     }
+
     public boolean isJump() {
         return "J".equals(level);
     }
-    
+
     /**
      * @return The suit part.
      */
@@ -73,7 +75,8 @@ public class BidPattern {
     }
 
     /**
-     * @param str The string to parse
+     * @param str
+     *            The string to parse
      * @return A BidPattern parsed from a string
      */
     public static BidPattern valueOf(String str) {

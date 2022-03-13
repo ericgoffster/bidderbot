@@ -89,7 +89,7 @@ public class BiddingSystem {
                     tests.addAll(bs.tests);
                 } else if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
                     try {
-                        tests.add(BiddingTest.valueOf(comm[1]));
+                        tests.add(BiddingTest.valueOf(where + ":" + lineno, comm[1]));
                     } catch (Exception e) {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }

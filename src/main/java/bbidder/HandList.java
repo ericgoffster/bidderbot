@@ -15,7 +15,7 @@ public class HandList {
         super();
         this.l = l;
     }
-       
+
     public int minTotalPoints(int suit) {
         Integer minHcp = null;
         for (Hand h : l) {
@@ -26,7 +26,7 @@ public class HandList {
         }
         return minHcp == null ? 0 : minHcp;
     }
-    
+
     public int minHcp() {
         Integer minHcp = null;
         for (Hand h : l) {

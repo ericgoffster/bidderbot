@@ -9,8 +9,9 @@ package bbidder;
  */
 public interface IBoundInference {
     /**
-     * @param hand The hand
-     * @return True if it matches the hand 
+     * @param hand
+     *            The hand
+     * @return True if it matches the hand
      */
     public boolean matches(Hand hand);
 

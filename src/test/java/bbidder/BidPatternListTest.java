@@ -30,59 +30,55 @@ public class BidPatternListTest {
                 new BidPatternList(List.of(new BidPattern(false, "1S", true), new BidPattern(true, "X", true), new BidPattern(false, "1N", true)))
                         .toString());
     }
-    
+
     BiddingContext makeBC(String str) {
         return new BiddingContext(BidList.valueOf(str), Map.of());
     }
+
     BiddingContext makeBC(String str, String sym, Integer v) {
         return new BiddingContext(BidList.valueOf(str), Map.of(sym, v));
     }
-    
-    List<BiddingContext> add2(BiddingContext ... l) {
+
+    List<BiddingContext> add2(BiddingContext... l) {
         List<BiddingContext> newL = new ArrayList<>();
-        for(BiddingContext bc: l) {
+        for (BiddingContext bc : l) {
             newL.add(new BiddingContext(bc.bids.withBidPrepended(Bid.P).withBidPrepended(Bid.P), bc.suits));
         }
-        for(BiddingContext bc: l) {
+        for (BiddingContext bc : l) {
             newL.add(new BiddingContext(bc.bids.withBidPrepended(Bid.P), bc.suits));
         }
-        for(BiddingContext bc: l) {
+        for (BiddingContext bc : l) {
             newL.add(bc);
         }
         return newL;
     }
-    List<BiddingContext> add3(BiddingContext ... l) {
+
+    List<BiddingContext> add3(BiddingContext... l) {
         List<BiddingContext> newL = new ArrayList<>();
-        for(BiddingContext bc: l) {
+        for (BiddingContext bc : l) {
             newL.add(new BiddingContext(bc.bids.withBidPrepended(Bid.P).withBidPrepended(Bid.P).withBidPrepended(Bid.P), bc.suits));
         }
-        for(BiddingContext bc: l) {
+        for (BiddingContext bc : l) {
             newL.add(new BiddingContext(bc.bids.withBidPrepended(Bid.P).withBidPrepended(Bid.P), bc.suits));
         }
-        for(BiddingContext bc: l) {
+        for (BiddingContext bc : l) {
             newL.add(new BiddingContext(bc.bids.withBidPrepended(Bid.P), bc.suits));
         }
-        for(BiddingContext bc: l) {
+        for (BiddingContext bc : l) {
             newL.add(bc);
         }
         return newL;
     }
-    
+
     @Test
     public void testBidContext() {
-        assertEquals(BidPatternList.valueOf("(P) 1N").getContexts(),
-                add2(makeBC("P 1N")));
-        assertEquals(BidPatternList.valueOf("1N").getContexts(),
-                add3(makeBC("1N")));
-        assertEquals(BidPatternList.valueOf("1M").getContexts(),
-                add3(makeBC("1H", "M", 2), makeBC("1S", "M", 3)));
-        assertEquals(BidPatternList.valueOf("1M:down").getContexts(),
-                add3(makeBC("1S", "M", 3), makeBC("1H", "M", 2)));
-        assertEquals(BidPatternList.valueOf("1S (P) 1N").getContexts(),
-                add3(makeBC("1S P 1N")));
-        assertEquals(BidPatternList.valueOf("1C NJM").getContexts(), add3(new BiddingContext(BidList.valueOf("1C P 1H"), Map.of("M", 2)),
-                new BiddingContext(BidList.valueOf("1C P 1S"), Map.of("M", 3))));
-        assertEquals(BidPatternList.valueOf("1C P").getContexts(),
-                add3(new BiddingContext(BidList.valueOf("1C P P"), Map.of())));
+        assertEquals(BidPatternList.valueOf("(P) 1N").getContexts(), add2(makeBC("P 1N")));
+        assertEquals(BidPatternList.valueOf("1N").getContexts(), add3(makeBC("1N")));
+        assertEquals(BidPatternList.valueOf("1M").getContexts(), add3(makeBC("1H", "M", 2), makeBC("1S", "M", 3)));
+        assertEquals(BidPatternList.valueOf("1M:down").getContexts(), add3(makeBC("1S", "M", 3), makeBC("1H", "M", 2)));
+        assertEquals(BidPatternList.valueOf("1S (P) 1N").getContexts(), add3(makeBC("1S P 1N")));
+        assertEquals(BidPatternList.valueOf("1C NJM").getContexts(),
+                add3(new BiddingContext(BidList.valueOf("1C P 1H"), Map.of("M", 2)), new BiddingContext(BidList.valueOf("1C P 1S"), Map.of("M", 3))));
+        assertEquals(BidPatternList.valueOf("1C P").getContexts(), add3(new BiddingContext(BidList.valueOf("1C P P"), Map.of())));
     }
 }

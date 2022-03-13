@@ -16,14 +16,16 @@ public class InferenceRegistry {
     /**
      * Add a constructor of an inference from a string
      * 
-     * @param constructor String => Inference
+     * @param constructor
+     *            String => Inference
      */
     public void add(Function<String, Inference> constructor) {
         items.add(constructor);
     }
 
     /**
-     * @param str The string to parse.
+     * @param str
+     *            The string to parse.
      * @return An inference for the string.
      */
     public Inference valueOf(String str) {

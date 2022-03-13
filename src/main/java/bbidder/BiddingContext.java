@@ -115,7 +115,7 @@ public class BiddingContext {
         case "4":
         case "5":
         case "6":
-        case "7":            
+        case "7":
             return Bid.valueOf(level.charAt(0) - '1', strain);
         default:
             throw new IllegalArgumentException("Invalid level: '" + level + "'");

@@ -25,8 +25,10 @@ public class BidInference {
     }
 
     /**
-     * @param reg The inference registry
-     * @param str The string to parse.
+     * @param reg
+     *            The inference registry
+     * @param str
+     *            The string to parse.
      * @return A BidInference parsed from the string
      */
     public static BidInference valueOf(InferenceRegistry reg, String str) {

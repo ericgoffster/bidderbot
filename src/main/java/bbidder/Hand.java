@@ -113,7 +113,7 @@ public class Hand {
                 suit |= (1 << rank);
             }
         }
-        while(numX > 0) {
+        while (numX > 0) {
             int rank = getRank('X', avail.suits[suitIndex]);
             avail.suits[suitIndex] &= ~(1 << rank);
             suit |= (1 << rank);
@@ -141,11 +141,11 @@ public class Hand {
     public int numInSuit(int suit) {
         return BitUtil.size(suits[suit]);
     }
-    
+
     public int size() {
         return numInSuit(0) + numInSuit(1) + numInSuit(2) + numInSuit(3);
     }
-    
+
     public int pointsInSuit(int suit) {
         int pts = 0;
         for (int rank : BitUtil.iterate(suits[suit] & Hand.aboveRank(TEN))) {
@@ -161,13 +161,13 @@ public class Hand {
         }
         return hcp;
     }
-    
+
     public int totalPoints(int suit) {
         int pts = numHCP();
         if (suit != NOTRUMP) {
-            for(int s = 0; s < 4; s++) {
+            for (int s = 0; s < 4; s++) {
                 if (s != suit) {
-                    switch(numInSuit(s)) {
+                    switch (numInSuit(s)) {
                     case 0:
                         pts += 3;
                         break;
@@ -210,7 +210,7 @@ public class Hand {
     }
 
     public static Hand valueOf(String str) {
-        return valueOf(str, new Hand(new short[] {0x1fff, 0x1fff, 0x1fff, 0x1fff}));
+        return valueOf(str, new Hand(new short[] { 0x1fff, 0x1fff, 0x1fff, 0x1fff }));
     }
 
     public String toString() {

@@ -19,7 +19,8 @@ public class BidList {
     }
 
     /**
-     * @param bid The bid to add
+     * @param bid
+     *            The bid to add
      * @return A new bid list with the given bid added
      */
     public BidList withBidAdded(Bid bid) {
@@ -29,7 +30,8 @@ public class BidList {
     }
 
     /**
-     * @param bid The bid to add
+     * @param bid
+     *            The bid to add
      * @return A new bid list with the given bid prepended
      */
     public BidList withBidPrepended(Bid bid) {
@@ -47,7 +49,7 @@ public class BidList {
     }
 
     /**
-     * @return The last actual suit bid.  Null if all pass.
+     * @return The last actual suit bid. Null if all pass.
      */
     public Bid getLastBidSuit() {
         for (int i = bids.size() - 1; i >= 0; i--) {
@@ -66,7 +68,8 @@ public class BidList {
     }
 
     /**
-     * @param str The string to parse
+     * @param str
+     *            The string to parse
      * @return A bid list parsed from the string
      */
     public static BidList valueOf(String str) {
@@ -78,7 +81,7 @@ public class BidList {
         for (String part : parts) {
             Bid b = Bid.fromStr(part);
             if (b == null) {
-                throw new IllegalArgumentException("Illegal bid: '"+part+"'");
+                throw new IllegalArgumentException("Illegal bid: '" + part + "'");
             }
             bids.add(b);
         }

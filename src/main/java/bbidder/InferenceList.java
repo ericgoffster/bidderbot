@@ -22,7 +22,8 @@ public class InferenceList {
     }
 
     /**
-     * @param context The context for binding
+     * @param context
+     *            The context for binding
      * @return A bound inference representing all of the inferences as an "and"
      */
     public IBoundInference bind(InferenceContext context) {

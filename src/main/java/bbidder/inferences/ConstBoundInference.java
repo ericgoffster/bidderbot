@@ -4,7 +4,7 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 
 /**
- * Represents a "const" bound inference.  Always matches or always does not.
+ * Represents a "const" bound inference. Always matches or always does not.
  * 
  * @author goffster
  *

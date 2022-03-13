@@ -43,7 +43,7 @@ public class Strain {
             return null;
         }
     }
-    
+
     public static Integer getSuit(String s) {
         Integer strain = Strain.getStrain(s);
         if (strain != null && strain.intValue() == NOTRUMP) {
