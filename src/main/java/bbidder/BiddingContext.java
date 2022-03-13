@@ -110,6 +110,8 @@ public class BiddingContext {
     private Bid getBid(BidPattern pattern, int strain) {
         String level = pattern.getLevel();
         switch (level) {
+        case "DJ":
+            return nextLevel(strain).raise().raise();
         case "J":
             return nextLevel(strain).raise();
         case "NJ":

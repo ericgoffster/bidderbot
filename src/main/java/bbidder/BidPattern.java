@@ -19,31 +19,41 @@ public class BidPattern {
     public final boolean isOpposition;
     public final String str;
     public final boolean upTheLine;
+    public final String suit;
+    public final String level;
 
     public BidPattern(boolean isOpposition, String str, boolean upTheLine) {
         this.isOpposition = isOpposition;
         this.str = str;
         this.upTheLine = upTheLine;
+        if (str.equals(Constants.STR_X) || str.equals(Constants.STR_XX) || str.equals(Constants.STR_P)) {
+            suit = null;
+            level = null;
+        } else if (str.startsWith("NJ") || str.startsWith("DJ")) {
+            level = str.substring(0, 2);
+            suit = str.substring(2);
+        } else {
+            level = str.substring(0, 1);
+            suit = str.substring(1);
+        }
+    }
+    
+    public boolean isSuitBid() {
+        return suit == null;
     }
 
     /**
      * @return The suit part.
      */
     public String getSuit() {
-        if (str.startsWith("NJ")) {
-            return str.substring(2);
-        }
-        return str.substring(1);
+        return suit;
     }
 
     /**
      * @return The level part.
      */
     public String getLevel() {
-        if (str.startsWith("NJ")) {
-            return str.substring(0, 2);
-        }
-        return str.substring(0, 1);
+        return level;
     }
 
     /**
