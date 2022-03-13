@@ -3,10 +3,10 @@
 2♣ => 22+ tpts
 test AKQxx AKQ AK xxx:2♣
 
-2N => balanced, 20-21 tpts
+2N => balanced, 20-21 tpts, 20-21 hcp
 test AKQx AQxx AQ xxx:2N
 
-1N => balanced, 15-17 tpts
+1N => balanced, 15-17 hcp, 15-18 tpts
 test AQxx KQxx AQ xxx:1N
 
 P 1M:down => 5+ M, 8+ tpts, longest_or_equal M among majors
