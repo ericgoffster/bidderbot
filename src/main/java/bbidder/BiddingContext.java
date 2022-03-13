@@ -116,9 +116,11 @@ public class BiddingContext {
     }
 
     private short getStrains(BidPattern pattern) {
-        Integer strain = getSuit(pattern.getSuit());
-        if (strain != null) {
-            return (short) (1 << strain);
+        if (pattern.getSuit() != null) {
+            Integer strain = getSuit(pattern.getSuit());
+            if (strain != null) {
+                return (short) (1 << strain);
+            }
         }
         short values = pattern.getSuitClass();
         for (int i : suits.values()) {
