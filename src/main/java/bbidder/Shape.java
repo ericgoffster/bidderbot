@@ -573,10 +573,10 @@ public enum Shape {
     }
     
     public static long toNum(int ... num) {
-        return (num[3] << (16 * 3)) | (num[2] << (16 * 2))  | (num[1] << (16 * 3)) | num[0];
+        return (((long)num[3]) << (16 * 3)) | (((long)num[2]) << (16 * 2))  | (((long)num[1]) << (16 * 1)) | num[0];
     }
     
-    static final Shape[][][] numToShape = new Shape[13][13][13];
+    static final Shape[][][] numToShape = new Shape[14][14][14];
             
     static {
         for(Shape s: Shape.values()) {
@@ -585,6 +585,10 @@ public enum Shape {
     }
     
     public static Shape getShape(int ... num) {
-        return numToShape[num[0]][num[1]][num[2]];
+        Shape shape = numToShape[num[0]][num[1]][num[2]];
+        if (shape == null) {
+            throw new IllegalArgumentException();
+        }
+        return shape;
     }
 }

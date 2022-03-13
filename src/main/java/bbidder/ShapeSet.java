@@ -43,4 +43,12 @@ public class ShapeSet {
         }
         return new ShapeSet(n);
     }
+
+    public boolean isEmpty() {
+        return shapes.isEmpty();
+    }
+
+    public boolean isFull() {
+        return not().isEmpty();
+    }
 }
