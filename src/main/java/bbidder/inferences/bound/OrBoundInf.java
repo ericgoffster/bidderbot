@@ -34,14 +34,7 @@ public class OrBoundInf implements IBoundInference {
     public IBoundInference andWith(InfSummary summary) {
         List<IBoundInference> l = new ArrayList<>();
         for(IBoundInference i : inferences) {
-            IBoundInference t = i.andWith(summary);
-            if (t == ConstBoundInference.T) {
-                return ConstBoundInference.T;
-            }
-            if (t == ConstBoundInference.F) {
-                continue;
-            }
-            l.add(t);
+            l.add(i.andWith(summary));
         }
         return create(l);
     }
@@ -72,6 +65,12 @@ public class OrBoundInf implements IBoundInference {
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> orList = new ArrayList<>();
         for (IBoundInference i : inferences) {
+            if (i == ConstBoundInference.T) {
+                return ConstBoundInference.T;
+            }
+            if (i == ConstBoundInference.F) {
+                continue;
+            }
             orList.add(i);
         }
         if (orList.size() == 0) {
