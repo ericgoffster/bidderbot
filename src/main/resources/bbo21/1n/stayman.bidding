@@ -47,8 +47,8 @@ test AJxx AQx AQx xxx: 1N 2♣ 2♥ 4N
 test Axx AQx KJxx Qxx: 1N 2♣ 2♦
 
 1N 2♣ 2♦ 2M => inv, 5+M
-test AJxx Axxxx xx xx: 1N 2♣ 2♦ 2♥
-test AJxxx Axxx xx xx: 1N 2♣ 2♦ 2♠
+test AJxx Kxxxx xx xx: 1N 2♣ 2♦ 2♥
+test AJxxx Kxxx xx xx: 1N 2♣ 2♦ 2♠
 
 1N 2♣ 2♦ 2N => inv
 test AJxx Axxx xxx xx: 1N 2♣ 2♦ 2N
@@ -64,4 +64,4 @@ test AJxx AQxx xxx xx: 1N 2♣ 2♦ 3N
 test AJxx AQ AQxxx xx: 1N 2♣ 2♦ 3♦
 
 1N 2♣ 2♦ 4N => slaminv
-test AJxx AQxx AQx xx: 1N 2♣ 2♦ 4N
+test AJxx AJxx AQx xx: 1N 2♣ 2♦ 4N

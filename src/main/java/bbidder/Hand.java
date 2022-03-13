@@ -227,9 +227,7 @@ public class Hand {
     public int getTotalPoints(InfSummary partnerSummary) {
         int pts = totalPoints(Constants.NOTRUMP);
         for (int s = 0; s < 4; s++) {
-            if (haveFit(partnerSummary, s)) {
-                pts = Math.max(pts, totalPoints(s));
-            }
+            pts = Math.max(pts, totalPoints(s));
         }
         return pts > 40 ? 40 : pts;
     }

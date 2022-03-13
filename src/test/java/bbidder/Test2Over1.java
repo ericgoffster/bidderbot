@@ -32,6 +32,11 @@ public class Test2Over1 {
             }
             if (!result.found.bid.equals(result.expected)) {
                 hadError.set(true);
+                InfSummary partnerSummary = result.state.partner.likelyHand;
+                System.err
+                        .println("You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
+                System.err.println("My summary " + result.state.me.likelyHand);
+                System.err.println("Partner summary " + partnerSummary);
                 System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
                 if (result.found.inference != null) {
                     System.err.println("But " + result.found.inference.where + " dictates I should bid " + result.found.bid);

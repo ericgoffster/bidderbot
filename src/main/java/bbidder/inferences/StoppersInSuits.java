@@ -24,7 +24,7 @@ public class StoppersInSuits implements Inference {
         super();
         this.suits = suits;
     }
-    
+
     public static Inference valueOf(String str) {
         String[] parts = SplitUtil.split(str, "\\s+", 2);
         if (parts.length == 2 && parts[0].equalsIgnoreCase("stoppers")) {
@@ -37,7 +37,7 @@ public class StoppersInSuits implements Inference {
     public List<MappedInference> bind(InferenceContext context) {
         short theSuits = context.lookupSuitSet(suits);
         StopperSet stoppers = new StopperSet(stopper -> {
-            for(int s: BitUtil.iterate(theSuits)) {
+            for (int s : BitUtil.iterate(theSuits)) {
                 if (!stopper.stopperIn(s)) {
                     return false;
                 }
@@ -49,7 +49,7 @@ public class StoppersInSuits implements Inference {
 
     @Override
     public String toString() {
-        return "stoppers "+ suits;
+        return "stoppers " + suits;
     }
 
     @Override

@@ -24,8 +24,8 @@ test xx Axx Axxxx Jxx:2N 3N
 test Axx x Axxxx Axxx:2N 3♠
 
 2N 4N => slaminv
-test Axx xx AQxxx Qxx:2N 4N
-test xx Axx AQxxx Qxx:2N 4N
+test Axx xx AJxxx Qxx:2N 4N
+test xx Axx AJxxx Qxx:2N 4N
 
 2N 5N => grandinv
 test Axx Axx AQxx Qxx:2N 5N

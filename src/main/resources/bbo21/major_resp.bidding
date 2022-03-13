@@ -20,7 +20,7 @@ test AQx Axxx Kx xxxx:1♥ 2N
 test xxx Kxxx Kx KQxx:1♥ 3♥
 
 1M 3m => inv, 6+ m
-test Qxx x Qxx AQJxxx:1♥ 3♣
+test Qxx x xxx AQJxxx:1♥ 3♣
 
 1M 1N => inv, 3 M
 test Kx KJx xxx Axxxx :1♥ 1N

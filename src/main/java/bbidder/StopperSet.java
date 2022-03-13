@@ -14,10 +14,14 @@ public class StopperSet implements Iterable<Stoppers> {
 
     private StopperSet(short stoppers) {
         this.stoppers = stoppers;
+        int highest = BitUtil.highestBit(stoppers);
+        if (highest >= Stoppers.values().length) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public StopperSet(Iterable<Stoppers> list) {
-        stoppers = createStoppers(list);
+        this(createStoppers(list));
     }
 
     private static short createStoppers(Iterable<Stoppers> list) {
@@ -29,7 +33,7 @@ public class StopperSet implements Iterable<Stoppers> {
     }
 
     public StopperSet(Predicate<Stoppers> pred) {
-        stoppers = createStoppers(pred);
+        this(createStoppers(pred));
     }
 
     private static short createStoppers(Predicate<Stoppers> pred) {
@@ -47,7 +51,8 @@ public class StopperSet implements Iterable<Stoppers> {
     }
 
     public StopperSet and(StopperSet other) {
-        return new StopperSet((short) (stoppers & other.stoppers));
+        short stoppers2 = (short) (stoppers & other.stoppers);
+        return new StopperSet(stoppers2);
     }
 
     public StopperSet or(StopperSet other) {

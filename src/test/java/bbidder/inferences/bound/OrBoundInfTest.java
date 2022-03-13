@@ -29,7 +29,7 @@ public class OrBoundInfTest {
         assertTrue(i3.matches(Hand.valueOf("AKQ xxx xxx xxxx")));
         assertTrue(i3.matches(Hand.valueOf("AKQ Jxx xxx xxxx")));
         assertTrue(i3.matches(Hand.valueOf("AKQ Jxx xxxx xxx")));
-        assertFalse(i3.matches(Hand.valueOf("AKQ xxx xxxxx xx")));
+        assertFalse(i3.matches(Hand.valueOf("AKJ xxx xxxxx xx")));
 
     }
 

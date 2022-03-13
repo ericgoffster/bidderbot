@@ -22,7 +22,7 @@ test AQx xxx AJx Axxx: 1N 2♥ 2♠
 
 
 1N 2♦ 2♥ 2♠ => inv, 5+♠
-test AJxxx Axxxx xx x: 1N 2♦ 2♥ 2♠
+test AJxxx Qxxxx xx x: 1N 2♦ 2♥ 2♠
 
 1N 2M-1 2M 3M => inv, 6+M
 test Axx Kxxxxx xx xx: 1N 2♦ 2♥ 3♥

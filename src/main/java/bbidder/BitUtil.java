@@ -30,6 +30,30 @@ public class BitUtil {
         }
     }
 
+    public static int size(int pattern) {
+        return size(toLong(pattern));
+    }
+
+    private static long toLong(int pattern) {
+        return pattern & 0xffffffffL;
+    }
+
+    public static int size(short pattern) {
+        return size(toLong(pattern));
+    }
+
+    private static long toLong(short pattern) {
+        return pattern & 0xffffL;
+    }
+
+    public static int size(byte pattern) {
+        return size(toLong(pattern));
+    }
+
+    private static long toLong(byte pattern) {
+        return pattern & 0xffL;
+    }
+
     public static int size(long pattern) {
         int sz = 0;
         long patt = pattern;
@@ -38,6 +62,18 @@ public class BitUtil {
             patt >>>= 16;
         }
         return sz;
+    }
+
+    public static int highestBit(byte pattern) {
+        return highestBit(toLong(pattern));
+    }
+
+    public static int highestBit(short pattern) {
+        return highestBit(toLong(pattern));
+    }
+
+    public static int highestBit(int pattern) {
+        return highestBit(toLong(pattern));
     }
 
     public static int highestBit(long pattern) {
@@ -56,6 +92,18 @@ public class BitUtil {
 
     public static Iterable<Integer> iterate(long pattern) {
         return new PatternIterable(pattern);
+    }
+
+    public static Iterable<Integer> iterate(int pattern) {
+        return iterate(toLong(pattern));
+    }
+
+    public static Iterable<Integer> iterate(short pattern) {
+        return iterate(toLong(pattern));
+    }
+
+    public static Iterable<Integer> iterate(byte pattern) {
+        return iterate(toLong(pattern));
     }
 
     private static final class PatternIterable implements Iterable<Integer> {
@@ -78,7 +126,7 @@ public class BitUtil {
         int i = 0;
 
         public PatternIterator(long pattern) {
-            patt = pattern >> 16;
+            patt = pattern >>> 16;
             res = set[(int) (pattern & 0xffff)];
         }
 

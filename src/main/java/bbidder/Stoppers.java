@@ -54,6 +54,7 @@ public class Stoppers {
         for (int i = 0; i < 16; i++) {
             values[i] = new Stoppers((byte) i);
         }
+        values[0] = values[0];
     }
 
     public static Stoppers[] values() {
