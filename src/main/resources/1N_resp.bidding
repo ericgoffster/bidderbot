@@ -1,3 +1,9 @@
+1N 2H => slaminv, 6+ S
+test AQxxxx x AKx Kxx:1N P 2H
+
+1N 2D => slaminv, 6+ H
+test x AQxxxx AKx Kxx:1N P 2D
+
 1N 4H => 6 S, gf+
 test AQxxxx Kxx Qx xx:1N P 4H
 
@@ -10,8 +16,20 @@ test Axxxx xxx Qxx xx:1N P 2H
 1N 2D => 5+ H
 test xxx Axxxx Qxx xx:1N P 2D
 
+1N 2C => inv+, 4 H
+test Axx AJxx xxxx xx:1N P 2C
+
+1N 2C => inv+, 4 S
+test Axxx AJx xxxx xx:1N P 2C
+
 1N 3N => gf
 test Axx Axx Qxxxx Kx:1N P 3N
+
+1N 4N => slaminv
+test Axx Axx Axxx Kxx:1N P 3N
+
+1N 6N => slam
+test Axx Axx AKxx Kxx:1N P 6N
 
 1N 2C => inv+
 test Axxx AJx xxxx xx:1N P 2C
