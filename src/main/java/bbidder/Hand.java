@@ -10,7 +10,7 @@ import static bbidder.Constants.*;
  *
  */
 public class Hand {
-    public final short[] suits;
+    private final short[] suits;
 
     public Hand(short[] suits) {
         super();
@@ -84,6 +84,10 @@ public class Hand {
         default:
             return 0;
         }
+    }
+    
+    public short getAllInSuit(int suit) {
+        return suits[suit];
     }
 
     public static String printSuit(short suit) {

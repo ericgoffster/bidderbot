@@ -8,6 +8,7 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.Range;
 import bbidder.SplitUtil;
 
 /**

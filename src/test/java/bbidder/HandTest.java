@@ -10,10 +10,10 @@ public class HandTest {
     public void testBasic() {
         Hand hand = Hand.valueOf("AKQJ    T98   765   432");
         assertEquals("AKQJ T98 765 432", hand.toString());
-        assertTrue(hand.suits[0] == 0x7);
-        assertTrue(hand.suits[1] >> 3 == 0x7);
-        assertTrue(hand.suits[2] >> 6 == 0x7);
-        assertTrue(hand.suits[3] >> 9 == 0xf);
+        assertTrue(hand.getAllInSuit(0) == 0x7);
+        assertTrue(hand.getAllInSuit(1) >> 3 == 0x7);
+        assertTrue(hand.getAllInSuit(2) >> 6 == 0x7);
+        assertTrue(hand.getAllInSuit(3) >> 9 == 0xf);
     }
 
     @Test

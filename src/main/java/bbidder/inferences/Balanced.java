@@ -1,10 +1,9 @@
 package bbidder.inferences;
 
-import bbidder.BitUtil;
-import bbidder.InferenceContext;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
 
 /**
  * Represents the inference of a "balanced" hand
@@ -16,7 +15,7 @@ public class Balanced implements Inference {
     private static boolean isBalanced(Hand hand) {
         int ndoub = 0;
         for (int s = 0; s < 4; s++) {
-            int len = BitUtil.size(hand.suits[s]);
+            int len = hand.numInSuit(s);
             if (len < 2) {
                 return false;
             }

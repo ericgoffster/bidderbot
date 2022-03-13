@@ -1,11 +1,16 @@
-package bbidder.inferences;
+package bbidder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.BitUtil;
-
+/**
+ * Represents a range of integers from 0 up to 64.
+ * Handy for points, or number of cards in a suit.
+ * 
+ * @author goffster
+ *
+ */
 public class Range {
     public final long bits;
     public final int max;
