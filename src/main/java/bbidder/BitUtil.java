@@ -39,6 +39,20 @@ public class BitUtil {
         }
         return sz;
     }
+    
+    public static int highestBit(long pattern) {
+        if (pattern == 0) {
+            return -1;
+        }
+        return 63 - Long.numberOfLeadingZeros(pattern);
+    }
+    
+    public static int leastBit(long pattern) {
+        if (pattern == 0) {
+            return -1;
+        }
+        return Long.numberOfTrailingZeros(pattern);
+    }
 
     public static Iterable<Integer> iterate(long pattern) {
         return new PatternIterable(pattern);

@@ -3,6 +3,7 @@ package bbidder.inferences;
 import java.util.Arrays;
 import java.util.Objects;
 
+import bbidder.BitUtil;
 import bbidder.Constants;
 import bbidder.Hand;
 import bbidder.IBoundInference;
@@ -17,13 +18,11 @@ import bbidder.SplitUtil;
  *
  */
 public class CombinedTotalPointsRange implements Inference {
-    public final Integer min;
-    public final Integer max;
+    public final Range rng;
 
     public CombinedTotalPointsRange(Integer min, Integer max) {
         super();
-        this.min = min;
-        this.max = max;
+        this.rng = Range.between(min, max, 40);
     }
 
     static class Characteristic {
@@ -66,8 +65,7 @@ public class CombinedTotalPointsRange implements Inference {
             tp[i] = new Characteristic(context.likelyHands.partner.minTotalPoints(i), context.likelyHands.partner.minInSuit(i));
         }
         tp[4] = new Characteristic(context.likelyHands.partner.minTotalPoints(4), 0);
-        Range r = Range.between(min, max, 40);
-        return createBounded(tp, r);
+        return createBounded(tp, rng);
     }
 
     private static IBoundInference createBounded(Characteristic[] tp, Range r) {
@@ -85,7 +83,7 @@ public class CombinedTotalPointsRange implements Inference {
         if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
             CombinedTotalPointsRange r1 = makeRange(parts[0]);
             CombinedTotalPointsRange r2 = makeRange(parts[1]);
-            return new CombinedTotalPointsRange(r1.min, r2.max);
+            return new CombinedTotalPointsRange(BitUtil.leastBit(r1.rng.bits), BitUtil.highestBit(r2.rng.bits));
         }
         switch (str) {
         case "min":
@@ -142,18 +140,12 @@ public class CombinedTotalPointsRange implements Inference {
 
     @Override
     public String toString() {
-        if (max == null) {
-            return min + "+ tpts";
-        }
-        if (min == null) {
-            return max + "- tpts";
-        }
-        return min + "-" + max + " tpts";
+        return rng + " tpts";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(max, min);
+        return Objects.hash(rng);
     }
 
     @Override
@@ -165,7 +157,7 @@ public class CombinedTotalPointsRange implements Inference {
         if (getClass() != obj.getClass())
             return false;
         CombinedTotalPointsRange other = (CombinedTotalPointsRange) obj;
-        return Objects.equals(max, other.max) && Objects.equals(min, other.min);
+        return Objects.equals(rng, other.rng);
     }
 
     static class BoundInf implements IBoundInference {

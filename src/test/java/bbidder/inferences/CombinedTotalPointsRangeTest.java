@@ -30,7 +30,7 @@ public class CombinedTotalPointsRangeTest {
         assertEquals("8+ tpts", new CombinedTotalPointsRange(8, null).bind(ctx).toString());
         assertEquals("10- tpts", new CombinedTotalPointsRange(null, 10).toString());
         assertEquals("10- tpts", new CombinedTotalPointsRange(null, 10).bind(ctx).toString());
-        assertEquals("10-10 tpts", new CombinedTotalPointsRange(10, 10).toString());
+        assertEquals("10 tpts", new CombinedTotalPointsRange(10, 10).toString());
         assertEquals("10 tpts", new CombinedTotalPointsRange(10, 10).bind(ctx).toString());
     }
     
