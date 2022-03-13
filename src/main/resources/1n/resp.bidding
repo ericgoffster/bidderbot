@@ -59,5 +59,6 @@ test x xxx QJxxxx xxx:1N 3♣
 test x xxx xxx QJxxxx:1N 2N
 
 include classpath:1n/stayman.bidding
-include classpath:1n/jacoby.bidding
+include classpath:1n/jacobyxfer.bidding
 include classpath:1n/mss.bidding
+include classpath:1n/minorxfer.bidding
