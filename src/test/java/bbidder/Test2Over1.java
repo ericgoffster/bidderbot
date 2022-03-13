@@ -8,6 +8,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.BiddingSystem.Possibility;
+
 public class Test2Over1 {
     public static BiddingSystem bs;
 
@@ -30,7 +32,7 @@ public class Test2Over1 {
                 System.err.println("Could not generate a hand");
                 continue;
             }
-            if (!result.found.bid.equals(result.expected)) {
+            if (!result.found.possibility.bid.equals(result.expected)) {
                 hadError.set(true);
                 InfSummary partnerSummary = result.state.players.partner.infSummary;
                 System.err
@@ -38,21 +40,21 @@ public class Test2Over1 {
                 System.err.println("My summary " + result.state.players.me.infSummary);
                 System.err.println("Partner summary " + partnerSummary);
                 System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
-                if (result.found.inference != null) {
-                    System.err.println("But " + result.found.inference.where + " dictates I should bid " + result.found.bid);
+                if (result.found.possibility.inf != null) {
+                    System.err.println("But " + result.found.possibility.inf.where + " dictates I should bid " + result.found.possibility.bid);
                 } else {
-                    System.err.println("But no systemic bid matched so " + result.found.bid + " was chosen");
+                    System.err.println("But no systemic bid matched so " + result.found.possibility.bid + " was chosen");
                 }
                 System.err.println();
                 System.err.println("All bids matching the scenario in order of priority:");
-                for (BoundBidInference b : result.found.getPossible()) {
-                    if (b == result.found.inference) {
+                for (Possibility b : result.found.getPossible()) {
+                    if (b == result.found.possibility) {
                         System.err.println("   * " + b);
                     } else {
                         System.err.println("   " + b);
                     }
-                    for (MappedInference bound : b.bind(result.state.players)) {
-                        if (b == result.found.inference) {
+                    for (MappedInference bound : b.inf.bind(result.state.players)) {
+                        if (b == result.found.possibility) {
                             System.err.println("       * " + bound.inf + ", " + bound.ctx.bc.getSuits());
 
                         } else {
