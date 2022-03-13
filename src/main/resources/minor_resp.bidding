@@ -1,10 +1,14 @@
 # Responses to a suit with a GF hand
-1m NJy:down => 13+ hcp, 5+ y, longest_or_equal y among unbid
+1D 2C => 13+ hcp, 5+ C, longest_or_equal C among unbid
 1m NJy => 13+ hcp, 4 y, longest_or_equal y among unbid
+test Kxx Ax xxx AQxxx:1D P 2C
+test Kxxx Ax xxx AQxx:1D P 1S
 
 # 1/1
 1m 1M:down => 6+ hcp, 5+ M, longest_or_equal M among same_level & unbid
 1m 1M => 6+ hcp, 4 M, longest_or_equal M among same_level & unbid
+test Kxxx Ax xx xxxxx:1D P 1S
+test Kxxxx Axxx xx xx:1D P 1S
 
 # minor suit response
 1m 3N => 13-15 hcp, balanced
