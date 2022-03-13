@@ -1,6 +1,9 @@
 P 1M 2♣ => 11+ hcp, 3+ M
 test xxx KJx Kx Axxxx:P P 1♥ P 2♣
 
+P 1M 2M => 6-10 hcp, 3+ M
+test xxx Kxx Kx xxxxx:P P 1♥ P 2♥
+
 1M 2M => min, 3+ M
 test xxx Kxx Kx xxxxx:1♥ P 2♥
 
