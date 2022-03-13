@@ -65,16 +65,11 @@ public class CombinedTotalPointsRange implements Inference {
             tp[i] = new Characteristic(context.likelyHands.partner.minTotalPoints(i), context.likelyHands.partner.minInSuit(i));
         }
         tp[4] = new Characteristic(context.likelyHands.partner.minTotalPoints(4), 0);
-        if (min == null) {
-            if (max == null) {
-                return ConstBoundInference.T;
-            }
-            return new BoundInfMax(tp, max);
+        Range r = Range.between(min, max, 40);
+        if (r.unBounded()) {
+            return ConstBoundInference.T;
         }
-        if (max == null) {
-            return new BoundInfMin(tp, min);
-        }
-        return AndBoundInference.create(new BoundInfMin(tp, min), new BoundInfMax(tp, max));
+        return new BoundInf(tp, r);
     }
 
     public static CombinedTotalPointsRange makeRange(String str) {
@@ -134,7 +129,7 @@ public class CombinedTotalPointsRange implements Inference {
                 pts = Math.max(pts, hand.totalPoints(s) + tp[s].minTotalPoints);
             }
         }
-        return pts;
+        return pts > 40 ? 40 : pts;
     }
 
     @Override
@@ -165,54 +160,29 @@ public class CombinedTotalPointsRange implements Inference {
         return Objects.equals(max, other.max) && Objects.equals(min, other.min);
     }
 
-    static class BoundInfMin implements IBoundInference {
+    static class BoundInf implements IBoundInference {
         final Characteristic[] tp;
-        final int min;
+        final Range r;
 
-        public BoundInfMin(Characteristic[] tp, int min) {
+        public BoundInf(Characteristic[] tp, Range r) {
             this.tp = tp;
-            this.min = min;
+            this.r = r;
         }
 
         @Override
         public boolean matches(Hand hand) {
-            return getTotalPoints(hand, tp) >= min;
+            int tpts = getTotalPoints(hand, tp);
+            return r.contains(tpts);
         }
 
         @Override
         public IBoundInference negate() {
-            return new BoundInfMax(tp, min - 1);
+            return new BoundInf(tp, r.not());
         }
 
         @Override
         public String toString() {
-            return min + "+ tpts";
+            return r + "+ tpts";
         }
     }
-
-    static class BoundInfMax implements IBoundInference {
-        final Characteristic[] tp;
-        final int max;
-
-        public BoundInfMax(Characteristic[] tp, int max) {
-            this.tp = tp;
-            this.max = max;
-        }
-
-        @Override
-        public boolean matches(Hand hand) {
-            return getTotalPoints(hand, tp) <= max;
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return new BoundInfMin(tp, max + 1);
-        }
-
-        @Override
-        public String toString() {
-            return max + "- tpts";
-        }
-    }
-
 }

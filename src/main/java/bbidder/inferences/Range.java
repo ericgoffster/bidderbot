@@ -26,7 +26,7 @@ public class Range {
         if (n == null) {
             return new Range((1L << (max + 1)) - 1, max);
         }
-        return new Range((1 << (n + 1)) - 1, max);
+        return new Range((1L << (n + 1)) - 1, max);
     }
 
     public static Range between(Integer lhs, Integer rhs, int max) {
@@ -36,7 +36,7 @@ public class Range {
     }
     
     public boolean unBounded() {
-        return bits == ((1L << max) - 1);
+        return bits == ((1L << (max + 1)) - 1);
     }
 
     public Range not() {
@@ -44,7 +44,10 @@ public class Range {
     }
 
     public boolean contains(int pos) {
-        return (bits & (1L << pos)) != 0;
+        if (unBounded()) {
+            return true;
+        }
+        return (bits & (1L << pos)) != 0L;
     }
 
     @Override
