@@ -1,7 +1,6 @@
 package bbidder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,8 +24,7 @@ public class BidPatternList {
      * Retrieves the list of bidding contexts for this bid pattern list.
      */
     public List<BiddingContext> getContexts() {
-        HashMap<String, Integer> suits = new HashMap<>();
-        BiddingContext ctx = new BiddingContext(BidList.create(List.of()), suits);
+        BiddingContext ctx = new BiddingContext();
 
         // no patterns, then a wide open context.
         if (bids.isEmpty()) {
@@ -36,8 +34,8 @@ public class BidPatternList {
         List<BiddingContext> l = new ArrayList<>();
         // Add in first hand passing
         BidPattern pattern = bids.get(0);
-        getContexts(l, new BiddingContext(BidList.create(List.of(Bid.P, Bid.P)), suits), true);
-        getContexts(l, new BiddingContext(BidList.create(List.of(Bid.P)), suits), true);
+        getContexts(l, new BiddingContext(BidList.create(List.of(Bid.P, Bid.P))), true);
+        getContexts(l, new BiddingContext(BidList.create(List.of(Bid.P))), true);
         getContexts(l, ctx, true);
         if (!pattern.isOpposition) {
             getContexts(l, ctx, false);

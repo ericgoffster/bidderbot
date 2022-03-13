@@ -1,6 +1,7 @@
 package bbidder;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -18,6 +19,7 @@ import java.util.regex.Pattern;
  *
  */
 public class BiddingContext {
+    private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     public final BidList bids;
     public final Map<String, Integer> suits;
 
@@ -25,6 +27,13 @@ public class BiddingContext {
         super();
         this.bids = boundBidList;
         this.suits = suits;
+    }
+    
+    public BiddingContext() {
+        this(BidList.create(List.of()));
+    }
+    public BiddingContext(BidList boundBidList) {
+        this(boundBidList, new HashMap<>());
     }
     
     public BiddingContext withNewBid(Bid bid, BidPattern pattern) {
@@ -44,39 +53,13 @@ public class BiddingContext {
         return new BiddingContext(bids.withBidAdded(bid), newSuits);
     }
     
-    public static Pattern PATT = Pattern.compile("(.*)\\-(\\d+)");
-    
-    public static void putSuit(Map<String, Integer> suits, String symbol, int strain) {
-        Matcher m = PATT.matcher(symbol);
-        if (m.matches()) {
-            String lhs = m.group(1);
-            int delta = Integer.parseInt(m.group(2));
-            putSuit(suits, lhs, strain + delta);
-            return;
-        }
-        if (symbol.equals("OM")) {
-            suits.put("M", otherMajor(strain));
-        } else if (symbol.equals("om")) {
-            suits.put("m", otherMinor(strain));
-        } else {
-            suits.put(symbol, strain);            
-        }
-    }
-
-    private static Integer otherMajor(Integer strain) {
-        return strain == null ? null : strain == Constants.HEART ? Constants.SPADE : Constants.HEART;
-    }
-    private static Integer otherMinor(Integer strain) {
-        return strain == null ? null : strain == Constants.CLUB ? Constants.DIAMOND : Constants.CLUB;
-    }
-
     /**
      * @param symbol
      *            The symbol
      * @return (0,1,2,3,4) for a given symbol, null if not found.
      */
     public Integer getSuit(String symbol) {
-        Matcher m = PATT.matcher(symbol);
+        Matcher m = SUIT_PATTERN.matcher(symbol);
         if (m.matches()) {
             String lhs = m.group(1);
             int delta = Integer.parseInt(m.group(2));
@@ -158,6 +141,31 @@ public class BiddingContext {
             return false;
         BiddingContext other = (BiddingContext) obj;
         return Objects.equals(bids, other.bids) && Objects.equals(suits, other.suits);
+    }
+
+    private static void putSuit(Map<String, Integer> suits, String symbol, int strain) {
+        Matcher m = SUIT_PATTERN.matcher(symbol);
+        if (m.matches()) {
+            String lhs = m.group(1);
+            int delta = Integer.parseInt(m.group(2));
+            putSuit(suits, lhs, strain + delta);
+            return;
+        }
+        if (symbol.equals("OM")) {
+            suits.put("M", otherMajor(strain));
+        } else if (symbol.equals("om")) {
+            suits.put("m", otherMinor(strain));
+        } else {
+            suits.put(symbol, strain);            
+        }
+    }
+
+    private static Integer otherMajor(Integer strain) {
+        return strain == null ? null : strain == Constants.HEART ? Constants.SPADE : Constants.HEART;
+    }
+
+    private static Integer otherMinor(Integer strain) {
+        return strain == null ? null : strain == Constants.CLUB ? Constants.DIAMOND : Constants.CLUB;
     }
 
     private Bid getBid(BidPattern pattern, int strain) {
