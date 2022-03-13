@@ -24,8 +24,6 @@ public class BidPattern {
     private final Integer jumpLevel;
     public final boolean reverse;
     public final boolean notreverse;
-    
-    
 
     private BidPattern(boolean isOpposition, String suit, Integer level, Bid simpleBid, Integer jumpLevel, boolean reverse, boolean notreverse) {
         super();
@@ -42,7 +40,6 @@ public class BidPattern {
         return new BidPattern(isOpposition, suit, level, simpleBid, jumpLevel, reverse, notreverse);
     }
 
-
     public static BidPattern create(String str) {
         String upper = str.toUpperCase();
         if (upper.startsWith("NJ")) {
@@ -57,7 +54,10 @@ public class BidPattern {
             return new BidPattern(false, str.substring(2), null, null, 0, false, true);
         } else {
             Bid simpleBid = Bid.fromStr(str);
-            if (simpleBid != null && !simpleBid.isSuitBid()) {
+            if (simpleBid != null) {
+                if (simpleBid.isSuitBid()) {
+                    return new BidPattern(false, ""+Constants.STR_ALL_SUITS.charAt(simpleBid.strain), simpleBid.level, null, null, false, false);
+                }
                 return new BidPattern(false, null, null, simpleBid, null, false, false);
             } else {
                 final Integer level = Integer.parseInt(upper.substring(0, 1)) - 1;
