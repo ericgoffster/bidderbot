@@ -15,19 +15,16 @@ import bbidder.SplitUtil;
  *
  */
 public class HCPRange implements Inference {
-    public final Integer min;
-    public final Integer max;
+    public final Range rng;
 
     public HCPRange(Integer min, Integer max) {
         super();
-        this.min = min;
-        this.max = max;
+        this.rng = Range.between(min, max, 40);
     }
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        Range r = Range.between(min, max, 40);
-        return createBound(r);
+        return createBound(rng);
     }
 
     private static IBoundInference createBound(Range r) {
@@ -67,21 +64,12 @@ public class HCPRange implements Inference {
 
     @Override
     public String toString() {
-        if (max == null) {
-            return min + "+ hcp";
-        }
-        if (min == null) {
-            return max + "- hcp";
-        }
-        if (min.equals(max)) {
-            return min + " hcp";
-        }
-        return min + "-" + max + " hcp";
+        return rng + " hcp";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(max, min);
+        return Objects.hash(rng);
     }
 
     @Override
@@ -93,7 +81,7 @@ public class HCPRange implements Inference {
         if (getClass() != obj.getClass())
             return false;
         HCPRange other = (HCPRange) obj;
-        return Objects.equals(max, other.max) && Objects.equals(min, other.min);
+        return Objects.equals(rng, other.rng);
     }
 
     static class BoundInf implements IBoundInference {

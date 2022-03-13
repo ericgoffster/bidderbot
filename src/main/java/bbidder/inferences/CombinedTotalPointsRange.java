@@ -190,7 +190,7 @@ public class CombinedTotalPointsRange implements Inference {
 
         @Override
         public String toString() {
-            return r + "+ tpts";
+            return r + " tpts";
         }
 
         @Override
