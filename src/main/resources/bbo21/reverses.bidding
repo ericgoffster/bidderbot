@@ -15,6 +15,9 @@ test KQxx x Kxxx AKxx:1♣ 1♠ 2♥ 4♣
 1x 1y RVz NJz => fit z, gf
 test x KQxx xxxx Axxx:1♣ 1♠ 2♥ 3♣
 
+1x 1y RVz NJw => gf
+test AQxx xxx xxxx Ax:1♣ 1♠ 2♥ 3♦
+
 1x 1y RVz 2N =>
 test KQJx xx xxxx xxx:1♣ 1♠ 2♥ 2N
 
