@@ -132,7 +132,7 @@ public class InferenceContext {
                 case "NONE":
                     return 0;
                 default:
-                    Integer st = Strain.getSuit(sb.toString());
+                    Integer st = bc.getSuit(sb.toString());
                     if (st != null) {
                         return (short) (1 << st);
                     }
