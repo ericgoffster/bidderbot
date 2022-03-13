@@ -10,6 +10,12 @@ test AQxxxx Kxx Qx xx:1N P 4♥
 1N 4♦ => 6+ ♥, gf+
 test Kxx AQxxxx Qx xx:1N P 4♦
 
+1N 2♣ => inv+, 5+ ♠, 4 ♥
+test AJxxx Axxx xx xx:1N P 2♣
+
+1N 2♣ => inv+, 5+ ♥, 4 ♠
+test AJxx Axxxx xx xx:1N P 2♣
+
 1N 2♥ => 5+ ♠
 test Axxxx xxx Qxx xx:1N P 2♥
 
