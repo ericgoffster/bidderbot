@@ -20,12 +20,9 @@ test AJxx AQx AQxxx x: 1N P 2♣ P 2♠ P 4♣
 1N 2♣ 2♠ 4♥ => gf+, 4+♠, 1-♥
 test AJxx x AQx AQxxx: 1N P 2♣ P 2♠ P 4♥
 
-1N 2♣ 2♥ 3♠ => slaminv+, 4♥
+1N 2♣ 2M 3OM => slaminv+, 4M
 test AJx Axxx Axx Axx: 1N P 2♣ P 2♥ P 3♠
-
-1N 2♣ 2♠ 3♥ => slaminv+, 4♠
 test AJxx Axx Axx Axx: 1N P 2♣ P 2♠ P 3♥
-
 
 1N 2♣ 2♥ 2♠ => inv, 4♠
 test AJxx Axx xxx xxx: 1N P 2♣ P 2♥ P 2♠

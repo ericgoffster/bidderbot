@@ -54,7 +54,20 @@ public class BiddingContext {
             putSuit(suits, lhs, strain + delta);
             return;
         }
-        suits.put(symbol, strain);
+        if (symbol.equals("OM")) {
+            suits.put("M", otherMajor(strain));
+        } else if (symbol.equals("om")) {
+            suits.put("m", otherMinor(strain));
+        } else {
+            suits.put(symbol, strain);            
+        }
+    }
+
+    private static Integer otherMajor(Integer strain) {
+        return strain == null ? null : strain == Constants.HEART ? Constants.SPADE : Constants.HEART;
+    }
+    private static Integer otherMinor(Integer strain) {
+        return strain == null ? null : strain == Constants.CLUB ? Constants.DIAMOND : Constants.CLUB;
     }
 
     /**
@@ -76,6 +89,12 @@ public class BiddingContext {
         Integer strain = Strain.getStrain(symbol);
         if (strain != null) {
             return strain;
+        }
+        if (symbol.equals("OM")) {
+            return otherMajor(suits.get(symbol));
+        }
+        if (symbol.equals("om")) {
+            return otherMinor(suits.get(symbol));
         }
         return suits.get(symbol);
     }

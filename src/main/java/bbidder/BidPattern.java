@@ -75,6 +75,8 @@ public class BidPattern {
         switch (str) {
         case "M":
             return MAJORS;
+        case "OM":
+            return MAJORS;
         case "m":
             return MINORS;
         default:
