@@ -89,6 +89,36 @@ public final class BiddingContext {
         return suits.get(symbol);
     }
     
+    public boolean isReverse(Bid bid) {
+        List<Bid> theBids = bids.getBids();
+        Bid myLastBid = theBids.size() >= 4 ? theBids.get(theBids.size() - 4) : null;
+        Bid partnerLastBid = theBids.size() >= 2 ? theBids.get(theBids.size() - 2) : null;
+        Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
+        if (myRebid != null && bid.isSuitBid()) {
+            boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
+            if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() <= myRebid.ordinal() || supportedPartner
+                    || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isNonReverse(Bid bid) {
+        List<Bid> theBids = bids.getBids();
+        Bid myLastBid = theBids.size() >= 4 ? theBids.get(theBids.size() - 4) : null;
+        Bid partnerLastBid = theBids.size() >= 2 ? theBids.get(theBids.size() - 2) : null;
+        Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
+        if (myRebid != null && bid.isSuitBid()) {
+            boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
+            if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() >= myRebid.ordinal() || supportedPartner
+                    || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     /**
      * @param pattern
      *            The bid pattern
@@ -99,28 +129,15 @@ public final class BiddingContext {
             return List.of(new BiddingContext(bids.withBidAdded(pattern.simpleBid), suits));
         }
         Bid lastBidSuit = bids.getLastSuitBid();
-        List<Bid> theBids = bids.getBids();
-        Bid myLastBid = theBids.size() >= 4 ? theBids.get(theBids.size() - 4) : null;
-        Bid partnerLastBid = theBids.size() >= 2 ? theBids.get(theBids.size() - 2) : null;
-        Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
         List<BiddingContext> result = new ArrayList<>();
         Map<Integer, BiddingContext> m = getMappedBiddingContexts(pattern.getSuit());
         for (Entry<Integer, BiddingContext> e : m.entrySet()) {
             Bid bid = getBid(pattern, e.getKey());
-            if (myRebid != null && bid.isSuitBid()) {
-                boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
-                if (pattern.reverse) {
-                    if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() <= myRebid.ordinal() || supportedPartner
-                            || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
-                        continue;
-                    }
-                }
-                if (pattern.notreverse) {
-                    if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() >= myRebid.ordinal() || supportedPartner
-                            || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
-                        continue;
-                    }
-                }
+            if (pattern.reverse && !isReverse(bid)) {
+                continue;
+            }
+            if (pattern.notreverse && !isNonReverse(bid)) {
+                continue;
             }
             if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
                 BiddingContext bc = e.getValue();
