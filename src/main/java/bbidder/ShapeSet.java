@@ -22,11 +22,11 @@ public class ShapeSet implements Iterable<Shape> {
     }
 
     private static BitSet createShapes(Iterable<Shape> list) {
-        BitSet shp = new BitSet(Shape.values().length);
+        BitSet shapes = new BitSet(Shape.values().length);
         for (Shape s : list) {
-            shp.set(s.ordinal());
+            shapes.set(s.ordinal());
         }
-        return shp;
+        return shapes;
     }
 
     public ShapeSet(Predicate<Shape> pred) {
@@ -34,13 +34,13 @@ public class ShapeSet implements Iterable<Shape> {
     }
 
     private static BitSet createShapes(Predicate<Shape> pred) {
-        BitSet shp = new BitSet(Shape.values().length);
+        BitSet shapes = new BitSet(Shape.values().length);
         for (Shape s : Shape.values()) {
             if (pred.test(s)) {
-                shp.set(s.ordinal());
+                shapes.set(s.ordinal());
             }
         }
-        return shp;
+        return shapes;
     }
 
     public boolean contains(Shape s) {
