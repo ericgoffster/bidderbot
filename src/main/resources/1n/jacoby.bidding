@@ -1,61 +1,61 @@
 1N 2M-1 3M => 4+M, 15 hcp
-test AQxx AJxx Ax xxx: 1N P 2♦ P 3♥
-test AQxx AJxx Ax xxx: 1N P 2♥ P 3♠
+test AQxx AJxx Ax xxx: 1N 2♦ 3♥
+test AQxx AJxx Ax xxx: 1N 2♥ 3♠
 
 1N 2M-1 2N => 4+M, superbalanced
-test AQx Axxx Axx Qxx: 1N P 2♦ P 2N
-test AQxx Axx Axx Qxx: 1N P 2♥ P 2N
+test AQx Axxx Axx Qxx: 1N 2♦ 2N
+test AQxx Axx Axx Qxx: 1N 2♥ 2N
 
 1N 2♦ 2♠ => 4+♥, 2-♠
-test Ax Axxx AJxx Axx: 1N P 2♦ P 2♠
+test Ax Axxx AJxx Axx: 1N 2♦ 2♠
 
 1N 2M-1 3m => 4+M, 2-m
-test Axxx Axx AJxx Ax: 1N P 2♥ P 3♣
-test Axxx Axx Ax AJxx: 1N P 2♥ P 3♦
-test Axx Axxx AJxx Ax: 1N P 2♦ P 3♣
-test Axx Axxx Ax AJxx: 1N P 2♦ P 3♦
+test Axxx Axx AJxx Ax: 1N 2♥ 3♣
+test Axxx Axx Ax AJxx: 1N 2♥ 3♦
+test Axx Axxx AJxx Ax: 1N 2♦ 3♣
+test Axx Axxx Ax AJxx: 1N 2♦ 3♦
 
 1N 2M-1 2M =>
-test AQxx xx AJx Axxx: 1N P 2♦ P 2♥
-test AQx xxx AJx Axxx: 1N P 2♥ P 2♠
+test AQxx xx AJx Axxx: 1N 2♦ 2♥
+test AQx xxx AJx Axxx: 1N 2♥ 2♠
 
 
 
 1N 2♦ 2♥ 2♠ => inv, 5+♠
-test AJxxx Axxxx xx x: 1N P 2♦ P 2♥ P 2♠
+test AJxxx Axxxx xx x: 1N 2♦ 2♥ 2♠
 
 1N 2M-1 2M 3M => inv, 6+M
-test Axx Kxxxxx xx xx: 1N P 2♦ P 2♥ P 3♥
-test Kxxxxx Axx xx xx: 1N P 2♥ P 2♠ P 3♠
+test Axx Kxxxxx xx xx: 1N 2♦ 2♥ 3♥
+test Kxxxxx Axx xx xx: 1N 2♥ 2♠ 3♠
 
 1N 2M-1 2M 2N => inv
-test Axx Axxxx xx Jxx: 1N P 2♦ P 2♥ P 2N
-test Axxxx Axx xx Jxx: 1N P 2♥ P 2♠ P 2N
+test Axx Axxxx xx Jxx: 1N 2♦ 2♥ 2N
+test Axxxx Axx xx Jxx: 1N 2♥ 2♠ 2N
 
 1N 2M-1 2M 3m => gf+, 4+m
-test Axx Axxxx x Axxx: 1N P 2♦ P 2♥ P 3♣
-test Axxxx Axx x Axxx: 1N P 2♥ P 2♠ P 3♣
+test Axx Axxxx x Axxx: 1N 2♦ 2♥ 3♣
+test Axxxx Axx x Axxx: 1N 2♥ 2♠ 3♣
 
 1N 2M-1 2M 3N => gf
-test AJx AQxxx xxx xx: 1N P 2♦ P 2♥ P 3N
-test AQxxx AJx xxx xx: 1N P 2♥ P 2♠ P 3N
+test AJx AQxxx xxx xx: 1N 2♦ 2♥ 3N
+test AQxxx AJx xxx xx: 1N 2♥ 2♠ 3N
 
 1N 2M-1 2M Jx => slaminv, 6+M, 1-x
-test x AQxxxx Axx Axx: 1N P 2♦ P 2♥ P 3♠
-test AQxxxx x Axx Axx: 1N P 2♥ P 2♠ P 4♥
-test Axx AQxxxx Axx x: 1N P 2♦ P 2♥ P 4♣
-test AQxxxx Axx Axx x: 1N P 2♥ P 2♠ P 4♣
-test Axx AQxxxx x Axx: 1N P 2♦ P 2♥ P 4♦
-test AQxxxx Axx x Axx: 1N P 2♥ P 2♠ P 4♦
+test x AQxxxx Axx Axx: 1N 2♦ 2♥ 3♠
+test AQxxxx x Axx Axx: 1N 2♥ 2♠ 4♥
+test Axx AQxxxx Axx x: 1N 2♦ 2♥ 4♣
+test AQxxxx Axx Axx x: 1N 2♥ 2♠ 4♣
+test Axx AQxxxx x Axx: 1N 2♦ 2♥ 4♦
+test AQxxxx Axx x Axx: 1N 2♥ 2♠ 4♦
 
 1N 2M-1 2M 4M => slaminv, 6+M
-test Axx AQJxxx Ax xx: 1N P 2♦ P 2♥ P 4♥
-test AQJxxx Axx Ax xx: 1N P 2♥ P 2♠ P 4♠
+test Axx AQJxxx Ax xx: 1N 2♦ 2♥ 4♥
+test AQJxxx Axx Ax xx: 1N 2♥ 2♠ 4♠
 
 1N 2M-1 2M 4N => slaminv
-test Axx AQxxx AQx xx: 1N P 2♦ P 2♥ P 4N
-test AQxxx Axx AQx xx: 1N P 2♥ P 2♠ P 4N
+test Axx AQxxx AQx xx: 1N 2♦ 2♥ 4N
+test AQxxx Axx AQx xx: 1N 2♥ 2♠ 4N
 
 1N 2M-1 2M 5N => slam, 5M
-test Axx AQxxx AQx Ax: 1N P 2♦ P 2♥ P 5N
-test AQxxx Axx AQx Ax: 1N P 2♥ P 2♠ P 5N
+test Axx AQxxx AQx Ax: 1N 2♦ 2♥ 5N
+test AQxxx Axx AQx Ax: 1N 2♥ 2♠ 5N

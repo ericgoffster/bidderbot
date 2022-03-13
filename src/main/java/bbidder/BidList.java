@@ -88,6 +88,42 @@ public class BidList {
         }
         return new BidList(bids);
     }
+    
+    /**
+     * @param str
+     *            The string to parse
+     * @return A bid list parsed from the string
+     */
+    public static BidList valueOf2(String str) {
+        if (str == null) {
+            return null;
+        }
+        String[] parts = SplitUtil.split(str, "\\s+");
+        List<Bid> bids = new ArrayList<>();
+        boolean we = false;
+        for (String part : parts) {
+            if (part.startsWith("(") && part.endsWith(")")) {
+                Bid b = Bid.fromStr(part.substring(1,part.length() - 1));
+                if (b == null) {
+                    throw new IllegalArgumentException("Illegal bid: '" + part + "'");
+                }
+                bids.add(b);
+                we = false;
+            } else {
+                if (we) {
+                    bids.add(Bid.P);
+                }
+                Bid b = Bid.fromStr(part);
+                if (b == null) {
+                    throw new IllegalArgumentException("Illegal bid: '" + part + "'");
+                }
+                bids.add(b);
+                we = true;
+            }
+        }
+        return new BidList(bids);
+    }
+
 
     @Override
     public String toString() {

@@ -8,7 +8,7 @@ test AKQx AQxx AQ xxx:2N
 test AQxx KQxx AQ xxx:1N
 
 P 1M:down => 5+ M, 8+ hcp, longest_or_equal M among majors
-test KQJxx xxx Axx xx:P P 1♠
+test KQJxx xxx Axx xx:P 1♠
 
 1x:down => 5+ x, 13+ hcp, longest_or_equal x among all
 test AQxxx Axxx Kx xx:1♠
