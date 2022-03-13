@@ -107,9 +107,14 @@ public class OpeningPreempt implements Inference {
         public String toString() {
             return "opening_preempt " + level + " " + STR_ALL_SUITS.charAt(suit);
         }
-        
+
         @Override
         public IBoundInference andReduce(IBoundInference i) {
+            return null;
+        }
+
+        @Override
+        public IBoundInference orReduce(IBoundInference i) {
             return null;
         }
     }
@@ -138,9 +143,14 @@ public class OpeningPreempt implements Inference {
         public String toString() {
             return "non_opening_preempt " + level + " " + STR_ALL_SUITS.charAt(suit);
         }
-        
+
         @Override
         public IBoundInference andReduce(IBoundInference i) {
+            return null;
+        }
+
+        @Override
+        public IBoundInference orReduce(IBoundInference i) {
             return null;
         }
     }

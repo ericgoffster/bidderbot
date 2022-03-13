@@ -134,6 +134,11 @@ public class LongestOrEqual implements Inference {
         public IBoundInference andReduce(IBoundInference i) {
             return null;
         }
+
+        @Override
+        public IBoundInference orReduce(IBoundInference i) {
+            return null;
+        }
     }
 
     static class ShorterBoundInf implements IBoundInference {
@@ -160,9 +165,14 @@ public class LongestOrEqual implements Inference {
         public String toString() {
             return "shorter " + STR_ALL_SUITS.charAt(isuit) + getAmong(iamong);
         }
-        
+
         @Override
         public IBoundInference andReduce(IBoundInference i) {
+            return null;
+        }
+
+        @Override
+        public IBoundInference orReduce(IBoundInference i) {
             return null;
         }
     }

@@ -13,8 +13,6 @@ import bbidder.Inference;
  *
  */
 public class Balanced implements Inference {
-    private static final BalancedBoundInf BALANCED = new BalancedBoundInf();
-
     private static boolean isBalanced(Hand hand) {
         int ndoub = 0;
         for (int s = 0; s < 4; s++) {
@@ -35,7 +33,7 @@ public class Balanced implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        return BALANCED;
+        return new BoundInf(true);
     }
 
     public static Balanced valueOf(String str) {
@@ -70,15 +68,22 @@ public class Balanced implements Inference {
         return true;
     }
 
-    private static final class BalancedBoundInf implements IBoundInference {
+    private static final class BoundInf implements IBoundInference {
+        final boolean bal;
+
+        public BoundInf(boolean bal) {
+            super();
+            this.bal = bal;
+        }
+
         @Override
         public boolean matches(Hand hand) {
-            return isBalanced(hand);
+            return isBalanced(hand) == bal;
         }
 
         @Override
         public IBoundInference negate() {
-            return new UnbalancedBoundInf();
+            return new BoundInf(!bal);
         }
 
         @Override
@@ -87,42 +92,29 @@ public class Balanced implements Inference {
         }
 
         @Override
-        public IBoundInference andReduce(IBoundInference i) {
-            if (i instanceof BalancedBoundInf) {
+        public IBoundInference orReduce(IBoundInference i) {
+            if (i instanceof BoundInf) {
+                if (bal == ((BoundInf) i).bal) {
+                    return this;
+                }
+                if (bal != ((BoundInf) i).bal) {
+                    return ConstBoundInference.T;
+                }
                 return this;
-            }
-            if (i instanceof UnbalancedBoundInf) {
-                return ConstBoundInference.F;
             }
             return null;
         }
-    }
-
-    private static final class UnbalancedBoundInf implements IBoundInference {
-        private static final UnbalancedBoundInf UNBALANCED = new UnbalancedBoundInf();
-
-        @Override
-        public boolean matches(Hand hand) {
-            return !isBalanced(hand);
-        }
-
-        @Override
-        public IBoundInference negate() {
-            return UNBALANCED;
-        }
-
-        @Override
-        public String toString() {
-            return "unbalanced";
-        }
 
         @Override
         public IBoundInference andReduce(IBoundInference i) {
-            if (i instanceof UnbalancedBoundInf) {
+            if (i instanceof BoundInf) {
+                if (bal == ((BoundInf) i).bal) {
+                    return this;
+                }
+                if (bal != ((BoundInf) i).bal) {
+                    return ConstBoundInference.F;
+                }
                 return this;
-            }
-            if (i instanceof BalancedBoundInf) {
-                return ConstBoundInference.F;
             }
             return null;
         }

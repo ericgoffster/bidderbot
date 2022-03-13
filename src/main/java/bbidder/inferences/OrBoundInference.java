@@ -55,6 +55,32 @@ public class OrBoundInference implements IBoundInference {
                 l.add(i);
             }
         }
+        int i = 0;
+        while (i < l.size()) {
+            IBoundInference lhs = l.get(i);
+            int j = i + 1;
+            donebubble: {
+                while (j < l.size()) {
+                    IBoundInference rhs = l.get(j);
+                    IBoundInference comb = lhs.orReduce(rhs);
+                    if (comb != null) {
+                        l.remove(j);
+                        if (comb == ConstBoundInference.T) {
+                            return ConstBoundInference.T;
+                        }
+                        if (comb == ConstBoundInference.F) {
+                            l.remove(i);
+                        } else {
+                            l.set(i, comb);
+                        }
+                        break donebubble;
+                    } else {
+                        j++;
+                    }
+                }
+                i++;
+            }
+        }
         if (l.size() == 0) {
             return ConstBoundInference.F;
         }
@@ -72,9 +98,14 @@ public class OrBoundInference implements IBoundInference {
         }
         return "(" + String.join(" | ", l) + ")";
     }
-       
+
     @Override
     public IBoundInference andReduce(IBoundInference i) {
+        return null;
+    }
+
+    @Override
+    public IBoundInference orReduce(IBoundInference i) {
         return null;
     }
 }

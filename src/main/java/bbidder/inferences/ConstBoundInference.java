@@ -42,4 +42,9 @@ public class ConstBoundInference implements IBoundInference {
     public IBoundInference andReduce(IBoundInference i) {
         return null;
     }
+
+    @Override
+    public IBoundInference orReduce(IBoundInference i) {
+        return null;
+    }
 }

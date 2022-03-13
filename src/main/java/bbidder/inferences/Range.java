@@ -32,7 +32,7 @@ public class Range {
     public static Range between(Integer lhs, Integer rhs, int max) {
         return atLeast(lhs, max).and(atMost(rhs, max));
     }
-    
+
     public boolean unBounded() {
         return bits == ((1L << (max + 1)) - 1);
     }
@@ -40,7 +40,7 @@ public class Range {
     public Range not() {
         return new Range((~bits) & ((1L << (max + 1)) - 1), max);
     }
-    
+
     public Range and(Range other) {
         return new Range(bits & other.bits, max);
     }

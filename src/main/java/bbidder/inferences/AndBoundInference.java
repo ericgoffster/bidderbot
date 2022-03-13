@@ -56,11 +56,11 @@ public class AndBoundInference implements IBoundInference {
             }
         }
         int i = 0;
-        while(i < l.size()) {
+        while (i < l.size()) {
             IBoundInference lhs = l.get(i);
             int j = i + 1;
             donebubble: {
-                while(j < l.size()) {
+                while (j < l.size()) {
                     IBoundInference rhs = l.get(j);
                     IBoundInference comb = lhs.andReduce(rhs);
                     if (comb != null) {
@@ -101,6 +101,11 @@ public class AndBoundInference implements IBoundInference {
 
     @Override
     public IBoundInference andReduce(IBoundInference i) {
+        return null;
+    }
+
+    @Override
+    public IBoundInference orReduce(IBoundInference i) {
         return null;
     }
 }

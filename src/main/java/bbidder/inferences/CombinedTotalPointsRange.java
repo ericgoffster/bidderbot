@@ -192,11 +192,19 @@ public class CombinedTotalPointsRange implements Inference {
         public String toString() {
             return r + "+ tpts";
         }
-        
+
+        @Override
+        public IBoundInference orReduce(IBoundInference i) {
+            if (i instanceof BoundInf && Arrays.equals(tp, ((BoundInf) i).tp)) {
+                return createBounded(tp, r.or(((BoundInf) i).r));
+            }
+            return null;
+        }
+
         @Override
         public IBoundInference andReduce(IBoundInference i) {
             if (i instanceof BoundInf && Arrays.equals(tp, ((BoundInf) i).tp)) {
-                return createBounded(tp, new Range(r.bits & ((BoundInf) i).r.bits, r.max));
+                return createBounded(tp, r.and(((BoundInf) i).r));
             }
             return null;
         }

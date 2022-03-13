@@ -135,5 +135,13 @@ public class SuitRange implements Inference {
             }
             return null;
         }
+
+        @Override
+        public IBoundInference orReduce(IBoundInference i) {
+            if (i instanceof BoundInf && suit == ((BoundInf) i).suit) {
+                return createBound(suit, r.or(((BoundInf) i).r));
+            }
+            return null;
+        }
     }
 }

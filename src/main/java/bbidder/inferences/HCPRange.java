@@ -117,11 +117,19 @@ public class HCPRange implements Inference {
         public String toString() {
             return r + " hcp";
         }
-               
+
         @Override
         public IBoundInference andReduce(IBoundInference i) {
             if (i instanceof BoundInf) {
                 return createBound(r.and(((BoundInf) i).r));
+            }
+            return null;
+        }
+
+        @Override
+        public IBoundInference orReduce(IBoundInference i) {
+            if (i instanceof BoundInf) {
+                return createBound(r.or(((BoundInf) i).r));
             }
             return null;
         }
