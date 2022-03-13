@@ -16,7 +16,6 @@ public interface IBoundInference  {
     public boolean matches(Hand hand);
     
     public InfSummary getSummary();
-    public InfSummary getNotSummary();
     
     IBoundInference andWith(InfSummary summary);
     IBoundInference negate();

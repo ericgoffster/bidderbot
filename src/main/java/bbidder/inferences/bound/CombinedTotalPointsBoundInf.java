@@ -22,11 +22,6 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
     }
     
     @Override
-    public InfSummary getNotSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40), r.not(), Range.all(40));
-    }
-    
-    @Override
     public IBoundInference andWith(InfSummary summary) {
         return createBounded(partnerSummary, summary.ctpts.and(r));
     }

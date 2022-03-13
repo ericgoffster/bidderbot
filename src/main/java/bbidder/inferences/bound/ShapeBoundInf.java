@@ -30,11 +30,6 @@ public class ShapeBoundInf implements IBoundInference {
     }
     
     @Override
-    public InfSummary getNotSummary() {
-        return new InfSummary(shapes.not(), Range.all(40), Range.all(40), Range.all(40));
-    }
-    
-    @Override
     public IBoundInference andWith(InfSummary summary) {
         return create(shapes.and(summary.shape));
     }

@@ -22,11 +22,6 @@ public class TotalPtsBoundInf implements IBoundInference {
     }
     
     @Override
-    public InfSummary getNotSummary() {
-        return new InfSummary(ShapeSet.ALL, Range.all(40), Range.all(40), r.not());
-    }
-    
-    @Override
     public IBoundInference andWith(InfSummary summary) {
         return createBounded(partnerSummary, r.and(summary.tpts));
     }

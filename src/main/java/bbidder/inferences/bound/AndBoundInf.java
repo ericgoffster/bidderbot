@@ -41,15 +41,6 @@ public class AndBoundInf implements IBoundInference {
     }
         
     @Override
-    public InfSummary getNotSummary() {
-        InfSummary s = InfSummary.NONE;
-        for(IBoundInference i: inferences) {
-            s = s.or(i.getNotSummary());
-        }
-        return s;
-    }
-    
-    @Override
     public IBoundInference negate() {
         List<IBoundInference> l = new ArrayList<>();
         for(IBoundInference i : inferences) {

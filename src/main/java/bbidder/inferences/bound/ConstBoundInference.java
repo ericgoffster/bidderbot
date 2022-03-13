@@ -26,11 +26,6 @@ public class ConstBoundInference implements IBoundInference {
     }
     
     @Override
-    public InfSummary getNotSummary() {
-        return result ? InfSummary.NONE : InfSummary.ALL;
-    }
-    
-    @Override
     public IBoundInference negate() {
         return result ? F : T;
     }

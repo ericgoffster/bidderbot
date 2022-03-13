@@ -31,15 +31,6 @@ public class OrBoundInf implements IBoundInference {
     }
 
     @Override
-    public InfSummary getNotSummary() {
-        InfSummary s = InfSummary.ALL;
-        for(IBoundInference i: inferences) {
-            s = s.and(i.getNotSummary());
-        }
-        return s;
-    }
-    
-    @Override
     public IBoundInference andWith(InfSummary summary) {
         List<IBoundInference> l = new ArrayList<>();
         for(IBoundInference i : inferences) {
