@@ -131,29 +131,48 @@ public class Hand {
         sb.reverse();
         return sb.toString();
     }
-
-    public static short parseSuit(String suitStr, int suitIndex, Hand avail) {
-        if (suitStr.equals("-")) {
-            return 0;
+    
+    private static class ParsedHand {
+        Hand current = new Hand();
+        Hand avail; 
+        
+        public ParsedHand(Hand avail) {
+            super();
+            this.avail = avail;
         }
-        short suit = 0;
-        int numX = 0;
-        for (int i = 0; i < suitStr.length(); i++) {
-            if (suitStr.charAt(i) == 'x' || suitStr.charAt(i) == 'X') {
-                numX++;
-            } else {
-                int rank = getRank(suitStr.charAt(i), avail.getAllInSuit(suitIndex));
-                avail.suits[suitIndex] &= ~(1 << rank);
-                suit |= (1 << rank);
+
+        public void parseSuit(String suitStr, int suitIndex) {
+            if (suitStr.equals("-")) {
+                return;
+            }
+            int numX = 0;
+            for (int i = 0; i < suitStr.length(); i++) {
+                if (suitStr.charAt(i) == 'x' || suitStr.charAt(i) == 'X') {
+                    numX++;
+                } else {
+                    int rank = getRank(suitStr.charAt(i), avail.getAllInSuit(suitIndex));
+                    avail = avail.withCardEemoved(suitIndex, rank);
+                    current = current.withCardAdded(suitIndex, rank);
+                }
+            }
+            while (numX > 0) {
+                int rank = getRank('X', avail.getAllInSuit(suitIndex));
+                avail = avail.withCardEemoved(suitIndex, rank);
+                current = current.withCardAdded(suitIndex, rank);
+                numX--;
             }
         }
-        while (numX > 0) {
-            int rank = getRank('X', avail.getAllInSuit(suitIndex));
-            avail.suits[suitIndex] &= ~(1 << rank);
-            suit |= (1 << rank);
-            numX--;
+        
+        public void parseHand(String str) {
+            String[] suit_parts = SplitUtil.split(str, "\\s+", 4);
+            if (suit_parts.length != 4) {
+                throw new IllegalArgumentException("Expected 4 suits: '" + str + '"');
+            }
+            int suit = 3;
+            for (String suitStr : suit_parts) {
+                parseSuit(suitStr, suit--);
+            }
         }
-        return suit;
     }
 
     public static short belowSuit(int suit) {
@@ -230,17 +249,9 @@ public class Hand {
         if (str == null) {
             return null;
         }
-        int suit = 3;
-        short[] suits = new short[4];
-        String[] suit_parts = SplitUtil.split(str, "\\s+", 4);
-        if (suit_parts.length != 4) {
-            throw new IllegalArgumentException("Expected 4 suits: '" + str + '"');
-        }
-        for (String suitStr : suit_parts) {
-            short parseSuit = parseSuit(suitStr, suit, avail);
-            suits[suit--] = parseSuit;
-        }
-        return new Hand(suits);
+        ParsedHand parsed = new ParsedHand(avail);
+        parsed.parseHand(str);
+        return parsed.current;
     }
 
     public static Hand valueOf(String str) {
