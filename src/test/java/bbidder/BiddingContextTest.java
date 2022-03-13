@@ -122,6 +122,7 @@ public class BiddingContextTest {
                 .withNewBid(Bid._1S, BidPattern.valueOf("1S"))
                 .withNewBid(Bid.P, BidPattern.valueOf("P"));
         assertEquals(bc.getBids(BidPattern.valueOf("2x:reverse")), Set.of(Bid._2H));
+        assertEquals(bc.getBids(BidPattern.valueOf("2x:nonreverse")), Set.of(Bid._2C));
     }
 
     @Test
