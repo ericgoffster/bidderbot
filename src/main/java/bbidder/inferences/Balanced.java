@@ -107,9 +107,6 @@ public class Balanced implements Inference {
         @Override
         public IBoundInference andReduce(IBoundInference i) {
             if (i instanceof BoundInf) {
-                if (bal == ((BoundInf) i).bal) {
-                    return this;
-                }
                 if (bal != ((BoundInf) i).bal) {
                     return ConstBoundInference.F;
                 }

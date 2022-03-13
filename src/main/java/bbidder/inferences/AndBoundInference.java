@@ -103,14 +103,22 @@ public class AndBoundInference implements IBoundInference {
 
     @Override
     public IBoundInference andReduce(IBoundInference i) {
-        // (a * b ...) * (c * d ...) = (a * b * c * d ....)
+        // ab * cd = (abcd)
         if (i instanceof AndBoundInference) {
             List<IBoundInference> andList = new ArrayList<>(inferences);
             andList.addAll(((AndBoundInference) i).inferences);
             return create(andList);
         }
-        // (a * b ...) * (c + d ....)
+        // (ab) * (c + d) = (abc + abd)
         if (i instanceof OrBoundInference) {
+            List<IBoundInference> result = new ArrayList<>();
+            for(IBoundInference j: ((OrBoundInference) i).inferences) {
+                List<IBoundInference> i2 = new ArrayList<IBoundInference>(inferences);
+                i2.add(j);
+                result.add(create(i2));
+            }
+            IBoundInference res = OrBoundInference.create(result);
+            return res;
         }
         return null;
     }

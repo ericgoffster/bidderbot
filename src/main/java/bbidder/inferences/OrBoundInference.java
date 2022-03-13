@@ -42,55 +42,54 @@ public class OrBoundInference implements IBoundInference {
     public static IBoundInference create(IBoundInference i1, IBoundInference i2) {
         return create(List.of(i1, i2));
     }
+    
+    /**
+     * Adds a an inference to a list of inferences being or'ed together.
+     * @param orList The list of inferences being and'ed together.
+     * @param rhs inference to add to this list.
+     * @return false If any of the inferences is "T"
+     */
+    public static boolean addOr(List<IBoundInference> orList, IBoundInference rhs) {
+        // One bad apple spoils the rest
+        if (rhs == ConstBoundInference.T) {
+            return false;
+        } else if (rhs != ConstBoundInference.F) {
+            // Attempt to combine the inference with an existing inference.
+            for(int i = 0; i < orList.size(); i++) {
+                IBoundInference lhs = orList.get(i);
+                IBoundInference comb = lhs.orReduce(rhs);
+                if (comb == null) {
+                    comb = rhs.orReduce(lhs);
+                }
+                // Found a combination, remove original, add the combination.
+                if (comb != null) {
+                    // Remove 
+                    orList.remove(i);
+                    return addOr(orList, comb);
+                }
+            }
+            // Just add to the end
+            orList.add(rhs);
+            return true;
+        } else {
+            return true;
+        }
+    }
 
     public static IBoundInference create(List<IBoundInference> inferences) {
-        List<IBoundInference> l = new ArrayList<>();
+        List<IBoundInference> orList = new ArrayList<>();
         for (IBoundInference i : inferences) {
-            if (i == ConstBoundInference.T) {
+            if (!addOr(orList, i)) {
                 return ConstBoundInference.T;
             }
-            if (i instanceof OrBoundInference) {
-                l.addAll(((OrBoundInference) i).inferences);
-            } else if (i != ConstBoundInference.F) {
-                l.add(i);
-            }
         }
-        int i = 0;
-        while (i < l.size()) {
-            IBoundInference lhs = l.get(i);
-            int j = i + 1;
-            donebubble: {
-                while (j < l.size()) {
-                    IBoundInference rhs = l.get(j);
-                    IBoundInference comb = lhs.orReduce(rhs);
-                    if (comb == null) {
-                        comb = rhs.orReduce(lhs);
-                    }
-                    if (comb != null) {
-                        l.remove(j);
-                        if (comb == ConstBoundInference.T) {
-                            return ConstBoundInference.T;
-                        }
-                        if (comb == ConstBoundInference.F) {
-                            l.remove(i);
-                        } else {
-                            l.set(i, comb);
-                        }
-                        break donebubble;
-                    } else {
-                        j++;
-                    }
-                }
-                i++;
-            }
-        }
-        if (l.size() == 0) {
+        if (orList.size() == 0) {
             return ConstBoundInference.F;
         }
-        if (l.size() == 1) {
-            return l.get(0);
+        if (orList.size() == 1) {
+            return orList.get(0);
         }
-        return new OrBoundInference(l);
+        return new OrBoundInference(orList);
     }
 
     @Override
@@ -109,6 +108,12 @@ public class OrBoundInference implements IBoundInference {
 
     @Override
     public IBoundInference orReduce(IBoundInference i) {
+        // (a + b) + (c + d) = (a + b + c + d)
+        if (i instanceof OrBoundInference) {
+            List<IBoundInference> orList = new ArrayList<>(inferences);
+            orList.addAll(((OrBoundInference) i).inferences);
+            return create(orList);
+        }
         return null;
     }
 }
