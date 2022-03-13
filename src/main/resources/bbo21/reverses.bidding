@@ -1,25 +1,40 @@
-# Reverses
+# Lebensohl over reverses
 
+# Rebid first suit with minmum hand and 5+ in that suit
 1x 1y RVz 2y => 5+ y, 7- tpts
 test KQJxx xx xxxx xx:1♣ 1♠ 2♥ 2♠
 
-1x 1y RVz 3y => 6+ y, gf
+# Jump rebid first suit with gf hand and a powerful suit
+1x 1y RVz 3y => 6+ y, gf, AKQ|AKJ|AKT|AQJ|AQT|AJT|KQJ|KQT|KJT|QJT in y
 test KQJxxx xx Axx xx:1♣ 1♠ 2♥ 3♠
+test AQTxxx xx Axx xx:1♣ 1♠ 2♥ 3♠
 
+# gf simple raise of first suit.
 1x 1y RVz NJx => fit x, gf
 test KQxx x xxxx Axxx:1♣ 1♠ 2♥ 3♣
 
+# slam inv with jump raise of first suit
 1x 1y RVz Jx => fit x, slaminv+
 test KQxx x Kxxx AKxx:1♣ 1♠ 2♥ 4♣
 
-1x 1y RVz NJz => fit z, gf
+# simple raise of second suit with gf+
+1x 1y RVz NJz => fit z, gf+
 test x KQxx xxxx Axxx:1♣ 1♠ 2♥ 3♣
 
+# 4sf with generic game force
 1x 1y RVz NJw => gf
 test AQxx xxx xxxx Ax:1♣ 1♠ 2♥ 3♦
+test Qxxxxx Ax Axx xx:1♣ 1♠ 2♥ 3♦
 
+# 2N artficial weak
 1x 1y RVz 2N =>
 test KQJx xx xxxx xxx:1♣ 1♠ 2♥ 2N
 
-1x 1y RVz 2N 3C =>
-test x AQxx KQx AKxxx:1♣ 1♠ 2♥ 2N 3C
+1x 1y RVz 2N 3z => 5+ z
+test - AQxxx KQ AKxxxx:1♣ 1♠ 2♥ 2N 3♥
+
+1x 1y RVz 2N 3x => 6+ x
+test - AQxx  AKxxxx KQx:1♦ 1♠ 2♥ 2N 3♦
+
+1x 1y RVz 2N 3♣ =>
+test x AQxx KQx AKxxx:1♣ 1♠ 2♥ 2N 3♣
