@@ -105,19 +105,19 @@ public class BidPatternList {
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = bids.get(0);
         if (pattern.wild) {
-            return getContexts(ctx, pattern, new BidPatternList(bids.subList(1, bids.size())), false);
+            return new BidPatternList(bids.subList(1, bids.size())).getContexts(ctx, pattern, false);
         }
         if (isOpp && !pattern.isOpposition) {
-            return getContexts(ctx, BidPattern.PASS, this, !isOpp);
+            return getContexts(ctx, BidPattern.PASS, !isOpp);
         }
-        return getContexts(ctx, pattern, new BidPatternList(bids.subList(1, bids.size())), !isOpp);
+        return new BidPatternList(bids.subList(1, bids.size())).getContexts(ctx, pattern, !isOpp);
     }
 
-    private List<BiddingContext> getContexts(BiddingContext ctx, BidPattern pattern, BidPatternList theRest, boolean isOpp) {
+    private List<BiddingContext> getContexts(BiddingContext ctx, BidPattern pattern, boolean isOpp) {
         List<BiddingContext> l = new ArrayList<>();
 
         for (BiddingContext newCtx : ctx.getBids(pattern)) {
-            l.addAll(theRest.getContexts(newCtx, isOpp));
+            l.addAll(getContexts(newCtx, isOpp));
         }
         return l;
     }
