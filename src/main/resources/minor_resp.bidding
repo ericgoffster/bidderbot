@@ -6,12 +6,19 @@ test AQxxx Axxx x Kxx:1D P 1S
 test Kxxx Ax xxx AQxx:1D P 1S
 test AQxx Axxx xx Kxx:1D P 1H
 
-1m 1M:down => 6-12 hcp, 5+ M, longest_or_equal M among same_level & unbid
+1m 1M:down => min, 5+ M, longest_or_equal M among same_level & unbid
 test Kxxx Ax xx xxxxx:1D P 1S
 
-1m 1M => 6-12 hcp, 4 M, longest_or_equal M among same_level & unbid
+1m 1M:down => inv, 5+ M, longest_or_equal M among same_level & unbid
+test Kxxx Ax xx Axxxx:1D P 1S
+
+1m 1M => min, 4 M, longest_or_equal M among same_level & unbid
 test Kxxxx Axxx xx xx:1D P 1S
 test Kxxx Axxx xx xxx:1D P 1H
+
+1m 1M => inv, 4 M, longest_or_equal M among same_level & unbid
+test Kxxxx Axxx xx Ax:1D P 1S
+test Kxxx Axxx xx Axx:1D P 1H
 
 1m 3N => gf, balanced
 test Kxx Kx Axxx Kxxx:1D P 3N
