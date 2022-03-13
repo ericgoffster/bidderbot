@@ -112,7 +112,7 @@ public class BiddingContext {
         TreeSet<Bid> result = new TreeSet<>();
         for (int strain : BitUtil.iterate(getStrains(pattern))) {
             Bid bid = getBid(pattern, strain);
-            Bid myLastBid = bids.bids.size() >= 3 ? bids.bids.get(bids.bids.size() - 3) : null;
+            Bid myLastBid = bids.bids.size() >= 4 ? bids.bids.get(bids.bids.size() - 4) : null;
             if (myLastBid != null && myLastBid.isSuitBid() && bid.isSuitBid()) {
                 if (pattern.reverse) {
                     if (bid.strain < myLastBid.strain || bid.level != myLastBid.level + 1) {

@@ -144,7 +144,7 @@ public class BidPattern {
             } else if (parts[i].equalsIgnoreCase("reverse")) {
                 reverse = true;
             } else if (parts[i].equalsIgnoreCase("nonreverse")) {
-                reverse = true;
+                notreverse = true;
             }  else {
                 throw new IllegalArgumentException("Uknown qualifier: " + parts[i]);
             }

@@ -33,7 +33,7 @@ public class Test2Over1 {
             if (!result.found.bid.equals(result.expected)) {
                 hadError.set(true);
                 System.err.println("Test at " + result.where + " claims I should have bid "+result.expected);
-                if (result.found != null) {
+                if (result.found.inference != null) {
                     System.err.println("But "+result.found.inference.where + " dictates I should bid " + result.found.bid);
                 } else {
                     System.err.println("But no systemic bid matched so "+result.found.bid + " was chosen");
