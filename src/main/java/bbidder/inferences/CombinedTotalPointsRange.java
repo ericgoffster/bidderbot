@@ -7,6 +7,7 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.SplitUtil;
 
 /**
  * Represents the inference of the total points in a suit.
@@ -73,6 +74,12 @@ public class CombinedTotalPointsRange implements Inference {
     }
     
     public static CombinedTotalPointsRange makeRange(String str) {
+        String[] parts = SplitUtil.split(str, "-", 2);
+        if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
+            CombinedTotalPointsRange r1 = makeRange(parts[0]);
+            CombinedTotalPointsRange r2 = makeRange(parts[1]);
+            return new CombinedTotalPointsRange(r1.min, r2.max);
+        }
         switch(str) {
         case "min":
             return new CombinedTotalPointsRange(19, 23);
@@ -106,8 +113,7 @@ public class CombinedTotalPointsRange implements Inference {
             return new CombinedTotalPointsRange(37, null);
         default:
             return null;
-        }
-        
+        }       
     }
     
     public static CombinedTotalPointsRange valueOf(String str) {

@@ -6,17 +6,13 @@ test AQxxx Axxx x Kxx:1♦ P 1♠
 test Kxxx Ax xxx AQxx:1♦ P 1♠
 test AQxx Axxx xx Kxx:1♦ P 1♥
 
-1m 1M:down => min, 5+ M, longest_or_equal M among same_level & unbid
+1m 1M:down => min-inv, 5+ M, longest_or_equal M among same_level & unbid
 test Kxxx Ax xx xxxxx:1♦ P 1♠
-
-1m 1M:down => inv, 5+ M, longest_or_equal M among same_level & unbid
 test Kxxx Ax xx Axxxx:1♦ P 1♠
 
-1m 1M => min, 4 M, longest_or_equal M among same_level & unbid
+1m 1M => min-inv, 4 M, longest_or_equal M among same_level & unbid
 test Kxxxx Axxx xx xx:1♦ P 1♠
 test Kxxx Axxx xx xxx:1♦ P 1♥ 
-
-1m 1M => inv, 4 M, longest_or_equal M among same_level & unbid
 test Kxxxx Axxx xx Ax:1♦ P 1♠
 test Kxxx Axxx xx Axx:1♦ P 1♥ 
 
