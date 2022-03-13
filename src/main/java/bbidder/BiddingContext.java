@@ -40,10 +40,15 @@ public class BiddingContext {
         Map<String, Integer> newSuits;
         if (pattern.simpleBid != null) {
             if (bid != pattern.simpleBid) {
-                throw new IllegalArgumentException("bid - pattern mismatch");
+                throw new IllegalArgumentException(bid + " is incomptabiel with " + pattern);
             }
         }
         if (bid.isSuitBid()) {
+            if (pattern.level != null) {
+                if (bid.level != pattern.level.intValue()) {
+                    throw new IllegalArgumentException(bid + " is incomptabiel with " + pattern);
+                }
+            }
             newSuits = new HashMap<String, Integer>(suits);
             String symbol = pattern.getSuit();
             if (symbol != null) {
