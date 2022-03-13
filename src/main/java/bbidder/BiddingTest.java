@@ -4,6 +4,12 @@ import java.util.Random;
 
 import bbidder.BiddingSystem.BidSource;
 
+/**
+ * Represents the test of a bid.
+ * 
+ * @author goffster
+ *
+ */
 public class BiddingTest {
     public final Hand hand;
     public final BidList bids;

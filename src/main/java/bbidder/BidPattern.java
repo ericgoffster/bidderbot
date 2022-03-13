@@ -7,12 +7,9 @@ import static bbidder.Constants.MINORS;
 import java.util.Objects;
 
 /**
- * Represents a matchable bid pattern.
+ * Represents an immutable matchable bid pattern.
  * 
  * Like 1S or 2x or (2M)
- * 
- * UpTheline refers to how a variable should be matched,
- * from lower bids to higher bids, or vice versa.
  * 
  * Bid patterns typically last only long enough to be compiled into the notes as actual bids.
  * 
@@ -21,7 +18,6 @@ import java.util.Objects;
  */
 public class BidPattern {
     public final boolean isOpposition;
-    public final String str;
     public final String suit;
     public final Integer level;
     public final Bid simpleBid;
@@ -31,7 +27,6 @@ public class BidPattern {
 
     public BidPattern(boolean isOpposition, String str) {
         this.isOpposition = isOpposition;
-        this.str = str;
         String upper = str.toUpperCase();
         if (upper.startsWith("NJ")) {
             simpleBid = null;
@@ -128,6 +123,9 @@ public class BidPattern {
         }
     }
 
+    /**
+     * @return The number of jumps.   Null if N/A
+     */
     public Integer getJumpLevel() {
         return jumpLevel;
     }
@@ -165,16 +163,37 @@ public class BidPattern {
 
     @Override
     public String toString() {
-        String s = str;
+        String s = _getString();
         if (isOpposition) {
             return "(" + s + ")";
         }
         return s;
     }
 
+    private String _getString() {
+        if (simpleBid != null) {
+            return simpleBid.toString();
+        }
+        if (jumpLevel != null) {
+            switch(jumpLevel.intValue()) {
+            case 0: return "NJ" + suit;
+            case 1: return "J" + suit;
+            case 2: return "DJ" + suit;
+            default: throw new IllegalStateException();
+            }
+        }
+        if (reverse) {
+            return "RV" + suit;
+        }
+        if (notreverse) {
+            return "NR" + suit;
+        }
+        return level + suit;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(isOpposition, str, reverse, notreverse);
+        return Objects.hash(isOpposition, jumpLevel, level, notreverse, reverse, simpleBid, suit);
     }
 
     @Override
@@ -186,7 +205,7 @@ public class BidPattern {
         if (getClass() != obj.getClass())
             return false;
         BidPattern other = (BidPattern) obj;
-        return isOpposition == other.isOpposition && Objects.equals(str, other.str) && Objects.equals(reverse, other.reverse)
-                && Objects.equals(notreverse, other.notreverse);
+        return isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
+                && notreverse == other.notreverse && reverse == other.reverse && simpleBid == other.simpleBid && Objects.equals(suit, other.suit);
     }
 }
