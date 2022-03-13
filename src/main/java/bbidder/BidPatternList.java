@@ -105,6 +105,14 @@ public class BidPatternList {
         }
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = bids.get(0);
+        if (pattern.wild) {
+            BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
+
+            for (BiddingContext newCtx : ctx.getBids(pattern)) {
+                theRest.getContexts(l, newCtx, false);
+            }
+            return;
+        }
         if (isOpp && !pattern.isOpposition) {
             for(BiddingContext bc: ctx.getBids(BidPattern.PASS)) {
                 getContexts(l, bc, !isOpp);                
@@ -127,6 +135,14 @@ public class BidPatternList {
                 bids.get(bids.size() - 4).equals(BidPattern.PASS);
     }
     
+    public int positionOfWild() {
+        for(int i = 0; i < bids.size(); i++) {
+            if (bids.get(i).wild) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     /**
      * Given a bid pattern list where the suits have already been bound,
@@ -136,16 +152,29 @@ public class BidPatternList {
      */
     public Bid getMatch(BidList bidList) {
         List<Bid> theBids = bidList.getBids();
-        if (theBids.size() != bids.size() - 1) {
+        int wildSize = theBids.size() - bids.size() + 2;
+        int wildPos = positionOfWild();
+        if (wildPos < 0 && theBids.size() != bids.size() - 1) {
             return null;
         }
-        for(int i = 0; i < bids.size() - 1; i++) {
+        if (wildPos >= 0 && wildSize < 0) {
+            return null;
+        }
+        int j = 0;
+        int i = 0;
+        while(i < bids.size() - 1) {
             BidPattern pattern = bids.get(i);
-            Bid bid = theBids.get(i);
-            Bid expected = pattern.resolveToBid(bidList.firstN(i));
-            if (bid != expected) {
-                return null;
+            if (pattern.wild) {
+                j += wildSize;
+            } else {
+                Bid bid = theBids.get(j);
+                Bid expected = pattern.resolveToBid(bidList.firstN(j));
+                if (bid != expected) {
+                    return null;
+                }
+                j++;
             }
+            i++;
         }
         Bid theNextBid = bids.get(bids.size() - 1).resolveToBid(bidList);
         if (theNextBid == null || !bidList.isLegalBid(theNextBid)) {

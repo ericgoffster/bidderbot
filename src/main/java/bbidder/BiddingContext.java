@@ -98,7 +98,7 @@ public final class BiddingContext {
      * @return The set of possible bids for a pattern
      */
     public List<BiddingContext> getBids(BidPattern pattern) {
-        if (pattern.simpleBid != null) {
+        if (pattern.simpleBid != null || pattern.wild) {
             return List.of(new BiddingContext(bids.withBidAdded(pattern), suits));
         }
         List<BiddingContext> result = new ArrayList<>();
