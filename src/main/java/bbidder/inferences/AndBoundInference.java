@@ -14,10 +14,21 @@ import bbidder.IBoundInference;
  */
 public class AndBoundInference implements IBoundInference {
     public final List<IBoundInference> inferences;
+    public final int size;
 
     private AndBoundInference(List<IBoundInference> inf) {
         super();
         this.inferences = inf;
+        int sz = 0;
+        for(IBoundInference i: inf) {
+            sz += i.size();
+        }
+        size = sz + 1;
+    }
+    
+    @Override
+    public int size() {
+        return size;
     }
 
     @Override
@@ -47,7 +58,8 @@ public class AndBoundInference implements IBoundInference {
         again: for(;;) {
             // Attempt to combine the inference with an existing inference.
             for(int i = 0; i < andList.size(); i++) {
-                IBoundInference comb = AndBoundInference.andReduce(andList.get(i), rhs);
+                IBoundInference lhs = andList.get(i);
+                IBoundInference comb = AndBoundInference.andReduce(lhs, rhs);
                 // Found a combination, remove original, add the combination.
                 if (comb != null) {
                     // Remove 
@@ -93,6 +105,7 @@ public class AndBoundInference implements IBoundInference {
             andList.addAll(((AndBoundInference) i).inferences);
             return create(andList);
         }
+        
         return null;
     }
 

@@ -87,6 +87,11 @@ public class HCPRange implements Inference {
 
     static class BoundInf implements IBoundInference {
         final Range r;
+        
+        @Override
+        public int size() {
+            return 1;
+        }
 
         public BoundInf(Range r) {
             this.r = r;

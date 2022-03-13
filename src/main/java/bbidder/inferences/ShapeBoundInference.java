@@ -18,6 +18,11 @@ public class ShapeBoundInference implements IBoundInference {
         this.r = r;
     }
     
+    @Override
+    public int size() {
+        return 1;
+    }
+    
     public static IBoundInference create(ShapeSet r) {
         if (r.isEmpty()) {
             return ConstBoundInference.F;

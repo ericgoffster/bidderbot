@@ -14,10 +14,21 @@ import bbidder.IBoundInference;
  */
 public class OrBoundInference implements IBoundInference {
     public final List<IBoundInference> inferences;
+    public final int size;
 
     private OrBoundInference(List<IBoundInference> inf) {
         super();
         this.inferences = inf;
+        int sz = 0;
+        for(IBoundInference i: inf) {
+            sz += i.size();
+        }
+        size = sz + 1;
+    }
+    
+    @Override
+    public int size() {
+        return size;
     }
 
     @Override
@@ -87,6 +98,17 @@ public class OrBoundInference implements IBoundInference {
 
     @Override
     public IBoundInference andReduce(IBoundInference i) {
+        // (a + b) * c = ab + bc
+        List<IBoundInference> result = new ArrayList<>();
+        for(IBoundInference j: inferences) {
+            result.add(AndBoundInference.create(j, i));
+        }
+        IBoundInference res = OrBoundInference.create(result);
+        int sizeJustAdding = size + i.size() + 1;
+        if (res.size() < sizeJustAdding) {
+            return res;
+        }
+
         return null;
     }
 

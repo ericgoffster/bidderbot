@@ -164,6 +164,11 @@ public class CombinedTotalPointsRange implements Inference {
         final Characteristic[] tp;
         final Range r;
 
+        @Override
+        public int size() {
+            return 1;
+        }
+
         public BoundInf(Characteristic[] tp, Range r) {
             this.tp = tp;
             this.r = r;

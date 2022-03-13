@@ -107,7 +107,10 @@ public class Range {
         if (lhs != null && rhs != null) {
             ranges.add(getRangeItem(lhs, rhs));
         }
-        return String.join("|", ranges);
+        if (ranges.size() == 1) {
+            return ranges.get(0);
+        }
+        return "[" + String.join(",", ranges) + "]";
     }
 
     private String getRangeItem(Integer lhs, Integer rhs) {
