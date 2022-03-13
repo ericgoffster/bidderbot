@@ -1,52 +1,52 @@
-1N 2♥ => slaminv, 6+ ♠
+1N 2♥ => slaminv, 6+♠
 test AQxxxx x AKx Jxx:1N P 2♥
 
-1N 2♦ => slaminv, 6+ ♥
+1N 2♦ => slaminv, 6+♥
 test x AQxxxx AKx Jxx:1N P 2♦
 
-1N 4♥ => 6+ ♠, gf+
+1N 4♥ => 6+♠, gf+
 test AQxxxx Kxx Qx xx:1N P 4♥
 
-1N 4♦ => 6+ ♥, gf+
+1N 4♦ => 6+♥, gf+
 test Kxx AQxxxx Qx xx:1N P 4♦
 
-1N 2♣ => inv+, 5+ ♠, 4 ♥
+1N 2♣ => inv+, 5+♠, 4♥
 test AJxxx Axxx xx xx:1N P 2♣
 
-1N 2♣ => inv+, 5+ ♥, 4 ♠
+1N 2♣ => inv+, 5+♥, 4♠
 test AJxx Axxxx xx xx:1N P 2♣
 
-1N 2♥ => 5+ ♠
+1N 2♥ => 5+♠
 test Axxxx xxx Qxx xx:1N P 2♥
 
-1N 2♦ => 5+ ♥
+1N 2♦ => 5+♥
 test xxx Axxxx Qxx xx:1N P 2♦
 
-1N 3♦ => gf+, 1- ♦, 4+ ♣, 4 ♥, 4 ♠
+1N 3♦ => gf+, 1-♦, 4+♣, 4♥, 4♠
 test Axxx Axxx x Axxx:1N P 3♦
 
-1N 3♥ => gf+, 1- ♥, 4+ ♣, 4+ ♦, 4 ♠
+1N 3♥ => gf+, 1-♥, 4+♣, 4+♦, 4♠
 test Axxx x Axxx Axxx:1N P 3♥
 
-1N 3♠ => gf+, 1- ♠, 4+ ♣, 4+ ♦, 4 ♥
+1N 3♠ => gf+, 1-♠, 4+♣, 4+♦, 4♥
 test x Axxx Axxx Axxx:1N P 3♠
 
-1N 2♣ => inv+, 4 ♥
+1N 2♣ => inv+, 4♥
 test Axx AJxx xxxx xx:1N P 2♣
 
-1N 2♣ => inv+, 4 ♠
+1N 2♣ => inv+, 4♠
 test Axxx AJx xxxx xx:1N P 2♣
 
-1N 2♠ => gf+, 5+ ♣, 4+ ♦
+1N 2♠ => gf+, 5+♣, 4+♦
 test Axx x AKxxx AKxx:1N P 2♠
 
-1N 2♠ => gf+, 4+ ♣, 5+ ♦
+1N 2♠ => gf+, 4+♣, 5+♦
 test Axx x AKxx AKxxx:1N P 2♠
 
 1N 3N => gf
 test Axx Axx Qxxxx Kx:1N P 3N
 
-1N 2♠ => gf+, 4+ ♣, 4+ ♦
+1N 2♠ => gf+, 4+♣, 4+♦
 test Axx xx AKxx AKxx:1N P 2♠
 
 1N 4N => slaminv
@@ -58,10 +58,10 @@ test Axx Axx AKxx Kxx:1N P 6N
 1N 2♣ => inv+
 test Axxx AJx xxxx xx:1N P 2♣
 
-1N 3♣ => 6+ ♦
+1N 3♣ => 6+♦
 test x xxx QJxxxx xxx:1N P 3♣
 
-1N 2N => 6+ ♣
+1N 2N => 6+♣
 test x xxx xxx QJxxxx:1N P 2N
 
 include classpath:1n/stayman.bidding
