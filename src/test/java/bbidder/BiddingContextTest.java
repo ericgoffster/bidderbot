@@ -124,6 +124,17 @@ public class BiddingContextTest {
         assertEquals(bc.getBids(BidPattern.valueOf("2x:reverse")), Set.of(Bid._2H));
         assertEquals(bc.getBids(BidPattern.valueOf("2x:nonreverse")), Set.of(Bid._2C));
     }
+    
+    @Test
+    public void testHighReverse() {
+        BiddingContext bc = new BiddingContext().withNewBid(Bid._1S, BidPattern.valueOf("1S"))
+                .withNewBid(Bid.P, BidPattern.valueOf("P"))
+                .withNewBid(Bid._2H, BidPattern.valueOf("2H"))
+                .withNewBid(Bid.P, BidPattern.valueOf("P"));
+        //assertEquals(bc.getBids(BidPattern.valueOf("2x:reverse")), Set.of());
+        assertEquals(bc.getBids(BidPattern.valueOf("3x:reverse")), Set.of(Bid._3C, Bid._3D));
+        //assertEquals(bc.getBids(BidPattern.valueOf("2x:nonreverse")), Set.of());
+    }
 
     @Test
     public void testCombo() {

@@ -97,21 +97,22 @@ public class BiddingContext {
             return Set.of(pattern.simpleBid);
         }
         Bid lastBidSuit = bids.getLastBidSuit();
+        Bid myLastBid = bids.bids.size() >= 4 ? bids.bids.get(bids.bids.size() - 4) : null;
+        Bid partnerLastBid = bids.bids.size() >= 2 ? bids.bids.get(bids.bids.size() - 2) : null;
+        Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
         TreeSet<Bid> result = new TreeSet<>();
         for (int strain : BitUtil.iterate(getStrains(pattern))) {
             Bid bid = getBid(pattern, strain);
-            Bid myLastBid = bids.bids.size() >= 4 ? bids.bids.get(bids.bids.size() - 4) : null;
-            Bid partnerLastBid = bids.bids.size() >= 2 ? bids.bids.get(bids.bids.size() - 2) : null;
-            boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() &&  bid.strain == partnerLastBid.strain;
-            if (myLastBid != null && myLastBid.isSuitBid() && bid.isSuitBid()) {
-                Bid rebid = myLastBid.raise();
+            if (myRebid != null && bid.isSuitBid()) {
+                boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
+                boolean supportedMyself = myLastBid != null && myLastBid.isSuitBid() && bid.strain == myLastBid.strain;
                 if (pattern.reverse) {
-                    if (bid.ordinal() <= rebid.ordinal() || supportedPartner) {
+                    if (bid.ordinal() <= myRebid.ordinal() || supportedPartner || supportedMyself) {
                         continue;
                     }
                  }
                 if (pattern.notreverse) {
-                    if (bid.ordinal() >= rebid.ordinal() || supportedPartner) {
+                    if (bid.ordinal() >= myRebid.ordinal() || supportedPartner || supportedMyself) {
                         continue;
                     }
                 }

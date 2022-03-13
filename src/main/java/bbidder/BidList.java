@@ -25,6 +25,18 @@ public class BidList {
         }
         return bl;
     }
+    
+    public Bid nextLegalBidOf(int strain) {
+        Contract contract = getContract();
+        if (contract.winningBid == Bid.P) {
+            return Bid.valueOf(1, strain);
+        }
+        if (strain > contract.winningBid.strain) {
+            return Bid.valueOf(contract.winningBid.level, strain);
+        } else {
+            return Bid.valueOf(contract.winningBid.level + 1, strain);
+        }
+    }
 
     /**
      * @param bid
