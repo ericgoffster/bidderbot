@@ -282,7 +282,7 @@ public final class BiddingContext {
         for(int i = 0; i < bidPatterns.size() - 1; i++) {
             BidPattern pattern = bidPatterns.get(i);
             Bid bid = theBids.get(i);
-            Bid expected = theNextBid(new BidList(theBids.subList(0, i)), pattern);
+            Bid expected = theNextBid(list.firstN(i), pattern);
             if (bid != expected) {
                 return null;
             }

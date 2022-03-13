@@ -14,7 +14,7 @@ import java.util.Objects;
 public class BidList {
     private final List<Bid> bids;
 
-    public BidList(List<Bid> bids) {
+    private BidList(List<Bid> bids) {
         super();
         this.bids = bids;
     }
@@ -172,6 +172,17 @@ public class BidList {
             return this;
         }
         return new BidList(bids.subList(0, bids.size() - 1));
+    }
+    
+    /**
+     * @param n The number of bids to return
+     * @return A bid list of just the first "n" bids,
+     */
+    public BidList firstN(int n) {
+        if (bids.size() < n) {
+            return this;
+        }
+        return new BidList(bids.subList(0, n));
     }
 
     /**
