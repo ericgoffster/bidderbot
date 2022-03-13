@@ -105,7 +105,7 @@ public final class BiddingContext {
         Map<Integer, BiddingContext> m = getMappedBiddingContexts(pattern.getSuit());
         for (Entry<Integer, BiddingContext> e : m.entrySet()) {
             BiddingContext bc = e.getValue();
-            result.add(new BiddingContext(bc.bids.withBidAdded(pattern.resolveSuit(e.getKey())), bc.suits));
+            result.add(new BiddingContext(bc.bids.withBidAdded(pattern.bindSuit(e.getKey())), bc.suits));
         }
         return result;
     }
@@ -241,56 +241,5 @@ public final class BiddingContext {
         default:
             throw new IllegalArgumentException("invalid minor");
         }
-    }
-
-    public Bid theNextBid(BidList bl, BidPattern pattern) {
-        if (pattern.simpleBid != null) {
-            return pattern.simpleBid;
-        }
-        Integer strain = Strain.getStrain(pattern.suit);
-        if (strain == null) {
-            throw new IllegalStateException();
-        }
-        if (pattern.reverse) {
-            Bid b = bl.nextLevel(strain);
-            if (!bl.isReverse(b)) {
-                return null;
-            } else {
-                return b;
-            }
-        }
-        if (pattern.notreverse) {
-            Bid b = bl.nextLevel(strain);
-            if (!bl.isNonReverse(b)) {
-                return null;
-            } else {
-                return b;
-            }
-        }
-        if (pattern.getJumpLevel() != null) {
-            return bl.getBid(pattern.getJumpLevel(), strain);
-        }
-        return Bid.valueOf(pattern.getLevel(), strain);
-    }
-
-    public Bid getMatch(BidList list) {
-        List<BidPattern> bidPatterns = bids.getBids();
-        List<Bid> theBids = list.getBids();
-        if (theBids.size() != bidPatterns.size() - 1) {
-            return null;
-        }
-        for(int i = 0; i < bidPatterns.size() - 1; i++) {
-            BidPattern pattern = bidPatterns.get(i);
-            Bid bid = theBids.get(i);
-            Bid expected = theNextBid(list.firstN(i), pattern);
-            if (bid != expected) {
-                return null;
-            }
-        }
-        Bid theNextBid = theNextBid(list, bidPatterns.get(bidPatterns.size() - 1));
-        if (theNextBid == null || !list.isLegalBid(theNextBid)) {
-            return null;
-        }
-        return theNextBid;
     }
 }

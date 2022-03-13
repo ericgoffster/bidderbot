@@ -17,6 +17,11 @@ import java.util.Objects;
  *
  */
 public class BidPattern {
+    private static final String STR_DOUBLEJUMP = "DJ";
+    private static final String STR_JUMP = "J";
+    private static final String STR_NONJUMP = "NJ";
+    private static final String STR_NONREVERSE = "NR";
+    private static final String STR_REVERSE = "RV";
     public static final BidPattern PASS = createSimpleBid(Bid.P);
     public final boolean isOpposition;
     public final String suit;
@@ -24,7 +29,7 @@ public class BidPattern {
     public final Bid simpleBid;
     private final Integer jumpLevel;
     public final boolean reverse;
-    public final boolean notreverse;
+    public final boolean nonreverse;
 
     private BidPattern(boolean isOpposition, String suit, Integer level, Bid simpleBid, Integer jumpLevel, boolean reverse, boolean notreverse) {
         super();
@@ -34,7 +39,7 @@ public class BidPattern {
         this.simpleBid = simpleBid;
         this.jumpLevel = jumpLevel;
         this.reverse = reverse;
-        this.notreverse = notreverse;
+        this.nonreverse = notreverse;
     }
 
     /**
@@ -43,7 +48,7 @@ public class BidPattern {
      * @return A Bid Pattern with isOpposition set.
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
-        return new BidPattern(isOpposition, suit, level, simpleBid, jumpLevel, reverse, notreverse);
+        return new BidPattern(isOpposition, suit, level, simpleBid, jumpLevel, reverse, nonreverse);
     }
 
     public static short rotateDown(short s) {
@@ -137,7 +142,7 @@ public class BidPattern {
 
     @Override
     public int hashCode() {
-        return Objects.hash(isOpposition, jumpLevel, level, notreverse, reverse, simpleBid, suit);
+        return Objects.hash(isOpposition, jumpLevel, level, nonreverse, reverse, simpleBid, suit);
     }
 
     @Override
@@ -150,7 +155,7 @@ public class BidPattern {
             return false;
         BidPattern other = (BidPattern) obj;
         return isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
-                && notreverse == other.notreverse && reverse == other.reverse && simpleBid == other.simpleBid && Objects.equals(suit, other.suit);
+                && nonreverse == other.nonreverse && reverse == other.reverse && simpleBid == other.simpleBid && Objects.equals(suit, other.suit);
     }
 
     private String _getString() {
@@ -158,19 +163,19 @@ public class BidPattern {
             return simpleBid.toString();
         }
         if (reverse) {
-            return "RV" + suit;
+            return STR_REVERSE + suit;
         }
-        if (notreverse) {
-            return "NR" + suit;
+        if (nonreverse) {
+            return STR_NONREVERSE + suit;
         }
         if (jumpLevel != null) {
             switch (jumpLevel.intValue()) {
             case 0:
-                return "NJ" + suit;
+                return STR_NONJUMP + suit;
             case 1:
-                return "J" + suit;
+                return STR_JUMP + suit;
             case 2:
-                return "DJ" + suit;
+                return STR_DOUBLEJUMP + suit;
             default:
                 throw new IllegalStateException();
             }
@@ -202,24 +207,61 @@ public class BidPattern {
         return new BidPattern(false, suit, level, null, null, false, false);
     }
     
-    public BidPattern resolveSuit(int strain) {
+    public BidPattern bindSuit(int strain) {
         if (level != null) {
-            return BidPattern.createSimpleBid(Bid.valueOf(level, strain));
+            return createSimpleBid(Bid.valueOf(level, strain));
         }
-        return new BidPattern(isOpposition, String.valueOf(Constants.STR_ALL_SUITS.charAt(strain)), level, simpleBid, jumpLevel, reverse, notreverse);
+        return new BidPattern(isOpposition, String.valueOf(Constants.STR_ALL_SUITS.charAt(strain)), level, simpleBid, jumpLevel, reverse, nonreverse);
+    }
+    
+    /**
+     * At this point, the bid pattern's suit has already been
+     * resolved, so we just need to determine the level.
+     * 
+     * @param bidList The current list of bids.
+     * @return The bid associated with the given pattern.
+     */
+    public Bid resolveToBid(BidList bidList) {
+        if (simpleBid != null) {
+            return simpleBid;
+        }
+        Integer strain = Strain.getStrain(suit);
+        if (strain == null) {
+            throw new IllegalStateException();
+        }
+        if (reverse) {
+            Bid b = bidList.nextLevel(strain);
+            if (!bidList.isReverse(b)) {
+                return null;
+            } else {
+                return b;
+            }
+        }
+        if (nonreverse) {
+            Bid b = bidList.nextLevel(strain);
+            if (!bidList.isNonReverse(b)) {
+                return null;
+            } else {
+                return b;
+            }
+        }
+        if (getJumpLevel() != null) {
+            return bidList.getBid(getJumpLevel(), strain);
+        }
+        return Bid.valueOf(getLevel(), strain);
     }
 
     private static BidPattern create(String str) {
         String upper = str.toUpperCase();
-        if (upper.startsWith("NJ")) {
+        if (upper.startsWith(STR_NONJUMP)) {
             return createJump(str.substring(2), 0);
-        } else if (upper.startsWith("DJ")) {
+        } else if (upper.startsWith(STR_DOUBLEJUMP)) {
             return createJump(str.substring(2), 2);
-        } else if (upper.startsWith("J")) {
+        } else if (upper.startsWith(STR_JUMP)) {
             return createJump(str.substring(1), 1);
-        } else if (upper.startsWith("RV")) {
+        } else if (upper.startsWith(STR_REVERSE)) {
             return createReverse(str.substring(2));
-        } else if (upper.startsWith("NR")) {
+        } else if (upper.startsWith(STR_NONREVERSE)) {
             return createNonReverse(str.substring(2));
         } else {
             Bid simpleBid = Bid.fromStr(str);

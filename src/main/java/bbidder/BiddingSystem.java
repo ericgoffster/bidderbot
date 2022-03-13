@@ -88,7 +88,7 @@ public class BiddingSystem {
     public List<Possibility> getPossible(BidList bids) {
         List<Possibility> l = new ArrayList<>();
         for (BoundBidInference i : inferences) {
-            Bid match = i.ctx.getMatch(bids);
+            Bid match = i.ctx.getBids().getMatch(bids);
             if (match != null) {
                 l.add(new Possibility(i, match));
             }

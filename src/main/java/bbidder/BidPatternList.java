@@ -127,4 +127,30 @@ public class BidPatternList {
                 bids.get(bids.size() - 4).equals(BidPattern.PASS);
     }
     
+
+    /**
+     * Given a bid pattern list where the suits have already been bound,
+     * return the last bid of the pattern in the context of a bidList.
+     * @param bidList The bidList to match.
+     * @return The last bid.  null if there was no match.
+     */
+    public Bid getMatch(BidList bidList) {
+        List<Bid> theBids = bidList.getBids();
+        if (theBids.size() != bids.size() - 1) {
+            return null;
+        }
+        for(int i = 0; i < bids.size() - 1; i++) {
+            BidPattern pattern = bids.get(i);
+            Bid bid = theBids.get(i);
+            Bid expected = pattern.resolveToBid(bidList.firstN(i));
+            if (bid != expected) {
+                return null;
+            }
+        }
+        Bid theNextBid = bids.get(bids.size() - 1).resolveToBid(bidList);
+        if (theNextBid == null || !bidList.isLegalBid(theNextBid)) {
+            return null;
+        }
+        return theNextBid;
+    }  
 }
