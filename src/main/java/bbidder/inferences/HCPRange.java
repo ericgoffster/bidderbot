@@ -15,10 +15,10 @@ import bbidder.SplitUtil;
  *
  */
 public class HCPRange implements Inference {
-    public final String min;
-    public final String max;
+    public final Integer min;
+    public final Integer max;
 
-    public HCPRange(String min, String max) {
+    public HCPRange(Integer min, Integer max) {
         super();
         this.min = min;
         this.max = max;
@@ -26,7 +26,7 @@ public class HCPRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        Range r = Range.between(min == null ? null : context.resolvePoints(min), max == null ? null : context.resolvePoints(max), 40);
+        Range r = Range.between(min, max, 40);
         return createBound(r);
     }
 
@@ -50,19 +50,19 @@ public class HCPRange implements Inference {
         }
         str = hcpParts[0].trim();
         if (str.endsWith("+")) {
-            return new HCPRange(str.substring(0, str.length() - 1).trim(), null);
+            return new HCPRange(Integer.parseInt(str.substring(0, str.length() - 1).trim()), null);
         }
         if (str.endsWith("-")) {
-            return new HCPRange(null, str.substring(0, str.length() - 1).trim());
+            return new HCPRange(null, Integer.parseInt(str.substring(0, str.length() - 1).trim()));
         }
         String[] parts = SplitUtil.split(str, "-", 2);
         if (parts.length == 1) {
-            return new HCPRange(parts[0], parts[0]);
+            return new HCPRange(Integer.parseInt(parts[0]), Integer.parseInt(parts[0]));
         }
         if (parts.length != 2) {
             return null;
         }
-        return new HCPRange(parts[0], parts[1]);
+        return new HCPRange(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
     }
 
     @Override

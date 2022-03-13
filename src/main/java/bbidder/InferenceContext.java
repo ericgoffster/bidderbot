@@ -176,28 +176,4 @@ public class InferenceContext {
             throw new IllegalArgumentException("Invalid Suit Set: '" + str + "'", e);
         }
     }
-
-    /**
-     * @param str
-     *            The string to parse
-     * @return The high card point range represented by the string.
-     */
-    public int resolvePoints(String str) {
-        if (str.matches("\\d+")) {
-            return Integer.parseInt(str);
-        }
-        throw new IllegalArgumentException("Invalid Points: '" + str + "'");
-    }
-
-    /**
-     * @param str
-     *            The string to parse
-     * @return The length represented by the string.
-     */
-    public int resolveLength(String str) {
-        if (str.matches("\\d+")) {
-            return Integer.parseInt(str);
-        }
-        throw new IllegalArgumentException("Invalid Length: '" + str + "'");
-    }
 }

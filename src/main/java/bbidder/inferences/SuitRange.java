@@ -18,10 +18,10 @@ import bbidder.SplitUtil;
  */
 public class SuitRange implements Inference {
     public final String suit;
-    public final String min;
-    public final String max;
+    public final Integer min;
+    public final Integer max;
 
-    public SuitRange(String suit, String min, String max) {
+    public SuitRange(String suit, Integer min, Integer max) {
         super();
         this.suit = suit;
         this.min = min;
@@ -30,7 +30,7 @@ public class SuitRange implements Inference {
 
     @Override
     public IBoundInference bind(InferenceContext context) {
-        Range r = Range.between(min == null ? null : context.resolveLength(min), max == null ? null : context.resolveLength(max), 13);
+        Range r = Range.between(min, max, 13);
         return createBound(context.lookupSuit(suit), r);
     }
 
@@ -58,19 +58,19 @@ public class SuitRange implements Inference {
         }
         str = bidParts[0].trim();
         if (str.endsWith("+")) {
-            return new SuitRange(suit, str.substring(0, str.length() - 1).trim(), null);
+            return new SuitRange(suit, Integer.parseInt(str.substring(0, str.length() - 1).trim()), null);
         }
         if (str.endsWith("-")) {
-            return new SuitRange(suit, null, str.substring(0, str.length() - 1).trim());
+            return new SuitRange(suit, null, Integer.parseInt(str.substring(0, str.length() - 1).trim()));
         }
         String[] parts = SplitUtil.split(str, "-", 2);
         if (parts.length == 1) {
-            return new SuitRange(suit, parts[0], parts[0]);
+            return new SuitRange(suit, Integer.parseInt(parts[0]), Integer.parseInt(parts[0]));
         }
         if (parts.length != 2) {
             return null;
         }
-        return new SuitRange(suit, parts[0], parts[1]);
+        return new SuitRange(suit, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
     }
 
     @Override
