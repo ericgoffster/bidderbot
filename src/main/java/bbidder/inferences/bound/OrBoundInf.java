@@ -58,16 +58,30 @@ public class OrBoundInf implements IBoundInference {
         return create(List.of(i1, i2));
     }
     
+    private static void addOr(List<IBoundInference> l, IBoundInference inf) {
+        if (inf == ConstBoundInference.F) {
+            return;
+        }
+        if (inf == ConstBoundInference.T) {
+            l.clear();
+            l.add(ConstBoundInference.T);
+            return;
+        }
+        if (inf instanceof OrBoundInf) {
+            for(IBoundInference i: ((AndBoundInf) inf).inferences) {
+                addOr(l, i);
+            }
+            return;
+        }
+        l.add(inf);
+    }
+    
+
+    
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> orList = new ArrayList<>();
         for (IBoundInference i : inferences) {
-            if (i == ConstBoundInference.T) {
-                return ConstBoundInference.T;
-            }
-            if (i == ConstBoundInference.F) {
-                continue;
-            }
-            orList.add(i);
+            addOr(orList, i);
         }
         if (orList.size() == 0) {
             return ConstBoundInference.F;
