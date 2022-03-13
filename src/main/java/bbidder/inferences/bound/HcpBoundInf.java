@@ -5,6 +5,7 @@ import java.util.Objects;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
+import bbidder.Players;
 import bbidder.Range;
 
 public class HcpBoundInf implements IBoundInference {
@@ -51,7 +52,7 @@ public class HcpBoundInf implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Hand hand) {
+    public boolean matches(Players players, Hand hand) {
         return r.contains(hand.numHCP());
     }
 

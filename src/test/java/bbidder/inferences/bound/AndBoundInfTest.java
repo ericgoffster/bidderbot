@@ -11,6 +11,7 @@ import org.junit.Test;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
+import bbidder.Players;
 import bbidder.Range;
 import bbidder.Shape;
 import bbidder.ShapeSet;
@@ -27,9 +28,9 @@ public class AndBoundInfTest {
         IBoundInference i3 = AndBoundInf.create(i1, i2);
         assertEquals(i3.getSummary(),
                 new InfSummary(new ShapeSet(List.of(Shape._04030303)), Range.between(10, 11, 40), StopperSet.ALL, StopperSet.ALL));
-        assertFalse(i3.matches(Hand.valueOf("AKQ xxx xxx xxxx")));
-        assertTrue(i3.matches(Hand.valueOf("AKQ Jxx xxx xxxx")));
-        assertFalse(i3.matches(Hand.valueOf("AKQ Jxx xxxx xxx")));
+        assertFalse(i3.matches(new Players(), Hand.valueOf("AKQ xxx xxx xxxx")));
+        assertTrue(i3.matches(new Players(), Hand.valueOf("AKQ Jxx xxx xxxx")));
+        assertFalse(i3.matches(new Players(), Hand.valueOf("AKQ Jxx xxxx xxx")));
     }
 
     @Test

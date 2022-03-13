@@ -7,6 +7,7 @@ import java.util.Objects;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
+import bbidder.Players;
 
 /**
  * Represents the "or" of 2 or more bound inferences.
@@ -52,9 +53,9 @@ public class OrBoundInf implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Hand hand) {
+    public boolean matches(Players players, Hand hand) {
         for (IBoundInference i : inferences) {
-            if (i.matches(hand)) {
+            if (i.matches(players, hand)) {
                 return true;
             }
         }

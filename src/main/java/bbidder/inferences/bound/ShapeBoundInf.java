@@ -5,6 +5,7 @@ import java.util.Objects;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
+import bbidder.Players;
 import bbidder.ShapeSet;
 
 /**
@@ -57,7 +58,7 @@ public class ShapeBoundInf implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Hand hand) {
+    public boolean matches(Players players, Hand hand) {
         return shapes.contains(hand.getShape());
     }
 

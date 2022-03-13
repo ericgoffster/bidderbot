@@ -5,6 +5,7 @@ import java.util.Objects;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
+import bbidder.Players;
 
 /**
  * Represents a "const" bound inference. Always matches or always does not.
@@ -43,7 +44,7 @@ public class ConstBoundInference implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Hand hand) {
+    public boolean matches(Players players, Hand hand) {
         return result;
     }
 
