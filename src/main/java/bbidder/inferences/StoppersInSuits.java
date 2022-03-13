@@ -9,6 +9,7 @@ import bbidder.InferenceContext;
 import bbidder.MappedInference;
 import bbidder.SplitUtil;
 import bbidder.StopperSet;
+import bbidder.inferences.bound.PartialStoppersBoundInf;
 import bbidder.inferences.bound.StoppersBoundInf;
 
 /**
@@ -19,16 +20,21 @@ import bbidder.inferences.bound.StoppersBoundInf;
  */
 public class StoppersInSuits implements Inference {
     public final String suits;
+    public final boolean partial;
 
-    public StoppersInSuits(String suits) {
+    public StoppersInSuits(String suits, boolean partial) {
         super();
         this.suits = suits;
+        this.partial = partial;
     }
 
     public static Inference valueOf(String str) {
         String[] parts = SplitUtil.split(str, "\\s+", 2);
         if (parts.length == 2 && parts[0].equalsIgnoreCase("stoppers")) {
-            return new StoppersInSuits(parts[1]);
+            return new StoppersInSuits(parts[1], false);
+        }
+        if (parts.length == 2 && parts[0].equalsIgnoreCase("partial_stoppers")) {
+            return new StoppersInSuits(parts[1], true);
         }
         return null;
     }
@@ -44,12 +50,15 @@ public class StoppersInSuits implements Inference {
             }
             return true;
         });
+        if (partial) {
+            return List.of(new MappedInference(PartialStoppersBoundInf.create(stoppers), context));
+        }
         return List.of(new MappedInference(StoppersBoundInf.create(stoppers), context));
     }
 
     @Override
     public String toString() {
-        return "stoppers " + suits;
+        return (partial ? "partial_stoppers " : "stoppers ") + suits;
     }
 
     @Override

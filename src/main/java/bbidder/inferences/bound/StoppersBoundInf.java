@@ -27,7 +27,7 @@ public class StoppersBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return InfSummary.ALL.withStoppers(stoppers);
+        return InfSummary.ALL.withStoppers(stoppers).withPartialStoppers(stoppers);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class StoppersBoundInf implements IBoundInference {
 
     @Override
     public String toString() {
-        return stoppers.toString();
+        return "stoppers "+ stoppers;
     }
 
     @Override

@@ -100,13 +100,13 @@ public class StopperSet implements Iterable<Stoppers> {
             }
         }
         if (strStoppers.size() == 0 && strNoStoppers.size() == 0) {
-            return "stoppers unknown";
+            return "unknown";
         }
         if (strStoppers.size() == 0) {
-            return "no stoppers in " + String.join(",", strNoStoppers);
+            return "not in " + String.join(",", strNoStoppers);
         }
         if (strNoStoppers.size() == 0) {
-            return "stoppers in " + String.join(",", strStoppers);
+            return " in " + String.join(",", strStoppers);
         }
         return " in " + String.join(",", strStoppers) + ", not in " + String.join(",", strNoStoppers);
     }
