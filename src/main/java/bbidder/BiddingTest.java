@@ -22,7 +22,7 @@ public class BiddingTest {
     public TestResult getResult(Random r, BiddingSystem bs) {
         BiddingState state = new BiddingState(r, bs);
         BidList exceptLast = bids.exceptLast();
-        for (Bid bid : exceptLast.bids) {
+        for (Bid bid : exceptLast.getBids()) {
             state = state.withBid(bid);
         }
         Bid expected = bids.getLastBid();

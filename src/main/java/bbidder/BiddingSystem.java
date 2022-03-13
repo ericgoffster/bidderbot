@@ -202,7 +202,7 @@ public class BiddingSystem {
      * @return The inference The inference from the bid.
      */
     public IBoundInference getInference(BidList bids, LikelyHands likelyHands) {
-        if (bids.bids.size() == 0) {
+        if (bids.getBids().size() == 0) {
             return ConstBoundInference.create(false);
         }
         Bid lastBid = bids.getLastBid();

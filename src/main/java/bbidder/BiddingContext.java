@@ -1,6 +1,7 @@
 package bbidder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,14 +24,14 @@ public class BiddingContext {
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     private final BidList bids;
     
+    private final Map<String, Integer> suits;
+
     public BidList getBids() {
         return bids;
     }
 
-    private final Map<String, Integer> suits;
-
-    protected Map<String, Integer> getSuits() {
-        return suits;
+    public Map<String, Integer> getSuits() {
+        return Collections.unmodifiableMap(suits);
     }
 
 
@@ -123,8 +124,9 @@ public class BiddingContext {
             return Map.of(pattern.simpleBid, this);
         }
         Bid lastBidSuit = bids.getLastBidSuit();
-        Bid myLastBid = bids.bids.size() >= 4 ? bids.bids.get(bids.bids.size() - 4) : null;
-        Bid partnerLastBid = bids.bids.size() >= 2 ? bids.bids.get(bids.bids.size() - 2) : null;
+        List<Bid> theBids = bids.getBids();
+        Bid myLastBid = theBids.size() >= 4 ? theBids.get(theBids.size() - 4) : null;
+        Bid partnerLastBid = theBids.size() >= 2 ? theBids.get(theBids.size() - 2) : null;
         Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? bids.nextLegalBidOf(myLastBid.strain) : null;
         Map<Bid, BiddingContext> result = new LinkedHashMap<>();
         var m = getSuits(pattern.getSuit());
@@ -150,6 +152,56 @@ public class BiddingContext {
             }
         }
         return result;
+    }
+
+    public Map<Integer, BiddingContext> getSuits(String suit) {
+        boolean reverse = false;
+        if (suit.endsWith(":down")) {
+            reverse = true;
+            suit = suit.substring(0, suit.length() - 5);
+        }
+        {
+            Integer strain = getSuit(suit);
+            if (strain != null) {
+                if (strain < 0 || strain > 4) {
+                    throw new IllegalArgumentException("Invalid strain");
+                }
+                return Map.of(strain, this);
+            }
+        }
+        TreeMap<Integer, BiddingContext> m = new TreeMap<>();
+        for (int strain : BitUtil.iterate(BidPattern.getSuitClass(suit))) {
+            if (!suits.containsValue(strain)) {
+                Map<String, Integer> newSuits = new HashMap<>(suits);
+                putSuit(newSuits, suit, strain);
+                m.put(strain, new BiddingContext(bids, newSuits));
+            }
+        }
+        return reverse ? m.descendingMap() : m;
+    }
+
+    public static boolean isValidSuit(String symbol) {
+        {
+            Matcher m = SUIT_PATTERN.matcher(symbol);
+            if (m.matches()) {
+                String lhs = m.group(1);
+                return isValidSuit(lhs);
+            }
+        }
+        if (symbol.startsWith("~")) {
+            return isValidSuit(symbol.substring(1));
+        }
+        if (symbol.equals("om")) {
+            return true;
+        }
+        if (symbol.equals("OM")) {
+            return true;
+        }
+        Integer strain = Strain.getStrain(symbol);
+        if (strain != null) {
+            return true;
+        }
+        return symbol.length() == 1;
     }
 
     @Override
@@ -237,32 +289,6 @@ public class BiddingContext {
         return Bid.valueOf(pattern.getLevel(), strain);
     }
 
-    public Map<Integer, BiddingContext> getSuits(String suit) {
-        boolean reverse = false;
-        if (suit.endsWith(":down")) {
-            reverse = true;
-            suit = suit.substring(0, suit.length() - 5);
-        }
-        {
-            Integer strain = getSuit(suit);
-            if (strain != null) {
-                if (strain < 0 || strain > 4) {
-                    throw new IllegalArgumentException("Invalid strain");
-                }
-                return Map.of(strain, this);
-            }
-        }
-        TreeMap<Integer, BiddingContext> m = new TreeMap<>();
-        for (int strain : BitUtil.iterate(BidPattern.getSuitClass(suit))) {
-            if (!suits.containsValue(strain)) {
-                Map<String, Integer> newSuits = new HashMap<>(suits);
-                putSuit(newSuits, suit, strain);
-                m.put(strain, new BiddingContext(bids, newSuits));
-            }
-        }
-        return reverse ? m.descendingMap() : m;
-    }
-
     private Bid nextLevel(int strain) {
         Bid lastBidSuit = bids.getLastBidSuit();
         if (strain > lastBidSuit.strain) {
@@ -270,29 +296,5 @@ public class BiddingContext {
         } else {
             return Bid.valueOf(lastBidSuit.level + 1, strain);
         }
-    }
-    
-    public static boolean isValidSuit(String symbol) {
-        {
-            Matcher m = SUIT_PATTERN.matcher(symbol);
-            if (m.matches()) {
-                String lhs = m.group(1);
-                return isValidSuit(lhs);
-            }
-        }
-        if (symbol.startsWith("~")) {
-            return isValidSuit(symbol.substring(1));
-        }
-        if (symbol.equals("om")) {
-            return true;
-        }
-        if (symbol.equals("OM")) {
-            return true;
-        }
-        Integer strain = Strain.getStrain(symbol);
-        if (strain != null) {
-            return true;
-        }
-        return symbol.length() == 1;
     }
 }
