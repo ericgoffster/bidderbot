@@ -5,14 +5,17 @@ test Axxx AQxx KJx Qx: 1N P 2♣ P 2♥
 test Axxx AQx KJxx Qx: 1N P 2♣ P 2♠
 
 1N 2♣ 2M 3M => inv, 4 M
-test AJx Axxx xxx xxx: 1N P 2♣ P 2♥ P 3♥
+test AJxx Axxx xx xxx: 1N P 2♣ P 2♠ P 3♠
+test AJxx Axxx xx xxx: 1N P 2♣ P 2♥ P 3♥
 
 1N 2♣ 2M 4M => gf, 4 M
-test AJx Axxx Axx xxx: 1N P 2♣ P 2♥ P 4♥
+test AJxx Axxx Axx xx: 1N P 2♣ P 2♥ P 4♥
+test AJxx Axxx Axx xx: 1N P 2♣ P 2♠ P 4♠
 
 
 1N 2♣ 2M 4m => gf+, 4+ M, 1- m
 test AJx AQxx AQxxx x: 1N P 2♣ P 2♥ P 4♣
+test AJxx AQx AQxxx x: 1N P 2♣ P 2♠ P 4♣
 
 1N 2♣ 2♠ 4♥ => gf+, 4+ ♠, 1- ♥
 test AJxx x AQx AQxxx: 1N P 2♣ P 2♠ P 4♥
