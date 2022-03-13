@@ -12,9 +12,9 @@ import bbidder.InferenceContext;
 public class CombinedTotalPointsRangeTest {
     @Test
     public void testValueOf() {
-        assertEquals(new CombinedTotalPointsRange(19, 23), CombinedTotalPointsRange.valueOf("min"));
-        assertEquals(new CombinedTotalPointsRange(24, 25), CombinedTotalPointsRange.valueOf("inv"));
-        assertEquals(new CombinedTotalPointsRange(26, 30), CombinedTotalPointsRange.valueOf("gf"));
+        assertEquals(new CombinedTotalPointsRange(18, 21), CombinedTotalPointsRange.valueOf("min"));
+        assertEquals(new CombinedTotalPointsRange(22, 24), CombinedTotalPointsRange.valueOf("inv"));
+        assertEquals(new CombinedTotalPointsRange(25, 30), CombinedTotalPointsRange.valueOf("gf"));
         assertEquals(new CombinedTotalPointsRange(31, 32), CombinedTotalPointsRange.valueOf("slaminv"));
         assertEquals(new CombinedTotalPointsRange(33, 34), CombinedTotalPointsRange.valueOf("slam"));
         assertEquals(new CombinedTotalPointsRange(37, null), CombinedTotalPointsRange.valueOf("grand"));

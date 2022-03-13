@@ -22,15 +22,15 @@ test AQx xxx AJx Axxx: 1N 2♥ 2♠
 
 
 1N 2♦ 2♥ 2♠ => inv, 5+♠
-test AJxxx Qxxxx xx x: 1N 2♦ 2♥ 2♠
+test AJxxx Jxxxx xx x: 1N 2♦ 2♥ 2♠
 
 1N 2M-1 2M 3M => inv, 6+M
 test Axx Kxxxxx xx xx: 1N 2♦ 2♥ 3♥
 test Kxxxxx Axx xx xx: 1N 2♥ 2♠ 3♠
 
 1N 2M-1 2M 2N => inv
-test Axx Axxxx xx Jxx: 1N 2♦ 2♥ 2N
-test Axxxx Axx xx Jxx: 1N 2♥ 2♠ 2N
+test Axx Kxxxx xx Jxx: 1N 2♦ 2♥ 2N
+test Axxxx Kxx xx Jxx: 1N 2♥ 2♠ 2N
 
 1N 2M-1 2M 3m => gf+, 4+m
 test Axx Axxxx x Axxx: 1N 2♦ 2♥ 3♣

@@ -18,7 +18,7 @@ import bbidder.inferences.bound.TotalPtsBoundInf;
  *
  */
 public class CombinedTotalPointsRange implements Inference {
-    private static final Map<String, Integer> STD = Map.of("min", 19, "inv", 24, "gf", 26, "slaminv", 31, "slam", 33, "grandinv", 35, "grand", 37);
+    private static final Map<String, Integer> STD = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35, "grand", 37);
     public final Range rng;
 
     public CombinedTotalPointsRange(Integer min, Integer max) {
