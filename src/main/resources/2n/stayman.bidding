@@ -16,3 +16,4 @@ test AJxx Axxxx xx xx: 2N 3♣ 3♦ 3♠
 
 2N 3♣ 3M NJOM => slaminv+, 4+M
 test Axx Axxx Axx xxx: 2N 3♣ 3♥ 3♠
+test Axxx Axx Axx xxx: 2N 3♣ 3♠ 4♥
