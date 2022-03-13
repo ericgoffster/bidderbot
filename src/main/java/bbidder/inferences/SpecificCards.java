@@ -1,6 +1,7 @@
 package bbidder.inferences;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.MappedInference;
 import bbidder.SplitUtil;
+import bbidder.inferences.bound.OrBoundInf;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
 
 /**
@@ -18,9 +20,9 @@ import bbidder.inferences.bound.SpecificCardsBoundInf;
  */
 public class SpecificCards implements Inference {
     public final String suit;
-    public final short cards;
+    public final short[] cards;
 
-    public SpecificCards(String suit, short cards) {
+    public SpecificCards(String suit, short[] cards) {
         super();
         this.suit = suit;
         this.cards = cards;
@@ -30,7 +32,11 @@ public class SpecificCards implements Inference {
     public List<MappedInference> bind(InferenceContext context) {
         List<MappedInference> l = new ArrayList<>();
         for (var e : context.lookupSuits(suit).entrySet()) {
-            l.add(new MappedInference(createBound(e.getKey(), cards), e.getValue()));
+            List<IBoundInference> orList = new ArrayList<>();
+            for(short crd: cards) {
+                orList.add(createBound(e.getKey(), crd));
+            }
+            l.add(new MappedInference(OrBoundInf.create(orList), e.getValue()));
         }
         return l;
     }
@@ -51,12 +57,17 @@ public class SpecificCards implements Inference {
         if (parts.length == 3 && parts[1].equalsIgnoreCase("in")) {
             String suit = parts[2];
             String cardsS = parts[0].toUpperCase();
-            short cards = 0;
-            for (int i = 0; i < cardsS.length(); i++) {
-                char c = cardsS.charAt(i);
-                int rank = Hand.getRank(c, (short)0x1ff);
-                cards |= 1 << rank;
-             }
+            String[] patterns = cardsS.split("\\|");
+            short[] cards = new short[patterns.length];
+            for(int j = 0; j < patterns.length; j++) {
+                String patt = patterns[j];
+                for (int i = 0; i < patt.length(); i++) {
+                    char c = patt.charAt(i);
+                    int rank = Hand.getRank(c, (short)0x1ff);
+                    cards[j] |= 1 << rank;
+                }
+
+            }
             return new SpecificCards(suit, cards);
         } else {
             return null;
@@ -65,12 +76,20 @@ public class SpecificCards implements Inference {
 
     @Override
     public String toString() {
-        return Hand.printSuit(cards) + " " + suit;
+        List<String> l = new ArrayList<>();
+        for(short c: cards) {
+            l.add(Hand.printSuit(c));
+        }
+        return String.join("|", l) + " " + suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cards, suit);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(cards);
+        result = prime * result + Objects.hash(suit);
+        return result;
     }
 
     @Override
@@ -82,7 +101,6 @@ public class SpecificCards implements Inference {
         if (getClass() != obj.getClass())
             return false;
         SpecificCards other = (SpecificCards) obj;
-        return cards == other.cards && Objects.equals(suit, other.suit);
+        return Arrays.equals(cards, other.cards) && Objects.equals(suit, other.suit);
     }
-
 }
