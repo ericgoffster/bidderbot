@@ -47,6 +47,9 @@ public class TotalPtsBoundInf implements IBoundInference {
 
     @Override
     public String toString() {
-        return r + " tpts" + ", partner=" + partnerSummary;
+        if (partnerSummary.shape.isFull()) {
+            return r + " tpts";
+        }
+        return r + " tpts" + ", partner=" + partnerSummary.shape;
     }
 }

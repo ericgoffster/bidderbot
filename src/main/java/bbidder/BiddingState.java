@@ -55,10 +55,10 @@ public class BiddingState {
         final IBoundInference inf;
         final InfSummary likelyHand;
 
-        public Player(IBoundInference inf) {
+        public Player(IBoundInference inf, InfSummary summ) {
             super();
             this.inf = inf;
-            this.likelyHand = inf.getSummary();
+            this.likelyHand = summ;
         }
 
         public Player() {
@@ -75,7 +75,9 @@ public class BiddingState {
     public BiddingState withBid(Bid bid) {
         BidList newBidList = bidding.withBidAdded(bid);
         IBoundInference newInf = AndBoundInf.create(we.getInference(newBidList, getLikelyHands()), me.inf);
-        Player newMe = new Player(newInf);
+        InfSummary summ = newInf.getSummary();
+        newInf = newInf.andWith(summ);
+        Player newMe = new Player(newInf, summ);
         return new BiddingState(r, they, we, newBidList, partner, rho, newMe, lho);
     }
 

@@ -215,10 +215,14 @@ public class Hand {
         return hcp;
     }
     
+    public boolean haveFit(InfSummary partnerSummary, int suit) {
+        return numInSuit(suit) + partnerSummary.minInSuit(suit) >= 8;
+    }
+    
     public int getTotalPoints(InfSummary partnerSummary) {
         int pts = totalPoints(Constants.NOTRUMP);
         for (int s = 0; s < 4; s++) {
-            if (numInSuit(s) + partnerSummary.minInSuit(s) >= 8) {
+            if (haveFit(partnerSummary, s)) {
                 pts = Math.max(pts, totalPoints(s));
             }
         }

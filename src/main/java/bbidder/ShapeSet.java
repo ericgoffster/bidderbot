@@ -1,5 +1,6 @@
 package bbidder;
 
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
@@ -55,35 +56,40 @@ public class ShapeSet implements Iterable<Shape> {
     public boolean isEmpty() {
         return shapes.isEmpty();
     }
+    
+    public int size() {
+        return shapes.cardinality();
+    }
 
     public boolean isFull() {
-        return not().isEmpty();
+        return size() == Shape.values().length;
     }
 
     @Override
     public String toString() {
-        int[] min = {13,13,13,13};
-        int[] max = {0,0,0,0};
-        for (int i = shapes.nextSetBit(0); i != -1; i = shapes.nextSetBit(i + 1)) {
-            Shape shape = Shape.values()[i];
-            for(int s = 0; s < 4; s++) {
-                min[s] = Math.min(min[s], shape.numInSuit(s));
-                max[s] = Math.max(max[s], shape.numInSuit(s));
+        if (isEmpty()) {
+            return "none";
+        }
+        short[] ranges = { 0, 0, 0, 0 };
+        for (Shape shape: this) {
+            for (int s = 0; s < 4; s++) {
+                ranges[s] |= 1 << shape.numInSuit(s);
             }
         }
-        String[] str = new String[4];
-        boolean isEmpty = false;
-        for(int s = 0; s < 4; s++) {
-            if (max[s] < min[s]) {
-                isEmpty = true;
+        List<String> str = new ArrayList<>();
+        for (int s = 0; s < 4; s++) {
+            Range rn = new Range(ranges[s], 13);
+            if (rn.isEmpty()) {
+                return "{}";
             }
-            if (min[s] == max[s]) {
-                str[s] = min[s] + "" + Constants.STR_ALL_SUITS.charAt(s);
-            } else {
-                str[s] = min[s] + "-" + max[s] + Constants.STR_ALL_SUITS.charAt(s);
+            if (!rn.unBounded()) {
+                str.add(rn + " " + Constants.STR_ALL_SUITS.charAt(s));
             }
         }
-        return isEmpty ? "{}" : String.join(",",  str);
+        if (str.size() == 0) {
+            return "almost any shape";
+        }
+        return String.join(",", str);
     }
 
     @Override

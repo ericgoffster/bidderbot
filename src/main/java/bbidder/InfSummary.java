@@ -23,7 +23,7 @@ public class InfSummary {
 
     @Override
     public String toString() {
-        return shape + " , tpts=" + tpts;
+        return shape + "," + tpts + " tpts";
     }
     
     public boolean isEmpty() {
