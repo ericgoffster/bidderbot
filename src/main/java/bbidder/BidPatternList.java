@@ -102,8 +102,8 @@ public class BidPatternList {
 
         BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
 
-        for (Bid bid : ctx.getBids(pattern).keySet()) {
-            theRest.getContexts(l, ctx.withNewBid(bid, pattern), !isOpp);
+        for (BiddingContext newCtx: ctx.withNewBid(pattern)) {
+            theRest.getContexts(l, newCtx, !isOpp);
         }
     }
 }

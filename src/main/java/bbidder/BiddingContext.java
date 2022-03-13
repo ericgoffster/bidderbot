@@ -1,5 +1,6 @@
 package bbidder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,6 +37,15 @@ public class BiddingContext {
     public BiddingContext(BidList boundBidList) {
         this(boundBidList, new HashMap<>());
     }
+    
+    public List<BiddingContext> withNewBid(BidPattern pattern) {
+        List<BiddingContext> l = new ArrayList<>();
+        for (var e : getBids(pattern).entrySet()) {
+            l.add(new BiddingContext(bids.withBidAdded(e.getKey()),e.getValue().suits));
+        }
+        return l;
+    }
+
 
     public BiddingContext withNewBid(Bid bid, BidPattern pattern) {
         Map<Bid, BiddingContext> acceptable = getBids(pattern);
