@@ -17,7 +17,7 @@ public class BiddingState {
     public final BiddingSystem[] systems;
     public final BidList bidding;
     public final int turn;
-    public final IBoundInference[] players;
+    public final Player[] players;
 
     public BiddingState(BiddingSystem system) {
         this(new BiddingSystem[] { system, system }, 0);
@@ -27,15 +27,34 @@ public class BiddingState {
         this.systems = systems;
         this.turn = turn;
         this.bidding = new BidList(List.of());
-        this.players = new IBoundInference[] { ConstBoundInference.T, ConstBoundInference.T, ConstBoundInference.T, ConstBoundInference.T };
+        this.players = new Player[] { new Player(), new Player(), new Player(), new Player() };
     }
 
-    public BiddingState(BiddingSystem[] systems, BidList bidding, int turn, IBoundInference[] players) {
+    public BiddingState(BiddingSystem[] systems, BidList bidding, int turn, Player[] players) {
         super();
         this.systems = systems;
         this.bidding = bidding;
         this.turn = turn;
         this.players = players;
+    }
+    
+    public static class Player {
+        final IBoundInference inf;
+        final IHandList likelyHand;
+        public Player(IBoundInference inf, IHandList likelyHand) {
+            super();
+            this.inf = inf;
+            this.likelyHand = likelyHand;
+        }
+        
+        public Player() {
+            this.inf = ConstBoundInference.T;
+            this.likelyHand = new AllPossibleHands();
+        }
+    }
+    
+    public static IHandList getHandList(IBoundInference inf) {
+        return HandGenerator.generateHands(inf, 1000);
     }
 
     /**
@@ -45,11 +64,17 @@ public class BiddingState {
      */
     public BiddingState withBid(Bid bid) {
         BidList newBidList = bidding.withBidAdded(bid);
-        IBoundInference[] newPlayers = Arrays.copyOf(players, players.length);
-        LikelyHands likelyHands = new LikelyHands(newPlayers[(turn + 3) % 4], newPlayers[(turn + 2) % 4], newPlayers[(turn + 1) % 4],
-                newPlayers[turn]);
-        newPlayers[turn] = AndBoundInference.create(systems[turn % 2].getInference(newBidList, likelyHands), newPlayers[turn]);
+        LikelyHands likelyHands = getLikelyHands();
+        IBoundInference newInf = AndBoundInference.create(systems[turn % 2].getInference(newBidList, likelyHands), players[turn].inf);
+        Player[] newPlayers = Arrays.copyOf(players, players.length);
+        IHandList newHands = HandGenerator.generateHands(newInf, 1000);
+        newPlayers[turn] = new Player(newInf, newHands);
         return new BiddingState(systems, newBidList, (turn + 1) % 4, newPlayers);
+    }
+
+    private LikelyHands getLikelyHands() {
+        return new LikelyHands(players[(turn + 3) % 4].likelyHand, players[(turn + 2) % 4].likelyHand, players[(turn + 1) % 4].likelyHand,
+                players[turn].likelyHand);
     }
 
     /**
@@ -58,10 +83,8 @@ public class BiddingState {
      * @return A bid for the given hand.
      */
     public Bid getBid(Hand hand) {
-        // Retrieve likeihood of all hands for all players
-        LikelyHands likelyHands = new LikelyHands(players[(turn + 3) % 4], players[(turn + 2) % 4], players[(turn + 1) % 4], players[turn]);
-
         // Get the bid from the system.
+        LikelyHands likelyHands = getLikelyHands();
         return systems[turn % 2].getBid(bidding, likelyHands, hand);
     }
 }
