@@ -3,6 +3,7 @@ package bbidder;
 import static bbidder.Constants.ALL_SUITS;
 import static bbidder.Constants.MAJORS;
 import static bbidder.Constants.MINORS;
+import static bbidder.Constants.NOTRUMP;
 
 import java.util.Objects;
 
@@ -27,6 +28,7 @@ public class BidPattern {
     public final String level;
     public final Bid simpleBid;
     public final int step;
+    private final short suitClass;
 
     public BidPattern(boolean isOpposition, String str, boolean upTheLine) {
         this.isOpposition = isOpposition;
@@ -35,23 +37,22 @@ public class BidPattern {
         String upper = str.toUpperCase();
         if (upper.startsWith("NJ") || upper.startsWith("DJ")) {
             level = upper.substring(0, 2);
-            suit = str.substring(2);
+            suit = getSuit(str.substring(2));
             simpleBid = null;
             step = -1;
+            suitClass = getSuitClass(str.substring(2));
         } else if (upper.startsWith("J")) {
             level = upper.substring(0, 1);
-            suit = str.substring(1);
+            suit = getSuit(str.substring(1));
             simpleBid = null;
             step = -1;
+            suitClass = getSuitClass(str.substring(2));
         } else if (upper.contains("STEP")) {
             int pos = upper.indexOf("STEP");
             step = Integer.parseInt(upper.substring(0, pos));
             level = upper.substring(0, pos + 4);
-            if (pos + 4 >= str.length()) {
-                suit = null;
-            } else {
-                suit = str.substring(pos + 4);
-            }
+            suit = getSuit(str.substring(pos + 4));
+            suitClass = getSuitClass(str.substring(pos + 4));
             simpleBid = null;
         } else {
             step = -1;
@@ -59,19 +60,29 @@ public class BidPattern {
             if (simpleBid != null && !simpleBid.isSuitBid()) {
                 level = null;
                 suit = null;
+                suitClass = 0;
             } else {
                 level = upper.substring(0, 1);
-                suit = str.substring(1);
+                suit = getSuit(str.substring(1));
+                suitClass = getSuitClass(str.substring(1));
             }
         }
     }
     
-    public short getSuitClass() {
-        if (getSuit() == null) {
-            return 0x1f;
+    public static String getSuit(String str) {
+        str = str.trim();
+        if (str.contains("/")) {
+            return null;
         }
-        if (isSuitSet()) {
-            String[] parts = getSuit().split("/");
+        if (str.equals("")) {
+            return null;
+        }
+        return str;
+    }
+    
+    public static short getSuitClass(String str) {
+        if (str.contains("/")) {
+            String[] parts = str.split("/");
             short result = 0;
             for(String p: parts) {
                 Integer strain = Strain.getStrain(p);
@@ -82,7 +93,10 @@ public class BidPattern {
             }
             return result;
         }
-        switch (getSuit()) {
+        switch (str) {
+        case "N":
+        case "n":
+            return 1 << NOTRUMP;
         case "M":
             return MAJORS;
         case "m":
@@ -90,6 +104,10 @@ public class BidPattern {
         default:
             return ALL_SUITS;
         }
+    }
+    
+    public short getSuitClass() {
+        return suitClass;
     }
     
     public boolean isSuitSet() {

@@ -50,10 +50,8 @@ public class BiddingContext {
         TreeSet<Bid> result = new TreeSet<>();
         for (int strain : BitUtil.iterate(getStrains(pattern))) {
             Bid bid = getBid(pattern, strain);
-            if (strain == bid.strain) {
-                if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
-                    result.add(bid);
-                }
+            if (lastBidSuit == null || bid.ordinal() > lastBidSuit.ordinal()) {
+                result.add(bid);
             }
         }
         if (!pattern.upTheLine) {
