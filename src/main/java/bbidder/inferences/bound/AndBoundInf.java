@@ -5,6 +5,7 @@ import java.util.List;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
+import bbidder.Range;
 import bbidder.ShapeSet;
 
 /**
@@ -45,6 +46,24 @@ public class AndBoundInf implements IBoundInference {
         ShapeSet s = ShapeSet.NONE;
         for(IBoundInference i: inferences) {
             s = s.or(i.getNotShapes());
+        }
+        return s;
+    }
+
+    @Override
+    public Range getHcp() {
+        Range s = Range.all(40);
+        for(IBoundInference i: inferences) {
+            s = s.and(i.getHcp());
+        }
+        return s;
+    }
+    
+    @Override
+    public Range getNotHcp() {
+        Range s = Range.none(40);
+        for(IBoundInference i: inferences) {
+            s = s.or(i.getNotHcp());
         }
         return s;
     }

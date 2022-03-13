@@ -28,6 +28,14 @@ public class Range {
     public int lowest() {
         return BitUtil.leastBit(bits);
     }
+    
+    public static Range all(int max) {
+        return new Range((1L << (max + 1)) - 1, max);
+    }
+    
+    public static Range none(int max) {
+        return new Range(0, max);
+    }
 
     public static Range atLeast(Integer n, int max) {
         if (n == null) {

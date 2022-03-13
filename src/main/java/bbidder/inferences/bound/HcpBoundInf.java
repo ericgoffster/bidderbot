@@ -18,6 +18,16 @@ public class HcpBoundInf implements IBoundInference {
         return ShapeSet.ALL;
     }
     
+    @Override
+    public Range getHcp() {
+        return r;
+    }
+    
+    @Override
+    public Range getNotHcp() {
+        return r.not();
+    }
+    
     public HcpBoundInf(Range r) {
         this.r = r;
     }

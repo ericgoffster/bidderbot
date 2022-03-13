@@ -17,6 +17,7 @@ public class HandGenerator {
             cards[i] = i;
         }
         ShapeSet ss = inf.getShapes();
+        Range hcp = inf.getHcp();
         List<Hand> result = new ArrayList<>();
         int num = 0;
         while (result.size() < numDesired) {
@@ -28,8 +29,9 @@ public class HandGenerator {
                 cards[i] = t;
                 h = h.withCardAdded(t % 4, t / 4);
             }
-            if (inf.matches(h)) {
-                if (!ss.contains(h.getShape())) {
+            if (ss.contains(h.getShape()) && inf.matches(h)) {
+                if (!hcp.contains(h.numHCP())) {
+                    inf.getHcp();
                     throw new RuntimeException();
                 }
                 result.add(h);

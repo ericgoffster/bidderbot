@@ -20,6 +20,16 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
         return ShapeSet.ALL;
     }
     
+    @Override
+    public Range getHcp() {
+        return Range.all(40);
+    }
+    
+    @Override
+    public Range getNotHcp() {
+        return Range.all(40);
+    }
+    
     public static IBoundInference createBounded(LikelyHandSummary partnerSummary, Range r) {
         if (r.unBounded()) {
             return ConstBoundInference.T;

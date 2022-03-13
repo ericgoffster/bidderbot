@@ -17,4 +17,7 @@ public interface IBoundInference {
     
     public ShapeSet getShapes();
     public ShapeSet getNotShapes();
+    
+    public Range getHcp();
+    public Range getNotHcp();
 }
