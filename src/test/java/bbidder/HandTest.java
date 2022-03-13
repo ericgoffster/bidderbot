@@ -1,6 +1,7 @@
 package bbidder;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -32,8 +33,22 @@ public class HandTest {
     @Test
     public void testTotalPts() {
         Hand hand = Hand.valueOf("    AKQJ  -  T7658    9432");
-        assertEquals(hand.getShape(), Shape._04050004);
         assertEquals(13, hand.totalPoints(0));
         assertEquals(10, hand.totalPoints(2));
+    }
+
+    @Test
+    public void testGetShape() {
+        Hand hand = Hand.valueOf("    AKQJ  -  T7658    9432");
+        assertEquals(hand.getShape(), Shape._04050004);
+    }
+
+    @Test
+    public void testFit() {
+        Hand hand = Hand.valueOf("    AKQJ  xxx  xx    9432");
+        assertFalse(hand.haveFit(InfSummary.ALL, 0));
+        assertTrue(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 4), Range.all(40)), 0));
+        assertFalse(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 4), Range.all(40)), 1));
+        assertFalse(hand.haveFit(new InfSummary(new ShapeSet(shape -> shape.numInSuit(0) >= 3), Range.all(40)), 0));
     }
 }
