@@ -31,31 +31,51 @@ public class BidPattern {
     public final boolean reverse;
     public final boolean notreverse;
 
-    public BidPattern(boolean isOpposition, String str, boolean upTheLine, boolean reverse, boolean notreverse) {
+    public BidPattern(boolean isOpposition, String str, boolean upTheLine) {
         this.isOpposition = isOpposition;
         this.str = str;
         this.upTheLine = upTheLine;
-        this.reverse = reverse;
-        this.notreverse = notreverse;
         String upper = str.toUpperCase();
         if (upper.startsWith("NJ")) {
             simpleBid = null;
             jumpLevel = 0;
             level = null;
             suit = str.substring(2);
-            suitClass = getSuitClass(str.substring(2));
+            suitClass = getSuitClass(suit);
+            reverse = false;
+            notreverse = false;
         } else if (upper.startsWith("DJ")) {
             jumpLevel = 2;
             level = null;
             suit = str.substring(2);
             simpleBid = null;
-            suitClass = getSuitClass(str.substring(2));
+            suitClass = getSuitClass(suit);
+            reverse = false;
+            notreverse = false;
         } else if (upper.startsWith("J")) {
             jumpLevel = 1;
             level = null;
             suit = str.substring(1);
             simpleBid = null;
-            suitClass = getSuitClass(str.substring(2));
+            suitClass = getSuitClass(suit);
+            reverse = false;
+            notreverse = false;
+        } else if (upper.startsWith("RV")) {
+            jumpLevel = 0;
+            level = null;
+            suit = str.substring(2);
+            simpleBid = null;
+            suitClass = getSuitClass(suit);
+            reverse = true;
+            notreverse = false;
+        } else if (upper.startsWith("NR")) {
+            jumpLevel = 0;
+            level = null;
+            suit = str.substring(2);
+            simpleBid = null;
+            suitClass = getSuitClass(suit);
+            reverse = false;
+            notreverse = true;
         } else {
             jumpLevel = null;
             simpleBid = Bid.fromStr(str);
@@ -69,8 +89,10 @@ public class BidPattern {
                     throw new IllegalArgumentException("Invalid bid: '"+str+"'");
                 }
                 suit = str.substring(1);
-                suitClass = getSuitClass(str.substring(1));
+                suitClass = getSuitClass(suit);
             }
+            reverse = false;
+            notreverse = false;
         }
     }
 
@@ -139,20 +161,14 @@ public class BidPattern {
         }
         String[] parts = SplitUtil.split(str, ":");
         boolean downTheLine = false;
-        boolean reverse = false;
-        boolean notreverse = false;
         for (int i = 1; i < parts.length; i++) {
             if (parts[i].equalsIgnoreCase("down")) {
                 downTheLine = true;
-            } else if (parts[i].equalsIgnoreCase("reverse")) {
-                reverse = true;
-            } else if (parts[i].equalsIgnoreCase("nonreverse")) {
-                notreverse = true;
             } else {
                 throw new IllegalArgumentException("Uknown qualifier: " + parts[i]);
             }
         }
-        return new BidPattern(isOpposition, parts[0].trim(), !downTheLine, reverse, notreverse);
+        return new BidPattern(isOpposition, parts[0].trim(), !downTheLine);
     }
 
     @Override

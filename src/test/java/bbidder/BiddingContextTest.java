@@ -121,8 +121,8 @@ public class BiddingContextTest {
                 .withNewBid(Bid.P, BidPattern.valueOf("P"))
                 .withNewBid(Bid._1S, BidPattern.valueOf("1S"))
                 .withNewBid(Bid.P, BidPattern.valueOf("P"));
-        assertEquals(bc.getBids(BidPattern.valueOf("2x:reverse")), Set.of(Bid._2H));
-        assertEquals(bc.getBids(BidPattern.valueOf("2x:nonreverse")), Set.of(Bid._2C));
+        assertEquals(bc.getBids(BidPattern.valueOf("RVx")), Set.of(Bid._2H));
+        assertEquals(bc.getBids(BidPattern.valueOf("NRx")), Set.of(Bid._2C));
     }
     
     @Test
@@ -131,9 +131,8 @@ public class BiddingContextTest {
                 .withNewBid(Bid.P, BidPattern.valueOf("P"))
                 .withNewBid(Bid._2H, BidPattern.valueOf("2H"))
                 .withNewBid(Bid.P, BidPattern.valueOf("P"));
-        assertEquals(bc.getBids(BidPattern.valueOf("2x:reverse")), Set.of());
-        assertEquals(bc.getBids(BidPattern.valueOf("3x:reverse")), Set.of(Bid._3C, Bid._3D));
-        assertEquals(bc.getBids(BidPattern.valueOf("2x:nonreverse")), Set.of());
+        assertEquals(bc.getBids(BidPattern.valueOf("RVx")), Set.of(Bid._3C, Bid._3D));
+        assertEquals(bc.getBids(BidPattern.valueOf("NRx")), Set.of());
     }
 
     @Test
