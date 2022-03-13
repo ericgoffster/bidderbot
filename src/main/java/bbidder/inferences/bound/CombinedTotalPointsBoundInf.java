@@ -1,6 +1,5 @@
 package bbidder.inferences.bound;
 
-import bbidder.Constants;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Range;
@@ -20,16 +19,6 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
         return new CombinedTotalPointsBoundInf(partnerSummary, r);
     }
     
-    static int getTotalPoints(Hand hand, LikelyHandSummary partnerSummary) {
-        int pts = hand.totalPoints(Constants.NOTRUMP) + partnerSummary.suitSummaries[Constants.NOTRUMP].minTotalPoints;
-        for (int s = 0; s < 4; s++) {
-            if (hand.numInSuit(s) + partnerSummary.suitSummaries[s].minLength >= 8) {
-                pts = Math.max(pts, hand.totalPoints(s) + partnerSummary.suitSummaries[s].minTotalPoints);
-            }
-        }
-        return pts > 40 ? 40 : pts;
-    }
-
     @Override
     public int size() {
         return 1;
@@ -42,8 +31,7 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
 
     @Override
     public boolean matches(Hand hand) {
-        int tpts = getTotalPoints(hand, partnerSummary);
-        return r.contains(tpts);
+        return r.contains(hand.getTotalPoints(partnerSummary));
     }
 
     @Override
@@ -53,7 +41,7 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
 
     @Override
     public String toString() {
-        return r + " tpts";
+        return r + " tpts" + ", partner=" + partnerSummary;
     }
 
     @Override

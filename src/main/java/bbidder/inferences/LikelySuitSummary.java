@@ -14,12 +14,20 @@ public class LikelySuitSummary {
 
     @Override
     public String toString() {
-        return "minTotalPoints=" + minTotalPoints + ", minLength=" + minLength;
+        if (minLength > 0) {
+            return "tps min=" + minTotalPoints + ", length min=" + minLength;
+        } else {
+            return "tps min=" + minTotalPoints;
+        }
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(minLength, minTotalPoints);
+    }
+    
+    public boolean isEmpty() {
+        return minTotalPoints == 0 && minLength == 0;
     }
 
     @Override
