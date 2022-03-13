@@ -43,21 +43,4 @@ public class CombinedTotalPointsBoundInf implements IBoundInference {
     public String toString() {
         return r + " combined tpts" + ", partner=" + partnerSummary;
     }
-
-    @Override
-    public IBoundInference orReduce(IBoundInference i) {
-        if (i instanceof CombinedTotalPointsBoundInf && partnerSummary.equals(((CombinedTotalPointsBoundInf) i).partnerSummary)) {
-            return createBounded(partnerSummary, r.or(((CombinedTotalPointsBoundInf) i).r));
-        }
-        return null;
-    }
-
-    @Override
-    public IBoundInference andReduce(IBoundInference i) {
-        if (i instanceof CombinedTotalPointsBoundInf && partnerSummary.equals(((CombinedTotalPointsBoundInf) i).partnerSummary)) {
-            return createBounded(partnerSummary, r.and(((CombinedTotalPointsBoundInf) i).r));
-        }
-        return null;
-    }
-
 }

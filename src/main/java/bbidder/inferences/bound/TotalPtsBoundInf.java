@@ -43,21 +43,4 @@ public class TotalPtsBoundInf implements IBoundInference {
     public String toString() {
         return r + " tpts" + ", partner=" + partnerSummary;
     }
-
-    @Override
-    public IBoundInference orReduce(IBoundInference i) {
-        if (i instanceof TotalPtsBoundInf && partnerSummary.equals(((TotalPtsBoundInf) i).partnerSummary)) {
-            return createBounded(partnerSummary, r.or(((TotalPtsBoundInf) i).r));
-        }
-        return null;
-    }
-
-    @Override
-    public IBoundInference andReduce(IBoundInference i) {
-        if (i instanceof TotalPtsBoundInf && partnerSummary.equals(((TotalPtsBoundInf) i).partnerSummary)) {
-            return createBounded(partnerSummary, r.and(((TotalPtsBoundInf) i).r));
-        }
-        return null;
-    }
-
 }

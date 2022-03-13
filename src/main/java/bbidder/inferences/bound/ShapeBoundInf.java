@@ -48,20 +48,4 @@ public class ShapeBoundInf implements IBoundInference {
     public String toString() {
         return r.toString();
     }
-
-    @Override
-    public IBoundInference andReduce(IBoundInference i) {
-        if (i instanceof ShapeBoundInf) {
-            return create(r.and(((ShapeBoundInf) i).r));
-        }
-        return null;
-    }
-
-    @Override
-    public IBoundInference orReduce(IBoundInference i) {
-        if (i instanceof ShapeBoundInf) {
-            return create(r.or(((ShapeBoundInf) i).r));
-        }
-        return null;
-    }
 }

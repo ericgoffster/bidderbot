@@ -20,9 +20,5 @@ public interface IBoundInference {
      */
     public IBoundInference negate();
 
-    public IBoundInference andReduce(IBoundInference i);
-
-    public IBoundInference orReduce(IBoundInference i);
-    
     public int size();
 }

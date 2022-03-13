@@ -56,29 +56,10 @@ public class OrBoundInf implements IBoundInference {
         return create(List.of(i1, i2));
     }
     
-    public static void addOr(List<IBoundInference> orList, IBoundInference rhs) {
-        // Attempt to combine the inference with an existing inference.
-        again: for(;;) {
-            for(int i = 0; i < orList.size(); i++) {
-                IBoundInference comb = OrBoundInf.orReduce(rhs, orList.get(i));
-                // Found a combination, remove original, add the combination.
-                if (comb != null) {
-                    // Remove 
-                    orList.remove(i);
-                    rhs = comb;
-                    continue again;
-                }
-            }
-            // Just add to the end
-            orList.add(rhs);
-            return;
-        }
-    }
-
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> orList = new ArrayList<>();
         for (IBoundInference i : inferences) {
-            addOr(orList, i);
+            orList.add(i);
         }
         if (orList.size() == 0) {
             return ConstBoundInference.F;
@@ -96,48 +77,5 @@ public class OrBoundInf implements IBoundInference {
             l.add(i.toString());
         }
         return "(" + String.join(" | ", l) + ")";
-    }
-
-    @Override
-    public IBoundInference andReduce(IBoundInference i) {
-        // (a + b) * c = ab + bc
-        List<IBoundInference> result = new ArrayList<>();
-        for(IBoundInference j: inferences) {
-            result.add(AndBoundInf.create(j, i));
-        }
-        IBoundInference res = OrBoundInf.create(result);
-        if (res.size() < size + i.size() + 1) {
-            return res;
-        }
-
-        return null;
-    }
-
-    @Override
-    public IBoundInference orReduce(IBoundInference i) {
-        // (a + b) + (c + d) = (a + b + c + d)
-        if (i instanceof OrBoundInf) {
-            List<IBoundInference> orList = new ArrayList<>(inferences);
-            orList.addAll(((OrBoundInf) i).inferences);
-            return create(orList);
-        }
-        return null;
-    }
-
-    public static IBoundInference orReduce(IBoundInference a, IBoundInference b) {
-        if (a == ConstBoundInference.T || b == ConstBoundInference.T) {
-            return ConstBoundInference.T;
-        }
-        if (a == ConstBoundInference.F) {
-            return b;
-        }
-        if (b == ConstBoundInference.F) {
-            return a;
-        }
-        IBoundInference comb = a.orReduce(b);
-        if (comb == null) {
-            return b.orReduce(a);
-        }
-        return comb;
     }
 }

@@ -42,20 +42,4 @@ public class ConstBoundInference implements IBoundInference {
     public String toString() {
         return String.valueOf(result);
     }
-
-    @Override
-    public IBoundInference andReduce(IBoundInference i) {
-        if (result) {
-            return i;
-        }
-        return F;
-    }
-
-    @Override
-    public IBoundInference orReduce(IBoundInference i) {
-        if (result) {
-            return T;
-        }
-        return i;
-    }
 }

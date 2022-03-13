@@ -55,30 +55,10 @@ public class AndBoundInf implements IBoundInference {
         return create(List.of(i1, i2));
     }
     
-    public static void addAnd(List<IBoundInference> andList, IBoundInference rhs) {
-        again: for(;;) {
-            // Attempt to combine the inference with an existing inference.
-            for(int i = 0; i < andList.size(); i++) {
-                IBoundInference lhs = andList.get(i);
-                IBoundInference comb = AndBoundInf.andReduce(lhs, rhs);
-                // Found a combination, remove original, add the combination.
-                if (comb != null) {
-                    // Remove 
-                    andList.remove(i);
-                    rhs = comb;
-                    continue again;
-                }
-            }
-            // Just add to the end
-            andList.add(rhs);
-            return;
-        }
-    }
-
     public static IBoundInference create(List<IBoundInference> inferences) {
         List<IBoundInference> andList = new ArrayList<>();
         for (IBoundInference i : inferences) {
-            addAnd(andList, i);
+            andList.add(i);
         }
         if (andList.size() == 0) {
             return ConstBoundInference.T;
@@ -96,39 +76,5 @@ public class AndBoundInf implements IBoundInference {
             l.add(i.toString());
         }
         return "(" + String.join(" & ", l) + ")";
-    }
-
-    @Override
-    public IBoundInference andReduce(IBoundInference i) {
-        // ab * cd = (abcd)
-        if (i instanceof AndBoundInf) {
-            List<IBoundInference> andList = new ArrayList<>(inferences);
-            andList.addAll(((AndBoundInf) i).inferences);
-            return create(andList);
-        }
-        
-        return null;
-    }
-
-    @Override
-    public IBoundInference orReduce(IBoundInference i) {
-        return null;
-    }
-
-    public static IBoundInference andReduce(IBoundInference a, IBoundInference b) {
-        if (a == ConstBoundInference.F || b == ConstBoundInference.F) {
-            return ConstBoundInference.F;
-        }
-        if (a == ConstBoundInference.T) {
-            return b;
-        }
-        if (b == ConstBoundInference.T) {
-            return a;
-        }
-        IBoundInference comb = a.andReduce(b);
-        if (comb == null) {
-            return b.andReduce(a);
-        }
-        return comb;
     }
 }
