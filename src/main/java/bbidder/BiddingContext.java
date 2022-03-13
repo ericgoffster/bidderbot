@@ -105,7 +105,7 @@ public final class BiddingContext {
         Map<Integer, BiddingContext> m = getMappedBiddingContexts(pattern.getSuit());
         for (Entry<Integer, BiddingContext> e : m.entrySet()) {
             BiddingContext bc = e.getValue();
-            result.add(new BiddingContext(bc.bids.withBidAdded(pattern), bc.suits));
+            result.add(new BiddingContext(bc.bids.withBidAdded(pattern.resolveSuit(e.getKey())), bc.suits));
         }
         return result;
     }
@@ -247,7 +247,7 @@ public final class BiddingContext {
         if (pattern.simpleBid != null) {
             return pattern.simpleBid;
         }
-        Integer strain = getSuit(pattern.suit);
+        Integer strain = Strain.getStrain(pattern.suit);
         if (strain == null) {
             throw new IllegalStateException();
         }

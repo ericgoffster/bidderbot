@@ -201,6 +201,10 @@ public class BidPattern {
     public static BidPattern createBid(int level, String suit) {
         return new BidPattern(false, suit, level, null, null, false, false);
     }
+    
+    public BidPattern resolveSuit(int strain) {
+        return new BidPattern(isOpposition, String.valueOf(Constants.STR_ALL_SUITS.charAt(strain)), level, simpleBid, jumpLevel, reverse, notreverse);
+    }
 
     private static BidPattern create(String str) {
         String upper = str.toUpperCase();
