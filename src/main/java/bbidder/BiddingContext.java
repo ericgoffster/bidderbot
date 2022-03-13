@@ -86,8 +86,8 @@ public class BiddingContext {
         return Objects.equals(bids, other.bids) && Objects.equals(suits, other.suits);
     }
 
-    private static short getSuitClass(BidPattern pattern) {
-        if (pattern .getSuit() == null) {
+    private short getSuitClass(BidPattern pattern) {
+        if (pattern.getSuit() == null) {
             return 0x1f;
         }
         switch (pattern.getSuit()) {
@@ -96,6 +96,18 @@ public class BiddingContext {
         case "m":
             return MINORS;
         default:
+            String[] parts = pattern.getSuit().split("/");
+            if (parts.length > 1) {
+                short result = 0;
+                for(String p: parts) {
+                    Integer strain = getSuit(p);
+                    if (strain == null) {
+                        throw new IllegalArgumentException("invalud suit in this context");
+                    }
+                    result |= 1 << strain;
+                }
+                return result;
+            }
             return ALL_SUITS;
         }
     }
