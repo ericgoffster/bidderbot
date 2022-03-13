@@ -2,6 +2,7 @@ package bbidder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 
 import java.util.Set;
 
@@ -115,5 +116,15 @@ public class BiddingContextTest {
         BiddingContext bc = new BiddingContext();
         bc = bc.withNewBid(Bid._1C, BidPattern.valueOf("1x"));
         assertEquals(bc.getBids(BidPattern.valueOf("1m")), Set.of(Bid._1D));
+    }
+    @Test
+    public void testInvalid() {
+        BiddingContext bc = new BiddingContext();
+        assertThrows(IllegalArgumentException.class, () -> bc.withNewBid(Bid._1C, BidPattern.valueOf("1M")));
+        assertThrows(IllegalArgumentException.class, () -> bc.withNewBid(Bid._1C, BidPattern.valueOf("1OM")));
+        assertThrows(IllegalArgumentException.class, () -> bc.withNewBid(Bid._1H, BidPattern.valueOf("1m")));
+        assertThrows(IllegalArgumentException.class, () -> bc.withNewBid(Bid._1H, BidPattern.valueOf("1om")));
+        assertThrows(IllegalArgumentException.class, () -> bc.withNewBid(Bid._1N, BidPattern.valueOf("1x")));
+        assertThrows(IllegalArgumentException.class, () -> bc.withNewBid(Bid.P, BidPattern.valueOf("1x")));
     }
 }

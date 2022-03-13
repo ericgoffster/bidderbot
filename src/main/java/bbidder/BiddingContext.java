@@ -40,13 +40,13 @@ public class BiddingContext {
         Map<String, Integer> newSuits;
         if (pattern.simpleBid != null) {
             if (bid != pattern.simpleBid) {
-                throw new IllegalArgumentException(bid + " is incomptabiel with " + pattern);
+                throw new IllegalArgumentException(bid + " is incomptabile with " + pattern);
             }
         }
         if (bid.isSuitBid()) {
             if (pattern.level != null) {
                 if (bid.level != pattern.level.intValue()) {
-                    throw new IllegalArgumentException(bid + " is incomptabiel with " + pattern);
+                    throw new IllegalArgumentException(bid + " is incomptabile with " + pattern);
                 }
             }
             newSuits = new HashMap<String, Integer>(suits);
@@ -58,6 +58,9 @@ public class BiddingContext {
                 }
             }
         } else {
+            if (pattern.simpleBid == null) {
+                throw new IllegalArgumentException(bid + " is incomptabile with " + pattern);
+            }
             newSuits = suits;
         }
         return new BiddingContext(bids.withBidAdded(bid), newSuits);
