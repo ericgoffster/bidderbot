@@ -28,8 +28,8 @@ public class BidPattern {
     public final Bid simpleBid;
     private final short suitClass;
     private final Integer jumpLevel;
-    private final boolean reverse;
-    private final boolean notreverse;
+    public final boolean reverse;
+    public final boolean notreverse;
     
     public BidPattern(boolean isOpposition, String str, boolean upTheLine, boolean reverse, boolean notreverse) {
         this.isOpposition = isOpposition;
@@ -101,11 +101,7 @@ public class BidPattern {
     public short getSuitClass() {
         return suitClass;
     }
-    
-    public boolean isSuitSet() {
-        return suit != null && suit.contains("/");
-    }
-    
+        
     public Integer getJumpLevel() {
         return jumpLevel;
     }
