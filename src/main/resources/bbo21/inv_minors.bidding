@@ -14,7 +14,7 @@ test AKx QJx Kxx xxxx: 1♣ 2♣ 2N
 1m 2m 3N => 18-19 tpts, balanced, partial_stoppers unbid
 test AKx QJx Kxx AJxx: 1♣ 2♣ 3N
 
-1m 2m NJx => 12-14 tpts,stoppers x
+1m 2m NJx => balanced,stoppers x
 test AKx QJx Kxx xxxx: 1♣ 2♣ 2N
 
 1m 2m Jx => gf,1- x
