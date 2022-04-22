@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import bbidder.BiddingContext;
 import bbidder.Generality;
+import bbidder.SplitUtil;
 import bbidder.Strain;
 
 public class FitEstablished implements Generality {
@@ -23,6 +24,19 @@ public class FitEstablished implements Generality {
             result.add(bc.withGeneralityAdded(new FitEstablished(Strain.getName(e.getKey()))));
          }
         return result;
+    }
+    
+    public static FitEstablished valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
+        String[] parts = SplitUtil.split(str, "\\s+", 2);
+        if (parts.length == 2 && parts[0].equalsIgnoreCase("fit_established")) {
+            if (BiddingContext.isValidSuit(parts[1])) {
+                return new FitEstablished(parts[1]);
+            }
+        }
+        return null;
     }
 
 }
