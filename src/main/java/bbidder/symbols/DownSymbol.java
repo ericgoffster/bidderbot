@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -47,10 +48,10 @@ public class DownSymbol implements Symbol {
     public Map<String, Integer> unevaluate(int strain) {
         return sym.unevaluate(strain);
     }
-
+    
     @Override
-    public short getSuitClass(Map<String, Integer> suits) {
-        return sym.getSuitClass(suits);
+    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+        return sym.boundSymbols(suits);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -51,8 +52,8 @@ public class LessThanSymbol implements Symbol {
     }
 
     @Override
-    public short getSuitClass(Map<String, Integer> suits) {
-        return sym.getSuitClass(suits);
+    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+        return List.of(new BoundSymbol(sym.getResolved(), this));
     }
 
     @Override

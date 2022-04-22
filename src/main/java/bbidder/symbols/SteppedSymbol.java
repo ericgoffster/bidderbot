@@ -1,6 +1,8 @@
 package bbidder.symbols;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -39,16 +41,14 @@ public class SteppedSymbol implements Symbol {
         SteppedSymbol other = (SteppedSymbol) obj;
         return delta == other.delta && Objects.equals(sym, other.sym);
     }
-
+    
     @Override
-    public short getSuitClass(Map<String, Integer> sts) {
-        int n = delta;
-        short suits = sym.getSuitClass(sts);
-        while (n > 0) {
-            suits = rotateDown(suits);
-            n--;
+    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+        List<Symbol> l = new ArrayList<>();
+        for(Symbol s: sym.boundSymbols(suits)) {
+            l.add(new BoundSymbol(transform(s.getResolved()), this));
         }
-        return suits;
+        return l;
     }
 
     @Override
@@ -57,12 +57,20 @@ public class SteppedSymbol implements Symbol {
         if (s == null) {
             return null;
         }
+        return transform(s);
+    }
+
+    private int transform(Integer s) {
         return (s + 5 - delta) % 5;
     }
 
     @Override
     public Map<String, Integer> unevaluate(int strain) {
-        return sym.unevaluate((strain + delta) % 5);
+        return sym.unevaluate(untransform(strain));
+    }
+
+    private int untransform(int strain) {
+        return (strain + delta) % 5;
     }
 
     /**

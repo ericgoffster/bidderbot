@@ -1,8 +1,7 @@
 package bbidder.symbols;
 
-import static bbidder.Constants.MAJORS;
-
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -53,13 +52,13 @@ public class MajorSymbol implements Symbol {
     public Map<String, Integer> unevaluate(int strain) {
         return Map.of("M", strain);
     }
-
+    
     @Override
-    public short getSuitClass(Map<String, Integer> suits) {
+    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
         if (suits.containsKey("M") || suits.containsKey("OM")) {
-            return (short) (1 << evaluate(suits));
+            return List.of(new BoundSymbol(evaluate(suits), this));
         }
-        return MAJORS;
+        return List.of(new BoundSymbol(Constants.SPADE, this), new BoundSymbol(Constants.HEART, this));
     }
 
     private static Integer otherMajor(Integer strain) {

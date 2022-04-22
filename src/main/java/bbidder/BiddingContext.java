@@ -113,11 +113,11 @@ public final class BiddingContext {
             }
         }
         TreeMap<Symbol, BiddingContext> m = new TreeMap<>(symbol.direction());
-        for (int strain : BitUtil.iterate(symbol.getSuitClass(suits))) {
-            if (!suits.containsValue(strain)) {
+        for (Symbol newSym: symbol.boundSymbols(suits)) {
+            if (!suits.containsValue(newSym.getResolved())) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
-                newSuits.putAll(symbol.unevaluate(strain));
-                m.put(new BoundSymbol(strain, symbol), new BiddingContext(bidInference, newSuits));
+                newSuits.putAll(symbol.unevaluate(newSym.getResolved()));
+                m.put(newSym, new BiddingContext(bidInference, newSuits));
             }
         }
         return m;

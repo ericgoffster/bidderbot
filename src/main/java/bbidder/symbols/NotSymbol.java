@@ -1,6 +1,8 @@
 package bbidder.symbols;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -37,10 +39,26 @@ public class NotSymbol implements Symbol {
         NotSymbol other = (NotSymbol) obj;
         return Objects.equals(sym, other.sym);
     }
-
+    
+    public boolean findStrain(int strain, List<Symbol> old) {
+        for(Symbol s: old) {
+            if (strain == s.getResolved()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     @Override
-    public short getSuitClass(Map<String, Integer> suits) {
-        return (short) (0xf ^ sym.getSuitClass(suits));
+    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+        List<Symbol> old = sym.boundSymbols(suits);
+        List<Symbol> l = new ArrayList<>();
+        for(int i = 0; i < 4; i++) {
+            if (!findStrain(i, old)) {
+                l.add(new BoundSymbol(i, sym));
+            }
+        }
+        return l;
     }
 
     @Override

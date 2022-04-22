@@ -1,8 +1,7 @@
 package bbidder.symbols;
 
-import static bbidder.Constants.MINORS;
-
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -53,13 +52,13 @@ public class OtherMinorSymbol implements Symbol {
     public Map<String, Integer> unevaluate(int strain) {
         return Map.of("om", strain);
     }
-
+    
     @Override
-    public short getSuitClass(Map<String, Integer> suits) {
+    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
         if (suits.containsKey("m") || suits.containsKey("om")) {
-            return (short) (1 << evaluate(suits));
+            return List.of(new BoundSymbol(evaluate(suits), this));
         }
-        return MINORS;
+        return List.of(new BoundSymbol(Constants.CLUB, this), new BoundSymbol(Constants.DIAMOND, this));
     }
 
     private static Integer otherMinor(Integer strain) {

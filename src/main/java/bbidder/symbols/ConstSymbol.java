@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -51,10 +52,10 @@ public class ConstSymbol implements Symbol {
         }
         return Map.of();
     }
-
+    
     @Override
-    public short getSuitClass(Map<String, Integer> suits) {
-        return (short) (1 << strain);
+    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+        return List.of(new BoundSymbol(strain, this));
     }
 
     @Override
