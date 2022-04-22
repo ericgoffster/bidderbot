@@ -3,6 +3,7 @@ package bbidder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A map of strings to suits.
@@ -29,10 +30,12 @@ public final class SuitTable {
         newSuits.put(name, suit);
         return new SuitTable(newSuits);
     }
-
+    
     @Override
     public String toString() {
-        return suitMap.toString();
+        return "{" + String.join(",",
+                suitMap.entrySet().stream().map(e -> e.getKey() + "=" + Constants.STR_ALL_SUITS.charAt(e.getValue())).collect(Collectors.toList()))
+                + "}";
     }
 
     @Override
