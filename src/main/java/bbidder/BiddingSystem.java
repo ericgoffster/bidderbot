@@ -67,7 +67,7 @@ public class BiddingSystem {
     public void dump(OutputStream os) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
             for (BidInference bi : inferences) {
-                bw.write(bi.toString());
+                bw.write(bi + "\n");
             }
         }
     }
@@ -153,6 +153,10 @@ public class BiddingSystem {
                 negativeWild.add(inf);
             }
         }
+        
+//        if (positive.isEmpty() && lastBid != Bid.P) {
+//            throw new RuntimeException("Unrecognized bidding: " + bids);
+//        }
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {

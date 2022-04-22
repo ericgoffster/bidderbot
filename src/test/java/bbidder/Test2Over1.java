@@ -3,6 +3,9 @@ package bbidder;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.jupiter.api.Test;
@@ -80,5 +83,8 @@ public class Test2Over1 {
         System.out.println("tests = " + bs.getTests().size());
         assertTrue(bs.getTests().size() > 0);
         assertFalse(hadError.get());
+        try(OutputStream os = new FileOutputStream(new File("/tmp/bids.txt"))) {
+            bs.dump(os);
+        }
     }
 }
