@@ -46,7 +46,7 @@ public class BidInference {
         return new BidInference(null, BidPatternList.valueOf(parts[0]), InferenceList.valueOf(reg, parts[1]));
     }
 
-    public List<BidInference> getBoundInferences() {
+    public List<BidInference> resolveSuits() {
         List<BidInference> result = new ArrayList<>();
         for (BiddingContext ctx : bids.resolveSuits()) {
             for(MappedInferenceList mil: inferences.resolveSuits(ctx)) {
