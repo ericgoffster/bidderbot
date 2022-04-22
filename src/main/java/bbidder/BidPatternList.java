@@ -279,7 +279,7 @@ public final class BidPatternList {
         // evaluate the remaining bids in the context of that bid.
         BidPatternList exceptFirst = exceptFirst();
         BidPattern pattern = bids.get(0);
-        return ListUtil.flatMap(pattern.resolveSymbols(symbols), b -> exceptFirst.resolveSymbols(previous.withBidAdded(b.getBidPattern()), b.symbols));
+        return ListUtil.flatMap(pattern.resolveSymbols(previous, symbols), b -> exceptFirst.resolveSymbols(previous.withBidAdded(b.getBidPattern()), b.symbols));
     }
 
     /**

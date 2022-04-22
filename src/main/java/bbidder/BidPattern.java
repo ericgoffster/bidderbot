@@ -120,11 +120,13 @@ public final class BidPattern {
     }
 
     /**
+     * @param previous 
+     *            Auction to date
      * @param symbol
      *            The new symbol
      * @return A bid with the suit bound to a specific strain
      */
-    private BidPattern withSymbol(Symbol symbol) {
+    private BidPattern withSymbol(BidPatternList previous, Symbol symbol) {
         if (level != null) {
             int resolved = symbol.getResolved();
             Bid b = Bid.valueOf(level, resolved);
@@ -136,18 +138,20 @@ public final class BidPattern {
     }
     
     /**
+     * @param previous  
+     *            Auction to date
      * @param symbols
      *            The suits
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public List<Context> resolveSymbols(SymbolTable symbols) {
+    public List<Context> resolveSymbols(BidPatternList previous, SymbolTable symbols) {
         if (generality != null) {
             return ListUtil.map(generality.resolveSymbols(symbols), e -> createWild(e.getGenerality()).new Context(e.symbols));
         }
         if (simpleBid != null) {
             return List.of(new Context(symbols));
         }
-        return ListUtil.map(getSymbol().resolveSymbols(symbols), e -> withSymbol(e.getSymbol()).new Context(e.symbols));
+        return ListUtil.map(getSymbol().resolveSymbols(symbols), e -> withSymbol(previous, e.getSymbol()).new Context(e.symbols));
     }
 
     /**
