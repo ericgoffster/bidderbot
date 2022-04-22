@@ -5,20 +5,20 @@
 # H = ♥
 # S = ♠
 
-1m 2m 4M => 14+ hcp, 6+ m, 5+ M
-test x AKJxx AQJxxx x: 1♦ 2♦ 4♥
+1m 2m 4M => 14+ hcp, 6+ m, 5+ M;
+test x AKJxx AQJxxx x: 1♦ 2♦ 4♥;
 
-1m 2m 2N => 12-14 tpts, balanced, partial_stoppers unbid
-test AKx QJx Kxx xxxx: 1♣ 2♣ 2N
+1m 2m 2N => 12-14 tpts, balanced, partial_stoppers unbid;
+test AKx QJx Kxx xxxx: 1♣ 2♣ 2N;
 
-1m 2m 3N => 18-19 tpts, balanced, partial_stoppers unbid
-test AKx QJx Kxx AJxx: 1♣ 2♣ 3N
+1m 2m 3N => 18-19 tpts, balanced, partial_stoppers unbid;
+test AKx QJx Kxx AJxx: 1♣ 2♣ 3N;
 
-1m 2m NJx => balanced,stoppers x
-test AKx QJx Kxx xxxx: 1♣ 2♣ 2N
+1m 2m NJx => balanced,stoppers x;
+test AKx QJx Kxx xxxx: 1♣ 2♣ 2N;
 
-1m 2m Jx => gf,1- x
-test x AKxx KQxx Axxx: 1♣ 2♣ 3♠
+1m 2m Jx => gf,1- x;
+test x AKxx KQxx Axxx: 1♣ 2♣ 3♠;
 
-1m 2m 4m => gf
-test x AKxx KQxx Axxx: 1♣ 2♣ 3♠
+1m 2m 4m => gf;
+test x AKxx KQxx Axxx: 1♣ 2♣ 3♠;

@@ -5,26 +5,26 @@
 # H = ♥
 # S = ♠
 
-P 1S 2C 2H => inv, 4+H
-test Axxxx Axxx xx Ax: P 1S 2C 2H
+P 1S 2C 2H => inv, 4+H;
+test Axxxx Axxx xx Ax: P 1S 2C 2H;
 
-P 1H 2C 2S => slaminv+, 4+S
-test AQxx AQxxx Ax Ax: P 1H 2C 2S
+P 1H 2C 2S => slaminv+, 4+S;
+test AQxx AQxxx Ax Ax: P 1H 2C 2S;
 
-P 1M 2C 2N => gf, balanced, partial_stoppers unbid
-test Qx Axxxx Axx Axx: P 1H 2C 2N
+P 1M 2C 2N => gf, balanced, partial_stoppers unbid;
+test Qx Axxxx Axx Axx: P 1H 2C 2N;
 
-P 1M 2C 3N => gf, 6+M, partial_stoppers unbid
-test Qx Axxxxx AQ Axx: P 1H 2C 3N
+P 1M 2C 3N => gf, 6+M, partial_stoppers unbid;
+test Qx Axxxxx AQ Axx: P 1H 2C 3N;
 
-P 1M 2C 4M => gf
-test AQxxx Axx xxx Ax: P 1S 2C 4S
+P 1M 2C 4M => gf;
+test AQxxx Axx xxx Ax: P 1S 2C 4S;
 
-P 1M 2C 3M => slaminv+
-test AQxxxx AQx Ax Ax: P 1S 2C 3S
+P 1M 2C 3M => slaminv+;
+test AQxxxx AQx Ax Ax: P 1S 2C 3S;
 
-P 1M 2C 2D => inv
-test xx Axxxx Axx Axx: P 1H 2C 2D
+P 1M 2C 2D => inv;
+test xx Axxxx Axx Axx: P 1H 2C 2D;
 
-P 1M 2C 2M =>
-test xx Kxxxx Qxx Axx: P 1H 2C 2H
+P 1M 2C 2M =>;
+test xx Kxxxx Qxx Axx: P 1H 2C 2H;

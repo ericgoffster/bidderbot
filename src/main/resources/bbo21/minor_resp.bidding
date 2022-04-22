@@ -5,57 +5,57 @@
 # H = ♥
 # S = ♠
 
-1♦ 3♣ => inv, 6+ ♣ 
-test KQx x xxx Axxxxx:1D 3♣
+1♦ 3♣ => inv, 6+ ♣;
+test KQx x xxx Axxxxx:1D 3♣;
 
-1m Jy => 6+ y, 15-18 tpts
-test Qx AKJxxx Ax Kxx:1♣ 2♥
+1m Jy => 6+ y, 15-18 tpts;
+test Qx AKJxxx Ax Kxx:1♣ 2♥;
 
-1m Jy => 4+ y, 18-19 tpts, balanced
-test KQx Kxx AKJx Kxx:1♣ 2♦
+1m Jy => 4+ y, 18-19 tpts, balanced;
+test KQx Kxx AKJx Kxx:1♣ 2♦;
 
-1m Jy => 5+ y, 4+m, 15-18 tpts
-test KQJ98 A4 A6 Q963:1♣ 2♠
+1m Jy => 5+ y, 4+m, 15-18 tpts;
+test KQJ98 A4 A6 Q963:1♣ 2♠;
 
-1♦ NJy:down => gf+, 5+ y, longest_or_equal y among unbid
-test Kxx Ax xxx AQxxx:1♦ 2♣
-test AQxxx Axxx x Kxx:1♦ 1♠
+1♦ NJy:down => gf+, 5+ y, longest_or_equal y among unbid;
+test Kxx Ax xxx AQxxx:1♦ 2♣;
+test AQxxx Axxx x Kxx:1♦ 1♠;
 
-1m 1M => gf+, 4 M, longest_or_equal M among unbid
-test Kxxx Ax xxx AQxx:1♦ 1♠
-test AQxx Axxx xx Kxx:1♦ 1♥
+1m 1M => gf+, 4 M, longest_or_equal M among unbid;
+test Kxxx Ax xxx AQxx:1♦ 1♠;
+test AQxx Axxx xx Kxx:1♦ 1♥;
 
-1m 1M:down => min-inv, 5+ M, longest_or_equal M among >m & unbid
-test Kxxx Ax xx xxxxx:1♦ 1♠
-test Kxxx Ax xx Axxxx:1♦ 1♠
+1m 1M:down => min-inv, 5+ M, longest_or_equal M among >m & unbid;
+test Kxxx Ax xx xxxxx:1♦ 1♠;
+test Kxxx Ax xx Axxxx:1♦ 1♠;
 
-1m 1M => min-inv, 4 M, longest_or_equal M among >m & unbid
-test Kxxxx Axxx xx xx:1♦ 1♠
-test Kxxx Axxx xx xxx:1♦ 1♥ 
-test Kxxxx Axxx xx Ax:1♦ 1♠
-test Kxxx Axxx xx Axx:1♦ 1♥ 
+1m 1M => min-inv, 4 M, longest_or_equal M among >m & unbid;
+test Kxxxx Axxx xx xx:1♦ 1♠;
+test Kxxx Axxx xx xxx:1♦ 1♥;
+test Kxxxx Axxx xx Ax:1♦ 1♠;
+test Kxxx Axxx xx Axx:1♦ 1♥ ;
 
-1m 3N => gf, balanced
-test Kxx Kx Axxx Kxxx:1♦ 3N
+1m 3N => gf, balanced;
+test Kxx Kx Axxx Kxxx:1♦ 3N;
 
-1m 2N => inv, balanced
-test Kxx Kx Qxxx Kxxx:1♦ 2N
+1m 2N => inv, balanced;
+test Kxx Kx Qxxx Kxxx:1♦ 2N;
 
-1m 1N => min, balanced
-test Kxx Kx Qxxx xxxx:1♦ 1N
+1m 1N => min, balanced;
+test Kxx Kx Qxxx xxxx:1♦ 1N;
 
-1m 2m => inv+, 4+ m
-test KQx x Qxxxx Axxx:1♦ 2♦
+1m 2m => inv+, 4+ m;
+test KQx x Qxxxx Axxx:1♦ 2♦;
 
-1m 3m => min, 5+ m
-test KQx x Qxxxx xxxx:1♦ 3♦
+1m 3m => min, 5+ m;
+test KQx x Qxxxx xxxx:1♦ 3♦;
 
-1m 1y:down => min+, 5+ y, longest_or_equal y among >m & unbid
-test KQx x Axxxxx xxx:1♣ 1♦
+1m 1y:down => min+, 5+ y, longest_or_equal y among >m & unbid;
+test KQx x Axxxxx xxx:1♣ 1♦;
 
 # very hard to get here ith 6+ pts, here just as a catch all
-1m 1y => gf+, 4 y, longest_or_equal y among unbid
-1m 1y => min+, 4 y, longest_or_equal y among >m & unbid
-1m 1N => min
+1m 1y => gf+, 4 y, longest_or_equal y among unbid;
+1m 1y => min+, 4 y, longest_or_equal y among >m & unbid;
+1m 1N => min;
 
 include inv_minors.bidding
