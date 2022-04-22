@@ -2,6 +2,7 @@ package bbidder.inferences;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -49,7 +50,7 @@ public final class SuitRange extends Inference {
 
     @Override
     public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SuitRange(e.getSymbol(), rng).new Context(e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols).collect(Collectors.toList()), e -> new SuitRange(e.getSymbol(), rng).new Context(e.symbols));
     }
 
     private static IBoundInference createBound(int s, Range r) {

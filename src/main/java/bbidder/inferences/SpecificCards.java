@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -41,7 +42,7 @@ public final class SpecificCards extends Inference {
 
     @Override
     public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SpecificCards(e.getSymbol(), rng, top).new Context(e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols).collect(Collectors.toList()), e -> new SpecificCards(e.getSymbol(), rng, top).new Context(e.symbols));
     }
 
     private static IBoundInference createBound(NOfTop spec) {

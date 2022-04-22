@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import bbidder.Bid;
 import bbidder.Symbol;
@@ -55,9 +57,9 @@ public final class DownSymbol extends Symbol {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        List<Context> l = new ArrayList<>(symbol.resolveSymbols(symbols));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        List<Context> l = new ArrayList<>(symbol.resolveSymbols(symbols).collect(Collectors.toList()));
         Collections.reverse(l);
-        return l;
+        return l.stream();
     }
 }

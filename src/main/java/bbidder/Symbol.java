@@ -1,6 +1,6 @@
 package bbidder;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 public abstract class Symbol {
     /**
@@ -21,7 +21,7 @@ public abstract class Symbol {
      */
     public abstract boolean nonConvential();
 
-    public abstract List<Context> resolveSymbols(SymbolTable symbols);
+    public abstract Stream<Context> resolveSymbols(SymbolTable symbols);
 
     public final class Context {
         public final SymbolTable symbols;

@@ -1,13 +1,13 @@
 package bbidder.symbols;
 
-import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 import bbidder.utils.BitUtil;
-import bbidder.utils.ListUtil;
 
 public final class OtherMinorSymbol extends Symbol {
     public OtherMinorSymbol() {
@@ -41,14 +41,15 @@ public final class OtherMinorSymbol extends Symbol {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
         if (symbols.containsKey("om")) {
-            return List.of(new ConstSymbol(symbols.get("om")).new Context(symbols));
+            return Stream.of(new ConstSymbol(symbols.get("om")).new Context(symbols));
         }
         if (symbols.containsKey("m")) {
-            return List.of(new ConstSymbol(otherMinor(symbols.get("m"))).new Context(symbols));
+            return Stream.of(new ConstSymbol(otherMinor(symbols.get("m"))).new Context(symbols));
         }
-        return ListUtil.map(BitUtil.iterate(Constants.MINORS & ~symbols.values()), s -> new ConstSymbol(s).new Context(symbols.add("om", s)));
+        return StreamSupport.stream(BitUtil.iterate(Constants.MINORS & ~symbols.values()).spliterator(), false)
+                .map(s -> new ConstSymbol(s).new Context(symbols.add("om", s)));
     }
 
     private static Integer otherMinor(Integer strain) {

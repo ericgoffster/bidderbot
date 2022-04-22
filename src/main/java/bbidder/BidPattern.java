@@ -3,6 +3,7 @@ package bbidder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import bbidder.symbols.ConstSymbol;
 import bbidder.utils.ListUtil;
@@ -169,7 +170,7 @@ public final class BidPattern {
             return List.of(new Context(symbols));
         }
         List<Context> l = new ArrayList<>();
-        for (var e : getSymbol().resolveSymbols(symbols)) {
+        for (var e : getSymbol().resolveSymbols(symbols).collect(Collectors.toList())) {
             BidPattern newSym = withSymbol(contract, e.getSymbol());
             if (newSym != null) {
                 l.add(newSym.new Context(e.symbols));

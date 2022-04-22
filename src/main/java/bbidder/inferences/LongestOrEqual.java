@@ -2,6 +2,7 @@ package bbidder.inferences;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -39,7 +40,7 @@ public final class LongestOrEqual extends Inference {
 
     @Override
     public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.flatMap(suit.resolveSymbols(symbols),
+        return ListUtil.flatMap(suit.resolveSymbols(symbols).collect(Collectors.toList()),
                 e1 -> ListUtil.map(among.resolveSymbols(e1.symbols), e2 -> new LongestOrEqual(e1.getSymbol(), e2.suitSet).new Context(e2.symbols)));
     }
 

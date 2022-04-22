@@ -1,14 +1,14 @@
 package bbidder.symbols;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 import bbidder.utils.BitUtil;
-import bbidder.utils.ListUtil;
 
 public final class VarSymbol extends Symbol {
     private final String varName;
@@ -46,11 +46,12 @@ public final class VarSymbol extends Symbol {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
         if (symbols.containsKey(varName)) {
-            return List.of(new ConstSymbol(symbols.get(varName)).new Context(symbols));
+            return Stream.of(new ConstSymbol(symbols.get(varName)).new Context(symbols));
         }
-        return ListUtil.map(BitUtil.iterate(Constants.ALL_SUITS & ~symbols.values()), s -> new ConstSymbol(s).new Context(symbols.add(varName, s)));
+        return StreamSupport.stream(BitUtil.iterate(Constants.ALL_SUITS & ~symbols.values()).spliterator(), false)
+                .map(s -> new ConstSymbol(s).new Context(symbols.add(varName, s)));
     }
 
     @Override

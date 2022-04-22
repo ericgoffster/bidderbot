@@ -1,6 +1,7 @@
 package bbidder.generalities;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import bbidder.Auction;
 import bbidder.Generality;
@@ -21,7 +22,7 @@ public final class IBidSuitGenerality extends Generality {
 
     @Override
     public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new IBidSuitGenerality(e.getSymbol()).new Context(e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols).collect(Collectors.toList()), e -> new IBidSuitGenerality(e.getSymbol()).new Context(e.symbols));
     }
 
     @Override

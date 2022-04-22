@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
@@ -38,7 +39,7 @@ public final class RebiddableSecondSuit extends Inference {
 
     @Override
     public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.flatMap(longer.resolveSymbols(symbols), e1 -> ListUtil.map(shorter.resolveSymbols(e1.symbols),
+        return ListUtil.flatMap(longer.resolveSymbols(symbols).collect(Collectors.toList()), e1 -> ListUtil.map(shorter.resolveSymbols(e1.symbols).collect(Collectors.toList()),
                 e2 -> new RebiddableSecondSuit(e1.getSymbol(), e2.getSymbol()).new Context(e2.symbols)));
     }
 

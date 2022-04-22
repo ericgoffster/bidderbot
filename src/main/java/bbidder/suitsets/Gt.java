@@ -2,6 +2,7 @@ package bbidder.suitsets;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import bbidder.Players;
 import bbidder.SuitSet;
@@ -48,6 +49,6 @@ public final class Gt implements SuitSet {
 
     @Override
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SuitSetContext(new Gt(e.getSymbol()), symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols).collect(Collectors.toList()), e -> new SuitSetContext(new Gt(e.getSymbol()), symbols));
     }
 }

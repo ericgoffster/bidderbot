@@ -1,7 +1,7 @@
 package bbidder.symbols;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import bbidder.Bid;
 import bbidder.Strain;
@@ -17,8 +17,8 @@ public final class ConstSymbol extends Symbol {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        return List.of(new Context(symbols));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        return Stream.of(new Context(symbols));
     }
 
     @Override

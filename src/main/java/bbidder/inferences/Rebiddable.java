@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
@@ -35,7 +36,7 @@ public final class Rebiddable extends Inference {
 
     @Override
     public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new Rebiddable(e.getSymbol()).new Context(e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols).collect(Collectors.toList()), e -> new Rebiddable(e.getSymbol()).new Context(e.symbols));
     }
 
     private IBoundInference createrBound(int s, InfSummary meSummary, InfSummary partnerSummary) {
