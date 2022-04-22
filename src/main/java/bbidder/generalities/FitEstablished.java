@@ -13,7 +13,7 @@ import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 
 public final class FitEstablished extends Generality {
-    public final Symbol symbol;
+    private final Symbol symbol;
 
     public FitEstablished(Symbol symbol) {
         super();

@@ -12,9 +12,8 @@ import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 
 public final class TwoSuitedGenerality extends Generality {
-    public final Symbol longer;
-    public final Symbol shorter;
-
+    private final Symbol longer;
+    private final Symbol shorter;
 
     public TwoSuitedGenerality(Symbol longer, Symbol shorter) {
         super();

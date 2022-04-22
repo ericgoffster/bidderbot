@@ -10,8 +10,8 @@ import bbidder.Players;
 import bbidder.SymbolTable;
 
 public final class AndGenerality extends Generality {
-    public final Generality g1;
-    public final Generality g2;
+    private final Generality g1;
+    private final Generality g2;
 
     public AndGenerality(Generality g1, Generality g2) {
         super();

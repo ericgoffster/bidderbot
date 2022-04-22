@@ -12,7 +12,7 @@ import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 
 public final class IBidSuitGenerality extends Generality {
-    public final Symbol symbol;
+    private final Symbol symbol;
 
     public IBidSuitGenerality(Symbol symbol) {
         super();

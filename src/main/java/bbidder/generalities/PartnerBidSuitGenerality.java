@@ -12,8 +12,7 @@ import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 
 public final class PartnerBidSuitGenerality extends Generality {
-    public final Symbol symbol;
-
+    private final Symbol symbol;
 
     public PartnerBidSuitGenerality(Symbol symbol) {
         super();
