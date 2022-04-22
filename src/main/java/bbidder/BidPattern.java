@@ -205,19 +205,6 @@ public class BidPattern {
     }
 
     /**
-     * @param bc
-     *            The bidding context
-     * @return A list of contexts representing the symbol bound to actual values
-     */
-    public List<BiddingContext> resolveSymbols(BiddingContext bc) {
-        List<BiddingContext> l = new ArrayList<>();
-        for(BidPatternContext b: resolveSymbols(bc.getSuits())) {
-            l.add(new BiddingContext(bc.bidInference.withBidAdded(b.bid), b.getSuits()));
-        }
-        return l;
-    }
-
-    /**
      * At this point, the bid pattern's suit has already been
      * resolved, so we just need to determine the level.
      * 
