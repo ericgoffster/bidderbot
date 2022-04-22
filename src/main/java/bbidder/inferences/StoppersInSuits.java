@@ -45,14 +45,7 @@ public final class StoppersInSuits extends Inference {
     @Override
     public IBoundInference bind(Players players) {
         short theSuits = suits.evaluate(players);
-        StopperSet stoppers = new StopperSet(stopper -> {
-            for (int s : BitUtil.iterate(theSuits)) {
-                if (!stopper.stopperIn(s)) {
-                    return false;
-                }
-            }
-            return true;
-        });
+        StopperSet stoppers = new StopperSet(stopper -> !BitUtil.stream(theSuits).filter(s -> !stopper.stopperIn(s)).findFirst().isPresent());
         if (partial) {
             return PartialStoppersBoundInf.create(stoppers);
         }
