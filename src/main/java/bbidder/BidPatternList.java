@@ -106,7 +106,7 @@ public final class BidPatternList {
      * 
      * @return The list of resolved bidding pattern contexts
      */
-    public List<BidPatternListContext> resolveSymbols(SymbolTable suits) {
+    public List<Context> resolveSymbols(SymbolTable suits) {
         return ListUtil.flatMap(withOpposingBidding().addInitialPasses(), bpl -> bpl.resolveSymbols(BidPatternList.EMPTY, suits));
     }
     
@@ -269,9 +269,9 @@ public final class BidPatternList {
      *             The previous context.
      * @return The list of resolved bidding pattern contexts
      */
-    private List<BidPatternListContext> resolveSymbols(BidPatternList previous, SymbolTable symbols) {
+    private List<Context> resolveSymbols(BidPatternList previous, SymbolTable symbols) {
         if (bids.isEmpty()) {
-            return List.of(new BidPatternListContext(previous, symbols));
+            return List.of(previous.new Context(symbols));
         }
         // For each context gotten from the first bid,
         // evaluate the remaining bids in the context of that bid.
@@ -302,5 +302,18 @@ public final class BidPatternList {
             }
         }
         return bids.size();
+    }
+    
+    public final class Context {
+        public final SymbolTable symbols;
+
+        public Context(SymbolTable symbols) {
+            super();
+            this.symbols = symbols;
+        }
+
+        public BidPatternList getBids() {
+            return BidPatternList.this;
+        }
     }
 }

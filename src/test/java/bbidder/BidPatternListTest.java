@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.BidPatternList.Context;
+
 public class BidPatternListTest {
     @Test
     public void testValueOf() {
@@ -96,7 +98,7 @@ public class BidPatternListTest {
     public void test2() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         BidPatternList bpl = BidPatternList.valueOf(reg, "1C");
-        List<BidPatternListContext> l = bpl.resolveSymbols(SymbolTable.EMPTY);
+        List<Context> l = bpl.resolveSymbols(SymbolTable.EMPTY);
         assertEquals(4, l.size());
     }
 }
