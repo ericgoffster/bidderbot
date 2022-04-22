@@ -194,9 +194,10 @@ public class BidPatternList {
             return l;
         }
         if (isOpp && !pattern.isOpposition) {
+            BidPattern pass = BidPattern.PASS.withIsOpposition(isOpp);
             List<BiddingContext> l = new ArrayList<>();
             for (BiddingContext newCtx : contexts) {
-                l.addAll(resolveSymbols(newCtx, BidPattern.PASS.withIsOpposition(isOpp).resolveSymbols(newCtx), !isOpp));
+                l.addAll(resolveSymbols(newCtx, pass.resolveSymbols(newCtx), !isOpp));
             }
             return l;
         }
