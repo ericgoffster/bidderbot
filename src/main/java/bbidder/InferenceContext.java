@@ -13,6 +13,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * An inference in the context of other inferences.
@@ -51,7 +52,188 @@ public class InferenceContext {
     }
     
     public interface SuitSet {
-        public short evaluate();
+        public short evaluate(InferenceContext inf);
+    }
+
+    public static class Not implements SuitSet {
+        final SuitSet ss;
+
+        public Not(SuitSet ss) {
+            super();
+            this.ss = ss;
+        }
+
+        @Override
+        public short evaluate(InferenceContext inf) {
+            return (short) (0xf & ~ss.evaluate(inf));
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(ss);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Not other = (Not) obj;
+            return Objects.equals(ss, other.ss);
+        }
+        @Override
+        public String toString() {
+            return "~"+ss;
+        }
+    }
+
+    public static class Gt implements SuitSet {
+        final String strain;
+
+        public Gt(String strain) {
+            super();
+            this.strain = strain;
+        }
+
+        @Override
+        public short evaluate(InferenceContext inf) {
+            Integer st = inf.bc.getSuit(strain);
+            if (st == null) {
+                throw new IllegalArgumentException("Unknown Suit: '" + strain + "'");
+            }
+            return (short) (0xf & ~((1 << (st + 1)) - 1));
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(strain);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Gt other = (Gt) obj;
+            return Objects.equals(strain, other.strain);
+        }
+
+        @Override
+        public String toString() {
+            return ">"+strain;
+        }
+    }
+    
+    public static class Unbid implements SuitSet {
+        public Unbid() {
+            super();
+        }
+
+        @Override
+        public short evaluate(InferenceContext inf) {
+            short suits = 0;
+            for (int suit = 0; suit < 4; suit++) {
+                if (inf.players.lho.infSummary.avgLenInSuit(suit) < 4 && inf.players.rho.infSummary.avgLenInSuit(suit) < 4
+                        && inf.players.partner.infSummary.avgLenInSuit(suit) < 4 && inf.players.me.infSummary.avgLenInSuit(suit) < 4) {
+                    suits |= (1 << suit);
+                }
+            }
+            return suits;
+        }
+        
+        @Override
+        public int hashCode() {
+            return 0;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            return true;
+        }
+    }
+    
+    public static class ConstSet implements SuitSet {
+        String ssuits;
+        short suits;
+        public ConstSet(String ssuits, short suits) {
+            this.ssuits = ssuits;
+            this.suits = suits;
+        }
+
+        @Override
+        public short evaluate(InferenceContext inf) {
+            return suits;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(ssuits, suits);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            ConstSet other = (ConstSet) obj;
+            return Objects.equals(ssuits, other.ssuits) && suits == other.suits;
+        }
+        @Override
+        public String toString() {
+            return ssuits;
+        }
+    }
+
+    public static class LookupSet implements SuitSet {
+        String strain;
+        public LookupSet(String strain) {
+            this.strain = strain;
+        }
+
+        @Override
+        public short evaluate(InferenceContext inf) {
+            Integer st = inf.bc.getSuit(strain);
+            if (st != null) {
+                return (short) (1 << st);
+            }
+            throw new IllegalArgumentException("Unknown Suit Set: '" + strain + "'");
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(strain);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            LookupSet other = (LookupSet) obj;
+            return Objects.equals(strain, other.strain);
+        }
+        @Override
+        public String toString() {
+            return strain;
+        }
     }
 
     /**
@@ -60,7 +242,7 @@ public class InferenceContext {
      * @author goffster
      *
      */
-    private class ReadState implements Closeable {
+    private static class ReadState implements Closeable {
         int ch;
         CharArrayReader rd;
 
@@ -86,8 +268,7 @@ public class InferenceContext {
                 return s;
             } else if (ch == '~') {
                 advance();
-                SuitSet ss = lookupSuitSet0();
-                return () -> (short) (0xf & ~ss.evaluate());
+                return new Not(lookupSuitSet0());
             } else if (ch == '>') {
                 advance();
                 StringBuilder sb = new StringBuilder();
@@ -95,11 +276,8 @@ public class InferenceContext {
                     sb.append((char) ch);
                     advance();
                 }
-                Integer st = bc.getSuit(sb.toString());
-                if (st == null) {
-                    throw new IllegalArgumentException("Unknown Suit: '" + sb + "'");
-                }
-                return () -> (short) (0xf & ~((1 << (st + 1)) - 1));
+                String strain = sb.toString();
+                return new Gt(strain);
             } else {
                 StringBuilder sb = new StringBuilder();
                 while (Character.isLetter(ch) || ch == '_' || Character.isDigit(ch)) {
@@ -107,39 +285,26 @@ public class InferenceContext {
                     advance();
                 }
                 switch (sb.toString().toUpperCase()) {
-                case "UNBID": {
-                    short suits = 0;
-                    for (int suit = 0; suit < 4; suit++) {
-                        if (players.lho.infSummary.avgLenInSuit(suit) < 4 && players.rho.infSummary.avgLenInSuit(suit) < 4
-                                && players.partner.infSummary.avgLenInSuit(suit) < 4 && players.me.infSummary.avgLenInSuit(suit) < 4) {
-                            suits |= (1 << suit);
-                        }
-                    }
-                    short suits2 = suits;
-                    return () -> suits2;
-                }
+                case "UNBID":
+                    return new Unbid();
                 case "MINORS":
-                    return () -> MINORS;
+                    return new ConstSet(sb.toString().toUpperCase(), MINORS);
                 case "MAJORS":
-                    return () -> MAJORS;
+                    return new ConstSet(sb.toString().toUpperCase(), MAJORS);
                 case "REDS":
-                    return () -> REDS;
+                    return new ConstSet(sb.toString().toUpperCase(), REDS);
                 case "BLACKS":
-                    return () -> BLACKS;
+                    return new ConstSet(sb.toString().toUpperCase(), BLACKS);
                 case "ROUND":
-                    return () -> ROUND;
+                    return new ConstSet(sb.toString().toUpperCase(), ROUND);
                 case "POINTED":
-                    return () -> POINTED;
+                    return new ConstSet(sb.toString().toUpperCase(), POINTED);
                 case "ALL":
-                    return () -> ALL_SUITS;
+                    return new ConstSet(sb.toString().toUpperCase(), ALL_SUITS);
                 case "NONE":
-                    return () -> 0;
+                    return new ConstSet(sb.toString().toUpperCase(), (short)0);
                 default:
-                    Integer st = bc.getSuit(sb.toString());
-                    if (st != null) {
-                        return () -> (short) (1 << st);
-                    }
-                    throw new IllegalArgumentException("Unknown Suit Set: '" + sb + "'");
+                    return new LookupSet(sb.toString());
                 }
             }
         }
@@ -155,7 +320,7 @@ public class InferenceContext {
                 advance();
                 SuitSet result2 = lookupSuitSet0();
                 SuitSet result3 = result;
-                result = () -> (short)(result3.evaluate() & result2.evaluate());
+                result = inf -> (short)(result3.evaluate(inf) & result2.evaluate(inf));
             }
             return result;
         }
@@ -176,7 +341,7 @@ public class InferenceContext {
      *            The string to parse
      * @return The suits bound to the given expression
      */
-    public SuitSet lookupSuitSet(String str) {
+    public static SuitSet lookupSuitSet(String str) {
         try (ReadState state = new ReadState(str)) {
             SuitSet suits = state.lookupSuitSet();
             state.readWhite();

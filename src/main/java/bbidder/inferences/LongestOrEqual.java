@@ -9,6 +9,7 @@ import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.InferenceContext.SuitSet;
 import bbidder.MappedInf;
 import bbidder.Players;
 import bbidder.ShapeSet;
@@ -23,13 +24,10 @@ import bbidder.inferences.bound.ShapeBoundInf;
  */
 public class LongestOrEqual implements Inference {
     public final String suit;
-    public final String among;
+    public final SuitSet among;
     public final BiddingContext ctx;
 
-    public LongestOrEqual(String suit, String among, BiddingContext ctx) {
-        if (among != null && among.trim().equals("")) {
-            throw new IllegalArgumentException("among");
-        }
+    public LongestOrEqual(String suit, SuitSet among, BiddingContext ctx) {
         this.suit = suit;
         this.among = among;
         this.ctx = ctx;
@@ -38,7 +36,7 @@ public class LongestOrEqual implements Inference {
     @Override
     public IBoundInference bind(Players players) {
         InferenceContext context = new InferenceContext(players, ctx);
-        int iamong = among == null ? 0xf : context.lookupSuitSet(among).evaluate();
+        int iamong = among == null ? 0xf : among.evaluate(context);
         int strain = Strain.getStrain(suit);
         return ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(strain, iamong)));
     }
@@ -63,7 +61,7 @@ public class LongestOrEqual implements Inference {
         str = str.substring(16).trim();
         int pos = str.indexOf("among");
         if (pos >= 0) {
-            return new LongestOrEqual(str.substring(0, pos).trim(), str.substring(pos + 5).trim(), null);
+            return new LongestOrEqual(str.substring(0, pos).trim(), InferenceContext.lookupSuitSet(str.substring(pos + 5).trim()), null);
         }
         if (!BiddingContext.isValidSuit(str)) {
             return null;
