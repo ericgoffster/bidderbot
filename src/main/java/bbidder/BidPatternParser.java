@@ -59,6 +59,7 @@ public class BidPatternParser implements Parser<BidPattern> {
             inp.advanceWhite();
             while(inp.ch != ']') {
                 sb.append((char)inp.ch);
+                inp.advance();
             }
             if (inp.ch == ']') {
                 inp.advance();
