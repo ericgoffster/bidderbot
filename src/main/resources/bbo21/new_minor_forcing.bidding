@@ -12,5 +12,14 @@ test Axx Axxx Axxx xx: 1D 1S 1N 2C 2H
 1m 1M 1N 2om 2M => 13- hcp, 3M
 test Axx Axx Axxx xxx: 1D 1S 1N 2C 2S
 
+1m 1M 1N 2om 2N => 13- hcp
+test Ax Axx Axxxx xxx: 1D 1S 1N 2C 2N
+
+1m 1M 1N 2om 3OM => 4OM
+test Ax AQxx Axxx xxx: 1D 1S 1N 2C 3H
+
 1m 1M 1N 2om 3M => 3M
 test Axx AQx Axxxx xx: 1D 1S 1N 2C 3S
+
+1m 1M 1N 2om 3N =>
+test Ax AQx Axxxx xxx: 1D 1S 1N 2C 3N
