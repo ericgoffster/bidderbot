@@ -40,11 +40,10 @@ public final class Stoppers {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int i : BitUtil.iterate(patt)) {
-            sb.append(Strain.getName(i));
-        }
-        return sb.toString();
+        return BitUtil.stream(patt)
+                .mapToObj(i -> Strain.getName(i))
+                .reduce(new StringBuilder(), (sb, i) -> sb.append(i), (a, b) -> a.append(b))
+                .toString();
     }
 
     public int ordinal() {

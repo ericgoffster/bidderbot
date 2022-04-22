@@ -135,12 +135,12 @@ public final class Range {
         return bits == other.bits && max == other.max;
     }
     
-    @Override
-    public String toString() {
+    public class State {
         List<String> ranges = new ArrayList<>();
         Integer lhs = null;
         Integer rhs = null;
-        for (int i : BitUtil.iterate(bits)) {
+        
+        public void add(int i) {
             if (rhs == null || lhs == null) {
                 lhs = i;
                 rhs = i;
@@ -152,13 +152,24 @@ public final class Range {
                 rhs = i;
             }
         }
-        if (lhs != null && rhs != null) {
-            ranges.add(getRangeItem(lhs, rhs));
+        
+        @Override
+        public String toString() {
+            if (lhs != null && rhs != null) {
+                ranges.add(getRangeItem(lhs, rhs));
+            }
+            if (ranges.size() == 1) {
+                return ranges.get(0);
+            }
+            return "[" + String.join(",", ranges) + "]";
         }
-        if (ranges.size() == 1) {
-            return ranges.get(0);
-        }
-        return "[" + String.join(",", ranges) + "]";
+    }
+    
+    @Override
+    public String toString() {
+        State state = new State();
+        BitUtil.stream(bits).forEach(i -> state.add(i));
+        return state.toString();
     }
 
     private String getRangeItem(Integer lhs, Integer rhs) {

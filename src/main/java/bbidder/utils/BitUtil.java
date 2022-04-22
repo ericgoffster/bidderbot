@@ -137,13 +137,17 @@ public final class BitUtil {
     public static Iterable<Integer> iterate(long pattern) {
         return new PatternIterable(pattern);
     }
+    
+    public static IntStream stream(long pattern) {
+        return StreamSupport.stream(iterate(pattern).spliterator(), false).mapToInt(i -> i.intValue());
+    }
 
     /**
      * @param pattern
      *            The bit pattern
      * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
-    public static Iterable<Integer> iterate(int pattern) {
+    private static Iterable<Integer> iterate(int pattern) {
         return iterate(toLong(pattern));
     }
     
@@ -156,7 +160,7 @@ public final class BitUtil {
      *            The bit pattern
      * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
-    public static Iterable<Integer> iterate(short pattern) {
+    private static Iterable<Integer> iterate(short pattern) {
         return iterate(toLong(pattern));
     }
     
@@ -169,10 +173,13 @@ public final class BitUtil {
      *            The bit pattern
      * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
-    public static Iterable<Integer> iterate(byte pattern) {
+    private static Iterable<Integer> iterate(byte pattern) {
         return iterate(toLong(pattern));
     }
 
+    public static IntStream stream(byte pattern) {
+        return StreamSupport.stream(iterate(pattern).spliterator(), false).mapToInt(i -> i.intValue());
+    }
     /**
      * @param pattern
      *            The bit pattern

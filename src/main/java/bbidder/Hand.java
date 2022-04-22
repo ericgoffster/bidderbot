@@ -130,9 +130,11 @@ public final class Hand {
         if (BitUtil.size(suit) == 0) {
             return "-";
         }
-        StringBuilder sb = new StringBuilder(BitUtil.stream(suit).mapToObj(rank -> String.valueOf(toRank(rank))).reduce("", (a, b) -> a + b));
-        sb.reverse();
-        return sb.toString();
+        return BitUtil.stream(suit)
+                .mapToObj(rank -> toRank(rank))
+                .reduce(new StringBuilder(), (s, a) -> s.append(a), (a, b) -> a.append(b))
+                .reverse()
+                .toString();
     }
 
     private static class ParsedHand {
