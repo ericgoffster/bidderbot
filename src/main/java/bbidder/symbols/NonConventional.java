@@ -9,7 +9,7 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class NonConventional extends Symbol {
-    public final Symbol symbol;
+    private final Symbol symbol;
 
     public NonConventional(Symbol symbol) {
         super();

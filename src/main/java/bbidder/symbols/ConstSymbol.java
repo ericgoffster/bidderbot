@@ -9,7 +9,7 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class ConstSymbol extends Symbol {
-    public final int strain;
+    private final int strain;
 
     public ConstSymbol(int strain) {
         super();

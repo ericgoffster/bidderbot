@@ -15,7 +15,7 @@ import bbidder.InfSummary;
  *
  */
 public final class AndBoundInf implements IBoundInference {
-    public final List<IBoundInference> inferences;
+    private final List<IBoundInference> inferences;
 
     private AndBoundInf(List<IBoundInference> inf) {
         super();

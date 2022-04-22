@@ -11,7 +11,7 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class LookupSet implements SuitSet {
-    final Symbol symbol;
+    private final Symbol symbol;
 
     public LookupSet(Symbol strain) {
         this.symbol = strain;

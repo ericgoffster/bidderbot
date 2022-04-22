@@ -8,7 +8,7 @@ import bbidder.InfSummary;
 import bbidder.Range;
 
 public final class HcpBoundInf implements IBoundInference {
-    final Range r;
+    private final Range r;
 
     @Override
     public IBoundInference negate() {

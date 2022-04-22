@@ -14,7 +14,7 @@ import bbidder.ShapeSet;
  *
  */
 public final class ShapeBoundInf implements IBoundInference {
-    final ShapeSet shapes;
+    private final ShapeSet shapes;
 
     @Override
     public IBoundInference negate() {

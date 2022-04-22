@@ -10,8 +10,8 @@ import bbidder.SuitSetContext;
 import bbidder.SymbolTable;
 
 public final class And implements SuitSet {
-    final SuitSet s1;
-    final SuitSet s2;
+    private final SuitSet s1;
+    private final SuitSet s2;
 
     public And(SuitSet s1, SuitSet s2) {
         super();

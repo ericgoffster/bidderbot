@@ -8,8 +8,8 @@ import bbidder.InfSummary;
 import bbidder.Range;
 
 public final class TotalPtsBoundInf implements IBoundInference {
-    final InfSummary partnerSummary;
-    final Range r;
+    private final InfSummary partnerSummary;
+    private final Range r;
 
     @Override
     public IBoundInference negate() {

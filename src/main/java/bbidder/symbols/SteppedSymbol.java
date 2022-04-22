@@ -9,8 +9,8 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class SteppedSymbol extends Symbol {
-    public final Symbol symbol;
-    public final int delta;
+    private final Symbol symbol;
+    private final int delta;
 
     public SteppedSymbol(Symbol sym, int delta) {
         super();

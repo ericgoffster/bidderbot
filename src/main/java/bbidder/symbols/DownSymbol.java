@@ -10,7 +10,7 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class DownSymbol extends Symbol {
-    public final Symbol symbol;
+    private final Symbol symbol;
 
     public DownSymbol(Symbol symbol) {
         super();

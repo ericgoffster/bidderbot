@@ -11,7 +11,7 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class VarSymbol extends Symbol {
-    public final String varName;
+    private final String varName;
 
     public VarSymbol(String varName) {
         super();

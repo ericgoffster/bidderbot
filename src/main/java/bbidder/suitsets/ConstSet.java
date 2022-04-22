@@ -9,8 +9,8 @@ import bbidder.SuitSetContext;
 import bbidder.SymbolTable;
 
 public final class ConstSet implements SuitSet {
-    final String ssuits;
-    final short suits;
+    private final String ssuits;
+    private final short suits;
 
     public ConstSet(String ssuits, short suits) {
         this.ssuits = ssuits;

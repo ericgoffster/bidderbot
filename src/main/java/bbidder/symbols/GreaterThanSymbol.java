@@ -9,9 +9,9 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class GreaterThanSymbol extends Symbol {
-    public final Symbol symbol;
-    public final int level;
-    public final Symbol other;
+    private final Symbol symbol;
+    private final int level;
+    private final Symbol other;
 
     public GreaterThanSymbol(Symbol symbol, int level, Symbol other) {
         super();

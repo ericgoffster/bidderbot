@@ -8,8 +8,8 @@ import bbidder.InfSummary;
 import bbidder.NOfTop;
 
 public final class SpecificCardsBoundInf implements IBoundInference {
-    final NOfTop spec;
-    final boolean have;
+    private final NOfTop spec;
+    private final boolean have;
 
     @Override
     public IBoundInference negate() {

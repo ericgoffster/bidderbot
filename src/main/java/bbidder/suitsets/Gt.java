@@ -11,7 +11,7 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class Gt implements SuitSet {
-    final Symbol symbol;
+    private final Symbol symbol;
 
     public Gt(Symbol symbol) {
         super();

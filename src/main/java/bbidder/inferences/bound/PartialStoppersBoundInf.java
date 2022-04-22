@@ -14,7 +14,7 @@ import bbidder.StopperSet;
  *
  */
 public final class PartialStoppersBoundInf implements IBoundInference {
-    final StopperSet stoppers;
+    private final StopperSet stoppers;
 
     @Override
     public IBoundInference negate() {

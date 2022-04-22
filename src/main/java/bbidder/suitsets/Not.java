@@ -10,7 +10,7 @@ import bbidder.SuitSetContext;
 import bbidder.SymbolTable;
 
 public final class Not implements SuitSet {
-    final SuitSet ss;
+    private final SuitSet ss;
 
     public Not(SuitSet ss) {
         super();
