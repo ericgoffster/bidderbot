@@ -1,9 +1,11 @@
 package bbidder.symbols;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import bbidder.Bid;
+import bbidder.BitUtil;
 import bbidder.Constants;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
@@ -51,11 +53,6 @@ public final class OtherMinorSymbol implements Symbol {
     }
 
     @Override
-    public SymbolTable unevaluate(int strain) {
-        return SymbolTable.EMPTY.add("om", strain);
-    }
-    
-    @Override
     public List<Symbol> boundSymbols(SymbolTable symbols) {
         if (symbols.containsKey("m") || symbols.containsKey("om")) {
             return List.of(evaluate(symbols));
@@ -71,9 +68,13 @@ public final class OtherMinorSymbol implements Symbol {
         if (symbols.containsKey("m")) {
             return Map.of(new ConstSymbol(otherMinor(symbols.get("m"))), symbols);
         }
-        return Map.of(
-                new ConstSymbol(Constants.CLUB), symbols.add("om", Constants.CLUB),
-                new ConstSymbol(Constants.DIAMOND), symbols.add("om", Constants.DIAMOND));
+        LinkedHashMap<Symbol, SymbolTable> map = new LinkedHashMap<>();
+        for(int s: BitUtil.iterate(Constants.MINORS)) {
+            if (!symbols.containsValue(s)) {
+                map.put(new ConstSymbol(s), symbols.add("om", s));
+            }
+        }
+        return map;
     }
 
     private static Integer otherMinor(Integer strain) {

@@ -1,9 +1,11 @@
 package bbidder.symbols;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import bbidder.Bid;
+import bbidder.BitUtil;
 import bbidder.Constants;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
@@ -51,11 +53,6 @@ public final class MajorSymbol implements Symbol {
     }
 
     @Override
-    public SymbolTable unevaluate(int strain) {
-        return SymbolTable.EMPTY.add("M", strain);
-    }
-    
-    @Override
     public List<Symbol> boundSymbols(SymbolTable symbols) {
         if (symbols.containsKey("M") || symbols.containsKey("OM")) {
             return List.of(evaluate(symbols));
@@ -71,9 +68,13 @@ public final class MajorSymbol implements Symbol {
         if (symbols.containsKey("OM")) {
             return Map.of(new ConstSymbol(otherMajor(symbols.get("OM"))), symbols);
         }
-        return Map.of(
-                new ConstSymbol(Constants.HEART), symbols.add("M", Constants.HEART),
-                new ConstSymbol(Constants.SPADE), symbols.add("M", Constants.SPADE));
+        LinkedHashMap<Symbol, SymbolTable> map = new LinkedHashMap<>();
+        for(int s: BitUtil.iterate(Constants.MAJORS)) {
+            if (!symbols.containsValue(s)) {
+                map.put(new ConstSymbol(s), symbols.add("M", s));
+            }
+        }
+        return map;
     }
 
     private static Integer otherMajor(Integer strain) {

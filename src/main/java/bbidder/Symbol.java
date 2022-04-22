@@ -6,8 +6,6 @@ import java.util.Map;
 public interface Symbol {
     public Symbol evaluate(SymbolTable symbols);
 
-    public SymbolTable unevaluate(int strain);
-
     public List<Symbol> boundSymbols(SymbolTable symbols);
 
     public int getResolved();

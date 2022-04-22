@@ -50,11 +50,6 @@ public final class NonConventional implements Symbol {
     }
 
     @Override
-    public SymbolTable unevaluate(int strain) {
-        return symbol.unevaluate(strain);
-    }
-    
-    @Override
     public List<Symbol> boundSymbols(SymbolTable symbols) {
         List<Symbol> l = new ArrayList<>();
         for(Symbol s: symbol.boundSymbols(symbols)) {

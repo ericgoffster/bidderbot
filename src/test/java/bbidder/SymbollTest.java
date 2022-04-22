@@ -27,7 +27,6 @@ public class SymbollTest {
         Symbol sym = new OtherMinorSymbol();
         assertEquals(1, sym.evaluate(SymbolTable.EMPTY.add("m", 0)).getResolved());
         assertEquals(0, sym.evaluate(SymbolTable.EMPTY.add("om", 0)).getResolved());
-        assertEquals(SymbolTable.EMPTY.add("om", 0), sym.unevaluate(0));
         assertEquals("om", sym.toString());
     }
 
@@ -36,7 +35,6 @@ public class SymbollTest {
         Symbol sym = new MinorSymbol();
         assertEquals(0, sym.evaluate(SymbolTable.EMPTY.add("m", 0)).getResolved());
         assertEquals(1, sym.evaluate(SymbolTable.EMPTY.add("om", 0)).getResolved());
-        assertEquals(SymbolTable.EMPTY.add("m", 0), sym.unevaluate(0));
         assertEquals("m", sym.toString());
     }
 
@@ -45,7 +43,6 @@ public class SymbollTest {
         Symbol sym = new OtherMajorSymbol();
         assertEquals(3, sym.evaluate(SymbolTable.EMPTY.add("M", 2)).getResolved());
         assertEquals(2, sym.evaluate(SymbolTable.EMPTY.add("OM", 2)).getResolved());
-        assertEquals(SymbolTable.EMPTY.add("OM", 2), sym.unevaluate(2));
         assertEquals("OM", sym.toString());
     }
 
@@ -54,7 +51,6 @@ public class SymbollTest {
         Symbol sym = new MajorSymbol();
         assertEquals(2, sym.evaluate(SymbolTable.EMPTY.add("M", 2)).getResolved());
         assertEquals(3, sym.evaluate(SymbolTable.EMPTY.add("OM", 2)).getResolved());
-        assertEquals(SymbolTable.EMPTY.add("M", 2), sym.unevaluate(2));
         assertEquals("M", sym.toString());
     }
 
@@ -62,7 +58,6 @@ public class SymbollTest {
     public void testVar() {
         Symbol sym = new VarSymbol("x");
         assertEquals(2, sym.evaluate(SymbolTable.EMPTY.add("x", 2)).getResolved());
-        assertEquals(SymbolTable.EMPTY.add("x", 2), sym.unevaluate(2));
         assertEquals("x", sym.toString());
     }
 
@@ -70,7 +65,6 @@ public class SymbollTest {
     public void testDown() {
         Symbol sym = new DownSymbol(new VarSymbol("x"));
         assertEquals(2, sym.evaluate(SymbolTable.EMPTY.add("x", 2)).getResolved());
-        assertEquals(SymbolTable.EMPTY.add("x", 2), sym.unevaluate(2));
         assertEquals("x:down", sym.toString());
     }
 
@@ -80,8 +74,6 @@ public class SymbollTest {
         assertEquals(0, sym.evaluate(SymbolTable.EMPTY.add("x", 2)).getResolved());
         assertEquals(4, sym.evaluate(SymbolTable.EMPTY.add("x", 1)).getResolved());
         assertEquals(3, sym.evaluate(SymbolTable.EMPTY.add("x", 0)).getResolved());
-        assertEquals(SymbolTable.EMPTY.add("x", 2), sym.unevaluate(0));
-        assertEquals(SymbolTable.EMPTY.add("x", 1), sym.unevaluate(4));
         assertEquals("x-2", sym.toString());
     }
 }

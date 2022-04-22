@@ -50,14 +50,6 @@ public final class ConstSymbol implements Symbol {
     }
 
     @Override
-    public SymbolTable unevaluate(int strain) {
-        if (strain != this.strain) {
-            throw new IllegalArgumentException();
-        }
-        return SymbolTable.EMPTY;
-    }
-    
-    @Override
     public List<Symbol> boundSymbols(SymbolTable symbols) {
         return List.of(this);
     }

@@ -75,15 +75,6 @@ public final class SteppedSymbol implements Symbol {
     }
 
     @Override
-    public SymbolTable unevaluate(int strain) {
-        return symbol.unevaluate(untransform(strain));
-    }
-
-    private int untransform(int strain) {
-        return (strain + delta) % 5;
-    }
-
-    @Override
     public int getResolved() {
         return transform(symbol.getResolved());
     }

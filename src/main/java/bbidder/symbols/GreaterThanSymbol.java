@@ -54,11 +54,6 @@ public final class GreaterThanSymbol implements Symbol {
     }
 
     @Override
-    public SymbolTable unevaluate(int strain) {
-        return symbol.unevaluate(strain);
-    }
-    
-    @Override
     public List<Symbol> boundSymbols(SymbolTable symbols) {
         List<Symbol> boundOthers = other.boundSymbols(symbols);
         if (boundOthers.size() != 1) {
