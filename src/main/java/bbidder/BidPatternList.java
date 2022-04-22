@@ -280,8 +280,7 @@ public final class BidPatternList {
         List<BidPatternListContext> l = new ArrayList<>();
         for (BidPatternListContext newCtx : contexts) {
             if (pattern.generality != null) {
-                boolean newIsOpp = bids.get(1).isOpposition;
-                l.addAll(resolveSymbols(newCtx, newIsOpp));
+                l.addAll(resolveSymbols(newCtx, bids.get(1).isOpposition));
             } else if (isOpp && !pattern.isOpposition) {
                 l.addAll(resolveRemainingSymbols(newCtx, resolveSymbols(BidPattern.PASS.withIsOpposition(isOpp), newCtx), !isOpp));
             } else {
@@ -292,7 +291,11 @@ public final class BidPatternList {
     }
 
     private boolean isCompleted() {
-        return bids.size() >= 4 && bids.get(bids.size() - 1).isPass() && bids.get(bids.size() - 2).isPass()
-                && bids.get(bids.size() - 3).isPass() && bids.get(bids.size() - 4).isPass();
+        int sz = bids.size();
+        return sz >= 4
+                && bids.get(bids.size() - 1).isPass()
+                && bids.get(bids.size() - 2).isPass()
+                && bids.get(bids.size() - 3).isPass()
+                && bids.get(bids.size() - 4).isPass();
     }
 }
