@@ -45,7 +45,7 @@ public final class Gt implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(SymbolTable bc) {
-        return new Gt(SuitSets.bind(bc, strain));
+    public SuitSet replaceVars(SymbolTable symbols) {
+        return new Gt(SuitSets.bind(symbols, strain));
     }
 }

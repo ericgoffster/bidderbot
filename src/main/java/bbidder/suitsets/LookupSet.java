@@ -44,7 +44,7 @@ public final class LookupSet implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(SymbolTable bc) {
-        return new LookupSet(SuitSets.bind(bc, strain));
+    public SuitSet replaceVars(SymbolTable symbols) {
+        return new LookupSet(SuitSets.bind(symbols, strain));
     }
 }

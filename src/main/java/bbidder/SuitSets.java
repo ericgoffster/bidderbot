@@ -22,8 +22,8 @@ import bbidder.suitsets.Unstopped;
 
 public final class SuitSets {
 
-    public static Symbol bind(SymbolTable bc, Symbol symbol) {
-        Symbol evaluate = symbol.evaluate(bc);
+    public static Symbol bind(SymbolTable symbols, Symbol symbol) {
+        Symbol evaluate = symbol.evaluate(symbols);
         if (evaluate == null) {
             throw new IllegalArgumentException(symbol + " undefined");
         }

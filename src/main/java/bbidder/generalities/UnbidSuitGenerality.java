@@ -24,9 +24,9 @@ public final class UnbidSuitGenerality implements Generality {
     }
 
     @Override
-    public List<GeneralityContext> resolveSymbols(SymbolTable bc) {
+    public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
         List<GeneralityContext> result = new ArrayList<>();
-        for (Entry<Symbol, SymbolTable> e : SymbolContext.resolveSymbols(bc, symbol).entrySet()) {
+        for (Entry<Symbol, SymbolTable> e : SymbolContext.resolveSymbols(symbols, symbol).entrySet()) {
             result.add(new GeneralityContext(new UnbidSuitGenerality(e.getKey()), e.getValue()));
         }
         return result;

@@ -26,11 +26,11 @@ public final class TwoSuitedGenerality implements Generality {
     }
 
     @Override
-    public List<GeneralityContext> resolveSymbols(SymbolTable bc) {
+    public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
         List<GeneralityContext> result = new ArrayList<>();
-        for (Entry<Symbol, SymbolTable> e : SymbolContext.resolveSymbols(bc, longer).entrySet()) {
-            for (Entry<Symbol, SymbolTable> e2 : SymbolContext.resolveSymbols(e.getValue(), shorter).entrySet()) {
-                result.add(new GeneralityContext(new TwoSuitedGenerality(e.getKey(), e2.getKey()), e.getValue()));
+        for (Entry<Symbol, SymbolTable> e1 : SymbolContext.resolveSymbols(symbols, longer).entrySet()) {
+            for (Entry<Symbol, SymbolTable> e2 : SymbolContext.resolveSymbols(e1.getValue(), shorter).entrySet()) {
+                result.add(new GeneralityContext(new TwoSuitedGenerality(e1.getKey(), e2.getKey()), e1.getValue()));
             }
         }
         return result;

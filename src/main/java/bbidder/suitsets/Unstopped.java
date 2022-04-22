@@ -38,7 +38,7 @@ public final class Unstopped implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(SymbolTable bc) {
+    public SuitSet replaceVars(SymbolTable symbols) {
         return this;
     }
     

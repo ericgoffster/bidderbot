@@ -44,7 +44,7 @@ public final class And implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(SymbolTable bc) {
-        return new And(s1.replaceVars(bc), s2.replaceVars(bc));
+    public SuitSet replaceVars(SymbolTable symbols) {
+        return new And(s1.replaceVars(symbols), s2.replaceVars(symbols));
     }
 }

@@ -34,9 +34,9 @@ public final class AndInference implements Inference {
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> res = new ArrayList<>();
-        for (InferenceContext bc : i1.resolveSymbols(symbols)) {
-            for (InferenceContext bc2 : i2.resolveSymbols(bc.symbols)) {
-                res.add(new InferenceContext(new AndInference(bc.inference, bc2.inference), bc2.symbols));
+        for (InferenceContext ctx1 : i1.resolveSymbols(symbols)) {
+            for (InferenceContext ctx2 : i2.resolveSymbols(ctx1.symbols)) {
+                res.add(new InferenceContext(new AndInference(ctx1.inference, ctx2.inference), ctx2.symbols));
             }
         }
         return res;

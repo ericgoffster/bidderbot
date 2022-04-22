@@ -47,9 +47,9 @@ public final class BidInference {
      */
     public List<BidInference> resolveSymbols() {
         List<BidInference> result = new ArrayList<>();
-        for (BidPatternListContext bplc : bids.resolveSymbols(SymbolTable.EMPTY)) {
-            for (InferenceContext bc : inferences.resolveSymbols(bplc.symbols)) {
-                result.add(new BidInference(where, bplc.bids, bc.inference));
+        for (BidPatternListContext ctx1 : bids.resolveSymbols(SymbolTable.EMPTY)) {
+            for (InferenceContext ctx2 : inferences.resolveSymbols(ctx1.symbols)) {
+                result.add(new BidInference(where, ctx1.bids, ctx2.inference));
             }
         }
         return result;

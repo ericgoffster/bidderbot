@@ -42,7 +42,7 @@ public final class Not implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(SymbolTable bc) {
-        return new Not(ss.replaceVars(bc));
+    public SuitSet replaceVars(SymbolTable symbols) {
+        return new Not(ss.replaceVars(symbols));
     }
 }

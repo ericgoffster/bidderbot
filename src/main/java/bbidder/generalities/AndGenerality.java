@@ -31,11 +31,11 @@ public final class AndGenerality implements Generality {
     }
 
     @Override
-    public List<GeneralityContext> resolveSymbols(SymbolTable bc) {
+    public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
         List<GeneralityContext> result = new ArrayList<>();
-        for (GeneralityContext bc2 : g1.resolveSymbols(bc)) {
-            for (GeneralityContext bc3 : g2.resolveSymbols(bc2.symbols)) {
-                result.add(new GeneralityContext(new AndGenerality(bc2.generality, bc3.generality), bc3.symbols));
+        for (GeneralityContext ctx1 : g1.resolveSymbols(symbols)) {
+            for (GeneralityContext ctx2 : g2.resolveSymbols(ctx1.symbols)) {
+                result.add(new GeneralityContext(new AndGenerality(ctx1.generality, ctx2.generality), ctx2.symbols));
             }
         }
         return result;
