@@ -255,7 +255,11 @@ public class BidPattern {
             }
         }
         if (getJumpLevel() != null) {
-            return bidList.getBid(getJumpLevel(), strain);
+            int newLevel = getJumpLevel();
+            if (level != null && newLevel != level.intValue()) {
+                return null;
+            }
+            return bidList.getBid(newLevel, strain);
         }
         return Bid.valueOf(getLevel(), strain);
     }
