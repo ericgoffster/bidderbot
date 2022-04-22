@@ -47,7 +47,7 @@ public class StoppersInSuits implements Inference {
     @Override
     public IBoundInference bind(Players players) {
         InferenceContext context = new InferenceContext(players, ctx);
-        short theSuits = context.lookupSuitSet(suits);
+        short theSuits = context.lookupSuitSet(suits).evaluate();
         StopperSet stoppers = new StopperSet(stopper -> {
             for (int s : BitUtil.iterate(theSuits)) {
                 if (!stopper.stopperIn(s)) {

@@ -49,6 +49,10 @@ public class InferenceContext {
         }
         return result;
     }
+    
+    public interface SuitSet {
+        public short evaluate();
+    }
 
     /**
      * Represents the parser state.
@@ -70,10 +74,10 @@ public class InferenceContext {
             rd.close();
         }
 
-        public short lookupSuitSet0() throws IOException {
+        public SuitSet lookupSuitSet0() throws IOException {
             readWhite();
             if (ch == '(') {
-                short s = lookupSuitSet();
+                SuitSet s = lookupSuitSet();
                 readWhite();
                 if (ch != ')') {
                     throw new IllegalArgumentException("Expected )");
@@ -82,7 +86,8 @@ public class InferenceContext {
                 return s;
             } else if (ch == '~') {
                 advance();
-                return (short) (0xf & ~lookupSuitSet0());
+                SuitSet ss = lookupSuitSet0();
+                return () -> (short) (0xf & ~ss.evaluate());
             } else if (ch == '>') {
                 advance();
                 StringBuilder sb = new StringBuilder();
@@ -94,7 +99,7 @@ public class InferenceContext {
                 if (st == null) {
                     throw new IllegalArgumentException("Unknown Suit: '" + sb + "'");
                 }
-                return (short) (0xf & ~((1 << (st + 1)) - 1));
+                return () -> (short) (0xf & ~((1 << (st + 1)) - 1));
             } else {
                 StringBuilder sb = new StringBuilder();
                 while (Character.isLetter(ch) || ch == '_' || Character.isDigit(ch)) {
@@ -110,44 +115,47 @@ public class InferenceContext {
                             suits |= (1 << suit);
                         }
                     }
-                    return suits;
+                    short suits2 = suits;
+                    return () -> suits2;
                 }
                 case "MINORS":
-                    return MINORS;
+                    return () -> MINORS;
                 case "MAJORS":
-                    return MAJORS;
+                    return () -> MAJORS;
                 case "REDS":
-                    return REDS;
+                    return () -> REDS;
                 case "BLACKS":
-                    return BLACKS;
+                    return () -> BLACKS;
                 case "ROUND":
-                    return ROUND;
+                    return () -> ROUND;
                 case "POINTED":
-                    return POINTED;
+                    return () -> POINTED;
                 case "ALL":
-                    return ALL_SUITS;
+                    return () -> ALL_SUITS;
                 case "NONE":
-                    return 0;
+                    return () -> 0;
                 default:
                     Integer st = bc.getSuit(sb.toString());
                     if (st != null) {
-                        return (short) (1 << st);
+                        return () -> (short) (1 << st);
                     }
                     throw new IllegalArgumentException("Unknown Suit Set: '" + sb + "'");
                 }
             }
         }
 
-        public short lookupSuitSet() throws IOException {
+        public SuitSet lookupSuitSet() throws IOException {
             readWhite();
-            short result = lookupSuitSet0();
+            SuitSet result = lookupSuitSet0();
             for (;;) {
                 readWhite();
                 if (ch != '&') {
                     break;
                 }
                 advance();
-                result &= lookupSuitSet0();
+                SuitSet result2 = lookupSuitSet0();
+                SuitSet result3 = result;
+                result = () -> (short)(result3.evaluate() & result2.evaluate());
             }
             return result;
         }
@@ -168,9 +176,9 @@ public class InferenceContext {
      *            The string to parse
      * @return The suits bound to the given expression
      */
-    public short lookupSuitSet(String str) {
+    public SuitSet lookupSuitSet(String str) {
         try (ReadState state = new ReadState(str)) {
-            short suits = state.lookupSuitSet();
+            SuitSet suits = state.lookupSuitSet();
             state.readWhite();
             if (state.ch != -1) {
                 throw new IllegalArgumentException("Undecipherable characters at end");
