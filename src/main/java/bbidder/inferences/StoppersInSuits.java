@@ -5,10 +5,11 @@ import java.util.Objects;
 
 import bbidder.BiddingContext;
 import bbidder.BitUtil;
+import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.MappedInf;
-import bbidder.MappedInference;
+import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.StopperSet;
 import bbidder.inferences.bound.PartialStoppersBoundInf;
@@ -23,26 +24,29 @@ import bbidder.inferences.bound.StoppersBoundInf;
 public class StoppersInSuits implements Inference {
     public final String suits;
     public final boolean partial;
+    public final BiddingContext ctx;
 
-    public StoppersInSuits(String suits, boolean partial) {
+    public StoppersInSuits(String suits, boolean partial, BiddingContext ctx) {
         super();
         this.suits = suits;
         this.partial = partial;
+        this.ctx = ctx;
     }
 
     public static Inference valueOf(String str) {
         String[] parts = SplitUtil.split(str, "\\s+", 2);
         if (parts.length == 2 && parts[0].equalsIgnoreCase("stoppers")) {
-            return new StoppersInSuits(parts[1], false);
+            return new StoppersInSuits(parts[1], false, null);
         }
         if (parts.length == 2 && parts[0].equalsIgnoreCase("partial_stoppers")) {
-            return new StoppersInSuits(parts[1], true);
+            return new StoppersInSuits(parts[1], true, null);
         }
         return null;
     }
 
     @Override
-    public List<MappedInference> bind(InferenceContext context) {
+    public IBoundInference bind(Players players) {
+        InferenceContext context = new InferenceContext(players, ctx);
         short theSuits = context.lookupSuitSet(suits);
         StopperSet stoppers = new StopperSet(stopper -> {
             for (int s : BitUtil.iterate(theSuits)) {
@@ -53,14 +57,14 @@ public class StoppersInSuits implements Inference {
             return true;
         });
         if (partial) {
-            return List.of(new MappedInference(PartialStoppersBoundInf.create(stoppers), context));
+            return PartialStoppersBoundInf.create(stoppers);
         }
-        return List.of(new MappedInference(StoppersBoundInf.create(stoppers), context));
+        return StoppersBoundInf.create(stoppers);
     }
     
     @Override
     public List<MappedInf> resolveSuits(BiddingContext context) {
-        return List.of(new MappedInf(this, context));
+        return List.of(new MappedInf(new StoppersInSuits(suits, partial, context), context));
     }
 
     @Override

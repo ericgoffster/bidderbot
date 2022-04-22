@@ -6,14 +6,15 @@ import java.util.Objects;
 
 import bbidder.BiddingContext;
 import bbidder.Constants;
+import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.MappedInf;
-import bbidder.MappedInference;
+import bbidder.Players;
 import bbidder.Range;
 import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.SplitUtil;
+import bbidder.Strain;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.HcpBoundInf;
 import bbidder.inferences.bound.ShapeBoundInf;
@@ -35,13 +36,10 @@ public class OpeningPreempt implements Inference {
     }
 
     @Override
-    public List<MappedInference> bind(InferenceContext context) {
-        List<MappedInference> l = new ArrayList<>();
-        for (var e : context.lookupSuits(suit).entrySet()) {
-            l.add(new MappedInference(AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
-                    ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(e.getKey(), level, shape)))), e.getValue()));
-        }
-        return l;
+    public IBoundInference bind(Players players) {
+        int strain = Strain.getStrain(suit);
+        return AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
+                    ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(strain, level, shape))));
     }
     
     @Override

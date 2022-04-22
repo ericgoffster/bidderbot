@@ -6,11 +6,13 @@ import java.util.Objects;
 
 import bbidder.BiddingContext;
 import bbidder.Constants;
+import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
 import bbidder.MappedInf;
-import bbidder.MappedInference;
+import bbidder.Players;
 import bbidder.ShapeSet;
+import bbidder.Strain;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -22,30 +24,30 @@ import bbidder.inferences.bound.ShapeBoundInf;
 public class LongestOrEqual implements Inference {
     public final String suit;
     public final String among;
+    public final BiddingContext ctx;
 
-    public LongestOrEqual(String suit, String among) {
+    public LongestOrEqual(String suit, String among, BiddingContext ctx) {
         if (among != null && among.trim().equals("")) {
             throw new IllegalArgumentException("among");
         }
         this.suit = suit;
         this.among = among;
+        this.ctx = ctx;
     }
 
     @Override
-    public List<MappedInference> bind(InferenceContext context) {
+    public IBoundInference bind(Players players) {
+        InferenceContext context = new InferenceContext(players, ctx);
         int iamong = among == null ? 0xf : context.lookupSuitSet(among);
-        List<MappedInference> l = new ArrayList<>();
-        for (var e : context.lookupSuits(suit).entrySet()) {
-            l.add(new MappedInference(ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(e.getKey(), iamong))), e.getValue()));
-        }
-        return l;
+        int strain = Strain.getStrain(suit);
+        return ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(strain, iamong)));
     }
     
     @Override
     public List<MappedInf> resolveSuits(BiddingContext context) {
         List<MappedInf> l = new ArrayList<>();
         for (var e : context.getMappedBiddingContexts(suit).entrySet()) {
-            l.add(new MappedInf(new LongestOrEqual(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), among), e.getValue()));
+            l.add(new MappedInf(new LongestOrEqual(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), among, context), e.getValue()));
         }
         return l;
     }
@@ -61,12 +63,12 @@ public class LongestOrEqual implements Inference {
         str = str.substring(16).trim();
         int pos = str.indexOf("among");
         if (pos >= 0) {
-            return new LongestOrEqual(str.substring(0, pos).trim(), str.substring(pos + 5).trim());
+            return new LongestOrEqual(str.substring(0, pos).trim(), str.substring(pos + 5).trim(), null);
         }
         if (!BiddingContext.isValidSuit(str)) {
             return null;
         }
-        return new LongestOrEqual(str, null);
+        return new LongestOrEqual(str, null, null);
     }
 
     @Override

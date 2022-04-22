@@ -110,10 +110,9 @@ public class BiddingSystem {
     public BidSource getBid(BidList bids, Players players, Hand hand) {
         List<Possibility> possible = getPossible(bids);
         for (Possibility i : possible) {
-            for (MappedInference newInference : i.inf.bind(players)) {
-                if (newInference.inf.matches(hand)) {
-                    return new BidSource(i, possible);
-                }
+            IBoundInference inf = i.inf.bind(players);
+            if (inf.matches(hand)) {
+                return new BidSource(i, possible);
             }
         }
 
@@ -139,14 +138,13 @@ public class BiddingSystem {
         List<IBoundInference> negative = new ArrayList<>();
         List<Possibility> possible = getPossible(bids.exceptLast());
         for (Possibility i : possible) {
-            for (MappedInference newInference : i.inf.bind(players)) {
-                if (i.bid.equals(lastBid)) {
-                    positive.add(AndBoundInf.create(newInference.inf, OrBoundInf.create(negative).negate()));
-                }
-                negative.add(newInference.inf);
+            IBoundInference inf = i.inf.bind(players);
+            if (i.bid.equals(lastBid)) {
+                positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
             }
+            negative.add(inf);
         }
-    
+
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
             positive.add(OrBoundInf.create(negative).negate());
@@ -211,7 +209,7 @@ public class BiddingSystem {
                     }
                 } else if (!ln.equals("")) {
                     try {
-                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences(where + ":" + lineno, new Players()));
+                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences(where + ":" + lineno));
                     } catch (Exception e) {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }

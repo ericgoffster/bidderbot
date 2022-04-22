@@ -3,10 +3,10 @@ package bbidder.inferences;
 import java.util.List;
 
 import bbidder.BiddingContext;
+import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.MappedInf;
-import bbidder.MappedInference;
+import bbidder.Players;
 import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.inferences.bound.ShapeBoundInf;
@@ -22,8 +22,8 @@ public class VeryBalanced implements Inference {
     }
 
     @Override
-    public List<MappedInference> bind(InferenceContext context) {
-        return List.of(new MappedInference(ShapeBoundInf.create(new ShapeSet(Shape::isSuperBalanced)), context));
+    public IBoundInference bind(Players players) {
+        return ShapeBoundInf.create(new ShapeSet(Shape::isSuperBalanced));
     }
     
     @Override

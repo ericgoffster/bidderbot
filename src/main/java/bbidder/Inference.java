@@ -6,6 +6,6 @@ import java.util.List;
  * A Bridge inference.
  */
 public interface Inference {
-    public List<MappedInference> bind(InferenceContext context);
+    public IBoundInference bind(Players players);
     public List<MappedInf> resolveSuits(BiddingContext context);
 }

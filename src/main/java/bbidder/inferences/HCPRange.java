@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
+import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.MappedInf;
-import bbidder.MappedInference;
+import bbidder.Players;
 import bbidder.Range;
 import bbidder.inferences.bound.HcpBoundInf;
 
@@ -31,8 +31,8 @@ public class HCPRange implements Inference {
     }
 
     @Override
-    public List<MappedInference> bind(InferenceContext context) {
-        return List.of(new MappedInference(HcpBoundInf.create(rng), context));
+    public IBoundInference bind(Players players) {
+        return HcpBoundInf.create(rng);
     }
     
     @Override

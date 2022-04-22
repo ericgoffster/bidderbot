@@ -23,8 +23,8 @@ public class BoundBidInference {
         this.inferences = inferences;
     }
 
-    public List<MappedInference> bind(Players players) {
-        return inferences.bind(new InferenceContext(players, ctx));
+    public IBoundInference bind(Players players) {
+        return inferences.bind(players);
     }
     
 

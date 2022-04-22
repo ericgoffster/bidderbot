@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
+import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.MappedInf;
-import bbidder.MappedInference;
+import bbidder.Players;
 import bbidder.Range;
 import bbidder.SplitUtil;
 import bbidder.inferences.bound.TotalPtsBoundInf;
@@ -34,10 +34,10 @@ public class CombinedTotalPointsRange implements Inference {
     }
 
     @Override
-    public List<MappedInference> bind(InferenceContext context) {
-        int tpts = context.players.partner.infSummary.minTotalPts();
+    public IBoundInference bind(Players players) {
+        int tpts = players.partner.infSummary.minTotalPts();
         Range r = new Range(rng.bits >> tpts, 40);
-        return List.of(new MappedInference(TotalPtsBoundInf.create(context.players.partner.infSummary, r), context));
+        return TotalPtsBoundInf.create(players.partner.infSummary, r);
     }
     
     @Override

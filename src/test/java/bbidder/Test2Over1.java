@@ -54,13 +54,12 @@ public class Test2Over1 {
                     } else {
                         System.err.println("   " + b);
                     }
-                    for (MappedInference bound : b.inf.bind(result.state.players)) {
-                        if (b == result.found.possibility) {
-                            System.err.println("       * " + bound.inf + ", " + bound.ctx.bc.getSuits());
+                    IBoundInference bi = b.inf.bind(result.state.players);
+                    if (b == result.found.possibility) {
+                        System.err.println("       * " + bi) ;
 
-                        } else {
-                            System.err.println("       " + bound.inf + ", " + bound.ctx.bc.getSuits());
-                        }
+                    } else {
+                        System.err.println("       " + bi);
                     }
                 }
                 test.getResult(r, bs);

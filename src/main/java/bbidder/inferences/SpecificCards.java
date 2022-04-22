@@ -10,11 +10,11 @@ import bbidder.BiddingContext;
 import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.MappedInf;
-import bbidder.MappedInference;
 import bbidder.NOfTop;
+import bbidder.Players;
 import bbidder.Range;
+import bbidder.Strain;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
 
 /**
@@ -35,12 +35,9 @@ public class SpecificCards implements Inference {
     }
 
     @Override
-    public List<MappedInference> bind(InferenceContext context) {
-        List<MappedInference> l = new ArrayList<>();
-        for (var e : context.lookupSuits(suit).entrySet()) {
-            l.add(new MappedInference(createBound(new NOfTop(rng, top, e.getKey())), e.getValue()));
-        }
-        return l;
+    public IBoundInference bind(Players players) {
+        int strain = Strain.getStrain(suit);
+        return createBound(new NOfTop(rng, top, strain));
     }
     
     @Override

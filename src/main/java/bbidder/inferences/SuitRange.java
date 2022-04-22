@@ -8,11 +8,11 @@ import bbidder.BiddingContext;
 import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.MappedInf;
-import bbidder.MappedInference;
+import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.Strain;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -38,12 +38,14 @@ public class SuitRange implements Inference {
     }
 
     @Override
-    public List<MappedInference> bind(InferenceContext context) {
-        List<MappedInference> l = new ArrayList<>();
-        for (var e : context.lookupSuits(suit).entrySet()) {
-            l.add(new MappedInference(createBound(e.getKey(), rng), e.getValue()));
+    public IBoundInference bind(Players players) {
+        int strain;
+        try {
+            strain = Strain.getStrain(suit);
+        } catch (Exception e) {
+            throw e;
         }
-        return l;
+        return createBound(strain, rng);
     }
     
     @Override

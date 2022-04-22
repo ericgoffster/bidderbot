@@ -22,23 +22,16 @@ public class InferenceList {
     }
 
     /**
-     * @param context
-     *            The context for binding
+     * @param players
+     *            The players
      * @return A bound inference representing all of the inferences as an "and"
      */
-    public List<MappedInference> bind(InferenceContext context) {
-        List<MappedInference> list = new ArrayList<>();
-        list.add(new MappedInference(ConstBoundInference.create(true), context));
+    public IBoundInference bind(Players players) {
+        IBoundInference result = ConstBoundInference.create(true);
         for (Inference i : inferences) {
-            List<MappedInference> newList = new ArrayList<>();
-            for (MappedInference bi2 : list) {
-                for (MappedInference bi : i.bind(bi2.ctx)) {
-                    newList.add(new MappedInference(AndBoundInf.create(bi2.inf, bi.inf), bi.ctx));
-                }
-            }
-            list = newList;
+            result = AndBoundInf.create(result, i.bind(players));
         }
-        return list;
+        return result;
     }
     
     public List<MappedInferenceList> resolveSuits(BiddingContext context) {

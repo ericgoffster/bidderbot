@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
-import bbidder.InferenceContext;
+import bbidder.Players;
 
 public class CombinedTotalPointsRangeTest {
     @Test
@@ -27,11 +27,10 @@ public class CombinedTotalPointsRangeTest {
 
     @Test
     public void testAffirmative() {
-        InferenceContext ctx = new InferenceContext();
-        assertTrue(new CombinedTotalPointsRange(10, 10).bind(ctx).get(0).inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new CombinedTotalPointsRange(10, null).bind(ctx).get(0).inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new CombinedTotalPointsRange(11, null).bind(ctx).get(0).inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new CombinedTotalPointsRange(null, 10).bind(ctx).get(0).inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new CombinedTotalPointsRange(null, 9).bind(ctx).get(0).inf.matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new CombinedTotalPointsRange(10, 10).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new CombinedTotalPointsRange(10, null).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new CombinedTotalPointsRange(11, null).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new CombinedTotalPointsRange(null, 10).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new CombinedTotalPointsRange(null, 9).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
     }
 }

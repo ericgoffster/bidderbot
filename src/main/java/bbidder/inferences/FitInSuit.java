@@ -11,11 +11,11 @@ import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.MappedInf;
-import bbidder.MappedInference;
+import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.Strain;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -36,12 +36,9 @@ public class FitInSuit implements Inference {
     }
 
     @Override
-    public List<MappedInference> bind(InferenceContext context) {
-        List<MappedInference> l = new ArrayList<>();
-        for (var e : context.lookupSuits(suit).entrySet()) {
-            l.add(new MappedInference(createrBound(e.getKey(), context.players.partner.infSummary), e.getValue()));
-        }
-        return l;
+    public IBoundInference bind(Players players) {
+        int strain = Strain.getStrain(suit);
+        return createrBound(strain, players.partner.infSummary);
     }
     
     @Override
