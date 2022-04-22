@@ -22,6 +22,7 @@ public class SymbollTest {
         assertEquals(3, sym.evaluate(Map.of()).intValue());
         assertEquals(3, sym.getResolved());
         assertEquals(1 << 3, sym.getSuitClass(Map.of()));
+        assertEquals("S", sym.toString());
     }
 
     @Test
@@ -31,6 +32,7 @@ public class SymbollTest {
         assertEquals(0, sym.evaluate(Map.of("om", 0)).intValue());
         assertEquals(Map.of("om", 0), sym.unevaluate(0));
         assertEquals(Constants.MINORS, sym.getSuitClass(Map.of()));
+        assertEquals("om", sym.toString());
     }
 
     @Test
@@ -40,6 +42,7 @@ public class SymbollTest {
         assertEquals(1, sym.evaluate(Map.of("om", 0)).intValue());
         assertEquals(Map.of("m", 0), sym.unevaluate(0));
         assertEquals(Constants.MINORS, sym.getSuitClass(Map.of()));
+        assertEquals("m", sym.toString());
     }
 
     @Test
@@ -49,6 +52,7 @@ public class SymbollTest {
         assertEquals(2, sym.evaluate(Map.of("OM", 2)).intValue());
         assertEquals(Map.of("OM", 2), sym.unevaluate(2));
         assertEquals(Constants.MAJORS, sym.getSuitClass(Map.of()));
+        assertEquals("OM", sym.toString());
     }
 
     @Test
@@ -58,6 +62,7 @@ public class SymbollTest {
         assertEquals(3, sym.evaluate(Map.of("OM", 2)).intValue());
         assertEquals(Map.of("M", 2), sym.unevaluate(2));
         assertEquals(Constants.MAJORS, sym.getSuitClass(Map.of()));
+        assertEquals("M", sym.toString());
     }
 
     @Test
@@ -66,6 +71,7 @@ public class SymbollTest {
         assertEquals(2, sym.evaluate(Map.of("x", 2)).intValue());
         assertEquals(Map.of("x", 2), sym.unevaluate(2));
         assertEquals(Constants.ALL_SUITS, sym.getSuitClass(Map.of()));
+        assertEquals("x", sym.toString());
     }
 
     @Test
@@ -76,6 +82,7 @@ public class SymbollTest {
         assertEquals(Map.of("x", 2), sym.unevaluate(1));
         assertEquals(Map.of("x", 0), sym.unevaluate(4));
         assertEquals(1 << 0 | 1 << 1 | 1 << 2 | 1 << 4, sym.getSuitClass(Map.of()));
+        assertEquals("x-1", sym.toString());
     }
 
     @Test
@@ -84,5 +91,6 @@ public class SymbollTest {
         assertEquals(2, sym.evaluate(Map.of("x", 1, "~x", 2)).intValue());
         assertEquals(Map.of("~x", 2), sym.unevaluate(2));
         assertEquals(1 << 0 | 1 << 2 | 1 << 3, sym.getSuitClass(Map.of("x", 1)));
+        assertEquals("~x", sym.toString());
     }
 }
