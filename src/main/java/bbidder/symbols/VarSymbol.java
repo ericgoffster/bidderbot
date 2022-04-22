@@ -10,7 +10,7 @@ import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public final class VarSymbol implements Symbol {
+public final class VarSymbol extends Symbol {
     public final String varName;
 
     public VarSymbol(String varName) {

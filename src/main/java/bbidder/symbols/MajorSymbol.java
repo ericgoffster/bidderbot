@@ -9,7 +9,7 @@ import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public final class MajorSymbol implements Symbol {
+public final class MajorSymbol extends Symbol {
     public MajorSymbol() {
         super();
     }

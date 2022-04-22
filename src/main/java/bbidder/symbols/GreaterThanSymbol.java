@@ -8,7 +8,7 @@ import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public final class GreaterThanSymbol implements Symbol {
+public final class GreaterThanSymbol extends Symbol {
     public final Symbol symbol;
     public final int level;
     public final Symbol other;
@@ -45,7 +45,7 @@ public final class GreaterThanSymbol implements Symbol {
     @Override
     public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
         return ListUtil.flatMap(symbol.resolveSymbols(symbols), e1 -> ListUtil.map(other.resolveSymbols(e1.symbols),
-                e2 -> new SymbolContext(new GreaterThanSymbol(e1.symbol, level, e2.symbol), e2.symbols)));
+                e2 -> new SymbolContext(new GreaterThanSymbol(e1.getSymbol(), level, e2.getSymbol()), e2.symbols)));
     }
 
     @Override

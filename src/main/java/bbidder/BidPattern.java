@@ -137,7 +137,7 @@ public final class BidPattern {
         if (simpleBid != null) {
             return List.of(new BidPatternContext(this, symbols));
         }
-        return ListUtil.map(getSymbol().resolveSymbols(symbols), e -> new BidPatternContext(bindSuit(e.symbol), e.symbols));
+        return ListUtil.map(getSymbol().resolveSymbols(symbols), e -> new BidPatternContext(bindSuit(e.getSymbol()), e.symbols));
     }
 
     /**

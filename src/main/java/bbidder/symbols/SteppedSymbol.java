@@ -8,7 +8,7 @@ import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public final class SteppedSymbol implements Symbol {
+public final class SteppedSymbol extends Symbol {
     public final Symbol symbol;
     public final int delta;
 
@@ -42,7 +42,7 @@ public final class SteppedSymbol implements Symbol {
     
     @Override
     public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SymbolContext(new SteppedSymbol(e.symbol, delta), e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SymbolContext(new SteppedSymbol(e.getSymbol(), delta), e.symbols));
     }
 
     private int transform(Integer s) {

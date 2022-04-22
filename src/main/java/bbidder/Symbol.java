@@ -2,34 +2,38 @@ package bbidder;
 
 import java.util.List;
 
-public interface Symbol {
+public abstract class Symbol {
     /**
      * @return The resolved value
      */
-    int getResolved();
+    public abstract int getResolved();
     
     /**
      * @param bid The bid to test
      * @return true if the given bid is compatible with the symbol
      */
-    boolean compatibleWith(Bid bid);
+    public abstract boolean compatibleWith(Bid bid);
     
     /**
      * 
      * @return true if the given bid should only be considered if the bid was not previously defined.
      */
-    boolean nonConvential();
+    public abstract boolean nonConvential();
     
-    List<SymbolContext> resolveSymbols(SymbolTable symbols);
+    public abstract List<SymbolContext> resolveSymbols(SymbolTable symbols);
     
-    public static final class SymbolContext {
-        public final Symbol symbol;
+    public final class SymbolContext {
+        private final Symbol symbol;
         public final SymbolTable symbols;
 
         public SymbolContext(Symbol symbol, SymbolTable symbols) {
             super();
             this.symbol = symbol;
             this.symbols = symbols;
+        }
+
+        public Symbol getSymbol() {
+            return symbol;
         }
     }
 }

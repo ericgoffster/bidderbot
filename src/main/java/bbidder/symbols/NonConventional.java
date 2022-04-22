@@ -8,7 +8,7 @@ import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public final class NonConventional implements Symbol {
+public final class NonConventional extends Symbol {
     public final Symbol symbol;
 
     public NonConventional(Symbol symbol) {
@@ -40,7 +40,7 @@ public final class NonConventional implements Symbol {
 
     @Override
     public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SymbolContext(new NonConventional(e.symbol), e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SymbolContext(new NonConventional(e.getSymbol()), e.symbols));
     }
 
     @Override

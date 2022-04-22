@@ -9,7 +9,7 @@ import bbidder.Bid;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public final class DownSymbol implements Symbol {
+public final class DownSymbol extends Symbol {
     public final Symbol symbol;
 
     public DownSymbol(Symbol symbol) {
