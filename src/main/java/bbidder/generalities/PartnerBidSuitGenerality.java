@@ -22,7 +22,7 @@ public final class PartnerBidSuitGenerality extends Generality {
 
     @Override
     public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new GeneralityContext(new PartnerBidSuitGenerality(e.getSymbol()), e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new PartnerBidSuitGenerality(e.getSymbol()).new GeneralityContext(e.symbols));
     }
 
     @Override

@@ -22,7 +22,7 @@ public final class UnbidSuitGenerality extends Generality {
 
     @Override
     public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new GeneralityContext(new UnbidSuitGenerality(e.getSymbol()), e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new UnbidSuitGenerality(e.getSymbol()).new GeneralityContext(e.symbols));
     }
 
     @Override

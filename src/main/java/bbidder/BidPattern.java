@@ -132,7 +132,7 @@ public final class BidPattern {
      */
     public List<Context> resolveSymbols(SymbolTable symbols) {
         if (generality != null) {
-            return ListUtil.map(generality.resolveSymbols(symbols), e -> createWild(e.generality).new Context(e.symbols));
+            return ListUtil.map(generality.resolveSymbols(symbols), e -> createWild(e.getGenerality()).new Context(e.symbols));
         }
         if (simpleBid != null) {
             return List.of(new Context(symbols));
