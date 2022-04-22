@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Bid;
@@ -14,6 +15,11 @@ public final class ConstSymbol implements Symbol {
     public ConstSymbol(int strain) {
         super();
         this.strain = strain;
+    }
+    
+    @Override
+    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
+        return Map.of(this, symbols);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package bbidder.symbols;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Bid;
@@ -59,6 +61,16 @@ public final class NonConventional implements Symbol {
             l.add(new NonConventional(s));
         }
         return l;
+    }
+    
+    @Override
+    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
+        Map<Symbol, SymbolTable> old = symbol.resolveSymbol(symbols);
+        Map<Symbol, SymbolTable> m = new LinkedHashMap<>();
+        for(var e: old.entrySet()) {
+            m.put(new NonConventional(e.getKey()), e.getValue());
+        }
+        return m;
     }
 
     @Override

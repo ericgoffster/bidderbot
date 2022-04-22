@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.List;
+import java.util.Map;
 
 import bbidder.Bid;
 import bbidder.Constants;
@@ -60,6 +61,19 @@ public final class OtherMinorSymbol implements Symbol {
             return List.of(evaluate(symbols));
         }
         return List.of(new ConstSymbol(Constants.CLUB), new ConstSymbol(Constants.DIAMOND));
+    }
+    
+    @Override
+    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
+        if (symbols.containsKey("om")) {
+            return Map.of(new ConstSymbol(symbols.get("om")), symbols);
+        }
+        if (symbols.containsKey("m")) {
+            return Map.of(new ConstSymbol(otherMinor(symbols.get("m"))), symbols);
+        }
+        return Map.of(
+                new ConstSymbol(Constants.CLUB), symbols.add("om", Constants.CLUB),
+                new ConstSymbol(Constants.DIAMOND), symbols.add("om", Constants.DIAMOND));
     }
 
     private static Integer otherMinor(Integer strain) {

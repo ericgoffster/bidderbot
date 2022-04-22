@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Bid;
@@ -62,6 +63,18 @@ public final class VarSymbol implements Symbol {
             return List.of(evaluate(symbols));
         }
         return List.of(new ConstSymbol(Constants.CLUB), new ConstSymbol(Constants.DIAMOND), new ConstSymbol(Constants.HEART), new ConstSymbol(Constants.SPADE));
+    }
+    
+    @Override
+    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
+        if (symbols.containsKey(varName)) {
+            return Map.of(new ConstSymbol(symbols.get(varName)), symbols);
+        }
+        return Map.of(
+                new ConstSymbol(Constants.CLUB), symbols.add(varName, Constants.CLUB),
+                new ConstSymbol(Constants.DIAMOND), symbols.add(varName, Constants.DIAMOND),
+                new ConstSymbol(Constants.HEART), symbols.add(varName, Constants.HEART),
+                new ConstSymbol(Constants.SPADE), symbols.add(varName, Constants.SPADE));
     }
 
     @Override

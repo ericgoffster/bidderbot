@@ -1,7 +1,11 @@
 package bbidder.symbols;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import bbidder.Bid;
@@ -74,5 +78,16 @@ public final class DownSymbol implements Symbol {
     @Override
     public boolean nonConvential() {
         return symbol.nonConvential();
+    }
+    
+    @Override
+    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
+        ArrayList<Entry<Symbol, SymbolTable>> l = new ArrayList<>(symbol.resolveSymbol(symbols).entrySet());
+        Collections.reverse(l);
+        Map<Symbol, SymbolTable> m = new LinkedHashMap<>();
+        for(Entry<Symbol, SymbolTable> e: l) {
+            m.put(e.getKey(), e.getValue());
+        }
+        return m;
     }
 }

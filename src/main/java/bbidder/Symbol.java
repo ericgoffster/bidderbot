@@ -1,6 +1,7 @@
 package bbidder;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Symbol {
     public Symbol evaluate(SymbolTable symbols);
@@ -14,4 +15,6 @@ public interface Symbol {
     public boolean compatibleWith(Bid bid);
     
     public boolean nonConvential();
+    
+    Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols);
 }

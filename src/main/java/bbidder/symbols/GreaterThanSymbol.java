@@ -1,7 +1,9 @@
 package bbidder.symbols;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Bid;
@@ -68,6 +70,21 @@ public final class GreaterThanSymbol implements Symbol {
             l.add(new GreaterThanSymbol(s, level, boundOthers.get(0)));
         }
         return l;
+    }
+    
+    @Override
+    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
+        Map<Symbol, SymbolTable> boundOthers = other.resolveSymbol(symbols);
+        if (boundOthers.size() != 1) {
+            throw new IllegalArgumentException("undefined smybol: " + other);
+        }
+        Symbol bo = boundOthers.keySet().iterator().next();
+        Map<Symbol, SymbolTable> old = symbol.resolveSymbol(symbols);
+        Map<Symbol, SymbolTable> m = new LinkedHashMap<>();
+        for(var e: old.entrySet()) {
+            m.put(new GreaterThanSymbol(e.getKey(), level, bo), e.getValue());
+        }
+        return m;
     }
 
     @Override

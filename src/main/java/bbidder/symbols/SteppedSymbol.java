@@ -1,7 +1,9 @@
 package bbidder.symbols;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Bid;
@@ -47,6 +49,16 @@ public final class SteppedSymbol implements Symbol {
             l.add(new SteppedSymbol(s, delta));
         }
         return l;
+    }
+    
+    @Override
+    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
+        Map<Symbol, SymbolTable> old = symbol.resolveSymbol(symbols);
+        Map<Symbol, SymbolTable> m = new LinkedHashMap<>();
+        for(var e: old.entrySet()) {
+            m.put(new SteppedSymbol(e.getKey(), delta), e.getValue());
+        }
+        return m;
     }
 
     @Override

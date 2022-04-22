@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.List;
+import java.util.Map;
 
 import bbidder.Bid;
 import bbidder.Constants;
@@ -60,6 +61,19 @@ public final class OtherMajorSymbol implements Symbol {
             return List.of(evaluate(symbols));
         }
         return List.of(new ConstSymbol(Constants.HEART), new ConstSymbol(Constants.SPADE));
+    }
+    
+    @Override
+    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
+        if (symbols.containsKey("OM")) {
+            return Map.of(new ConstSymbol(symbols.get("OM")), symbols);
+        }
+        if (symbols.containsKey("M")) {
+            return Map.of(new ConstSymbol(otherMajor(symbols.get("M"))), symbols);
+        }
+        return Map.of(
+                new ConstSymbol(Constants.HEART), symbols.add("OM", Constants.HEART),
+                new ConstSymbol(Constants.SPADE), symbols.add("OM", Constants.SPADE));
     }
 
     private static Integer otherMajor(Integer strain) {
