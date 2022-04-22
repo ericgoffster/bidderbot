@@ -51,10 +51,7 @@ public class TwoSuitedGenerality implements Generality {
         if ((players.me.infSummary.getBidSuits() & (1 << s)) == 0) {
             return false;
         }
-        if (players.me.infSummary.avgLenInSuit(l) > players.me.infSummary.avgLenInSuit(s)) {
-            return true;
-        } 
-        return false;
+        return true;
     }
 
     public static TwoSuitedGenerality valueOf(String str) {

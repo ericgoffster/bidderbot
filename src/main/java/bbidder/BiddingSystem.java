@@ -80,12 +80,17 @@ public class BiddingSystem {
      * @return A list of all possible bids given the list of bids.
      */
     public List<PossibleBid> getPossibleBids(BidList bids, Players players) {
+        DebugUtils.breakpointGetPossibleBid(bids, players);
         List<PossibleBid> l = new ArrayList<>();
         for (BidInference i : inferences) {
             Bid match = i.bids.getMatch(bids, players);
             if (match != null) {
+                DebugUtils.breakpointGetPossibleBid(bids, players, match, i);
                 l.add(new PossibleBid(i, match));
             }
+        }
+        if (l.isEmpty()) {
+            DebugUtils.breakpointGetPossibleBid(bids, players, l);
         }
         return l;
     }
@@ -130,19 +135,27 @@ public class BiddingSystem {
         Bid lastBid = bids.getLastBid();
         List<IBoundInference> positive = new ArrayList<>();
         List<IBoundInference> negative = new ArrayList<>();
+        List<IBoundInference> negativeWild = new ArrayList<>();
         List<PossibleBid> possible = getPossibleBids(bids.exceptLast(), players);
         for (PossibleBid i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
-                if (i.inf.bids.positionOfWild() < 0 || negative.isEmpty()) {
+                if (i.inf.bids.positionOfWild() < 0) {
                     positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
+                } else {
+                    positive.add(AndBoundInf.create(inf, OrBoundInf.create(negativeWild).negate()));
                 }
             }
-            negative.add(inf);
+            if (i.inf.bids.positionOfWild() < 0) {
+                negative.add(inf);
+            } else {
+                negativeWild.add(inf);
+            }
         }
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
+            negative.addAll(negativeWild);
             positive.add(OrBoundInf.create(negative).negate());
         }
         return OrBoundInf.create(positive);

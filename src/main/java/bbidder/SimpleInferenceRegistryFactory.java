@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import bbidder.generalities.FitEstablished;
 import bbidder.generalities.IBidSuitGenerality;
+import bbidder.generalities.PartnerBidSuitGenerality;
 import bbidder.generalities.TwoSuitedGenerality;
 import bbidder.inferences.Balanced;
 import bbidder.inferences.CombinedTotalPointsRange;
@@ -43,6 +44,7 @@ public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistr
         reg.addGenerality(FitEstablished::valueOf);
         reg.addGenerality(TwoSuitedGenerality::valueOf);
         reg.addGenerality(IBidSuitGenerality::valueOf);
+        reg.addGenerality(PartnerBidSuitGenerality::valueOf);
         return reg;
     }
 

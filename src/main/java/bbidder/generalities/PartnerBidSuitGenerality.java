@@ -13,11 +13,11 @@ import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.symbols.ConstSymbol;
 
-public class IBidSuitGenerality implements Generality {
+public class PartnerBidSuitGenerality implements Generality {
     public final Symbol symbol;
 
 
-    public IBidSuitGenerality(Symbol symbol) {
+    public PartnerBidSuitGenerality(Symbol symbol) {
         super();
         this.symbol = symbol;
     }
@@ -26,7 +26,7 @@ public class IBidSuitGenerality implements Generality {
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         List<BiddingContext> result = new ArrayList<>();
         for (Entry<Integer, BiddingContext> e : bc.resolveSymbols(symbol).entrySet()) {
-            result.add(e.getValue().withGeneralityAdded(new IBidSuitGenerality(new ConstSymbol(e.getKey()))));                
+            result.add(e.getValue().withGeneralityAdded(new PartnerBidSuitGenerality(new ConstSymbol(e.getKey()))));                
         }
         return result;
     }
@@ -34,26 +34,24 @@ public class IBidSuitGenerality implements Generality {
     @Override
     public boolean matches(Players players, BidList bidList) {
         int suit = symbol.getResolved();
-        int minLenInSuit = players.me.infSummary.minLenInSuit(suit);
-        int minLenInSuit2 = players.partner.infSummary.minLenInSuit(suit);
-        if (minLenInSuit + minLenInSuit2 >= 8) {
+        if (players.me.infSummary.minLenInSuit(suit) + players.partner.infSummary.minLenInSuit(suit) >= 8) {
             return false;
         }
-        if ((players.me.infSummary.getBidSuits() & (1 << suit)) == 0) {
+        if ((players.partner.infSummary.getBidSuits() & (1 << suit)) == 0) {
             return false;
         }
         return true;
     }
 
-    public static IBidSuitGenerality valueOf(String str) {
+    public static PartnerBidSuitGenerality valueOf(String str) {
         if (str == null) {
             return null;
         }
         String[] parts = SplitUtil.split(str, "\\s+", 2);
-        if (parts.length == 2 && parts[0].equalsIgnoreCase("i_bid_suit")) {
+        if (parts.length == 2 && parts[0].equalsIgnoreCase("partner_bid_suit")) {
             Symbol symbol = SymbolParser.parseSymbol(parts[1]);
             if (symbol != null) {
-                return new IBidSuitGenerality(symbol);
+                return new PartnerBidSuitGenerality(symbol);
             }
         }
         return null;
@@ -62,7 +60,7 @@ public class IBidSuitGenerality implements Generality {
 
     @Override
     public String toString() {
-        return "i_bid_suit " + symbol;
+        return "partner_bid_suit " + symbol;
     }
 
 }

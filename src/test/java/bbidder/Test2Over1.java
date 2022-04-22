@@ -58,7 +58,10 @@ public class Test2Over1 {
                         System.err.println("       " + bi);
                     }
                 }
+                DebugUtils.debugMode = true;
+                DebugUtils.breakpoint();
                 test.getResult(bs);
+                DebugUtils.debugMode = false;
             }
         }
         System.out.println("tests = " + bs.getTests().size());

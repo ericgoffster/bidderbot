@@ -19,39 +19,44 @@ import bbidder.inferences.bound.ShapeBoundInf;
 import bbidder.symbols.ConstSymbol;
 
 public class RebiddableSecondSuit implements Inference {
-    public final Symbol suit;
+    public final Symbol longer;
+    public final Symbol shorter;
 
-    public static Pattern PATT_FIT = Pattern.compile("\\s*rebiddable_2nd\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    public static Pattern PATT_FIT = Pattern.compile("\\s*rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
-    public RebiddableSecondSuit(Symbol suit) {
+    public RebiddableSecondSuit(Symbol longer, Symbol shorter) {
         super();
-        this.suit = suit;
+        this.longer = longer;
+        this.shorter = shorter;
     }
 
     @Override
     public IBoundInference bind(Players players) {
-        int strain = suit.getResolved();
-        return createrBound(strain, players.me.infSummary, players.partner.infSummary);
+        int strainLonger = longer.getResolved();
+        int strainShorter = shorter.getResolved();
+        return createrBound(strainLonger, strainShorter, players.me.infSummary, players.partner.infSummary);
     }
 
     @Override
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
-        for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new RebiddableSecondSuit(new ConstSymbol(e.getKey()))));
+        for (var e : context.resolveSymbols(longer).entrySet()) {
+            for (var e2 : e.getValue().resolveSymbols(shorter).entrySet()) {
+                l.add(e2.getValue().withInferenceAdded(new RebiddableSecondSuit(new ConstSymbol(e.getKey()), new ConstSymbol(e2.getKey()))));
+            }
         }
         return l;
     }
 
-    private IBoundInference createrBound(int s, InfSummary meSummary, InfSummary partnerSummary) {
-        int n = meSummary.minLenInSuit(s);
+    private static IBoundInference createrBound(int strainLonger, int strainShorter, InfSummary meSummary, InfSummary partnerSummary) {
+        int n = meSummary.minLenInSuit(strainShorter);
         Range r;
         if (n <= 0) {
             r = Range.atLeast(5, 13);
         } else {
-            r = Range.atLeast(Math.min(n + 1, 5), 13);
+            r = Range.atLeast(Math.max(n + 1, 5), 13);
         }
-        return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
+        return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(strainShorter, r) && shape.isLongerOrEqual(strainLonger, 1 << strainShorter)));
     }
 
     public static Inference valueOf(String str) {
@@ -60,23 +65,24 @@ public class RebiddableSecondSuit implements Inference {
         }
         Matcher m = PATT_FIT.matcher(str);
         if (m.matches()) {
-            Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-            if (sym == null) {
+            Symbol longer = SymbolParser.parseSymbol(m.group(1).trim());
+            Symbol shorter = SymbolParser.parseSymbol(m.group(2).trim());
+            if (longer == null || shorter == null) {
                 return null;
             }
-            return new RebiddableSecondSuit(sym);
+            return new RebiddableSecondSuit(longer, shorter);
         }
         return null;
     }
 
     @Override
     public String toString() {
-        return "rebiddable_2nd " + suit;
+        return "rebiddable_2nd " + longer + " " + shorter;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(suit);
+        return Objects.hash(longer, shorter);
     }
 
     @Override
@@ -88,6 +94,7 @@ public class RebiddableSecondSuit implements Inference {
         if (getClass() != obj.getClass())
             return false;
         RebiddableSecondSuit other = (RebiddableSecondSuit) obj;
-        return Objects.equals(suit, other.suit);
+        return Objects.equals(longer, other.longer) && Objects.equals(shorter, other.shorter);
     }
+    
 }

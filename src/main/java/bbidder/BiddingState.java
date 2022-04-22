@@ -57,8 +57,15 @@ public final class BiddingState {
      */
     public BiddingState withBid(Bid bid) {
         BidList newBidList = bidding.withBidAdded(bid);
-        IBoundInference newInf = AndBoundInf.create(we.getInference(newBidList, players), players.me.inf);
+        IBoundInference inference = we.getInference(newBidList, players);
+        IBoundInference newInf = AndBoundInf.create(inference, players.me.inf);
         InfSummary summ = newInf.getSummary();
+        InfSummary infSummary = players.me.infSummary;
+        if (!infSummary.isEmpty() && summ.isEmpty()) {
+            DebugUtils.breakpointNoBid(bidding, bid, players);
+            we.getInference(newBidList, players);
+            System.exit(0);
+        }
         Player newMe = new Player(newInf, summ);
         return new BiddingState(they, we, newBidList, new Players(players.partner, players.rho, newMe, players.lho));
     }

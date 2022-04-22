@@ -49,9 +49,10 @@ public class Rebiddable implements Inference {
         if (n <= 0) {
             r = Range.atLeast(6, 13);
         } else {
-            r = Range.atLeast(Math.min(n + 1, 6), 13);
+            r = Range.atLeast(Math.max(n + 1, 6), 13);
         }
-        return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
+        IBoundInference create = ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
+        return create;
     }
 
     public static Inference valueOf(String str) {

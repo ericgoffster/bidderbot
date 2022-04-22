@@ -33,6 +33,7 @@ public class BiddingTest {
         BiddingState state = new BiddingState(bs);
         BidList exceptLast = bids.exceptLast();
         for (Bid bid : exceptLast.getBids()) {
+            DebugUtils.breakpoint();
             state = state.withBid(bid);
         }
         Bid expected = bids.getLastBid();
