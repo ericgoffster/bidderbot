@@ -9,23 +9,23 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class SteppedSymbol implements Symbol {
-    public final Symbol sym;
+    public final Symbol symbol;
     public final int delta;
 
     public SteppedSymbol(Symbol sym, int delta) {
         super();
-        this.sym = sym;
+        this.symbol = sym;
         this.delta = delta;
     }
 
     @Override
     public String toString() {
-        return sym + "-" + delta;
+        return symbol + "-" + delta;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(delta, sym);
+        return Objects.hash(delta, symbol);
     }
 
     @Override
@@ -37,13 +37,13 @@ public final class SteppedSymbol implements Symbol {
         if (getClass() != obj.getClass())
             return false;
         SteppedSymbol other = (SteppedSymbol) obj;
-        return delta == other.delta && Objects.equals(sym, other.sym);
+        return delta == other.delta && Objects.equals(symbol, other.symbol);
     }
     
     @Override
     public List<Symbol> boundSymbols(SymbolTable symbols) {
         List<Symbol> l = new ArrayList<>();
-        for(Symbol s: sym.boundSymbols(symbols)) {
+        for(Symbol s: symbol.boundSymbols(symbols)) {
             l.add(new SteppedSymbol(s, delta));
         }
         return l;
@@ -51,7 +51,7 @@ public final class SteppedSymbol implements Symbol {
 
     @Override
     public Symbol evaluate(SymbolTable symbols) {
-        Symbol s = sym.evaluate(symbols);
+        Symbol s = symbol.evaluate(symbols);
         if (s == null) {
             return null;
         }
@@ -64,7 +64,7 @@ public final class SteppedSymbol implements Symbol {
 
     @Override
     public SymbolTable unevaluate(int strain) {
-        return sym.unevaluate(untransform(strain));
+        return symbol.unevaluate(untransform(strain));
     }
 
     private int untransform(int strain) {
@@ -73,7 +73,7 @@ public final class SteppedSymbol implements Symbol {
 
     @Override
     public int getResolved() {
-        return transform(sym.getResolved());
+        return transform(symbol.getResolved());
     }
     
     @Override
@@ -83,6 +83,6 @@ public final class SteppedSymbol implements Symbol {
     
     @Override
     public boolean nonConvential() {
-        return sym.nonConvential();
+        return symbol.nonConvential();
     }
 }

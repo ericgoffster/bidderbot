@@ -44,9 +44,9 @@ public final class FitEstablished implements Generality {
         }
         String[] parts = SplitUtil.split(str, "\\s+", 2);
         if (parts.length == 2 && parts[0].equalsIgnoreCase("fit_established")) {
-            Symbol sym = SymbolParser.parseSymbol(parts[1]);
-            if (sym != null) {
-                return new FitEstablished(sym);
+            Symbol symbol = SymbolParser.parseSymbol(parts[1]);
+            if (symbol != null) {
+                return new FitEstablished(symbol);
             }
         }
         return null;

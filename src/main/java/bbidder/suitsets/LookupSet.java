@@ -9,21 +9,21 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class LookupSet implements SuitSet {
-    final Symbol strain;
+    final Symbol symbol;
 
     public LookupSet(Symbol strain) {
-        this.strain = strain;
+        this.symbol = strain;
     }
 
     @Override
     public short evaluate(Players players) {
-        int st = strain.getResolved();
+        int st = symbol.getResolved();
         return (short) (1 << st);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(strain);
+        return Objects.hash(symbol);
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class LookupSet implements SuitSet {
         if (getClass() != obj.getClass())
             return false;
         LookupSet other = (LookupSet) obj;
-        return Objects.equals(strain, other.strain);
+        return Objects.equals(symbol, other.symbol);
     }
 
     @Override
     public String toString() {
-        return strain.toString();
+        return symbol.toString();
     }
 
     @Override
     public SuitSet replaceVars(SymbolTable symbols) {
-        return new LookupSet(SuitSets.bind(symbols, strain));
+        return new LookupSet(SuitSets.bind(symbols, symbol));
     }
 }

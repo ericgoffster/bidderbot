@@ -9,21 +9,21 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class DownSymbol implements Symbol {
-    public final Symbol sym;
+    public final Symbol symbol;
 
-    public DownSymbol(Symbol sym) {
+    public DownSymbol(Symbol symbol) {
         super();
-        this.sym = sym;
+        this.symbol = symbol;
     }
 
     @Override
     public String toString() {
-        return sym + ":down";
+        return symbol + ":down";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sym);
+        return Objects.hash(symbol);
     }
 
     @Override
@@ -35,12 +35,12 @@ public final class DownSymbol implements Symbol {
         if (getClass() != obj.getClass())
             return false;
         DownSymbol other = (DownSymbol) obj;
-        return Objects.equals(sym, other.sym);
+        return Objects.equals(symbol, other.symbol);
     }
 
     @Override
     public Symbol evaluate(SymbolTable symbols) {
-        Symbol evaluate = sym.evaluate(symbols);
+        Symbol evaluate = symbol.evaluate(symbols);
         if (evaluate == null) {
             return null;
         }
@@ -49,13 +49,13 @@ public final class DownSymbol implements Symbol {
 
     @Override
     public SymbolTable unevaluate(int strain) {
-        return sym.unevaluate(strain);
+        return symbol.unevaluate(strain);
     }
     
     @Override
     public List<Symbol> boundSymbols(SymbolTable symbols) {
         List<Symbol> l = new ArrayList<>();
-        for(Symbol s: sym.boundSymbols(symbols)) {
+        for(Symbol s: symbol.boundSymbols(symbols)) {
             l.add(0, s);
         }
         return l;
@@ -63,16 +63,16 @@ public final class DownSymbol implements Symbol {
 
     @Override
     public int getResolved() {
-        return sym.getResolved();
+        return symbol.getResolved();
     }
     
     @Override
     public boolean compatibleWith(Bid bid) {
-        return sym.compatibleWith(bid);
+        return symbol.compatibleWith(bid);
     }
     
     @Override
     public boolean nonConvential() {
-        return sym.nonConvential();
+        return symbol.nonConvential();
     }
 }

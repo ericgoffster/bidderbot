@@ -23,18 +23,18 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class SuitRange implements Inference {
-    public final Symbol suit;
+    public final Symbol symbol;
     public final Range rng;
 
-    public SuitRange(Symbol suit, Integer min, Integer max) {
+    public SuitRange(Symbol symbol, Integer min, Integer max) {
         super();
-        this.suit = suit;
+        this.symbol = symbol;
         this.rng = Range.between(min, max, 13);
     }
 
-    public SuitRange(Symbol suit, Range r) {
+    public SuitRange(Symbol symbol, Range r) {
         super();
-        this.suit = suit;
+        this.symbol = symbol;
         this.rng = r;
     }
 
@@ -42,7 +42,7 @@ public final class SuitRange implements Inference {
     public IBoundInference bind(Players players) {
         int strain;
         try {
-            strain = suit.getResolved();
+            strain = symbol.getResolved();
         } catch (Exception e) {
             throw e;
         }
@@ -52,7 +52,7 @@ public final class SuitRange implements Inference {
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : SymbolContext.resolveSymbols(symbols, suit).entrySet()) {
+        for (var e : SymbolContext.resolveSymbols(symbols, symbol).entrySet()) {
             l.add(new InferenceContext(new SuitRange(e.getKey(), rng), e.getValue()));
         }
         return l;
@@ -80,12 +80,12 @@ public final class SuitRange implements Inference {
 
     @Override
     public String toString() {
-        return rng + " " + suit;
+        return rng + " " + symbol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rng, suit);
+        return Objects.hash(rng, symbol);
     }
 
     @Override
@@ -97,6 +97,6 @@ public final class SuitRange implements Inference {
         if (getClass() != obj.getClass())
             return false;
         SuitRange other = (SuitRange) obj;
-        return Objects.equals(rng, other.rng) && Objects.equals(suit, other.suit);
+        return Objects.equals(rng, other.rng) && Objects.equals(symbol, other.symbol);
     }
 }

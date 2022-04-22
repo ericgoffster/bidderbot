@@ -9,25 +9,25 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class LessThanSymbol implements Symbol {
-    public final Symbol sym;
+    public final Symbol symbol;
     public final int level;
     public final Symbol other;
 
-    public LessThanSymbol(Symbol sym, int level, Symbol other) {
+    public LessThanSymbol(Symbol symbol, int level, Symbol other) {
         super();
-        this.sym = sym;
+        this.symbol = symbol;
         this.level = level;
         this.other = other;
     }
 
     @Override
     public String toString() {
-        return sym + ":<"+(level + 1)+other;
+        return symbol + ":<"+(level + 1)+other;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(level, sym, other);
+        return Objects.hash(level, symbol, other);
     }
 
     @Override
@@ -39,12 +39,12 @@ public final class LessThanSymbol implements Symbol {
         if (getClass() != obj.getClass())
             return false;
         LessThanSymbol other = (LessThanSymbol) obj;
-        return level == other.level && Objects.equals(sym, other.sym) && Objects.equals(other, other.other);
+        return level == other.level && Objects.equals(symbol, other.symbol) && Objects.equals(other, other.other);
     }
 
     @Override
     public Symbol evaluate(SymbolTable symbols) {
-        Symbol evaluate = sym.evaluate(symbols);
+        Symbol evaluate = symbol.evaluate(symbols);
         if (evaluate == null) {
             return null;
         }
@@ -53,7 +53,7 @@ public final class LessThanSymbol implements Symbol {
 
     @Override
     public SymbolTable unevaluate(int strain) {
-        return sym.unevaluate(strain);
+        return symbol.unevaluate(strain);
     }
     
     @Override
@@ -62,7 +62,7 @@ public final class LessThanSymbol implements Symbol {
         if (boundOthers.size() != 1) {
             throw new IllegalArgumentException("undefined smybol: " + other);
         }
-        List<Symbol> old = sym.boundSymbols(symbols);
+        List<Symbol> old = symbol.boundSymbols(symbols);
         List<Symbol> l = new ArrayList<>();
         for(Symbol s: old) {
             l.add(new LessThanSymbol(s, level, boundOthers.get(0)));
@@ -72,17 +72,17 @@ public final class LessThanSymbol implements Symbol {
 
     @Override
     public int getResolved() {
-        return sym.getResolved();
+        return symbol.getResolved();
     }
     
     @Override
     public boolean compatibleWith(Bid bid) {
         Bid comparisonBid = Bid.valueOf(level, other.getResolved());
-        return sym.compatibleWith(bid) && bid.compareTo(comparisonBid) < 0;
+        return symbol.compatibleWith(bid) && bid.compareTo(comparisonBid) < 0;
     }
     
     @Override
     public boolean nonConvential() {
-        return sym.nonConvential();
+        return symbol.nonConvential();
     }
 }

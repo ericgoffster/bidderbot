@@ -9,22 +9,22 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class Gt implements SuitSet {
-    final Symbol strain;
+    final Symbol symbol;
 
-    public Gt(Symbol strain) {
+    public Gt(Symbol symbol) {
         super();
-        this.strain = strain;
+        this.symbol = symbol;
     }
 
     @Override
     public short evaluate(Players players) {
-        Integer st = strain.getResolved();
+        Integer st = symbol.getResolved();
         return (short) (0xf & ~((1 << (st + 1)) - 1));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(strain);
+        return Objects.hash(symbol);
     }
 
     @Override
@@ -36,16 +36,16 @@ public final class Gt implements SuitSet {
         if (getClass() != obj.getClass())
             return false;
         Gt other = (Gt) obj;
-        return Objects.equals(strain, other.strain);
+        return Objects.equals(symbol, other.symbol);
     }
 
     @Override
     public String toString() {
-        return ">" + strain;
+        return ">" + symbol;
     }
 
     @Override
     public SuitSet replaceVars(SymbolTable symbols) {
-        return new Gt(SuitSets.bind(symbols, strain));
+        return new Gt(SuitSets.bind(symbols, symbol));
     }
 }

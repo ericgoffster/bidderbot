@@ -23,25 +23,25 @@ public final class BidPatternParser implements Parser<BidPattern> {
         inp.advanceWhite();
         if (inp.readKeyword(BidPattern.STR_NONJUMP)) {
             String str = parseSuit(inp);
-            Symbol sym = SymbolParser.parseSymbol(str);
-            if (sym == null) {
+            Symbol symbol = SymbolParser.parseSymbol(str);
+            if (symbol == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createJump(sym, 0);
+            return BidPattern.createJump(symbol, 0);
         } else if (inp.readKeyword(BidPattern.STR_DOUBLEJUMP)) {
             String str = parseSuit(inp);
-            Symbol sym = SymbolParser.parseSymbol(str);
-            if (sym == null) {
+            Symbol symbol = SymbolParser.parseSymbol(str);
+            if (symbol == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createJump(sym, 2);
+            return BidPattern.createJump(symbol, 2);
         } else if (inp.readKeyword(BidPattern.STR_JUMP)) {
             String str = parseSuit(inp);
-            Symbol sym = SymbolParser.parseSymbol(str);
-            if (sym == null) {
+            Symbol symbol = SymbolParser.parseSymbol(str);
+            if (symbol == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createJump(sym, 1);
+            return BidPattern.createJump(symbol, 1);
         } else {
             String str = parseSuit(inp);
             if (str.length() == 0) {
@@ -59,11 +59,11 @@ public final class BidPatternParser implements Parser<BidPattern> {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
             int level = ch - '1';
-            Symbol sym = SymbolParser.parseSymbol(str.substring(1));
-            if (sym == null) {
+            Symbol symbol = SymbolParser.parseSymbol(str.substring(1));
+            if (symbol == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createBid(level, sym);
+            return BidPattern.createBid(level, symbol);
         }
     }
 

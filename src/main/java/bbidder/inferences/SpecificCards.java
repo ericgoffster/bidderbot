@@ -22,29 +22,29 @@ import bbidder.inferences.bound.SpecificCardsBoundInf;
  * Represents the inference of a specific cards in a suit.
  */
 public final class SpecificCards implements Inference {
-    public final Symbol suit;
+    public final Symbol symbol;
     public final Range rng;
     public final int top;
 
     public static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
-    public SpecificCards(Symbol suit, Range rng, int top) {
+    public SpecificCards(Symbol symbol, Range rng, int top) {
         super();
-        this.suit = suit;
+        this.symbol = symbol;
         this.rng = rng;
         this.top = top;
     }
 
     @Override
     public IBoundInference bind(Players players) {
-        int strain = suit.getResolved();
+        int strain = symbol.getResolved();
         return createBound(new NOfTop(rng, top, strain));
     }
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : SymbolContext.resolveSymbols(symbols, suit).entrySet()) {
+        for (var e : SymbolContext.resolveSymbols(symbols, symbol).entrySet()) {
             l.add(new InferenceContext(new SpecificCards(e.getKey(), rng, top), e.getValue()));
         }
         return l;
@@ -76,12 +76,12 @@ public final class SpecificCards implements Inference {
 
     @Override
     public String toString() {
-        return rng + " of top " + top + " in " + suit;
+        return rng + " of top " + top + " in " + symbol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rng, suit, top);
+        return Objects.hash(rng, symbol, top);
     }
 
     @Override
@@ -93,6 +93,6 @@ public final class SpecificCards implements Inference {
         if (getClass() != obj.getClass())
             return false;
         SpecificCards other = (SpecificCards) obj;
-        return Objects.equals(rng, other.rng) && Objects.equals(suit, other.suit) && top == other.top;
+        return Objects.equals(rng, other.rng) && Objects.equals(symbol, other.symbol) && top == other.top;
     }
 }

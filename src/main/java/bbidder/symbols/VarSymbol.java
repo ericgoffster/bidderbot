@@ -9,21 +9,21 @@ import bbidder.Symbol;
 import bbidder.SymbolTable;
 
 public final class VarSymbol implements Symbol {
-    public final String v;
+    public final String varName;
 
-    public VarSymbol(String v) {
+    public VarSymbol(String varName) {
         super();
-        this.v = v;
+        this.varName = varName;
     }
 
     @Override
     public String toString() {
-        return v;
+        return varName;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(v);
+        return Objects.hash(varName);
     }
 
     @Override
@@ -35,13 +35,13 @@ public final class VarSymbol implements Symbol {
         if (getClass() != obj.getClass())
             return false;
         VarSymbol other = (VarSymbol) obj;
-        return Objects.equals(v, other.v);
+        return Objects.equals(varName, other.varName);
     }
 
     @Override
     public Symbol evaluate(SymbolTable symbols) {
-        if (symbols.containsKey(v)) {
-            return new ConstSymbol(symbols.get(v));
+        if (symbols.containsKey(varName)) {
+            return new ConstSymbol(symbols.get(varName));
         }
         return null;
     }
@@ -53,12 +53,12 @@ public final class VarSymbol implements Symbol {
 
     @Override
     public SymbolTable unevaluate(int strain) {
-        return SymbolTable.EMPTY.add(v, strain);
+        return SymbolTable.EMPTY.add(varName, strain);
     }
 
     @Override
     public List<Symbol> boundSymbols(SymbolTable symbols) {
-        if (symbols.containsKey(v)) {
+        if (symbols.containsKey(varName)) {
             return List.of(evaluate(symbols));
         }
         return List.of(new ConstSymbol(Constants.CLUB), new ConstSymbol(Constants.DIAMOND), new ConstSymbol(Constants.HEART), new ConstSymbol(Constants.SPADE));

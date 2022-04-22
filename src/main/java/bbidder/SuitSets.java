@@ -71,11 +71,11 @@ public final class SuitSets {
                     advance();
                 }
                 String strain = sb.toString();
-                Symbol sym = SymbolParser.parseSymbol(strain);
-                if (sym == null) {
+                Symbol symbol = SymbolParser.parseSymbol(strain);
+                if (symbol == null) {
                     throw new IllegalArgumentException("bad symbol " + strain);
                 }
-                return new Gt(sym);
+                return new Gt(symbol);
             } else {
                 StringBuilder sb = new StringBuilder();
                 while (Character.isLetter(ch) || ch == '_' || Character.isDigit(ch)) {
@@ -104,11 +104,11 @@ public final class SuitSets {
                 case "NONE":
                     return new ConstSet(sb.toString().toUpperCase(), (short) 0);
                 default:
-                    Symbol sym = SymbolParser.parseSymbol(sb.toString());
-                    if (sym == null) {
+                    Symbol symbol = SymbolParser.parseSymbol(sb.toString());
+                    if (symbol == null) {
                         throw new IllegalArgumentException("bad symbol " + sb);
                     }
-                    return new LookupSet(sym);
+                    return new LookupSet(symbol);
                 }
             }
         }

@@ -21,68 +21,68 @@ public final class SymbolParser {
     public static Pattern GREATER_THAN = Pattern.compile(">(\\d+)(.+)");
 
     /**
-     * @param symbol
+     * @param str
      *            The symbol to test
      * @return true, if the symbol is syntactically a valid suit.
      */
-    public static Symbol parseSymbol(String symbol) {
+    public static Symbol parseSymbol(String str) {
         {
-            Matcher m = SUIT_PATTERN.matcher(symbol);
+            Matcher m = SUIT_PATTERN.matcher(str);
             if (m.matches()) {
-                Symbol sym = parseSymbol(m.group(1));
-                if (sym == null) {
+                Symbol symbol = parseSymbol(m.group(1));
+                if (symbol == null) {
                     return null;
                 }
-                return new SteppedSymbol(sym, Integer.parseInt(m.group(2)));
+                return new SteppedSymbol(symbol, Integer.parseInt(m.group(2)));
             }
         }
-        int pos = symbol.lastIndexOf(":");
+        int pos = str.lastIndexOf(":");
         if (pos >= 0) {
-            Symbol sym = parseSymbol(symbol.substring(0, pos));
-            if (sym == null) {
+            Symbol symbol = parseSymbol(str.substring(0, pos));
+            if (symbol == null) {
                 return null;
             }
-            String tag = symbol.substring(pos + 1);
+            String tag = str.substring(pos + 1);
             if (tag.equalsIgnoreCase("down")) {
-                return new DownSymbol(sym);
+                return new DownSymbol(symbol);
             }
             if (tag.equalsIgnoreCase("nonconventional")) {
-                return new NonConventional(sym);
+                return new NonConventional(symbol);
             }
             {
                 Matcher m = LESS_THAN.matcher(tag);
                 if (m.matches()) {
                     Symbol other = parseSymbol(m.group(2));
-                    return new LessThanSymbol(sym, Integer.parseInt(m.group(1)) - 1, other);
+                    return new LessThanSymbol(symbol, Integer.parseInt(m.group(1)) - 1, other);
                 }
             }
             {
                 Matcher m = GREATER_THAN.matcher(tag);
                 if (m.matches()) {
                     Symbol other = parseSymbol(m.group(2));
-                    return new GreaterThanSymbol(sym, Integer.parseInt(m.group(1)) - 1, other);
+                    return new GreaterThanSymbol(symbol, Integer.parseInt(m.group(1)) - 1, other);
                 }
             }
             return null;
         } 
-        if (symbol.equals("om")) {
+        if (str.equals("om")) {
             return new OtherMinorSymbol();
         }
-        if (symbol.equals("OM")) {
+        if (str.equals("OM")) {
             return new OtherMajorSymbol();
         }
-        if (symbol.equals("m")) {
+        if (str.equals("m")) {
             return new MinorSymbol();
         }
-        if (symbol.equals("M")) {
+        if (str.equals("M")) {
             return new MajorSymbol();
         }
-        Integer strain = Strain.getStrain(symbol);
+        Integer strain = Strain.getStrain(str);
         if (strain != null) {
             return new ConstSymbol(strain);
         }
-        if (symbol.length() == 1) {
-            return new VarSymbol(symbol);
+        if (str.length() == 1) {
+            return new VarSymbol(str);
         }
         return null;
     }
