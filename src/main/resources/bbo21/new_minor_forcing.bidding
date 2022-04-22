@@ -9,17 +9,49 @@
 test Ax Axxx Axxx xxx: 1D 1S 1N 2C 2H
 test Axx Axxx Axxx xx: 1D 1S 1N 2C 2H
 
+
 1m 1M 1N 2om 2M => 13- hcp, 3M
 test Axx Axx Axxx xxx: 1D 1S 1N 2C 2S
 
-1m 1M 1N 2om 2N => 13- hcp
+1H 1S 1N 2C 2S => 13- hcp, 3S
+test Axx Axxxx Ax xxx: 1H 1S 1N 2C 2S
+
+
+1m 1M 1N 2om 2N => 13- hcp, stoppers unbid & MAJORS
 test Ax Axx Axxxx xxx: 1D 1S 1N 2C 2N
+
+1H 1S 1N 2C 2N => 13- hcp, stoppers D
+test xx Axxxx Axx Axx: 1H 1S 1N 2C 2N
+
 
 1m 1M 1N 2om 3OM => 4OM
 test Ax AQxx Axxx xxx: 1D 1S 1N 2C 3H
 
+
 1m 1M 1N 2om 3M => 3M
 test Axx AQx Axxxx xx: 1D 1S 1N 2C 3S
 
-1m 1M 1N 2om 3N =>
+1H 1S 1N 2C 3S => 3S
+test AQx Axxxx Ax xxx: 1H 1S 1N 2C 3S
+
+
+1m 1M 1N 2om 3N => stoppers unbid & MAJORS
 test Ax AQx Axxxx xxx: 1D 1S 1N 2C 3N
+
+1H 1S 1N 2C 3N => stoppers D
+test Ax Axxxx Axx Qxx: 1H 1S 1N 2C 3N
+
+
+1m 1M 1N 2om 3om => 4 om
+test xx Axx Axxx Axxx: 1D 1S 1N 2C 3C
+
+1H 1S 1N 2C NJm => 4 C
+test Qx AQxxx Jx Axxx: 1H 1S 1N 2C 3C
+
+
+1m 1M 1N 2om Njm =>
+test xx Axx Axxxx Axx: 1D 1S 1N 2C 2D
+test xx Axx Axx Axxxx: 1C 1S 1N 2D 3C
+
+1H 1S 1N 2C 2H =>
+test Ax Axxxx xxx Axx: 1H 1S 1N 2C 2H
