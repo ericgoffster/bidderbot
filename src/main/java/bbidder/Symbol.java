@@ -22,7 +22,7 @@ public abstract class Symbol {
     
     public abstract List<SymbolContext> resolveSymbols(SymbolTable symbols);
     
-    public final class SymbolContext {
+    public static final class SymbolContext {
         private final Symbol symbol;
         public final SymbolTable symbols;
 
