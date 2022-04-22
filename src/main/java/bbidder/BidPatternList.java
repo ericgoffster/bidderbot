@@ -127,40 +127,19 @@ public final class BidPatternList {
     }
     
     /**
-     * Resolve the symbols starting from a previous context
-     * @param ctx
-     *             The previous context.
-     * @return The list of resolved bidding pattern contexts
-     */
-    private List<BidPatternListContext> resolveSymbols(BidPatternList previous, SymbolTable suits) {
-        if (bids.isEmpty()) {
-            return List.of(new BidPatternListContext(previous, suits));
-        }
-        // For each context gotten from the first bid,
-        // evaluate the remaining bids in the context of that bid.
-        BidPatternList exceptFirst = exceptFirst();
-        List<BidPatternListContext> list = new ArrayList<>();
-        BidPattern pattern = bids.get(0);
-        for (BidPatternContext b : pattern.resolveSymbols(suits)) {
-            list.addAll(exceptFirst.resolveSymbols(previous.withBidAdded(b.bidPattern), b.suits));
-        }
-        return list;
-    }
-
-    /**
      * Given a bid pattern list where the suits have already been bound,
-     * return the last bid of the pattern in the context of a bidList.
+     * return the last bid of the pattern in the context of an auction.
      * 
-     * @param bidList
-     *            The bidList to match.
+     * @param auction
+     *            The auction to match.
      * @param players
      *            the players
      * @param matched
      *            the set of matched bids
      * @return The last bid. null if there was no match.
      */
-    public Bid getMatch(Auction bidList, Players players, Set<Bid> matched) {
-        List<Bid> theBids = bidList.getBids();
+    public Bid getMatch(Auction auction, Players players, Set<Bid> matched) {
+        List<Bid> theBids = auction.getBids();
         int wildSize = theBids.size() - bids.size() + 2;
         int wildPos = positionOfWild();
         if (wildPos < 0 && theBids.size() != bids.size() - 1) {
@@ -169,28 +148,25 @@ public final class BidPatternList {
         if (wildPos >= 0 && wildSize < 0) {
             return null;
         }
-        int j = 0;
         int i = 0;
-        while (i < bids.size() - 1) {
-            BidPattern pattern = bids.get(i);
+        for(BidPattern pattern: bids.subList(0, bids.size() - 1)) {
             if (pattern.generality != null) {
-                if (!pattern.generality.matches(players, bidList)) {
+                if (!pattern.generality.matches(players, auction)) {
                     return null;
                 }
-                j += wildSize;
+                i += wildSize;
             } else {
-                Bid bid = theBids.get(j);
-                Bid expected = pattern.resolveToBid(bidList.firstN(j));
+                Bid bid = theBids.get(i);
+                Bid expected = pattern.resolveToBid(auction.firstN(i));
                 if (bid != expected) {
                     return null;
                 }
-                j++;
+                i++;
             }
-            i++;
         }
         BidPattern lastPatt = bids.get(bids.size() - 1);
-        Bid theNextBid = lastPatt.resolveToBid(bidList);
-        if (theNextBid == null || !bidList.isLegalBid(theNextBid)) {
+        Bid theNextBid = lastPatt.resolveToBid(auction);
+        if (theNextBid == null || !auction.isLegalBid(theNextBid)) {
             return null;
         }
         if (matched.contains(theNextBid) && lastPatt.symbol != null && lastPatt.symbol.nonConvential()) {
@@ -199,42 +175,6 @@ public final class BidPatternList {
         return theNextBid;
     }
 
-    /**
-     * @param reg
-     *            The inference registry
-     * @param str
-     *            The String to parse
-     * @return A parsed BidPatternList
-     */
-    public static BidPatternList valueOf(InferenceRegistry reg, String str) {
-        if (str == null) {
-            return null;
-        }
-        ListParser<BidPattern> parser = new ListParser<BidPattern>(new BidPatternParser(reg), "");
-        try (Input inp = new Input(new StringReader(str))) {
-            List<BidPattern> l = parser.parse(inp);
-            inp.advanceWhite();
-            if (inp.ch != -1) {
-                throw new IllegalArgumentException("invalid bids: '" + str + "'");
-            }
-            int numWild = 0;
-            for (BidPattern patt : l) {
-                if (patt.generality != null) {
-                    numWild++;
-                }
-            }
-            if (numWild > 1) {
-                throw new IllegalArgumentException("Only one generality allowed");
-            }
-            if (l.size() > 0 && l.get(l.size() - 1).generality != null) {
-                throw new IllegalArgumentException("bids may not end with a generality");
-            }
-            return new BidPatternList(l);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("invalid bids: '" + str + "'", e);
-        }
-    }
-    
     /**
      * Given unopposed bidding sequences, will insert
      * passes where the opposing bidding is missing.
@@ -275,6 +215,42 @@ public final class BidPatternList {
         return new BidPatternList(newBids);
     }
 
+    /**
+     * @param reg
+     *            The inference registry
+     * @param str
+     *            The String to parse
+     * @return A parsed BidPatternList
+     */
+    public static BidPatternList valueOf(InferenceRegistry reg, String str) {
+        if (str == null) {
+            return null;
+        }
+        ListParser<BidPattern> parser = new ListParser<BidPattern>(new BidPatternParser(reg), "");
+        try (Input inp = new Input(new StringReader(str))) {
+            List<BidPattern> l = parser.parse(inp);
+            inp.advanceWhite();
+            if (inp.ch != -1) {
+                throw new IllegalArgumentException("invalid bids: '" + str + "'");
+            }
+            int numWild = 0;
+            for (BidPattern patt : l) {
+                if (patt.generality != null) {
+                    numWild++;
+                }
+            }
+            if (numWild > 1) {
+                throw new IllegalArgumentException("Only one generality allowed");
+            }
+            if (l.size() > 0 && l.get(l.size() - 1).generality != null) {
+                throw new IllegalArgumentException("bids may not end with a generality");
+            }
+            return new BidPatternList(l);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("invalid bids: '" + str + "'", e);
+        }
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -301,6 +277,27 @@ public final class BidPatternList {
             return false;
         BidPatternList other = (BidPatternList) obj;
         return Objects.equals(bids, other.bids);
+    }
+
+    /**
+     * Resolve the symbols starting from a previous context
+     * @param ctx
+     *             The previous context.
+     * @return The list of resolved bidding pattern contexts
+     */
+    private List<BidPatternListContext> resolveSymbols(BidPatternList previous, SymbolTable suits) {
+        if (bids.isEmpty()) {
+            return List.of(new BidPatternListContext(previous, suits));
+        }
+        // For each context gotten from the first bid,
+        // evaluate the remaining bids in the context of that bid.
+        BidPatternList exceptFirst = exceptFirst();
+        List<BidPatternListContext> list = new ArrayList<>();
+        BidPattern pattern = bids.get(0);
+        for (BidPatternContext b : pattern.resolveSymbols(suits)) {
+            list.addAll(exceptFirst.resolveSymbols(previous.withBidAdded(b.bidPattern), b.suits));
+        }
+        return list;
     }
 
     /**
