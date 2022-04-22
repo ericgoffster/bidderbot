@@ -7,41 +7,20 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-/**
- * A bidding context is used to build BidInference's.
- * A bidding context consists of the current BidInference, and the current symbol table.
- * A call to resolveSymbols will create "N" different version of the bidding context,
- * each with a different value of the suit that is allowed, added toe the symbol table.
- * 
- * Note that a BiddingContext is immutable.
- * 
- * @author goffster
- *
- */
+import bbidder.inferences.AndInference;
+
 public final class BiddingContext {
-    public static final BiddingContext EMPTY = new BiddingContext(BidInference.EMPTY, Map.of());
     static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
-    public final BidInference bidInference;
+    public final Inference inference;
 
     private final Map<String, Integer> suits;
 
-    public BiddingContext(BidInference bidInference, Map<String, Integer> suits) {
+    public BiddingContext(Inference inference, Map<String, Integer> suits) {
         super();
-        this.bidInference = bidInference;
+        this.inference = inference;
         this.suits = suits;
     }
     
-    public BiddingContext at(String where) {
-        return new BiddingContext(bidInference.at(where), suits);
-    }
-
-    /**
-     * @return The bid inference.
-     */
-    public BidInference getInference() {
-        return bidInference;
-    }
-
     /**
      * @return The immutable symbol table.
      */
@@ -49,21 +28,10 @@ public final class BiddingContext {
         return Collections.unmodifiableMap(suits);
     }
 
-    /**
-     * @param inf
-     *            The inference to add.
-     * @return A new BiddingContext with the given inference added to the inference list.
-     */
     public BiddingContext withInferenceAdded(Inference inf) {
-        return new BiddingContext(bidInference.withInferenceAdded(inf), suits);
+        return new BiddingContext(AndInference.create(inference, inf), suits);
     }
 
-    /**
-     * @param symbol
-     *            The suit symbol to match.
-     * @return a map of strains to new bidding contexts. Each key in the map represents a possible bid strain
-     *         for the given suit symbol.
-     */
     public Map<Symbol, BiddingContext> resolveSymbols(Symbol symbol) {
         {
             Symbol esymbol = symbol.evaluate(suits);
@@ -80,7 +48,7 @@ public final class BiddingContext {
             if (!suits.containsValue(newSym.getResolved())) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
                 newSuits.putAll(symbol.unevaluate(newSym.getResolved()));
-                m.put(newSym, new BiddingContext(bidInference, newSuits));
+                m.put(newSym, new BiddingContext(inference, newSuits));
             }
         }
         return m;
@@ -89,14 +57,14 @@ public final class BiddingContext {
     @Override
     public String toString() {
         if (suits.isEmpty()) {
-            return bidInference.toString();
+            return inference.toString();
         }
-        return bidInference + " where " + suits;
+        return inference + " where " + suits;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bidInference, suits);
+        return Objects.hash(inference, suits);
     }
 
     @Override
@@ -108,6 +76,6 @@ public final class BiddingContext {
         if (getClass() != obj.getClass())
             return false;
         BiddingContext other = (BiddingContext) obj;
-        return Objects.equals(bidInference, other.bidInference) && Objects.equals(suits, other.suits);
+        return Objects.equals(inference, other.inference) && Objects.equals(suits, other.suits);
     }
 }

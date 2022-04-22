@@ -33,6 +33,9 @@ public class BidInference {
     public BidInference withBids(BidPatternList bids) {
         return new BidInference(where, bids, inferences);
     }
+    public BidInference withInference(Inference inferences) {
+        return new BidInference(where, bids, inferences);
+    }
 
     /**
      * @param patt
@@ -89,9 +92,9 @@ public class BidInference {
     public List<BidInference> resolveSymbols() {
         List<BidInference> result = new ArrayList<>();
         for (BidPatternListContext bc3 : bids.resolveFirstSymbol()) {
-            BiddingContext bc2 = new BiddingContext(BidInference.EMPTY.at(where).withBids(bc3.bids), bc3.getSuits());
+            BiddingContext bc2 = new BiddingContext(TrueInference.T, bc3.getSuits());
             for (BiddingContext bc : inferences.resolveSymbols(bc2)) {
-                result.add(bc.getInference());
+                result.add(BidInference.EMPTY.at(where).withBids(bc3.bids).withInference(bc.inference));
             }
         }
         return result;
