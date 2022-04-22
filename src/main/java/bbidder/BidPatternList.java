@@ -323,8 +323,7 @@ public final class BidPatternList {
         boolean redoubled = false;
         boolean doubled = false;
         for (int i = bids.size() - 1; i >= 0; i--) {
-            BidPattern bidPattern = bids.get(i);
-            Bid bid = bidPattern.simpleBid;
+            Bid bid = bids.get(i).simpleBid;
             if (bid == null) {
                 return null;
             }

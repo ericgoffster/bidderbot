@@ -1,5 +1,6 @@
 package bbidder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -132,6 +133,8 @@ public final class BidPattern {
             Bid b = Bid.valueOf(level, resolved);
             if (symbol.compatibleWith(b)) {
                 return new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional);
+            } else {
+                return null;
             }
         }
         if (jumpLevel != null) {
@@ -141,6 +144,8 @@ public final class BidPattern {
                 Bid b = contract.getBid(jumpLevel, resolved);
                 if (symbol.compatibleWith(b)) {
                     return new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional);
+                } else {
+                    return null;
                 }
             }
         }
@@ -161,7 +166,14 @@ public final class BidPattern {
         if (simpleBid != null) {
             return List.of(new Context(symbols));
         }
-        return ListUtil.map(getSymbol().resolveSymbols(symbols), e -> withSymbol(previous, e.getSymbol()).new Context(e.symbols));
+        List<Context> l = new ArrayList<>();
+        for(var e: getSymbol().resolveSymbols(symbols)) {
+            BidPattern newSym = withSymbol(previous, e.getSymbol());
+            if (newSym != null) {
+                l.add(newSym.new Context(e.symbols));
+            }
+        }
+        return l;
     }
 
     /**
