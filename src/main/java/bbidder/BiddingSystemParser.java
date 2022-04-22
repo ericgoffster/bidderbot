@@ -35,7 +35,7 @@ public final class BiddingSystemParser {
         List<BidInference> inferences = new ArrayList<>();
         List<BiddingTest> tests = new ArrayList<>();
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
-        BiddingSystemParser.load("", urlSpec, reportErrors, inferences, tests, reg);
+        BiddingSystemParser.load("", urlSpec, reportErrors, inferences::add, tests::add, reg);
         return new BiddingSystem(inferences, tests);
     }
 
@@ -49,8 +49,8 @@ public final class BiddingSystemParser {
      * @param reportErrors
      *            The consumer of parse errors
      */
-    private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, List<BidInference> inferences,
-            List<BiddingTest> tests, InferenceRegistry reg) {
+    private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, Consumer<BidInference> inferences,
+            Consumer<BiddingTest> tests, InferenceRegistry reg) {
         try (InputStream is = new URL(null, urlSpec, new ClassPathUrlHandler(BiddingSystem.class.getClassLoader())).openStream()) {
             load(urlSpec, is, reportErrors, inferences, tests, reg);
         } catch (MalformedURLException e) {
@@ -70,8 +70,8 @@ public final class BiddingSystemParser {
      * @param reportErrors
      *            The consumer of parse errors
      */
-    private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, List<BidInference> inferences,
-            List<BiddingTest> tests, InferenceRegistry reg) {
+    private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, Consumer<BidInference> inferences,
+            Consumer<BiddingTest> tests, InferenceRegistry reg) {
         int lineno = 0;
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             StringBuilder sb = new StringBuilder();
@@ -92,23 +92,26 @@ public final class BiddingSystemParser {
                     String[] comm = SplitUtil.split(ln, "\\s+", 2);
                     if (comm.length == 2 && comm[0].equalsIgnoreCase("include")) {
                         load(where, resolveUrlSpec(where, comm[1]), reportErrors, inferences, tests, reg);
-                    } else if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
-                        try {
-                            tests.add(BiddingTest.valueOf(false, where + ":" + lineno, comm[1]));
-                        } catch (Exception e) {
-                            reportErrors.accept(new ParseException(where + ":" + lineno, e));
-                        }
-                    } else if (comm.length == 2 && comm[0].equalsIgnoreCase("anti_test")) {
-                        try {
-                            tests.add(BiddingTest.valueOf(true, where + ":" + lineno, comm[1]));
-                        } catch (Exception e) {
-                            reportErrors.accept(new ParseException(where + ":" + lineno, e));
-                        }
-                    } else if (!ln.equals("")) {
-                        try {
-                            BidInference.valueOf(where + ":" + lineno, reg, ln).resolveSymbols().forEach(inferences::add);
-                        } catch (Exception e) {
-                            reportErrors.accept(new ParseException(where + ":" + lineno, e));
+                    } else {
+                        String here = where + ":" + lineno;
+                        if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
+                            try {
+                                tests.accept(BiddingTest.valueOf(false, here, comm[1]));
+                            } catch (Exception e) {
+                                reportErrors.accept(new ParseException(here, e));
+                            }
+                        } else if (comm.length == 2 && comm[0].equalsIgnoreCase("anti_test")) {
+                            try {
+                                tests.accept(BiddingTest.valueOf(true, here, comm[1]));
+                            } catch (Exception e) {
+                                reportErrors.accept(new ParseException(here, e));
+                            }
+                        } else if (!ln.equals("")) {
+                            try {
+                                BidInference.valueOf(here, reg, ln).resolveSymbols().forEach(inferences);
+                            } catch (Exception e) {
+                                reportErrors.accept(new ParseException(here, e));
+                            }
                         }
                     }
                     sb.setLength(0);
