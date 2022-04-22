@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public class ShapeSet implements Iterable<Shape> {
+public final class ShapeSet implements Iterable<Shape> {
     public static final ShapeSet ALL = new ShapeSet(Shape.values().length);
     public static final ShapeSet NONE = new ShapeSet(0);
 

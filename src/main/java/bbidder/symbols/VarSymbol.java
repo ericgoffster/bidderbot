@@ -8,7 +8,7 @@ import bbidder.Constants;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public class VarSymbol implements Symbol {
+public final class VarSymbol implements Symbol {
     public final String v;
 
     public VarSymbol(String v) {

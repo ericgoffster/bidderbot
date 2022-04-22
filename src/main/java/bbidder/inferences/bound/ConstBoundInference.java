@@ -12,7 +12,7 @@ import bbidder.InfSummary;
  * @author goffster
  *
  */
-public class ConstBoundInference implements IBoundInference {
+public final class ConstBoundInference implements IBoundInference {
     public static ConstBoundInference T = new ConstBoundInference(true);
     public static ConstBoundInference F = new ConstBoundInference(false);
     public final boolean result;

@@ -15,7 +15,7 @@ import bbidder.symbols.OtherMinorSymbol;
 import bbidder.symbols.SteppedSymbol;
 import bbidder.symbols.VarSymbol;
 
-public class SymbolParser {
+public final class SymbolParser {
     static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     public static Pattern LESS_THAN = Pattern.compile("<(\\d+)(.+)");
     public static Pattern GREATER_THAN = Pattern.compile(">(\\d+)(.+)");

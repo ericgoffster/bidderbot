@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author goffster
  *
  */
-public class Range {
+public final class Range {
     public final long bits;
     public final int max;
 

@@ -8,7 +8,7 @@ import bbidder.Bid;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public class DownSymbol implements Symbol {
+public final class DownSymbol implements Symbol {
     public final Symbol sym;
 
     public DownSymbol(Symbol sym) {

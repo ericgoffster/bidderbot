@@ -17,7 +17,7 @@ import bbidder.symbols.ConstSymbol;
  * @author goffster
  *
  */
-public class BidPattern {
+public final class BidPattern {
     static final String STR_DOUBLEJUMP = "DJ";
     static final String STR_JUMP = "J";
     static final String STR_NONJUMP = "NJ";

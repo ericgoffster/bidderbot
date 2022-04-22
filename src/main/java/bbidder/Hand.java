@@ -20,7 +20,7 @@ import java.util.Objects;
  * @author goffster
  *
  */
-public class Hand {
+public final class Hand {
     private final long cards;
 
     private Hand(long cards) {

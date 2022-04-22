@@ -2,7 +2,7 @@ package bbidder;
 
 import java.util.Objects;
 
-public class Stoppers {
+public final class Stoppers {
     public static Stoppers EMPTY = new Stoppers((byte) 0);
     private final byte patt;
 

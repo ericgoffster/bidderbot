@@ -26,7 +26,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
  * @author goffster
  *
  */
-public class FitInSuit implements Inference {
+public final class FitInSuit implements Inference {
     public final Symbol suit;
 
     public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);

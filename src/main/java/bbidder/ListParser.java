@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListParser<T> implements Parser<List<T>> {
+public final class ListParser<T> implements Parser<List<T>> {
 
     public final Parser<T> elementParser;
     public final String delimiter;

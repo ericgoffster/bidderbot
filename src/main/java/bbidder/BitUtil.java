@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * @author goffster
  *
  */
-public class BitUtil {
+public final class BitUtil {
     private static int set[][] = new int[65536][];
 
     static {

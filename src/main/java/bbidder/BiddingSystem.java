@@ -18,7 +18,7 @@ import bbidder.inferences.bound.OrBoundInf;
 /**
  * Represents a compiled bidding system.
  */
-public class BiddingSystem {
+public final class BiddingSystem {
     private final List<BidInference> inferences;
     private final List<BiddingTest> tests;
 

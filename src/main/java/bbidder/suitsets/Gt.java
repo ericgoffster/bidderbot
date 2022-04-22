@@ -8,7 +8,7 @@ import bbidder.SuitSets;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public class Gt implements SuitSet {
+public final class Gt implements SuitSet {
     final Symbol strain;
 
     public Gt(Symbol strain) {

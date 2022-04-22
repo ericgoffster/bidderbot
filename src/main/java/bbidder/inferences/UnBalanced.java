@@ -17,7 +17,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
  * @author goffster
  *
  */
-public class UnBalanced implements Inference {
+public final class UnBalanced implements Inference {
 
     public UnBalanced() {
     }

@@ -7,7 +7,7 @@ import bbidder.Constants;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public class MajorSymbol implements Symbol {
+public final class MajorSymbol implements Symbol {
     public MajorSymbol() {
         super();
     }

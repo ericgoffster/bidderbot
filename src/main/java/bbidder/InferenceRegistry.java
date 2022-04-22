@@ -15,7 +15,7 @@ import bbidder.inferences.TrueInference;
  * @author goffster
  *
  */
-public class InferenceRegistry {
+public final class InferenceRegistry {
     final List<Function<String, Inference>> inferences = new ArrayList<>();
     final List<Function<String, Generality>> generaliities = new ArrayList<>();
 

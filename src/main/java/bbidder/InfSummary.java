@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import bbidder.ShapeSet.Stat;
 
-public class InfSummary {
+public final class InfSummary {
     public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, Range.all(40), StopperSet.ALL, StopperSet.ALL);
     public static final InfSummary NONE = new InfSummary(ShapeSet.NONE, Range.none(40), StopperSet.NONE, StopperSet.NONE);
 

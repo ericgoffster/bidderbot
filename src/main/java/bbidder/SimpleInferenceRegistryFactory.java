@@ -23,7 +23,7 @@ import bbidder.inferences.TotalPointsRange;
 import bbidder.inferences.UnBalanced;
 import bbidder.inferences.VeryBalanced;
 
-public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistry> {
+public final class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistry> {
 
     @Override
     public InferenceRegistry get() {

@@ -19,7 +19,7 @@ import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
-public class Rebiddable implements Inference {
+public final class Rebiddable implements Inference {
     public final Symbol suit;
 
     public static Pattern PATT_FIT = Pattern.compile("\\s*rebiddable\\s*(.*)", Pattern.CASE_INSENSITIVE);

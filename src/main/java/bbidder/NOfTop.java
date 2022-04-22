@@ -2,7 +2,7 @@ package bbidder;
 
 import java.util.Objects;
 
-public class NOfTop {
+public final class NOfTop {
     public final Range r;
     public final int top;
     public final int suit;

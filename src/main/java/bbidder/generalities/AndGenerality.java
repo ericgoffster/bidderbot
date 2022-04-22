@@ -10,7 +10,7 @@ import bbidder.GeneralityContext;
 import bbidder.Players;
 import bbidder.SymbolTable;
 
-public class AndGenerality implements Generality {
+public final class AndGenerality implements Generality {
     public final Generality g1;
     public final Generality g2;
 

@@ -26,7 +26,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
  * @author goffster
  *
  */
-public class OpeningPreempt implements Inference {
+public final class OpeningPreempt implements Inference {
     private final Symbol suit;
     private final int level;
 

@@ -8,7 +8,7 @@ import bbidder.Bid;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public class NonConventional implements Symbol {
+public final class NonConventional implements Symbol {
     public final Symbol sym;
 
     public NonConventional(Symbol sym) {

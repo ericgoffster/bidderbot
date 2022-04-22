@@ -3,7 +3,7 @@ package bbidder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class SymbolContext {
+public final class SymbolContext {
     public static Map<Symbol, SymbolTable> resolveSymbols(SymbolTable suits, Symbol symbol) {
         {
             Symbol esymbol = symbol.evaluate(suits);

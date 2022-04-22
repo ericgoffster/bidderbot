@@ -13,7 +13,7 @@ import bbidder.StopperSet;
  * @author goffster
  *
  */
-public class PartialStoppersBoundInf implements IBoundInference {
+public final class PartialStoppersBoundInf implements IBoundInference {
     final StopperSet stoppers;
 
     @Override

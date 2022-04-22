@@ -4,7 +4,7 @@ import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SymbolTable;
 
-public class Unbid implements SuitSet {
+public final class Unbid implements SuitSet {
     public Unbid() {
         super();
     }

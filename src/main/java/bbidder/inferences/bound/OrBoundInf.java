@@ -14,7 +14,7 @@ import bbidder.InfSummary;
  * @author goffster
  *
  */
-public class OrBoundInf implements IBoundInference {
+public final class OrBoundInf implements IBoundInference {
     public final List<IBoundInference> inferences;
 
     private OrBoundInf(List<IBoundInference> inf) {

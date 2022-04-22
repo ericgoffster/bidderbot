@@ -8,7 +8,7 @@ import bbidder.SuitSets;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public class LookupSet implements SuitSet {
+public final class LookupSet implements SuitSet {
     final Symbol strain;
 
     public LookupSet(Symbol strain) {

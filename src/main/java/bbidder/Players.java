@@ -1,6 +1,6 @@
 package bbidder;
 
-public class Players {
+public final class Players {
     public final Player lho;
     public final Player partner;
     public final Player rho;

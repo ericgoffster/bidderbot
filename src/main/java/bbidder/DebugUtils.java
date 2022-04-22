@@ -2,7 +2,7 @@ package bbidder;
 
 import java.util.List;
 
-public class DebugUtils {
+public final class DebugUtils {
     public static boolean debugMode = false;
     public static int cnt;
     

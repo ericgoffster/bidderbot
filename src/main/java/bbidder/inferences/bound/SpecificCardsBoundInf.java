@@ -7,7 +7,7 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.NOfTop;
 
-public class SpecificCardsBoundInf implements IBoundInference {
+public final class SpecificCardsBoundInf implements IBoundInference {
     final NOfTop spec;
     final boolean have;
 

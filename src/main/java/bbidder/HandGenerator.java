@@ -10,7 +10,7 @@ import java.util.Random;
  * @author goffster
  *
  */
-public class HandGenerator {
+public final class HandGenerator {
     public static HandList generateHands(Random r, IBoundInference inf, int numDesired, InfSummary partner) {
         int[] cards = new int[52];
         for (int i = 0; i < 52; i++) {

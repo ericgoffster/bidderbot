@@ -2,7 +2,7 @@ package bbidder;
 
 import java.io.IOException;
 
-public class BidPatternParser implements Parser<BidPattern> {
+public final class BidPatternParser implements Parser<BidPattern> {
     public final InferenceRegistry reg;
 
     public BidPatternParser(InferenceRegistry reg) {

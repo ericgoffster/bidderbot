@@ -14,9 +14,8 @@ import bbidder.SymbolContext;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 
-public class IBidSuitGenerality implements Generality {
+public final class IBidSuitGenerality implements Generality {
     public final Symbol symbol;
-
 
     public IBidSuitGenerality(Symbol symbol) {
         super();

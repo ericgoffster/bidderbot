@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author goffster
  *
  */
-public class BidList {
+public final class BidList {
     private final List<Bid> bids;
 
     private BidList(List<Bid> bids) {

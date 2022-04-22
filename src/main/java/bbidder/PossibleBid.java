@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author goffster
  *
  */
-public class PossibleBid {
+public final class PossibleBid {
     final BidInference inf;
     final Bid bid;
 

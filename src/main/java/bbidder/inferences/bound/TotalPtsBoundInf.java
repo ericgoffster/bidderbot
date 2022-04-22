@@ -7,7 +7,7 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Range;
 
-public class TotalPtsBoundInf implements IBoundInference {
+public final class TotalPtsBoundInf implements IBoundInference {
     final InfSummary partnerSummary;
     final Range r;
 

@@ -4,7 +4,7 @@ import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SymbolTable;
 
-public class Unstopped implements SuitSet {
+public final class Unstopped implements SuitSet {
     public Unstopped() {
         super();
     }

@@ -13,7 +13,7 @@ import bbidder.ShapeSet;
  * @author goffster
  *
  */
-public class ShapeBoundInf implements IBoundInference {
+public final class ShapeBoundInf implements IBoundInference {
     final ShapeSet shapes;
 
     @Override

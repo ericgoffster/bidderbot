@@ -8,7 +8,7 @@ import bbidder.GeneralityContext;
 import bbidder.Players;
 import bbidder.SymbolTable;
 
-public class TrueGenerality implements Generality {
+public final class TrueGenerality implements Generality {
     public static TrueGenerality T = new TrueGenerality();
 
     private TrueGenerality() {

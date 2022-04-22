@@ -6,7 +6,7 @@ package bbidder;
  * @author goffster
  *
  */
-public class SplitUtil {
+public final class SplitUtil {
     /**
      * Trims all strings in the array
      * 

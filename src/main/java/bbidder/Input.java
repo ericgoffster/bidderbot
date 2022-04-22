@@ -6,7 +6,7 @@ import java.io.PushbackReader;
 import java.io.Reader;
 import java.util.function.Predicate;
 
-public class Input implements Closeable {
+public final class Input implements Closeable {
     public final PushbackReader rd;
     public int ch;
 

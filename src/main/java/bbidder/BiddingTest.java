@@ -6,7 +6,7 @@ package bbidder;
  * @author goffster
  *
  */
-public class BiddingTest {
+public final class BiddingTest {
     public final Hand hand;
     public final BidList bids;
     public final String where;

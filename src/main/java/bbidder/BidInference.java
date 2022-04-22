@@ -13,7 +13,7 @@ import bbidder.inferences.TrueInference;
  * @author goffster
  *
  */
-public class BidInference {
+public final class BidInference {
     public static BidInference EMPTY = new BidInference("System", BidPatternList.EMPTY, TrueInference.T);
     public final String where;
     public final BidPatternList bids;

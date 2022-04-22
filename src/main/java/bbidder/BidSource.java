@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author goffster
  *
  */
-public class BidSource {
+public final class BidSource {
     private final List<PossibleBid> possibleBids;
     public final PossibleBid possibleBid;
 

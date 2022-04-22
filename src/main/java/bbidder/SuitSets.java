@@ -20,7 +20,7 @@ import bbidder.suitsets.Not;
 import bbidder.suitsets.Unbid;
 import bbidder.suitsets.Unstopped;
 
-public class SuitSets {
+public final class SuitSets {
 
     public static Symbol bind(SymbolTable bc, Symbol symbol) {
         Symbol evaluate = symbol.evaluate(bc);

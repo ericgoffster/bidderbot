@@ -8,7 +8,7 @@ import bbidder.Strain;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
 
-public class ConstSymbol implements Symbol {
+public final class ConstSymbol implements Symbol {
     public final int strain;
 
     public ConstSymbol(int strain) {

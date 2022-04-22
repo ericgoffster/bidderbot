@@ -11,7 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class BiddingSystemParser {
+/**
+ * Parses a bidding system.
+ * 
+ * @author goffster
+ *
+ */
+public final class BiddingSystemParser {
 
     /**
      * Loads a bidding system from a url.

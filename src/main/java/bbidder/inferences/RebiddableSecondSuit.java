@@ -19,7 +19,7 @@ import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
-public class RebiddableSecondSuit implements Inference {
+public final class RebiddableSecondSuit implements Inference {
     public final Symbol longer;
     public final Symbol shorter;
 

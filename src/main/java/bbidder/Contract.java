@@ -2,7 +2,7 @@ package bbidder;
 
 import java.util.Objects;
 
-public class Contract {
+public final class Contract {
     public final int position;
     public final Bid winningBid;
     public final boolean doubled;

@@ -6,7 +6,7 @@ import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SymbolTable;
 
-public class Not implements SuitSet {
+public final class Not implements SuitSet {
     final SuitSet ss;
 
     public Not(SuitSet ss) {

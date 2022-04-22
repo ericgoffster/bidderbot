@@ -11,7 +11,7 @@ import static bbidder.Constants.STR_HEART;
 import static bbidder.Constants.STR_NOTRUMP;
 import static bbidder.Constants.STR_SPADE;
 
-public class Strain {
+public final class Strain {
 
     /**
      * Parses a strain

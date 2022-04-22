@@ -14,7 +14,7 @@ import bbidder.SymbolContext;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 
-public class TwoSuitedGenerality implements Generality {
+public final class TwoSuitedGenerality implements Generality {
     public final Symbol longer;
     public final Symbol shorter;
 

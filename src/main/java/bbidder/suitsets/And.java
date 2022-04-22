@@ -6,7 +6,7 @@ import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SymbolTable;
 
-public class And implements SuitSet {
+public final class And implements SuitSet {
     final SuitSet s1;
     final SuitSet s2;
 

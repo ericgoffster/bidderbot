@@ -1,6 +1,6 @@
 package bbidder;
 
-public class TestResult {
+public final class TestResult {
     public final String where;
     public final Hand hand;
     public final BidList bids;

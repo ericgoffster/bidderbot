@@ -16,7 +16,7 @@ import java.util.Set;
  * @author goffster
  *
  */
-public class BidPatternList {
+public final class BidPatternList {
     public static final BidPatternList EMPTY = new BidPatternList(List.of());
     private final List<BidPattern> bids;
 

@@ -22,7 +22,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
  * @author goffster
  *
  */
-public class SuitRange implements Inference {
+public final class SuitRange implements Inference {
     public final Symbol suit;
     public final Range rng;
 

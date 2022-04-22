@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
-public class Handler extends URLStreamHandler {
+public final class Handler extends URLStreamHandler {
     /** The classloader to find resources from. */
     private final ClassLoader classLoader;
 
