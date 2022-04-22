@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.inferences.AndInference;
-import bbidder.inferences.TrueInference;
-
 /**
  * Holds the bids and inferences from the notes.
  * 
@@ -14,58 +11,17 @@ import bbidder.inferences.TrueInference;
  *
  */
 public final class BidInference {
-    public static BidInference EMPTY = new BidInference("System", BidPatternList.EMPTY, TrueInference.T);
     public final String where;
     public final BidPatternList bids;
     public final Inference inferences;
 
-    private BidInference(String where, BidPatternList bids, Inference inferences) {
+    public BidInference(String where, BidPatternList bids, Inference inferences) {
         super();
         this.where = where;
         this.bids = bids;
         this.inferences = inferences;
     }
     
-    public BidInference at(String where) {
-        return new BidInference(where, bids, inferences);
-    }
-    
-    public BidInference withBids(BidPatternList bids) {
-        return new BidInference(where, bids, inferences);
-    }
-    public BidInference withInference(Inference inferences) {
-        return new BidInference(where, bids, inferences);
-    }
-
-    /**
-     * @param patt
-     *            The bid pattern to add
-     * @return A bid inference with the given bid pattern added
-     */
-    public BidInference withBidAdded(BidPattern patt) {
-        return new BidInference(where, bids.withBidAdded(patt), inferences);
-    }
-
-    /**
-     * 
-     * @param patt
-     *            The bid pattern to add
-     * @return A bid inference with the last bid pattern replaced.
-     */
-    public BidInference withLastBidReplaced(BidPattern patt) {
-        return new BidInference(where, bids.withLastBidReplaced(patt), inferences);
-    }
-
-    /**
-     * 
-     * @param inf
-     *            The inference to add
-     * @return A bid inference with the given inference added
-     */
-    public BidInference withInferenceAdded(Inference inf) {
-        return new BidInference(where, bids, AndInference.create(inferences, inf));
-    }
-
     /**
      * @param where
      *            Where is it located.
@@ -93,7 +49,7 @@ public final class BidInference {
         List<BidInference> result = new ArrayList<>();
         for (BidPatternListContext bplc : bids.resolveFirstSymbol(SymbolTable.EMPTY)) {
             for (InferenceContext bc : inferences.resolveSymbols(bplc.suits)) {
-                result.add(BidInference.EMPTY.at(where).withBids(bplc.bids).withInference(bc.inference));
+                result.add(new BidInference(where, bplc.bids, bc.inference));
             }
         }
         return result;
