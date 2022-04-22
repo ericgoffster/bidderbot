@@ -8,8 +8,20 @@
 [fit_established M] 4M P => gf
 test AQxxx Axx Axx xx: 1S 2N 4S P
 
+[fit_established M] 3M P => inv
+test Axxxx Axx Axx xx: 1S 3S P
+
+[fit_established M] 2M P => min
+test xxx Axxx Kx xxxx: 1C 1H 2H P
+
 [fit_established M] 4M => gf
 test AQxxx Axxx Ax xx: 1S 3S 4S
 
 [] 4M => gf, fit M
-test AQxx Axxxx Ax xx: 1C 1H 2H 4H
+test AQxx Axxx x AKxx: 1C 1H 4H
+
+[] 3M => inv, fit M
+test AQxx Axxx xx AQx: 1C 1H 3H
+
+[] 2M => min, fit M
+test Axxx Axxx xx Axx: 1C 1H 2H
