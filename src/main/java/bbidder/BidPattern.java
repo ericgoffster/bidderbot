@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-import bbidder.generalities.AndGenerality;
 import bbidder.symbols.ConstSymbol;
 
 /**
@@ -49,14 +48,6 @@ public class BidPattern {
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality);
-    }
-
-    public BidPattern withGenerality(Generality generality) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality);
-    }
-
-    public BidPattern withGeneralityAdded(Generality g) {
-        return withGenerality(AndGenerality.create(generality, g));
     }
 
     /**
