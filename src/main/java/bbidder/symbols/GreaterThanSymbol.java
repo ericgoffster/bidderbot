@@ -22,7 +22,7 @@ public final class GreaterThanSymbol implements Symbol {
 
     @Override
     public String toString() {
-        return sym + ":>"+level+other;
+        return sym + ":>"+(level + 1)+other;
     }
 
     @Override
