@@ -41,14 +41,14 @@ public final class OtherMinorSymbol extends Symbol {
     }
 
     @Override
-    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
+    public List<Context> resolveSymbols(SymbolTable symbols) {
         if (symbols.containsKey("om")) {
-            return List.of(new SymbolContext(new ConstSymbol(symbols.get("om")), symbols));
+            return List.of(new ConstSymbol(symbols.get("om")).new Context(symbols));
         }
         if (symbols.containsKey("m")) {
-            return List.of(new SymbolContext(new ConstSymbol(otherMinor(symbols.get("m"))), symbols));
+            return List.of(new ConstSymbol(otherMinor(symbols.get("m"))).new Context(symbols));
         }
-        return ListUtil.map(BitUtil.iterate(Constants.MINORS & ~symbols.values()), s -> new SymbolContext(new ConstSymbol(s), symbols.add("om", s)));
+        return ListUtil.map(BitUtil.iterate(Constants.MINORS & ~symbols.values()), s -> new ConstSymbol(s).new Context(symbols.add("om", s)));
     }
 
     private static Integer otherMinor(Integer strain) {

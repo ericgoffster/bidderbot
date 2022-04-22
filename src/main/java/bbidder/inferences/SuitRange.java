@@ -50,7 +50,7 @@ public final class SuitRange implements Inference {
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new SuitRange(e.symbol, rng), e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new SuitRange(e.getSymbol(), rng), e.symbols));
     }
 
     private static IBoundInference createBound(int s, Range r) {

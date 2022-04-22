@@ -22,7 +22,7 @@ public final class IBidSuitGenerality implements Generality {
 
     @Override
     public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new GeneralityContext(new IBidSuitGenerality(e.symbol), e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new GeneralityContext(new IBidSuitGenerality(e.getSymbol()), e.symbols));
     }
 
     @Override

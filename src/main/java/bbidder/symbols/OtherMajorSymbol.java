@@ -41,14 +41,14 @@ public final class OtherMajorSymbol extends Symbol {
     }
 
     @Override
-    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
+    public List<Context> resolveSymbols(SymbolTable symbols) {
         if (symbols.containsKey("OM")) {
-            return List.of(new SymbolContext(new ConstSymbol(symbols.get("OM")), symbols));
+            return List.of(new ConstSymbol(symbols.get("OM")).new Context(symbols));
         }
         if (symbols.containsKey("M")) {
-            return List.of(new SymbolContext(new ConstSymbol(otherMajor(symbols.get("M"))), symbols));
+            return List.of(new ConstSymbol(otherMajor(symbols.get("M"))).new Context(symbols));
         }
-        return ListUtil.map(BitUtil.iterate(Constants.MAJORS & ~symbols.values()), s -> new SymbolContext(new ConstSymbol(s), symbols.add("OM", s)));
+        return ListUtil.map(BitUtil.iterate(Constants.MAJORS & ~symbols.values()), s -> new ConstSymbol(s).new Context(symbols.add("OM", s)));
     }
 
     private static Integer otherMajor(Integer strain) {

@@ -41,8 +41,8 @@ public final class SteppedSymbol extends Symbol {
     }
     
     @Override
-    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SymbolContext(new SteppedSymbol(e.symbol, delta), e.symbols));
+    public List<Context> resolveSymbols(SymbolTable symbols) {
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SteppedSymbol(e.getSymbol(), delta).new Context(e.symbols));
     }
 
     private int transform(Integer s) {

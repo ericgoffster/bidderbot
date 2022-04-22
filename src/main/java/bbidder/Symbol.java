@@ -20,16 +20,18 @@ public abstract class Symbol {
      */
     public abstract boolean nonConvential();
     
-    public abstract List<SymbolContext> resolveSymbols(SymbolTable symbols);
+    public abstract List<Context> resolveSymbols(SymbolTable symbols);
     
-    public static final class SymbolContext {
-        public final Symbol symbol;
+    public final class Context {
         public final SymbolTable symbols;
 
-        public SymbolContext(Symbol symbol, SymbolTable symbols) {
+        public Context(SymbolTable symbols) {
             super();
-            this.symbol = symbol;
             this.symbols = symbols;
+        }
+
+        public Symbol getSymbol() {
+            return Symbol.this;
         }
     }
 }

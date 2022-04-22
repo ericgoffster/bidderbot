@@ -39,8 +39,8 @@ public final class NonConventional extends Symbol {
     }
 
     @Override
-    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SymbolContext(new NonConventional(e.symbol), e.symbols));
+    public List<Context> resolveSymbols(SymbolTable symbols) {
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new NonConventional(e.getSymbol()).new Context(e.symbols));
     }
 
     @Override

@@ -46,11 +46,11 @@ public final class VarSymbol extends Symbol {
     }
 
     @Override
-    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
+    public List<Context> resolveSymbols(SymbolTable symbols) {
         if (symbols.containsKey(varName)) {
-            return List.of(new SymbolContext(new ConstSymbol(symbols.get(varName)), symbols));
+            return List.of(new ConstSymbol(symbols.get(varName)).new Context(symbols));
         }
-        return ListUtil.map(BitUtil.iterate(Constants.ALL_SUITS & ~symbols.values()), s -> new SymbolContext(new ConstSymbol(s), symbols.add(varName, s)));
+        return ListUtil.map(BitUtil.iterate(Constants.ALL_SUITS & ~symbols.values()), s -> new ConstSymbol(s).new Context(symbols.add(varName, s)));
     }
 
     @Override
