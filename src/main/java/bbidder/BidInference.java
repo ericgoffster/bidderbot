@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import bbidder.inferences.AndInference;
+import bbidder.inferences.TrueInference;
+
 /**
  * Holds the bids and inferences from the notes.
  * 
@@ -11,12 +14,12 @@ import java.util.Objects;
  *
  */
 public class BidInference {
-    public static BidInference EMPTY = new BidInference(null, BidPatternList.EMPTY, InferenceList.EMPTY);
+    public static BidInference EMPTY = new BidInference(null, BidPatternList.EMPTY, TrueInference.T);
     public final String where;
     public final BidPatternList bids;
-    public final InferenceList inferences;
+    public final Inference inferences;
 
-    private BidInference(String where, BidPatternList bids, InferenceList inferences) {
+    private BidInference(String where, BidPatternList bids, Inference inferences) {
         super();
         this.where = where;
         this.bids = bids;
@@ -44,6 +47,17 @@ public class BidInference {
     public BidInference withLastBidReplaced(BidPattern patt) {
         return new BidInference(where, bids.withLastBidReplaced(patt), inferences);
     }
+    
+    public static Inference parseInf(InferenceRegistry registry, String str) {
+        if (str == null) {
+            return null;
+        }
+        List<Inference> l = new ArrayList<>();
+        for (String part : SplitUtil.split(str, ",")) {
+            l.add(registry.valueOf(part));
+        }
+        return AndInference.create(l);
+    }
 
     /**
      * 
@@ -52,7 +66,7 @@ public class BidInference {
      * @return A bid inference with the given inference added
      */
     public BidInference withInferenceAdded(Inference i) {
-        return new BidInference(where, bids, inferences.withInferenceAdded(i));
+        return new BidInference(where, bids, AndInference.create(inferences, i));
     }
 
     /**
@@ -70,7 +84,7 @@ public class BidInference {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        return new BidInference(null, BidPatternList.valueOf(parts[0]), InferenceList.valueOf(reg, parts[1]));
+        return new BidInference(null, BidPatternList.valueOf(parts[0]), parseInf(reg, parts[1]));
     }
 
     /**
