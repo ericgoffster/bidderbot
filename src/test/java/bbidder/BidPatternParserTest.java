@@ -15,7 +15,7 @@ public class BidPatternParserTest {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         BidPatternParser parser = new BidPatternParser(reg);
         BidPattern patt;
-        try(Input inp = new Input(new StringReader(str)) ){
+        try (Input inp = new Input(new StringReader(str))) {
             patt = parser.parse(inp);
             inp.advanceWhite();
             if (inp.ch != -1) {
@@ -24,6 +24,7 @@ public class BidPatternParserTest {
         }
         return patt;
     }
+
     @Test
     public void test() throws IOException {
         assertEquals(BidPattern.createSimpleBid(Bid.P), parse("P"));
