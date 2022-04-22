@@ -3,11 +3,22 @@ package bbidder;
 import java.util.Map;
 
 public interface Symbol {
-    public int getResolved();
+    /**
+     * @return The resolved value
+     */
+    int getResolved();
     
-    public boolean compatibleWith(Bid bid);
+    /**
+     * @param bid The bid to test
+     * @return true if the given bid is compatible with the symbol
+     */
+    boolean compatibleWith(Bid bid);
     
-    public boolean nonConvential();
+    /**
+     * 
+     * @return true if the given bid should only be considered if the bid was not previously defined.
+     */
+    boolean nonConvential();
     
     Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols);
 }
