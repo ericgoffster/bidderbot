@@ -66,8 +66,13 @@ public class BiddingSystem {
      */
     public void dump(OutputStream os) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
+            String last = null;
             for (BidInference bi : inferences) {
-                bw.write(bi + "\n");
+                if (last == null || !last.equals(bi.where)) {
+                    bw.write(bi.where + ":\n");
+                    last = bi.where;
+                }
+                bw.write("    " + bi + "\n");
             }
         }
     }
