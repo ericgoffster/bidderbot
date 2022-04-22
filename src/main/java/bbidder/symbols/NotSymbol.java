@@ -12,7 +12,7 @@ public class NotSymbol implements Symbol {
         super();
         this.sym = sym;
     }
-    
+
     @Override
     public String toString() {
         return "~" + sym;
@@ -34,7 +34,7 @@ public class NotSymbol implements Symbol {
         NotSymbol other = (NotSymbol) obj;
         return Objects.equals(sym, other.sym);
     }
-    
+
     @Override
     public short getSuitClass(Map<String, Integer> suits) {
         return (short) (0xf ^ sym.getSuitClass(suits));
@@ -44,12 +44,12 @@ public class NotSymbol implements Symbol {
     public Integer evaluate(Map<String, Integer> suits) {
         return suits.get(toString());
     }
-    
+
     @Override
     public Map<String, Integer> unevaluate(int strain) {
         return Map.of(toString(), strain);
     }
-    
+
     @Override
     public int getResolved() {
         throw new IllegalStateException(this + " not resolved");

@@ -11,7 +11,7 @@ public class OtherMinorSymbol implements Symbol {
     public OtherMinorSymbol() {
         super();
     }
-    
+
     @Override
     public String toString() {
         return "om";
@@ -32,7 +32,7 @@ public class OtherMinorSymbol implements Symbol {
             return false;
         return true;
     }
-    
+
     @Override
     public Integer evaluate(Map<String, Integer> suits) {
         if (suits.containsKey("m")) {
@@ -40,7 +40,7 @@ public class OtherMinorSymbol implements Symbol {
         }
         return suits.get("om");
     }
-    
+
     @Override
     public int getResolved() {
         throw new IllegalStateException(this + " not resolved");
@@ -48,13 +48,13 @@ public class OtherMinorSymbol implements Symbol {
 
     @Override
     public Map<String, Integer> unevaluate(int strain) {
-        return Map.of("om", strain);        
+        return Map.of("om", strain);
     }
-    
+
     @Override
     public short getSuitClass(Map<String, Integer> suits) {
         if (suits.containsKey("m") || suits.containsKey("om")) {
-            return (short)(1 << evaluate(suits));
+            return (short) (1 << evaluate(suits));
         }
         return MINORS;
     }

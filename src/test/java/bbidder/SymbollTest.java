@@ -23,6 +23,7 @@ public class SymbollTest {
         assertEquals(3, sym.getResolved());
         assertEquals(1 << 3, sym.getSuitClass(Map.of()));
     }
+
     @Test
     public void testOtherMinor() {
         Symbol sym = new OtherMinorSymbol();
@@ -31,6 +32,7 @@ public class SymbollTest {
         assertEquals(Map.of("om", 0), sym.unevaluate(0));
         assertEquals(Constants.MINORS, sym.getSuitClass(Map.of()));
     }
+
     @Test
     public void testMinor() {
         Symbol sym = new MinorSymbol();
@@ -39,6 +41,7 @@ public class SymbollTest {
         assertEquals(Map.of("m", 0), sym.unevaluate(0));
         assertEquals(Constants.MINORS, sym.getSuitClass(Map.of()));
     }
+
     @Test
     public void testOtherMajor() {
         Symbol sym = new OtherMajorSymbol();
@@ -47,6 +50,7 @@ public class SymbollTest {
         assertEquals(Map.of("OM", 2), sym.unevaluate(2));
         assertEquals(Constants.MAJORS, sym.getSuitClass(Map.of()));
     }
+
     @Test
     public void testMajor() {
         Symbol sym = new MajorSymbol();
@@ -55,6 +59,7 @@ public class SymbollTest {
         assertEquals(Map.of("M", 2), sym.unevaluate(2));
         assertEquals(Constants.MAJORS, sym.getSuitClass(Map.of()));
     }
+
     @Test
     public void testVar() {
         Symbol sym = new VarSymbol("x");
@@ -62,6 +67,7 @@ public class SymbollTest {
         assertEquals(Map.of("x", 2), sym.unevaluate(2));
         assertEquals(Constants.ALL_SUITS, sym.getSuitClass(Map.of()));
     }
+
     @Test
     public void testStepped() {
         Symbol sym = new SteppedSymbol(new VarSymbol("x"), 1);
@@ -71,6 +77,7 @@ public class SymbollTest {
         assertEquals(Map.of("x", 0), sym.unevaluate(4));
         assertEquals(1 << 0 | 1 << 1 | 1 << 2 | 1 << 4, sym.getSuitClass(Map.of()));
     }
+
     @Test
     public void testNot() {
         Symbol sym = new NotSymbol(new VarSymbol("x"));

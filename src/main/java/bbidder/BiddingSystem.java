@@ -75,7 +75,7 @@ public class BiddingSystem {
     /**
      * @param bids
      *            The list of bids
-     * @param players 
+     * @param players
      *            The players
      * @return A list of all possible bids given the list of bids.
      */
@@ -135,7 +135,7 @@ public class BiddingSystem {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
                 if (i.inf.bids.positionOfWild() < 0 || negative.isEmpty()) {
-                    positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));                    
+                    positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
                 }
             }
             negative.add(inf);

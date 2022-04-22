@@ -43,7 +43,7 @@ public class Strain {
             return null;
         }
     }
-    
+
     public static String getName(Integer strain) {
         if (strain == null) {
             return null;

@@ -35,7 +35,7 @@ public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistr
         reg.addInference(CombinedTotalPointsRange::valueOf);
         reg.addInference(SpecificCards::valueOf);
         reg.addInference(StoppersInSuits::valueOf);
-        
+
         reg.addGenerality(FitEstablished::valueOf);
         return reg;
     }

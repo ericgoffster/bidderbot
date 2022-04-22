@@ -23,11 +23,11 @@ public class BidPatternList {
         super();
         this.bids = bids;
     }
-    
+
     public BidPattern getLastBid() {
         return bids.get(bids.size() - 1);
     }
-    
+
     public List<BidPattern> getBids() {
         return Collections.unmodifiableList(bids);
     }
@@ -60,7 +60,7 @@ public class BidPatternList {
         l.addAll(_resolveSymbols(bc));
         return l;
     }
-    
+
     public List<BiddingContext> _resolveSymbols(BiddingContext bc) {
         // no patterns, then a wide open context.
         if (bids.isEmpty()) {
@@ -80,15 +80,15 @@ public class BidPatternList {
             return null;
         }
         ListParser<BidPattern> parser = new ListParser<BidPattern>(new BidPatternParser(reg), "");
-        try(Input inp = new Input(new StringReader(str))) {
+        try (Input inp = new Input(new StringReader(str))) {
             List<BidPattern> l = parser.parse(inp);
             inp.advanceWhite();
             if (inp.ch != -1) {
-                throw new IllegalArgumentException("invalid bids: '"+str+"'");
+                throw new IllegalArgumentException("invalid bids: '" + str + "'");
             }
             return new BidPatternList(l);
         } catch (IOException e) {
-            throw new IllegalArgumentException("invalid bids: '"+str+"'", e);
+            throw new IllegalArgumentException("invalid bids: '" + str + "'", e);
         }
     }
 
@@ -194,7 +194,7 @@ public class BidPatternList {
         while (i < bids.size() - 1) {
             BidPattern pattern = bids.get(i);
             if (pattern.generality != null) {
-                if (!pattern.generality .matches(players, bidList)) {
+                if (!pattern.generality.matches(players, bidList)) {
                     return null;
                 }
                 j += wildSize;

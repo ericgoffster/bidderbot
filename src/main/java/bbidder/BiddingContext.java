@@ -73,7 +73,7 @@ public final class BiddingContext {
     public BiddingContext withInferenceAdded(Inference i) {
         return new BiddingContext(bidInference.withInferenceAdded(i), suits);
     }
-    
+
     public BiddingContext withGeneralityAdded(Generality g) {
         return withLastBidReplaced(bidInference.bids.getLastBid().withGeneralityAdded(g));
     }
@@ -86,7 +86,7 @@ public final class BiddingContext {
     public Integer getSuit(Symbol symbol) {
         return symbol.evaluate(suits);
     }
-    
+
     /**
      * @param symbol
      *            The suit to match.

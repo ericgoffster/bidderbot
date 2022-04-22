@@ -12,7 +12,7 @@ public class DownSymbol implements Symbol {
         super();
         this.sym = sym;
     }
-    
+
     @Override
     public String toString() {
         return sym + ":down";
@@ -39,7 +39,7 @@ public class DownSymbol implements Symbol {
     public Integer evaluate(Map<String, Integer> suits) {
         return sym.evaluate(suits);
     }
-    
+
     @Override
     public Map<String, Integer> unevaluate(int strain) {
         return sym.unevaluate(strain);
@@ -49,7 +49,7 @@ public class DownSymbol implements Symbol {
     public short getSuitClass(Map<String, Integer> suits) {
         return sym.getSuitClass(suits);
     }
-    
+
     @Override
     public int getResolved() {
         throw new IllegalStateException(this + " not resolved");

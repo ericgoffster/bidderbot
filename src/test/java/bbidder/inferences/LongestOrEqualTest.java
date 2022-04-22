@@ -42,8 +42,11 @@ public class LongestOrEqualTest {
 
     @Test
     public void testHigherRankingOfNotSpades() {
-        assertTrue(new LongestOrEqual(new ConstSymbol(2), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
-        assertTrue(new LongestOrEqual(new ConstSymbol(1), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
-        assertFalse(new LongestOrEqual(new ConstSymbol(0), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+        assertTrue(
+                new LongestOrEqual(new ConstSymbol(2), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+        assertTrue(
+                new LongestOrEqual(new ConstSymbol(1), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+        assertFalse(
+                new LongestOrEqual(new ConstSymbol(0), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
     }
 }

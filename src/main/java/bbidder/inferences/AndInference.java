@@ -19,6 +19,7 @@ import bbidder.inferences.bound.AndBoundInf;
 public class AndInference implements Inference {
     public final Inference i1;
     public final Inference i2;
+
     private AndInference(Inference i1, Inference i2) {
         this.i1 = i1;
         this.i2 = i2;
@@ -32,12 +33,12 @@ public class AndInference implements Inference {
     @Override
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> res = new ArrayList<>();
-        for(BiddingContext bc: i1.resolveSymbols(context)) {
+        for (BiddingContext bc : i1.resolveSymbols(context)) {
             res.addAll(i2.resolveSymbols(bc));
         }
         return res;
     }
-    
+
     public static Inference create(Inference i1, Inference i2) {
         if (i1.equals(TrueInference.T)) {
             return i2;

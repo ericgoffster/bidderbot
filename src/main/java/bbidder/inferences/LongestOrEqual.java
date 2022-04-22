@@ -42,8 +42,7 @@ public class LongestOrEqual implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue()
-                    .withInferenceAdded(new LongestOrEqual(new ConstSymbol(e.getKey()), among.replaceVars(context))));
+            l.add(e.getValue().withInferenceAdded(new LongestOrEqual(new ConstSymbol(e.getKey()), among.replaceVars(context))));
         }
         return l;
     }

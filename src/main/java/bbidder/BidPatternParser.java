@@ -4,14 +4,16 @@ import java.io.IOException;
 
 public class BidPatternParser implements Parser<BidPattern> {
     public final InferenceRegistry reg;
-    
+
     public BidPatternParser(InferenceRegistry reg) {
         super();
         this.reg = reg;
     }
+
     private String parseSuit(Input inp) throws IOException {
         return inp.readToken(ch -> ch != ')');
     }
+
     private BidPattern parseInterior(Input inp) throws IOException {
         inp.advanceWhite();
         Integer jumpLevel = null;
@@ -34,7 +36,7 @@ public class BidPatternParser implements Parser<BidPattern> {
             nonreverse = true;
             str = parseSuit(inp);
         } else {
-            str = parseSuit(inp);   
+            str = parseSuit(inp);
             if (str.length() == 0) {
                 return null;
             }
@@ -67,8 +69,8 @@ public class BidPatternParser implements Parser<BidPattern> {
             StringBuilder sb = new StringBuilder();
             inp.advance();
             inp.advanceWhite();
-            while(inp.ch != ']') {
-                sb.append((char)inp.ch);
+            while (inp.ch != ']') {
+                sb.append((char) inp.ch);
                 inp.advance();
             }
             if (inp.ch == ']') {
@@ -86,7 +88,7 @@ public class BidPatternParser implements Parser<BidPattern> {
             inp.advance();
             return patt.withIsOpposition(true);
         }
-            
+
         return parseInterior(inp);
-    }        
+    }
 }

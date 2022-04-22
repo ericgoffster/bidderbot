@@ -13,7 +13,7 @@ public class InfSummary {
     public final Range tpts;
     public final StopperSet stoppers;
     public final StopperSet partialStoppers;
-    
+
     public final AtomicReference<Stat[]> stats;
 
     public InfSummary(ShapeSet shape, Range tpts, StopperSet stoppers, StopperSet partialStoppers) {
@@ -60,7 +60,7 @@ public class InfSummary {
 
     public Range getSuit(int suit) {
         return getStat(suit).range;
-     }
+    }
 
     public Stat getStat(int suit) {
         return stats.updateAndGet(st -> (st != null) ? st : shape.getStats())[suit];
@@ -69,7 +69,7 @@ public class InfSummary {
     public int minTotalPts() {
         return tpts.lowest();
     }
-    
+
     public int minLenInSuit(int suit) {
         return getSuit(suit).lowest();
     }

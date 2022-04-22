@@ -16,7 +16,7 @@ import bbidder.symbols.ConstSymbol;
 
 public class FitEstablished implements Generality {
     public final Symbol symbol;
-    
+
     public FitEstablished(Symbol symbol) {
         super();
         this.symbol = symbol;
@@ -27,16 +27,16 @@ public class FitEstablished implements Generality {
         List<BiddingContext> result = new ArrayList<>();
         for (Entry<Integer, BiddingContext> e : bc.resolveSymbols(symbol).entrySet()) {
             result.add(e.getValue().withGeneralityAdded(new FitEstablished(new ConstSymbol(e.getKey()))));
-         }
+        }
         return result;
     }
-    
+
     @Override
     public boolean matches(Players players, BidList bidList) {
         int s = symbol.getResolved();
         return players.partner.infSummary.minLenInSuit(s) + players.me.infSummary.minLenInSuit(s) >= 8;
     }
-    
+
     public static FitEstablished valueOf(String str) {
         if (str == null) {
             return null;
@@ -67,7 +67,7 @@ public class FitEstablished implements Generality {
         FitEstablished other = (FitEstablished) obj;
         return Objects.equals(symbol, other.symbol);
     }
-    
+
     @Override
     public String toString() {
         return "fit_established " + symbol;

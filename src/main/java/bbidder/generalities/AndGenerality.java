@@ -18,7 +18,7 @@ public class AndGenerality implements Generality {
         this.g1 = g1;
         this.g2 = g2;
     }
-    
+
     public static Generality create(Generality g1, Generality g2) {
         if (g1.equals(TrueGenerality.T)) {
             return g2;
@@ -32,17 +32,17 @@ public class AndGenerality implements Generality {
     @Override
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         List<BiddingContext> result = new ArrayList<>();
-        for (BiddingContext bc2: g1.resolveSymbols(bc)) {
-            result.addAll(g2.resolveSymbols(bc2)) ;
+        for (BiddingContext bc2 : g1.resolveSymbols(bc)) {
+            result.addAll(g2.resolveSymbols(bc2));
         }
         return result;
     }
-    
+
     @Override
     public boolean matches(Players players, BidList bidList) {
         return g1.matches(players, bidList) && g2.matches(players, bidList);
     }
-    
+
     @Override
     public String toString() {
         return g1 + ", " + g2;

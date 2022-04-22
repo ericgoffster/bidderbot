@@ -62,7 +62,8 @@ public class BidList {
 
     /**
      * 
-     * @param bid The bid to test
+     * @param bid
+     *            The bid to test
      * @return true if the bid represents a legal bid in the auction
      */
     public boolean isLegalBid(Bid bid) {
@@ -268,7 +269,8 @@ public class BidList {
 
     /**
      * 
-     * @param bid The bid to test
+     * @param bid
+     *            The bid to test
      * @return true if the given bid would be a reverse.
      */
     public boolean isReverse(Bid bid) {
@@ -287,7 +289,8 @@ public class BidList {
 
     /**
      * 
-     * @param bid The bid to test
+     * @param bid
+     *            The bid to test
      * @return true if the given bid would be a non-reverse.
      */
     public boolean isNonReverse(Bid bid) {
@@ -306,7 +309,8 @@ public class BidList {
 
     /**
      * 
-     * @param strain The bid strain
+     * @param strain
+     *            The bid strain
      * @return The next possible level of the given strain.
      */
     public Bid nextLevel(int strain) {
@@ -320,8 +324,10 @@ public class BidList {
 
     /**
      * 
-     * @param jumpLevel The number of levels to jump
-     * @param strain The bidding strain
+     * @param jumpLevel
+     *            The number of levels to jump
+     * @param strain
+     *            The bidding strain
      * @return The bid, jumping the requisite number of jumps.
      */
     public Bid getBid(int jumpLevel, int strain) {

@@ -57,7 +57,7 @@ public class BidPattern {
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, generality);
     }
-    
+
     public BidPattern withGenerality(Generality generality) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, generality);
     }
@@ -65,6 +65,7 @@ public class BidPattern {
     public BidPattern withGeneralityAdded(Generality g) {
         return withGenerality(AndGenerality.create(generality, g));
     }
+
     /**
      * @return The number of jumps. Null if N/A
      */
@@ -116,7 +117,7 @@ public class BidPattern {
                 && nonreverse == other.nonreverse && reverse == other.reverse && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol)
                 && Objects.equals(generality, other.generality);
     }
-    
+
     public String getLevelString() {
         return level == null ? "" : String.valueOf(level);
     }
@@ -147,8 +148,10 @@ public class BidPattern {
     }
 
     /**
-     * @param symbol The suit
-     * @param jumpLevel The number of jumps
+     * @param symbol
+     *            The suit
+     * @param jumpLevel
+     *            The number of jumps
      * @return A pattern where the level is "jump" based.
      */
     public static BidPattern createJump(Symbol symbol, int jumpLevel) {
@@ -156,7 +159,8 @@ public class BidPattern {
     }
 
     /**
-     * @param symbol The suit to reverse
+     * @param symbol
+     *            The suit to reverse
      * @return A bid that is the reverse of a suit
      */
     public static BidPattern createReverse(Symbol symbol) {
@@ -164,7 +168,8 @@ public class BidPattern {
     }
 
     /**
-     * @param suit to non-reverse
+     * @param suit
+     *            to non-reverse
      * @return A bid that is the non-reverse reverse of a suit
      */
     public static BidPattern createNonReverse(Symbol suit) {
@@ -172,45 +177,48 @@ public class BidPattern {
     }
 
     /**
-     * @param simpleBid The simple bid
+     * @param simpleBid
+     *            The simple bid
      * @return A simple "constant" bid
      */
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
-            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, false,
-                    false, null);
+            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, false, false, null);
         }
         return new BidPattern(false, null, null, simpleBid, null, false, false, null);
     }
 
     /**
      * 
-     * @param level The level
-     * @param symbol The suitz
+     * @param level
+     *            The level
+     * @param symbol
+     *            The suitz
      * @return A bid that is the level of a suit
      */
     public static BidPattern createBid(int level, Symbol symbol) {
         return new BidPattern(false, symbol, level, null, null, false, false, null);
     }
-    
+
     public static BidPattern createWild(Generality generality) {
         return new BidPattern(false, null, null, null, null, false, false, generality);
     }
 
     /**
-     * @param strain The strain
+     * @param strain
+     *            The strain
      * @return A bid with the suit bound to a specific strain
      */
     public BidPattern bindSuit(int strain) {
         if (level != null) {
             return createSimpleBid(Bid.valueOf(level, strain));
         }
-        return new BidPattern(isOpposition, new ConstSymbol(strain), level, simpleBid, jumpLevel, reverse, nonreverse,
-                generality);
+        return new BidPattern(isOpposition, new ConstSymbol(strain), level, simpleBid, jumpLevel, reverse, nonreverse, generality);
     }
 
     /**
-     * @param bc The bidding context
+     * @param bc
+     *            The bidding context
      * @return A list of contexts representing the symbol bound to actual values
      */
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {

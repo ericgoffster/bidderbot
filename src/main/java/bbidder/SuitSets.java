@@ -104,7 +104,7 @@ public class SuitSets {
             return new Gt(bind(bc, strain));
         }
     }
-    
+
     public static Symbol bind(BiddingContext bc, Symbol symbol) {
         Integer strain = bc.getSuit(symbol);
         if (strain == null) {
@@ -112,7 +112,6 @@ public class SuitSets {
         }
         return new ConstSymbol(strain);
     }
-    
 
     public static class Unbid implements SuitSet {
         public Unbid() {

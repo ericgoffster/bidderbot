@@ -16,10 +16,10 @@ public class ShapeSet implements Iterable<Shape> {
     private ShapeSet(BitSet shapes) {
         this.shapes = shapes;
     }
-    
+
     private ShapeSet(int n) {
         this.shapes = new BitSet(n);
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             this.shapes.set(i);
         }
     }
@@ -31,7 +31,7 @@ public class ShapeSet implements Iterable<Shape> {
         }
         return shapes;
     }
-    
+
     public static ShapeSet create(Iterable<Shape> list) {
         return createNew(createShapes(list));
     }
@@ -94,7 +94,7 @@ public class ShapeSet implements Iterable<Shape> {
     public boolean unBounded() {
         return size() == Shape.values().length;
     }
-    
+
     public Stat[] getStats() {
         long[] bits = new long[4];
         double tot = 0;
@@ -181,13 +181,14 @@ public class ShapeSet implements Iterable<Shape> {
         final int suit;
         final Range range;
         final double avg;
+
         public Stat(int suit, Range range, double avg) {
             super();
             this.suit = suit;
             this.range = range;
             this.avg = avg;
         }
-        
+
         @Override
         public String toString() {
             return range + " " + Strain.getName(suit) + " average " + avg;

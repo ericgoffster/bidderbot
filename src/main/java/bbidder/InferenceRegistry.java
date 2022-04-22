@@ -28,7 +28,7 @@ public class InferenceRegistry {
     public void addInference(Function<String, Inference> constructor) {
         inferences.add(constructor);
     }
-    
+
     public void addGenerality(Function<String, Generality> constructor) {
         generaliities.add(constructor);
     }
@@ -59,7 +59,7 @@ public class InferenceRegistry {
         }
         throw new IllegalArgumentException("unknown inference: '" + str + "'");
     }
-    
+
     public Generality parseGenerality(String str) {
         if (str == null) {
             return null;

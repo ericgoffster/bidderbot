@@ -13,7 +13,7 @@ public class ConstSymbol implements Symbol {
         super();
         this.strain = strain;
     }
-    
+
     @Override
     public String toString() {
         return Strain.getName(strain);
@@ -40,7 +40,7 @@ public class ConstSymbol implements Symbol {
     public Integer evaluate(Map<String, Integer> suits) {
         return strain;
     }
-    
+
     @Override
     public Map<String, Integer> unevaluate(int strain) {
         if (strain != this.strain) {
@@ -53,7 +53,7 @@ public class ConstSymbol implements Symbol {
     public short getSuitClass(Map<String, Integer> suits) {
         return (short) (1 << strain);
     }
-    
+
     @Override
     public int getResolved() {
         return strain;

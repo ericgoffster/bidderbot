@@ -9,12 +9,12 @@ import bbidder.Symbol;
 
 public class VarSymbol implements Symbol {
     public final String v;
-    
+
     public VarSymbol(String v) {
         super();
         this.v = v;
     }
-    
+
     @Override
     public String toString() {
         return v;
@@ -36,12 +36,12 @@ public class VarSymbol implements Symbol {
         VarSymbol other = (VarSymbol) obj;
         return Objects.equals(v, other.v);
     }
-    
+
     @Override
     public Integer evaluate(Map<String, Integer> suits) {
         return suits.get(v);
     }
-    
+
     @Override
     public int getResolved() {
         throw new IllegalStateException(this + " not resolved");
@@ -49,13 +49,13 @@ public class VarSymbol implements Symbol {
 
     @Override
     public Map<String, Integer> unevaluate(int strain) {
-        return Map.of(v, strain);        
+        return Map.of(v, strain);
     }
-    
+
     @Override
     public short getSuitClass(Map<String, Integer> suits) {
         if (suits.containsKey(v)) {
-            return (short)(1 << evaluate(suits));
+            return (short) (1 << evaluate(suits));
         }
         return ALL_SUITS;
     }

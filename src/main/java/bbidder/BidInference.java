@@ -34,11 +34,11 @@ public class BidInference {
     public BidInference withBidAdded(BidPattern patt) {
         return new BidInference(where, bids.withBidAdded(patt), inferences);
     }
-    
+
     public BidInference withLastBidReplaced(BidPattern patt) {
         return new BidInference(where, bids.withLastBidReplaced(patt), inferences);
     }
-    
+
     /**
      * 
      * @param i
@@ -50,7 +50,7 @@ public class BidInference {
     }
 
     /**
-     * @param where 
+     * @param where
      *            Where is it located.
      * @param reg
      *            The inference registry
@@ -70,8 +70,8 @@ public class BidInference {
     }
 
     /**
-     * @param context 
-     *     The bidding context
+     * @param context
+     *            The bidding context
      * @return A list of bid inferences with all suit variables resolved.
      */
     public List<BidInference> resolveSymbols(BiddingContext context) {

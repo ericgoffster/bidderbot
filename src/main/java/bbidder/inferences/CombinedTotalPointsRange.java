@@ -72,7 +72,7 @@ public class CombinedTotalPointsRange implements Inference {
                 maxPts = nextMax;
             }
         }
-        
+
         if (dir < 0) {
             pts = null;
         }

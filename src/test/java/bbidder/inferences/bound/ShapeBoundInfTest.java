@@ -24,6 +24,7 @@ public class ShapeBoundInfTest {
         assertFalse(ShapeBoundInf.create(ShapeSet.create(List.of(Shape._00030307, Shape._01000507))).matches(Hand.valueOf("xxxxxxx xxxx x x")));
 
         InfSummary summary = ShapeBoundInf.create(ShapeSet.create(List.of(Shape._00030307, Shape._01000507))).getSummary();
-        assertEquals(summary, new InfSummary(ShapeSet.create(List.of(Shape._00030307, Shape._01000507)), Range.all(40), StopperSet.ALL, StopperSet.ALL));
+        assertEquals(summary,
+                new InfSummary(ShapeSet.create(List.of(Shape._00030307, Shape._01000507)), Range.all(40), StopperSet.ALL, StopperSet.ALL));
     }
 }

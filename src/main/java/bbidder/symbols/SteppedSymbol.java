@@ -8,12 +8,13 @@ import bbidder.Symbol;
 public class SteppedSymbol implements Symbol {
     public final Symbol sym;
     public final int delta;
+
     public SteppedSymbol(Symbol sym, int delta) {
         super();
         this.sym = sym;
         this.delta = delta;
     }
-    
+
     @Override
     public String toString() {
         return sym + "-" + delta;
@@ -35,7 +36,7 @@ public class SteppedSymbol implements Symbol {
         SteppedSymbol other = (SteppedSymbol) obj;
         return delta == other.delta && Objects.equals(sym, other.sym);
     }
-    
+
     @Override
     public short getSuitClass(Map<String, Integer> sts) {
         int n = delta;
@@ -46,7 +47,7 @@ public class SteppedSymbol implements Symbol {
         }
         return suits;
     }
-    
+
     @Override
     public Integer evaluate(Map<String, Integer> suits) {
         Integer s = sym.evaluate(suits);
@@ -55,7 +56,7 @@ public class SteppedSymbol implements Symbol {
         }
         return (s + 5 - delta) % 5;
     }
-    
+
     @Override
     public Map<String, Integer> unevaluate(int strain) {
         return sym.unevaluate((strain + delta) % 5);
@@ -63,13 +64,14 @@ public class SteppedSymbol implements Symbol {
 
     /**
      * 
-     * @param suits The suits to rotate
+     * @param suits
+     *            The suits to rotate
      * @return The suits, rotated down once.
      */
     public static short rotateDown(short suits) {
         return (short) ((suits >> 1) | ((suits & 1) << 4));
     }
-    
+
     @Override
     public int getResolved() {
         throw new IllegalStateException(this + " not resolved");

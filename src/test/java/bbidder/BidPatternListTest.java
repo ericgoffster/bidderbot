@@ -11,9 +11,10 @@ public class BidPatternListTest {
     public void testValueOf() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         assertEquals(List.of(BidPattern.createSimpleBid(Bid._1S)), BidPatternList.valueOf(reg, "1S").getBids());
-        assertEquals(List.of(BidPattern.createSimpleBid(Bid._1S), BidPattern.createSimpleBid(Bid._1N)), BidPatternList.valueOf(reg, "1S 1N").getBids());
-        assertEquals(List.of(BidPattern.createSimpleBid(Bid._1S), BidPattern.createSimpleBid(Bid.X).withIsOpposition(true), BidPattern.createSimpleBid(Bid._1N)),
-                BidPatternList.valueOf(reg, "1S (X) 1N").getBids());
+        assertEquals(List.of(BidPattern.createSimpleBid(Bid._1S), BidPattern.createSimpleBid(Bid._1N)),
+                BidPatternList.valueOf(reg, "1S 1N").getBids());
+        assertEquals(List.of(BidPattern.createSimpleBid(Bid._1S), BidPattern.createSimpleBid(Bid.X).withIsOpposition(true),
+                BidPattern.createSimpleBid(Bid._1N)), BidPatternList.valueOf(reg, "1S (X) 1N").getBids());
     }
 
     @Test

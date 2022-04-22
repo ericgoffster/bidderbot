@@ -16,7 +16,7 @@ import bbidder.inferences.bound.ConstBoundInference;
  */
 public class TrueInference implements Inference {
     public static final TrueInference T = new TrueInference();
-    
+
     private TrueInference() {
     }
 
