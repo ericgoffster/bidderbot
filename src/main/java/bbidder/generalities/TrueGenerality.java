@@ -4,7 +4,6 @@ import java.util.List;
 
 import bbidder.Auction;
 import bbidder.Generality;
-import bbidder.GeneralityContext;
 import bbidder.Players;
 import bbidder.SymbolTable;
 
