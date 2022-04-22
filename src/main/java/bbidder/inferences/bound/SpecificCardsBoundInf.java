@@ -6,7 +6,6 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.NOfTop;
-import bbidder.Players;
 
 public class SpecificCardsBoundInf implements IBoundInference {
     final NOfTop spec;
@@ -49,7 +48,7 @@ public class SpecificCardsBoundInf implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Players players, Hand hand) {
+    public boolean matches(Hand hand) {
         return have ? hand.haveCards(spec) : !hand.haveCards(spec);
     }
 

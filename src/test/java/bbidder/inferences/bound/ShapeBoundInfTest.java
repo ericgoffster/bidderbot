@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import bbidder.Hand;
 import bbidder.InfSummary;
-import bbidder.Players;
 import bbidder.Range;
 import bbidder.Shape;
 import bbidder.ShapeSet;
@@ -21,8 +20,8 @@ public class ShapeBoundInfTest {
     public void test() {
         assertEquals(ShapeBoundInf.create(ShapeSet.ALL), ConstBoundInference.T);
         assertEquals(ShapeBoundInf.create(ShapeSet.NONE), ConstBoundInference.F);
-        assertTrue(ShapeBoundInf.create(new ShapeSet(List.of(Shape._00030307, Shape._01000507))).matches(new Players(), Hand.valueOf("xxxxxxx xxxxx - x")));
-        assertFalse(ShapeBoundInf.create(new ShapeSet(List.of(Shape._00030307, Shape._01000507))).matches(new Players(), Hand.valueOf("xxxxxxx xxxx x x")));
+        assertTrue(ShapeBoundInf.create(new ShapeSet(List.of(Shape._00030307, Shape._01000507))).matches(Hand.valueOf("xxxxxxx xxxxx - x")));
+        assertFalse(ShapeBoundInf.create(new ShapeSet(List.of(Shape._00030307, Shape._01000507))).matches(Hand.valueOf("xxxxxxx xxxx x x")));
 
         InfSummary summary = ShapeBoundInf.create(new ShapeSet(List.of(Shape._00030307, Shape._01000507))).getSummary();
         assertEquals(summary, new InfSummary(new ShapeSet(List.of(Shape._00030307, Shape._01000507)), Range.all(40), StopperSet.ALL, StopperSet.ALL));

@@ -111,7 +111,7 @@ public class BiddingSystem {
         List<Possibility> possible = getPossible(bids);
         for (Possibility i : possible) {
             for (MappedInference newInference : i.inf.bind(players)) {
-                if (newInference.inf.matches(players, hand)) {
+                if (newInference.inf.matches(hand)) {
                     return new BidSource(i, possible);
                 }
             }

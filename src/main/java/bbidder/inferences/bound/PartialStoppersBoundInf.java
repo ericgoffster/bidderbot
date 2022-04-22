@@ -5,7 +5,6 @@ import java.util.Objects;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
-import bbidder.Players;
 import bbidder.StopperSet;
 
 /**
@@ -58,7 +57,7 @@ public class PartialStoppersBoundInf implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Players players, Hand hand) {
+    public boolean matches(Hand hand) {
         return stoppers.contains(hand.getPartialStoppers());
     }
 

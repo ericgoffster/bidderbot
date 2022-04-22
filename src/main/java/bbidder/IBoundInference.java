@@ -9,13 +9,11 @@ package bbidder;
  */
 public interface IBoundInference {
     /**
-     * @param players 
-     *            The current players
      * @param hand
      *            The hand
      * @return True if it matches the hand
      */
-    public boolean matches(Players players, Hand hand);
+    public boolean matches(Hand hand);
 
     public InfSummary getSummary();
 

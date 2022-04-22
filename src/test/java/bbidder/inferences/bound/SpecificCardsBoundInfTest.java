@@ -7,14 +7,13 @@ import org.junit.Test;
 
 import bbidder.Hand;
 import bbidder.NOfTop;
-import bbidder.Players;
 import bbidder.Range;
 
 public class SpecificCardsBoundInfTest {
     @Test
     public void test() {
-        assertTrue(SpecificCardsBoundInf.create(new NOfTop(Range.exactly(2, 3), 3, 3)).matches(new Players(), Hand.valueOf("AKxx Kxx xxx xxx")));
-        assertFalse(SpecificCardsBoundInf.create(new NOfTop(Range.exactly(1, 3), 3, 3)).matches(new Players(), Hand.valueOf("AKxx Kxx xxx xxx")));
-        assertFalse(SpecificCardsBoundInf.create(new NOfTop(Range.exactly(2, 3), 3, 2)).matches(new Players(), Hand.valueOf("AKxx Kxx xxx xxx")));
+        assertTrue(SpecificCardsBoundInf.create(new NOfTop(Range.exactly(2, 3), 3, 3)).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
+        assertFalse(SpecificCardsBoundInf.create(new NOfTop(Range.exactly(1, 3), 3, 3)).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
+        assertFalse(SpecificCardsBoundInf.create(new NOfTop(Range.exactly(2, 3), 3, 2)).matches(Hand.valueOf("AKxx Kxx xxx xxx")));
     }
 }
