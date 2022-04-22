@@ -7,11 +7,11 @@ package bbidder;
  */
 public final class InferenceContext {
     public final Inference inference;
-    public final SymbolTable suits;
+    public final SymbolTable symbols;
 
-    public InferenceContext(Inference inference, SymbolTable suits) {
+    public InferenceContext(Inference inference, SymbolTable symbols) {
         super();
         this.inference = inference;
-        this.suits = suits;
+        this.symbols = symbols;
     }
 }

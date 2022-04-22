@@ -25,8 +25,8 @@ public final class Always implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
-        return List.of(new InferenceContext(this, suits));
+    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
+        return List.of(new InferenceContext(this, symbols));
     }
 
     public static Always valueOf(String str) {

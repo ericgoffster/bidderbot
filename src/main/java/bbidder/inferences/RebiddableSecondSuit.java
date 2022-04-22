@@ -39,9 +39,9 @@ public final class RebiddableSecondSuit implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
+    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : SymbolContext.resolveSymbols(suits, longer).entrySet()) {
+        for (var e : SymbolContext.resolveSymbols(symbols, longer).entrySet()) {
             for (var e2 : SymbolContext.resolveSymbols(e.getValue(), shorter).entrySet()) {
                 l.add(new InferenceContext(new RebiddableSecondSuit(e.getKey(), e2.getKey()), e2.getValue()));
             }

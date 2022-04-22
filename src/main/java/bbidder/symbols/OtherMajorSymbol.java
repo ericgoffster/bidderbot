@@ -34,12 +34,12 @@ public final class OtherMajorSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable suits) {
-        if (suits.containsKey("M")) {
-            return new ConstSymbol(otherMajor(suits.get("M")));
+    public Symbol evaluate(SymbolTable symbols) {
+        if (symbols.containsKey("M")) {
+            return new ConstSymbol(otherMajor(symbols.get("M")));
         }
-        if (suits.containsKey("OM")) {
-            return new ConstSymbol(suits.get("OM"));          
+        if (symbols.containsKey("OM")) {
+            return new ConstSymbol(symbols.get("OM"));          
         }
         return null;
     }
@@ -55,9 +55,9 @@ public final class OtherMajorSymbol implements Symbol {
     }
 
     @Override
-    public List<Symbol> boundSymbols(SymbolTable suits) {
-        if (suits.containsKey("M") || suits.containsKey("OM")) {
-            return List.of(evaluate(suits));
+    public List<Symbol> boundSymbols(SymbolTable symbols) {
+        if (symbols.containsKey("M") || symbols.containsKey("OM")) {
+            return List.of(evaluate(symbols));
         }
         return List.of(new ConstSymbol(Constants.HEART), new ConstSymbol(Constants.SPADE));
     }

@@ -34,8 +34,8 @@ public final class AndGenerality implements Generality {
     public List<GeneralityContext> resolveSymbols(SymbolTable bc) {
         List<GeneralityContext> result = new ArrayList<>();
         for (GeneralityContext bc2 : g1.resolveSymbols(bc)) {
-            for (GeneralityContext bc3 : g2.resolveSymbols(bc2.suits)) {
-                result.add(new GeneralityContext(new AndGenerality(bc2.generality, bc3.generality), bc3.suits));
+            for (GeneralityContext bc3 : g2.resolveSymbols(bc2.symbols)) {
+                result.add(new GeneralityContext(new AndGenerality(bc2.generality, bc3.generality), bc3.symbols));
             }
         }
         return result;

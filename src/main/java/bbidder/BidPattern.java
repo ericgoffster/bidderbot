@@ -128,23 +128,23 @@ public final class BidPattern {
     }
     
     /**
-     * @param suits
+     * @param symbols
      *            The suits
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public List<BidPatternContext> resolveSymbols(SymbolTable suits) {
+    public List<BidPatternContext> resolveSymbols(SymbolTable symbols) {
         if (generality != null) {
             List<BidPatternContext> l = new ArrayList<>();
-            for(GeneralityContext gc: generality.resolveSymbols(suits)) {
-                l.add(new BidPatternContext(createWild(gc.generality), gc.suits));
+            for(GeneralityContext gc: generality.resolveSymbols(symbols)) {
+                l.add(new BidPatternContext(createWild(gc.generality), gc.symbols));
             }
             return l;
         }
         if (simpleBid != null) {
-            return List.of(new BidPatternContext(this, suits));
+            return List.of(new BidPatternContext(this, symbols));
         }
         List<BidPatternContext> result = new ArrayList<>();
-        for (Entry<Symbol, SymbolTable> e : SymbolContext.resolveSymbols(suits, getSymbol()).entrySet()) {
+        for (Entry<Symbol, SymbolTable> e : SymbolContext.resolveSymbols(symbols, getSymbol()).entrySet()) {
             result.add(new BidPatternContext(bindSuit(e.getKey()), e.getValue()));
         }
         return result;

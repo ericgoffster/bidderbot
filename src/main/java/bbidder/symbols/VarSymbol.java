@@ -39,9 +39,9 @@ public final class VarSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable suits) {
-        if (suits.containsKey(v)) {
-            return new ConstSymbol(suits.get(v));
+    public Symbol evaluate(SymbolTable symbols) {
+        if (symbols.containsKey(v)) {
+            return new ConstSymbol(symbols.get(v));
         }
         return null;
     }
@@ -57,9 +57,9 @@ public final class VarSymbol implements Symbol {
     }
 
     @Override
-    public List<Symbol> boundSymbols(SymbolTable suits) {
-        if (suits.containsKey(v)) {
-            return List.of(evaluate(suits));
+    public List<Symbol> boundSymbols(SymbolTable symbols) {
+        if (symbols.containsKey(v)) {
+            return List.of(evaluate(symbols));
         }
         return List.of(new ConstSymbol(Constants.CLUB), new ConstSymbol(Constants.DIAMOND), new ConstSymbol(Constants.HEART), new ConstSymbol(Constants.SPADE));
     }

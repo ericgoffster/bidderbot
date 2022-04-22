@@ -7,11 +7,11 @@ package bbidder;
  */
 public final class GeneralityContext {
     public final Generality generality;
-    public final SymbolTable suits;
+    public final SymbolTable symbols;
 
-    public GeneralityContext(Generality generality, SymbolTable suits) {
+    public GeneralityContext(Generality generality, SymbolTable symbols) {
         super();
         this.generality = generality;
-        this.suits = suits;
+        this.symbols = symbols;
     }
 }

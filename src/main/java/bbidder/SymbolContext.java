@@ -4,21 +4,21 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class SymbolContext {
-    public static Map<Symbol, SymbolTable> resolveSymbols(SymbolTable suits, Symbol symbol) {
+    public static Map<Symbol, SymbolTable> resolveSymbols(SymbolTable symbols, Symbol symbol) {
         {
-            Symbol esymbol = symbol.evaluate(suits);
+            Symbol esymbol = symbol.evaluate(symbols);
             if (esymbol != null) {
                 int strain = esymbol.getResolved();
                 if (strain < 0 || strain > 4) {
                     throw new IllegalArgumentException("Invalid strain");
                 }
-                return Map.of(esymbol, suits);
+                return Map.of(esymbol, symbols);
             }
         }
         Map<Symbol, SymbolTable> m = new LinkedHashMap<Symbol, SymbolTable>();
-        for (Symbol newSym: symbol.boundSymbols(suits)) {
-            if (!suits.containsValue(newSym.getResolved())) {
-                m.put(newSym, suits.add(symbol.unevaluate(newSym.getResolved())));
+        for (Symbol newSym: symbol.boundSymbols(symbols)) {
+            if (!symbols.containsValue(newSym.getResolved())) {
+                m.put(newSym, symbols.add(symbol.unevaluate(newSym.getResolved())));
             }
         }
         return m;

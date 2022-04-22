@@ -43,8 +43,8 @@ public final class LessThanSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable suits) {
-        Symbol evaluate = sym.evaluate(suits);
+    public Symbol evaluate(SymbolTable symbols) {
+        Symbol evaluate = sym.evaluate(symbols);
         if (evaluate == null) {
             return null;
         }
@@ -57,12 +57,12 @@ public final class LessThanSymbol implements Symbol {
     }
     
     @Override
-    public List<Symbol> boundSymbols(SymbolTable suits) {
-        List<Symbol> boundOthers = other.boundSymbols(suits);
+    public List<Symbol> boundSymbols(SymbolTable symbols) {
+        List<Symbol> boundOthers = other.boundSymbols(symbols);
         if (boundOthers.size() != 1) {
             throw new IllegalArgumentException("undefined smybol: " + other);
         }
-        List<Symbol> old = sym.boundSymbols(suits);
+        List<Symbol> old = sym.boundSymbols(symbols);
         List<Symbol> l = new ArrayList<>();
         for(Symbol s: old) {
             l.add(new LessThanSymbol(s, level, boundOthers.get(0)));

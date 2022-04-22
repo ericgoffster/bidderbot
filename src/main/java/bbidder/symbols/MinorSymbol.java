@@ -34,12 +34,12 @@ public final class MinorSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable suits) {
-        if (suits.containsKey("om")) {
-            return new ConstSymbol(otherMinor(suits.get("om")));
+    public Symbol evaluate(SymbolTable symbols) {
+        if (symbols.containsKey("om")) {
+            return new ConstSymbol(otherMinor(symbols.get("om")));
         }
-        if (suits.containsKey("m")) {
-            return new ConstSymbol(suits.get("m"));
+        if (symbols.containsKey("m")) {
+            return new ConstSymbol(symbols.get("m"));
         }
         return null;
     }
@@ -55,9 +55,9 @@ public final class MinorSymbol implements Symbol {
     }
     
     @Override
-    public List<Symbol> boundSymbols(SymbolTable suits) {
-        if (suits.containsKey("m") || suits.containsKey("om")) {
-            return List.of(evaluate(suits));
+    public List<Symbol> boundSymbols(SymbolTable symbols) {
+        if (symbols.containsKey("m") || symbols.containsKey("om")) {
+            return List.of(evaluate(symbols));
         }
         return List.of(new ConstSymbol(Constants.CLUB), new ConstSymbol(Constants.DIAMOND));
     }

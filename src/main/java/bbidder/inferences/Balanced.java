@@ -27,8 +27,8 @@ public final class Balanced implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
-        return List.of(new InferenceContext(this, suits));
+    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
+        return List.of(new InferenceContext(this, symbols));
     }
 
     public static Balanced valueOf(String str) {

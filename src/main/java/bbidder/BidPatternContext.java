@@ -6,11 +6,11 @@ package bbidder;
  */
 public final class BidPatternContext {
     public final BidPattern bidPattern;
-    public final SymbolTable suits;
+    public final SymbolTable symbols;
 
-    public BidPatternContext(BidPattern bidPattern, SymbolTable suits) {
+    public BidPatternContext(BidPattern bidPattern, SymbolTable symbols) {
         super();
         this.bidPattern = bidPattern;
-        this.suits = suits;
+        this.symbols = symbols;
     }
 }

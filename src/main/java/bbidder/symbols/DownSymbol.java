@@ -39,8 +39,8 @@ public final class DownSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable suits) {
-        Symbol evaluate = sym.evaluate(suits);
+    public Symbol evaluate(SymbolTable symbols) {
+        Symbol evaluate = sym.evaluate(symbols);
         if (evaluate == null) {
             return null;
         }
@@ -53,9 +53,9 @@ public final class DownSymbol implements Symbol {
     }
     
     @Override
-    public List<Symbol> boundSymbols(SymbolTable suits) {
+    public List<Symbol> boundSymbols(SymbolTable symbols) {
         List<Symbol> l = new ArrayList<>();
-        for(Symbol s: sym.boundSymbols(suits)) {
+        for(Symbol s: sym.boundSymbols(symbols)) {
             l.add(0, s);
         }
         return l;

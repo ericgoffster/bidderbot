@@ -40,10 +40,10 @@ public final class LongestOrEqual implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
+    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : SymbolContext.resolveSymbols(suits, suit).entrySet()) {
-            l.add(new InferenceContext(new LongestOrEqual(e.getKey(), among.replaceVars(suits)), e.getValue()));
+        for (var e : SymbolContext.resolveSymbols(symbols, suit).entrySet()) {
+            l.add(new InferenceContext(new LongestOrEqual(e.getKey(), among.replaceVars(symbols)), e.getValue()));
         }
 
         return l;

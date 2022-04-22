@@ -11,5 +11,5 @@ import java.util.function.BiPredicate;
  *
  */
 public interface Generality extends BiPredicate<Players, Auction> {
-    public List<GeneralityContext> resolveSymbols(SymbolTable context);
+    public List<GeneralityContext> resolveSymbols(SymbolTable symbols);
 }

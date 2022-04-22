@@ -41,17 +41,17 @@ public final class SteppedSymbol implements Symbol {
     }
     
     @Override
-    public List<Symbol> boundSymbols(SymbolTable suits) {
+    public List<Symbol> boundSymbols(SymbolTable symbols) {
         List<Symbol> l = new ArrayList<>();
-        for(Symbol s: sym.boundSymbols(suits)) {
+        for(Symbol s: sym.boundSymbols(symbols)) {
             l.add(new SteppedSymbol(s, delta));
         }
         return l;
     }
 
     @Override
-    public Symbol evaluate(SymbolTable suits) {
-        Symbol s = sym.evaluate(suits);
+    public Symbol evaluate(SymbolTable symbols) {
+        Symbol s = sym.evaluate(symbols);
         if (s == null) {
             return null;
         }

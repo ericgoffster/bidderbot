@@ -36,9 +36,9 @@ public final class Rebiddable implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
+    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : SymbolContext.resolveSymbols(suits, suit).entrySet()) {
+        for (var e : SymbolContext.resolveSymbols(symbols, suit).entrySet()) {
             l.add(new InferenceContext(new Rebiddable(e.getKey()), e.getValue()));
         }
         return l;

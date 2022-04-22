@@ -39,7 +39,7 @@ public final class ConstSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable suits) {
+    public Symbol evaluate(SymbolTable symbols) {
         return this;
     }
 
@@ -52,7 +52,7 @@ public final class ConstSymbol implements Symbol {
     }
     
     @Override
-    public List<Symbol> boundSymbols(SymbolTable suits) {
+    public List<Symbol> boundSymbols(SymbolTable symbols) {
         return List.of(this);
     }
 
