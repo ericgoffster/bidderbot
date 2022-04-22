@@ -6,6 +6,7 @@ import bbidder.generalities.FitEstablished;
 import bbidder.generalities.IBidSuitGenerality;
 import bbidder.generalities.PartnerBidSuitGenerality;
 import bbidder.generalities.TwoSuitedGenerality;
+import bbidder.generalities.UnbidSuitGenerality;
 import bbidder.inferences.Balanced;
 import bbidder.inferences.CombinedTotalPointsRange;
 import bbidder.inferences.FitInSuit;
@@ -44,6 +45,7 @@ public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistr
         reg.addGenerality(FitEstablished::valueOf);
         reg.addGenerality(TwoSuitedGenerality::valueOf);
         reg.addGenerality(IBidSuitGenerality::valueOf);
+        reg.addGenerality(UnbidSuitGenerality::valueOf);
         reg.addGenerality(PartnerBidSuitGenerality::valueOf);
         return reg;
     }
