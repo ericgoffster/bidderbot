@@ -103,7 +103,7 @@ public final class BiddingSystemParser {
                         }
                     } else if (!ln.equals("")) {
                         try {
-                            inferences.addAll(BidInference.valueOf(where + ":" + lineno, reg, ln).resolveSymbols());
+                            inferences.addAll(BidInference.valueOf(where + ":" + lineno, reg, ln).resolveSymbols(SymbolTable.EMPTY));
                         } catch (Exception e) {
                             reportErrors.accept(new ParseException(where + ":" + lineno, e));
                         }

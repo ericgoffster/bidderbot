@@ -42,10 +42,11 @@ public final class BidInference {
     }
 
     /**
+     * @param symbols The symbols
      * @return A list of bid inferences with all suit variables resolved.
      */
-    public List<BidInference> resolveSymbols() {
-        return ListUtil.flatMap(bids.resolveSymbols(SymbolTable.EMPTY), e1 -> ListUtil.map(inferences.resolveSymbols(e1.symbols),
+    public List<BidInference> resolveSymbols(SymbolTable symbols) {
+        return ListUtil.flatMap(bids.resolveSymbols(symbols), e1 -> ListUtil.map(inferences.resolveSymbols(e1.symbols),
                 e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
     }
 
