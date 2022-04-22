@@ -53,5 +53,5 @@ test Qx AQxxx Jx Axxx: 1H 1S 1N 2C 3C;
 test xx Axx Axxxx Axx: 1D 1S 1N 2C 2D;
 test xx Axx Axx Axxxx: 1C 1S 1N 2D 3C;
 
-1H 1S 1N 2C 2H =>
+1H 1S 1N 2C 2H =>;
 test Ax Axxxx xxx Axx: 1H 1S 1N 2C 2H;

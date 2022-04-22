@@ -1,2 +1,2 @@
-include opening_bids.bidding
-include general.bidding
+include opening_bids.bidding;
+include general.bidding;

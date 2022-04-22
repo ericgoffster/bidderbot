@@ -76,37 +76,33 @@ public class BiddingSystemParser {
                 if (pos >= 0) {
                     ln = ln.substring(0, pos);
                 }
-                ln = ln.trim();
-                boolean endsLine = ln.endsWith(";");
-                if (endsLine) {
+                sb.append(" " + ln);
+                ln = sb.toString().trim();
+                if (ln.endsWith(";")) {
                     ln = ln.substring(0, ln.length() - 1);
-                }
-                String[] comm = SplitUtil.split(ln, "\\s+", 2);
-                if (comm.length == 2 && comm[0].equalsIgnoreCase("include")) {
-                    load(where, resolveUrlSpec(where, comm[1]), reportErrors, inferences, tests, reg);
-                } else if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
-                    try {
-                        tests.add(BiddingTest.valueOf(false, where + ":" + lineno, comm[1]));
-                    } catch (Exception e) {
-                        reportErrors.accept(new ParseException(where + ":" + lineno, e));
-                    }
-                } else if (comm.length == 2 && comm[0].equalsIgnoreCase("anti_test")) {
-                    try {
-                        tests.add(BiddingTest.valueOf(true, where + ":" + lineno, comm[1]));
-                    } catch (Exception e) {
-                        reportErrors.accept(new ParseException(where + ":" + lineno, e));
-                    }
-                } else if (!ln.equals("")) {
-                    sb.append(" " + ln);
-                    String str = sb.toString().trim();
-                    if (str.contains("=>") || endsLine) {
+                    String[] comm = SplitUtil.split(ln, "\\s+", 2);
+                    if (comm.length == 2 && comm[0].equalsIgnoreCase("include")) {
+                        load(where, resolveUrlSpec(where, comm[1]), reportErrors, inferences, tests, reg);
+                    } else if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
                         try {
-                            inferences.addAll(BidInference.valueOf(where + ":" + lineno, reg, str).resolveSymbols());
+                            tests.add(BiddingTest.valueOf(false, where + ":" + lineno, comm[1]));
                         } catch (Exception e) {
                             reportErrors.accept(new ParseException(where + ":" + lineno, e));
                         }
-                        sb.setLength(0);
+                    } else if (comm.length == 2 && comm[0].equalsIgnoreCase("anti_test")) {
+                        try {
+                            tests.add(BiddingTest.valueOf(true, where + ":" + lineno, comm[1]));
+                        } catch (Exception e) {
+                            reportErrors.accept(new ParseException(where + ":" + lineno, e));
+                        }
+                    } else if (!ln.equals("")) {
+                        try {
+                            inferences.addAll(BidInference.valueOf(where + ":" + lineno, reg, ln).resolveSymbols());
+                        } catch (Exception e) {
+                            reportErrors.accept(new ParseException(where + ":" + lineno, e));
+                        }
                     }
+                    sb.setLength(0);
                 }
             }
         } catch (IOException e) {

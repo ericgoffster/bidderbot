@@ -58,4 +58,4 @@ test KQx x Axxxxx xxx:1♣ 1♦;
 1m 1y => min+, 4 y, longest_or_equal y among >m & unbid;
 1m 1N => min;
 
-include inv_minors.bidding
+include inv_minors.bidding;

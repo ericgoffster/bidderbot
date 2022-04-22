@@ -62,8 +62,8 @@ test x xxx QJxxxx xxx:1N 3♣;
 1N 2N => 6+♣;
 test x xxx xxx QJxxxx:1N 2N;
 
-include stayman.bidding
-include jacobyxfer.bidding
-include mss.bidding
-include minorxfer.bidding
-include texasxfer.bidding
+include stayman.bidding;
+include jacobyxfer.bidding;
+include mss.bidding;
+include minorxfer.bidding;
+include texasxfer.bidding;
