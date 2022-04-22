@@ -3,11 +3,11 @@ package bbidder.symbols;
 import java.util.List;
 
 import bbidder.Bid;
-import bbidder.BitUtil;
 import bbidder.Constants;
-import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
+import bbidder.utils.BitUtil;
+import bbidder.utils.ListUtil;
 
 public final class OtherMajorSymbol extends Symbol {
     public OtherMajorSymbol() {

@@ -1,4 +1,4 @@
-package bbidder;
+package bbidder.utils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import bbidder.utils.BitUtil;
+
 public final class StopperSet implements Iterable<Stoppers> {
     public static final StopperSet ALL = new StopperSet(List.of(Stoppers.values()));
     public static final StopperSet NONE = new StopperSet(List.of());

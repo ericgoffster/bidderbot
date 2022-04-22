@@ -3,11 +3,11 @@ package bbidder.suitsets;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetContext;
 import bbidder.SymbolTable;
+import bbidder.utils.ListUtil;
 
 public final class Not implements SuitSet {
     private final SuitSet ss;

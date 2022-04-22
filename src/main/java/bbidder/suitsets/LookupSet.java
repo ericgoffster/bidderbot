@@ -3,12 +3,12 @@ package bbidder.suitsets;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetContext;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
+import bbidder.utils.ListUtil;
 
 public final class LookupSet implements SuitSet {
     private final Symbol symbol;

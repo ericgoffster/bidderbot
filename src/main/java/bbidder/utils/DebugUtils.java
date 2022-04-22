@@ -1,6 +1,12 @@
-package bbidder;
+package bbidder.utils;
 
 import java.util.List;
+
+import bbidder.Auction;
+import bbidder.Bid;
+import bbidder.BidInference;
+import bbidder.Players;
+import bbidder.PossibleBid;
 
 public final class DebugUtils {
     public static boolean debugMode = false;

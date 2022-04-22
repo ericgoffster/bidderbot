@@ -1,4 +1,4 @@
-package bbidder;
+package bbidder.utils;
 
 /**
  * Various split utils for parsing.

@@ -3,6 +3,7 @@ package bbidder;
 import java.util.List;
 
 import bbidder.inferences.bound.AndBoundInf;
+import bbidder.utils.DebugUtils;
 
 /**
  * Represents the entire state of an entire bidding auction

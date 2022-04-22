@@ -1,5 +1,7 @@
 package bbidder;
 
+import bbidder.utils.BitUtil;
+
 public enum Shape {
     _03070003(3, 7, 0, 3, 0.000221730),
     _00020605(0, 2, 6, 5, 0.000270860),

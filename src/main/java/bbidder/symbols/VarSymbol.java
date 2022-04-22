@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.Bid;
-import bbidder.BitUtil;
 import bbidder.Constants;
-import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
+import bbidder.utils.BitUtil;
+import bbidder.utils.ListUtil;
 
 public final class VarSymbol extends Symbol {
     private final String varName;

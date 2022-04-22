@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.Bid;
-import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
+import bbidder.utils.ListUtil;
 
 public final class NonConventional extends Symbol {
     private final Symbol symbol;

@@ -4,12 +4,12 @@ import java.util.List;
 
 import bbidder.Auction;
 import bbidder.Generality;
-import bbidder.ListUtil;
 import bbidder.Players;
-import bbidder.SplitUtil;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
+import bbidder.utils.ListUtil;
+import bbidder.utils.SplitUtil;
 
 public final class TwoSuitedGenerality extends Generality {
     private final Symbol longer;

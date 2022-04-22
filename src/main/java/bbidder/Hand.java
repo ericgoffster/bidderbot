@@ -14,6 +14,9 @@ import static bbidder.Constants.TEN;
 
 import java.util.Objects;
 
+import bbidder.utils.BitUtil;
+import bbidder.utils.SplitUtil;
+
 /**
  * Represents a hand in bridge.
  * 

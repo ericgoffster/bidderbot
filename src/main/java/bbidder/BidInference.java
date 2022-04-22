@@ -3,6 +3,9 @@ package bbidder;
 import java.util.List;
 import java.util.Objects;
 
+import bbidder.utils.ListUtil;
+import bbidder.utils.SplitUtil;
+
 /**
  * Holds the bids and inferences from the notes.
  * 

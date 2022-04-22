@@ -14,6 +14,7 @@ import java.util.Set;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.OrBoundInf;
+import bbidder.utils.DebugUtils;
 
 /**
  * Represents a compiled bidding system.

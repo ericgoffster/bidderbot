@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import bbidder.utils.BitUtil;
+
 /**
  * Represents a range of integers from 0 up to 64.
  * Handy for points, or number of cards in a suit.

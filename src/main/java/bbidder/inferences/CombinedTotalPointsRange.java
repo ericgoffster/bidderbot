@@ -8,9 +8,9 @@ import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.Range;
-import bbidder.SplitUtil;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.TotalPtsBoundInf;
+import bbidder.utils.SplitUtil;
 
 /**
  * Represents the inference of the total points in a suit.

@@ -5,9 +5,9 @@ import java.util.Objects;
 
 import bbidder.Auction;
 import bbidder.Generality;
-import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.SymbolTable;
+import bbidder.utils.ListUtil;
 
 public final class AndGenerality extends Generality {
     private final Generality g1;

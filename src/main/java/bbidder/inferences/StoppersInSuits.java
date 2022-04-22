@@ -3,18 +3,18 @@ package bbidder.inferences;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.BitUtil;
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.ListUtil;
 import bbidder.Players;
-import bbidder.SplitUtil;
 import bbidder.StopperSet;
 import bbidder.SuitSet;
 import bbidder.SuitSets;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.PartialStoppersBoundInf;
 import bbidder.inferences.bound.StoppersBoundInf;
+import bbidder.utils.BitUtil;
+import bbidder.utils.ListUtil;
+import bbidder.utils.SplitUtil;
 
 /**
  * Represents the inference of the stoppers in a suit set.

@@ -5,10 +5,10 @@ import java.util.Objects;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.AndBoundInf;
+import bbidder.utils.ListUtil;
 
 /**
  * Represents the inference of a "balanced" hand

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.symbols.ConstSymbol;
+import bbidder.utils.ListUtil;
 
 /**
  * Represents an immutable matchable bid pattern.

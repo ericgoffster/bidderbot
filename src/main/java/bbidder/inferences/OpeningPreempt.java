@@ -5,18 +5,18 @@ import java.util.Objects;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.Shape;
 import bbidder.ShapeSet;
-import bbidder.SplitUtil;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.HcpBoundInf;
 import bbidder.inferences.bound.ShapeBoundInf;
+import bbidder.utils.ListUtil;
+import bbidder.utils.SplitUtil;
 
 /**
  * Represents the inference of a premptive hand of varying levels.

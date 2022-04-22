@@ -1,5 +1,8 @@
 package bbidder;
 
+import bbidder.utils.DebugUtils;
+import bbidder.utils.SplitUtil;
+
 /**
  * Represents the test of a bid.
  * 

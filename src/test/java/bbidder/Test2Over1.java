@@ -10,6 +10,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.utils.DebugUtils;
+
 public class Test2Over1 {
     public static BiddingSystem bs;
     

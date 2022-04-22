@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import bbidder.utils.ListUtil;
+
 /**
  * Represents the bid patterns as read in from the notes.
  * This structure lasts only long enough to call resolveFirstSymbol() which is what is actually used

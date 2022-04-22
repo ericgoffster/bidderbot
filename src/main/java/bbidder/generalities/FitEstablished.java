@@ -5,12 +5,12 @@ import java.util.Objects;
 
 import bbidder.Auction;
 import bbidder.Generality;
-import bbidder.ListUtil;
 import bbidder.Players;
-import bbidder.SplitUtil;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
+import bbidder.utils.ListUtil;
+import bbidder.utils.SplitUtil;
 
 public final class FitEstablished extends Generality {
     private final Symbol symbol;

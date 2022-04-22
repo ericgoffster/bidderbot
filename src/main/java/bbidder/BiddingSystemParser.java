@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import bbidder.utils.ClassPathUrlHandler;
+import bbidder.utils.SplitUtil;
+
 /**
  * Parses a bidding system.
  * 
