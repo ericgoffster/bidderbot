@@ -79,36 +79,10 @@ public class BidInference {
      * @return A list of bid inferences with all suit variables resolved.
      */
     public List<BidInference> resolveSymbols() {
-        if (bids.getBids().isEmpty()) {
-            return List.of(BiddingContext.EMPTY.getInference());
-        }
         List<BidInference> result = new ArrayList<>();
-        List<BiddingContext> contexts = new ArrayList<>();
-        BidPattern firstBid = bids.getBids().get(0);
-        
-        if (firstBid.generality != null) {
-            // First bid is wild card, then start only from nothing
-            // Since all seats are taken care of.
-            contexts.add(BiddingContext.EMPTY);
-        } else {
-            // For the first bid,allow for first, second, third, or fourth chair
-            // Get the cadence right
-            BidPattern p1 = BidPattern.PASS.withIsOpposition(!firstBid.isOpposition);
-            BidPattern p2 = BidPattern.PASS.withIsOpposition(firstBid.isOpposition);            
-            // 1C
-            contexts.add(BiddingContext.EMPTY);
-            // (P) 1C
-            contexts.add(BiddingContext.EMPTY.withBidAdded(p1));
-            // P (P) 1C
-            contexts.add(BiddingContext.EMPTY.withBidAdded(p2).withBidAdded(p1));
-            // (1C) P (P) 1C
-            contexts.add(BiddingContext.EMPTY.withBidAdded(p1).withBidAdded(p2).withBidAdded(p1));
-        }
-        for(BiddingContext context: contexts) {
-            for (BiddingContext bc2 : bids.resolveFirstSymbol(context, firstBid)) {
-                for (BiddingContext bc : inferences.resolveSymbols(bc2)) {
-                    result.add(bc.getInference());
-                }
+        for (BiddingContext bc2 : bids.resolveFirstSymbol()) {
+            for (BiddingContext bc : inferences.resolveSymbols(bc2)) {
+                result.add(bc.getInference());
             }
         }
         return result;

@@ -61,11 +61,23 @@ public class BidPatternList {
         return l;
     }
     
-    public List<BiddingContext> resolveFirstSymbol(BiddingContext bc, BidPattern pattern) {
-        if (pattern.generality != null) {
-            return resolveGenerality(bc, pattern);
+    public List<BiddingContext> resolveFirstSymbol() {
+        if (bids.isEmpty()) {
+            return List.of(BiddingContext.EMPTY);
         }
-        return resolveSymbols(bc, pattern.isOpposition);
+        BidPattern pattern = bids.get(0);
+        if (pattern.generality != null) {
+            return resolveGenerality(BiddingContext.EMPTY, pattern);
+        }
+        boolean isOpp = pattern.isOpposition;
+        BidPattern p1 = BidPattern.PASS.withIsOpposition(!isOpp);
+        BidPattern p2 = BidPattern.PASS.withIsOpposition(isOpp);            
+        List<BiddingContext> list = new ArrayList<>();
+        list.addAll(resolveSymbols(BiddingContext.EMPTY, isOpp));
+        list.addAll(resolveSymbols(BiddingContext.EMPTY.withBidAdded(p1), isOpp));
+        list.addAll(resolveSymbols(BiddingContext.EMPTY.withBidAdded(p2).withBidAdded(p1), isOpp));
+        list.addAll(resolveSymbols(BiddingContext.EMPTY.withBidAdded(p1).withBidAdded(p2).withBidAdded(p1), isOpp));
+        return list;
     }
 
     public static BidPatternList valueOf(InferenceRegistry reg, String str) {
