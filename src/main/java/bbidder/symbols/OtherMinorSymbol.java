@@ -2,6 +2,7 @@ package bbidder.symbols;
 
 import static bbidder.Constants.MINORS;
 
+import java.util.Comparator;
 import java.util.Map;
 
 import bbidder.Constants;
@@ -72,4 +73,9 @@ public class OtherMinorSymbol implements Symbol {
             throw new IllegalArgumentException("invalid minor");
         }
     }
+    
+    @Override
+    public Comparator<Integer> direction() {
+        return Integer::compare;
+    }    
 }

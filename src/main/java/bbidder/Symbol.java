@@ -1,5 +1,6 @@
 package bbidder;
 
+import java.util.Comparator;
 import java.util.Map;
 
 public interface Symbol {
@@ -10,4 +11,6 @@ public interface Symbol {
     public short getSuitClass(Map<String, Integer> suits);
 
     public int getResolved();
+    
+    public Comparator<Integer> direction();
 }

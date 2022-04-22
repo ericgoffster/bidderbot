@@ -7,8 +7,6 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
-import bbidder.symbols.DownSymbol;
-
 /**
  * A bidding context is used to build BidInference's.
  * A bidding context consists of the current BidInference, and the current symbol table.
@@ -112,7 +110,7 @@ public final class BiddingContext {
                 return Map.of(strain, this);
             }
         }
-        TreeMap<Integer, BiddingContext> m = new TreeMap<>();
+        TreeMap<Integer, BiddingContext> m = new TreeMap<>(symbol.direction());
         for (int strain : BitUtil.iterate(symbol.getSuitClass(suits))) {
             if (!suits.containsValue(strain)) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
@@ -120,7 +118,7 @@ public final class BiddingContext {
                 m.put(strain, new BiddingContext(bidInference, newSuits));
             }
         }
-        return symbol instanceof DownSymbol ? m.descendingMap() : m;
+        return m;
     }
 
     @Override

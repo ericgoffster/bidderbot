@@ -1,5 +1,6 @@
 package bbidder.symbols;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
 
@@ -58,4 +59,9 @@ public class ConstSymbol implements Symbol {
     public int getResolved() {
         return strain;
     }
+
+    @Override
+    public Comparator<Integer> direction() {
+        return Integer::compare;
+    }    
 }

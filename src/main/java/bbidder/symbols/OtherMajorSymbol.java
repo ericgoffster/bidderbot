@@ -2,6 +2,7 @@ package bbidder.symbols;
 
 import static bbidder.Constants.MAJORS;
 
+import java.util.Comparator;
 import java.util.Map;
 
 import bbidder.Constants;
@@ -72,4 +73,9 @@ public class OtherMajorSymbol implements Symbol {
             throw new IllegalArgumentException("invalid major");
         }
     }
+    
+    @Override
+    public Comparator<Integer> direction() {
+        return Integer::compare;
+    }    
 }

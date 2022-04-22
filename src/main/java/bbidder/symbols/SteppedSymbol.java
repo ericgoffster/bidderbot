@@ -1,5 +1,6 @@
 package bbidder.symbols;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
 
@@ -75,5 +76,10 @@ public class SteppedSymbol implements Symbol {
     @Override
     public int getResolved() {
         throw new IllegalStateException(this + " not resolved");
+    }
+    
+    @Override
+    public Comparator<Integer> direction() {
+        return sym.direction();
     }
 }

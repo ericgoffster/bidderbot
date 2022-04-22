@@ -2,6 +2,7 @@ package bbidder.symbols;
 
 import static bbidder.Constants.ALL_SUITS;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
 
@@ -59,4 +60,9 @@ public class VarSymbol implements Symbol {
         }
         return ALL_SUITS;
     }
+    
+    @Override
+    public Comparator<Integer> direction() {
+        return Integer::compare;
+    }    
 }
