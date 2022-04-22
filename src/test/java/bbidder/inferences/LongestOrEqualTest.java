@@ -6,13 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.BiddingContext;
 import bbidder.Hand;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSets;
+import bbidder.Symbol;
+import bbidder.symbols.BoundSymbol;
 import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.VarSymbol;
-import bbidder.Symbol;
 
 public class LongestOrEqualTest {
     SuitSet ALL = SuitSets.lookupSuitSet("ALL");
@@ -34,19 +36,19 @@ public class LongestOrEqualTest {
 
     @Test
     public void testHigherRanking() {
-        assertTrue(new LongestOrEqual(new ConstSymbol(3), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertTrue(new LongestOrEqual(new ConstSymbol(2), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertFalse(new LongestOrEqual(new ConstSymbol(1), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertFalse(new LongestOrEqual(new ConstSymbol(0), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertTrue(new LongestOrEqual(new BoundSymbol(3, new ConstSymbol(3)), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertTrue(new LongestOrEqual(new BoundSymbol(2, new ConstSymbol(2)), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertFalse(new LongestOrEqual(new BoundSymbol(1, new ConstSymbol(1)), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertFalse(new LongestOrEqual(new BoundSymbol(0, new ConstSymbol(0)), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
     }
 
     @Test
     public void testHigherRankingOfNotSpades() {
         assertTrue(
-                new LongestOrEqual(new ConstSymbol(2), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+                new LongestOrEqual(new BoundSymbol(2, new ConstSymbol(2)), SuitSets.lookupSuitSet("~S").replaceVars(BiddingContext.EMPTY)).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertTrue(
-                new LongestOrEqual(new ConstSymbol(1), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+                new LongestOrEqual(new BoundSymbol(1, new ConstSymbol(1)), SuitSets.lookupSuitSet("~S").replaceVars(BiddingContext.EMPTY)).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertFalse(
-                new LongestOrEqual(new ConstSymbol(0), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+                new LongestOrEqual(new BoundSymbol(0, new ConstSymbol(0)), SuitSets.lookupSuitSet("~S").replaceVars(BiddingContext.EMPTY)).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
     }
 }

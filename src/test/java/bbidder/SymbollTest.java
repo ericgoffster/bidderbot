@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.symbols.BoundSymbol;
 import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.DownSymbol;
 import bbidder.symbols.MajorSymbol;
@@ -19,7 +20,7 @@ import bbidder.symbols.VarSymbol;
 public class SymbollTest {
     @Test
     public void testConst() {
-        Symbol sym = new ConstSymbol(3);
+        Symbol sym = new BoundSymbol(3, new ConstSymbol(3));
         assertEquals(3, sym.evaluate(Map.of()).intValue());
         assertEquals(3, sym.getResolved());
         assertEquals(1 << 3, sym.getSuitClass(Map.of()));

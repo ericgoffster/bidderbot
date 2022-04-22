@@ -58,7 +58,7 @@ public class ConstSymbol implements Symbol {
 
     @Override
     public int getResolved() {
-        return strain;
+        throw new IllegalStateException();
     }
 
     @Override
