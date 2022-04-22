@@ -80,7 +80,7 @@ public final class Auction {
             }
         }
 
-        if (isCompleted()) {
+        if (contract.isCompleted()) {
             return false;
         }
         return true;
@@ -100,13 +100,6 @@ public final class Auction {
         List<Bid> newBids = new ArrayList<>(bids);
         newBids.add(bid);
         return new Auction(newBids);
-    }
-
-    /**
-     * @return true if the action is completed.
-     */
-    public boolean isCompleted() {
-        return bids.size() >= 4 && getContract().winningBid == Bid.P;
     }
 
     /**

@@ -47,6 +47,10 @@ public final class Contract {
         return winningBid + (redoubled ? "XX" : doubled ? "X" : "") + " by " + position;
     }
     
+    public boolean isCompleted() {
+        return numPasses == 4 || winningBid != Bid.P && numPasses == 3;
+    }
+    
     public Bid nextLevel(int strain) {
         if (winningBid == Bid.P) {
             return Bid.valueOf(0, strain);
