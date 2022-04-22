@@ -114,11 +114,11 @@ public class BidPatternList {
         List<BidPatternListContext> list = new ArrayList<>();
         BidPatternListContext ctx = empty;
         list.addAll(exceptFirst.resolveSymbols(ctx, resolveSymbols(pattern, ctx), !isOpp));
-        BidPatternListContext ctx1 = empty.withBidAdded(p1);
+        BidPatternListContext ctx1 = new BidPatternListContext(BidPatternList.EMPTY.withBidAdded(p1), suits);
         list.addAll(exceptFirst.resolveSymbols(ctx1, resolveSymbols(pattern, ctx1), !isOpp));
-        BidPatternListContext ctx2 = empty.withBidAdded(p2).withBidAdded(p1);
+        BidPatternListContext ctx2 = new BidPatternListContext(BidPatternList.EMPTY.withBidAdded(p2).withBidAdded(p1), suits);
         list.addAll(exceptFirst.resolveSymbols(ctx2, resolveSymbols(pattern, ctx2), !isOpp));
-        BidPatternListContext ctx3 = empty.withBidAdded(p1).withBidAdded(p2).withBidAdded(p1);
+        BidPatternListContext ctx3 = new BidPatternListContext(BidPatternList.EMPTY.withBidAdded(p1).withBidAdded(p2).withBidAdded(p1), suits);
         list.addAll(exceptFirst.resolveSymbols(ctx3, resolveSymbols(pattern, ctx3), !isOpp));
         return list;
     }
