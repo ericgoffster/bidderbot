@@ -26,6 +26,54 @@ public class BidPatternListTest {
     }
     
     @Test
+    public void testAddInitialPassed1() {
+        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
+        BidPatternList bpl = BidPatternList.valueOf(reg, "1S");
+        List<BidPatternList> initpass = bpl.addInitialPasses();
+        assertEquals(4, initpass.size());
+        assertEquals("1S", initpass.get(0).toString());
+        assertEquals("(P) 1S", initpass.get(1).toString());
+        assertEquals("P (P) 1S", initpass.get(2).toString());
+        assertEquals("(P) P (P) 1S", initpass.get(3).toString());
+    }
+    @Test
+    public void testAddInitialPassed2() {
+        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
+        BidPatternList bpl = BidPatternList.valueOf(reg, "(P) 1S");
+        List<BidPatternList> initpass = bpl.addInitialPasses();
+        assertEquals(3, initpass.size());
+        assertEquals("(P) 1S", initpass.get(0).toString());
+        assertEquals("P (P) 1S", initpass.get(1).toString());
+        assertEquals("(P) P (P) 1S", initpass.get(2).toString());
+    }
+    @Test
+    public void testAddInitialPassed3() {
+        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
+        BidPatternList bpl = BidPatternList.valueOf(reg, "P (P) 1S");
+        List<BidPatternList> initpass = bpl.addInitialPasses();
+        assertEquals(2, initpass.size());
+        assertEquals("P (P) 1S", initpass.get(0).toString());
+        assertEquals("(P) P (P) 1S", initpass.get(1).toString());
+    }
+    @Test
+    public void testAddInitialPassed4() {
+        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
+        BidPatternList bpl = BidPatternList.valueOf(reg, "(P) P (P) 1S");
+        List<BidPatternList> initpass = bpl.addInitialPasses();
+        assertEquals(1, initpass.size());
+        assertEquals("(P) P (P) 1S", initpass.get(0).toString());
+    }
+    @Test
+    public void testAddInitialPassed5() {
+        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
+        BidPatternList bpl = BidPatternList.valueOf(reg, "(P) P (P)");
+        List<BidPatternList> initpass = bpl.addInitialPasses();
+        assertEquals(2, initpass.size());
+        assertEquals("(P) P (P)", initpass.get(0).toString());
+        assertEquals("P (P) P (P)", initpass.get(1).toString());
+    }
+    
+    @Test
     public void testAddOpposition() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         assertEquals("1S (P) 1N", BidPatternList.valueOf(reg, "1S 1N").withOpposingBidding().toString());
