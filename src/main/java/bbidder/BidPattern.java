@@ -120,7 +120,7 @@ public class BidPattern {
     }
 
     public String getLevelString() {
-        return level == null ? "" : String.valueOf(level);
+        return level == null ? "" : String.valueOf(level + 1);
     }
 
     private String _getString() {

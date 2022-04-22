@@ -80,11 +80,13 @@ public class BidPatternList {
             return List.of(BiddingContext.EMPTY);
         }
         BidPattern pattern = bids.get(0);
+        BidPatternList exceptFirst = exceptFirst();
 
         // If the first bid is a generality, then the generality
         // takes care of all chairs
         if (pattern.generality != null) {
-            return exceptFirst().resolveSymbols(BiddingContext.EMPTY, pattern, bids.get(1).isOpposition);
+            BiddingContext ctx = BiddingContext.EMPTY;
+            return exceptFirst.resolveSymbols(ctx, pattern.resolveSymbols(ctx), bids.get(1).isOpposition);
         }
 
         // generate contexts for {[bid], [(P) bid], [P (P) bids], [(P) P (P) bids]}
@@ -92,10 +94,14 @@ public class BidPatternList {
         BidPattern p1 = BidPattern.PASS.withIsOpposition(!isOpp);
         BidPattern p2 = BidPattern.PASS.withIsOpposition(isOpp);
         List<BiddingContext> list = new ArrayList<>();
-        list.addAll(resolveSymbols(BiddingContext.EMPTY, isOpp));
-        list.addAll(resolveSymbols(BiddingContext.EMPTY.withBidAdded(p1), isOpp));
-        list.addAll(resolveSymbols(BiddingContext.EMPTY.withBidAdded(p2).withBidAdded(p1), isOpp));
-        list.addAll(resolveSymbols(BiddingContext.EMPTY.withBidAdded(p1).withBidAdded(p2).withBidAdded(p1), isOpp));
+        BiddingContext ctx = BiddingContext.EMPTY;
+        list.addAll(exceptFirst.resolveSymbols(ctx, pattern.resolveSymbols(ctx), !isOpp));
+        BiddingContext ctx1 = BiddingContext.EMPTY.withBidAdded(p1);
+        list.addAll(exceptFirst.resolveSymbols(ctx1, pattern.resolveSymbols(ctx1), !isOpp));
+        BiddingContext ctx2 = BiddingContext.EMPTY.withBidAdded(p2).withBidAdded(p1);
+        list.addAll(exceptFirst.resolveSymbols(ctx2, pattern.resolveSymbols(ctx2), !isOpp));
+        BiddingContext ctx3 = BiddingContext.EMPTY.withBidAdded(p1).withBidAdded(p2).withBidAdded(p1);
+        list.addAll(exceptFirst.resolveSymbols(ctx3, pattern.resolveSymbols(ctx3), !isOpp));
         return list;
     }
 
@@ -163,34 +169,40 @@ public class BidPatternList {
         return Objects.equals(bids, other.bids);
     }
 
-    private List<BiddingContext> resolveSymbols(BiddingContext ctx, boolean isOpp) {
+    private List<BiddingContext> resolveSymbols(BiddingContext ctx, List<BiddingContext> contexts, boolean isOpp) {
+        // If we are already done then it is invalid to add any more bids
+        if (ctx.getInference().bids.isCompleted() && !bids.isEmpty()) {
+            return List.of();
+        }
+
+        // If no more bids then we are done
         if (bids.isEmpty()) {
             if (!isOpp) {
                 throw new IllegalArgumentException("last bid must be made by 'we'");
             }
-            return List.of(ctx);
+            return contexts;
         }
-        if (ctx.getInference().bids.isCompleted()) {
-            return List.of();
-        }
-        // If it is the opps turn and the next bid is not opp, then assume pass for opps
+        
         BidPattern pattern = bids.get(0);
+        
         if (pattern.generality != null) {
-            return exceptFirst().resolveSymbols(ctx, pattern, bids.get(1).isOpposition);
+            boolean newIsOpp = bids.get(1).isOpposition;
+            List<BiddingContext> l = new ArrayList<>();
+            for (BiddingContext newCtx : contexts) {
+                l.addAll(exceptFirst().resolveSymbols(newCtx, pattern.resolveSymbols(newCtx), newIsOpp));
+            }
+            return l;
         }
-        // If it is the opposition's turn, and the bid is not opposition,
-        // then assume pass for opposition
         if (isOpp && !pattern.isOpposition) {
-            return resolveSymbols(ctx, BidPattern.PASS, !isOpp);
+            List<BiddingContext> l = new ArrayList<>();
+            for (BiddingContext newCtx : contexts) {
+                l.addAll(resolveSymbols(newCtx, BidPattern.PASS.withIsOpposition(isOpp).resolveSymbols(newCtx), !isOpp));
+            }
+            return l;
         }
-        return exceptFirst().resolveSymbols(ctx, pattern, !isOpp);
-    }
-
-    private List<BiddingContext> resolveSymbols(BiddingContext ctx, BidPattern pattern, boolean isOpp) {
         List<BiddingContext> l = new ArrayList<>();
-
-        for (BiddingContext newCtx : pattern.resolveSymbols(ctx)) {
-            l.addAll(resolveSymbols(newCtx, isOpp));
+        for (BiddingContext newCtx : contexts) {
+            l.addAll(exceptFirst().resolveSymbols(newCtx, pattern.resolveSymbols(newCtx), !isOpp));
         }
         return l;
     }
