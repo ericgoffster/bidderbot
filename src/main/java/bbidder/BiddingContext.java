@@ -87,19 +87,6 @@ public final class BiddingContext {
 
     /**
      * @param symbol
-     *            The symbol
-     * @return (0,1,2,3,4) for a given symbol, null if not found.
-     */
-    public Integer getSuit(Symbol symbol) {
-        Symbol evaluate = symbol.evaluate(suits);
-        if (evaluate == null) {
-            return null;
-        }
-        return evaluate.getResolved();
-    }
-
-    /**
-     * @param symbol
      *            The suit symbol to match.
      * @return a map of strains to new bidding contexts. Each key in the map represents a possible bid strain
      *         for the given suit symbol.

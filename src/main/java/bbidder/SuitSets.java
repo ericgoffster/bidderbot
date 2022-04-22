@@ -19,15 +19,15 @@ import bbidder.suitsets.LookupSet;
 import bbidder.suitsets.Not;
 import bbidder.suitsets.Unbid;
 import bbidder.suitsets.Unstopped;
-import bbidder.symbols.ConstSymbol;
 
 public class SuitSets {
+
     public static Symbol bind(BiddingContext bc, Symbol symbol) {
-        Integer strain = bc.getSuit(symbol);
-        if (strain == null) {
+        Symbol evaluate = symbol.evaluate(bc.getSuits());
+        if (evaluate == null) {
             throw new IllegalArgumentException(symbol + " undefined");
         }
-        return new ConstSymbol(strain);
+        return evaluate;
     }
 
     /**
