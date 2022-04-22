@@ -2,8 +2,10 @@ package bbidder.inferences;
 
 import java.util.List;
 
+import bbidder.BiddingContext;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInf;
 import bbidder.MappedInference;
 import bbidder.Shape;
 import bbidder.ShapeSet;
@@ -22,6 +24,11 @@ public class Balanced implements Inference {
     @Override
     public List<MappedInference> bind(InferenceContext context) {
             return List.of(new MappedInference(ShapeBoundInf.create(new ShapeSet(Shape::isBalanced)), context));
+    }
+    
+    @Override
+    public List<MappedInf> resolveSuits(BiddingContext context) {
+        return List.of(new MappedInf(this, context));
     }
 
     public static Balanced valueOf(String str) {

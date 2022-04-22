@@ -3,9 +3,11 @@ package bbidder.inferences;
 import java.util.List;
 import java.util.Objects;
 
+import bbidder.BiddingContext;
 import bbidder.BitUtil;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInf;
 import bbidder.MappedInference;
 import bbidder.SplitUtil;
 import bbidder.StopperSet;
@@ -54,6 +56,11 @@ public class StoppersInSuits implements Inference {
             return List.of(new MappedInference(PartialStoppersBoundInf.create(stoppers), context));
         }
         return List.of(new MappedInference(StoppersBoundInf.create(stoppers), context));
+    }
+    
+    @Override
+    public List<MappedInf> resolveSuits(BiddingContext context) {
+        return List.of(new MappedInf(this, context));
     }
 
     @Override

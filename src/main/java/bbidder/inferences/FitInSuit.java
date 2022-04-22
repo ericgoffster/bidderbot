@@ -6,10 +6,13 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import bbidder.BiddingContext;
+import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInf;
 import bbidder.MappedInference;
 import bbidder.Range;
 import bbidder.ShapeSet;
@@ -37,6 +40,15 @@ public class FitInSuit implements Inference {
         List<MappedInference> l = new ArrayList<>();
         for (var e : context.lookupSuits(suit).entrySet()) {
             l.add(new MappedInference(createrBound(e.getKey(), context.players.partner.infSummary), e.getValue()));
+        }
+        return l;
+    }
+    
+    @Override
+    public List<MappedInf> resolveSuits(BiddingContext context) {
+        List<MappedInf> l = new ArrayList<>();
+        for (var e : context.getMappedBiddingContexts(suit).entrySet()) {
+            l.add(new MappedInf(new FitInSuit(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey()))), e.getValue()));
         }
         return l;
     }

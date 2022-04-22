@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import bbidder.BiddingContext;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInf;
 import bbidder.MappedInference;
 import bbidder.Range;
 import bbidder.SplitUtil;
@@ -36,6 +38,11 @@ public class CombinedTotalPointsRange implements Inference {
         int tpts = context.players.partner.infSummary.minTotalPts();
         Range r = new Range(rng.bits >> tpts, 40);
         return List.of(new MappedInference(TotalPtsBoundInf.create(context.players.partner.infSummary, r), context));
+    }
+    
+    @Override
+    public List<MappedInf> resolveSuits(BiddingContext context) {
+        return List.of(new MappedInf(this, context));
     }
 
     public static Range createRange(String str, Map<String, Integer> m) {

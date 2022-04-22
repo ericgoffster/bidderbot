@@ -3,8 +3,10 @@ package bbidder.inferences;
 import java.util.List;
 import java.util.Objects;
 
+import bbidder.BiddingContext;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInf;
 import bbidder.MappedInference;
 import bbidder.Range;
 import bbidder.inferences.bound.TotalPtsBoundInf;
@@ -31,6 +33,11 @@ public class TotalPointsRange implements Inference {
     @Override
     public List<MappedInference> bind(InferenceContext context) {
         return List.of(new MappedInference(TotalPtsBoundInf.create(context.players.partner.infSummary, rng), context));
+    }
+    
+    @Override
+    public List<MappedInf> resolveSuits(BiddingContext context) {
+        return List.of(new MappedInf(this, context));
     }
 
     public static Inference valueOf(String str) {

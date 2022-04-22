@@ -26,6 +26,11 @@ public class BoundBidInference {
     public List<MappedInference> bind(Players players) {
         return inferences.bind(new InferenceContext(players, ctx));
     }
+    
+
+    public List<MappedInferenceList> resolveSuits() {
+        return inferences.resolveSuits(ctx);
+    }
 
     @Override
     public String toString() {

@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
+import bbidder.Constants;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInf;
 import bbidder.MappedInference;
 import bbidder.ShapeSet;
 import bbidder.inferences.bound.ShapeBoundInf;
@@ -35,6 +37,15 @@ public class LongestOrEqual implements Inference {
         List<MappedInference> l = new ArrayList<>();
         for (var e : context.lookupSuits(suit).entrySet()) {
             l.add(new MappedInference(ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(e.getKey(), iamong))), e.getValue()));
+        }
+        return l;
+    }
+    
+    @Override
+    public List<MappedInf> resolveSuits(BiddingContext context) {
+        List<MappedInf> l = new ArrayList<>();
+        for (var e : context.getMappedBiddingContexts(suit).entrySet()) {
+            l.add(new MappedInf(new LongestOrEqual(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), among), e.getValue()));
         }
         return l;
     }

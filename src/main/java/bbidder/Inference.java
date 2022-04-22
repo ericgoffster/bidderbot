@@ -7,4 +7,5 @@ import java.util.List;
  */
 public interface Inference {
     public List<MappedInference> bind(InferenceContext context);
+    public List<MappedInf> resolveSuits(BiddingContext context);
 }

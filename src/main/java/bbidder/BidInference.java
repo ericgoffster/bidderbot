@@ -50,10 +50,12 @@ public class BidInference {
     public List<BoundBidInference> getBoundInferences(String where, Players players) {
         List<BoundBidInference> result = new ArrayList<>();
         for (BiddingContext ctx : bids.getContexts()) {
-            BoundBidInference inference = new BoundBidInference(where, ctx, inferences);
-            // Catch any errors
-            inference.bind(players);
-            result.add(inference);
+            for(MappedInferenceList mil: inferences.resolveSuits(ctx)) {
+                BoundBidInference inference = new BoundBidInference(where, mil.ctx, inferences);                
+                inference.bind(players);
+                // Catch any errors
+                result.add(inference);
+            }
         }
         return result;
     }

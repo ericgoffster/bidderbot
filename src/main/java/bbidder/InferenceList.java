@@ -40,6 +40,23 @@ public class InferenceList {
         }
         return list;
     }
+    
+    public List<MappedInferenceList> resolveSuits(BiddingContext context) {
+        List<MappedInferenceList> list = new ArrayList<>();
+        list.add(new MappedInferenceList(new InferenceList(List.of()), context));
+        for (Inference i : inferences) {
+            List<MappedInferenceList> newList = new ArrayList<>();
+            for (MappedInferenceList bi2 : list) {
+                for (MappedInf bi : i.resolveSuits(bi2.ctx)) {
+                    List<Inference> l = new ArrayList<>(bi2.inf.inferences);
+                    l.add(bi.inf);
+                    newList.add(new MappedInferenceList(new InferenceList(l), bi.ctx));
+                }
+            }
+            list = newList;
+        }
+        return list;
+    }
 
     public static InferenceList valueOf(InferenceRegistry registry, String str) {
         if (str == null) {

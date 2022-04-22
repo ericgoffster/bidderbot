@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
+import bbidder.Constants;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInf;
 import bbidder.MappedInference;
 import bbidder.Range;
 import bbidder.Shape;
@@ -38,6 +40,15 @@ public class OpeningPreempt implements Inference {
         for (var e : context.lookupSuits(suit).entrySet()) {
             l.add(new MappedInference(AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
                     ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(e.getKey(), level, shape)))), e.getValue()));
+        }
+        return l;
+    }
+    
+    @Override
+    public List<MappedInf> resolveSuits(BiddingContext context) {
+        List<MappedInf> l = new ArrayList<>();
+        for (var e : context.getMappedBiddingContexts(suit).entrySet()) {
+            l.add(new MappedInf(new OpeningPreempt(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), level), e.getValue()));
         }
         return l;
     }

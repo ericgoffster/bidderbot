@@ -7,9 +7,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bbidder.BiddingContext;
+import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.MappedInf;
 import bbidder.MappedInference;
 import bbidder.NOfTop;
 import bbidder.Range;
@@ -37,6 +39,15 @@ public class SpecificCards implements Inference {
         List<MappedInference> l = new ArrayList<>();
         for (var e : context.lookupSuits(suit).entrySet()) {
             l.add(new MappedInference(createBound(new NOfTop(rng, top, e.getKey())), e.getValue()));
+        }
+        return l;
+    }
+    
+    @Override
+    public List<MappedInf> resolveSuits(BiddingContext context) {
+        List<MappedInf> l = new ArrayList<>();
+        for (var e : context.getMappedBiddingContexts(suit).entrySet()) {
+            l.add(new MappedInf(new SpecificCards(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), rng, top), e.getValue()));
         }
         return l;
     }
