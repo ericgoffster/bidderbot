@@ -47,6 +47,7 @@ public class AndInference implements Inference {
         }
         return new AndInference(i1, i2);
     }
+
     public static Inference create(List<Inference> l) {
         if (l.isEmpty()) {
             return TrueInference.T;

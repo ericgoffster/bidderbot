@@ -48,17 +48,6 @@ public class BidInference {
         return new BidInference(where, bids.withLastBidReplaced(patt), inferences);
     }
     
-    public static Inference parseInf(InferenceRegistry registry, String str) {
-        if (str == null) {
-            return null;
-        }
-        List<Inference> l = new ArrayList<>();
-        for (String part : SplitUtil.split(str, ",")) {
-            l.add(registry.parseInference(part));
-        }
-        return AndInference.create(l);
-    }
-
     /**
      * 
      * @param i
@@ -84,7 +73,7 @@ public class BidInference {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        return new BidInference(null, BidPatternList.valueOf(reg, parts[0]), parseInf(reg, parts[1]));
+        return new BidInference(null, BidPatternList.valueOf(reg, parts[0]), reg.parseInference(parts[1]));
     }
 
     /**

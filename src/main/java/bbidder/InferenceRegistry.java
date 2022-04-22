@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import bbidder.inferences.AndInference;
+import bbidder.inferences.TrueInference;
+
 /**
  * The registry of all possible inferences.
  *
@@ -36,6 +39,15 @@ public class InferenceRegistry {
     public Inference parseInference(String str) {
         if (str == null) {
             return null;
+        }
+        int pos = str.indexOf(",");
+        if (pos >= 0) {
+            String str1 = str.substring(0, pos);
+            String str2 = str.substring(pos + 1);
+            return AndInference.create(parseInference(str1), parseInference(str2));
+        }
+        if (str.trim().equals("")) {
+            return TrueInference.T;
         }
         for (Function<String, Inference> item : inferences) {
             Inference inf = item.apply(str);
