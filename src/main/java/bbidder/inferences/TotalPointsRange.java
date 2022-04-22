@@ -35,7 +35,7 @@ public class TotalPointsRange implements Inference {
     }
 
     @Override
-    public List<BiddingContext> resolveSuits(BiddingContext context) {
+    public List<BiddingContext> resolveSymbols(BiddingContext context) {
         return List.of(context.withInferenceAdded(this));
     }
 

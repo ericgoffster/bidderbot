@@ -41,11 +41,11 @@ public class InferenceList {
         return result;
     }
 
-    public List<BiddingContext> resolveSuits(List<BiddingContext> list) {
+    public List<BiddingContext> resolveSymbols(List<BiddingContext> list) {
         for (Inference i : inferences) {
             List<BiddingContext> newList = new ArrayList<>();
             for (BiddingContext bi2 : list) {
-                newList.addAll(i.resolveSuits(bi2));
+                newList.addAll(i.resolveSymbols(bi2));
             }
             list = newList;
         }

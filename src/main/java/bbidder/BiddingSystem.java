@@ -201,7 +201,7 @@ public class BiddingSystem {
                     }
                 } else if (!ln.equals("")) {
                     try {
-                        inferences.addAll(BidInference.valueOf(reg, ln).at(where + ":" + lineno).resolveSuits());
+                        inferences.addAll(BidInference.valueOf(reg, ln).at(where + ":" + lineno).resolveSymbols());
                     } catch (Exception e) {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }

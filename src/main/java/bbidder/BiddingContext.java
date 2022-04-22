@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 /**
  * A bidding context is used to build BidInference's.
  * A bidding context consists of the current BidInference, and the current symbol table.
- * A call to resolveSuits will create "N" different version of the bidding context,
+ * A call to resolveSymbols will create "N" different version of the bidding context,
  * each with a different value of the suit that is allowed, added toe the symbol table.
  * 
  * Note that a BiddingContext is immutable.
@@ -161,7 +161,7 @@ public final class BiddingContext {
      * @return a map of strains to new bidding contexts. Each key in the map represents a possible bid strain
      *         for the given suit.
      */
-    public Map<Integer, BiddingContext> resolveSuits(String symbol) {
+    public Map<Integer, BiddingContext> resolveSymbols(String symbol) {
         boolean reverse = false;
         if (symbol.endsWith(":down")) {
             reverse = true;

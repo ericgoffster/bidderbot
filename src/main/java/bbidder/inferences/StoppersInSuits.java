@@ -60,7 +60,7 @@ public class StoppersInSuits implements Inference {
     }
 
     @Override
-    public List<BiddingContext> resolveSuits(BiddingContext context) {
+    public List<BiddingContext> resolveSymbols(BiddingContext context) {
         return List.of(context.withInferenceAdded(new StoppersInSuits(suits.replaceVars(context), partial)));
     }
 

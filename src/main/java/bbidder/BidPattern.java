@@ -64,7 +64,7 @@ public class BidPattern {
     /**
      * @return The suit part.
      */
-    public String getSuit() {
+    public String getSymbol() {
         return symbol;
     }
 
@@ -149,20 +149,20 @@ public class BidPattern {
     }
 
     /**
-     * @param suit The suit
+     * @param symbol The suit
      * @param jumpLevel The number of jumps
      * @return A pattern where the level is "jump" based.
      */
-    public static BidPattern createJump(String suit, int jumpLevel) {
-        return new BidPattern(false, suit, null, null, jumpLevel, false, false, false);
+    public static BidPattern createJump(String symbol, int jumpLevel) {
+        return new BidPattern(false, symbol, null, null, jumpLevel, false, false, false);
     }
 
     /**
-     * @param suit The suit to reverse
+     * @param symbol The suit to reverse
      * @return A bid that is the reverse of a suit
      */
-    public static BidPattern createReverse(String suit) {
-        return new BidPattern(false, suit, null, null, 0, true, false, false);
+    public static BidPattern createReverse(String symbol) {
+        return new BidPattern(false, symbol, null, null, 0, true, false, false);
     }
 
     /**
@@ -188,11 +188,11 @@ public class BidPattern {
     /**
      * 
      * @param level The level
-     * @param suit The suitz
+     * @param symbol The suitz
      * @return A bid that is the level of a suit
      */
-    public static BidPattern createBid(int level, String suit) {
-        return new BidPattern(false, suit, level, null, null, false, false, false);
+    public static BidPattern createBid(int level, String symbol) {
+        return new BidPattern(false, symbol, level, null, null, false, false, false);
     }
 
     /**
@@ -211,12 +211,12 @@ public class BidPattern {
      * @param bc The bidding context
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public List<BiddingContext> resolveSuits(BiddingContext bc) {
+    public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         if (simpleBid != null || wild) {
             return List.of(bc.withBidAdded(this));
         }
         List<BiddingContext> result = new ArrayList<>();
-        for (Entry<Integer, BiddingContext> e : bc.resolveSuits(getSuit()).entrySet()) {
+        for (Entry<Integer, BiddingContext> e : bc.resolveSymbols(getSymbol()).entrySet()) {
             result.add(e.getValue().withBidAdded(bindSuit(e.getKey())));
         }
         return result;

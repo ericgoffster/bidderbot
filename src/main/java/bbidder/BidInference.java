@@ -72,9 +72,9 @@ public class BidInference {
     /**
      * @return A list of bid inferences with all suit variables resolved.
      */
-    public List<BidInference> resolveSuits() {
+    public List<BidInference> resolveSymbols() {
         List<BidInference> result = new ArrayList<>();
-        for (BiddingContext bc : inferences.resolveSuits(bids.resolveSuits())) {
+        for (BiddingContext bc : inferences.resolveSymbols(bids.resolveSymbols())) {
             result.add(bc.getInference());
         }
         return result;
