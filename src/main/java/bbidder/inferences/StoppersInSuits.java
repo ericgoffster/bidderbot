@@ -7,8 +7,8 @@ import bbidder.BiddingContext;
 import bbidder.BitUtil;
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
-import bbidder.InferenceContext.SuitSet;
+import bbidder.SuitSets;
+import bbidder.SuitSets.SuitSet;
 import bbidder.MappedInf;
 import bbidder.Players;
 import bbidder.SplitUtil;
@@ -35,10 +35,10 @@ public class StoppersInSuits implements Inference {
     public static Inference valueOf(String str) {
         String[] parts = SplitUtil.split(str, "\\s+", 2);
         if (parts.length == 2 && parts[0].equalsIgnoreCase("stoppers")) {
-            return new StoppersInSuits(InferenceContext.lookupSuitSet(parts[1]), false);
+            return new StoppersInSuits(SuitSets.lookupSuitSet(parts[1]), false);
         }
         if (parts.length == 2 && parts[0].equalsIgnoreCase("partial_stoppers")) {
-            return new StoppersInSuits(InferenceContext.lookupSuitSet(parts[1]), true);
+            return new StoppersInSuits(SuitSets.lookupSuitSet(parts[1]), true);
         }
         return null;
     }

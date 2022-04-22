@@ -11,46 +11,9 @@ import static bbidder.Constants.ROUND;
 import java.io.CharArrayReader;
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
 
-/**
- * An inference in the context of other inferences.
- * 
- * @author goffster
- *
- */
-public class InferenceContext {
-
-    public final BiddingContext bc;
-
-    public final Players players;
-
-    public InferenceContext(Players players, BiddingContext bc) {
-        super();
-        this.players = players;
-        this.bc = bc;
-    }
-
-    public InferenceContext() {
-        super();
-        this.players = new Players();
-        this.bc = BiddingContext.EMPTY;
-    }
-
-    public Map<Integer, InferenceContext> lookupSuits(String s) {
-        Integer strain = Strain.getSuit(s);
-        if (strain != null) {
-            return Map.of(strain, this);
-        }
-        Map<Integer, InferenceContext> result = new LinkedHashMap<>();
-        for (var e : bc.getMappedBiddingContexts(s).entrySet()) {
-            result.put(e.getKey(), new InferenceContext(players, e.getValue()));
-        }
-        return result;
-    }
-    
+public class SuitSets {
     public interface SuitSet {
         public short evaluate(Players players);
         public SuitSet replaceVars(BiddingContext bc);

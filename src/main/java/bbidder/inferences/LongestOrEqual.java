@@ -8,8 +8,8 @@ import bbidder.BiddingContext;
 import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
-import bbidder.InferenceContext.SuitSet;
+import bbidder.SuitSets;
+import bbidder.SuitSets.SuitSet;
 import bbidder.MappedInf;
 import bbidder.Players;
 import bbidder.ShapeSet;
@@ -58,7 +58,7 @@ public class LongestOrEqual implements Inference {
         str = str.substring(16).trim();
         int pos = str.indexOf("among");
         if (pos >= 0) {
-            return new LongestOrEqual(str.substring(0, pos).trim(), InferenceContext.lookupSuitSet(str.substring(pos + 5).trim()));
+            return new LongestOrEqual(str.substring(0, pos).trim(), SuitSets.lookupSuitSet(str.substring(pos + 5).trim()));
         }
         if (!BiddingContext.isValidSuit(str)) {
             return null;
