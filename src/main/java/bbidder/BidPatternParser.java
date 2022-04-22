@@ -17,8 +17,6 @@ public class BidPatternParser implements Parser<BidPattern> {
     private BidPattern parseInterior(Input inp) throws IOException {
         inp.advanceWhite();
         Integer jumpLevel = null;
-        boolean reverse = false;
-        boolean nonreverse = false;
         String str;
         if (inp.readKeyword(BidPattern.STR_NONJUMP)) {
             jumpLevel = 0;
@@ -28,12 +26,6 @@ public class BidPatternParser implements Parser<BidPattern> {
             str = parseSuit(inp);
         } else if (inp.readKeyword(BidPattern.STR_JUMP)) {
             jumpLevel = 1;
-            str = parseSuit(inp);
-        } else if (inp.readKeyword(BidPattern.STR_REVERSE)) {
-            reverse = true;
-            str = parseSuit(inp);
-        } else if (inp.readKeyword(BidPattern.STR_NONREVERSE)) {
-            nonreverse = true;
             str = parseSuit(inp);
         } else {
             str = parseSuit(inp);
@@ -58,7 +50,7 @@ public class BidPatternParser implements Parser<BidPattern> {
             if (sym == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createBid(jumpLevel, reverse, nonreverse, level, sym);
+            return BidPattern.createBid(jumpLevel, level, sym);
         }
     }
 

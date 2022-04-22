@@ -269,46 +269,6 @@ public class BidList {
 
     /**
      * 
-     * @param bid
-     *            The bid to test
-     * @return true if the given bid would be a reverse.
-     */
-    public boolean isReverse(Bid bid) {
-        Bid myLastBid = bids.size() >= 4 ? bids.get(bids.size() - 4) : null;
-        Bid partnerLastBid = bids.size() >= 2 ? bids.get(bids.size() - 2) : null;
-        Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? nextLegalBidOf(myLastBid.strain) : null;
-        if (myRebid != null && bid.isSuitBid()) {
-            boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
-            if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() <= myRebid.ordinal() || supportedPartner
-                    || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * 
-     * @param bid
-     *            The bid to test
-     * @return true if the given bid would be a non-reverse.
-     */
-    public boolean isNonReverse(Bid bid) {
-        Bid myLastBid = bids.size() >= 4 ? bids.get(bids.size() - 4) : null;
-        Bid partnerLastBid = bids.size() >= 2 ? bids.get(bids.size() - 2) : null;
-        Bid myRebid = myLastBid != null && myLastBid.isSuitBid() ? nextLegalBidOf(myLastBid.strain) : null;
-        if (myRebid != null && bid.isSuitBid()) {
-            boolean supportedPartner = partnerLastBid != null && partnerLastBid.isSuitBid() && bid.strain == partnerLastBid.strain;
-            if (myLastBid == null || !myLastBid.isSuitBid() || bid.ordinal() >= myRebid.ordinal() || supportedPartner
-                    || bid.strain == myLastBid.strain || bid.level == myLastBid.level) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * 
      * @param strain
      *            The bid strain
      * @return The next possible level of the given strain.
