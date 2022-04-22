@@ -4,7 +4,11 @@ import static bbidder.Constants.ALL_SUITS;
 import static bbidder.Constants.MAJORS;
 import static bbidder.Constants.MINORS;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Map.Entry;
 
 /**
  * Represents an immutable matchable bid pattern.
@@ -220,6 +224,19 @@ public class BidPattern {
             return createSimpleBid(Bid.valueOf(level, strain));
         }
         return new BidPattern(isOpposition, String.valueOf(Constants.STR_ALL_SUITS.charAt(strain)), level, simpleBid, jumpLevel, reverse, nonreverse, wild);
+    }
+    
+    public List<BiddingContext> resolveSuits(BiddingContext bc) {
+        if (simpleBid != null || wild) {
+            return List.of(bc.withBidAdded(this));
+        }
+        List<BiddingContext> result = new ArrayList<>();
+        Map<Integer, BiddingContext> m = bc.getMappedBiddingContexts(getSuit());
+        for (Entry<Integer, BiddingContext> e : m.entrySet()) {
+            BiddingContext bc2 = e.getValue();
+            result.add(bc2.withBidAdded(bindSuit(e.getKey())));
+        }
+        return result;
     }
     
     /**

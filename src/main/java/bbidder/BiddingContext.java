@@ -1,11 +1,8 @@
 package bbidder;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -51,6 +48,10 @@ public final class BiddingContext {
     public Map<String, Integer> getSuits() {
         return Collections.unmodifiableMap(suits);
     }
+    
+    public BiddingContext withBidAdded(BidPattern patt) {
+        return new BiddingContext(bids.withBidAdded(patt), suits);
+    }
 
     /**
      * @param symbol
@@ -92,24 +93,6 @@ public final class BiddingContext {
         return suits.get(symbol);
     }
     
-    /**
-     * @param pattern
-     *            The bid pattern
-     * @return The set of possible bids for a pattern
-     */
-    public List<BiddingContext> getBids(BidPattern pattern) {
-        if (pattern.simpleBid != null || pattern.wild) {
-            return List.of(new BiddingContext(bids.withBidAdded(pattern), suits));
-        }
-        List<BiddingContext> result = new ArrayList<>();
-        Map<Integer, BiddingContext> m = getMappedBiddingContexts(pattern.getSuit());
-        for (Entry<Integer, BiddingContext> e : m.entrySet()) {
-            BiddingContext bc = e.getValue();
-            result.add(new BiddingContext(bc.bids.withBidAdded(pattern.bindSuit(e.getKey())), bc.suits));
-        }
-        return result;
-    }
-
     /**
      * @param suit The suit to match.
      * @return a map of strains to new bidding contexts
