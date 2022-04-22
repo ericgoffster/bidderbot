@@ -10,8 +10,9 @@ public class BiddingTest {
     public final Hand hand;
     public final BidList bids;
     public final String where;
+    public final boolean anti;
 
-    public BiddingTest(String where, Hand hand, BidList bids) {
+    public BiddingTest(String where, Hand hand, BidList bids, boolean anti) {
         super();
         if (hand.size() != 13) {
             throw new IllegalArgumentException("Hand does not have 13 cards: '" + hand + '"');
@@ -19,6 +20,7 @@ public class BiddingTest {
         this.where = where;
         this.hand = hand;
         this.bids = bids;
+        this.anti = anti;
     }
 
     /**
@@ -48,7 +50,8 @@ public class BiddingTest {
 
     /**
      * Parses a test.
-     * 
+     * @param anti 
+     *            True if this is an anti test
      * @param where
      *            Where the test was defined
      * @param str
@@ -56,11 +59,11 @@ public class BiddingTest {
      * @return
      *         The bidding test
      */
-    public static BiddingTest valueOf(String where, String str) {
+    public static BiddingTest valueOf(boolean anti, String where, String str) {
         String[] parts = SplitUtil.split(str, ":", 2);
         if (parts.length != 2) {
             throw new IllegalArgumentException("Expected <hand>:<bids> '" + str + "'");
         }
-        return new BiddingTest(where, Hand.valueOf(parts[0]), BidList.valueOf(parts[1]));
+        return new BiddingTest(where, Hand.valueOf(parts[0]), BidList.valueOf(parts[1]), anti);
     }
 }

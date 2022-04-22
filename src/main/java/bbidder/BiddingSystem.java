@@ -212,7 +212,13 @@ public class BiddingSystem {
                     load(where, resolveUrlSpec(where, comm[1]), reportErrors, inferences, tests, reg);
                 } else if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
                     try {
-                        tests.add(BiddingTest.valueOf(where + ":" + lineno, comm[1]));
+                        tests.add(BiddingTest.valueOf(false, where + ":" + lineno, comm[1]));
+                    } catch (Exception e) {
+                        reportErrors.accept(new ParseException(where + ":" + lineno, e));
+                    }
+                } else if (comm.length == 2 && comm[0].equalsIgnoreCase("antitest")) {
+                    try {
+                        tests.add(BiddingTest.valueOf(true, where + ":" + lineno, comm[1]));
                     } catch (Exception e) {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }

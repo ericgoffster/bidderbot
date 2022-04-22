@@ -29,7 +29,7 @@ public class Test2Over1 {
                 e.printStackTrace();
                 continue;
             }
-            if (!result.found.possibleBid.bid.equals(result.expected)) {
+            if (!test.anti && !result.found.possibleBid.bid.equals(result.expected)) {
                 hadError.set(true);
                 InfSummary partnerSummary = result.state.players.partner.infSummary;
                 System.err
@@ -58,6 +58,18 @@ public class Test2Over1 {
                         System.err.println("       " + bi);
                     }
                 }
+                DebugUtils.debugMode = true;
+                DebugUtils.breakpoint();
+                test.getResult(bs);
+                DebugUtils.debugMode = false;
+            } else if (test.anti && result.found.possibleBid.bid.equals(result.expected)) {
+                hadError.set(true);
+                InfSummary partnerSummary = result.state.players.partner.infSummary;
+                System.err
+                        .println("You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
+                System.err.println("My summary " + result.state.players.me.infSummary);
+                System.err.println("Partner summary " + partnerSummary);
+                System.err.println("Test at " + result.where + " claims I should *not* have bid " + result.expected + " but I did");
                 DebugUtils.debugMode = true;
                 DebugUtils.breakpoint();
                 test.getResult(bs);
