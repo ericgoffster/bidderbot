@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  *
  */
 public final class BiddingContext {
-    public static final BiddingContext EMPTY = new BiddingContext(new BidInference(null, BidPatternList.EMPTY, InferenceList.EMPTY), Map.of());
+    public static final BiddingContext EMPTY = new BiddingContext(BidInference.EMPTY, Map.of());
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     private final BidInference bidInference;
     

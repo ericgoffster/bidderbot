@@ -6,24 +6,27 @@ import java.util.Objects;
 
 /**
  * Holds the bids and inferences from the notes.
- * This last only long enough to call getBoundInferences.
- * The result of this call is what is stored.
  * 
  * @author goffster
  *
  */
 public class BidInference {
+    public static BidInference EMPTY = new BidInference(null, BidPatternList.EMPTY, InferenceList.EMPTY);
     public final String where;
     public final BidPatternList bids;
     public final InferenceList inferences;
 
-    public BidInference(String where, BidPatternList bids, InferenceList inferences) {
+    private BidInference(String where, BidPatternList bids, InferenceList inferences) {
         super();
         this.where = where;
         this.bids = bids;
         this.inferences = inferences;
     }
     
+    /**
+     * @param where The where tag.
+     * @return A bid inference with the "where tag" set.
+     */
     public BidInference at(String where) {
         return new BidInference(where, bids, inferences);
     }

@@ -2,8 +2,6 @@ package bbidder;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 import bbidder.inferences.Balanced;
@@ -14,14 +12,16 @@ public class BidInferenceTest {
     public void testValueOf() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         assertEquals(
-                new BidInference(null, BidPatternList.valueOf("1N"),
-                        new InferenceList(List.of(new HCPRange(15, 17), new Balanced()))),
+                BidInference.EMPTY.withBidAdded(BidPattern.valueOf("1N")).withInferenceAdded(new HCPRange(15, 17)).withInferenceAdded(new Balanced()),
                 BidInference.valueOf(reg, "1N => 15-17 hcp, balanced"));
     }
 
     @Test
     public void testToString() {
-        assertEquals("1N => 15-17 hcp,balanced", new BidInference(null, BidPatternList.valueOf("1N"),
-                new InferenceList(List.of(new HCPRange(15, 17), new Balanced()))).toString());
+        assertEquals("1N => 15-17 hcp,balanced",
+                BidInference.EMPTY.withBidAdded(BidPattern.valueOf("1N"))
+                        .withInferenceAdded(new HCPRange(15, 17))
+                        .withInferenceAdded(new Balanced())
+                        .toString());
     }
 }
