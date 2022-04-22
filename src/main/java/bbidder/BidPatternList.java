@@ -37,6 +37,13 @@ public class BidPatternList {
     public List<BidPattern> getBids() {
         return Collections.unmodifiableList(bids);
     }
+    
+    /**
+     * @return All bids except the first
+     */
+    public BidPatternList exceptFirst() {
+        return new BidPatternList(bids.subList(1, bids.size()));
+    }
 
     /**
      * @param patt
@@ -77,7 +84,7 @@ public class BidPatternList {
         // If the first bid is a generality, then the generality
         // takes care of all chairs
         if (pattern.generality != null) {
-            return new BidPatternList(bids.subList(1, bids.size())).resolveGenerality(BiddingContext.EMPTY, pattern);
+            return exceptFirst().resolveSymbols(BiddingContext.EMPTY, pattern, bids.get(1).isOpposition);
         }
 
         // generate contexts for {[bid], [(P) bid], [P (P) bids], [(P) P (P) bids]}
@@ -109,6 +116,18 @@ public class BidPatternList {
             inp.advanceWhite();
             if (inp.ch != -1) {
                 throw new IllegalArgumentException("invalid bids: '" + str + "'");
+            }
+            int numWild = 0 ;
+            for(BidPattern patt: l) {
+                if (patt.generality != null) {
+                    numWild++;
+                }
+            }
+            if (numWild > 1) {
+                throw new IllegalArgumentException("Only one generality allowed");
+            }
+            if (l.size() > 0 && l.get(l.size() - 1).generality != null) {
+                throw new IllegalArgumentException("bids may not end with a generality");
             }
             return new BidPatternList(l);
         } catch (IOException e) {
@@ -157,23 +176,14 @@ public class BidPatternList {
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = bids.get(0);
         if (pattern.generality != null) {
-            BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
-            return theRest.resolveGenerality(ctx, pattern);
+            return exceptFirst().resolveSymbols(ctx, pattern, bids.get(1).isOpposition);
         }
+        // If it is the opposition's turn, and the bid is not opposition,
+        // then assume pass for opposition
         if (isOpp && !pattern.isOpposition) {
             return resolveSymbols(ctx, BidPattern.PASS, !isOpp);
         }
-        return new BidPatternList(bids.subList(1, bids.size())).resolveSymbols(ctx, pattern, !isOpp);
-    }
-
-    private List<BiddingContext> resolveGenerality(BiddingContext ctx, BidPattern pattern) {
-        List<BiddingContext> l = new ArrayList<>();
-        boolean isOpp = bids.get(0).isOpposition;
-
-        for (BiddingContext newCtx : pattern.resolveSymbols(ctx)) {
-            l.addAll(resolveSymbols(newCtx, isOpp));
-        }
-        return l;
+        return exceptFirst().resolveSymbols(ctx, pattern, !isOpp);
     }
 
     private List<BiddingContext> resolveSymbols(BiddingContext ctx, BidPattern pattern, boolean isOpp) {
