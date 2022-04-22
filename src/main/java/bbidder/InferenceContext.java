@@ -8,12 +8,12 @@ import java.util.Objects;
 
 import bbidder.inferences.AndInference;
 
-public final class BiddingContext {
+public final class InferenceContext {
     public final Inference inference;
 
     private final Map<String, Integer> suits;
 
-    public BiddingContext(Inference inference, Map<String, Integer> suits) {
+    public InferenceContext(Inference inference, Map<String, Integer> suits) {
         super();
         this.inference = inference;
         this.suits = suits;
@@ -26,11 +26,11 @@ public final class BiddingContext {
         return Collections.unmodifiableMap(suits);
     }
 
-    public BiddingContext withInferenceAdded(Inference inf) {
-        return new BiddingContext(AndInference.create(inference, inf), suits);
+    public InferenceContext withInferenceAdded(Inference inf) {
+        return new InferenceContext(AndInference.create(inference, inf), suits);
     }
 
-    public Map<Symbol, BiddingContext> resolveSymbols(Symbol symbol) {
+    public Map<Symbol, InferenceContext> resolveSymbols(Symbol symbol) {
         {
             Symbol esymbol = symbol.evaluate(suits);
             if (esymbol != null) {
@@ -41,12 +41,12 @@ public final class BiddingContext {
                 return Map.of(esymbol, this);
             }
         }
-        Map<Symbol, BiddingContext> m = new LinkedHashMap<Symbol, BiddingContext>();
+        Map<Symbol, InferenceContext> m = new LinkedHashMap<Symbol, InferenceContext>();
         for (Symbol newSym: symbol.boundSymbols(suits)) {
             if (!suits.containsValue(newSym.getResolved())) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
                 newSuits.putAll(symbol.unevaluate(newSym.getResolved()));
-                m.put(newSym, new BiddingContext(inference, newSuits));
+                m.put(newSym, new InferenceContext(inference, newSuits));
             }
         }
         return m;
@@ -73,7 +73,7 @@ public final class BiddingContext {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        BiddingContext other = (BiddingContext) obj;
+        InferenceContext other = (InferenceContext) obj;
         return Objects.equals(inference, other.inference) && Objects.equals(suits, other.suits);
     }
 }

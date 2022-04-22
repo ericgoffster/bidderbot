@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.BiddingContext;
+import bbidder.InferenceContext;
 import bbidder.Hand;
 import bbidder.Players;
 import bbidder.SuitSet;
@@ -45,7 +45,7 @@ public class LongestOrEqualTest {
 
     @Test
     public void testHigherRankingOfNotSpades() {
-        BiddingContext empty = new BiddingContext(TrueInference.T, Map.of());
+        InferenceContext empty = new InferenceContext(TrueInference.T, Map.of());
         assertTrue(
                 new LongestOrEqual(new ConstSymbol(2), SuitSets.lookupSuitSet("~S").replaceVars(empty)).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertTrue(

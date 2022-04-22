@@ -1,6 +1,6 @@
 package bbidder.suitsets;
 
-import bbidder.BiddingContext;
+import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.SuitSet;
 
@@ -33,7 +33,7 @@ public class Unbid implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(BiddingContext bc) {
+    public SuitSet replaceVars(InferenceContext bc) {
         return this;
     }
     

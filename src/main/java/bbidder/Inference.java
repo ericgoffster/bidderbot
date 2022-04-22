@@ -8,5 +8,5 @@ import java.util.List;
 public interface Inference {
     public IBoundInference bind(Players players);
 
-    public List<BiddingContext> resolveSymbols(BiddingContext context);
+    public List<InferenceContext> resolveSymbols(InferenceContext context);
 }

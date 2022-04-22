@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import bbidder.BiddingContext;
+import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
@@ -41,8 +41,8 @@ public class FitInSuit implements Inference {
     }
 
     @Override
-    public List<BiddingContext> resolveSymbols(BiddingContext context) {
-        List<BiddingContext> l = new ArrayList<>();
+    public List<InferenceContext> resolveSymbols(InferenceContext context) {
+        List<InferenceContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
             l.add(e.getValue().withInferenceAdded(new FitInSuit(e.getKey())));
         }

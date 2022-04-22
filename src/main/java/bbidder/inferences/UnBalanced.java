@@ -2,7 +2,7 @@ package bbidder.inferences;
 
 import java.util.List;
 
-import bbidder.BiddingContext;
+import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -27,7 +27,7 @@ public class UnBalanced implements Inference {
     }
 
     @Override
-    public List<BiddingContext> resolveSymbols(BiddingContext context) {
+    public List<InferenceContext> resolveSymbols(InferenceContext context) {
         return List.of(context.withInferenceAdded(this));
     }
 

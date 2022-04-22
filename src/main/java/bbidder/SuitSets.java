@@ -22,7 +22,7 @@ import bbidder.suitsets.Unstopped;
 
 public class SuitSets {
 
-    public static Symbol bind(BiddingContext bc, Symbol symbol) {
+    public static Symbol bind(InferenceContext bc, Symbol symbol) {
         Symbol evaluate = symbol.evaluate(bc.getSuits());
         if (evaluate == null) {
             throw new IllegalArgumentException(symbol + " undefined");

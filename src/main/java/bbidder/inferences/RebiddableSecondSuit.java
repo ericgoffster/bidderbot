@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import bbidder.BiddingContext;
+import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
@@ -37,8 +37,8 @@ public class RebiddableSecondSuit implements Inference {
     }
 
     @Override
-    public List<BiddingContext> resolveSymbols(BiddingContext context) {
-        List<BiddingContext> l = new ArrayList<>();
+    public List<InferenceContext> resolveSymbols(InferenceContext context) {
+        List<InferenceContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(longer).entrySet()) {
             for (var e2 : e.getValue().resolveSymbols(shorter).entrySet()) {
                 l.add(e2.getValue().withInferenceAdded(new RebiddableSecondSuit(e.getKey(), e2.getKey())));

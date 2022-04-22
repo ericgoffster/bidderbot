@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.BiddingContext;
+import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -31,9 +31,9 @@ public class AndInference implements Inference {
     }
 
     @Override
-    public List<BiddingContext> resolveSymbols(BiddingContext context) {
-        List<BiddingContext> res = new ArrayList<>();
-        for (BiddingContext bc : i1.resolveSymbols(context)) {
+    public List<InferenceContext> resolveSymbols(InferenceContext context) {
+        List<InferenceContext> res = new ArrayList<>();
+        for (InferenceContext bc : i1.resolveSymbols(context)) {
             res.addAll(i2.resolveSymbols(bc));
         }
         return res;

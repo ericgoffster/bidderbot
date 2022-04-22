@@ -2,7 +2,7 @@ package bbidder.suitsets;
 
 import java.util.Objects;
 
-import bbidder.BiddingContext;
+import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.SuitSet;
 
@@ -43,7 +43,7 @@ public class ConstSet implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(BiddingContext bc) {
+    public SuitSet replaceVars(InferenceContext bc) {
         return this;
     }
 }

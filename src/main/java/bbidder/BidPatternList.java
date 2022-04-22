@@ -87,12 +87,13 @@ public class BidPatternList {
     /**
      * Resolve the first symbol.
      * Allow for first, second, third or fourth chair openings
+     * @param suits suits
      * 
      * @return The list of resolved bidding contexts
      */
-    public List<BidPatternListContext> resolveFirstSymbol() {
+    public List<BidPatternListContext> resolveFirstSymbol(Map<String, Integer> suits) {
         // If there are no bids, then we are done
-        BidPatternListContext empty = new BidPatternListContext(BidPatternList.EMPTY, Map.of());
+        BidPatternListContext empty = new BidPatternListContext(BidPatternList.EMPTY, suits);
         if (bids.isEmpty()) {
             return List.of(empty);
         }

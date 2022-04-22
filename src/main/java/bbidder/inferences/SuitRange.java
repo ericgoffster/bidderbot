@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.BiddingContext;
+import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -48,8 +48,8 @@ public class SuitRange implements Inference {
     }
 
     @Override
-    public List<BiddingContext> resolveSymbols(BiddingContext context) {
-        List<BiddingContext> l = new ArrayList<>();
+    public List<InferenceContext> resolveSymbols(InferenceContext context) {
+        List<InferenceContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
             l.add(e.getValue().withInferenceAdded(new SuitRange(e.getKey(), rng)));
         }

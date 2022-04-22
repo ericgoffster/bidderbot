@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import bbidder.inferences.AndInference;
@@ -91,10 +92,10 @@ public class BidInference {
      */
     public List<BidInference> resolveSymbols() {
         List<BidInference> result = new ArrayList<>();
-        for (BidPatternListContext bc3 : bids.resolveFirstSymbol()) {
-            BiddingContext bc2 = new BiddingContext(TrueInference.T, bc3.getSuits());
-            for (BiddingContext bc : inferences.resolveSymbols(bc2)) {
-                result.add(BidInference.EMPTY.at(where).withBids(bc3.bids).withInference(bc.inference));
+        for (BidPatternListContext bplc : bids.resolveFirstSymbol(Map.of())) {
+            InferenceContext bc2 = new InferenceContext(TrueInference.T, bplc.getSuits());
+            for (InferenceContext bc : inferences.resolveSymbols(bc2)) {
+                result.add(BidInference.EMPTY.at(where).withBids(bplc.bids).withInference(bc.inference));
             }
         }
         return result;

@@ -2,7 +2,7 @@ package bbidder.suitsets;
 
 import java.util.Objects;
 
-import bbidder.BiddingContext;
+import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSets;
@@ -45,7 +45,7 @@ public class Gt implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(BiddingContext bc) {
+    public SuitSet replaceVars(InferenceContext bc) {
         return new Gt(SuitSets.bind(bc, strain));
     }
 }

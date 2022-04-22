@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import bbidder.BiddingContext;
+import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.NOfTop;
@@ -40,8 +40,8 @@ public class SpecificCards implements Inference {
     }
 
     @Override
-    public List<BiddingContext> resolveSymbols(BiddingContext context) {
-        List<BiddingContext> l = new ArrayList<>();
+    public List<InferenceContext> resolveSymbols(InferenceContext context) {
+        List<InferenceContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
             l.add(e.getValue().withInferenceAdded(new SpecificCards(e.getKey(), rng, top)));
         }
