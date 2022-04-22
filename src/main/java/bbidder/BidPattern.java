@@ -254,7 +254,7 @@ public class BidPattern {
             if (level != null && b.level != level.intValue()) {
                 return null;
             }
-            if (!symbol.levelTest().test(b.level)) {
+            if (!symbol.levelTest().test(b)) {
                 return null;
             }
             if (!bidList.isReverse(b)) {
@@ -268,7 +268,7 @@ public class BidPattern {
             if (level != null && b.level != level.intValue()) {
                 return null;
             }
-            if (!symbol.levelTest().test(b.level)) {
+            if (!symbol.levelTest().test(b)) {
                 return null;
             }
             if (!bidList.isNonReverse(b)) {
@@ -279,13 +279,14 @@ public class BidPattern {
         }
         if (getJumpLevel() != null) {
             int newLevel = getJumpLevel();
-            if (level != null && newLevel != level.intValue()) {
+            Bid b = bidList.getBid(newLevel, strain);
+            if (level != null && b.level != level.intValue()) {
                 return null;
             }
-            if (!symbol.levelTest().test(newLevel)) {
+            if (!symbol.levelTest().test(b)) {
                 return null;
             }
-            return bidList.getBid(newLevel, strain);
+            return b;
         }
         return Bid.valueOf(getLevel(), strain);
     }

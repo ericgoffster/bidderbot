@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import bbidder.Bid;
 import bbidder.Symbol;
 
 public class NotSymbol implements Symbol {
@@ -63,7 +64,7 @@ public class NotSymbol implements Symbol {
     }
 
     @Override
-    public Predicate<Integer> levelTest() {
+    public Predicate<Bid> levelTest() {
         return level -> true;
     }
 }

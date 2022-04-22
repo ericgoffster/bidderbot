@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import bbidder.Bid;
 import bbidder.Symbol;
 
 public class GreaterThanLevel implements Symbol {
@@ -65,7 +66,7 @@ public class GreaterThanLevel implements Symbol {
     }
     
     @Override
-    public Predicate<Integer> levelTest() {
-        return lev -> level < lev;
+    public Predicate<Bid> levelTest() {
+        return lev -> level < lev.level;
     }
 }

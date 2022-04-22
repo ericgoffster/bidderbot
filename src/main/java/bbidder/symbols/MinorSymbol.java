@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.Symbol;
 
@@ -82,7 +83,7 @@ public class MinorSymbol implements Symbol {
 
 
     @Override
-    public Predicate<Integer> levelTest() {
+    public Predicate<Bid> levelTest() {
         return level -> true;
     }
 }

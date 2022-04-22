@@ -51,19 +51,19 @@ public class SymbolParser {
             {
                 Matcher m = LESS_THAN.matcher(tag);
                 if (m.matches()) {
-                    return new LessThanLevelSymbol(sym, Integer.parseInt(m.group(1)));
+                    return new LessThanLevelSymbol(sym, Integer.parseInt(m.group(1)) - 1);
                 }
             }
             {
                 Matcher m = GREATER_THAN.matcher(tag);
                 if (m.matches()) {
-                    return new GreaterThanLevel(sym, Integer.parseInt(m.group(1)));
+                    return new GreaterThanLevel(sym, Integer.parseInt(m.group(1)) - 1);
                 }
             }
             {
                 Matcher m = EQUAL_TO.matcher(tag);
                 if (m.matches()) {
-                    return new EqualLevel(sym, Integer.parseInt(m.group(1)));
+                    return new EqualLevel(sym, Integer.parseInt(m.group(1)) - 1);
                 }
             }
             return null;

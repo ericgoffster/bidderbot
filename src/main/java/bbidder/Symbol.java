@@ -15,5 +15,5 @@ public interface Symbol {
     
     public Comparator<Integer> direction();
     
-    public Predicate<Integer> levelTest();
+    public Predicate<Bid> levelTest();
 }
