@@ -7,7 +7,7 @@ import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetContext;
 import bbidder.Symbol;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 
 public final class LookupSet implements SuitSet {
     private final Symbol symbol;
@@ -45,7 +45,7 @@ public final class LookupSet implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return symbol.resolveSymbols(symbols).map(e -> new SuitSetContext(new LookupSet(e.getSymbol()), e.symbols));
+    public Stream<SuitSetContext> resolveSymbols(SuitTable suitTable) {
+        return symbol.resolveSymbols(suitTable).map(e -> new SuitSetContext(new LookupSet(e.getSymbol()), e.suitTable));
     }
 }

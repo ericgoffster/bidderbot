@@ -12,14 +12,14 @@ import java.util.stream.Stream;
  *
  */
 public abstract class Generality implements BiPredicate<Players, Auction> {
-    public abstract Stream<Context> resolveSymbols(SymbolTable symbols);
+    public abstract Stream<Context> resolveSymbols(SuitTable suitTable);
 
     public final class Context {
-        public final SymbolTable symbols;
+        public final SuitTable suitTable;
 
-        public Context(SymbolTable symbols) {
+        public Context(SuitTable suitTable) {
             super();
-            this.symbols = symbols;
+            this.suitTable = suitTable;
         }
 
         public Generality getGenerality() {

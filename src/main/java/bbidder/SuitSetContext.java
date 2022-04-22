@@ -8,11 +8,11 @@ package bbidder;
  */
 public final class SuitSetContext {
     public final SuitSet suitSet;
-    public final SymbolTable symbols;
+    public final SuitTable suitTable;
 
-    public SuitSetContext(SuitSet ss, SymbolTable symbols) {
+    public SuitSetContext(SuitSet ss, SuitTable suitTable) {
         super();
         this.suitSet = ss;
-        this.symbols = symbols;
+        this.suitTable = suitTable;
     }
 }

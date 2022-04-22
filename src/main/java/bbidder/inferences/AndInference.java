@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.inferences.bound.AndBoundInf;
 
 /**
@@ -31,10 +31,10 @@ public final class AndInference extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return i1.resolveSymbols(symbols)
-                .flatMap(e1 -> i2.resolveSymbols(e1.symbols)
-                        .map(e2 -> new AndInference(e1.getInference(), e2.getInference()).new Context(e2.symbols)));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return i1.resolveSymbols(suitTable)
+                .flatMap(e1 -> i2.resolveSymbols(e1.suitTable)
+                        .map(e2 -> new AndInference(e1.getInference(), e2.getInference()).new Context(e2.suitTable)));
     }
 
     public static Inference create(Inference i1, Inference i2) {

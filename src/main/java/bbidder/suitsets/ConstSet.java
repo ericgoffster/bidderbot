@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetContext;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 
 public final class ConstSet implements SuitSet {
     private final String ssuits;
@@ -45,7 +45,7 @@ public final class ConstSet implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return Stream.of(new SuitSetContext(this, symbols));
+    public Stream<SuitSetContext> resolveSymbols(SuitTable suitTable) {
+        return Stream.of(new SuitSetContext(this, suitTable));
     }
 }

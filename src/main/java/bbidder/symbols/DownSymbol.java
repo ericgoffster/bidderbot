@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import bbidder.Bid;
 import bbidder.Symbol;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 
 public final class DownSymbol extends Symbol {
     private final Symbol symbol;
@@ -57,8 +57,8 @@ public final class DownSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        List<Context> l = new ArrayList<>(symbol.resolveSymbols(symbols).collect(Collectors.toList()));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        List<Context> l = new ArrayList<>(symbol.resolveSymbols(suitTable).collect(Collectors.toList()));
         Collections.reverse(l);
         return l.stream();
     }

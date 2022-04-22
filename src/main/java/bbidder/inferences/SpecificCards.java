@@ -12,7 +12,7 @@ import bbidder.Players;
 import bbidder.Range;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
 
 /**
@@ -39,8 +39,8 @@ public final class SpecificCards extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return symbol.resolveSymbols(symbols).map(e -> new SpecificCards(e.getSymbol(), rng, top).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return symbol.resolveSymbols(suitTable).map(e -> new SpecificCards(e.getSymbol(), rng, top).new Context(e.suitTable));
     }
 
     private static IBoundInference createBound(NOfTop spec) {

@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import bbidder.Bid;
 import bbidder.Strain;
 import bbidder.Symbol;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 
 public final class ConstSymbol extends Symbol {
     private final int strain;
@@ -17,8 +17,8 @@ public final class ConstSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return Stream.of(new Context(symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return Stream.of(new Context(suitTable));
     }
 
     @Override

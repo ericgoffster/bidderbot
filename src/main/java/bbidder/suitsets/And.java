@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetContext;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 
 public final class And implements SuitSet {
     private final SuitSet s1;
@@ -46,9 +46,9 @@ public final class And implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return s1.resolveSymbols(symbols)
-                .flatMap(e1 -> s2.resolveSymbols(e1.symbols).map(e2 -> new SuitSetContext(new And(e1.suitSet, e2.suitSet), e2.symbols)));
+    public Stream<SuitSetContext> resolveSymbols(SuitTable suitTable) {
+        return s1.resolveSymbols(suitTable)
+                .flatMap(e1 -> s2.resolveSymbols(e1.suitTable).map(e2 -> new SuitSetContext(new And(e1.suitSet, e2.suitSet), e2.suitTable)));
     }
 
 }

@@ -9,7 +9,7 @@ import bbidder.Players;
 import bbidder.StopperSet;
 import bbidder.SuitSet;
 import bbidder.SuitSets;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.inferences.bound.PartialStoppersBoundInf;
 import bbidder.inferences.bound.StoppersBoundInf;
 import bbidder.utils.BitUtil;
@@ -60,8 +60,8 @@ public final class StoppersInSuits extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return suits.resolveSymbols(symbols).map(e -> new StoppersInSuits(e.suitSet, partial).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return suits.resolveSymbols(suitTable).map(e -> new StoppersInSuits(e.suitSet, partial).new Context(e.suitTable));
     }
 
     @Override

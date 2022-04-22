@@ -13,7 +13,7 @@ import bbidder.Range;
 import bbidder.ShapeSet;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 public final class Rebiddable extends Inference {
@@ -33,8 +33,8 @@ public final class Rebiddable extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return symbol.resolveSymbols(symbols).map(e -> new Rebiddable(e.getSymbol()).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return symbol.resolveSymbols(suitTable).map(e -> new Rebiddable(e.getSymbol()).new Context(e.suitTable));
     }
 
     private IBoundInference createrBound(int s, InfSummary meSummary, InfSummary partnerSummary) {

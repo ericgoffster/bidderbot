@@ -11,18 +11,30 @@ import bbidder.utils.SplitUtil;
  */
 public final class BiddingTest {
     public final Hand hand;
-    public final Auction bids;
+    public final Auction auction;
     public final String where;
     public final boolean anti;
 
-    public BiddingTest(String where, Hand hand, Auction bids, boolean anti) {
+    /**
+     * Constructs a new test
+     * 
+     * @param where
+     *            where it was defined
+     * @param hand
+     *            The hand that was tested
+     * @param auction
+     *            The auction
+     * @param anti
+     *            True if this is an anti test
+     */
+    public BiddingTest(String where, Hand hand, Auction auction, boolean anti) {
         super();
         if (hand.size() != 13) {
             throw new IllegalArgumentException("Hand does not have 13 cards: '" + hand + '"');
         }
         this.where = where;
         this.hand = hand;
-        this.bids = bids;
+        this.auction = auction;
         this.anti = anti;
     }
 
@@ -36,8 +48,8 @@ public final class BiddingTest {
      */
     public TestResult getResult(BiddingSystem bs) {
         BiddingState state = new BiddingState(bs);
-        Auction exceptLast = bids.exceptLast();
-        Bid expected = bids.getLastBid().get();
+        Auction exceptLast = auction.exceptLast();
+        Bid expected = auction.getLastBid().get();
         try {
             for (Bid bid : exceptLast.getBids()) {
                 DebugUtils.breakpoint();
@@ -52,7 +64,7 @@ public final class BiddingTest {
 
     @Override
     public String toString() {
-        return hand + ":" + bids;
+        return hand + ":" + auction;
     }
 
     /**

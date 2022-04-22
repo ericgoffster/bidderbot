@@ -100,7 +100,7 @@ public final class Auction {
     }
 
     /**
-     * @return The last bid in the sequence. null if empty.
+     * @return The last bid in the sequence. empty if the list of bids is empty.
      */
     public Optional<Bid> getLastBid() {
         if (bids.isEmpty()) {

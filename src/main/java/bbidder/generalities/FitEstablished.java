@@ -8,7 +8,7 @@ import bbidder.Generality;
 import bbidder.Players;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.utils.SplitUtil;
 
 public final class FitEstablished extends Generality {
@@ -20,8 +20,8 @@ public final class FitEstablished extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return symbol.resolveSymbols(symbols).map(e -> new FitEstablished(e.getSymbol()).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return symbol.resolveSymbols(suitTable).map(e -> new FitEstablished(e.getSymbol()).new Context(e.suitTable));
     }
 
     @Override

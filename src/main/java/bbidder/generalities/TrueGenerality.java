@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 
 public final class TrueGenerality extends Generality {
     public static TrueGenerality T = new TrueGenerality();
@@ -14,8 +14,8 @@ public final class TrueGenerality extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return Stream.of(new Context(symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return Stream.of(new Context(suitTable));
     }
 
     @Override

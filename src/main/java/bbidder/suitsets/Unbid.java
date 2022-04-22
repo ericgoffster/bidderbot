@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetContext;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 
 public final class Unbid implements SuitSet {
     public Unbid() {
@@ -36,8 +36,8 @@ public final class Unbid implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return Stream.of(new SuitSetContext(this, symbols));
+    public Stream<SuitSetContext> resolveSymbols(SuitTable suitTable) {
+        return Stream.of(new SuitSetContext(this, suitTable));
     }
 
     @Override

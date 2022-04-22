@@ -15,19 +15,19 @@ public abstract class Inference {
 
     /**
      * 
-     * @param symbols
+     * @param suitTable
      *            The symbol table
      * @return A list of inferences representing this inference bound to all possible
      *         symbols.
      */
-    public abstract Stream<Context> resolveSymbols(SymbolTable symbols);
+    public abstract Stream<Context> resolveSymbols(SuitTable suitTable);
 
     public final class Context {
-        public final SymbolTable symbols;
+        public final SuitTable suitTable;
 
-        public Context(SymbolTable symbols) {
+        public Context(SuitTable suitTable) {
             super();
-            this.symbols = symbols;
+            this.suitTable = suitTable;
         }
 
         public Inference getInference() {

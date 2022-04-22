@@ -42,6 +42,9 @@ public final class BidPattern {
         this.isNonConventional = isNonConventional;
     }
 
+    /**
+     * @return True if this bid pattern is a pass.
+     */
     public boolean isPass() {
         return simpleBid == Bid.P;
     }
@@ -49,7 +52,7 @@ public final class BidPattern {
     /**
      * @param isOpposition
      *            true, if is an opposition bid
-     * @return A Bid Pattern with isOpposition set.
+     * @return A pattern with isOpposition set.
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional);
@@ -82,7 +85,7 @@ public final class BidPattern {
      * @param level
      *            The level
      * @param symbol
-     *            The suitz
+     *            The strain
      * @return A bid that is the level of a suit
      */
     public static BidPattern createBid(int level, Symbol symbol) {
@@ -92,7 +95,7 @@ public final class BidPattern {
     /**
      * @param generality
      *            The generality.
-     * @return A bid that represents a seires of bids that fit a generality
+     * @return A bid that represents a series of bids that fit a generality
      */
     public static BidPattern createWild(Generality generality) {
         return new BidPattern(false, null, null, null, null, generality, false);
@@ -103,7 +106,7 @@ public final class BidPattern {
      *            Current contract
      * @param symbol
      *            The new symbol
-     * @return A bid with the suit bound to a specific strain
+     * @return A bid with the suit bound to a specific strain.  empty if none found.
      */
     private Optional<BidPattern> withSymbol(Contract contract, Symbol symbol) {
         if (level != null) {
@@ -136,18 +139,18 @@ public final class BidPattern {
     /**
      * @param contract
      *            Current contract
-     * @param symbols
-     *            The suits
+     * @param suitTable
+     *            The symbols
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public Stream<Context> resolveSymbols(Contract contract, SymbolTable symbols) {
+    public Stream<Context> resolveSymbols(Contract contract, SuitTable suitTable) {
         if (generality != null) {
-            return generality.resolveSymbols(symbols).map(e -> createWild(e.getGenerality()).new Context(e.symbols));
+            return generality.resolveSymbols(suitTable).map(e -> createWild(e.getGenerality()).new Context(e.suitTable));
         }
         if (simpleBid != null) {
-            return Stream.of(new Context(symbols));
+            return Stream.of(new Context(suitTable));
         }
-        return symbol.resolveSymbols(symbols).flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.symbols)));
+        return symbol.resolveSymbols(suitTable).flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.suitTable)));
     }
 
     /**
@@ -226,11 +229,11 @@ public final class BidPattern {
     }
 
     public class Context {
-        public final SymbolTable symbols;
+        public final SuitTable suitTable;
 
-        public Context(SymbolTable symbols) {
+        public Context(SuitTable suitTable) {
             super();
-            this.symbols = symbols;
+            this.suitTable = suitTable;
         }
 
         public BidPattern getBidPattern() {

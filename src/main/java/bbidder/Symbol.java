@@ -21,14 +21,14 @@ public abstract class Symbol {
      */
     public abstract boolean nonConvential();
 
-    public abstract Stream<Context> resolveSymbols(SymbolTable symbols);
+    public abstract Stream<Context> resolveSymbols(SuitTable suitTable);
 
     public final class Context {
-        public final SymbolTable symbols;
+        public final SuitTable suitTable;
 
-        public Context(SymbolTable symbols) {
+        public Context(SuitTable suitTable) {
             super();
-            this.symbols = symbols;
+            this.suitTable = suitTable;
         }
 
         public Symbol getSymbol() {

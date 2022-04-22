@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.inferences.bound.ConstBoundInference;
 
 /**
@@ -24,8 +24,8 @@ public final class Always extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return Stream.of(new Context(symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return Stream.of(new Context(suitTable));
     }
 
     public static Always valueOf(String str) {

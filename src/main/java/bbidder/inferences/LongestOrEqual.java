@@ -11,7 +11,7 @@ import bbidder.SuitSet;
 import bbidder.SuitSets;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -37,9 +37,9 @@ public final class LongestOrEqual extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return suit.resolveSymbols(symbols)
-                .flatMap(e1 -> among.resolveSymbols(e1.symbols).map(e2 -> new LongestOrEqual(e1.getSymbol(), e2.suitSet).new Context(e2.symbols)));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return suit.resolveSymbols(suitTable)
+                .flatMap(e1 -> among.resolveSymbols(e1.suitTable).map(e2 -> new LongestOrEqual(e1.getSymbol(), e2.suitSet).new Context(e2.suitTable)));
     }
 
     public static LongestOrEqual valueOf(String str) {

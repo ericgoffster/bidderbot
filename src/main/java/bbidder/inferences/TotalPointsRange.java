@@ -7,7 +7,7 @@ import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.Range;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.inferences.bound.TotalPtsBoundInf;
 
 /**
@@ -35,8 +35,8 @@ public final class TotalPointsRange extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return Stream.of(new Context(symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return Stream.of(new Context(suitTable));
     }
 
     public static Inference valueOf(String str) {

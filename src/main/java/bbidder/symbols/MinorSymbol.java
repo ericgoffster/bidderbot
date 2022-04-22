@@ -6,7 +6,7 @@ import java.util.stream.StreamSupport;
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.Symbol;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.utils.BitUtil;
 
 public final class MinorSymbol extends Symbol {
@@ -41,15 +41,15 @@ public final class MinorSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        if (symbols.containsKey("m")) {
-            return Stream.of(new ConstSymbol(symbols.get("m")).new Context(symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        if (suitTable.containsName("m")) {
+            return Stream.of(new ConstSymbol(suitTable.getSuit("m")).new Context(suitTable));
         }
-        if (symbols.containsKey("om")) {
-            return Stream.of(new ConstSymbol(otherMinor(symbols.get("om"))).new Context(symbols));
+        if (suitTable.containsName("om")) {
+            return Stream.of(new ConstSymbol(otherMinor(suitTable.getSuit("om"))).new Context(suitTable));
         }
-        return StreamSupport.stream(BitUtil.iterate(Constants.MINORS & ~symbols.values()).spliterator(), false)
-                .map(s -> new ConstSymbol(s).new Context(symbols.add("m", s)));
+        return StreamSupport.stream(BitUtil.iterate(Constants.MINORS & ~suitTable.getSuits()).spliterator(), false)
+                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded("m", s)));
     }
 
     private static Integer otherMinor(Integer strain) {

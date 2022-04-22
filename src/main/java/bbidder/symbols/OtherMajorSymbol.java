@@ -6,7 +6,7 @@ import java.util.stream.StreamSupport;
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.Symbol;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.utils.BitUtil;
 
 public final class OtherMajorSymbol extends Symbol {
@@ -41,15 +41,15 @@ public final class OtherMajorSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        if (symbols.containsKey("OM")) {
-            return Stream.of(new ConstSymbol(symbols.get("OM")).new Context(symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        if (suitTable.containsName("OM")) {
+            return Stream.of(new ConstSymbol(suitTable.getSuit("OM")).new Context(suitTable));
         }
-        if (symbols.containsKey("M")) {
-            return Stream.of(new ConstSymbol(otherMajor(symbols.get("M"))).new Context(symbols));
+        if (suitTable.containsName("M")) {
+            return Stream.of(new ConstSymbol(otherMajor(suitTable.getSuit("M"))).new Context(suitTable));
         }
-        return StreamSupport.stream(BitUtil.iterate(Constants.MAJORS & ~symbols.values()).spliterator(), false)
-                .map(s -> new ConstSymbol(s).new Context(symbols.add("OM", s)));
+        return StreamSupport.stream(BitUtil.iterate(Constants.MAJORS & ~suitTable.getSuits()).spliterator(), false)
+                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded("OM", s)));
     }
 
     private static Integer otherMajor(Integer strain) {

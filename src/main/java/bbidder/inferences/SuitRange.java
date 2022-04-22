@@ -10,7 +10,7 @@ import bbidder.Range;
 import bbidder.ShapeSet;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -47,8 +47,8 @@ public final class SuitRange extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return symbol.resolveSymbols(symbols).map(e -> new SuitRange(e.getSymbol(), rng).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return symbol.resolveSymbols(suitTable).map(e -> new SuitRange(e.getSymbol(), rng).new Context(e.suitTable));
     }
 
     private static IBoundInference createBound(int s, Range r) {

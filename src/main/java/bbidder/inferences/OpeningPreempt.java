@@ -11,7 +11,7 @@ import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.HcpBoundInf;
 import bbidder.inferences.bound.ShapeBoundInf;
@@ -41,8 +41,8 @@ public final class OpeningPreempt extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return symbol.resolveSymbols(symbols).map(e -> new OpeningPreempt(e.getSymbol(), level).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return symbol.resolveSymbols(suitTable).map(e -> new OpeningPreempt(e.getSymbol(), level).new Context(e.suitTable));
     }
 
     public static OpeningPreempt valueOf(String str) {

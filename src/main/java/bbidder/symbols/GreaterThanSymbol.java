@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 import bbidder.Bid;
 import bbidder.Symbol;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 
 public final class GreaterThanSymbol extends Symbol {
     private final Symbol symbol;
@@ -42,10 +42,10 @@ public final class GreaterThanSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return symbol.resolveSymbols(symbols)
-                .flatMap(e1 -> other.resolveSymbols(e1.symbols)
-                        .map(e2 -> new GreaterThanSymbol(e1.getSymbol(), level, e2.getSymbol()).new Context(e2.symbols)));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return symbol.resolveSymbols(suitTable)
+                .flatMap(e1 -> other.resolveSymbols(e1.suitTable)
+                        .map(e2 -> new GreaterThanSymbol(e1.getSymbol(), level, e2.getSymbol()).new Context(e2.suitTable)));
     }
 
     @Override

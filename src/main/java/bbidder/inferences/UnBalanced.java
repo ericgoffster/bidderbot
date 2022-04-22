@@ -7,7 +7,7 @@ import bbidder.Inference;
 import bbidder.Players;
 import bbidder.Shape;
 import bbidder.ShapeSet;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -27,8 +27,8 @@ public final class UnBalanced extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return Stream.of(new Context(symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return Stream.of(new Context(suitTable));
     }
 
     public static UnBalanced valueOf(String str) {

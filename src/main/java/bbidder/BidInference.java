@@ -16,6 +16,16 @@ public final class BidInference {
     public final BidPatternList bids;
     public final Inference inferences;
 
+    /**
+     * Constructs a bid inference
+     * 
+     * @param where
+     *            Where it was defined
+     * @param bids
+     *            The list of bids
+     * @param inferences
+     *            The inferences you can make from the bids.
+     */
     public BidInference(String where, BidPatternList bids, Inference inferences) {
         super();
         this.where = where;
@@ -44,11 +54,11 @@ public final class BidInference {
     }
 
     /**
-     * @return A list of bid inferences with all suit variables resolved.
+     * @return A stream of bid inferences with all suit variables resolved.
      */
     public Stream<BidInference> resolveSymbols() {
-        return bids.resolveSymbols(SymbolTable.EMPTY)
-                .flatMap(e1 -> inferences.resolveSymbols(e1.symbols).map(e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
+        return bids.resolveSymbols(SuitTable.EMPTY)
+                .flatMap(e1 -> inferences.resolveSymbols(e1.suitTable).map(e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
     }
 
     @Override

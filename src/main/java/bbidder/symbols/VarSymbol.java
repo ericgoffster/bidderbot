@@ -7,7 +7,7 @@ import java.util.stream.StreamSupport;
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.Symbol;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 import bbidder.utils.BitUtil;
 
 public final class VarSymbol extends Symbol {
@@ -46,12 +46,12 @@ public final class VarSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        if (symbols.containsKey(varName)) {
-            return Stream.of(new ConstSymbol(symbols.get(varName)).new Context(symbols));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        if (suitTable.containsName(varName)) {
+            return Stream.of(new ConstSymbol(suitTable.getSuit(varName)).new Context(suitTable));
         }
-        return StreamSupport.stream(BitUtil.iterate(Constants.ALL_SUITS & ~symbols.values()).spliterator(), false)
-                .map(s -> new ConstSymbol(s).new Context(symbols.add(varName, s)));
+        return StreamSupport.stream(BitUtil.iterate(Constants.ALL_SUITS & ~suitTable.getSuits()).spliterator(), false)
+                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(varName, s)));
     }
 
     @Override

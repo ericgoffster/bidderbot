@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
-import bbidder.SymbolTable;
+import bbidder.SuitTable;
 
 public final class AndGenerality extends Generality {
     private final Generality g1;
@@ -29,10 +29,10 @@ public final class AndGenerality extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return g1.resolveSymbols(symbols)
-                .flatMap(e1 -> g2.resolveSymbols(e1.symbols)
-                        .map(e2 -> new AndGenerality(e1.getGenerality(), e2.getGenerality()).new Context(e2.symbols)));
+    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+        return g1.resolveSymbols(suitTable)
+                .flatMap(e1 -> g2.resolveSymbols(e1.suitTable)
+                        .map(e2 -> new AndGenerality(e1.getGenerality(), e2.getGenerality()).new Context(e2.suitTable)));
     }
 
     @Override
