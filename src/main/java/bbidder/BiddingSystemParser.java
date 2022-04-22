@@ -77,6 +77,10 @@ public class BiddingSystemParser {
                     ln = ln.substring(0, pos);
                 }
                 ln = ln.trim();
+                boolean endsLine = ln.endsWith(";");
+                if (endsLine) {
+                    ln = ln.substring(0, ln.length() - 1);
+                }
                 String[] comm = SplitUtil.split(ln, "\\s+", 2);
                 if (comm.length == 2 && comm[0].equalsIgnoreCase("include")) {
                     load(where, resolveUrlSpec(where, comm[1]), reportErrors, inferences, tests, reg);
@@ -94,9 +98,10 @@ public class BiddingSystemParser {
                     }
                 } else if (!ln.equals("")) {
                     sb.append(" " + ln);
-                    if (ln.contains("=>")) {
+                    String str = sb.toString().trim();
+                    if (str.contains("=>") || endsLine) {
                         try {
-                            inferences.addAll(BidInference.valueOf(where + ":" + lineno, reg, sb.toString().trim()).resolveSymbols());
+                            inferences.addAll(BidInference.valueOf(where + ":" + lineno, reg, str).resolveSymbols());
                         } catch (Exception e) {
                             reportErrors.accept(new ParseException(where + ":" + lineno, e));
                         }
