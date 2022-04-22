@@ -38,4 +38,14 @@ public final class TrueGenerality implements Generality {
     public boolean equals(Object obj) {
         return obj == T;
     }
+    
+    public static TrueGenerality valueOf(String str) {
+        if (str == null) {
+            return null;
+        }
+        if (str.trim().equalsIgnoreCase("true")) {
+            return new TrueGenerality();
+        }
+        return null;
+    }
 }

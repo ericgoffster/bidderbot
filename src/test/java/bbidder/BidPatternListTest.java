@@ -24,6 +24,18 @@ public class BidPatternListTest {
         assertEquals("1S 1N", BidPatternList.valueOf(reg, "1S 1N").toString());
         assertEquals("1S (X) 1N", BidPatternList.valueOf(reg, "1S (X) 1N").toString());
     }
+    
+    @Test
+    public void testAddOpposition() {
+        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
+        assertEquals("1S (P) 1N", BidPatternList.valueOf(reg, "1S 1N").withOpposingBidding().toString());
+        assertEquals("1C (P) 1S (P) 1N", BidPatternList.valueOf(reg, "1C 1S 1N").withOpposingBidding().toString());
+        assertEquals("(P) 1N", BidPatternList.valueOf(reg, "(P) 1N").withOpposingBidding().toString());
+        assertEquals("[true] 1N", BidPatternList.valueOf(reg, "[true] 1N").withOpposingBidding().toString());
+        assertEquals("1C [true] 1N", BidPatternList.valueOf(reg, "1C [true] 1N").withOpposingBidding().toString());
+        assertEquals("1C (P) 1S [true] 1N", BidPatternList.valueOf(reg, "1C 1S [true] 1N").withOpposingBidding().toString());
+        assertEquals("1C (1S) [true] 1N", BidPatternList.valueOf(reg, "1C (1S) [true] 1N").withOpposingBidding().toString());
+    }
 
     @Test
     public void test1() {

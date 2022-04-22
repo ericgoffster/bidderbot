@@ -98,16 +98,17 @@ public final class BidPatternList {
      * @return The list of resolved bidding pattern contexts
      */
     public List<BidPatternListContext> resolveFirstSymbol(SymbolTable suits) {
+        BidPatternList withOpp = withOpposingBidding();
         // If there are no bids, then we are done
-        if (bids.isEmpty()) {
+        if (withOpp.bids.isEmpty()) {
             return List.of(new BidPatternListContext(BidPatternList.EMPTY, suits));
         }
-        BidPattern pattern = bids.get(0);
+        BidPattern pattern = withOpp.bids.get(0);
 
         // If the first bid is a generality, then the generality
         // takes care of all chairs
         if (pattern.generality != null) {
-            return resolveSymbols(new BidPatternListContext(BidPatternList.EMPTY, suits), bids.get(1).isOpposition);
+            return withOpp.resolveSymbols(new BidPatternListContext(BidPatternList.EMPTY, suits), withOpp.bids.get(1).isOpposition);
         }
 
         boolean isOpp = pattern.isOpposition;
@@ -116,7 +117,7 @@ public final class BidPatternList {
         List<BidPatternListContext> list = new ArrayList<>();
         List<BidPattern> passes = new ArrayList<>();
         for(int i = 0; i < 4; i++) {
-            list.addAll(resolveSymbols(new BidPatternListContext(new BidPatternList(passes), suits), !isOpp));
+            list.addAll(withOpp.resolveSymbols(new BidPatternListContext(new BidPatternList(passes), suits), !isOpp));
             passes.add(0, BidPattern.PASS.withIsOpposition((i % 2 == 0) ^ isOpp));
         }
         return list;
@@ -220,6 +221,41 @@ public final class BidPatternList {
             throw new IllegalArgumentException("invalid bids: '" + str + "'", e);
         }
     }
+    
+    public BidPatternList withOpposingBidding() {
+        if (bids.isEmpty()) {
+            throw new IllegalStateException("List must be non-empty");
+        }
+        List<BidPattern> newBids = new ArrayList<>();
+        BidPattern lastBid = getLastBid();
+        if (lastBid.isOpposition) {
+            throw new IllegalStateException("Last bid must be 'we'");
+        }
+        if (lastBid.generality != null) {
+            throw new IllegalStateException("Last bid must not ne a wild card");
+        }
+        boolean isOpp = false;
+        int i = bids.size() - 1;
+        while (i >= 0) {
+            // If we have a generality, then
+            // whatever the next bid is fine.
+            if (bids.get(i).generality != null) {
+                newBids.add(0, bids.get(i--));
+                if (i >= 0) {
+                    isOpp = bids.get(i).isOpposition;
+                }
+            } else if (isOpp != bids.get(i).isOpposition) {
+                // Not what we were expecting, then insert pass for opposition.
+                newBids.add(0, BidPattern.PASS.withIsOpposition(isOpp));
+                isOpp = !isOpp;
+            } else {
+                // Otherwise we have what we want.
+                newBids.add(0, bids.get(i--));
+                isOpp = !isOpp;
+            }
+        }
+        return new BidPatternList(newBids);
+    }
 
     @Override
     public String toString() {
@@ -281,8 +317,6 @@ public final class BidPatternList {
         for (BidPatternListContext newCtx : contexts) {
             if (pattern.generality != null) {
                 l.addAll(resolveSymbols(newCtx, bids.get(1).isOpposition));
-            } else if (isOpp && !pattern.isOpposition) {
-                l.addAll(resolveRemainingSymbols(newCtx, resolveSymbols(BidPattern.PASS.withIsOpposition(isOpp), newCtx), !isOpp));
             } else {
                 l.addAll(resolveSymbols(newCtx, !isOpp));
             }

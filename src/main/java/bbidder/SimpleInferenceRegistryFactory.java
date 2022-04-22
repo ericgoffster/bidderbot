@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import bbidder.generalities.FitEstablished;
 import bbidder.generalities.IBidSuitGenerality;
 import bbidder.generalities.PartnerBidSuitGenerality;
+import bbidder.generalities.TrueGenerality;
 import bbidder.generalities.TwoSuitedGenerality;
 import bbidder.generalities.UnbidSuitGenerality;
 import bbidder.inferences.Always;
@@ -44,6 +45,7 @@ public final class SimpleInferenceRegistryFactory implements Supplier<InferenceR
         reg.addInference(StoppersInSuits::valueOf);
         reg.addInference(Always::valueOf);
 
+        reg.addGenerality(TrueGenerality::valueOf);
         reg.addGenerality(FitEstablished::valueOf);
         reg.addGenerality(TwoSuitedGenerality::valueOf);
         reg.addGenerality(IBidSuitGenerality::valueOf);
