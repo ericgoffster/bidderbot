@@ -101,16 +101,16 @@ public final class CombinedTotalPointsRange extends Inference {
         } else {
             dir = 0;
         }
-    
+
         if (!m.containsKey(str)) {
             return null;
         }
-    
+
         Integer pts = m.get(str);
         if (dir > 0) {
             return Range.between(pts, null, 40);
         }
-    
+
         Integer maxPts = null;
         for (var e : m.entrySet()) {
             int nextMax = e.getValue() - 1;
@@ -118,15 +118,15 @@ public final class CombinedTotalPointsRange extends Inference {
                 maxPts = nextMax;
             }
         }
-    
+
         if (dir < 0) {
             pts = null;
         }
-    
+
         if (maxPts == null) {
             return Range.between(pts, null, 40);
         }
-    
+
         return Range.between(pts, maxPts, 40);
     }
 

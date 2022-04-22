@@ -50,7 +50,8 @@ public final class RebiddableSecondSuit extends Inference {
         } else {
             r = Range.atLeast(Math.max(n + 1, 5), 13);
         }
-        return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(strainShorter, r) && shape.isLongerOrEqual(strainLonger, 1 << strainShorter)));
+        return ShapeBoundInf
+                .create(ShapeSet.create(shape -> shape.isSuitInRange(strainShorter, r) && shape.isLongerOrEqual(strainLonger, 1 << strainShorter)));
     }
 
     public static Inference valueOf(String str) {
@@ -90,5 +91,5 @@ public final class RebiddableSecondSuit extends Inference {
         RebiddableSecondSuit other = (RebiddableSecondSuit) obj;
         return Objects.equals(longer, other.longer) && Objects.equals(shorter, other.shorter);
     }
-    
+
 }

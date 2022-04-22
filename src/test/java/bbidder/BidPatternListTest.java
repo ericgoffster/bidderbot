@@ -26,7 +26,7 @@ public class BidPatternListTest {
         assertEquals("1S 1N", BidPatternList.valueOf(reg, "1S 1N").toString());
         assertEquals("1S (X) 1N", BidPatternList.valueOf(reg, "1S (X) 1N").toString());
     }
-    
+
     @Test
     public void testAddInitialPassed1() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
@@ -38,6 +38,7 @@ public class BidPatternListTest {
         assertEquals("P (P) 1S", initpass.get(2).toString());
         assertEquals("(P) P (P) 1S", initpass.get(3).toString());
     }
+
     @Test
     public void testAddInitialPassed2() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
@@ -48,6 +49,7 @@ public class BidPatternListTest {
         assertEquals("P (P) 1S", initpass.get(1).toString());
         assertEquals("(P) P (P) 1S", initpass.get(2).toString());
     }
+
     @Test
     public void testAddInitialPassed3() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
@@ -57,6 +59,7 @@ public class BidPatternListTest {
         assertEquals("P (P) 1S", initpass.get(0).toString());
         assertEquals("(P) P (P) 1S", initpass.get(1).toString());
     }
+
     @Test
     public void testAddInitialPassed4() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
@@ -65,6 +68,7 @@ public class BidPatternListTest {
         assertEquals(1, initpass.size());
         assertEquals("(P) P (P) 1S", initpass.get(0).toString());
     }
+
     @Test
     public void testAddInitialPassed5() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
@@ -74,7 +78,7 @@ public class BidPatternListTest {
         assertEquals("(P) P (P)", initpass.get(0).toString());
         assertEquals("P (P) P (P)", initpass.get(1).toString());
     }
-    
+
     @Test
     public void testAddOpposition() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();

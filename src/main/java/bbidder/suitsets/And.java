@@ -48,8 +48,8 @@ public final class And implements SuitSet {
 
     @Override
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.flatMap(s1.resolveSymbols(symbols), e1 -> ListUtil.map(s2.resolveSymbols(e1.symbols),
-                e2 -> new SuitSetContext(new And(e1.suitSet, e2.suitSet), e2.symbols)));
+        return ListUtil.flatMap(s1.resolveSymbols(symbols),
+                e1 -> ListUtil.map(s2.resolveSymbols(e1.symbols), e2 -> new SuitSetContext(new And(e1.suitSet, e2.suitSet), e2.symbols)));
     }
 
 }

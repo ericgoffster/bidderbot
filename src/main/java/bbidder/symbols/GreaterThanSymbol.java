@@ -22,7 +22,7 @@ public final class GreaterThanSymbol extends Symbol {
 
     @Override
     public String toString() {
-        return symbol + ":>"+(level + 1)+other;
+        return symbol + ":>" + (level + 1) + other;
     }
 
     @Override
@@ -52,13 +52,13 @@ public final class GreaterThanSymbol extends Symbol {
     public int getResolved() {
         return symbol.getResolved();
     }
-    
+
     @Override
     public boolean compatibleWith(Bid bid) {
         Bid comparisonBid = Bid.valueOf(level, other.getResolved());
         return symbol.compatibleWith(bid) && bid.compareTo(comparisonBid) > 0;
     }
-    
+
     @Override
     public boolean nonConvential() {
         return symbol.nonConvential();

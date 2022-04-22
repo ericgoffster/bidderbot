@@ -47,12 +47,12 @@ public final class NonConventional extends Symbol {
     public int getResolved() {
         return symbol.getResolved();
     }
-    
+
     @Override
     public boolean compatibleWith(Bid bid) {
         return symbol.compatibleWith(bid);
     }
-    
+
     @Override
     public boolean nonConvential() {
         return true;

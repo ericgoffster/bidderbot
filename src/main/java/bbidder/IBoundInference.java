@@ -21,14 +21,16 @@ public interface IBoundInference extends Predicate<Hand> {
     IBoundInference negate();
 
     /**
-     * @param other The other inference
-     * @return An inference representing this & other.  Null if not possible.
+     * @param other
+     *            The other inference
+     * @return An inference representing this & other. Null if not possible.
      */
     IBoundInference andWith(IBoundInference other);
 
     /**
-     * @param other The other inference
-     * @return An inference representing this | other.  Null if not possible.
+     * @param other
+     *            The other inference
+     * @return An inference representing this | other. Null if not possible.
      */
     IBoundInference orWith(IBoundInference other);
 }

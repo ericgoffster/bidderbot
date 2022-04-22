@@ -31,7 +31,7 @@ public class SuitRangeTest {
         assertTrue(new SuitRange(S, 3, 4).bind(new Players()).test(Hand.valueOf("AKQ JT9 876 5432")));
         assertTrue(new SuitRange(S, null, 3).bind(new Players()).test(Hand.valueOf("AKQ JT9 876 5432")));
         assertFalse(new SuitRange(S, 4, null).bind(new Players()).test(Hand.valueOf("AKQ JT9 876 5432")));
-        Symbol C =  new ConstSymbol(0);
+        Symbol C = new ConstSymbol(0);
         assertFalse(new SuitRange(C, 3, 3).bind(new Players()).test(Hand.valueOf("AKQ JT9 876 5432")));
         assertTrue(new SuitRange(C, 3, 4).bind(new Players()).test(Hand.valueOf("AKQ JT9 876 5432")));
         assertFalse(new SuitRange(C, 2, 3).bind(new Players()).test(Hand.valueOf("AKQ JT9 876 5432")));

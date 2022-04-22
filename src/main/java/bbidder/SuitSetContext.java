@@ -2,6 +2,7 @@ package bbidder;
 
 /**
  * Represents a suitsets in the context of a symbol table.
+ * 
  * @author goffster
  *
  */

@@ -61,7 +61,6 @@ public final class TwoSuitedGenerality extends Generality {
         return null;
     }
 
-
     @Override
     public String toString() {
         return "i_am_two_suited " + longer + " " + shorter;

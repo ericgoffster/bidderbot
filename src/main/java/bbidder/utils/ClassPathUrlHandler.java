@@ -8,6 +8,7 @@ import java.net.URLStreamHandler;
 
 /**
  * Allows loading of resources from the ClassLoader.
+ * 
  * @author goffster
  *
  */

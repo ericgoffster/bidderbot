@@ -27,7 +27,8 @@ public final class UnbidSuitGenerality extends Generality {
     @Override
     public boolean test(Players players, Auction bidList) {
         int suit = symbol.getResolved();
-        int bidSuits = players.me.infSummary.getBidSuits() |  players.partner.infSummary.getBidSuits() | players.lho.infSummary.getBidSuits() | players.rho.infSummary.getBidSuits();
+        int bidSuits = players.me.infSummary.getBidSuits() | players.partner.infSummary.getBidSuits() | players.lho.infSummary.getBidSuits()
+                | players.rho.infSummary.getBidSuits();
         if ((bidSuits & (1 << suit)) != 0) {
             return false;
         }
@@ -47,7 +48,6 @@ public final class UnbidSuitGenerality extends Generality {
         }
         return null;
     }
-
 
     @Override
     public String toString() {

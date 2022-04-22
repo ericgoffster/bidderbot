@@ -14,14 +14,14 @@ public final class Unstopped implements SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        short allBid = (short)(players.me.infSummary.getBidSuits() | players.partner.infSummary.getBidSuits());
-        for(int i = 0; i < 4; i++) {
+        short allBid = (short) (players.me.infSummary.getBidSuits() | players.partner.infSummary.getBidSuits());
+        for (int i = 0; i < 4; i++) {
             if (players.me.infSummary.stoppers.stopperIn(i) || players.partner.infSummary.stoppers.stopperIn(i)
                     || players.me.infSummary.partialStoppers.stopperIn(i) || players.partner.infSummary.partialStoppers.stopperIn(i)) {
-                allBid |= (short)(1 << i);
+                allBid |= (short) (1 << i);
             }
         }
-        return (short)(0xf ^ allBid);
+        return (short) (0xf ^ allBid);
     }
 
     @Override
@@ -44,7 +44,7 @@ public final class Unstopped implements SuitSet {
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
         return List.of(new SuitSetContext(this, symbols));
     }
-    
+
     @Override
     public String toString() {
         return "unstopped";

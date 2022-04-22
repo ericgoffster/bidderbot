@@ -39,7 +39,7 @@ public final class SteppedSymbol extends Symbol {
         SteppedSymbol other = (SteppedSymbol) obj;
         return delta == other.delta && Objects.equals(symbol, other.symbol);
     }
-    
+
     @Override
     public List<Context> resolveSymbols(SymbolTable symbols) {
         return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SteppedSymbol(e.getSymbol(), delta).new Context(e.symbols));
@@ -53,12 +53,12 @@ public final class SteppedSymbol extends Symbol {
     public int getResolved() {
         return transform(symbol.getResolved());
     }
-    
+
     @Override
     public boolean compatibleWith(Bid bid) {
         return true;
     }
-    
+
     @Override
     public boolean nonConvential() {
         return symbol.nonConvential();

@@ -64,12 +64,12 @@ public final class OtherMajorSymbol extends Symbol {
             throw new IllegalArgumentException("invalid major");
         }
     }
-    
+
     @Override
     public boolean compatibleWith(Bid bid) {
         return true;
     }
-    
+
     @Override
     public boolean nonConvential() {
         return false;

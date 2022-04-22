@@ -23,7 +23,7 @@ public final class BidInference {
         this.bids = bids;
         this.inferences = inferences;
     }
-    
+
     /**
      * @param where
      *            Where is it located.
@@ -48,8 +48,8 @@ public final class BidInference {
      * @return A list of bid inferences with all suit variables resolved.
      */
     public List<BidInference> resolveSymbols() {
-        return ListUtil.flatMap(bids.resolveSymbols(SymbolTable.EMPTY), e1 -> ListUtil.map(inferences.resolveSymbols(e1.symbols),
-                e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
+        return ListUtil.flatMap(bids.resolveSymbols(SymbolTable.EMPTY),
+                e1 -> ListUtil.map(inferences.resolveSymbols(e1.symbols), e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
     }
 
     @Override

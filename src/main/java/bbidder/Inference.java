@@ -21,7 +21,7 @@ public abstract class Inference {
      *         symbols.
      */
     public abstract List<Context> resolveSymbols(SymbolTable symbols);
-    
+
     public final class Context {
         public final SymbolTable symbols;
 

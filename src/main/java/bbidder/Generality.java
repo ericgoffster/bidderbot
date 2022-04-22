@@ -7,12 +7,13 @@ import java.util.function.BiPredicate;
  * Represents a generality.
  * A generality evaluates an auction and state, returning
  * true if it matches.
+ * 
  * @author goffster
  *
  */
 public abstract class Generality implements BiPredicate<Players, Auction> {
     public abstract List<Context> resolveSymbols(SymbolTable symbols);
-    
+
     public final class Context {
         public final SymbolTable symbols;
 

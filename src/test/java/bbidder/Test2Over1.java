@@ -14,7 +14,7 @@ import bbidder.utils.DebugUtils;
 
 public class Test2Over1 {
     public static BiddingSystem bs;
-    
+
     public void showSummary(String label, InfSummary summary) {
         System.err.println(label);
         System.err.println("   " + summary.shape);
@@ -84,10 +84,10 @@ public class Test2Over1 {
                         System.err.println("       " + bi);
                     }
                 }
-                //DebugUtils.debugMode = true;
-                //DebugUtils.breakpoint();
+                // DebugUtils.debugMode = true;
+                // DebugUtils.breakpoint();
                 test.getResult(bs);
-                //DebugUtils.debugMode = false;
+                // DebugUtils.debugMode = false;
             } else if (test.anti && result.found.matchedBid.bid.equals(result.expected)) {
                 hadError.set(true);
                 InfSummary partnerSummary = result.state.players.partner.infSummary;
@@ -103,7 +103,7 @@ public class Test2Over1 {
             }
         }
         System.out.println("tests = " + bs.getTests().size());
-        try(OutputStream os = new FileOutputStream(new File("/tmp/bids.txt"))) {
+        try (OutputStream os = new FileOutputStream(new File("/tmp/bids.txt"))) {
             bs.dump(os);
         }
         assertTrue(bs.getTests().size() > 0);

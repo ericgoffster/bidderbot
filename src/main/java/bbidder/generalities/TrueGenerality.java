@@ -37,7 +37,7 @@ public final class TrueGenerality extends Generality {
     public boolean equals(Object obj) {
         return obj == T;
     }
-    
+
     public static TrueGenerality valueOf(String str) {
         if (str == null) {
             return null;

@@ -130,7 +130,7 @@ public final class BiddingSystem {
             }
             negative.add(inf);
         }
-        
+
         if (positive.isEmpty() && lastBid != Bid.P) {
             throw new RuntimeException("Unrecognized bidding: " + bids);
         }

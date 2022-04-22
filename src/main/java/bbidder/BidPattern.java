@@ -31,8 +31,8 @@ public final class BidPattern {
     public final Generality generality;
     public final boolean isNonConventional;
 
-    private BidPattern(boolean isOpposition, Symbol symbol, Integer level, Bid simpleBid, Integer jumpLevel,
-            Generality generality, boolean isNonConventional) {
+    private BidPattern(boolean isOpposition, Symbol symbol, Integer level, Bid simpleBid, Integer jumpLevel, Generality generality,
+            boolean isNonConventional) {
         super();
         this.isOpposition = isOpposition;
         this.symbol = symbol;
@@ -42,7 +42,7 @@ public final class BidPattern {
         this.generality = generality;
         this.isNonConventional = isNonConventional;
     }
-    
+
     public boolean isPass() {
         return simpleBid == Bid.P;
     }
@@ -64,14 +64,14 @@ public final class BidPattern {
     }
 
     /**
-     * @return The strain part.  Null if N/A (i.e. for pass)
+     * @return The strain part. Null if N/A (i.e. for pass)
      */
     public Symbol getSymbol() {
         return symbol;
     }
 
     /**
-     * @return The level part.  Null if N/A
+     * @return The level part. Null if N/A
      */
     public Integer getLevel() {
         return level;
@@ -121,17 +121,16 @@ public final class BidPattern {
     }
 
     /**
-     * @param previous 
-     *            Auction to date
+     * @param contract
+     *            Current contract
      * @param symbol
      *            The new symbol
      * @return A bid with the suit bound to a specific strain
      */
-    private BidPattern withSymbol(BidPatternList previous, Symbol symbol) {
+    private BidPattern withSymbol(Contract contract, Symbol symbol) {
         if (level != null) {
             int resolved = symbol.getResolved();
             Bid b = Bid.valueOf(level, resolved);
-            Contract contract = previous.getContract();
             if (contract != null && !contract.isLegalBid(b)) {
                 return null;
             }
@@ -142,7 +141,6 @@ public final class BidPattern {
             }
         }
         if (jumpLevel != null) {
-            Contract contract = previous.getContract();
             if (contract != null) {
                 int resolved = symbol.getResolved();
                 Bid b = contract.getBid(jumpLevel, resolved);
@@ -155,15 +153,15 @@ public final class BidPattern {
         }
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional);
     }
-    
+
     /**
-     * @param previous  
-     *            Auction to date
+     * @param contract
+     *            Current contract
      * @param symbols
      *            The suits
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public List<Context> resolveSymbols(BidPatternList previous, SymbolTable symbols) {
+    public List<Context> resolveSymbols(Contract contract, SymbolTable symbols) {
         if (generality != null) {
             return ListUtil.map(generality.resolveSymbols(symbols), e -> createWild(e.getGenerality()).new Context(e.symbols));
         }
@@ -171,8 +169,8 @@ public final class BidPattern {
             return List.of(new Context(symbols));
         }
         List<Context> l = new ArrayList<>();
-        for(var e: getSymbol().resolveSymbols(symbols)) {
-            BidPattern newSym = withSymbol(previous, e.getSymbol());
+        for (var e : getSymbol().resolveSymbols(symbols)) {
+            BidPattern newSym = withSymbol(contract, e.getSymbol());
             if (newSym != null) {
                 l.add(newSym.new Context(e.symbols));
             }
@@ -186,7 +184,7 @@ public final class BidPattern {
      * 
      * @param auction
      *            The current list of bids.
-     * @return The bid associated with the given pattern.  Null, if not valid.
+     * @return The bid associated with the given pattern. Null, if not valid.
      */
     public Bid resolveToBid(Auction auction) {
         if (simpleBid != null) {
@@ -234,8 +232,7 @@ public final class BidPattern {
             return false;
         BidPattern other = (BidPattern) obj;
         return isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
-                && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol)
-                && Objects.equals(generality, other.generality);
+                && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol) && Objects.equals(generality, other.generality);
     }
 
     private String _getString() {
@@ -256,7 +253,7 @@ public final class BidPattern {
         }
         return String.valueOf(level + 1) + symbol;
     }
-    
+
     public class Context {
         public final SymbolTable symbols;
 

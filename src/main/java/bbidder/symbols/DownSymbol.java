@@ -43,17 +43,17 @@ public final class DownSymbol extends Symbol {
     public int getResolved() {
         return symbol.getResolved();
     }
-    
+
     @Override
     public boolean compatibleWith(Bid bid) {
         return symbol.compatibleWith(bid);
     }
-    
+
     @Override
     public boolean nonConvential() {
         return symbol.nonConvential();
     }
-    
+
     @Override
     public List<Context> resolveSymbols(SymbolTable symbols) {
         List<Context> l = new ArrayList<>(symbol.resolveSymbols(symbols));

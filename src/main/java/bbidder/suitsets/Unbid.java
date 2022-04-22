@@ -14,9 +14,9 @@ public final class Unbid implements SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        short allBid = (short)(players.lho.infSummary.getBidSuits() | players.rho.infSummary.getBidSuits()
-                | players.partner.infSummary.getBidSuits() | players.me.infSummary.getBidSuits());
-        return (short)(0xf ^ allBid);
+        short allBid = (short) (players.lho.infSummary.getBidSuits() | players.rho.infSummary.getBidSuits() | players.partner.infSummary.getBidSuits()
+                | players.me.infSummary.getBidSuits());
+        return (short) (0xf ^ allBid);
     }
 
     @Override
@@ -39,7 +39,7 @@ public final class Unbid implements SuitSet {
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
         return List.of(new SuitSetContext(this, symbols));
     }
-    
+
     @Override
     public String toString() {
         return "unbid";

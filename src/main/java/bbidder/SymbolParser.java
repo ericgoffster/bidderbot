@@ -64,7 +64,7 @@ public final class SymbolParser {
                 }
             }
             return null;
-        } 
+        }
         if (str.equals("om")) {
             return new OtherMinorSymbol();
         }

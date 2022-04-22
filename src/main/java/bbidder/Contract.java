@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * Represent a Contract.
+ * 
  * @author goffster
  */
 public final class Contract {
@@ -36,7 +37,8 @@ public final class Contract {
         if (getClass() != obj.getClass())
             return false;
         Contract other = (Contract) obj;
-        return doubled == other.doubled && position == other.position && redoubled == other.redoubled && winningBid == other.winningBid && numPasses == other.numPasses;
+        return doubled == other.doubled && position == other.position && redoubled == other.redoubled && winningBid == other.winningBid
+                && numPasses == other.numPasses;
     }
 
     @Override
@@ -46,11 +48,11 @@ public final class Contract {
         }
         return winningBid + (redoubled ? "XX" : doubled ? "X" : "") + " by " + position;
     }
-    
+
     public boolean isCompleted() {
         return numPasses == 4 || winningBid != Bid.P && numPasses == 3;
     }
-    
+
     public Bid nextLevel(int strain) {
         if (winningBid == Bid.P) {
             return Bid.valueOf(0, strain);
@@ -61,7 +63,7 @@ public final class Contract {
             return Bid.valueOf(winningBid.level + 1, strain);
         }
     }
-    
+
     public Bid getBid(int jumpLevel, int strain) {
         Bid b = nextLevel(strain);
         while (jumpLevel > 0) {
@@ -70,7 +72,7 @@ public final class Contract {
         }
         return b;
     }
-    
+
     /**
      * 
      * @param bid
@@ -81,8 +83,8 @@ public final class Contract {
         if (isCompleted()) {
             return false;
         }
-        
-        switch(bid) {
+
+        switch (bid) {
         case P:
             return true;
         case XX:

@@ -69,7 +69,7 @@ public final class MajorSymbol extends Symbol {
     public boolean compatibleWith(Bid bid) {
         return true;
     }
-    
+
     @Override
     public boolean nonConvential() {
         return false;

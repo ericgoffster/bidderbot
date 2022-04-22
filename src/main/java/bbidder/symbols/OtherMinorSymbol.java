@@ -64,12 +64,12 @@ public final class OtherMinorSymbol extends Symbol {
             throw new IllegalArgumentException("invalid minor");
         }
     }
-    
+
     @Override
     public boolean compatibleWith(Bid bid) {
         return true;
     }
-    
+
     @Override
     public boolean nonConvential() {
         return false;

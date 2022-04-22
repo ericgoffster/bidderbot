@@ -79,7 +79,7 @@ public final class BitUtil {
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the highest bit set in the pattern.  (-1 if all zero)
+     * @return The index of the highest bit set in the pattern. (-1 if all zero)
      */
     public static int highestBit(byte pattern) {
         return highestBit(toLong(pattern));
@@ -88,7 +88,7 @@ public final class BitUtil {
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the highest bit set in the pattern.  (-1 if all zero)
+     * @return The index of the highest bit set in the pattern. (-1 if all zero)
      */
     public static int highestBit(short pattern) {
         return highestBit(toLong(pattern));
@@ -97,7 +97,7 @@ public final class BitUtil {
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the highest bit set in the pattern.  (-1 if all zero)
+     * @return The index of the highest bit set in the pattern. (-1 if all zero)
      */
     public static int highestBit(int pattern) {
         return highestBit(toLong(pattern));
@@ -106,7 +106,7 @@ public final class BitUtil {
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the highest bit set in the pattern.  (-1 if all zero)
+     * @return The index of the highest bit set in the pattern. (-1 if all zero)
      */
     public static int highestBit(long pattern) {
         if (pattern == 0) {
@@ -118,7 +118,7 @@ public final class BitUtil {
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the lowest bit set in the pattern.  (-1 if all zero)
+     * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
     public static int leastBit(long pattern) {
         if (pattern == 0) {
@@ -130,7 +130,7 @@ public final class BitUtil {
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the lowest bit set in the pattern.  (-1 if all zero)
+     * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
     public static Iterable<Integer> iterate(long pattern) {
         return new PatternIterable(pattern);
@@ -139,7 +139,7 @@ public final class BitUtil {
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the lowest bit set in the pattern.  (-1 if all zero)
+     * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
     public static Iterable<Integer> iterate(int pattern) {
         return iterate(toLong(pattern));
@@ -148,7 +148,7 @@ public final class BitUtil {
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the lowest bit set in the pattern.  (-1 if all zero)
+     * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
     public static Iterable<Integer> iterate(short pattern) {
         return iterate(toLong(pattern));
@@ -157,14 +157,15 @@ public final class BitUtil {
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the lowest bit set in the pattern.  (-1 if all zero)
+     * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
     public static Iterable<Integer> iterate(byte pattern) {
         return iterate(toLong(pattern));
     }
 
     /**
-     * @param pattern The bit pattern
+     * @param pattern
+     *            The bit pattern
      * @return The long version of the pattern.
      */
     private static long toLong(int pattern) {
@@ -172,7 +173,8 @@ public final class BitUtil {
     }
 
     /**
-     * @param pattern The bit pattern
+     * @param pattern
+     *            The bit pattern
      * @return The long version of the pattern.
      */
     private static long toLong(short pattern) {
@@ -180,7 +182,8 @@ public final class BitUtil {
     }
 
     /**
-     * @param pattern The bit pattern
+     * @param pattern
+     *            The bit pattern
      * @return The long version of the pattern.
      */
     private static long toLong(byte pattern) {

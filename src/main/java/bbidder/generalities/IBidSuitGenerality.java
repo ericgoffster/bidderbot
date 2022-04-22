@@ -52,7 +52,6 @@ public final class IBidSuitGenerality extends Generality {
         return null;
     }
 
-
     @Override
     public String toString() {
         return "i_bid_suit " + symbol;

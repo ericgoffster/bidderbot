@@ -4,6 +4,7 @@ import java.io.IOException;
 
 /**
  * Parses a Bid Pattern.
+ * 
  * @author goffster
  *
  */

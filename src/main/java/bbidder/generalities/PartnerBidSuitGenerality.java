@@ -50,7 +50,6 @@ public final class PartnerBidSuitGenerality extends Generality {
         return null;
     }
 
-
     @Override
     public String toString() {
         return "partner_bid_suit " + symbol;

@@ -78,31 +78,31 @@ public final class InfSummary {
     public double avgLenInSuit(int suit) {
         return getStat(suit).avg;
     }
-    
+
     public short getBidSuits() {
-        Integer[] suitArr = {0, 1, 2, 3};
+        Integer[] suitArr = { 0, 1, 2, 3 };
         Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgLenInSuit(s1), avgLenInSuit(s2)));
         int minLenFirst = minLenInSuit(suitArr[0]);
         if (minLenFirst >= 5 || minLenFirst >= 4 && minLenInSuit(suitArr[1]) >= 4) {
             int i = 0;
             short suits = 0;
-            while(i < 4 && minLenInSuit(i) >= 4) {
-                suits |= (short)(1 << i);
+            while (i < 4 && minLenInSuit(i) >= 4) {
+                suits |= (short) (1 << i);
                 i++;
             }
             return suits;
         }
         if (minLenFirst == 4) {
             if (minLenInSuit(suitArr[1]) > minLenInSuit(suitArr[2])) {
-                return (short)((1 << suitArr[0]) | (1 << suitArr[1]));
+                return (short) ((1 << suitArr[0]) | (1 << suitArr[1]));
             }
-            return (short)((1 << suitArr[0]));
+            return (short) ((1 << suitArr[0]));
         }
         {
             int i = 0;
             short suits = 0;
-            while(i < 4 && avgLenInSuit(i) >= 4) {
-                suits |= (short)(1 << i);
+            while (i < 4 && avgLenInSuit(i) >= 4) {
+                suits |= (short) (1 << i);
                 i++;
             }
             return suits;

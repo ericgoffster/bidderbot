@@ -57,7 +57,8 @@ public final class BiddingTest {
 
     /**
      * Parses a test.
-     * @param anti 
+     * 
+     * @param anti
      *            True if this is an anti test
      * @param where
      *            Where the test was defined

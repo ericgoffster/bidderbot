@@ -65,7 +65,7 @@ public final class BidPatternList {
     public boolean canPrependPass() {
         return numInitialPasses() < 3 || numInitialPasses() == 3 && bids.size() == 3;
     }
-    
+
     /**
      * @return A new bid pattern list with PASS added to the beginning.
      */
@@ -74,9 +74,10 @@ public final class BidPatternList {
         l.add(0, BidPattern.PASS.withIsOpposition(!bids.get(0).isOpposition));
         return new BidPatternList(l);
     }
-    
+
     /**
      * Creates bidding sequences in the first, second, third or fourth chair.
+     * 
      * @return List of sequences with 0-3 passes added to the beginning
      */
     public List<BidPatternList> addInitialPasses() {
@@ -88,7 +89,7 @@ public final class BidPatternList {
             BidPatternList prev = this;
             list.add(prev);
             // Add up to 3 passes
-            for(int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++) {
                 if (!prev.canPrependPass()) {
                     break;
                 }
@@ -111,7 +112,7 @@ public final class BidPatternList {
     public List<Context> resolveSymbols(SymbolTable suits) {
         return ListUtil.flatMap(withOpposingBidding().addInitialPasses(), bpl -> bpl.resolveSymbols(BidPatternList.EMPTY, suits));
     }
-    
+
     /**
      * Given a bid pattern list where the suits have already been bound,
      * return the last bid of the pattern in the context of an auction.
@@ -135,7 +136,7 @@ public final class BidPatternList {
             return null;
         }
         int i = 0;
-        for(BidPattern pattern: bids.subList(0, bids.size() - 1)) {
+        for (BidPattern pattern : bids.subList(0, bids.size() - 1)) {
             if (pattern.generality != null) {
                 if (!pattern.generality.test(players, auction)) {
                     return null;
@@ -164,6 +165,7 @@ public final class BidPatternList {
     /**
      * Given unopposed bidding sequences, will insert
      * passes where the opposing bidding is missing.
+     * 
      * @return The new bid pattern list with passes inserted in the middle.
      */
     public BidPatternList withOpposingBidding() {
@@ -236,7 +238,7 @@ public final class BidPatternList {
             throw new IllegalArgumentException("invalid bids: '" + str + "'", e);
         }
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -267,8 +269,9 @@ public final class BidPatternList {
 
     /**
      * Resolve the symbols starting from a previous context
+     * 
      * @param ctx
-     *             The previous context.
+     *            The previous context.
      * @return The list of resolved bidding pattern contexts
      */
     private List<Context> resolveSymbols(BidPatternList previous, SymbolTable symbols) {
@@ -279,7 +282,8 @@ public final class BidPatternList {
         // evaluate the remaining bids in the context of that bid.
         BidPatternList exceptFirst = exceptFirst();
         BidPattern pattern = bids.get(0);
-        return ListUtil.flatMap(pattern.resolveSymbols(previous, symbols), b -> exceptFirst.resolveSymbols(previous.withBidAdded(b.getBidPattern()), b.symbols));
+        return ListUtil.flatMap(pattern.resolveSymbols(previous.getContract(), symbols),
+                b -> exceptFirst.resolveSymbols(previous.withBidAdded(b.getBidPattern()), b.symbols));
     }
 
     /**
@@ -298,14 +302,14 @@ public final class BidPatternList {
      * @return The number of initial passes.
      */
     private int numInitialPasses() {
-        for(int i = 0; i < bids.size(); i++) {
+        for (int i = 0; i < bids.size(); i++) {
             if (!bids.get(i).isPass()) {
                 return i;
             }
         }
         return bids.size();
     }
-    
+
     public final class Context {
         public final SymbolTable symbols;
 
@@ -318,7 +322,7 @@ public final class BidPatternList {
             return BidPatternList.this;
         }
     }
-    
+
     public Contract getContract() {
         boolean redoubled = false;
         boolean doubled = false;
@@ -344,6 +348,6 @@ public final class BidPatternList {
             }
         }
         return new Contract(0, Bid.P, false, false, numPasses);
- 
+
     }
 }

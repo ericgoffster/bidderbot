@@ -15,7 +15,7 @@ public final class ConstSymbol extends Symbol {
         super();
         this.strain = strain;
     }
-    
+
     @Override
     public List<Context> resolveSymbols(SymbolTable symbols) {
         return List.of(new Context(symbols));
