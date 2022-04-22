@@ -70,4 +70,9 @@ public class DownSymbol implements Symbol {
     public boolean compatibleWith(Bid bid) {
         return sym.compatibleWith(bid);
     }
+    
+    @Override
+    public boolean nonConvential() {
+        return sym.nonConvential();
+    }
 }

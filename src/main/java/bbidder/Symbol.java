@@ -13,4 +13,6 @@ public interface Symbol {
     public int getResolved();
     
     public boolean compatibleWith(Bid bid);
+    
+    public boolean nonConvential();
 }

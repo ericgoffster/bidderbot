@@ -80,4 +80,9 @@ public class OtherMajorSymbol implements Symbol {
     public boolean compatibleWith(Bid bid) {
         return true;
     }
+    
+    @Override
+    public boolean nonConvential() {
+        return false;
+    }
 }

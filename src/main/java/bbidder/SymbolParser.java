@@ -9,6 +9,7 @@ import bbidder.symbols.GreaterThanSymbol;
 import bbidder.symbols.LessThanSymbol;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.MinorSymbol;
+import bbidder.symbols.NonConventional;
 import bbidder.symbols.OtherMajorSymbol;
 import bbidder.symbols.OtherMinorSymbol;
 import bbidder.symbols.SteppedSymbol;
@@ -42,8 +43,11 @@ public class SymbolParser {
                 return null;
             }
             String tag = symbol.substring(pos + 1);
-            if (tag.toLowerCase().equals("down")) {
+            if (tag.equalsIgnoreCase("down")) {
                 return new DownSymbol(sym);
+            }
+            if (tag.equalsIgnoreCase("nonconventional")) {
+                return new NonConventional(sym);
             }
             {
                 Matcher m = LESS_THAN.matcher(tag);

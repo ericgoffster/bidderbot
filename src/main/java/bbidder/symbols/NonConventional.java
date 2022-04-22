@@ -8,26 +8,22 @@ import java.util.Objects;
 import bbidder.Bid;
 import bbidder.Symbol;
 
-public class LessThanSymbol implements Symbol {
+public class NonConventional implements Symbol {
     public final Symbol sym;
-    public final int level;
-    public final Symbol other;
 
-    public LessThanSymbol(Symbol sym, int level, Symbol other) {
+    public NonConventional(Symbol sym) {
         super();
         this.sym = sym;
-        this.level = level;
-        this.other = other;
     }
 
     @Override
     public String toString() {
-        return sym + ":<"+level+other;
+        return sym + ":nonvconventional";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(level, sym, other);
+        return Objects.hash(sym);
     }
 
     @Override
@@ -38,8 +34,8 @@ public class LessThanSymbol implements Symbol {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        LessThanSymbol other = (LessThanSymbol) obj;
-        return level == other.level && Objects.equals(sym, other.sym) && Objects.equals(other, other.other);
+        NonConventional other = (NonConventional) obj;
+        return Objects.equals(sym, other.sym);
     }
 
     @Override
@@ -48,7 +44,7 @@ public class LessThanSymbol implements Symbol {
         if (evaluate == null) {
             return null;
         }
-        return new LessThanSymbol(evaluate, level, other);
+        return new NonConventional(evaluate);
     }
 
     @Override
@@ -58,14 +54,9 @@ public class LessThanSymbol implements Symbol {
     
     @Override
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
-        List<Symbol> boundOthers = other.boundSymbols(suits);
-        if (boundOthers.size() != 1) {
-            throw new IllegalArgumentException("undefined smybol: " + other);
-        }
-        List<Symbol> old = sym.boundSymbols(suits);
         List<Symbol> l = new ArrayList<>();
-        for(Symbol s: old) {
-            l.add(new LessThanSymbol(s, level, boundOthers.get(0)));
+        for(Symbol s: sym.boundSymbols(suits)) {
+            l.add(new NonConventional(s));
         }
         return l;
     }
@@ -77,12 +68,11 @@ public class LessThanSymbol implements Symbol {
     
     @Override
     public boolean compatibleWith(Bid bid) {
-        Bid comparisonBid = Bid.valueOf(level, other.getResolved());
-        return sym.compatibleWith(bid) && bid.compareTo(comparisonBid) < 0;
+        return sym.compatibleWith(bid);
     }
     
     @Override
     public boolean nonConvential() {
-        return sym.nonConvential();
+        return true;
     }
 }

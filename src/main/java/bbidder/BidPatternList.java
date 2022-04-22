@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Represents the bid patterns as read in from the notes.
@@ -237,9 +238,11 @@ public class BidPatternList {
      *            The bidList to match.
      * @param players
      *            the players
+     * @param matched 
+     *            the set of matched bids
      * @return The last bid. null if there was no match.
      */
-    public Bid getMatch(BidList bidList, Players players) {
+    public Bid getMatch(BidList bidList, Players players, Set<Bid> matched) {
         List<Bid> theBids = bidList.getBids();
         int wildSize = theBids.size() - bids.size() + 2;
         int wildPos = positionOfWild();
@@ -268,8 +271,12 @@ public class BidPatternList {
             }
             i++;
         }
-        Bid theNextBid = bids.get(bids.size() - 1).resolveToBid(bidList);
+        BidPattern lastPatt = bids.get(bids.size() - 1);
+        Bid theNextBid = lastPatt.resolveToBid(bidList);
         if (theNextBid == null || !bidList.isLegalBid(theNextBid)) {
+            return null;
+        }
+        if (matched.contains(theNextBid) && lastPatt.symbol != null && lastPatt.symbol.nonConvential()) {
             return null;
         }
         return theNextBid;

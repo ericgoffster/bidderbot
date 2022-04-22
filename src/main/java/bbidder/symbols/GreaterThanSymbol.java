@@ -80,4 +80,9 @@ public class GreaterThanSymbol implements Symbol {
         Bid comparisonBid = Bid.valueOf(level, other.getResolved());
         return sym.compatibleWith(bid) && bid.compareTo(comparisonBid) > 0;
     }
+    
+    @Override
+    public boolean nonConvential() {
+        return sym.nonConvential();
+    }
 }

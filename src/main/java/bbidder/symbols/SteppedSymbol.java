@@ -80,4 +80,9 @@ public class SteppedSymbol implements Symbol {
     public boolean compatibleWith(Bid bid) {
         return true;
     }
+    
+    @Override
+    public boolean nonConvential() {
+        return sym.nonConvential();
+    }
 }

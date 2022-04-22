@@ -65,4 +65,9 @@ public class ConstSymbol implements Symbol {
     public boolean compatibleWith(Bid bid) {
         return bid.strain == strain;
     }
+
+    @Override
+    public boolean nonConvential() {
+        return false;
+    }
 }

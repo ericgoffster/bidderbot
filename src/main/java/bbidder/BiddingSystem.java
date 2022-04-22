@@ -7,7 +7,9 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.ConstBoundInference;
@@ -64,11 +66,13 @@ public class BiddingSystem {
     public List<PossibleBid> getPossibleBids(BidList bids, Players players) {
         DebugUtils.breakpointGetPossibleBid(bids, players);
         List<PossibleBid> l = new ArrayList<>();
+        Set<Bid> matched = new HashSet<>();
         for (BidInference i : inferences) {
-            Bid match = i.bids.getMatch(bids, players);
+            Bid match = i.bids.getMatch(bids, players, matched);
             if (match != null) {
                 DebugUtils.breakpointGetPossibleBid(bids, players, match, i);
                 l.add(new PossibleBid(i, match));
+                matched.add(match);
             }
         }
         if (l.isEmpty()) {
