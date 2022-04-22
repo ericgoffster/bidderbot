@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import bbidder.symbols.BoundSymbol;
+import bbidder.symbols.ConstSymbol;
 
 /**
  * A bidding context is used to build BidInference's.
@@ -109,7 +109,7 @@ public final class BiddingContext {
                 if (strain < 0 || strain > 4) {
                     throw new IllegalArgumentException("Invalid strain");
                 }
-                return Map.of(new BoundSymbol(strain, symbol), this);
+                return Map.of(new ConstSymbol(strain), this);
             }
         }
         Map<Symbol, BiddingContext> m = new LinkedHashMap<Symbol, BiddingContext>();

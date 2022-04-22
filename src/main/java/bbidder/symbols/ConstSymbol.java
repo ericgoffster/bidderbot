@@ -53,12 +53,12 @@ public class ConstSymbol implements Symbol {
     
     @Override
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
-        return List.of(new BoundSymbol(strain, this));
+        return List.of(this);
     }
 
     @Override
     public int getResolved() {
-        throw new IllegalStateException();
+        return strain;
     }
 
     @Override

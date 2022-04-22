@@ -19,7 +19,7 @@ import bbidder.suitsets.LookupSet;
 import bbidder.suitsets.Not;
 import bbidder.suitsets.Unbid;
 import bbidder.suitsets.Unstopped;
-import bbidder.symbols.BoundSymbol;
+import bbidder.symbols.ConstSymbol;
 
 public class SuitSets {
     public static Symbol bind(BiddingContext bc, Symbol symbol) {
@@ -27,7 +27,7 @@ public class SuitSets {
         if (strain == null) {
             throw new IllegalArgumentException(symbol + " undefined");
         }
-        return new BoundSymbol(strain, symbol);
+        return new ConstSymbol(strain);
     }
 
     /**
