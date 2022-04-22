@@ -60,26 +60,28 @@ public class CombinedTotalPointsRange implements Inference {
             return null;
         }
 
-        int pts = m.get(str);
+        Integer pts = m.get(str);
         if (dir > 0) {
             return Range.between(pts, null, 40);
         }
-        if (dir < 0) {
-            return Range.between(null, pts - 1, 40);
-        }
 
-        Integer diff = null;
+        Integer maxPts = null;
         for (var e : m.entrySet()) {
-            if (e.getValue() > pts && (diff == null || e.getValue() - pts < diff)) {
-                diff = e.getValue() - pts;
+            int nextMax = e.getValue() - 1;
+            if (nextMax >= pts && (maxPts == null || nextMax < maxPts)) {
+                maxPts = nextMax;
             }
         }
+        
+        if (dir < 0) {
+            pts = null;
+        }
 
-        if (diff == null) {
+        if (maxPts == null) {
             return Range.between(pts, null, 40);
         }
 
-        return Range.between(pts, pts + diff - 1, 40);
+        return Range.between(pts, maxPts, 40);
     }
 
     public static Range createRange(String str) {

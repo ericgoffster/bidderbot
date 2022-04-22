@@ -5,13 +5,13 @@
 # H = ♥
 # S = ♠
 
-[fit_established M] 4M P => gf
+[fit_established M] 4M P => gf-
 test AQxxx Axx Axx xx: 1S 2N 4S P
 
-[fit_established M] 3M P => inv
+[fit_established M] 3M P => inv-
 test Axxxx Axx Axx xx: 1S 3S P
 
-[fit_established M] 2M P => min
+[fit_established M] 2M P => min-
 test xxx Axxx Kx xxxx: 1C 1H 2H P
 
 [fit_established M] 4M => gf
