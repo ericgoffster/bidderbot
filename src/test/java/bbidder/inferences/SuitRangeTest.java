@@ -6,30 +6,35 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.ConstSymbol;
 import bbidder.Hand;
 import bbidder.Players;
+import bbidder.Symbol;
 
 public class SuitRangeTest {
     @Test
     public void testValueOf() {
-        assertEquals(new SuitRange("s", 10, null), SuitRange.valueOf("10+ s"));
+        Symbol S = new ConstSymbol(3);
+        assertEquals(new SuitRange(S, 10, null), SuitRange.valueOf("10+ s"));
     }
 
     @Test
     public void testToString() {
-        assertEquals("8-10 s", new SuitRange("s", 8, 10).toString());
+        Symbol S = new ConstSymbol(3);
+        assertEquals("8-10 S", new SuitRange(S, 8, 10).toString());
     }
 
     @Test
     public void test() {
-        assertTrue(new SuitRange("s", 3, 3).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new SuitRange("s", 3, 4).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new SuitRange("s", null, 3).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new SuitRange("s", 4, null).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
-
-        assertFalse(new SuitRange("c", 3, 3).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new SuitRange("c", 3, 4).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new SuitRange("c", 2, 3).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new SuitRange("c", 4, null).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        Symbol S = new ConstSymbol(3);
+        assertTrue(new SuitRange(S, 3, 3).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new SuitRange(S, 3, 4).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new SuitRange(S, null, 3).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new SuitRange(S, 4, null).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        Symbol C = new ConstSymbol(0);
+        assertFalse(new SuitRange(C, 3, 3).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new SuitRange(C, 3, 4).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertFalse(new SuitRange(C, 2, 3).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new SuitRange(C, 4, null).bind(new Players()).matches(Hand.valueOf("AKQ JT9 876 5432")));
     }
 }

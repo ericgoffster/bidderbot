@@ -6,40 +6,44 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.ConstSymbol;
 import bbidder.Hand;
+import bbidder.Players;
 import bbidder.SuitSets;
 import bbidder.SuitSets.SuitSet;
-import bbidder.Players;
+import bbidder.Symbol;
+import bbidder.VarSymbol;
 
 public class LongestOrEqualTest {
     SuitSet ALL = SuitSets.lookupSuitSet("ALL");
 
     @Test
     public void testValueOf() {
-        assertEquals(new LongestOrEqual("s", ALL), LongestOrEqual.valueOf("longest_or_equal s among all"));
-        assertEquals(new LongestOrEqual("s", ALL), LongestOrEqual.valueOf("   longest_or_equal    s    among    all    "));
-        assertEquals(new LongestOrEqual("s", null), LongestOrEqual.valueOf("longest_or_equal s"));
-        assertEquals(new LongestOrEqual("s", null), LongestOrEqual.valueOf("    longest_or_equal  s    "));
+        Symbol sym = new ConstSymbol(3);
+        assertEquals(new LongestOrEqual(sym, ALL), LongestOrEqual.valueOf("longest_or_equal s among all"));
+        assertEquals(new LongestOrEqual(sym, ALL), LongestOrEqual.valueOf("   longest_or_equal    s    among    all    "));
+        assertEquals(new LongestOrEqual(sym, null), LongestOrEqual.valueOf("longest_or_equal s"));
+        assertEquals(new LongestOrEqual(sym, null), LongestOrEqual.valueOf("    longest_or_equal  s    "));
     }
 
     @Test
     public void testToString() {
-        assertEquals("longest_or_equal x among ALL", new LongestOrEqual("x", ALL).toString());
-        assertEquals("longest_or_equal s", new LongestOrEqual("s", null).toString());
+        assertEquals("longest_or_equal x among ALL", new LongestOrEqual(new VarSymbol("x"), ALL).toString());
+        assertEquals("longest_or_equal s", new LongestOrEqual(new VarSymbol("s"), null).toString());
     }
 
     @Test
     public void testHigherRanking() {
-        assertTrue(new LongestOrEqual("s", ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertTrue(new LongestOrEqual("h", ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertFalse(new LongestOrEqual("d", ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertFalse(new LongestOrEqual("c", ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertTrue(new LongestOrEqual(new ConstSymbol(3), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertTrue(new LongestOrEqual(new ConstSymbol(2), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertFalse(new LongestOrEqual(new ConstSymbol(1), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertFalse(new LongestOrEqual(new ConstSymbol(0), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
     }
 
     @Test
     public void testHigherRankingOfNotSpades() {
-        assertTrue(new LongestOrEqual("h", SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
-        assertTrue(new LongestOrEqual("d", SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
-        assertFalse(new LongestOrEqual("c", SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+        assertTrue(new LongestOrEqual(new ConstSymbol(2), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+        assertTrue(new LongestOrEqual(new ConstSymbol(1), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+        assertFalse(new LongestOrEqual(new ConstSymbol(0), SuitSets.lookupSuitSet("~S")).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
     }
 }

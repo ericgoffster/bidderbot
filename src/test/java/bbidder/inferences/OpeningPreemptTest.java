@@ -6,45 +6,53 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.ConstSymbol;
 import bbidder.Hand;
 import bbidder.Players;
+import bbidder.Symbol;
 
 public class OpeningPreemptTest {
     @Test
     public void testValueOf() {
-        assertEquals(new OpeningPreempt("S", 2), OpeningPreempt.valueOf("opening_preempt 2 S"));
-        assertEquals(new OpeningPreempt("S", 2), OpeningPreempt.valueOf("   opening_preempt    2   S   "));
+        Symbol S = new ConstSymbol(3);
+        assertEquals(new OpeningPreempt(S, 2), OpeningPreempt.valueOf("opening_preempt 2 S"));
+        assertEquals(new OpeningPreempt(S, 2), OpeningPreempt.valueOf("   opening_preempt    2   S   "));
     }
 
     @Test
     public void testToString() {
-        assertEquals("opening_preempt 2 S", new OpeningPreempt("S", 2).toString());
+        Symbol S = new ConstSymbol(3);
+        assertEquals("opening_preempt 2 S", new OpeningPreempt(S, 2).toString());
     }
 
     @Test
     public void test2() {
-        assertTrue(new OpeningPreempt("S", 2).bind(new Players()).matches(Hand.valueOf("KQJ234 J 876 543")));
-        assertFalse(new OpeningPreempt("S", 3).bind(new Players()).matches(Hand.valueOf("KQJ234 J 876 543")));
-        assertFalse(new OpeningPreempt("S", 2).bind(new Players()).matches(Hand.valueOf("KQJ234 J A76 543")));
+        Symbol S = new ConstSymbol(3);
+        assertTrue(new OpeningPreempt(S, 2).bind(new Players()).matches(Hand.valueOf("KQJ234 J 876 543")));
+        assertFalse(new OpeningPreempt(S, 3).bind(new Players()).matches(Hand.valueOf("KQJ234 J 876 543")));
+        assertFalse(new OpeningPreempt(S, 2).bind(new Players()).matches(Hand.valueOf("KQJ234 J A76 543")));
     }
 
     @Test
     public void test3() {
-        assertTrue(new OpeningPreempt("S", 3).bind(new Players()).matches(Hand.valueOf("KQJ2345 J 87 543")));
-        assertFalse(new OpeningPreempt("S", 4).bind(new Players()).matches(Hand.valueOf("KQJ2345 J 87 543")));
-        assertFalse(new OpeningPreempt("S", 3).bind(new Players()).matches(Hand.valueOf("KQJ2345 J A7 543")));
+        Symbol S = new ConstSymbol(3);
+        assertTrue(new OpeningPreempt(S, 3).bind(new Players()).matches(Hand.valueOf("KQJ2345 J 87 543")));
+        assertFalse(new OpeningPreempt(S, 4).bind(new Players()).matches(Hand.valueOf("KQJ2345 J 87 543")));
+        assertFalse(new OpeningPreempt(S, 3).bind(new Players()).matches(Hand.valueOf("KQJ2345 J A7 543")));
     }
 
     @Test
     public void test4() {
-        assertTrue(new OpeningPreempt("S", 4).bind(new Players()).matches(Hand.valueOf("KQJ23456 J 87 54")));
-        assertFalse(new OpeningPreempt("S", 5).bind(new Players()).matches(Hand.valueOf("KQJ23456 J 87 54")));
-        assertFalse(new OpeningPreempt("S", 4).bind(new Players()).matches(Hand.valueOf("KQJ23456 J A7 54")));
+        Symbol S = new ConstSymbol(3);
+        assertTrue(new OpeningPreempt(S, 4).bind(new Players()).matches(Hand.valueOf("KQJ23456 J 87 54")));
+        assertFalse(new OpeningPreempt(S, 5).bind(new Players()).matches(Hand.valueOf("KQJ23456 J 87 54")));
+        assertFalse(new OpeningPreempt(S, 4).bind(new Players()).matches(Hand.valueOf("KQJ23456 J A7 54")));
     }
 
     @Test
     public void test5() {
-        assertTrue(new OpeningPreempt("C", 5).bind(new Players()).matches(Hand.valueOf("J 87 5 KQJ234567")));
-        assertFalse(new OpeningPreempt("C", 5).bind(new Players()).matches(Hand.valueOf("J A7 5 KQJ234567")));
+        Symbol C = new ConstSymbol(0);
+        assertTrue(new OpeningPreempt(C, 5).bind(new Players()).matches(Hand.valueOf("J 87 5 KQJ234567")));
+        assertFalse(new OpeningPreempt(C, 5).bind(new Players()).matches(Hand.valueOf("J A7 5 KQJ234567")));
     }
 }

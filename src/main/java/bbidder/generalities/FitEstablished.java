@@ -7,15 +7,16 @@ import java.util.Objects;
 
 import bbidder.BidList;
 import bbidder.BiddingContext;
+import bbidder.ConstSymbol;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SplitUtil;
-import bbidder.Strain;
+import bbidder.Symbol;
 
 public class FitEstablished implements Generality {
-    public final String symbol;
+    public final Symbol symbol;
     
-    public FitEstablished(String symbol) {
+    public FitEstablished(Symbol symbol) {
         super();
         this.symbol = symbol;
     }
@@ -24,14 +25,14 @@ public class FitEstablished implements Generality {
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         List<BiddingContext> result = new ArrayList<>();
         for (Entry<Integer, BiddingContext> e : bc.resolveSymbols(symbol).entrySet()) {
-            result.add(e.getValue().withGeneralityAdded(new FitEstablished(Strain.getName(e.getKey()))));
+            result.add(e.getValue().withGeneralityAdded(new FitEstablished(new ConstSymbol(e.getKey()))));
          }
         return result;
     }
     
     @Override
     public boolean matches(Players players, BidList bidList) {
-        int s = Strain.getStrain(symbol);
+        int s = symbol.getResolved();
         return players.partner.infSummary.getSuit(s).lowest() + players.me.infSummary.getSuit(s).lowest() >= 8;
     }
     
@@ -41,8 +42,9 @@ public class FitEstablished implements Generality {
         }
         String[] parts = SplitUtil.split(str, "\\s+", 2);
         if (parts.length == 2 && parts[0].equalsIgnoreCase("fit_established")) {
-            if (BiddingContext.isValidSuit(parts[1])) {
-                return new FitEstablished(parts[1]);
+            Symbol sym = BiddingContext.parseSymbol(parts[1]);
+            if (sym != null) {
+                return new FitEstablished(sym);
             }
         }
         return null;

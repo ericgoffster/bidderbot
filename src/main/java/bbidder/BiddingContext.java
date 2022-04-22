@@ -1,9 +1,5 @@
 package bbidder;
 
-import static bbidder.Constants.ALL_SUITS;
-import static bbidder.Constants.MAJORS;
-import static bbidder.Constants.MINORS;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,86 +82,20 @@ public final class BiddingContext {
      *            The symbol
      * @return (0,1,2,3,4) for a given symbol, null if not found.
      */
-    public Integer getSuit(String symbol) {
-        if (symbol.endsWith(":down")) {
-            return getSuit(symbol.substring(0, symbol.length() - 5));
-        }
-        {
-            Matcher m = SUIT_PATTERN.matcher(symbol);
-            if (m.matches()) {
-                String lhs = m.group(1);
-                int delta = Integer.parseInt(m.group(2));
-                Integer s = getSuit(lhs);
-                if (s == null) {
-                    return null;
-                }
-                return (s + 5 - delta) % 5;
-            }
-        }
-        Integer strain = Strain.getStrain(symbol);
-        if (strain != null) {
-            return strain;
-        }
-        if (symbol.equals("M") && suits.containsKey("OM")) {
-            return otherMajor(suits.get("OM"));
-        }
-        if (symbol.equals("m") && suits.containsKey("om")) {
-            return otherMinor(suits.get("om"));
-        }
-        if (symbol.equals("OM") && suits.containsKey("M")) {
-            return otherMajor(suits.get("M"));
-        }
-        if (symbol.equals("om") && suits.containsKey("m")) {
-            return otherMinor(suits.get("m"));
-        }
-        return suits.get(symbol);
+    public Integer getSuit(Symbol symbol) {
+        return symbol.evaluate(suits);
     }
     
-    /**
-     * 
-     * @param suits The suits to rotate
-     * @return The suits, rotated down once.
-     */
-    public static short rotateDown(short suits) {
-        return (short) ((suits >> 1) | ((suits & 1) << 4));
+    public Symbol bind(Symbol symbol) {
+        Integer strain = getSuit(symbol);
+        if (strain == null) {
+            throw new IllegalArgumentException(symbol + " undefined");
+        }
+        return new ConstSymbol(strain);
     }
     
-    public static short getSuitClass(String str) {
-        if (str.startsWith("~")) {
-            return (short) (0xf ^ getSuitClass(str.substring(1)));
-        }
-        int pos = str.indexOf("-");
-        if (pos >= 0) {
-            int n = Integer.parseInt(str.substring(pos + 1));
-            short suits = getSuitClass(str.substring(0, pos));
-            while (n > 0) {
-                suits = rotateDown(suits);
-                n--;
-            }
-            return suits;
-        }
-        {
-            Integer strain = Strain.getStrain(str);
-            if (strain != null) {
-                if (strain < 0 || strain > 3) {
-                    throw new IllegalArgumentException("Invalid strain");
-                }
-                return (short) (1 << strain);
-            }
-        }
-
-        switch (str) {
-        case "M":
-            return MAJORS;
-        case "OM":
-            return MAJORS;
-        case "m":
-            return MINORS;
-        case "om":
-            return MINORS;
-        default:
-            return ALL_SUITS;
-        }
+    public static short getSuitClass(Symbol str) {
+        return str.getSuitClass();
     }
 
     /**
@@ -174,11 +104,11 @@ public final class BiddingContext {
      * @return a map of strains to new bidding contexts. Each key in the map represents a possible bid strain
      *         for the given suit.
      */
-    public Map<Integer, BiddingContext> resolveSymbols(String symbol) {
+    public Map<Integer, BiddingContext> resolveSymbols(Symbol symbol) {
         boolean reverse = false;
-        if (symbol.endsWith(":down")) {
+        if (symbol instanceof DownSymbol) {
             reverse = true;
-            symbol = symbol.substring(0, symbol.length() - 5);
+            symbol = ((DownSymbol) symbol).sym;
         }
         {
             Integer strain = getSuit(symbol);
@@ -205,31 +135,45 @@ public final class BiddingContext {
      *            The symbol to test
      * @return true, if the symbol is syntactically a valid suit.
      */
-    public static boolean isValidSuit(String symbol) {
+    public static Symbol parseSymbol(String symbol) {
         {
             Matcher m = SUIT_PATTERN.matcher(symbol);
             if (m.matches()) {
-                String lhs = m.group(1);
-                return isValidSuit(lhs);
+                Symbol sym = parseSymbol(m.group(1));
+                if (sym == null) {
+                    return null;
+                }
+                return new SteppedSymbol(sym, Integer.parseInt(m.group(2)));
             }
         }
         if (symbol.endsWith(":down")) {
-            return isValidSuit(symbol.substring(0, symbol.length() - 5));
+            Symbol sym = parseSymbol(symbol.substring(0, symbol.length() - 5));
+            if (sym == null) {
+                return null;
+            }
+            return new DownSymbol(sym);
         }
         if (symbol.startsWith("~")) {
-            return isValidSuit(symbol.substring(1));
+            Symbol sym = parseSymbol(symbol.substring(1));
+            if (sym == null) {
+                return null;
+            }
+            return new NotSymbol(sym);
         }
         if (symbol.equals("om")) {
-            return true;
+            return new VarSymbol(symbol);
         }
         if (symbol.equals("OM")) {
-            return true;
+            return new VarSymbol(symbol);
         }
         Integer strain = Strain.getStrain(symbol);
         if (strain != null) {
-            return true;
+            return new ConstSymbol(strain);
         }
-        return symbol.length() == 1;
+        if (symbol.length() == 1) {
+            return new VarSymbol(symbol);
+        }
+        return null;
     }
 
     @Override
@@ -257,50 +201,7 @@ public final class BiddingContext {
         return Objects.equals(bidInference, other.bidInference) && Objects.equals(suits, other.suits);
     }
 
-    private static void putSuit(Map<String, Integer> suits, String symbol, int strain) {
-        Matcher m = SUIT_PATTERN.matcher(symbol);
-        if (m.matches()) {
-            String lhs = m.group(1);
-            int delta = Integer.parseInt(m.group(2));
-            putSuit(suits, lhs, (strain + delta) % 5);
-            return;
-        }
-        if (strain < 0 || strain > 4) {
-            throw new IllegalArgumentException("Invalid strain");
-        }
-
-        if (symbol.endsWith(":down")) {
-            throw new IllegalArgumentException();
-        }
-
-        suits.put(symbol, strain);
-    }
-
-    private static Integer otherMajor(Integer strain) {
-        if (strain == null) {
-            return null;
-        }
-        switch (strain.intValue()) {
-        case Constants.HEART:
-            return Constants.SPADE;
-        case Constants.SPADE:
-            return Constants.HEART;
-        default:
-            throw new IllegalArgumentException("invalid major");
-        }
-    }
-
-    private static Integer otherMinor(Integer strain) {
-        if (strain == null) {
-            return null;
-        }
-        switch (strain.intValue()) {
-        case Constants.CLUB:
-            return Constants.DIAMOND;
-        case Constants.DIAMOND:
-            return Constants.CLUB;
-        default:
-            throw new IllegalArgumentException("invalid minor");
-        }
+    private static void putSuit(Map<String, Integer> suits, Symbol symbol, int strain) {
+        symbol.unevaluate(suits, strain);
     }
 }

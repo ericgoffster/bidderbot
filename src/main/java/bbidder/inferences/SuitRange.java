@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
+import bbidder.ConstSymbol;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
-import bbidder.Strain;
+import bbidder.Symbol;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -20,16 +21,16 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public class SuitRange implements Inference {
-    public final String suit;
+    public final Symbol suit;
     public final Range rng;
 
-    public SuitRange(String suit, Integer min, Integer max) {
+    public SuitRange(Symbol suit, Integer min, Integer max) {
         super();
         this.suit = suit;
         this.rng = Range.between(min, max, 13);
     }
 
-    public SuitRange(String suit, Range r) {
+    public SuitRange(Symbol suit, Range r) {
         super();
         this.suit = suit;
         this.rng = r;
@@ -39,7 +40,7 @@ public class SuitRange implements Inference {
     public IBoundInference bind(Players players) {
         int strain;
         try {
-            strain = Strain.getStrain(suit);
+            strain = suit.getResolved();
         } catch (Exception e) {
             throw e;
         }
@@ -50,7 +51,7 @@ public class SuitRange implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new SuitRange(Strain.getName(e.getKey()), rng)));
+            l.add(e.getValue().withInferenceAdded(new SuitRange(new ConstSymbol(e.getKey()), rng)));
         }
         return l;
     }
@@ -67,8 +68,9 @@ public class SuitRange implements Inference {
         if (rng == null) {
             return null;
         }
-        if (BiddingContext.isValidSuit(rng.of)) {
-            return new SuitRange(rng.of, Range.between(rng.min, rng.max, 13));
+        Symbol sym = BiddingContext.parseSymbol(rng.of);
+        if (sym != null) {
+            return new SuitRange(sym, Range.between(rng.min, rng.max, 13));
         } else {
             return null;
         }

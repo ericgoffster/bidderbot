@@ -7,13 +7,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bbidder.BiddingContext;
+import bbidder.ConstSymbol;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
-import bbidder.Strain;
+import bbidder.Symbol;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -24,18 +25,18 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public class FitInSuit implements Inference {
-    public final String suit;
+    public final Symbol suit;
 
     public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
-    public FitInSuit(String suit) {
+    public FitInSuit(Symbol suit) {
         super();
         this.suit = suit;
     }
 
     @Override
     public IBoundInference bind(Players players) {
-        int strain = Strain.getStrain(suit);
+        int strain = suit.getResolved();
         return createrBound(strain, players.partner.infSummary);
     }
 
@@ -43,7 +44,7 @@ public class FitInSuit implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new FitInSuit(Strain.getName(e.getKey()))));
+            l.add(e.getValue().withInferenceAdded(new FitInSuit(new ConstSymbol(e.getKey()))));
         }
         return l;
     }
@@ -63,7 +64,11 @@ public class FitInSuit implements Inference {
         }
         Matcher m = PATT_FIT.matcher(str);
         if (m.matches()) {
-            return new FitInSuit(m.group(1).trim());
+            Symbol sym = BiddingContext.parseSymbol(m.group(1).trim());
+            if (sym == null) {
+                return null;
+            }
+            return new FitInSuit(sym);
         }
         return null;
     }

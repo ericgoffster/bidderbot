@@ -52,10 +52,11 @@ public class BidPatternParser implements Parser<BidPattern> {
                     str = str.substring(1);
                 }
             }
-            if (!BiddingContext.isValidSuit(str)) {
+            Symbol sym = BiddingContext.parseSymbol(str);
+            if (sym == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createBid(jumpLevel, reverse, nonreverse, level, str);
+            return BidPattern.createBid(jumpLevel, reverse, nonreverse, level, sym);
         }
     }
 

@@ -62,19 +62,16 @@ public class SuitSets {
     }
 
     public static class Gt implements SuitSet {
-        final String strain;
+        final Symbol strain;
 
-        public Gt(String strain) {
+        public Gt(Symbol strain) {
             super();
             this.strain = strain;
         }
 
         @Override
         public short evaluate(Players players) {
-            Integer st = Strain.getStrain(strain);
-            if (st == null) {
-                throw new IllegalArgumentException("Unknown Suit: '" + strain + "'");
-            }
+            Integer st = strain.getResolved();
             return (short) (0xf & ~((1 << (st + 1)) - 1));
         }
 
@@ -102,7 +99,7 @@ public class SuitSets {
 
         @Override
         public SuitSet replaceVars(BiddingContext bc) {
-            return new Gt(Strain.getName(bc.getSuit(strain)));
+            return new Gt(bc.bind(strain));
         }
     }
 
@@ -188,19 +185,16 @@ public class SuitSets {
     }
 
     public static class LookupSet implements SuitSet {
-        final String strain;
+        final Symbol strain;
 
-        public LookupSet(String strain) {
+        public LookupSet(Symbol strain) {
             this.strain = strain;
         }
 
         @Override
         public short evaluate(Players players) {
-            Integer st = Strain.getStrain(strain);
-            if (st != null) {
-                return (short) (1 << st);
-            }
-            throw new IllegalArgumentException("Unknown Suit Set: '" + strain + "'");
+            int st = strain.getResolved();
+            return (short) (1 << st);
         }
 
         @Override
@@ -222,12 +216,12 @@ public class SuitSets {
 
         @Override
         public String toString() {
-            return strain;
+            return strain.toString();
         }
 
         @Override
         public SuitSet replaceVars(BiddingContext bc) {
-            return new LookupSet(Strain.getName(bc.getSuit(strain)));
+            return new LookupSet(bc.bind(strain));
         }
     }
 
@@ -315,7 +309,11 @@ public class SuitSets {
                     advance();
                 }
                 String strain = sb.toString();
-                return new Gt(strain);
+                Symbol sym = BiddingContext.parseSymbol(strain);
+                if (sym == null) {
+                    throw new IllegalArgumentException("bad symbol " + strain);
+                }
+                return new Gt(sym);
             } else {
                 StringBuilder sb = new StringBuilder();
                 while (Character.isLetter(ch) || ch == '_' || Character.isDigit(ch)) {
@@ -342,7 +340,11 @@ public class SuitSets {
                 case "NONE":
                     return new ConstSet(sb.toString().toUpperCase(), (short) 0);
                 default:
-                    return new LookupSet(sb.toString());
+                    Symbol sym = BiddingContext.parseSymbol(sb.toString());
+                    if (sym == null) {
+                        throw new IllegalArgumentException("bad symbol " + sb);
+                    }
+                    return new LookupSet(sym);
                 }
             }
         }

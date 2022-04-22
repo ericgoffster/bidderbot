@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
+import bbidder.ConstSymbol;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.ShapeSet;
-import bbidder.Strain;
 import bbidder.SuitSets;
 import bbidder.SuitSets.SuitSet;
+import bbidder.Symbol;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -21,10 +22,10 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public class LongestOrEqual implements Inference {
-    public final String suit;
+    public final Symbol suit;
     public final SuitSet among;
 
-    public LongestOrEqual(String suit, SuitSet among) {
+    public LongestOrEqual(Symbol suit, SuitSet among) {
         this.suit = suit;
         this.among = among;
     }
@@ -32,7 +33,7 @@ public class LongestOrEqual implements Inference {
     @Override
     public IBoundInference bind(Players players) {
         int iamong = among == null ? 0xf : among.evaluate(players);
-        int strain = Strain.getStrain(suit);
+        int strain = suit.getResolved();
         return ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(strain, iamong)));
     }
 
@@ -41,7 +42,7 @@ public class LongestOrEqual implements Inference {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
             l.add(e.getValue()
-                    .withInferenceAdded(new LongestOrEqual(Strain.getName(e.getKey()), among.replaceVars(context))));
+                    .withInferenceAdded(new LongestOrEqual(new ConstSymbol(e.getKey()), among.replaceVars(context))));
         }
         return l;
     }
@@ -57,12 +58,17 @@ public class LongestOrEqual implements Inference {
         str = str.substring(16).trim();
         int pos = str.indexOf("among");
         if (pos >= 0) {
-            return new LongestOrEqual(str.substring(0, pos).trim(), SuitSets.lookupSuitSet(str.substring(pos + 5).trim()));
+            Symbol sym = BiddingContext.parseSymbol(str.substring(0, pos).trim());
+            if (sym == null) {
+                return null;
+            }
+            return new LongestOrEqual(sym, SuitSets.lookupSuitSet(str.substring(pos + 5).trim()));
         }
-        if (!BiddingContext.isValidSuit(str)) {
+        Symbol sym = BiddingContext.parseSymbol(str);
+        if (sym == null) {
             return null;
         }
-        return new LongestOrEqual(str, null);
+        return new LongestOrEqual(sym, null);
     }
 
     @Override

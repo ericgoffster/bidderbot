@@ -7,25 +7,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bbidder.BiddingContext;
+import bbidder.ConstSymbol;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.NOfTop;
 import bbidder.Players;
 import bbidder.Range;
-import bbidder.Strain;
+import bbidder.Symbol;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
 
 /**
  * Represents the inference of a specific cards in a suit.
  */
 public class SpecificCards implements Inference {
-    public final String suit;
+    public final Symbol suit;
     public final Range rng;
     public final int top;
 
     public static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
-    public SpecificCards(String suit, Range rng, int top) {
+    public SpecificCards(Symbol suit, Range rng, int top) {
         super();
         this.suit = suit;
         this.rng = rng;
@@ -34,7 +35,7 @@ public class SpecificCards implements Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        int strain = Strain.getStrain(suit);
+        int strain = suit.getResolved();
         return createBound(new NOfTop(rng, top, strain));
     }
 
@@ -42,7 +43,7 @@ public class SpecificCards implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new SpecificCards(Strain.getName(e.getKey()), rng, top)));
+            l.add(e.getValue().withInferenceAdded(new SpecificCards(new ConstSymbol(e.getKey()), rng, top)));
         }
         return l;
     }
@@ -61,10 +62,11 @@ public class SpecificCards implements Inference {
             if (m.matches()) {
                 int top = Integer.parseInt(m.group(1));
                 String suit = m.group(2);
-                if (!BiddingContext.isValidSuit(suit)) {
+                Symbol sym = BiddingContext.parseSymbol(suit);
+                if (sym == null) {
                     return null;
                 }
-                return new SpecificCards(suit, Range.between(rng.min, rng.max, top), top);
+                return new SpecificCards(sym, Range.between(rng.min, rng.max, top), top);
             }
         }
         return null;

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
+import bbidder.ConstSymbol;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -12,7 +13,7 @@ import bbidder.Range;
 import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.SplitUtil;
-import bbidder.Strain;
+import bbidder.Symbol;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.HcpBoundInf;
 import bbidder.inferences.bound.ShapeBoundInf;
@@ -24,10 +25,10 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public class OpeningPreempt implements Inference {
-    private final String suit;
+    private final Symbol suit;
     private final int level;
 
-    public OpeningPreempt(String suit, int level) {
+    public OpeningPreempt(Symbol suit, int level) {
         super();
         this.suit = suit;
         this.level = level;
@@ -35,7 +36,7 @@ public class OpeningPreempt implements Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        int strain = Strain.getStrain(suit);
+        int strain = suit.getResolved();
         return AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
                 ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(strain, level, shape))));
     }
@@ -44,7 +45,7 @@ public class OpeningPreempt implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new OpeningPreempt(Strain.getName(e.getKey()), level)));
+            l.add(e.getValue().withInferenceAdded(new OpeningPreempt(new ConstSymbol(e.getKey()), level)));
         }
         return l;
     }
@@ -60,10 +61,11 @@ public class OpeningPreempt implements Inference {
         if (!parts[0].equalsIgnoreCase("opening_preempt")) {
             return null;
         }
-        if (!BiddingContext.isValidSuit(parts[2])) {
+        Symbol sym = BiddingContext.parseSymbol(parts[2]);
+        if (sym == null) {
             return null;
         }
-        return new OpeningPreempt(parts[2], Integer.parseInt(parts[1]));
+        return new OpeningPreempt(sym, Integer.parseInt(parts[1]));
     }
 
     private static boolean isPremptive(int suit, int level, Shape hand) {
