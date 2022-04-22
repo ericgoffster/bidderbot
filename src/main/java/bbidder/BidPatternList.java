@@ -25,6 +25,10 @@ public final class BidPatternList {
         this.bids = bids;
     }
 
+    public static BidPatternList create(List<BidPattern> bids) {
+        return new BidPatternList(new ArrayList<>(bids));
+    }
+
     /**
      * @return The last bid
      */
@@ -38,7 +42,7 @@ public final class BidPatternList {
     public List<BidPattern> getBids() {
         return Collections.unmodifiableList(bids);
     }
-    
+
     /**
      * @return All bids except the first
      */
@@ -68,33 +72,35 @@ public final class BidPatternList {
         nbids.set(nbids.size() - 1, patt);
         return new BidPatternList(nbids);
     }
-    
+
     /**
-     * @param pattern pattern
+     * @param pattern
+     *            pattern
      * @param bc
      *            The bidding context
      * @return A list of contexts representing the symbol bound to actual values
      */
     public List<BidPatternListContext> resolveSymbols(BidPattern pattern, BidPatternListContext bc) {
         List<BidPatternListContext> l = new ArrayList<>();
-        for(BidPatternContext b: pattern.resolveSymbols(bc.suits)) {
-            l.add(new BidPatternListContext(bc.bids.withBidAdded(b.bid), b.suits));
+        for (BidPatternContext b : pattern.resolveSymbols(bc.suits)) {
+            l.add(new BidPatternListContext(bc.bids.withBidAdded(b.bidPattern), b.suits));
         }
         return l;
     }
-    
+
     /**
      * Resolve the first symbol.
      * Allow for first, second, third or fourth chair openings
-     * @param suits suits
+     * 
+     * @param suits
+     *            suits
      * 
      * @return The list of resolved bidding contexts
      */
     public List<BidPatternListContext> resolveFirstSymbol(SymbolTable suits) {
         // If there are no bids, then we are done
-        BidPatternListContext empty = new BidPatternListContext(BidPatternList.EMPTY, suits);
         if (bids.isEmpty()) {
-            return List.of(empty);
+            return List.of(new BidPatternListContext(BidPatternList.EMPTY, suits));
         }
         BidPattern pattern = bids.get(0);
         BidPatternList exceptFirst = exceptFirst();
@@ -102,24 +108,84 @@ public final class BidPatternList {
         // If the first bid is a generality, then the generality
         // takes care of all chairs
         if (pattern.generality != null) {
-            BidPatternListContext ctx = empty;
+            BidPatternListContext ctx = new BidPatternListContext(BidPatternList.EMPTY, suits);
             return exceptFirst.resolveSymbols(ctx, resolveSymbols(pattern, ctx), bids.get(1).isOpposition);
         }
 
         // generate contexts for {[bid], [(P) bid], [P (P) bids], [(P) P (P) bids]}
         boolean isOpp = pattern.isOpposition;
-        BidPattern p1 = BidPattern.PASS.withIsOpposition(!isOpp);
-        BidPattern p2 = BidPattern.PASS.withIsOpposition(isOpp);
+        BidPattern passWe = BidPattern.PASS.withIsOpposition(!isOpp);
+        BidPattern passThey = BidPattern.PASS.withIsOpposition(isOpp);
         List<BidPatternListContext> list = new ArrayList<>();
-        BidPatternListContext ctx = empty;
-        list.addAll(exceptFirst.resolveSymbols(ctx, resolveSymbols(pattern, ctx), !isOpp));
-        BidPatternListContext ctx1 = new BidPatternListContext(BidPatternList.EMPTY.withBidAdded(p1), suits);
-        list.addAll(exceptFirst.resolveSymbols(ctx1, resolveSymbols(pattern, ctx1), !isOpp));
-        BidPatternListContext ctx2 = new BidPatternListContext(BidPatternList.EMPTY.withBidAdded(p2).withBidAdded(p1), suits);
-        list.addAll(exceptFirst.resolveSymbols(ctx2, resolveSymbols(pattern, ctx2), !isOpp));
-        BidPatternListContext ctx3 = new BidPatternListContext(BidPatternList.EMPTY.withBidAdded(p1).withBidAdded(p2).withBidAdded(p1), suits);
-        list.addAll(exceptFirst.resolveSymbols(ctx3, resolveSymbols(pattern, ctx3), !isOpp));
+        {
+            BidPatternListContext ctx = new BidPatternListContext(BidPatternList.EMPTY, suits);
+            list.addAll(exceptFirst.resolveSymbols(ctx, resolveSymbols(pattern, ctx), !isOpp));
+        }
+        {
+            BidPatternListContext ctx1 = new BidPatternListContext(new BidPatternList(List.of(passWe)), suits);
+            list.addAll(exceptFirst.resolveSymbols(ctx1, resolveSymbols(pattern, ctx1), !isOpp));
+        }
+        {
+            BidPatternListContext ctx2 = new BidPatternListContext(new BidPatternList(List.of(passThey, passWe)), suits);
+            list.addAll(exceptFirst.resolveSymbols(ctx2, resolveSymbols(pattern, ctx2), !isOpp));
+        }
+        {
+            BidPatternListContext ctx3 = new BidPatternListContext(new BidPatternList(List.of(passWe, passThey, passWe)), suits);
+            list.addAll(exceptFirst.resolveSymbols(ctx3, resolveSymbols(pattern, ctx3), !isOpp));
+        }
         return list;
+    }
+
+    /**
+     * Given a bid pattern list where the suits have already been bound,
+     * return the last bid of the pattern in the context of a bidList.
+     * 
+     * @param bidList
+     *            The bidList to match.
+     * @param players
+     *            the players
+     * @param matched
+     *            the set of matched bids
+     * @return The last bid. null if there was no match.
+     */
+    public Bid getMatch(Auction bidList, Players players, Set<Bid> matched) {
+        List<Bid> theBids = bidList.getBids();
+        int wildSize = theBids.size() - bids.size() + 2;
+        int wildPos = positionOfWild();
+        if (wildPos < 0 && theBids.size() != bids.size() - 1) {
+            return null;
+        }
+        if (wildPos >= 0 && wildSize < 0) {
+            return null;
+        }
+        int j = 0;
+        int i = 0;
+        while (i < bids.size() - 1) {
+            BidPattern pattern = bids.get(i);
+            if (pattern.generality != null) {
+                if (!pattern.generality.matches(players, bidList)) {
+                    return null;
+                }
+                j += wildSize;
+            } else {
+                Bid bid = theBids.get(j);
+                Bid expected = pattern.resolveToBid(bidList.firstN(j));
+                if (bid != expected) {
+                    return null;
+                }
+                j++;
+            }
+            i++;
+        }
+        BidPattern lastPatt = bids.get(bids.size() - 1);
+        Bid theNextBid = lastPatt.resolveToBid(bidList);
+        if (theNextBid == null || !bidList.isLegalBid(theNextBid)) {
+            return null;
+        }
+        if (matched.contains(theNextBid) && lastPatt.symbol != null && lastPatt.symbol.nonConvential()) {
+            return null;
+        }
+        return theNextBid;
     }
 
     /**
@@ -140,8 +206,8 @@ public final class BidPatternList {
             if (inp.ch != -1) {
                 throw new IllegalArgumentException("invalid bids: '" + str + "'");
             }
-            int numWild = 0 ;
-            for(BidPattern patt: l) {
+            int numWild = 0;
+            for (BidPattern patt : l) {
                 if (patt.generality != null) {
                     numWild++;
                 }
@@ -186,6 +252,18 @@ public final class BidPatternList {
         return Objects.equals(bids, other.bids);
     }
 
+    /**
+     * @return the position of the wild card (or generality)
+     */
+    private int positionOfWild() {
+        for (int i = 0; i < bids.size(); i++) {
+            if (bids.get(i).generality != null) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     private List<BidPatternListContext> resolveSymbols(BidPatternListContext ctx, List<BidPatternListContext> contexts, boolean isOpp) {
         // If we are already done then it is invalid to add any more bids
         if (ctx.bids.isCompleted() && !bids.isEmpty()) {
@@ -199,9 +277,9 @@ public final class BidPatternList {
             }
             return contexts;
         }
-        
+
         BidPattern pattern = bids.get(0);
-        
+
         if (pattern.generality != null) {
             boolean newIsOpp = bids.get(1).isOpposition;
             List<BidPatternListContext> l = new ArrayList<>();
@@ -228,69 +306,5 @@ public final class BidPatternList {
     private boolean isCompleted() {
         return bids.size() >= 4 && bids.get(bids.size() - 1).equals(BidPattern.PASS) && bids.get(bids.size() - 2).equals(BidPattern.PASS)
                 && bids.get(bids.size() - 3).equals(BidPattern.PASS) && bids.get(bids.size() - 4).equals(BidPattern.PASS);
-    }
-
-    /**
-     * @return the position of the wild card (or generality)
-     */
-    public int positionOfWild() {
-        for (int i = 0; i < bids.size(); i++) {
-            if (bids.get(i).generality != null) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * Given a bid pattern list where the suits have already been bound,
-     * return the last bid of the pattern in the context of a bidList.
-     * 
-     * @param bidList
-     *            The bidList to match.
-     * @param players
-     *            the players
-     * @param matched 
-     *            the set of matched bids
-     * @return The last bid. null if there was no match.
-     */
-    public Bid getMatch(Auction bidList, Players players, Set<Bid> matched) {
-        List<Bid> theBids = bidList.getBids();
-        int wildSize = theBids.size() - bids.size() + 2;
-        int wildPos = positionOfWild();
-        if (wildPos < 0 && theBids.size() != bids.size() - 1) {
-            return null;
-        }
-        if (wildPos >= 0 && wildSize < 0) {
-            return null;
-        }
-        int j = 0;
-        int i = 0;
-        while (i < bids.size() - 1) {
-            BidPattern pattern = bids.get(i);
-            if (pattern.generality != null) {
-                if (!pattern.generality.matches(players, bidList)) {
-                    return null;
-                }
-                j += wildSize;
-            } else {
-                Bid bid = theBids.get(j);
-                Bid expected = pattern.resolveToBid(bidList.firstN(j));
-                if (bid != expected) {
-                    return null;
-                }
-                j++;
-            }
-            i++;
-        }
-        BidPattern lastPatt = bids.get(bids.size() - 1);
-        Bid theNextBid = lastPatt.resolveToBid(bidList);
-        if (theNextBid == null || !bidList.isLegalBid(theNextBid)) {
-            return null;
-        }
-        if (matched.contains(theNextBid) && lastPatt.symbol != null && lastPatt.symbol.nonConvential()) {
-            return null;
-        }
-        return theNextBid;
     }
 }
