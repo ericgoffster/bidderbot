@@ -1,8 +1,6 @@
 package bbidder;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -22,28 +20,6 @@ public final class InferenceContext {
      */
     public Map<String, Integer> getSuits() {
         return Collections.unmodifiableMap(suits);
-    }
-
-    public Map<Symbol, InferenceContext> resolveSymbols(Symbol symbol) {
-        {
-            Symbol esymbol = symbol.evaluate(suits);
-            if (esymbol != null) {
-                int strain = esymbol.getResolved();
-                if (strain < 0 || strain > 4) {
-                    throw new IllegalArgumentException("Invalid strain");
-                }
-                return Map.of(esymbol, this);
-            }
-        }
-        Map<Symbol, InferenceContext> m = new LinkedHashMap<Symbol, InferenceContext>();
-        for (Symbol newSym: symbol.boundSymbols(suits)) {
-            if (!suits.containsValue(newSym.getResolved())) {
-                Map<String, Integer> newSuits = new HashMap<>(suits);
-                newSuits.putAll(symbol.unevaluate(newSym.getResolved()));
-                m.put(newSym, new InferenceContext(inference, newSuits));
-            }
-        }
-        return m;
     }
 
     @Override

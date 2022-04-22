@@ -22,15 +22,6 @@ public final class BidPatternContext {
         return Collections.unmodifiableMap(suits);
     }
 
-    /**
-     * @param generality
-     *            The generality to add.
-     * @return A new BiddingContext with the given generality added to the last bid.
-     */
-    public BidPatternContext withGeneralityAdded(Generality generality) {
-        return new BidPatternContext(bid.withGeneralityAdded(generality), suits);
-    }
-
     @Override
     public String toString() {
         if (suits.isEmpty()) {
