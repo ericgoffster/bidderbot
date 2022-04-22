@@ -35,7 +35,7 @@ public class BidPatternList {
     /*
      * Retrieves the list of bidding contexts for this bid pattern list.
      */
-    public List<BiddingContext> getContexts() {
+    public List<BiddingContext> resolveSuits() {
         // no patterns, then a wide open context.
         if (bids.isEmpty()) {
             return List.of(BiddingContext.EMPTY);
