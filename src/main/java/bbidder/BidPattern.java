@@ -33,11 +33,10 @@ public class BidPattern {
     private final Integer jumpLevel;
     public final boolean reverse;
     public final boolean nonreverse;
-    public final boolean wild;
     public final Generality generality;
 
     private BidPattern(boolean isOpposition, String symbol, Integer level, Bid simpleBid, Integer jumpLevel, boolean reverse, boolean notreverse,
-            boolean wild, Generality generality) {
+            Generality generality) {
         super();
         this.isOpposition = isOpposition;
         this.symbol = symbol;
@@ -46,7 +45,6 @@ public class BidPattern {
         this.jumpLevel = jumpLevel;
         this.reverse = reverse;
         this.nonreverse = notreverse;
-        this.wild = wild;
         this.generality = generality;
     }
 
@@ -56,11 +54,11 @@ public class BidPattern {
      * @return A Bid Pattern with isOpposition set.
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, wild, generality);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, generality);
     }
     
     public BidPattern withGenerality(Generality generality) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, wild, generality);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, generality);
     }
 
     public BidPattern withGeneralityAdded(Generality g) {
@@ -98,7 +96,7 @@ public class BidPattern {
 
     @Override
     public int hashCode() {
-        return Objects.hash(isOpposition, jumpLevel, level, nonreverse, reverse, simpleBid, symbol, wild);
+        return Objects.hash(isOpposition, jumpLevel, level, nonreverse, reverse, simpleBid, symbol, generality);
     }
 
     @Override
@@ -112,7 +110,7 @@ public class BidPattern {
         BidPattern other = (BidPattern) obj;
         return isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
                 && nonreverse == other.nonreverse && reverse == other.reverse && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol)
-                && wild == other.wild;
+                && Objects.equals(generality, other.generality);
     }
 
     private String _getString() {
@@ -146,7 +144,7 @@ public class BidPattern {
      * @return A pattern where the level is "jump" based.
      */
     public static BidPattern createJump(String symbol, int jumpLevel) {
-        return new BidPattern(false, symbol, null, null, jumpLevel, false, false, false, null);
+        return new BidPattern(false, symbol, null, null, jumpLevel, false, false, null);
     }
 
     /**
@@ -154,7 +152,7 @@ public class BidPattern {
      * @return A bid that is the reverse of a suit
      */
     public static BidPattern createReverse(String symbol) {
-        return new BidPattern(false, symbol, null, null, 0, true, false, false, null);
+        return new BidPattern(false, symbol, null, null, 0, true, false, null);
     }
 
     /**
@@ -162,7 +160,7 @@ public class BidPattern {
      * @return A bid that is the non-reverse reverse of a suit
      */
     public static BidPattern createNonReverse(String suit) {
-        return new BidPattern(false, suit, null, null, 0, false, true, false, null);
+        return new BidPattern(false, suit, null, null, 0, false, true, null);
     }
 
     /**
@@ -172,9 +170,9 @@ public class BidPattern {
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
             return new BidPattern(false, Strain.getName(simpleBid.strain), simpleBid.level, simpleBid, null, false,
-                    false, false, null);
+                    false, null);
         }
-        return new BidPattern(false, null, null, simpleBid, null, false, false, false, null);
+        return new BidPattern(false, null, null, simpleBid, null, false, false, null);
     }
 
     /**
@@ -184,11 +182,11 @@ public class BidPattern {
      * @return A bid that is the level of a suit
      */
     public static BidPattern createBid(int level, String symbol) {
-        return new BidPattern(false, symbol, level, null, null, false, false, false, null);
+        return new BidPattern(false, symbol, level, null, null, false, false, null);
     }
     
     public static BidPattern createWild(Generality generality) {
-        return new BidPattern(false, null, null, null, null, false, false, true, generality);
+        return new BidPattern(false, null, null, null, null, false, false, generality);
     }
 
     /**
@@ -200,7 +198,7 @@ public class BidPattern {
             return createSimpleBid(Bid.valueOf(level, strain));
         }
         return new BidPattern(isOpposition, Strain.getName(strain), level, simpleBid, jumpLevel, reverse, nonreverse,
-                wild, generality);
+                generality);
     }
 
     /**
@@ -208,7 +206,7 @@ public class BidPattern {
      * @return A list of contexts representing the symbol bound to actual values
      */
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
-        if (wild) {
+        if (generality != null) {
             return generality.resolveSymbols(bc.withBidAdded(createWild(TrueGenerality.T)));
         }
         if (simpleBid != null) {

@@ -122,7 +122,7 @@ public class BidPatternList {
         }
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = bids.get(0);
-        if (pattern.wild) {
+        if (pattern.generality != null) {
             return new BidPatternList(bids.subList(1, bids.size())).resolveSymbols(ctx, pattern, false);
         }
         if (isOpp && !pattern.isOpposition) {
@@ -147,7 +147,7 @@ public class BidPatternList {
 
     public int positionOfWild() {
         for (int i = 0; i < bids.size(); i++) {
-            if (bids.get(i).wild) {
+            if (bids.get(i).generality != null) {
                 return i;
             }
         }
@@ -176,7 +176,7 @@ public class BidPatternList {
         int i = 0;
         while (i < bids.size() - 1) {
             BidPattern pattern = bids.get(i);
-            if (pattern.wild) {
+            if (pattern.generality != null) {
                 j += wildSize;
             } else {
                 Bid bid = theBids.get(j);

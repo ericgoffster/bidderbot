@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import bbidder.generalities.AndGenerality;
+import bbidder.generalities.TrueGenerality;
 import bbidder.inferences.AndInference;
 import bbidder.inferences.TrueInference;
 
@@ -61,6 +63,15 @@ public class InferenceRegistry {
     public Generality parseGenerality(String str) {
         if (str == null) {
             return null;
+        }
+        int pos = str.indexOf(",");
+        if (pos >= 0) {
+            String str1 = str.substring(0, pos);
+            String str2 = str.substring(pos + 1);
+            return AndGenerality.create(parseGenerality(str1), parseGenerality(str2));
+        }
+        if (str.trim().equals("")) {
+            return TrueGenerality.T;
         }
         for (Function<String, Generality> item : generaliities) {
             Generality inf = item.apply(str);
