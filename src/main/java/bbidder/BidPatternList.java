@@ -128,12 +128,12 @@ public final class BidPatternList {
         // If the first bid is a generality, then the generality
         // takes care of all chairs
         if (pattern.generality != null) {
-            return withOpp.resolveSymbols(new BidPatternListContext(BidPatternList.EMPTY, suits), withOpp.bids.get(1).isOpposition);
+            return withOpp.resolveSymbols(new BidPatternListContext(BidPatternList.EMPTY, suits));
         }
         
         List<BidPatternListContext> list = new ArrayList<>();
         for(BidPatternList bpl: withOpp.addInitialPasses()) {
-            list.addAll(bpl.resolveSymbols(new BidPatternListContext(BidPatternList.EMPTY, suits), !bpl.bids.get(0).isOpposition));
+            list.addAll(bpl.resolveSymbols(new BidPatternListContext(BidPatternList.EMPTY, suits)));
         }
         return list;
     }
@@ -144,8 +144,10 @@ public final class BidPatternList {
      * @param isOpp
      * @return
      */
-    private List<BidPatternListContext> resolveSymbols(BidPatternListContext ctx, boolean isOpp) {
-        return exceptFirst().resolveRemainingSymbols(ctx, resolveSymbols(bids.get(0), ctx), isOpp);
+    private List<BidPatternListContext> resolveSymbols(BidPatternListContext ctx) {
+        BidPattern pattern = bids.get(0);
+        boolean isOpp = pattern.generality != null ? bids.get(1).isOpposition : !pattern.isOpposition;
+        return exceptFirst().resolveRemainingSymbols(ctx, resolveSymbols(pattern, ctx), isOpp);
     }
 
     /**
@@ -330,9 +332,9 @@ public final class BidPatternList {
         List<BidPatternListContext> l = new ArrayList<>();
         for (BidPatternListContext newCtx : contexts) {
             if (pattern.generality != null) {
-                l.addAll(resolveSymbols(newCtx, bids.get(1).isOpposition));
+                l.addAll(resolveSymbols(newCtx));
             } else {
-                l.addAll(resolveSymbols(newCtx, !isOpp));
+                l.addAll(resolveSymbols(newCtx));
             }
         }
         return l;
