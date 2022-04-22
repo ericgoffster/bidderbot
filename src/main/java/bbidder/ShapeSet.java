@@ -94,6 +94,29 @@ public class ShapeSet implements Iterable<Shape> {
     public boolean unBounded() {
         return size() == Shape.values().length;
     }
+    
+    public Stat[] getStats() {
+        long[] bits = new long[4];
+        double tot = 0;
+        double[] sum = new double[4];
+        for (Shape s : this) {
+            bits[0] |= (1L << s.numInSuit(0));
+            bits[1] |= (1L << s.numInSuit(1));
+            bits[2] |= (1L << s.numInSuit(2));
+            bits[3] |= (1L << s.numInSuit(3));
+            sum[0] += s.numInSuit(0) * s.p;
+            sum[1] += s.numInSuit(1) * s.p;
+            sum[2] += s.numInSuit(2) * s.p;
+            sum[3] += s.numInSuit(3) * s.p;
+            tot += s.p;
+        }
+        Stat[] stats = new Stat[4];
+        stats[0] = new Stat(new Range(bits[0], 13), sum[0] / tot);
+        stats[1] = new Stat(new Range(bits[1], 13), sum[1] / tot);
+        stats[2] = new Stat(new Range(bits[2], 13), sum[2] / tot);
+        stats[3] = new Stat(new Range(bits[3], 13), sum[3] / tot);
+        return stats;
+    }
 
     @Override
     public String toString() {
@@ -178,5 +201,16 @@ public class ShapeSet implements Iterable<Shape> {
             tot += s.p;
         }
         return sum / tot;
+    }
+    
+    public static class Stat {
+        final Range range;
+        final double avg;
+        public Stat(Range range, double avg) {
+            super();
+            this.range = range;
+            this.avg = avg;
+        }
+        
     }
 }

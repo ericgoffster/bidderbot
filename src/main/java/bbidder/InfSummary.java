@@ -1,6 +1,9 @@
 package bbidder;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+
+import bbidder.ShapeSet.Stat;
 
 public class InfSummary {
     public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, Range.all(40), StopperSet.ALL, StopperSet.ALL);
@@ -10,6 +13,8 @@ public class InfSummary {
     public final Range tpts;
     public final StopperSet stoppers;
     public final StopperSet partialStoppers;
+    
+    public AtomicReference<Stat[]> stats;
 
     public InfSummary(ShapeSet shape, Range tpts, StopperSet stoppers, StopperSet partialStoppers) {
         super();
@@ -17,6 +22,7 @@ public class InfSummary {
         this.tpts = tpts;
         this.stoppers = stoppers;
         this.partialStoppers = partialStoppers;
+        this.stats = new AtomicReference<>();
     }
 
     public InfSummary withShapes(ShapeSet shape) {
@@ -53,7 +59,11 @@ public class InfSummary {
     }
 
     public Range getSuit(int suit) {
-        return shape.getSuit(suit);
+        return getStat(suit).range;
+     }
+
+    public Stat getStat(int suit) {
+        return stats.updateAndGet(st -> (st != null) ? st : shape.getStats())[suit];
     }
 
     public int minTotalPts() {
@@ -65,7 +75,7 @@ public class InfSummary {
     }
 
     public double avgLenInSuit(int suit) {
-        return shape.avgLenInSuit(suit);
+        return getStat(suit).avg;
     }
 
     @Override
