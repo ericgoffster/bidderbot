@@ -1,8 +1,7 @@
 package bbidder.generalities;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import bbidder.Auction;
 import bbidder.Generality;
@@ -10,7 +9,6 @@ import bbidder.Players;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
-import bbidder.utils.ListUtil;
 import bbidder.utils.SplitUtil;
 
 public final class FitEstablished extends Generality {
@@ -22,8 +20,8 @@ public final class FitEstablished extends Generality {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols).collect(Collectors.toList()), e -> new FitEstablished(e.getSymbol()).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        return symbol.resolveSymbols(symbols).map(e -> new FitEstablished(e.getSymbol()).new Context(e.symbols));
     }
 
     @Override

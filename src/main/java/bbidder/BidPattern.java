@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import bbidder.symbols.ConstSymbol;
-import bbidder.utils.ListUtil;
 
 /**
  * Represents an immutable matchable bid pattern.
@@ -164,7 +163,7 @@ public final class BidPattern {
      */
     public List<Context> resolveSymbols(Contract contract, SymbolTable symbols) {
         if (generality != null) {
-            return ListUtil.map(generality.resolveSymbols(symbols), e -> createWild(e.getGenerality()).new Context(e.symbols));
+            return generality.resolveSymbols(symbols).map(e -> createWild(e.getGenerality()).new Context(e.symbols)).collect(Collectors.toList());
         }
         if (simpleBid != null) {
             return List.of(new Context(symbols));

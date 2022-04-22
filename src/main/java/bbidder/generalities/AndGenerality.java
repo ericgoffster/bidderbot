@@ -1,13 +1,12 @@
 package bbidder.generalities;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SymbolTable;
-import bbidder.utils.ListUtil;
 
 public final class AndGenerality extends Generality {
     private final Generality g1;
@@ -30,9 +29,10 @@ public final class AndGenerality extends Generality {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.flatMap(g1.resolveSymbols(symbols), e1 -> ListUtil.map(g2.resolveSymbols(e1.symbols),
-                e2 -> new AndGenerality(e1.getGenerality(), e2.getGenerality()).new Context(e2.symbols)));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        return g1.resolveSymbols(symbols)
+                .flatMap(e1 -> g2.resolveSymbols(e1.symbols)
+                        .map(e2 -> new AndGenerality(e1.getGenerality(), e2.getGenerality()).new Context(e2.symbols)));
     }
 
     @Override

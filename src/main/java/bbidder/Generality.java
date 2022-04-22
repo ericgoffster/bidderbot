@@ -1,7 +1,7 @@
 package bbidder;
 
-import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.stream.Stream;
 
 /**
  * Represents a generality.
@@ -12,7 +12,7 @@ import java.util.function.BiPredicate;
  *
  */
 public abstract class Generality implements BiPredicate<Players, Auction> {
-    public abstract List<Context> resolveSymbols(SymbolTable symbols);
+    public abstract Stream<Context> resolveSymbols(SymbolTable symbols);
 
     public final class Context {
         public final SymbolTable symbols;

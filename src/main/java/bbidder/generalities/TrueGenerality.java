@@ -1,6 +1,6 @@
 package bbidder.generalities;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 import bbidder.Auction;
 import bbidder.Generality;
@@ -14,8 +14,8 @@ public final class TrueGenerality extends Generality {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        return List.of(new Context(symbols));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        return Stream.of(new Context(symbols));
     }
 
     @Override
