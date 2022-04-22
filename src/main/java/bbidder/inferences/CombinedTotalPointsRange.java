@@ -38,7 +38,7 @@ public class CombinedTotalPointsRange implements Inference {
         Range r = new Range(rng.bits >> tpts, 40);
         return TotalPtsBoundInf.create(players.partner.infSummary, r);
     }
-    
+
     @Override
     public List<BiddingContext> resolveSuits(BiddingContext context) {
         return List.of(context.withInferenceAdded(this));

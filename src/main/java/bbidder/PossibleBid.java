@@ -11,15 +11,16 @@ import java.util.Objects;
 public class PossibleBid {
     final BidInference inf;
     final Bid bid;
+
     public PossibleBid(BidInference inf, Bid bid) {
         super();
         this.inf = inf;
         this.bid = bid;
     }
-    
+
     @Override
     public String toString() {
-        return bid +" : "+inf;
+        return bid + " : " + inf;
     }
 
     @Override

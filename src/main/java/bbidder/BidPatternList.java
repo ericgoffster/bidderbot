@@ -21,11 +21,11 @@ public class BidPatternList {
         super();
         this.bids = bids;
     }
-    
+
     public List<BidPattern> getBids() {
         return Collections.unmodifiableList(bids);
     }
-    
+
     public BidPatternList withBidAdded(BidPattern patt) {
         List<BidPattern> nbids = new ArrayList<>(bids);
         nbids.add(patt);
@@ -121,17 +121,14 @@ public class BidPatternList {
         }
         return l;
     }
-    
+
     public boolean isCompleted() {
-        return bids.size() >= 4 &&
-                bids.get(bids.size() - 1).equals(BidPattern.PASS) &&
-                bids.get(bids.size() - 2).equals(BidPattern.PASS) &&
-                bids.get(bids.size() - 3).equals(BidPattern.PASS) &&
-                bids.get(bids.size() - 4).equals(BidPattern.PASS);
+        return bids.size() >= 4 && bids.get(bids.size() - 1).equals(BidPattern.PASS) && bids.get(bids.size() - 2).equals(BidPattern.PASS)
+                && bids.get(bids.size() - 3).equals(BidPattern.PASS) && bids.get(bids.size() - 4).equals(BidPattern.PASS);
     }
-    
+
     public int positionOfWild() {
-        for(int i = 0; i < bids.size(); i++) {
+        for (int i = 0; i < bids.size(); i++) {
             if (bids.get(i).wild) {
                 return i;
             }
@@ -142,8 +139,10 @@ public class BidPatternList {
     /**
      * Given a bid pattern list where the suits have already been bound,
      * return the last bid of the pattern in the context of a bidList.
-     * @param bidList The bidList to match.
-     * @return The last bid.  null if there was no match.
+     * 
+     * @param bidList
+     *            The bidList to match.
+     * @return The last bid. null if there was no match.
      */
     public Bid getMatch(BidList bidList) {
         List<Bid> theBids = bidList.getBids();
@@ -157,7 +156,7 @@ public class BidPatternList {
         }
         int j = 0;
         int i = 0;
-        while(i < bids.size() - 1) {
+        while (i < bids.size() - 1) {
             BidPattern pattern = bids.get(i);
             if (pattern.wild) {
                 j += wildSize;
@@ -176,5 +175,5 @@ public class BidPatternList {
             return null;
         }
         return theNextBid;
-    }  
+    }
 }

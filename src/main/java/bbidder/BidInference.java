@@ -22,19 +22,31 @@ public class BidInference {
         this.bids = bids;
         this.inferences = inferences;
     }
-    
+
     /**
-     * @param where The where tag.
-     * @return A bid inference with the "where tag" set.
+     * @param where
+     *            The where tag.
+     * @return A bid inference with the "where" tag set.
      */
     public BidInference at(String where) {
         return new BidInference(where, bids, inferences);
     }
-    
+
+    /**
+     * @param patt
+     *            The bid to add
+     * @return A bid inference with the given bid added
+     */
     public BidInference withBidAdded(BidPattern patt) {
         return new BidInference(where, bids.withBidAdded(patt), inferences);
     }
 
+    /**
+     * 
+     * @param i
+     *            The inference to add
+     * @return A bid inference with the given inference added
+     */
     public BidInference withInferenceAdded(Inference i) {
         return new BidInference(where, bids, inferences.withInferenceAdded(i));
     }
@@ -57,9 +69,12 @@ public class BidInference {
         return new BidInference(null, BidPatternList.valueOf(parts[0]), InferenceList.valueOf(reg, parts[1]));
     }
 
+    /**
+     * @return A list of bid inferences with all suit variables resolved.
+     */
     public List<BidInference> resolveSuits() {
         List<BidInference> result = new ArrayList<>();
-        for(BiddingContext bc: inferences.resolveSuits(bids.resolveSuits())) {
+        for (BiddingContext bc : inferences.resolveSuits(bids.resolveSuits())) {
             result.add(bc.getInference());
         }
         return result;

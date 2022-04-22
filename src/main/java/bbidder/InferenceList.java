@@ -21,7 +21,7 @@ public class InferenceList {
         super();
         this.inferences = inferences;
     }
-    
+
     public InferenceList withInferenceAdded(Inference i) {
         List<Inference> l = new ArrayList<>(inferences);
         l.add(i);
@@ -40,7 +40,7 @@ public class InferenceList {
         }
         return result;
     }
-    
+
     public List<BiddingContext> resolveSuits(List<BiddingContext> list) {
         for (Inference i : inferences) {
             List<BiddingContext> newList = new ArrayList<>();

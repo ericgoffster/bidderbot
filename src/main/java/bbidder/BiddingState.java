@@ -27,7 +27,9 @@ public final class BiddingState {
 
     /**
      * Constructs an initial bidding state with everyone playing the given system
-     * @param system The global system
+     * 
+     * @param system
+     *            The global system
      */
     public BiddingState(BiddingSystem system) {
         this(system, system);
@@ -35,8 +37,11 @@ public final class BiddingState {
 
     /**
      * Constructs an initial bidding state with everyone playing their own system
-     * @param we The bidding system for "we"
-     * @param they  The bidding system for "they"
+     * 
+     * @param we
+     *            The bidding system for "we"
+     * @param they
+     *            The bidding system for "they"
      */
     public BiddingState(BiddingSystem we, BiddingSystem they) {
         this.we = we;

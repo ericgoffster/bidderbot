@@ -37,7 +37,8 @@ public class BidPattern {
     public final boolean nonreverse;
     public final boolean wild;
 
-    private BidPattern(boolean isOpposition, String suit, Integer level, Bid simpleBid, Integer jumpLevel, boolean reverse, boolean notreverse, boolean wild) {
+    private BidPattern(boolean isOpposition, String suit, Integer level, Bid simpleBid, Integer jumpLevel, boolean reverse, boolean notreverse,
+            boolean wild) {
         super();
         this.isOpposition = isOpposition;
         this.suit = suit;
@@ -150,7 +151,6 @@ public class BidPattern {
         return s;
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hash(isOpposition, jumpLevel, level, nonreverse, reverse, simpleBid, suit, wild);
@@ -214,18 +214,19 @@ public class BidPattern {
         }
         return new BidPattern(false, null, null, simpleBid, null, false, false, false);
     }
-    
+
     public static BidPattern createBid(int level, String suit) {
         return new BidPattern(false, suit, level, null, null, false, false, false);
     }
-    
+
     public BidPattern bindSuit(int strain) {
         if (level != null) {
             return createSimpleBid(Bid.valueOf(level, strain));
         }
-        return new BidPattern(isOpposition, String.valueOf(Constants.STR_ALL_SUITS.charAt(strain)), level, simpleBid, jumpLevel, reverse, nonreverse, wild);
+        return new BidPattern(isOpposition, String.valueOf(Constants.STR_ALL_SUITS.charAt(strain)), level, simpleBid, jumpLevel, reverse, nonreverse,
+                wild);
     }
-    
+
     public List<BiddingContext> resolveSuits(BiddingContext bc) {
         if (simpleBid != null || wild) {
             return List.of(bc.withBidAdded(this));
@@ -238,12 +239,13 @@ public class BidPattern {
         }
         return result;
     }
-    
+
     /**
      * At this point, the bid pattern's suit has already been
      * resolved, so we just need to determine the level.
      * 
-     * @param bidList The current list of bids.
+     * @param bidList
+     *            The current list of bids.
      * @return The bid associated with the given pattern.
      */
     public Bid resolveToBid(BidList bidList) {

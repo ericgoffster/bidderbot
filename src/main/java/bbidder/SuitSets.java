@@ -16,6 +16,7 @@ import java.util.Objects;
 public class SuitSets {
     public interface SuitSet {
         public short evaluate(Players players);
+
         public SuitSet replaceVars(BiddingContext bc);
     }
 
@@ -48,9 +49,10 @@ public class SuitSets {
             Not other = (Not) obj;
             return Objects.equals(ss, other.ss);
         }
+
         @Override
         public String toString() {
-            return "~"+ss;
+            return "~" + ss;
         }
 
         @Override
@@ -95,7 +97,7 @@ public class SuitSets {
 
         @Override
         public String toString() {
-            return ">"+strain;
+            return ">" + strain;
         }
 
         @Override
@@ -103,7 +105,7 @@ public class SuitSets {
             return new Gt(String.valueOf(Constants.STR_ALL_SUITS.charAt(bc.getSuit(strain))));
         }
     }
-    
+
     public static class Unbid implements SuitSet {
         public Unbid() {
             super();
@@ -120,7 +122,7 @@ public class SuitSets {
             }
             return suits;
         }
-        
+
         @Override
         public int hashCode() {
             return 0;
@@ -142,10 +144,11 @@ public class SuitSets {
             return this;
         }
     }
-    
+
     public static class ConstSet implements SuitSet {
         final String ssuits;
         final short suits;
+
         public ConstSet(String ssuits, short suits) {
             this.ssuits = ssuits;
             this.suits = suits;
@@ -172,11 +175,12 @@ public class SuitSets {
             ConstSet other = (ConstSet) obj;
             return Objects.equals(ssuits, other.ssuits) && suits == other.suits;
         }
+
         @Override
         public String toString() {
             return ssuits;
         }
-        
+
         @Override
         public SuitSet replaceVars(BiddingContext bc) {
             return this;
@@ -185,6 +189,7 @@ public class SuitSets {
 
     public static class LookupSet implements SuitSet {
         final String strain;
+
         public LookupSet(String strain) {
             this.strain = strain;
         }
@@ -214,6 +219,7 @@ public class SuitSets {
             LookupSet other = (LookupSet) obj;
             return Objects.equals(strain, other.strain);
         }
+
         @Override
         public String toString() {
             return strain;
@@ -224,23 +230,27 @@ public class SuitSets {
             return new LookupSet(String.valueOf(Constants.STR_ALL_SUITS.charAt(bc.getSuit(strain))));
         }
     }
-    
+
     public static class And implements SuitSet {
         final SuitSet s1;
         final SuitSet s2;
+
         public And(SuitSet s1, SuitSet s2) {
             super();
             this.s1 = s1;
             this.s2 = s2;
         }
+
         @Override
         public short evaluate(Players players) {
-            return (short)(s1.evaluate(players) & s2.evaluate(players));
+            return (short) (s1.evaluate(players) & s2.evaluate(players));
         }
+
         @Override
         public int hashCode() {
             return Objects.hash(s1, s2);
         }
+
         @Override
         public boolean equals(Object obj) {
             if (this == obj)
@@ -252,6 +262,7 @@ public class SuitSets {
             And other = (And) obj;
             return Objects.equals(s1, other.s1) && Objects.equals(s2, other.s2);
         }
+
         @Override
         public String toString() {
             return s1 + " & " + s2;
@@ -329,7 +340,7 @@ public class SuitSets {
                 case "ALL":
                     return new ConstSet(sb.toString().toUpperCase(), ALL_SUITS);
                 case "NONE":
-                    return new ConstSet(sb.toString().toUpperCase(), (short)0);
+                    return new ConstSet(sb.toString().toUpperCase(), (short) 0);
                 default:
                     return new LookupSet(sb.toString());
                 }

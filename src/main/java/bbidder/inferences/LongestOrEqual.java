@@ -36,12 +36,13 @@ public class LongestOrEqual implements Inference {
         int strain = Strain.getStrain(suit);
         return ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(strain, iamong)));
     }
-    
+
     @Override
     public List<BiddingContext> resolveSuits(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSuits(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new LongestOrEqual(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), among.replaceVars(context))));
+            l.add(e.getValue()
+                    .withInferenceAdded(new LongestOrEqual(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), among.replaceVars(context))));
         }
         return l;
     }

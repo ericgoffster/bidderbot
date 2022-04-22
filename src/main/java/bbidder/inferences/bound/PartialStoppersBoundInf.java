@@ -63,7 +63,7 @@ public class PartialStoppersBoundInf implements IBoundInference {
 
     @Override
     public String toString() {
-        return "partial stoppers "+ stoppers;
+        return "partial stoppers " + stoppers;
     }
 
     @Override

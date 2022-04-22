@@ -23,7 +23,7 @@ public final class BiddingContext {
     public static final BiddingContext EMPTY = new BiddingContext(BidInference.EMPTY, Map.of());
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     private final BidInference bidInference;
-    
+
     private final Map<String, Integer> suits;
 
     private BiddingContext(BidInference bidInference, Map<String, Integer> suits) {
@@ -38,16 +38,17 @@ public final class BiddingContext {
     public BidInference getInference() {
         return bidInference;
     }
-    
+
     /**
      * @return The immutable symbol table.
      */
     public Map<String, Integer> getSuits() {
         return Collections.unmodifiableMap(suits);
     }
-    
+
     /**
-     * @param patt The bid pattern to add.
+     * @param patt
+     *            The bid pattern to add.
      * @return A new BiddingContext with the given bid added to the bid list.
      */
     public BiddingContext withBidAdded(BidPattern patt) {
@@ -55,7 +56,8 @@ public final class BiddingContext {
     }
 
     /**
-     * @param i An inference
+     * @param i
+     *            An inference
      * @return A new BiddingContext with the given inference added to the inference list.
      */
     public BiddingContext withInferenceAdded(Inference i) {
@@ -101,11 +103,12 @@ public final class BiddingContext {
         }
         return suits.get(symbol);
     }
-    
+
     /**
-     * @param symbol The suit to match.
-     * @return a map of strains to new bidding contexts.  Each key in the map represents a possible bid strain
-     * for the given suit.
+     * @param symbol
+     *            The suit to match.
+     * @return a map of strains to new bidding contexts. Each key in the map represents a possible bid strain
+     *         for the given suit.
      */
     public Map<Integer, BiddingContext> resolveSuits(String symbol) {
         boolean reverse = false;
@@ -134,7 +137,8 @@ public final class BiddingContext {
     }
 
     /**
-     * @param symbol The symbol to test
+     * @param symbol
+     *            The symbol to test
      * @return true, if the symbol is syntactically a valid suit.
      */
     public static boolean isValidSuit(String symbol) {

@@ -54,7 +54,7 @@ public class Test2Over1 {
                     }
                     IBoundInference bi = b.inf.inferences.bind(result.state.players);
                     if (b == result.found.possibleBid) {
-                        System.err.println("       * " + bi) ;
+                        System.err.println("       * " + bi);
 
                     } else {
                         System.err.println("       " + bi);

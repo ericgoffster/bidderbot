@@ -33,7 +33,7 @@ public class TotalPointsRange implements Inference {
     public IBoundInference bind(Players players) {
         return TotalPtsBoundInf.create(players.partner.infSummary, rng);
     }
-    
+
     @Override
     public List<BiddingContext> resolveSuits(BiddingContext context) {
         return List.of(context.withInferenceAdded(this));

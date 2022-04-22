@@ -35,8 +35,10 @@ public class BiddingSystem {
     /**
      * Loads a bidding system from a url.
      * 
-     * @param urlSpec The url specification
-     * @param reportErrors A consumer or parse exceptions
+     * @param urlSpec
+     *            The url specification
+     * @param reportErrors
+     *            A consumer or parse exceptions
      * @return The bidding system
      */
     public static BiddingSystem load(String urlSpec, Consumer<ParseException> reportErrors) {
@@ -46,7 +48,7 @@ public class BiddingSystem {
         load("", urlSpec, reportErrors, inferences, tests, reg);
         return new BiddingSystem(inferences, tests);
     }
-    
+
     /**
      * @return The tests for this bidding system
      */
@@ -69,9 +71,10 @@ public class BiddingSystem {
             }
         }
     }
-    
+
     /**
-     * @param bids The list of bids
+     * @param bids
+     *            The list of bids
      * @return A list of all possible bids given the list of bids.
      */
     public List<PossibleBid> getPossibleBids(BidList bids) {

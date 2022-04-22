@@ -22,5 +22,5 @@ public class Players {
     public String toString() {
         return "lho=" + lho + ", partner=" + partner + ", rho=" + rho + ", me=" + me;
     }
-    
+
 }

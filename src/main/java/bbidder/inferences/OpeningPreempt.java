@@ -38,9 +38,9 @@ public class OpeningPreempt implements Inference {
     public IBoundInference bind(Players players) {
         int strain = Strain.getStrain(suit);
         return AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
-                    ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(strain, level, shape))));
+                ShapeBoundInf.create(new ShapeSet(shape -> isPremptive(strain, level, shape))));
     }
-    
+
     @Override
     public List<BiddingContext> resolveSuits(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();

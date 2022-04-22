@@ -23,7 +23,7 @@ public class SpecificCards implements Inference {
     public final String suit;
     public final Range rng;
     public final int top;
-    
+
     public static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
     public SpecificCards(String suit, Range rng, int top) {
@@ -38,7 +38,7 @@ public class SpecificCards implements Inference {
         int strain = Strain.getStrain(suit);
         return createBound(new NOfTop(rng, top, strain));
     }
-    
+
     @Override
     public List<BiddingContext> resolveSuits(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
@@ -51,7 +51,7 @@ public class SpecificCards implements Inference {
     private static IBoundInference createBound(NOfTop spec) {
         return SpecificCardsBoundInf.create(spec);
     }
-    
+
     public static Inference valueOf(String str) {
         if (str == null) {
             return null;

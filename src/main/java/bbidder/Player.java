@@ -4,6 +4,7 @@ import bbidder.inferences.bound.ConstBoundInference;
 
 /**
  * Represents a immutable player in a bidding state.
+ * 
  * @author goffster
  *
  */

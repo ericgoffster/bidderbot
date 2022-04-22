@@ -63,7 +63,7 @@ public class StoppersBoundInf implements IBoundInference {
 
     @Override
     public String toString() {
-        return "stoppers "+ stoppers;
+        return "stoppers " + stoppers;
     }
 
     @Override

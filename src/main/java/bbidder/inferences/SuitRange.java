@@ -46,7 +46,7 @@ public class SuitRange implements Inference {
         }
         return createBound(strain, rng);
     }
-    
+
     @Override
     public List<BiddingContext> resolveSuits(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();

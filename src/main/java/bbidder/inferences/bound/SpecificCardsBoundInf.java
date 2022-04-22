@@ -10,7 +10,7 @@ import bbidder.NOfTop;
 public class SpecificCardsBoundInf implements IBoundInference {
     final NOfTop spec;
     final boolean have;
-    
+
     @Override
     public IBoundInference negate() {
         return new SpecificCardsBoundInf(spec, !have);

@@ -25,7 +25,7 @@ public class UnBalanced implements Inference {
     public IBoundInference bind(Players players) {
         return ShapeBoundInf.create(new ShapeSet(Shape::isBalanced).not());
     }
-    
+
     @Override
     public List<BiddingContext> resolveSuits(BiddingContext context) {
         return List.of(context.withInferenceAdded(this));

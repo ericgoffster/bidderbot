@@ -58,7 +58,7 @@ public class StoppersInSuits implements Inference {
         }
         return StoppersBoundInf.create(stoppers);
     }
-    
+
     @Override
     public List<BiddingContext> resolveSuits(BiddingContext context) {
         return List.of(context.withInferenceAdded(new StoppersInSuits(suits.replaceVars(context), partial)));

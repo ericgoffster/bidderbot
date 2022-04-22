@@ -14,8 +14,7 @@ public class InferenceListTest {
     public void testValueOf() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         assertEquals(new InferenceList(List.of(new Balanced())), InferenceList.valueOf(reg, "balanced"));
-        assertEquals(new InferenceList(List.of(new Balanced(), new SuitRange("S", 5, null))),
-                InferenceList.valueOf(reg, "balanced, 5+ S"));
+        assertEquals(new InferenceList(List.of(new Balanced(), new SuitRange("S", 5, null))), InferenceList.valueOf(reg, "balanced, 5+ S"));
     }
 
     @Test

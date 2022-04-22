@@ -18,7 +18,7 @@ public class BidList {
         super();
         this.bids = bids;
     }
-    
+
     /**
      * @return the immutable list of bids.
      */
@@ -28,9 +28,12 @@ public class BidList {
 
     /**
      * Creates a bid list from a list of bids.
-     * @param bids The list of bids.
+     * 
+     * @param bids
+     *            The list of bids.
      * @return The new bid List.
-     * @throws IllegalArgumentException If the auction is not valid.
+     * @throws IllegalArgumentException
+     *             If the auction is not valid.
      */
     public static BidList create(List<Bid> bids) {
         BidList bl = new BidList(List.of());
@@ -41,7 +44,8 @@ public class BidList {
     }
 
     /**
-     * @param strain The strain
+     * @param strain
+     *            The strain
      * @return the next legal bid of a strain
      */
     public Bid nextLegalBidOf(int strain) {
@@ -55,7 +59,7 @@ public class BidList {
             return Bid.valueOf(contract.winningBid.level + 1, strain);
         }
     }
-    
+
     public boolean isLegalBid(Bid bid) {
         Contract contract = getContract();
         if (contract.winningBid != Bid.P && bid.isSuitBid() && bid.ordinal() < contract.winningBid.ordinal()) {
@@ -95,7 +99,8 @@ public class BidList {
      * @param bid
      *            The bid to add
      * @return A new bid list with the given bid added
-     * @throws IllegalArgumentException If the auction is not valid.
+     * @throws IllegalArgumentException
+     *             If the auction is not valid.
      */
     public BidList withBidAdded(Bid bid) {
         if (!isLegalBid(bid)) {
@@ -114,7 +119,7 @@ public class BidList {
     }
 
     /**
-     * @return the current contract.  (returning a contract of "P" if no suit bids have been made)
+     * @return the current contract. (returning a contract of "P" if no suit bids have been made)
      */
     public Contract getContract() {
         boolean redoubled = false;
@@ -147,7 +152,7 @@ public class BidList {
     }
 
     /**
-     * @return The last bid in the sequence.  null if empty.
+     * @return The last bid in the sequence. null if empty.
      */
     public Bid getLastBid() {
         if (bids.isEmpty()) {
@@ -165,7 +170,7 @@ public class BidList {
     }
 
     /**
-     * @return A bid list of everything exception the last bid.  No-op if already empty.
+     * @return A bid list of everything exception the last bid. No-op if already empty.
      */
     public BidList exceptLast() {
         if (bids.isEmpty()) {
@@ -173,9 +178,10 @@ public class BidList {
         }
         return new BidList(bids.subList(0, bids.size() - 1));
     }
-    
+
     /**
-     * @param n The number of bids to return
+     * @param n
+     *            The number of bids to return
      * @return A bid list of just the first "n" bids,
      */
     public BidList firstN(int n) {
@@ -189,7 +195,8 @@ public class BidList {
      * @param str
      *            The string to parse
      * @return A bid list parsed from the string
-     * @throws IllegalArgumentException If the auction is not valid or bids cant be parsed.
+     * @throws IllegalArgumentException
+     *             If the auction is not valid or bids cant be parsed.
      */
     public static BidList valueOf(String str) {
         if (str == null) {
@@ -267,7 +274,7 @@ public class BidList {
         }
         return true;
     }
-    
+
     public boolean isNonReverse(Bid bid) {
         Bid myLastBid = bids.size() >= 4 ? bids.get(bids.size() - 4) : null;
         Bid partnerLastBid = bids.size() >= 2 ? bids.get(bids.size() - 2) : null;
@@ -281,7 +288,7 @@ public class BidList {
         }
         return true;
     }
-    
+
     public Bid nextLevel(int strain) {
         Bid lastBidSuit = getLastSuitBid();
         if (strain > lastBidSuit.strain) {
@@ -290,7 +297,7 @@ public class BidList {
             return Bid.valueOf(lastBidSuit.level + 1, strain);
         }
     }
-    
+
     public Bid getBid(int jl, int strain) {
         Bid b = nextLevel(strain);
         while (jl > 0) {

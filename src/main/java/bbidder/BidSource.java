@@ -14,7 +14,7 @@ import java.util.Objects;
 public class BidSource {
     private final List<PossibleBid> possibleBids;
     public final PossibleBid possibleBid;
-    
+
     public List<PossibleBid> getPossible() {
         return Collections.unmodifiableList(possibleBids);
     }

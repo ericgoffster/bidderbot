@@ -48,7 +48,7 @@ public class Range {
     public static Range none(int max) {
         return new Range(0, max);
     }
-    
+
     public static Range exactly(int n, int max) {
         if (n < 0 || n > max) {
             throw new IllegalArgumentException();

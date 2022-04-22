@@ -13,6 +13,7 @@ import bbidder.Players;
 
 public class LongestOrEqualTest {
     SuitSet ALL = SuitSets.lookupSuitSet("ALL");
+
     @Test
     public void testValueOf() {
         assertEquals(new LongestOrEqual("s", ALL), LongestOrEqual.valueOf("longest_or_equal s among all"));

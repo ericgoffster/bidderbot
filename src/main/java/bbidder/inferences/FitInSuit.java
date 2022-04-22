@@ -39,7 +39,7 @@ public class FitInSuit implements Inference {
         int strain = Strain.getStrain(suit);
         return createrBound(strain, players.partner.infSummary);
     }
-    
+
     @Override
     public List<BiddingContext> resolveSuits(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
