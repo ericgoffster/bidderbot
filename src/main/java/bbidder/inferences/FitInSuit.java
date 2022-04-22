@@ -50,7 +50,7 @@ public class FitInSuit implements Inference {
     }
 
     private IBoundInference createrBound(int s, InfSummary partnerSummary) {
-        int n = 8 - partnerSummary.getSuit(s).lowest();
+        int n = 8 - partnerSummary.minLenInSuit(s);
         if (n <= 0) {
             return ConstBoundInference.T;
         }

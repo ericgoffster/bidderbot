@@ -44,13 +44,13 @@ public class Rebiddable implements Inference {
     }
 
     private IBoundInference createrBound(int s, InfSummary meSummary, InfSummary partnerSummary) {
-        if (meSummary.getSuit(s).lowest() + partnerSummary.getSuit(s).lowest() >= 8) {
+        if (meSummary.minLenInSuit(s) + partnerSummary.minLenInSuit(s) >= 8) {
             return ConstBoundInference.F;
         }
         if (meSummary.avgLenInSuit(s) < 4) {
             return ConstBoundInference.F;
         }
-        int n = meSummary.getSuit(s).lowest();
+        int n = meSummary.minLenInSuit(s);
         Range r;
         if (n <= 0) {
             r = Range.atLeast(6, 13);

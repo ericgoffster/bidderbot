@@ -223,7 +223,7 @@ public class Hand {
     }
 
     public boolean haveFit(InfSummary partnerSummary, int suit) {
-        return numInSuit(suit) + partnerSummary.getSuit(suit).lowest() >= 8;
+        return numInSuit(suit) + partnerSummary.minLenInSuit(suit) >= 8;
     }
 
     public int getTotalPoints(InfSummary partnerSummary) {
