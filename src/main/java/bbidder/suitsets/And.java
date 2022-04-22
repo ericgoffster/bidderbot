@@ -1,9 +1,9 @@
 package bbidder.suitsets;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetContext;
@@ -48,13 +48,8 @@ public final class And implements SuitSet {
 
     @Override
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        List<SuitSetContext> l = new ArrayList<>();
-        for(var e1: s1.resolveSymbols(symbols)) {
-            for(var e2: s2.resolveSymbols(e1.symbols)) {
-                l.add(new SuitSetContext(new And(e1.ss, e2.ss), e2.symbols));
-            }
-        }
-        return l;
+        return ListUtil.flatMap(s1.resolveSymbols(symbols), e1 -> ListUtil.map(s2.resolveSymbols(e1.symbols),
+                e2 -> new SuitSetContext(new And(e1.suitSet, e2.suitSet), e2.symbols)));
     }
 
 }

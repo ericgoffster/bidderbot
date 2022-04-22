@@ -1,11 +1,11 @@
 package bbidder.generalities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.GeneralityContext;
+import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
@@ -25,13 +25,8 @@ public final class TwoSuitedGenerality implements Generality {
 
     @Override
     public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
-        List<GeneralityContext> result = new ArrayList<>();
-        for (var e1 : longer.resolveSymbols(symbols)) {
-            for (var e2 : shorter.resolveSymbols(e1.symbols)) {
-                result.add(new GeneralityContext(new TwoSuitedGenerality(e1.symbol, e2.symbol), e2.symbols));
-            }
-        }
-        return result;
+        return ListUtil.flatMap(longer.resolveSymbols(symbols), e1 -> ListUtil.map(shorter.resolveSymbols(e1.symbols),
+                e2 -> new GeneralityContext(new TwoSuitedGenerality(e1.symbol, e2.symbol), e2.symbols)));
     }
 
     @Override

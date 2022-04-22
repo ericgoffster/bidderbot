@@ -63,7 +63,7 @@ public final class StoppersInSuits implements Inference {
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(suits.resolveSymbols(symbols), e -> new InferenceContext(new StoppersInSuits(e.ss, partial), e.symbols));
+        return ListUtil.map(suits.resolveSymbols(symbols), e -> new InferenceContext(new StoppersInSuits(e.suitSet, partial), e.symbols));
     }
 
     @Override

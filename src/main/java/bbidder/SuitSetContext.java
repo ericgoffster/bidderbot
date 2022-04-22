@@ -6,12 +6,12 @@ package bbidder;
  *
  */
 public final class SuitSetContext {
-    public final SuitSet ss;
+    public final SuitSet suitSet;
     public final SymbolTable symbols;
 
     public SuitSetContext(SuitSet ss, SymbolTable symbols) {
         super();
-        this.ss = ss;
+        this.suitSet = ss;
         this.symbols = symbols;
     }
 }

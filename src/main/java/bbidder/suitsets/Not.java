@@ -46,6 +46,6 @@ public final class Not implements SuitSet {
 
     @Override
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(ss.resolveSymbols(symbols), e -> new SuitSetContext(new Not(e.ss), e.symbols));
+        return ListUtil.map(ss.resolveSymbols(symbols), e -> new SuitSetContext(new Not(e.suitSet), e.symbols));
     }
 }

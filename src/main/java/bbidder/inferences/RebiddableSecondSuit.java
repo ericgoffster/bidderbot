@@ -1,6 +1,5 @@
 package bbidder.inferences;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -10,6 +9,7 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
@@ -39,13 +39,8 @@ public final class RebiddableSecondSuit implements Inference {
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        List<InferenceContext> l = new ArrayList<>();
-        for (var e1 : longer.resolveSymbols(symbols)) {
-            for (var e2 : shorter.resolveSymbols(e1.symbols)) {
-                l.add(new InferenceContext(new RebiddableSecondSuit(e1.symbol, e2.symbol), e2.symbols));
-            }
-        }
-        return l;
+        return ListUtil.flatMap(longer.resolveSymbols(symbols), e1 -> ListUtil.map(shorter.resolveSymbols(e1.symbols),
+                e2 -> new InferenceContext(new RebiddableSecondSuit(e1.symbol, e2.symbol), e2.symbols)));
     }
 
     private static IBoundInference createrBound(int strainLonger, int strainShorter, InfSummary meSummary, InfSummary partnerSummary) {

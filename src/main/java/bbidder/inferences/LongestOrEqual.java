@@ -1,12 +1,12 @@
 package bbidder.inferences;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.ShapeSet;
 import bbidder.SuitSet;
@@ -40,14 +40,8 @@ public final class LongestOrEqual implements Inference {
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        List<InferenceContext> l = new ArrayList<>();
-        for (var e1 : suit.resolveSymbols(symbols)) {
-            for (var e2 : among.resolveSymbols(e1.symbols)) {
-                l.add(new InferenceContext(new LongestOrEqual(e1.symbol, e2.ss), e2.symbols));
-            }
-        }
-
-        return l;
+        return ListUtil.flatMap(suit.resolveSymbols(symbols), e1 -> ListUtil.map(among.resolveSymbols(e1.symbols),
+                e2 -> new InferenceContext(new LongestOrEqual(e1.symbol, e2.suitSet), e2.symbols)));
     }
 
     public static LongestOrEqual valueOf(String str) {

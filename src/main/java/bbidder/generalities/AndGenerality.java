@@ -1,12 +1,12 @@
 package bbidder.generalities;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.GeneralityContext;
+import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.SymbolTable;
 
@@ -32,13 +32,8 @@ public final class AndGenerality implements Generality {
 
     @Override
     public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
-        List<GeneralityContext> result = new ArrayList<>();
-        for (GeneralityContext ctx1 : g1.resolveSymbols(symbols)) {
-            for (GeneralityContext ctx2 : g2.resolveSymbols(ctx1.symbols)) {
-                result.add(new GeneralityContext(new AndGenerality(ctx1.generality, ctx2.generality), ctx2.symbols));
-            }
-        }
-        return result;
+        return ListUtil.flatMap(g1.resolveSymbols(symbols), e1 -> ListUtil.map(g2.resolveSymbols(e1.symbols),
+                e2 -> new GeneralityContext(new AndGenerality(e1.generality, e2.generality), e2.symbols)));
     }
 
     @Override

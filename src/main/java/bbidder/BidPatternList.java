@@ -107,11 +107,7 @@ public final class BidPatternList {
      * @return The list of resolved bidding pattern contexts
      */
     public List<BidPatternListContext> resolveSymbols(SymbolTable suits) {
-        List<BidPatternListContext> list = new ArrayList<>();
-        for(BidPatternList bpl: withOpposingBidding().addInitialPasses()) {
-            list.addAll(bpl.resolveSymbols(BidPatternList.EMPTY, suits));
-        }
-        return list;
+        return ListUtil.flatMap(withOpposingBidding().addInitialPasses(), bpl -> bpl.resolveSymbols(BidPatternList.EMPTY, suits));
     }
     
     /**
@@ -280,12 +276,8 @@ public final class BidPatternList {
         // For each context gotten from the first bid,
         // evaluate the remaining bids in the context of that bid.
         BidPatternList exceptFirst = exceptFirst();
-        List<BidPatternListContext> list = new ArrayList<>();
         BidPattern pattern = bids.get(0);
-        for (BidPatternContext b : pattern.resolveSymbols(symbols)) {
-            list.addAll(exceptFirst.resolveSymbols(previous.withBidAdded(b.bidPattern), b.symbols));
-        }
-        return list;
+        return ListUtil.flatMap(pattern.resolveSymbols(symbols), b -> exceptFirst.resolveSymbols(previous.withBidAdded(b.bidPattern), b.symbols));
     }
 
     /**

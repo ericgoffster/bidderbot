@@ -1,10 +1,10 @@
 package bbidder.symbols;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import bbidder.Bid;
+import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolContext;
 import bbidder.SymbolTable;
@@ -45,13 +45,8 @@ public final class LessThanSymbol implements Symbol {
 
     @Override
     public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
-        List<SymbolContext> l = new ArrayList<>();
-        for(var e1: symbol.resolveSymbols(symbols)) {
-            for(var e2: other.resolveSymbols(e1.symbols)) {
-                l.add(new SymbolContext(new LessThanSymbol(e1.symbol, level, e2.symbol), e2.symbols));
-            }
-        }
-        return l;
+        return ListUtil.flatMap(symbol.resolveSymbols(symbols), e1 -> ListUtil.map(other.resolveSymbols(e1.symbols),
+                e2 -> new SymbolContext(new LessThanSymbol(e1.symbol, level, e2.symbol), e2.symbols)));
     }
 
     @Override

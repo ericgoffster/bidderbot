@@ -1,6 +1,5 @@
 package bbidder;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,13 +45,8 @@ public final class BidInference {
      * @return A list of bid inferences with all suit variables resolved.
      */
     public List<BidInference> resolveSymbols() {
-        List<BidInference> result = new ArrayList<>();
-        for (BidPatternListContext ctx1 : bids.resolveSymbols(SymbolTable.EMPTY)) {
-            for (InferenceContext ctx2 : inferences.resolveSymbols(ctx1.symbols)) {
-                result.add(new BidInference(where, ctx1.bids, ctx2.inference));
-            }
-        }
-        return result;
+        return ListUtil.flatMap(bids.resolveSymbols(SymbolTable.EMPTY), e1 -> ListUtil.map(inferences.resolveSymbols(e1.symbols),
+                e2 -> new BidInference(where, e1.bids, e2.inference)));
     }
 
     @Override

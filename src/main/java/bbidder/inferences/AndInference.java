@@ -1,12 +1,12 @@
 package bbidder.inferences;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.AndBoundInf;
@@ -33,13 +33,8 @@ public final class AndInference implements Inference {
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        List<InferenceContext> res = new ArrayList<>();
-        for (InferenceContext ctx1 : i1.resolveSymbols(symbols)) {
-            for (InferenceContext ctx2 : i2.resolveSymbols(ctx1.symbols)) {
-                res.add(new InferenceContext(new AndInference(ctx1.inference, ctx2.inference), ctx2.symbols));
-            }
-        }
-        return res;
+        return ListUtil.flatMap(i1.resolveSymbols(symbols), e1 -> ListUtil.map(i2.resolveSymbols(e1.symbols),
+                e2 -> new InferenceContext(new AndInference(e1.inference, e2.inference), e2.symbols)));
     }
 
     public static Inference create(Inference i1, Inference i2) {
