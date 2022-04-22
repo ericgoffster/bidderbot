@@ -44,12 +44,15 @@ public class OtherMinorSymbol implements Symbol {
     }
 
     @Override
-    public void unevaluate(Map<String, Integer> suits, int strain) {
-        suits.put("om", strain);        
+    public Map<String, Integer> unevaluate(int strain) {
+        return Map.of("om", strain);        
     }
     
     @Override
-    public short getSuitClass() {
+    public short getSuitClass(Map<String, Integer> suits) {
+        if (suits.containsKey("m") || suits.containsKey("om")) {
+            return (short)(1 << evaluate(suits));
+        }
         return MINORS;
     }
 

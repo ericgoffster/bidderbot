@@ -35,9 +35,9 @@ public class SteppedSymbol implements Symbol {
     }
     
     @Override
-    public short getSuitClass() {
+    public short getSuitClass(Map<String, Integer> sts) {
         int n = delta;
-        short suits = sym.getSuitClass();
+        short suits = sym.getSuitClass(sts);
         while (n > 0) {
             suits = rotateDown(suits);
             n--;
@@ -55,8 +55,8 @@ public class SteppedSymbol implements Symbol {
     }
     
     @Override
-    public void unevaluate(Map<String, Integer> suits, int strain) {
-        sym.unevaluate(suits, (strain + delta) % 5);
+    public Map<String, Integer> unevaluate(int strain) {
+        return sym.unevaluate((strain + delta) % 5);
     }
 
     /**

@@ -34,8 +34,8 @@ public class NotSymbol implements Symbol {
     }
     
     @Override
-    public short getSuitClass() {
-        return (short) (0xf ^ sym.getSuitClass());
+    public short getSuitClass(Map<String, Integer> suits) {
+        return (short) (0xf ^ sym.getSuitClass(suits));
     }
 
     @Override
@@ -44,8 +44,8 @@ public class NotSymbol implements Symbol {
     }
     
     @Override
-    public void unevaluate(Map<String, Integer> suits, int strain) {
-        suits.put(toString(), strain);
+    public Map<String, Integer> unevaluate(int strain) {
+        return Map.of(toString(), strain);
     }
     
     @Override

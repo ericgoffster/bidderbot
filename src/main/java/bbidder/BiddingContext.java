@@ -102,10 +102,10 @@ public final class BiddingContext {
             }
         }
         TreeMap<Integer, BiddingContext> m = new TreeMap<>();
-        for (int strain : BitUtil.iterate(symbol.getSuitClass())) {
+        for (int strain : BitUtil.iterate(symbol.getSuitClass(suits))) {
             if (!suits.containsValue(strain)) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
-                symbol.unevaluate(newSuits, strain);
+                newSuits.putAll(symbol.unevaluate(strain));
                 m.put(strain, new BiddingContext(bidInference, newSuits));
             }
         }

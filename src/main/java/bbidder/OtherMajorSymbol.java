@@ -44,12 +44,15 @@ public class OtherMajorSymbol implements Symbol {
     }
 
     @Override
-    public void unevaluate(Map<String, Integer> suits, int strain) {
-        suits.put("OM", strain);        
+    public Map<String, Integer> unevaluate(int strain) {
+        return Map.of("OM", strain);
     }
     
     @Override
-    public short getSuitClass() {
+    public short getSuitClass(Map<String, Integer> suits) {
+        if (suits.containsKey("M") || suits.containsKey("OM")) {
+            return (short)(1 << evaluate(suits));
+        }
         return MAJORS;
     }
 

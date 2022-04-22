@@ -39,13 +39,13 @@ public class DownSymbol implements Symbol {
     }
     
     @Override
-    public void unevaluate(Map<String, Integer> suits, int strain) {
-        sym.unevaluate(suits, strain);
+    public Map<String, Integer> unevaluate(int strain) {
+        return sym.unevaluate(strain);
     }
 
     @Override
-    public short getSuitClass() {
-        return sym.getSuitClass();
+    public short getSuitClass(Map<String, Integer> suits) {
+        return sym.getSuitClass(suits);
     }
     
     @Override

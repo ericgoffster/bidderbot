@@ -39,14 +39,15 @@ public class ConstSymbol implements Symbol {
     }
     
     @Override
-    public void unevaluate(Map<String, Integer> suits, int strain) {
+    public Map<String, Integer> unevaluate(int strain) {
         if (strain != this.strain) {
             throw new IllegalArgumentException();
         }
+        return Map.of();
     }
 
     @Override
-    public short getSuitClass() {
+    public short getSuitClass(Map<String, Integer> suits) {
         return (short) (1 << strain);
     }
     
