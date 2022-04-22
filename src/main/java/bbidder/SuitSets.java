@@ -18,6 +18,7 @@ import bbidder.suitsets.Gt;
 import bbidder.suitsets.LookupSet;
 import bbidder.suitsets.Not;
 import bbidder.suitsets.Unbid;
+import bbidder.suitsets.Unstopped;
 import bbidder.symbols.ConstSymbol;
 
 public class SuitSets {
@@ -84,6 +85,8 @@ public class SuitSets {
                 switch (sb.toString().toUpperCase()) {
                 case "UNBID":
                     return new Unbid();
+                case "UNSTOPPED":
+                    return new Unstopped();
                 case "MINORS":
                     return new ConstSet(sb.toString().toUpperCase(), MINORS);
                 case "MAJORS":

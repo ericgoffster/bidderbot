@@ -4,15 +4,20 @@ import bbidder.BiddingContext;
 import bbidder.Players;
 import bbidder.SuitSet;
 
-public class Unbid implements SuitSet {
-    public Unbid() {
+public class Unstopped implements SuitSet {
+    public Unstopped() {
         super();
     }
 
     @Override
     public short evaluate(Players players) {
-        short allBid = (short)(players.lho.infSummary.getBidSuits() | players.rho.infSummary.getBidSuits()
-                | players.partner.infSummary.getBidSuits() | players.me.infSummary.getBidSuits());
+        short allBid = (short)(players.me.infSummary.getBidSuits() | players.partner.infSummary.getBidSuits());
+        for(int i = 0; i < 4; i++) {
+            if (players.me.infSummary.stoppers.stopperIn(i) || players.partner.infSummary.stoppers.stopperIn(i)
+                    || players.me.infSummary.partialStoppers.stopperIn(i) || players.partner.infSummary.partialStoppers.stopperIn(i)) {
+                allBid |= (short)(1 << i);
+            }
+        }
         return (short)(0xf ^ allBid);
     }
 
@@ -39,6 +44,6 @@ public class Unbid implements SuitSet {
     
     @Override
     public String toString() {
-        return "unbid";
+        return "unstopped";
     }
 }

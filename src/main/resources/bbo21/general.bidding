@@ -38,3 +38,6 @@ test xx AQxxxx xx Kxx: 1C 1H 1N 3H
 
 [i_bid_suit M] 4M => gf, rebiddable M
 test Ax AQxxxx xx Kxx: 1C 1H 1N 4H
+
+[] 3N => gf, partial_stoppers unstopped
+test Axx AQxx Qxx Qxx: 1C 1H 1N 3N
