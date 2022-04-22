@@ -1,12 +1,9 @@
 package bbidder;
 
-import java.util.List;
 import java.util.Map;
 
 public interface Symbol {
     public Symbol evaluate(SymbolTable symbols);
-
-    public List<Symbol> boundSymbols(SymbolTable symbols);
 
     public int getResolved();
     

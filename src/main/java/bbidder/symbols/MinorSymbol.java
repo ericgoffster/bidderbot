@@ -1,7 +1,6 @@
 package bbidder.symbols;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import bbidder.Bid;
@@ -52,14 +51,6 @@ public final class MinorSymbol implements Symbol {
         throw new IllegalStateException(this + " not resolved");
     }
 
-    @Override
-    public List<Symbol> boundSymbols(SymbolTable symbols) {
-        if (symbols.containsKey("m") || symbols.containsKey("om")) {
-            return List.of(evaluate(symbols));
-        }
-        return List.of(new ConstSymbol(Constants.CLUB), new ConstSymbol(Constants.DIAMOND));
-    }
-    
     @Override
     public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
         if (symbols.containsKey("m")) {

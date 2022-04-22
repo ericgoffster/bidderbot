@@ -3,7 +3,6 @@ package bbidder.symbols;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -49,15 +48,6 @@ public final class DownSymbol implements Symbol {
             return null;
         }
         return new DownSymbol(evaluate);
-    }
-
-    @Override
-    public List<Symbol> boundSymbols(SymbolTable symbols) {
-        List<Symbol> l = new ArrayList<>();
-        for(Symbol s: symbol.boundSymbols(symbols)) {
-            l.add(0, s);
-        }
-        return l;
     }
 
     @Override

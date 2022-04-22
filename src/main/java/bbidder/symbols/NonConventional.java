@@ -1,8 +1,6 @@
 package bbidder.symbols;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -49,15 +47,6 @@ public final class NonConventional implements Symbol {
         return new NonConventional(evaluate);
     }
 
-    @Override
-    public List<Symbol> boundSymbols(SymbolTable symbols) {
-        List<Symbol> l = new ArrayList<>();
-        for(Symbol s: symbol.boundSymbols(symbols)) {
-            l.add(new NonConventional(s));
-        }
-        return l;
-    }
-    
     @Override
     public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
         Map<Symbol, SymbolTable> old = symbol.resolveSymbol(symbols);

@@ -1,6 +1,5 @@
 package bbidder.symbols;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -47,11 +46,6 @@ public final class ConstSymbol implements Symbol {
     @Override
     public Symbol evaluate(SymbolTable symbols) {
         return this;
-    }
-
-    @Override
-    public List<Symbol> boundSymbols(SymbolTable symbols) {
-        return List.of(this);
     }
 
     @Override

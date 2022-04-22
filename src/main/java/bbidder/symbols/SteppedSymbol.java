@@ -1,8 +1,6 @@
 package bbidder.symbols;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -40,15 +38,6 @@ public final class SteppedSymbol implements Symbol {
             return false;
         SteppedSymbol other = (SteppedSymbol) obj;
         return delta == other.delta && Objects.equals(symbol, other.symbol);
-    }
-    
-    @Override
-    public List<Symbol> boundSymbols(SymbolTable symbols) {
-        List<Symbol> l = new ArrayList<>();
-        for(Symbol s: symbol.boundSymbols(symbols)) {
-            l.add(new SteppedSymbol(s, delta));
-        }
-        return l;
     }
     
     @Override
