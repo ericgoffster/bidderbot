@@ -75,7 +75,7 @@ public class OrBoundInf implements IBoundInference {
             return;
         }
         if (inf instanceof OrBoundInf) {
-            for (IBoundInference i : ((AndBoundInf) inf).inferences) {
+            for (IBoundInference i : ((OrBoundInf) inf).inferences) {
                 addOr(l, i);
             }
             return;

@@ -48,15 +48,6 @@ public class BidPatternList {
      * Retrieves the list of bidding contexts for this bid pattern list.
      */
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
-        // Add in first hand passing
-        List<BiddingContext> l = new ArrayList<>();
-        l.addAll(resolveSymbols(bc.withBidAdded(BidPattern.PASS).withBidAdded(BidPattern.PASS), true));
-        l.addAll(resolveSymbols(bc.withBidAdded(BidPattern.PASS), true));
-        l.addAll(_resolveSymbols(bc));
-        return l;
-    }
-
-    public List<BiddingContext> _resolveSymbols(BiddingContext bc) {
         // no patterns, then a wide open context.
         if (bids.isEmpty()) {
             return List.of(bc);
@@ -68,6 +59,13 @@ public class BidPatternList {
             l.addAll(resolveSymbols(bc, false));
         }
         return l;
+    }
+    
+    public List<BiddingContext> resolveFirstSymbol(BiddingContext bc, BidPattern pattern) {
+        if (pattern.generality != null) {
+            return resolveGenerality(bc, pattern);
+        }
+        return resolveSymbols(bc, pattern.isOpposition);
     }
 
     public static BidPatternList valueOf(InferenceRegistry reg, String str) {
@@ -115,7 +113,7 @@ public class BidPatternList {
         return Objects.equals(bids, other.bids);
     }
 
-    private List<BiddingContext> resolveSymbols(BiddingContext ctx, boolean isOpp) {
+    public List<BiddingContext> resolveSymbols(BiddingContext ctx, boolean isOpp) {
         if (bids.isEmpty()) {
             if (!isOpp) {
                 throw new IllegalArgumentException("last bid must be made by 'we'");
@@ -128,17 +126,21 @@ public class BidPatternList {
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = bids.get(0);
         if (pattern.generality != null) {
-            BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
-            List<BiddingContext> l = new ArrayList<>();
-            for (BiddingContext newCtx : pattern.resolveSymbols(ctx)) {
-                l.addAll(theRest._resolveSymbols(newCtx));
-            }
-            return l;
+            return resolveGenerality(ctx, pattern);
         }
         if (isOpp && !pattern.isOpposition) {
             return resolveSymbols(ctx, BidPattern.PASS, !isOpp);
         }
         return new BidPatternList(bids.subList(1, bids.size())).resolveSymbols(ctx, pattern, !isOpp);
+    }
+
+    public List<BiddingContext> resolveGenerality(BiddingContext ctx, BidPattern pattern) {
+        BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
+        List<BiddingContext> l = new ArrayList<>();
+        for (BiddingContext newCtx : pattern.resolveSymbols(ctx)) {
+            l.addAll(theRest.resolveSymbols(newCtx));
+        }
+        return l;
     }
 
     private List<BiddingContext> resolveSymbols(BiddingContext ctx, BidPattern pattern, boolean isOpp) {

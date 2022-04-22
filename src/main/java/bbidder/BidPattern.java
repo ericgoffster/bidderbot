@@ -27,6 +27,7 @@ public class BidPattern {
     static final String STR_NONREVERSE = "NR";
     static final String STR_REVERSE = "RV";
     public static final BidPattern PASS = createSimpleBid(Bid.P);
+    public static final BidPattern PASS_OPP = createSimpleBid(Bid.P).withIsOpposition(true);
     public final boolean isOpposition;
     public final Symbol symbol;
     public final Integer level;
