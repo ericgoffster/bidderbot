@@ -323,30 +323,17 @@ public final class BidPatternList {
     }
 
     public Contract getContract() {
-        boolean redoubled = false;
-        boolean doubled = false;
-        int numPasses = 0;
+        List<Bid> lastBids = new ArrayList<>();
         for (int i = bids.size() - 1; i >= 0; i--) {
             Bid bid = bids.get(i).simpleBid;
             if (bid == null) {
                 return null;
             }
+            lastBids.add(0, bid);
             if (bid.isSuitBid()) {
-                return new Contract(i, bid, doubled, redoubled, numPasses);
-            }
-            if (bid == Bid.X) {
-                doubled = true;
-            }
-            if (bid == Bid.XX) {
-                redoubled = true;
-            }
-            if (bid == Bid.P) {
-                if (!doubled && !redoubled) {
-                    numPasses++;
-                }
+                return Auction.create(lastBids).getContract();
             }
         }
-        return new Contract(0, Bid.P, false, false, numPasses);
-
+        return Auction.create(lastBids).getContract();
     }
 }
