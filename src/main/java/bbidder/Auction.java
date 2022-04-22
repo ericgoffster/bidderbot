@@ -115,10 +115,11 @@ public final class Auction {
     public Contract getContract() {
         boolean redoubled = false;
         boolean doubled = false;
+        int numPasses = 0;
         for (int i = bids.size() - 1; i >= 0; i--) {
             Bid bid = bids.get(i);
             if (bid.isSuitBid()) {
-                return new Contract(i, bid, doubled, redoubled);
+                return new Contract(i, bid, doubled, redoubled, numPasses);
             }
             if (bid == Bid.X) {
                 doubled = true;
@@ -126,8 +127,13 @@ public final class Auction {
             if (bid == Bid.XX) {
                 redoubled = true;
             }
+            if (bid == Bid.P) {
+                if (!doubled && !redoubled) {
+                    numPasses++;
+                }
+            }
         }
-        return new Contract(0, Bid.P, false, false);
+        return new Contract(0, Bid.P, false, false, numPasses);
     }
 
     /**
@@ -138,14 +144,6 @@ public final class Auction {
             return null;
         }
         return bids.get(bids.size() - 1);
-    }
-
-    /**
-     * @return The last actual suit bid. Null if all pass.
-     */
-    public Bid getLastSuitBid() {
-        Contract contract = getContract();
-        return contract.winningBid == Bid.P ? null : contract.winningBid;
     }
 
     /**

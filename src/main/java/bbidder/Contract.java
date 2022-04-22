@@ -11,18 +11,20 @@ public final class Contract {
     public final Bid winningBid;
     public final boolean doubled;
     public final boolean redoubled;
+    public final int numPasses;
 
-    public Contract(int position, Bid winningBid, boolean doubled, boolean redoubled) {
+    public Contract(int position, Bid winningBid, boolean doubled, boolean redoubled, int numPasses) {
         super();
         this.position = position;
         this.winningBid = winningBid;
         this.doubled = doubled;
         this.redoubled = redoubled;
+        this.numPasses = numPasses;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(doubled, position, redoubled, winningBid);
+        return Objects.hash(doubled, position, redoubled, winningBid, numPasses);
     }
 
     @Override
@@ -34,7 +36,7 @@ public final class Contract {
         if (getClass() != obj.getClass())
             return false;
         Contract other = (Contract) obj;
-        return doubled == other.doubled && position == other.position && redoubled == other.redoubled && winningBid == other.winningBid;
+        return doubled == other.doubled && position == other.position && redoubled == other.redoubled && winningBid == other.winningBid && numPasses == other.numPasses;
     }
 
     @Override
