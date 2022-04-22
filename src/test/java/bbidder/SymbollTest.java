@@ -86,13 +86,14 @@ public class SymbollTest {
 
     @Test
     public void testStepped() {
-        Symbol sym = new SteppedSymbol(new VarSymbol("x"), 1);
-        assertEquals(1, sym.evaluate(Map.of("x", 2)).intValue());
-        assertEquals(4, sym.evaluate(Map.of("x", 0)).intValue());
-        assertEquals(Map.of("x", 2), sym.unevaluate(1));
-        assertEquals(Map.of("x", 0), sym.unevaluate(4));
-        assertEquals(1 << 0 | 1 << 1 | 1 << 2 | 1 << 4, sym.getSuitClass(Map.of()));
-        assertEquals("x-1", sym.toString());
+        Symbol sym = new SteppedSymbol(new VarSymbol("x"), 2);
+        assertEquals(0, sym.evaluate(Map.of("x", 2)).intValue());
+        assertEquals(4, sym.evaluate(Map.of("x", 1)).intValue());
+        assertEquals(3, sym.evaluate(Map.of("x", 0)).intValue());
+        assertEquals(Map.of("x", 2), sym.unevaluate(0));
+        assertEquals(Map.of("x", 1), sym.unevaluate(4));
+        assertEquals(1 << 0 | 1 << 1 | 1 << 3 | 1 << 4, sym.getSuitClass(Map.of()));
+        assertEquals("x-2", sym.toString());
     }
 
     @Test
