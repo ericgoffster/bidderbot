@@ -130,14 +130,14 @@ public final class BidPattern {
      *            The suits
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public List<BidPatternContext> resolveSymbols(SymbolTable symbols) {
+    public List<Context> resolveSymbols(SymbolTable symbols) {
         if (generality != null) {
-            return ListUtil.map(generality.resolveSymbols(symbols), e -> new BidPatternContext(createWild(e.generality), e.symbols));
+            return ListUtil.map(generality.resolveSymbols(symbols), e -> createWild(e.generality).new Context(e.symbols));
         }
         if (simpleBid != null) {
-            return List.of(new BidPatternContext(this, symbols));
+            return List.of(new Context(symbols));
         }
-        return ListUtil.map(getSymbol().resolveSymbols(symbols), e -> new BidPatternContext(bindSuit(e.getSymbol()), e.symbols));
+        return ListUtil.map(getSymbol().resolveSymbols(symbols), e -> bindSuit(e.getSymbol()).new Context(e.symbols));
     }
 
     /**
@@ -215,5 +215,18 @@ public final class BidPattern {
             }
         }
         return String.valueOf(level + 1) + symbol;
+    }
+    
+    public class Context {
+        public final SymbolTable symbols;
+
+        public Context(SymbolTable symbols) {
+            super();
+            this.symbols = symbols;
+        }
+
+        public BidPattern getBidPattern() {
+            return BidPattern.this;
+        }
     }
 }
