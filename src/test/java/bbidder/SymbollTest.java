@@ -7,6 +7,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import bbidder.symbols.ConstSymbol;
+import bbidder.symbols.DownSymbol;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.MinorSymbol;
 import bbidder.symbols.NotSymbol;
@@ -72,6 +73,15 @@ public class SymbollTest {
         assertEquals(Map.of("x", 2), sym.unevaluate(2));
         assertEquals(Constants.ALL_SUITS, sym.getSuitClass(Map.of()));
         assertEquals("x", sym.toString());
+    }
+
+    @Test
+    public void testDown() {
+        Symbol sym = new DownSymbol(new VarSymbol("x"));
+        assertEquals(2, sym.evaluate(Map.of("x", 2)).intValue());
+        assertEquals(Map.of("x", 2), sym.unevaluate(2));
+        assertEquals(Constants.ALL_SUITS, sym.getSuitClass(Map.of()));
+        assertEquals("x:down", sym.toString());
     }
 
     @Test
