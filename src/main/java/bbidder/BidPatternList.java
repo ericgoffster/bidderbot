@@ -65,11 +65,11 @@ public class BidPatternList {
         return l;
     }
 
-    public static BidPatternList valueOf(String str) {
+    public static BidPatternList valueOf(InferenceRegistry reg, String str) {
         if (str == null) {
             return null;
         }
-        ListParser<BidPattern> parser = new ListParser<BidPattern>(new BidPatternParser(), "");
+        ListParser<BidPattern> parser = new ListParser<BidPattern>(new BidPatternParser(reg), "");
         try(Input inp = new Input(new StringReader(str))) {
             List<BidPattern> l = parser.parse(inp);
             inp.advanceWhite();

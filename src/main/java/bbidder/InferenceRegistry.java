@@ -11,7 +11,8 @@ import java.util.function.Function;
  *
  */
 public class InferenceRegistry {
-    final List<Function<String, Inference>> items = new ArrayList<>();
+    final List<Function<String, Inference>> inferences = new ArrayList<>();
+    final List<Function<String, Generality>> generaliities = new ArrayList<>();
 
     /**
      * Add a constructor of an inference from a string
@@ -19,8 +20,12 @@ public class InferenceRegistry {
      * @param constructor
      *            String => Inference
      */
-    public void add(Function<String, Inference> constructor) {
-        items.add(constructor);
+    public void addInference(Function<String, Inference> constructor) {
+        inferences.add(constructor);
+    }
+    
+    public void addGenerality(Function<String, Generality> constructor) {
+        generaliities.add(constructor);
     }
 
     /**
@@ -28,16 +33,29 @@ public class InferenceRegistry {
      *            The string to parse.
      * @return An inference for the string.
      */
-    public Inference valueOf(String str) {
+    public Inference parseInference(String str) {
         if (str == null) {
             return null;
         }
-        for (Function<String, Inference> item : items) {
+        for (Function<String, Inference> item : inferences) {
             Inference inf = item.apply(str);
             if (inf != null) {
                 return inf;
             }
         }
         throw new IllegalArgumentException("unknown inference: '" + str + "'");
+    }
+    
+    public Generality parseGenerality(String str) {
+        if (str == null) {
+            return null;
+        }
+        for (Function<String, Generality> item : generaliities) {
+            Generality inf = item.apply(str);
+            if (inf != null) {
+                return inf;
+            }
+        }
+        throw new IllegalArgumentException("unknown generality: '" + str + "'");
     }
 }

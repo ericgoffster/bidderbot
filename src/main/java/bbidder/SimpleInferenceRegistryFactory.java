@@ -20,18 +20,18 @@ public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistr
     @Override
     public InferenceRegistry get() {
         InferenceRegistry reg = new InferenceRegistry();
-        reg.add(Balanced::valueOf);
-        reg.add(VeryBalanced::valueOf);
-        reg.add(UnBalanced::valueOf);
-        reg.add(HCPRange::valueOf);
-        reg.add(OpeningPreempt::valueOf);
-        reg.add(LongestOrEqual::valueOf);
-        reg.add(SuitRange::valueOf);
-        reg.add(FitInSuit::valueOf);
-        reg.add(TotalPointsRange::valueOf);
-        reg.add(CombinedTotalPointsRange::valueOf);
-        reg.add(SpecificCards::valueOf);
-        reg.add(StoppersInSuits::valueOf);
+        reg.addInference(Balanced::valueOf);
+        reg.addInference(VeryBalanced::valueOf);
+        reg.addInference(UnBalanced::valueOf);
+        reg.addInference(HCPRange::valueOf);
+        reg.addInference(OpeningPreempt::valueOf);
+        reg.addInference(LongestOrEqual::valueOf);
+        reg.addInference(SuitRange::valueOf);
+        reg.addInference(FitInSuit::valueOf);
+        reg.addInference(TotalPointsRange::valueOf);
+        reg.addInference(CombinedTotalPointsRange::valueOf);
+        reg.addInference(SpecificCards::valueOf);
+        reg.addInference(StoppersInSuits::valueOf);
         return reg;
     }
 

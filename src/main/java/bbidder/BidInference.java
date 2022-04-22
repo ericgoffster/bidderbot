@@ -54,7 +54,7 @@ public class BidInference {
         }
         List<Inference> l = new ArrayList<>();
         for (String part : SplitUtil.split(str, ",")) {
-            l.add(registry.valueOf(part));
+            l.add(registry.parseInference(part));
         }
         return AndInference.create(l);
     }
@@ -84,7 +84,7 @@ public class BidInference {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        return new BidInference(null, BidPatternList.valueOf(parts[0]), parseInf(reg, parts[1]));
+        return new BidInference(null, BidPatternList.valueOf(reg, parts[0]), parseInf(reg, parts[1]));
     }
 
     /**

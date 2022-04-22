@@ -3,7 +3,12 @@ package bbidder;
 import java.io.IOException;
 
 public class BidPatternParser implements Parser<BidPattern> {
+    public final InferenceRegistry reg;
     
+    public BidPatternParser(InferenceRegistry reg) {
+        super();
+        this.reg = reg;
+    }
     private String parseSuit(Input inp) throws IOException {
         return inp.readToken(ch -> ch != ')');
     }
@@ -48,9 +53,17 @@ public class BidPatternParser implements Parser<BidPattern> {
     @Override
     public BidPattern parse(Input inp) throws IOException {
         inp.advanceWhite();
-        if (inp.ch == '*') {
+        if (inp.ch == '[') {
+            StringBuilder sb = new StringBuilder();
             inp.advance();
-            return BidPattern.createWild(null);
+            inp.advanceWhite();
+            while(inp.ch != ']') {
+                sb.append((char)inp.ch);
+            }
+            if (inp.ch == ']') {
+                inp.advance();
+            }
+            return BidPattern.createWild(reg.parseGenerality(sb.toString()));
         }
         if (inp.ch == '(') {
             inp.advance();
