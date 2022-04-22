@@ -134,7 +134,7 @@ public final class Range {
         Range other = (Range) obj;
         return bits == other.bits && max == other.max;
     }
-
+    
     @Override
     public String toString() {
         List<String> ranges = new ArrayList<>();

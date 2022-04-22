@@ -3,6 +3,8 @@ package bbidder.utils;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 /**
  * Fast bit utilities.
@@ -143,6 +145,10 @@ public final class BitUtil {
      */
     public static Iterable<Integer> iterate(int pattern) {
         return iterate(toLong(pattern));
+    }
+    
+    public static IntStream stream(int pattern) {
+        return StreamSupport.stream(iterate(pattern).spliterator(), false).mapToInt(i -> i.intValue());
     }
 
     /**
