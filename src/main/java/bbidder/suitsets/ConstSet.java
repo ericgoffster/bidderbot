@@ -1,9 +1,11 @@
 package bbidder.suitsets;
 
+import java.util.List;
 import java.util.Objects;
 
 import bbidder.Players;
 import bbidder.SuitSet;
+import bbidder.SuitSetContext;
 import bbidder.SymbolTable;
 
 public final class ConstSet implements SuitSet {
@@ -43,7 +45,7 @@ public final class ConstSet implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(SymbolTable symbols) {
-        return this;
+    public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
+        return List.of(new SuitSetContext(this, symbols));
     }
 }

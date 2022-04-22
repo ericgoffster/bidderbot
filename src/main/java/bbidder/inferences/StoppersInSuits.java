@@ -1,5 +1,6 @@
 package bbidder.inferences;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,8 +62,12 @@ public final class StoppersInSuits implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable insuits) {
-        return List.of(new InferenceContext(new StoppersInSuits(suits.replaceVars(insuits), partial), insuits));
+    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
+        List<InferenceContext> l = new ArrayList<>();
+        for (var e2 : suits.resolveSymbols(symbols)) {
+            l.add(new InferenceContext(new StoppersInSuits(e2.ss, partial), e2.symbols));
+        }
+        return l;
     }
 
     @Override

@@ -1,9 +1,12 @@
 package bbidder.suitsets;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import bbidder.Players;
 import bbidder.SuitSet;
+import bbidder.SuitSetContext;
 import bbidder.SymbolTable;
 
 public final class Not implements SuitSet {
@@ -42,7 +45,11 @@ public final class Not implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(SymbolTable symbols) {
-        return new Not(ss.replaceVars(symbols));
+    public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
+        List<SuitSetContext> l = new ArrayList<>();
+        for(var e: ss.resolveSymbols(symbols)) {
+            l.add(new SuitSetContext(new Not(e.ss), e.symbols));
+        }
+        return l;
     }
 }

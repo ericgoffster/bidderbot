@@ -11,7 +11,6 @@ import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSets;
 import bbidder.Symbol;
-import bbidder.SymbolTable;
 import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.VarSymbol;
 
@@ -39,15 +38,5 @@ public class LongestOrEqualTest {
         assertTrue(new LongestOrEqual(new ConstSymbol(2), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
         assertFalse(new LongestOrEqual(new ConstSymbol(1), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
         assertFalse(new LongestOrEqual(new ConstSymbol(0), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
-    }
-
-    @Test
-    public void testHigherRankingOfNotSpades() {
-        assertTrue(
-                new LongestOrEqual(new ConstSymbol(2), SuitSets.lookupSuitSet("~S").replaceVars(SymbolTable.EMPTY)).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 7654 3")));
-        assertTrue(
-                new LongestOrEqual(new ConstSymbol(1), SuitSets.lookupSuitSet("~S").replaceVars(SymbolTable.EMPTY)).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 7654 3")));
-        assertFalse(
-                new LongestOrEqual(new ConstSymbol(0), SuitSets.lookupSuitSet("~S").replaceVars(SymbolTable.EMPTY)).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 7654 3")));
     }
 }
