@@ -1,6 +1,5 @@
 package bbidder;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,11 +26,6 @@ public class BoundBidInference {
         return inferences.bind(players);
     }
     
-
-    public List<MappedInferenceList> resolveSuits() {
-        return inferences.resolveSuits(ctx);
-    }
-
     @Override
     public String toString() {
         return ctx + " => " + inferences;
