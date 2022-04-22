@@ -1,8 +1,7 @@
 package bbidder.inferences;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -13,7 +12,6 @@ import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.ShapeBoundInf;
-import bbidder.utils.ListUtil;
 
 /**
  * Represents the inference of a range of lengths of a suit.
@@ -49,8 +47,8 @@ public final class SuitRange extends Inference {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols).collect(Collectors.toList()), e -> new SuitRange(e.getSymbol(), rng).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        return symbol.resolveSymbols(symbols).map(e -> new SuitRange(e.getSymbol(), rng).new Context(e.symbols));
     }
 
     private static IBoundInference createBound(int s, Range r) {

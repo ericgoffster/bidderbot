@@ -1,7 +1,7 @@
 package bbidder.inferences;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -13,7 +13,6 @@ import bbidder.SymbolTable;
 import bbidder.inferences.bound.PartialStoppersBoundInf;
 import bbidder.inferences.bound.StoppersBoundInf;
 import bbidder.utils.BitUtil;
-import bbidder.utils.ListUtil;
 import bbidder.utils.SplitUtil;
 
 /**
@@ -61,8 +60,8 @@ public final class StoppersInSuits extends Inference {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(suits.resolveSymbols(symbols), e -> new StoppersInSuits(e.suitSet, partial).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        return suits.resolveSymbols(symbols).map(e -> new StoppersInSuits(e.suitSet, partial).new Context(e.symbols));
     }
 
     @Override

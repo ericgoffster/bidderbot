@@ -1,8 +1,8 @@
 package bbidder.inferences;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -40,8 +40,8 @@ public final class CombinedTotalPointsRange extends Inference {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable suits) {
-        return List.of(new Context(suits));
+    public Stream<Context> resolveSymbols(SymbolTable suits) {
+        return Stream.of(new Context(suits));
     }
 
     public static CombinedTotalPointsRange makeRange(String str) {

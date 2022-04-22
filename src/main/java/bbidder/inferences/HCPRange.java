@@ -1,7 +1,7 @@
 package bbidder.inferences;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -35,8 +35,8 @@ public final class HCPRange extends Inference {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        return List.of(new Context(symbols));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        return Stream.of(new Context(symbols));
     }
 
     public static Inference valueOf(String str) {

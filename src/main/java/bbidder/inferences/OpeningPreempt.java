@@ -1,8 +1,7 @@
 package bbidder.inferences;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -16,7 +15,6 @@ import bbidder.SymbolTable;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.HcpBoundInf;
 import bbidder.inferences.bound.ShapeBoundInf;
-import bbidder.utils.ListUtil;
 import bbidder.utils.SplitUtil;
 
 /**
@@ -43,8 +41,8 @@ public final class OpeningPreempt extends Inference {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols).collect(Collectors.toList()), e -> new OpeningPreempt(e.getSymbol(), level).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        return symbol.resolveSymbols(symbols).map(e -> new OpeningPreempt(e.getSymbol(), level).new Context(e.symbols));
     }
 
     public static OpeningPreempt valueOf(String str) {

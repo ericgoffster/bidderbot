@@ -1,9 +1,9 @@
 package bbidder;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 public interface SuitSet {
     public short evaluate(Players players);
 
-    public List<SuitSetContext> resolveSymbols(SymbolTable symbols);
+    public Stream<SuitSetContext> resolveSymbols(SymbolTable symbols);
 }

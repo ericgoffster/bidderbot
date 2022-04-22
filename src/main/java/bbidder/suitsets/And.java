@@ -1,13 +1,12 @@
 package bbidder.suitsets;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetContext;
 import bbidder.SymbolTable;
-import bbidder.utils.ListUtil;
 
 public final class And implements SuitSet {
     private final SuitSet s1;
@@ -47,9 +46,9 @@ public final class And implements SuitSet {
     }
 
     @Override
-    public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.flatMap(s1.resolveSymbols(symbols),
-                e1 -> ListUtil.map(s2.resolveSymbols(e1.symbols), e2 -> new SuitSetContext(new And(e1.suitSet, e2.suitSet), e2.symbols)));
+    public Stream<SuitSetContext> resolveSymbols(SymbolTable symbols) {
+        return s1.resolveSymbols(symbols)
+                .flatMap(e1 -> s2.resolveSymbols(e1.symbols).map(e2 -> new SuitSetContext(new And(e1.suitSet, e2.suitSet), e2.symbols)));
     }
 
 }

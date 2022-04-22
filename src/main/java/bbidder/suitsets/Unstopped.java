@@ -1,6 +1,6 @@
 package bbidder.suitsets;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
@@ -41,8 +41,8 @@ public final class Unstopped implements SuitSet {
     }
 
     @Override
-    public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return List.of(new SuitSetContext(this, symbols));
+    public Stream<SuitSetContext> resolveSymbols(SymbolTable symbols) {
+        return Stream.of(new SuitSetContext(this, symbols));
     }
 
     @Override

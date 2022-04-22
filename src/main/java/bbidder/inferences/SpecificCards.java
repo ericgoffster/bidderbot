@@ -1,10 +1,9 @@
 package bbidder.inferences;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -15,7 +14,6 @@ import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
-import bbidder.utils.ListUtil;
 
 /**
  * Represents the inference of a specific cards in a suit.
@@ -41,8 +39,8 @@ public final class SpecificCards extends Inference {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols).collect(Collectors.toList()), e -> new SpecificCards(e.getSymbol(), rng, top).new Context(e.symbols));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        return symbol.resolveSymbols(symbols).map(e -> new SpecificCards(e.getSymbol(), rng, top).new Context(e.symbols));
     }
 
     private static IBoundInference createBound(NOfTop spec) {

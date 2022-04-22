@@ -1,6 +1,6 @@
 package bbidder;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * A Bridge inference.
@@ -20,7 +20,7 @@ public abstract class Inference {
      * @return A list of inferences representing this inference bound to all possible
      *         symbols.
      */
-    public abstract List<Context> resolveSymbols(SymbolTable symbols);
+    public abstract Stream<Context> resolveSymbols(SymbolTable symbols);
 
     public final class Context {
         public final SymbolTable symbols;

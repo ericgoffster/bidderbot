@@ -2,13 +2,13 @@ package bbidder.inferences;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.AndBoundInf;
-import bbidder.utils.ListUtil;
 
 /**
  * Represents the inference of a "balanced" hand
@@ -31,9 +31,10 @@ public final class AndInference extends Inference {
     }
 
     @Override
-    public List<Context> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.flatMap(i1.resolveSymbols(symbols), e1 -> ListUtil.map(i2.resolveSymbols(e1.symbols),
-                e2 -> new AndInference(e1.getInference(), e2.getInference()).new Context(e2.symbols)));
+    public Stream<Context> resolveSymbols(SymbolTable symbols) {
+        return i1.resolveSymbols(symbols)
+                .flatMap(e1 -> i2.resolveSymbols(e1.symbols)
+                        .map(e2 -> new AndInference(e1.getInference(), e2.getInference()).new Context(e2.symbols)));
     }
 
     public static Inference create(Inference i1, Inference i2) {

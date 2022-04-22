@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -109,8 +108,8 @@ public final class BidPatternList {
      * 
      * @return The list of resolved bidding pattern contexts
      */
-    public List<Context> resolveSymbols(SymbolTable suits) {
-        return withOpposingBidding().addInitialPasses().stream().flatMap(bpl -> bpl.resolveSymbols(BidPatternList.EMPTY, suits)).collect(Collectors.toList());
+    public Stream<Context> resolveSymbols(SymbolTable suits) {
+        return withOpposingBidding().addInitialPasses().stream().flatMap(bpl -> bpl.resolveSymbols(BidPatternList.EMPTY, suits));
     }
 
     /**

@@ -1,15 +1,13 @@
 package bbidder.suitsets;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetContext;
 import bbidder.Symbol;
 import bbidder.SymbolTable;
-import bbidder.utils.ListUtil;
 
 public final class Gt implements SuitSet {
     private final Symbol symbol;
@@ -48,7 +46,7 @@ public final class Gt implements SuitSet {
     }
 
     @Override
-    public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols).collect(Collectors.toList()), e -> new SuitSetContext(new Gt(e.getSymbol()), symbols));
+    public Stream<SuitSetContext> resolveSymbols(SymbolTable symbols) {
+        return symbol.resolveSymbols(symbols).map(e -> new SuitSetContext(new Gt(e.getSymbol()), symbols));
     }
 }

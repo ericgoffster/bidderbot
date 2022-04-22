@@ -3,6 +3,7 @@ package bbidder;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -102,7 +103,7 @@ public class BidPatternListTest {
     public void test2() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         BidPatternList bpl = BidPatternList.valueOf(reg, "1C");
-        List<Context> l = bpl.resolveSymbols(SymbolTable.EMPTY);
+        List<Context> l = bpl.resolveSymbols(SymbolTable.EMPTY).collect(Collectors.toList());
         assertEquals(4, l.size());
     }
 }
