@@ -143,7 +143,7 @@ public final class BidPattern {
             return List.of(new BidPatternContext(this, symbols));
         }
         List<BidPatternContext> result = new ArrayList<>();
-        for (var e : getSymbol().resolveSymbol(symbols)) {
+        for (var e : getSymbol().resolveSymbols(symbols)) {
             result.add(new BidPatternContext(bindSuit(e.symbol), e.symbols));
         }
         return result;

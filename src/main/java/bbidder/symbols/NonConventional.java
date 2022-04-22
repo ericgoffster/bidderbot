@@ -40,9 +40,9 @@ public final class NonConventional implements Symbol {
     }
 
     @Override
-    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
+    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
         List<SymbolContext> l = new ArrayList<>();
-        for(var e: symbol.resolveSymbol(symbols)) {
+        for(var e: symbol.resolveSymbols(symbols)) {
             l.add(new SymbolContext(new NonConventional(e.symbol), e.symbols));
         }
         return l;

@@ -1,12 +1,12 @@
 package bbidder.inferences;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.Shape;
@@ -26,29 +26,25 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class OpeningPreempt implements Inference {
-    private final Symbol suit;
+    private final Symbol symbol;
     private final int level;
 
     public OpeningPreempt(Symbol suit, int level) {
         super();
-        this.suit = suit;
+        this.symbol = suit;
         this.level = level;
     }
 
     @Override
     public IBoundInference bind(Players players) {
-        int strain = suit.getResolved();
+        int strain = symbol.getResolved();
         return AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
                 ShapeBoundInf.create(ShapeSet.create(shape -> isPremptive(strain, level, shape))));
     }
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        List<InferenceContext> l = new ArrayList<>();
-        for (var e : suit.resolveSymbol(symbols)) {
-            l.add(new InferenceContext(new OpeningPreempt(e.symbol, level), e.symbols));
-        }
-        return l;
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new OpeningPreempt(e.symbol, level), e.symbols));
     }
 
     public static OpeningPreempt valueOf(String str) {
@@ -87,12 +83,12 @@ public final class OpeningPreempt implements Inference {
 
     @Override
     public String toString() {
-        return "opening_preempt " + level + " " + suit;
+        return "opening_preempt " + level + " " + symbol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(level, suit);
+        return Objects.hash(level, symbol);
     }
 
     @Override
@@ -104,6 +100,6 @@ public final class OpeningPreempt implements Inference {
         if (getClass() != obj.getClass())
             return false;
         OpeningPreempt other = (OpeningPreempt) obj;
-        return level == other.level && Objects.equals(suit, other.suit);
+        return level == other.level && Objects.equals(symbol, other.symbol);
     }
 }

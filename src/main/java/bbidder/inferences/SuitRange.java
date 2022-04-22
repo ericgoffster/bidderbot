@@ -1,12 +1,12 @@
 package bbidder.inferences;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
@@ -50,11 +50,7 @@ public final class SuitRange implements Inference {
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        List<InferenceContext> l = new ArrayList<>();
-        for (var e : symbol.resolveSymbol(symbols)) {
-            l.add(new InferenceContext(new SuitRange(e.symbol, rng), e.symbols));
-        }
-        return l;
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new SuitRange(e.symbol, rng), e.symbols));
     }
 
     private static IBoundInference createBound(int s, Range r) {

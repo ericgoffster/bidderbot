@@ -42,7 +42,7 @@ public final class OtherMajorSymbol implements Symbol {
     }
 
     @Override
-    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
+    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
         if (symbols.containsKey("OM")) {
             return List.of(new SymbolContext(new ConstSymbol(symbols.get("OM")), symbols));
         }

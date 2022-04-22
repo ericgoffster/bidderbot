@@ -56,8 +56,8 @@ public final class DownSymbol implements Symbol {
     }
     
     @Override
-    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
-        List<SymbolContext> l = new ArrayList<>(symbol.resolveSymbol(symbols));
+    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
+        List<SymbolContext> l = new ArrayList<>(symbol.resolveSymbols(symbols));
         Collections.reverse(l);
         return l;
     }

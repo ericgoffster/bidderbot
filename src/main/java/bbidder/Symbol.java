@@ -20,5 +20,5 @@ public interface Symbol {
      */
     boolean nonConvential();
     
-    List<SymbolContext> resolveSymbol(SymbolTable symbols);
+    List<SymbolContext> resolveSymbols(SymbolTable symbols);
 }

@@ -1,6 +1,5 @@
 package bbidder.inferences;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -10,6 +9,7 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
@@ -26,28 +26,24 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class FitInSuit implements Inference {
-    public final Symbol suit;
+    public final Symbol symbol;
 
     public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
     public FitInSuit(Symbol suit) {
         super();
-        this.suit = suit;
+        this.symbol = suit;
     }
 
     @Override
     public IBoundInference bind(Players players) {
-        int strain = suit.getResolved();
+        int strain = symbol.getResolved();
         return createrBound(strain, players.partner.infSummary);
     }
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        List<InferenceContext> l = new ArrayList<>();
-        for (var e : suit.resolveSymbol(symbols)) {
-            l.add(new InferenceContext(new FitInSuit(e.symbol), e.symbols));
-        }
-        return l;
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new FitInSuit(e.symbol), e.symbols));
     }
 
     private IBoundInference createrBound(int s, InfSummary partnerSummary) {
@@ -76,12 +72,12 @@ public final class FitInSuit implements Inference {
 
     @Override
     public String toString() {
-        return "fit " + suit;
+        return "fit " + symbol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(suit);
+        return Objects.hash(symbol);
     }
 
     @Override
@@ -93,6 +89,6 @@ public final class FitInSuit implements Inference {
         if (getClass() != obj.getClass())
             return false;
         FitInSuit other = (FitInSuit) obj;
-        return Objects.equals(suit, other.suit);
+        return Objects.equals(symbol, other.symbol);
     }
 }

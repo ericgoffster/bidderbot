@@ -42,9 +42,9 @@ public final class SteppedSymbol implements Symbol {
     }
     
     @Override
-    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
+    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
         List<SymbolContext> l = new ArrayList<>();
-        for(var e: symbol.resolveSymbol(symbols)) {
+        for(var e: symbol.resolveSymbols(symbols)) {
             l.add(new SymbolContext(new SteppedSymbol(e.symbol, delta), e.symbols));
         }
         return l;

@@ -47,7 +47,7 @@ public final class VarSymbol implements Symbol {
     }
 
     @Override
-    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
+    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
         if (symbols.containsKey(varName)) {
             return List.of(new SymbolContext(new ConstSymbol(symbols.get(varName)), symbols));
         }

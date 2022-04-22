@@ -1,6 +1,5 @@
 package bbidder.inferences;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -9,6 +8,7 @@ import java.util.regex.Pattern;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.InferenceContext;
+import bbidder.ListUtil;
 import bbidder.NOfTop;
 import bbidder.Players;
 import bbidder.Range;
@@ -42,11 +42,7 @@ public final class SpecificCards implements Inference {
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        List<InferenceContext> l = new ArrayList<>();
-        for (var e : symbol.resolveSymbol(symbols)) {
-            l.add(new InferenceContext(new SpecificCards(e.symbol, rng, top), e.symbols));
-        }
-        return l;
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new SpecificCards(e.symbol, rng, top), e.symbols));
     }
 
     private static IBoundInference createBound(NOfTop spec) {

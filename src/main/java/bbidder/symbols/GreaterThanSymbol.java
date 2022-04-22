@@ -44,10 +44,10 @@ public final class GreaterThanSymbol implements Symbol {
     }
 
     @Override
-    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
+    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
         List<SymbolContext> l = new ArrayList<>();
-        for(var e1: symbol.resolveSymbol(symbols)) {
-            for(var e2: other.resolveSymbol(e1.symbols)) {
+        for(var e1: symbol.resolveSymbols(symbols)) {
+            for(var e2: other.resolveSymbols(e1.symbols)) {
                 l.add(new SymbolContext(new GreaterThanSymbol(e1.symbol, level, e2.symbol), e2.symbols));
             }
         }

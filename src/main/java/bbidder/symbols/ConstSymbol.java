@@ -18,7 +18,7 @@ public final class ConstSymbol implements Symbol {
     }
     
     @Override
-    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
+    public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
         return List.of(new SymbolContext(this, symbols));
     }
 

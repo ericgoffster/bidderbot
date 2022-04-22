@@ -1,9 +1,9 @@
 package bbidder.suitsets;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetContext;
@@ -47,10 +47,6 @@ public final class LookupSet implements SuitSet {
 
     @Override
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        List<SuitSetContext> l = new ArrayList<>();
-        for(var e: symbol.resolveSymbol(symbols)) {
-            l.add(new SuitSetContext(new LookupSet(e.symbol), e.symbols));
-        }
-        return l;
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SuitSetContext(new LookupSet(e.symbol), e.symbols));
     }
 }

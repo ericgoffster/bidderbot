@@ -26,8 +26,8 @@ public final class TwoSuitedGenerality implements Generality {
     @Override
     public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
         List<GeneralityContext> result = new ArrayList<>();
-        for (var e1 : longer.resolveSymbol(symbols)) {
-            for (var e2 : shorter.resolveSymbol(e1.symbols)) {
+        for (var e1 : longer.resolveSymbols(symbols)) {
+            for (var e2 : shorter.resolveSymbols(e1.symbols)) {
                 result.add(new GeneralityContext(new TwoSuitedGenerality(e1.symbol, e2.symbol), e2.symbols));
             }
         }
