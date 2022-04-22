@@ -65,6 +65,7 @@ public class BiddingSystemParser {
             List<BiddingTest> tests, InferenceRegistry reg) {
         int lineno = 0;
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+            StringBuilder sb = new StringBuilder();
             for (;;) {
                 String ln = rd.readLine();
                 if (ln == null) {
@@ -92,10 +93,14 @@ public class BiddingSystemParser {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }
                 } else if (!ln.equals("")) {
-                    try {
-                        inferences.addAll(BidInference.valueOf(where + ":" + lineno, reg, ln).resolveSymbols());
-                    } catch (Exception e) {
-                        reportErrors.accept(new ParseException(where + ":" + lineno, e));
+                    sb.append(" " + ln);
+                    if (ln.contains("=>")) {
+                        try {
+                            inferences.addAll(BidInference.valueOf(where + ":" + lineno, reg, sb.toString().trim()).resolveSymbols());
+                        } catch (Exception e) {
+                            reportErrors.accept(new ParseException(where + ":" + lineno, e));
+                        }
+                        sb.setLength(0);
                     }
                 }
             }
