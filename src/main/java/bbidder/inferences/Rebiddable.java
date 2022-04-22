@@ -46,6 +46,9 @@ public class Rebiddable implements Inference {
         if (meSummary.getSuit(s).lowest() + partnerSummary.getSuit(s).lowest() >= 8) {
             return ConstBoundInference.F;
         }
+        if (meSummary.avgLenInSuit(s) < 4) {
+            return ConstBoundInference.F;
+        }
         int n = meSummary.getSuit(s).lowest();
         Range r;
         if (n <= 0) {

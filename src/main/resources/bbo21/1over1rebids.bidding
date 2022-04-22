@@ -32,6 +32,9 @@ test x Qxx AKQxxxx Qx:1♦ 1♠ 3N
 1x 1y 3x => 6+x, 17-20 tpts
 test AKx Kxx x AKxxxx:1♣ 1♦ 3♣
 
+1x 1y 2x => 6+x, 16- tpts
+test AKx Kxx x AKxxxx:1♣ 1♦ 3♣
+
 1x 1y 1N => 12-14 tpts
 test Qxx Axx Ax Axxxx:1♣ 1♦ 1N
 test Qx Axxx Ax Axxxx:1♣ 1♠ 1N

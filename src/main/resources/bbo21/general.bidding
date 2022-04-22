@@ -25,3 +25,6 @@ test AQxx Axxx xx AQx: 1C 1H 3H
 
 [] 2M => min, fit M
 test Axxx Axxx xx Axx: 1C 1H 2H
+
+[] NJ2x => min, rebiddable x
+test xx AQxxxx xx xxx: 1C 1H 1N 2H
