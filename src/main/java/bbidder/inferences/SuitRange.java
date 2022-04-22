@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
-import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -51,7 +50,7 @@ public class SuitRange implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new SuitRange(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), rng)));
+            l.add(e.getValue().withInferenceAdded(new SuitRange(Strain.getName(e.getKey()), rng)));
         }
         return l;
     }

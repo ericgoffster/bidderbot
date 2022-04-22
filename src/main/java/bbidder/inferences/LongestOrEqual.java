@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
-import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -42,7 +41,7 @@ public class LongestOrEqual implements Inference {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
             l.add(e.getValue()
-                    .withInferenceAdded(new LongestOrEqual(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), among.replaceVars(context))));
+                    .withInferenceAdded(new LongestOrEqual(Strain.getName(e.getKey()), among.replaceVars(context))));
         }
         return l;
     }

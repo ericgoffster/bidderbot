@@ -71,7 +71,7 @@ public enum Bid {
         if (this == XX) {
             return STR_XX;
         }
-        return String.valueOf(level + 1) + STR_ALL_SUITS.charAt(strain);
+        return String.valueOf(level + 1) + Strain.getName(strain);
     }
 
     /**

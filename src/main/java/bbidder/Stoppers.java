@@ -40,7 +40,7 @@ public class Stoppers {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i : BitUtil.iterate(patt)) {
-            sb.append(Constants.STR_ALL_SUITS.charAt(i));
+            sb.append(Strain.getName(i));
         }
         return sb.toString();
     }

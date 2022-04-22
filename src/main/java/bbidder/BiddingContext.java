@@ -60,6 +60,15 @@ public final class BiddingContext {
     }
 
     /**
+     * @param patt
+     *            The bid pattern to add.
+     * @return A new BiddingContext with the given bid added to the bid list.
+     */
+    public BiddingContext withLastBidReplaced(BidPattern patt) {
+        return new BiddingContext(bidInference.withLastBidReplaced(patt), suits);
+    }
+
+    /**
      * @param i
      *            An inference
      * @return A new BiddingContext with the given inference added to the inference list.

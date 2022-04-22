@@ -33,7 +33,7 @@ public class NOfTop {
 
     @Override
     public String toString() {
-        return r + " of top " + top + " in " + Constants.STR_ALL_SUITS.charAt(suit);
+        return r + " of top " + top + " in " + Strain.getName(suit);
     }
 
     public boolean isEmpty() {

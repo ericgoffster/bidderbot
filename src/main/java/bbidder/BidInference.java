@@ -40,6 +40,10 @@ public class BidInference {
     public BidInference withBidAdded(BidPattern patt) {
         return new BidInference(where, bids.withBidAdded(patt), inferences);
     }
+    
+    public BidInference withLastBidReplaced(BidPattern patt) {
+        return new BidInference(where, bids.withLastBidReplaced(patt), inferences);
+    }
 
     /**
      * 

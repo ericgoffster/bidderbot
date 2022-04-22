@@ -102,7 +102,7 @@ public class SuitSets {
 
         @Override
         public SuitSet replaceVars(BiddingContext bc) {
-            return new Gt(String.valueOf(Constants.STR_ALL_SUITS.charAt(bc.getSuit(strain))));
+            return new Gt(Strain.getName(bc.getSuit(strain)));
         }
     }
 
@@ -227,7 +227,7 @@ public class SuitSets {
 
         @Override
         public SuitSet replaceVars(BiddingContext bc) {
-            return new LookupSet(String.valueOf(Constants.STR_ALL_SUITS.charAt(bc.getSuit(strain))));
+            return new LookupSet(Strain.getName(bc.getSuit(strain)));
         }
     }
 

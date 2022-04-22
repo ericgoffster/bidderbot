@@ -23,7 +23,11 @@ public class BidPatternList {
         super();
         this.bids = bids;
     }
-
+    
+    public BidPattern getLastBid() {
+        return bids.get(bids.size() - 1);
+    }
+    
     public List<BidPattern> getBids() {
         return Collections.unmodifiableList(bids);
     }
@@ -31,6 +35,12 @@ public class BidPatternList {
     public BidPatternList withBidAdded(BidPattern patt) {
         List<BidPattern> nbids = new ArrayList<>(bids);
         nbids.add(patt);
+        return new BidPatternList(nbids);
+    }
+
+    public BidPatternList withLastBidReplaced(BidPattern patt) {
+        List<BidPattern> nbids = new ArrayList<>(bids);
+        nbids.set(nbids.size() - 1, patt);
         return new BidPatternList(nbids);
     }
 

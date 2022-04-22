@@ -54,6 +54,10 @@ public class BidPattern {
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, wild, generality);
     }
+    
+    public BidPattern withGenerality(Generality generality) {
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, wild, generality);
+    }
 
     /**
      * @return The number of jumps. Null if N/A
@@ -160,7 +164,7 @@ public class BidPattern {
      */
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
-            return new BidPattern(false, String.valueOf(Constants.STR_ALL_SUITS.charAt(simpleBid.strain)), simpleBid.level, simpleBid, null, false,
+            return new BidPattern(false, Strain.getName(simpleBid.strain), simpleBid.level, simpleBid, null, false,
                     false, false, null);
         }
         return new BidPattern(false, null, null, simpleBid, null, false, false, false, null);
@@ -188,7 +192,7 @@ public class BidPattern {
         if (level != null) {
             return createSimpleBid(Bid.valueOf(level, strain));
         }
-        return new BidPattern(isOpposition, String.valueOf(Constants.STR_ALL_SUITS.charAt(strain)), level, simpleBid, jumpLevel, reverse, nonreverse,
+        return new BidPattern(isOpposition, Strain.getName(strain), level, simpleBid, jumpLevel, reverse, nonreverse,
                 wild, generality);
     }
 
@@ -197,7 +201,13 @@ public class BidPattern {
      * @return A list of contexts representing the symbol bound to actual values
      */
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
-        if (simpleBid != null || wild) {
+        if (wild) {
+            if (generality != null) {
+                return generality.resolveSymbols(bc.withBidAdded(createWild(null)));
+            }
+            return List.of(bc.withBidAdded(this));
+        }
+        if (simpleBid != null) {
             return List.of(bc.withBidAdded(this));
         }
         List<BiddingContext> result = new ArrayList<>();

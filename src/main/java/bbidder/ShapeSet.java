@@ -95,7 +95,7 @@ public class ShapeSet implements Iterable<Shape> {
                 return "{}";
             }
             if (!rn.unBounded()) {
-                str.add(rn + " " + Constants.STR_ALL_SUITS.charAt(s));
+                str.add(rn + " " + Strain.getName(s));
             }
         }
         if (str.size() == 0) {

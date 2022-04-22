@@ -93,10 +93,10 @@ public class StopperSet implements Iterable<Stoppers> {
         List<String> strStoppers = new ArrayList<>();
         for (int s = 0; s < 4; s++) {
             if (haveStopper[s]) {
-                strStoppers.add("" + Constants.STR_ALL_SUITS.charAt(s));
+                strStoppers.add(Strain.getName(s));
             }
             if (haveNoStopper[s]) {
-                strNoStoppers.add("" + Constants.STR_ALL_SUITS.charAt(s));
+                strNoStoppers.add(Strain.getName(s));
             }
         }
         if (strStoppers.size() == 0 && strNoStoppers.size() == 0) {

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
-import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -45,7 +44,7 @@ public class OpeningPreempt implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new OpeningPreempt(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), level)));
+            l.add(e.getValue().withInferenceAdded(new OpeningPreempt(Strain.getName(e.getKey()), level)));
         }
         return l;
     }

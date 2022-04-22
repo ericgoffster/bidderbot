@@ -43,6 +43,13 @@ public class Strain {
             return null;
         }
     }
+    
+    public static String getName(Integer strain) {
+        if (strain == null) {
+            return null;
+        }
+        return String.valueOf(Constants.STR_ALL_SUITS.charAt(strain));
+    }
 
     public static Integer getSuit(String s) {
         Integer strain = Strain.getStrain(s);
