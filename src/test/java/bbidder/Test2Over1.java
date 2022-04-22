@@ -8,8 +8,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.BiddingSystem.Possibility;
-
 public class Test2Over1 {
     public static BiddingSystem bs;
 
@@ -33,7 +31,7 @@ public class Test2Over1 {
                 e.printStackTrace();
                 continue;
             }
-            if (!result.found.possibility.bid.equals(result.expected)) {
+            if (!result.found.possibleBid.bid.equals(result.expected)) {
                 hadError.set(true);
                 InfSummary partnerSummary = result.state.players.partner.infSummary;
                 System.err
@@ -41,21 +39,21 @@ public class Test2Over1 {
                 System.err.println("My summary " + result.state.players.me.infSummary);
                 System.err.println("Partner summary " + partnerSummary);
                 System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
-                if (result.found.possibility.inf != null) {
-                    System.err.println("But " + result.found.possibility.inf.where + " dictates I should bid " + result.found.possibility.bid);
+                if (result.found.possibleBid.inf != null) {
+                    System.err.println("But " + result.found.possibleBid.inf.where + " dictates I should bid " + result.found.possibleBid.bid);
                 } else {
-                    System.err.println("But no systemic bid matched so " + result.found.possibility.bid + " was chosen");
+                    System.err.println("But no systemic bid matched so " + result.found.possibleBid.bid + " was chosen");
                 }
                 System.err.println();
                 System.err.println("All bids matching the scenario in order of priority:");
-                for (Possibility b : result.found.getPossible()) {
-                    if (b == result.found.possibility) {
+                for (PossibleBid b : result.found.getPossible()) {
+                    if (b == result.found.possibleBid) {
                         System.err.println("   * " + b);
                     } else {
                         System.err.println("   " + b);
                     }
                     IBoundInference bi = b.inf.inferences.bind(result.state.players);
-                    if (b == result.found.possibility) {
+                    if (b == result.found.possibleBid) {
                         System.err.println("       * " + bi) ;
 
                     } else {

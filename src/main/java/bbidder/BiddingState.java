@@ -2,7 +2,6 @@ package bbidder;
 
 import java.util.List;
 
-import bbidder.BiddingSystem.BidSource;
 import bbidder.inferences.bound.AndBoundInf;
 
 /**

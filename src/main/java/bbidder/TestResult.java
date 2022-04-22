@@ -1,7 +1,5 @@
 package bbidder;
 
-import bbidder.BiddingSystem.BidSource;
-
 public class TestResult {
     public final String where;
     public final Hand hand;

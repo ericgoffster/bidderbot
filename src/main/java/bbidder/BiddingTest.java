@@ -2,8 +2,6 @@ package bbidder;
 
 import java.util.Random;
 
-import bbidder.BiddingSystem.BidSource;
-
 /**
  * Represents the test of a bid.
  * 

@@ -70,27 +70,16 @@ public class BiddingSystem {
         }
     }
     
-    public static class Possibility {
-        final BidInference inf;
-        final Bid bid;
-        public Possibility(BidInference inf, Bid bid) {
-            super();
-            this.inf = inf;
-            this.bid = bid;
-        }
-        
-        @Override
-        public String toString() {
-            return bid +" : "+inf;
-        }
-    }
-
-    public List<Possibility> getPossible(BidList bids) {
-        List<Possibility> l = new ArrayList<>();
+    /**
+     * @param bids The list of bids
+     * @return A list of all possible bids given the list of bids.
+     */
+    public List<PossibleBid> getPossibleBids(BidList bids) {
+        List<PossibleBid> l = new ArrayList<>();
         for (BidInference i : inferences) {
             Bid match = i.bids.getMatch(bids);
             if (match != null) {
-                l.add(new Possibility(i, match));
+                l.add(new PossibleBid(i, match));
             }
         }
         return l;
@@ -108,8 +97,8 @@ public class BiddingSystem {
      * @return The right bid
      */
     public BidSource getBid(BidList bids, Players players, Hand hand) {
-        List<Possibility> possible = getPossible(bids);
-        for (Possibility i : possible) {
+        List<PossibleBid> possible = getPossibleBids(bids);
+        for (PossibleBid i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (inf.matches(hand)) {
                 return new BidSource(i, possible);
@@ -117,7 +106,7 @@ public class BiddingSystem {
         }
 
         // For now always pass, this will get smarter.
-        return new BidSource(new Possibility(null, Bid.P), possible);
+        return new BidSource(new PossibleBid(null, Bid.P), possible);
     }
 
     /**
@@ -136,8 +125,8 @@ public class BiddingSystem {
         Bid lastBid = bids.getLastBid();
         List<IBoundInference> positive = new ArrayList<>();
         List<IBoundInference> negative = new ArrayList<>();
-        List<Possibility> possible = getPossible(bids.exceptLast());
-        for (Possibility i : possible) {
+        List<PossibleBid> possible = getPossibleBids(bids.exceptLast());
+        for (PossibleBid i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
                 positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
@@ -232,25 +221,5 @@ public class BiddingSystem {
             }
         }
         return urlSpec;
-    }
-
-    public static class BidSource {
-        private final List<Possibility> possible;
-        public final Possibility possibility;
-        
-        public List<Possibility> getPossible() {
-            return Collections.unmodifiableList(possible);
-        }
-
-        private BidSource(Possibility possibility, List<Possibility> possible) {
-            super();
-            this.possible = possible;
-            this.possibility = possibility;
-        }
-
-        @Override
-        public String toString() {
-            return possibility.toString();
-        }
     }
 }
