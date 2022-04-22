@@ -50,7 +50,7 @@ public class BidPatternParser implements Parser<BidPattern> {
         inp.advanceWhite();
         if (inp.ch == '*') {
             inp.advance();
-            return BidPattern.WILD;
+            return BidPattern.createWild(null);
         }
         if (inp.ch == '(') {
             inp.advance();
