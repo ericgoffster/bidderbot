@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 public class BidPatternListTest {
     @Test
     public void testValueOf() {
-        assertEquals(List.of(BidPattern.valueOf("1S")), BidPatternList.valueOf("1S").getBids());
-        assertEquals(List.of(BidPattern.valueOf("1S"), BidPattern.valueOf("1N")), BidPatternList.valueOf("1S 1N").getBids());
-        assertEquals(List.of(BidPattern.valueOf("1S"), BidPattern.valueOf("(X)"), BidPattern.valueOf("1N")),
+        assertEquals(List.of(BidPattern.createSimpleBid(Bid._1S)), BidPatternList.valueOf("1S").getBids());
+        assertEquals(List.of(BidPattern.createSimpleBid(Bid._1S), BidPattern.createSimpleBid(Bid._1N)), BidPatternList.valueOf("1S 1N").getBids());
+        assertEquals(List.of(BidPattern.createSimpleBid(Bid._1S), BidPattern.createSimpleBid(Bid.X).withIsOpposition(true), BidPattern.createSimpleBid(Bid._1N)),
                 BidPatternList.valueOf("1S (X) 1N").getBids());
     }
 

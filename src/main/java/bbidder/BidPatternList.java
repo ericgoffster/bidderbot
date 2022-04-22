@@ -1,5 +1,7 @@
 package bbidder;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -57,11 +59,17 @@ public class BidPatternList {
         if (str == null) {
             return null;
         }
-        List<BidPattern> l = new ArrayList<>();
-        for (String part : SplitUtil.split(str, "\\s+")) {
-            l.add(BidPattern.valueOf(part));
+        ListParser<BidPattern> parser = new ListParser<BidPattern>(new BidPatternParser(), "");
+        try(Input inp = new Input(new StringReader(str))) {
+            List<BidPattern> l = parser.parse(inp);
+            inp.advanceWhite();
+            if (inp.ch != -1) {
+                throw new IllegalArgumentException("invalid bids: '"+str+"'");
+            }
+            return new BidPatternList(l);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("invalid bids: '"+str+"'", e);
         }
-        return new BidPatternList(l);
     }
 
     @Override

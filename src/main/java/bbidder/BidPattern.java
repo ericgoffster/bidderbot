@@ -16,11 +16,11 @@ import java.util.Objects;
  *
  */
 public class BidPattern {
-    private static final String STR_DOUBLEJUMP = "DJ";
-    private static final String STR_JUMP = "J";
-    private static final String STR_NONJUMP = "NJ";
-    private static final String STR_NONREVERSE = "NR";
-    private static final String STR_REVERSE = "RV";
+    static final String STR_DOUBLEJUMP = "DJ";
+    static final String STR_JUMP = "J";
+    static final String STR_NONJUMP = "NJ";
+    static final String STR_NONREVERSE = "NR";
+    static final String STR_REVERSE = "RV";
     public static final BidPattern PASS = createSimpleBid(Bid.P);
     public static final BidPattern WILD = new BidPattern(false, null, null, null, null, false, false, true);
     public final boolean isOpposition;
@@ -73,26 +73,6 @@ public class BidPattern {
      */
     public Integer getLevel() {
         return level;
-    }
-
-    /**
-     * @param str
-     *            The string to parse
-     * @return A BidPattern parsed from a string
-     */
-    public static BidPattern valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (str.equals("*")) {
-            return WILD;
-        }
-        if (str.startsWith("(") && str.endsWith(")")) {
-            return BidPattern.create(str.substring(1, str.length() - 1).trim()).withIsOpposition(true);
-        } else {
-            return BidPattern.create(str);
-        }
     }
 
     @Override
@@ -258,34 +238,5 @@ public class BidPattern {
             return bidList.getBid(getJumpLevel(), strain);
         }
         return Bid.valueOf(getLevel(), strain);
-    }
-
-    private static BidPattern create(String str) {
-        String upper = str.toUpperCase();
-        if (upper.startsWith(STR_NONJUMP)) {
-            return createJump(str.substring(2), 0);
-        } else if (upper.startsWith(STR_DOUBLEJUMP)) {
-            return createJump(str.substring(2), 2);
-        } else if (upper.startsWith(STR_JUMP)) {
-            return createJump(str.substring(1), 1);
-        } else if (upper.startsWith(STR_REVERSE)) {
-            return createReverse(str.substring(2));
-        } else if (upper.startsWith(STR_NONREVERSE)) {
-            return createNonReverse(str.substring(2));
-        } else {
-            Bid simpleBid = Bid.fromStr(str);
-            if (simpleBid != null) {
-                return createSimpleBid(simpleBid);
-            } else {
-                final int level = Integer.parseInt(upper.substring(0, 1)) - 1;
-                if (level < 0 || level > 6) {
-                    throw new IllegalArgumentException("Invalid bid: '" + str + "'");
-                }
-                if (!BiddingContext.isValidSuit(str.substring(1))) {
-                    throw new IllegalArgumentException("Invalid bid: " + str);
-                }
-                return createBid(level, str.substring(1));
-            }
-        }
     }
 }

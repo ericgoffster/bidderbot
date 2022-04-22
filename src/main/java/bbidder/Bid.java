@@ -101,6 +101,9 @@ public enum Bid {
         if (str.equalsIgnoreCase(STR_XX)) {
             return XX;
         }
+        if (str.length() < 2) {
+            throw new IllegalArgumentException("Invalid bid: '"+str+"'");
+        }
         Integer strain = Strain.getStrain(str.substring(1));
         if (strain == null) {
             return null;
