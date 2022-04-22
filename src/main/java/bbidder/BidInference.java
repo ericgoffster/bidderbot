@@ -70,11 +70,13 @@ public class BidInference {
     }
 
     /**
+     * @param context 
+     *     The bidding context
      * @return A list of bid inferences with all suit variables resolved.
      */
-    public List<BidInference> resolveSymbols() {
+    public List<BidInference> resolveSymbols(BiddingContext context) {
         List<BidInference> result = new ArrayList<>();
-        for (BiddingContext bc2 : bids.resolveSymbols()) {
+        for (BiddingContext bc2 : bids.resolveSymbols(context)) {
             for (BiddingContext bc : inferences.resolveSymbols(bc2)) {
                 result.add(bc.getInference());
             }

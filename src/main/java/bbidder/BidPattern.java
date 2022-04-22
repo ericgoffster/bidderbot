@@ -87,6 +87,9 @@ public class BidPattern {
 
     @Override
     public String toString() {
+        if (generality != null) {
+            return "[" + generality + "]";
+        }
         String s = _getString();
         if (isOpposition) {
             return "(" + s + ")";

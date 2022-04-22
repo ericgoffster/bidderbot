@@ -1,0 +1,12 @@
+# General bids
+
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
+[fit_established M] 4M P => gf
+test AQxxx Axx Axx xx: 1S 2N 4S P
+
+[fit_established M] 4M => gf
+test AQxxx Axxx Ax xx: 1S 3S 4S

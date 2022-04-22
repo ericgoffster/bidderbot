@@ -24,7 +24,7 @@ public class FitEstablished implements Generality {
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         List<BiddingContext> result = new ArrayList<>();
         for (Entry<Integer, BiddingContext> e : bc.resolveSymbols(symbol).entrySet()) {
-            result.add(bc.withGeneralityAdded(new FitEstablished(Strain.getName(e.getKey()))));
+            result.add(e.getValue().withGeneralityAdded(new FitEstablished(Strain.getName(e.getKey()))));
          }
         return result;
     }
