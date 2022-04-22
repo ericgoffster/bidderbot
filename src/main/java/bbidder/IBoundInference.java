@@ -1,5 +1,7 @@
 package bbidder;
 
+import java.util.function.Predicate;
+
 /**
  * Represents a an inference bound to a bidding sequence
  * and in context to likely hands from all players.
@@ -7,19 +9,26 @@ package bbidder;
  * @author goffster
  *
  */
-public interface IBoundInference {
+public interface IBoundInference extends Predicate<Hand> {
     /**
-     * @param hand
-     *            The hand
-     * @return True if it matches the hand
+     * @return A summary of the inference
      */
-    public boolean matches(Hand hand);
+    InfSummary getSummary();
 
-    public InfSummary getSummary();
-
+    /**
+     * @return A negation of the inference
+     */
     IBoundInference negate();
 
+    /**
+     * @param other The other inference
+     * @return An inference representing this & other.  Null if not possible.
+     */
     IBoundInference andWith(IBoundInference other);
 
+    /**
+     * @param other The other inference
+     * @return An inference representing this | other.  Null if not possible.
+     */
     IBoundInference orWith(IBoundInference other);
 }

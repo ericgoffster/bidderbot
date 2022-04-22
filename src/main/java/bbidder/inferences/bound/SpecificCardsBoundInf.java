@@ -48,7 +48,7 @@ public final class SpecificCardsBoundInf implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Hand hand) {
+    public boolean test(Hand hand) {
         return have ? hand.haveCards(spec) : !hand.haveCards(spec);
     }
 

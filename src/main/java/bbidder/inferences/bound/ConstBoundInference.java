@@ -43,7 +43,7 @@ public final class ConstBoundInference implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Hand hand) {
+    public boolean test(Hand hand) {
         return result;
     }
 

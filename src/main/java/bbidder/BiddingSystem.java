@@ -96,7 +96,7 @@ public final class BiddingSystem {
         List<PossibleBid> possible = getPossibleBids(bids, players);
         for (PossibleBid i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
-            if (inf.matches(hand)) {
+            if (inf.test(hand)) {
                 return new BidSource(i, possible);
             }
         }

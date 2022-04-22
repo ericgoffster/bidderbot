@@ -27,9 +27,9 @@ public class AndBoundInfTest {
         IBoundInference i3 = AndBoundInf.create(i1, i2);
         assertEquals(i3.getSummary(),
                 new InfSummary(ShapeSet.create(List.of(Shape._04030303)), Range.between(10, 11, 40), StopperSet.ALL, StopperSet.ALL));
-        assertFalse(i3.matches(Hand.valueOf("AKQ xxx xxx xxxx")));
-        assertTrue(i3.matches(Hand.valueOf("AKQ Jxx xxx xxxx")));
-        assertFalse(i3.matches(Hand.valueOf("AKQ Jxx xxxx xxx")));
+        assertFalse(i3.test(Hand.valueOf("AKQ xxx xxx xxxx")));
+        assertTrue(i3.test(Hand.valueOf("AKQ Jxx xxx xxxx")));
+        assertFalse(i3.test(Hand.valueOf("AKQ Jxx xxxx xxx")));
     }
 
     @Test

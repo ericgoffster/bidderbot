@@ -52,9 +52,9 @@ public final class OrBoundInf implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Hand hand) {
+    public boolean test(Hand hand) {
         for (IBoundInference i : inferences) {
-            if (i.matches(hand)) {
+            if (i.test(hand)) {
                 return true;
             }
         }

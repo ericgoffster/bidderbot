@@ -48,7 +48,7 @@ public final class BiddingSystemParser {
      */
     private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, List<BidInference> inferences,
             List<BiddingTest> tests, InferenceRegistry reg) {
-        try (InputStream is = new URL(null, urlSpec, new Handler(BiddingSystem.class.getClassLoader())).openStream()) {
+        try (InputStream is = new URL(null, urlSpec, new ClassPathUrlHandler(BiddingSystem.class.getClassLoader())).openStream()) {
             load(urlSpec, is, reportErrors, inferences, tests, reg);
         } catch (MalformedURLException e) {
             reportErrors.accept(new ParseException(where, e));

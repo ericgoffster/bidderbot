@@ -28,7 +28,7 @@ public final class HandGenerator {
                 cards[i] = t;
                 h = h.withCardAdded(t % 4, t / 4);
             }
-            if (summary.shape.contains(h.getShape()) && summary.tpts.contains(h.getTotalPoints(partner)) && inf.matches(h)) {
+            if (summary.shape.contains(h.getShape()) && summary.tpts.contains(h.getTotalPoints(partner)) && inf.test(h)) {
                 result.add(h);
             }
             num++;

@@ -6,15 +6,20 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
-public final class Handler extends URLStreamHandler {
+/**
+ * Allows loading of resources from the ClassLoader.
+ * @author goffster
+ *
+ */
+public final class ClassPathUrlHandler extends URLStreamHandler {
     /** The classloader to find resources from. */
     private final ClassLoader classLoader;
 
-    public Handler() {
+    public ClassPathUrlHandler() {
         this.classLoader = getClass().getClassLoader();
     }
 
-    public Handler(ClassLoader classLoader) {
+    public ClassPathUrlHandler(ClassLoader classLoader) {
         this.classLoader = classLoader;
     }
 

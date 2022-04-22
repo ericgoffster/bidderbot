@@ -57,7 +57,7 @@ public final class ShapeBoundInf implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Hand hand) {
+    public boolean test(Hand hand) {
         return shapes.contains(hand.getShape());
     }
 

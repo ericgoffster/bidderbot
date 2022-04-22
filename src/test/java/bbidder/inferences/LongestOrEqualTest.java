@@ -35,19 +35,19 @@ public class LongestOrEqualTest {
 
     @Test
     public void testHigherRanking() {
-        assertTrue(new LongestOrEqual(new ConstSymbol(3), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertTrue(new LongestOrEqual(new ConstSymbol(2), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertFalse(new LongestOrEqual(new ConstSymbol(1), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertFalse(new LongestOrEqual(new ConstSymbol(0), ALL).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertTrue(new LongestOrEqual(new ConstSymbol(3), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertTrue(new LongestOrEqual(new ConstSymbol(2), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertFalse(new LongestOrEqual(new ConstSymbol(1), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertFalse(new LongestOrEqual(new ConstSymbol(0), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
     }
 
     @Test
     public void testHigherRankingOfNotSpades() {
         assertTrue(
-                new LongestOrEqual(new ConstSymbol(2), SuitSets.lookupSuitSet("~S").replaceVars(SymbolTable.EMPTY)).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+                new LongestOrEqual(new ConstSymbol(2), SuitSets.lookupSuitSet("~S").replaceVars(SymbolTable.EMPTY)).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertTrue(
-                new LongestOrEqual(new ConstSymbol(1), SuitSets.lookupSuitSet("~S").replaceVars(SymbolTable.EMPTY)).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+                new LongestOrEqual(new ConstSymbol(1), SuitSets.lookupSuitSet("~S").replaceVars(SymbolTable.EMPTY)).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertFalse(
-                new LongestOrEqual(new ConstSymbol(0), SuitSets.lookupSuitSet("~S").replaceVars(SymbolTable.EMPTY)).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+                new LongestOrEqual(new ConstSymbol(0), SuitSets.lookupSuitSet("~S").replaceVars(SymbolTable.EMPTY)).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 7654 3")));
     }
 }

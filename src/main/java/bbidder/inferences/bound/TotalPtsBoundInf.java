@@ -57,7 +57,7 @@ public final class TotalPtsBoundInf implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Hand hand) {
+    public boolean test(Hand hand) {
         return r.contains(hand.getTotalPoints(partnerSummary));
     }
 

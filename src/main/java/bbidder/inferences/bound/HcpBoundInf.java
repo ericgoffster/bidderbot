@@ -51,7 +51,7 @@ public final class HcpBoundInf implements IBoundInference {
     }
 
     @Override
-    public boolean matches(Hand hand) {
+    public boolean test(Hand hand) {
         return r.contains(hand.numHCP());
     }
 
