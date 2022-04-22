@@ -116,15 +116,15 @@ public final class BiddingSystem {
         }
         Bid lastBid = bids.getLastBid().get();
         List<IBoundInference> positive = new ArrayList<>();
-        List<IBoundInference> negative = new ArrayList<>();
+        IBoundInference negative = ConstBoundInference.F;
         List<PossibleBid> possible = getPossibleBids(bids.exceptLast(), players);
-        possible.forEach(i -> {
+        for(var i: possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
-                positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
+                positive.add(AndBoundInf.create(inf, negative.negate()));
             }
-            negative.add(inf);            
-        });
+            negative = OrBoundInf.create(inf, negative) ;           
+        }
 
         if (positive.isEmpty() && lastBid != Bid.P) {
             throw new RuntimeException("Unrecognized bidding: " + bids);
@@ -132,7 +132,7 @@ public final class BiddingSystem {
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
-            positive.add(OrBoundInf.create(negative).negate());
+            positive.add(negative.negate());
         }
         return OrBoundInf.create(positive);
     }
