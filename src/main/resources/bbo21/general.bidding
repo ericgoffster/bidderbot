@@ -28,6 +28,7 @@ test Axxx Axxx xx Axx: 1C 1H 2H
 
 [i_am_two_suited x y] NJy => rebiddable_2nd x y
 test AQxxx x x AQxxxx: 1C 1H 1S 2H 2S
+test xx x AQxxx AQxxx: 1D 1H 2C 2H 3C
 
 [i_bid_suit x] NJ2x => min, rebiddable x
 test xx AQxxxx xx xxx: 1C 1H 1N 2H
