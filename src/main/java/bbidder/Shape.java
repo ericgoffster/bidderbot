@@ -562,20 +562,19 @@ public enum Shape {
     _03050302(3, 5, 3, 2, 0.0129367),
     _01060006(1, 6, 0, 6, 5.97800e-05);
 
-    final long num;
+    final int[] num = new int[4];
     final double p;
 
     public int numInSuit(int suit) {
-        return (int) ((num >> (suit * 16)) & 0xffff);
+        return num[suit];
     }
 
     private Shape(int c, int d, int h, int s, double p) {
-        this.num = toNum(c, d, h, s);
+        this.num[0] = c;
+        this.num[1] = d;
+        this.num[2] = h;
+        this.num[3] = s;
         this.p = p;
-    }
-
-    public static long toNum(int... num) {
-        return (((long) num[3]) << (16 * 3)) | (((long) num[2]) << (16 * 2)) | (((long) num[1]) << (16 * 1)) | num[0];
     }
 
     static final Shape[][][] numToShape = new Shape[14][14][14];
