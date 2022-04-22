@@ -139,7 +139,7 @@ public final class BidPatternList {
         int i = 0;
         for(BidPattern pattern: bids.subList(0, bids.size() - 1)) {
             if (pattern.generality != null) {
-                if (!pattern.generality.matches(players, auction)) {
+                if (!pattern.generality.test(players, auction)) {
                     return null;
                 }
                 i += wildSize;

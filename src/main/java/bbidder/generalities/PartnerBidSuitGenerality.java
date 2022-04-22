@@ -33,7 +33,7 @@ public final class PartnerBidSuitGenerality implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, Auction bidList) {
+    public boolean test(Players players, Auction bidList) {
         int suit = symbol.getResolved();
         if (players.me.infSummary.minLenInSuit(suit) + players.partner.infSummary.minLenInSuit(suit) >= 8) {
             return false;

@@ -42,8 +42,8 @@ public final class AndGenerality implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, Auction bidList) {
-        return g1.matches(players, bidList) && g2.matches(players, bidList);
+    public boolean test(Players players, Auction bidList) {
+        return g1.test(players, bidList) && g2.test(players, bidList);
     }
 
     @Override

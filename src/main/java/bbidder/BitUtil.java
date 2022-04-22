@@ -11,9 +11,13 @@ import java.util.NoSuchElementException;
  *
  */
 public final class BitUtil {
-    private static int set[][] = new int[65536][];
+    /**
+     * set[patt] = array of set bits
+     */
+    private static final int set[][];
 
     static {
+        set = new int[65536][];
         int[] res = new int[16];
         for (int i = 0; i < 65536; i++) {
             int j = i;
@@ -30,30 +34,38 @@ public final class BitUtil {
         }
     }
 
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return Number of bits set in the pattern.
+     */
     public static int size(int pattern) {
         return size(toLong(pattern));
     }
 
-    private static long toLong(int pattern) {
-        return pattern & 0xffffffffL;
-    }
-
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return Number of bits set in the pattern.
+     */
     public static int size(short pattern) {
         return size(toLong(pattern));
     }
 
-    private static long toLong(short pattern) {
-        return pattern & 0xffffL;
-    }
-
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return Number of bits set in the pattern.
+     */
     public static int size(byte pattern) {
         return size(toLong(pattern));
     }
 
-    private static long toLong(byte pattern) {
-        return pattern & 0xffL;
-    }
-
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return Number of bits set in the pattern.
+     */
     public static int size(long pattern) {
         int sz = 0;
         long patt = pattern;
@@ -64,18 +76,38 @@ public final class BitUtil {
         return sz;
     }
 
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return The index of the highest bit set in the pattern.  (-1 if all zero)
+     */
     public static int highestBit(byte pattern) {
         return highestBit(toLong(pattern));
     }
 
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return The index of the highest bit set in the pattern.  (-1 if all zero)
+     */
     public static int highestBit(short pattern) {
         return highestBit(toLong(pattern));
     }
 
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return The index of the highest bit set in the pattern.  (-1 if all zero)
+     */
     public static int highestBit(int pattern) {
         return highestBit(toLong(pattern));
     }
 
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return The index of the highest bit set in the pattern.  (-1 if all zero)
+     */
     public static int highestBit(long pattern) {
         if (pattern == 0) {
             return -1;
@@ -83,6 +115,11 @@ public final class BitUtil {
         return 63 - Long.numberOfLeadingZeros(pattern);
     }
 
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return The index of the lowest bit set in the pattern.  (-1 if all zero)
+     */
     public static int leastBit(long pattern) {
         if (pattern == 0) {
             return -1;
@@ -90,20 +127,64 @@ public final class BitUtil {
         return Long.numberOfTrailingZeros(pattern);
     }
 
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return The index of the lowest bit set in the pattern.  (-1 if all zero)
+     */
     public static Iterable<Integer> iterate(long pattern) {
         return new PatternIterable(pattern);
     }
 
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return The index of the lowest bit set in the pattern.  (-1 if all zero)
+     */
     public static Iterable<Integer> iterate(int pattern) {
         return iterate(toLong(pattern));
     }
 
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return The index of the lowest bit set in the pattern.  (-1 if all zero)
+     */
     public static Iterable<Integer> iterate(short pattern) {
         return iterate(toLong(pattern));
     }
 
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return The index of the lowest bit set in the pattern.  (-1 if all zero)
+     */
     public static Iterable<Integer> iterate(byte pattern) {
         return iterate(toLong(pattern));
+    }
+
+    /**
+     * @param pattern The bit pattern
+     * @return The long version of the pattern.
+     */
+    private static long toLong(int pattern) {
+        return pattern & 0xffffffffL;
+    }
+
+    /**
+     * @param pattern The bit pattern
+     * @return The long version of the pattern.
+     */
+    private static long toLong(short pattern) {
+        return pattern & 0xffffL;
+    }
+
+    /**
+     * @param pattern The bit pattern
+     * @return The long version of the pattern.
+     */
+    private static long toLong(byte pattern) {
+        return pattern & 0xffL;
     }
 
     private static final class PatternIterable implements Iterable<Integer> {

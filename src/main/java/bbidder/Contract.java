@@ -2,6 +2,10 @@ package bbidder;
 
 import java.util.Objects;
 
+/**
+ * Represent a Contract.
+ * @author goffster
+ */
 public final class Contract {
     public final int position;
     public final Bid winningBid;

@@ -33,7 +33,7 @@ public final class FitEstablished implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, Auction bidList) {
+    public boolean test(Players players, Auction bidList) {
         int s = symbol.getResolved();
         return players.partner.infSummary.minLenInSuit(s) + players.me.infSummary.minLenInSuit(s) >= 8;
     }

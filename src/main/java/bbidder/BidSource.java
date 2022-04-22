@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public final class BidSource {
     private final List<PossibleBid> possibleBids;
-    public final PossibleBid possibleBid;
+    public final PossibleBid matchedBid;
 
     public List<PossibleBid> getPossible() {
         return Collections.unmodifiableList(possibleBids);
@@ -22,17 +22,17 @@ public final class BidSource {
     BidSource(PossibleBid possibility, List<PossibleBid> possible) {
         super();
         this.possibleBids = possible;
-        this.possibleBid = possibility;
+        this.matchedBid = possibility;
     }
 
     @Override
     public String toString() {
-        return possibleBid.toString();
+        return matchedBid.toString();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(possibleBid, possibleBids);
+        return Objects.hash(matchedBid, possibleBids);
     }
 
     @Override
@@ -44,6 +44,6 @@ public final class BidSource {
         if (getClass() != obj.getClass())
             return false;
         BidSource other = (BidSource) obj;
-        return Objects.equals(possibleBid, other.possibleBid) && Objects.equals(possibleBids, other.possibleBids);
+        return Objects.equals(matchedBid, other.matchedBid) && Objects.equals(possibleBids, other.possibleBids);
     }
 }

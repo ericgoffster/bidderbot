@@ -52,7 +52,7 @@ public class Test2Over1 {
                 System.err.println("But I got an exception: ");
                 result.ex.printStackTrace();
                 test.getResult(bs);
-            } else if (!test.anti && !result.found.possibleBid.bid.equals(result.expected)) {
+            } else if (!test.anti && !result.found.matchedBid.bid.equals(result.expected)) {
                 hadError.set(true);
                 InfSummary partnerSummary = result.state.players.partner.infSummary;
                 System.err.println("Bidding: " + result.bids);
@@ -61,21 +61,21 @@ public class Test2Over1 {
                 showSummary("My summary", result.state.players.me.infSummary);
                 showSummary("Partner summary", partnerSummary);
                 System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
-                if (result.found.possibleBid.inf != null) {
-                    System.err.println("But " + result.found.possibleBid.inf.where + " dictates I should bid " + result.found.possibleBid.bid);
+                if (result.found.matchedBid.inf != null) {
+                    System.err.println("But " + result.found.matchedBid.inf.where + " dictates I should bid " + result.found.matchedBid.bid);
                 } else {
-                    System.err.println("But no systemic bid matched so " + result.found.possibleBid.bid + " was chosen");
+                    System.err.println("But no systemic bid matched so " + result.found.matchedBid.bid + " was chosen");
                 }
                 System.err.println();
                 System.err.println("All bids matching the scenario in order of priority:");
                 for (PossibleBid b : result.found.getPossible()) {
-                    if (b == result.found.possibleBid) {
+                    if (b == result.found.matchedBid) {
                         System.err.println("   * " + b);
                     } else {
                         System.err.println("   " + b);
                     }
                     IBoundInference bi = b.inf.inferences.bind(result.state.players);
-                    if (b == result.found.possibleBid) {
+                    if (b == result.found.matchedBid) {
                         System.err.println("       * " + bi);
 
                     } else {
@@ -86,7 +86,7 @@ public class Test2Over1 {
                 //DebugUtils.breakpoint();
                 test.getResult(bs);
                 //DebugUtils.debugMode = false;
-            } else if (test.anti && result.found.possibleBid.bid.equals(result.expected)) {
+            } else if (test.anti && result.found.matchedBid.bid.equals(result.expected)) {
                 hadError.set(true);
                 InfSummary partnerSummary = result.state.players.partner.infSummary;
                 System.err

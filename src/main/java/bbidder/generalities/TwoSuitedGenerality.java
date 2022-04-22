@@ -37,7 +37,7 @@ public final class TwoSuitedGenerality implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, Auction bidList) {
+    public boolean test(Players players, Auction bidList) {
         int l = longer.getResolved();
         int s = shorter.getResolved();
         if (players.me.infSummary.minLenInSuit(s) + players.partner.infSummary.minLenInSuit(s) >= 8) {

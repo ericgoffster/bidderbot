@@ -20,7 +20,7 @@ public final class TrueGenerality implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, Auction bidList) {
+    public boolean test(Players players, Auction bidList) {
         return true;
     }
 

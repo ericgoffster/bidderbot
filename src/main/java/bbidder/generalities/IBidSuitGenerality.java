@@ -32,7 +32,7 @@ public final class IBidSuitGenerality implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, Auction bidList) {
+    public boolean test(Players players, Auction bidList) {
         int suit = symbol.getResolved();
         int minLenInSuit = players.me.infSummary.minLenInSuit(suit);
         int minLenInSuit2 = players.partner.infSummary.minLenInSuit(suit);
