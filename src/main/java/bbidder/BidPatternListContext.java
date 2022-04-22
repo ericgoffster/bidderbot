@@ -5,10 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public final class BidPatternListContext {
-    static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     public final BidPatternList bids;
 
     private final Map<String, Integer> suits;

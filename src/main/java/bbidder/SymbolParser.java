@@ -16,7 +16,7 @@ import bbidder.symbols.SteppedSymbol;
 import bbidder.symbols.VarSymbol;
 
 public class SymbolParser {
-    
+    static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     public static Pattern LESS_THAN = Pattern.compile("<(\\d+)(.+)");
     public static Pattern GREATER_THAN = Pattern.compile(">(\\d+)(.+)");
 
@@ -27,7 +27,7 @@ public class SymbolParser {
      */
     public static Symbol parseSymbol(String symbol) {
         {
-            Matcher m = BiddingContext.SUIT_PATTERN.matcher(symbol);
+            Matcher m = SUIT_PATTERN.matcher(symbol);
             if (m.matches()) {
                 Symbol sym = parseSymbol(m.group(1));
                 if (sym == null) {
