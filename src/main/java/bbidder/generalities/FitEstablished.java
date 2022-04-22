@@ -20,13 +20,13 @@ public final class FitEstablished extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return symbol.resolveSymbols(suitTable).map(e -> new FitEstablished(e.getSymbol()).new Context(e.suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new FitEstablished(e.getSymbol()).new Context(e.suitTable));
     }
 
     @Override
     public boolean test(Players players, Auction bidList) {
-        int s = symbol.getResolved();
+        int s = symbol.getResolvedStrain();
         return players.partner.infSummary.minLenInSuit(s) + players.me.infSummary.minLenInSuit(s) >= 8;
     }
 

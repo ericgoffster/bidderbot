@@ -46,9 +46,9 @@ public final class And implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSymbols(SuitTable suitTable) {
-        return s1.resolveSymbols(suitTable)
-                .flatMap(e1 -> s2.resolveSymbols(e1.suitTable).map(e2 -> new SuitSetContext(new And(e1.suitSet, e2.suitSet), e2.suitTable)));
+    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable) {
+        return s1.resolveSuits(suitTable)
+                .flatMap(e1 -> s2.resolveSuits(e1.suitTable).map(e2 -> new SuitSetContext(new And(e1.suitSet, e2.suitSet), e2.suitTable)));
     }
 
 }

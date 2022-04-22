@@ -34,13 +34,13 @@ public final class SpecificCards extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        int strain = symbol.getResolved();
+        int strain = symbol.getResolvedStrain();
         return createBound(new NOfTop(rng, top, strain));
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return symbol.resolveSymbols(suitTable).map(e -> new SpecificCards(e.getSymbol(), rng, top).new Context(e.suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new SpecificCards(e.getSymbol(), rng, top).new Context(e.suitTable));
     }
 
     private static IBoundInference createBound(NOfTop spec) {

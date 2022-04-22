@@ -36,12 +36,12 @@ public final class MinorSymbol extends Symbol {
     }
 
     @Override
-    public int getResolved() {
+    public int getResolvedStrain() {
         throw new IllegalStateException(this + " not resolved");
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
         Integer m = suitTable.getSuit("m");
         if (m != null) {
             return Stream.of(new ConstSymbol(m).new Context(suitTable));
@@ -74,7 +74,7 @@ public final class MinorSymbol extends Symbol {
     }
 
     @Override
-    public boolean nonConvential() {
+    public boolean isNonConvential() {
         return false;
     }
 }

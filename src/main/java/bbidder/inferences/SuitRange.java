@@ -39,7 +39,7 @@ public final class SuitRange extends Inference {
     public IBoundInference bind(Players players) {
         int strain;
         try {
-            strain = symbol.getResolved();
+            strain = symbol.getResolvedStrain();
         } catch (Exception e) {
             throw e;
         }
@@ -47,8 +47,8 @@ public final class SuitRange extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return symbol.resolveSymbols(suitTable).map(e -> new SuitRange(e.getSymbol(), rng).new Context(e.suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new SuitRange(e.getSymbol(), rng).new Context(e.suitTable));
     }
 
     private static IBoundInference createBound(int s, Range r) {

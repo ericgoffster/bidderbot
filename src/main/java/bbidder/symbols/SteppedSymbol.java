@@ -40,8 +40,8 @@ public final class SteppedSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return symbol.resolveSymbols(suitTable).map(e -> new SteppedSymbol(e.getSymbol(), delta).new Context(e.suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new SteppedSymbol(e.getSymbol(), delta).new Context(e.suitTable));
     }
 
     private int transform(Integer s) {
@@ -49,8 +49,8 @@ public final class SteppedSymbol extends Symbol {
     }
 
     @Override
-    public int getResolved() {
-        return transform(symbol.getResolved());
+    public int getResolvedStrain() {
+        return transform(symbol.getResolvedStrain());
     }
 
     @Override
@@ -59,7 +59,7 @@ public final class SteppedSymbol extends Symbol {
     }
 
     @Override
-    public boolean nonConvential() {
-        return symbol.nonConvential();
+    public boolean isNonConvential() {
+        return symbol.isNonConvential();
     }
 }

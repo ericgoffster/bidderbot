@@ -35,7 +35,7 @@ public final class TotalPointsRange extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
         return Stream.of(new Context(suitTable));
     }
 

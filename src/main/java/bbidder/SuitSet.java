@@ -5,5 +5,5 @@ import java.util.stream.Stream;
 public interface SuitSet {
     public short evaluate(Players players);
 
-    public Stream<SuitSetContext> resolveSymbols(SuitTable suitTable);
+    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable);
 }

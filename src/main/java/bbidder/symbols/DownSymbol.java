@@ -42,8 +42,8 @@ public final class DownSymbol extends Symbol {
     }
 
     @Override
-    public int getResolved() {
-        return symbol.getResolved();
+    public int getResolvedStrain() {
+        return symbol.getResolvedStrain();
     }
 
     @Override
@@ -52,13 +52,13 @@ public final class DownSymbol extends Symbol {
     }
 
     @Override
-    public boolean nonConvential() {
-        return symbol.nonConvential();
+    public boolean isNonConvential() {
+        return symbol.isNonConvential();
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        List<Context> l = new ArrayList<>(symbol.resolveSymbols(suitTable).collect(Collectors.toList()));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        List<Context> l = new ArrayList<>(symbol.resolveSuits(suitTable).collect(Collectors.toList()));
         Collections.reverse(l);
         return l.stream();
     }

@@ -44,7 +44,7 @@ public final class Not implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSymbols(SuitTable suitTable) {
-        return ss.resolveSymbols(suitTable).map(e -> new SuitSetContext(new Not(e.suitSet), e.suitTable));
+    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable) {
+        return ss.resolveSuits(suitTable).map(e -> new SuitSetContext(new Not(e.suitSet), e.suitTable));
     }
 }

@@ -18,7 +18,7 @@ public final class LookupSet implements SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        int st = symbol.getResolved();
+        int st = symbol.getResolvedStrain();
         return (short) (1 << st);
     }
 
@@ -45,7 +45,7 @@ public final class LookupSet implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSymbols(SuitTable suitTable) {
-        return symbol.resolveSymbols(suitTable).map(e -> new SuitSetContext(new LookupSet(e.getSymbol()), e.suitTable));
+    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new SuitSetContext(new LookupSet(e.getSymbol()), e.suitTable));
     }
 }

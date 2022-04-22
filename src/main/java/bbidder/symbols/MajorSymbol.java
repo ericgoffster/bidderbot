@@ -36,12 +36,12 @@ public final class MajorSymbol extends Symbol {
     }
 
     @Override
-    public int getResolved() {
+    public int getResolvedStrain() {
         throw new IllegalStateException(this + " not resolved");
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
         Integer M = suitTable.getSuit("M");
         if (M != null) {
             return Stream.of(new ConstSymbol(M).new Context(suitTable));
@@ -74,7 +74,7 @@ public final class MajorSymbol extends Symbol {
     }
 
     @Override
-    public boolean nonConvential() {
+    public boolean isNonConvential() {
         return false;
     }
 }

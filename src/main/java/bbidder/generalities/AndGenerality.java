@@ -29,9 +29,9 @@ public final class AndGenerality extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return g1.resolveSymbols(suitTable)
-                .flatMap(e1 -> g2.resolveSymbols(e1.suitTable)
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return g1.resolveSuits(suitTable)
+                .flatMap(e1 -> g2.resolveSuits(e1.suitTable)
                         .map(e2 -> new AndGenerality(e1.getGenerality(), e2.getGenerality()).new Context(e2.suitTable)));
     }
 

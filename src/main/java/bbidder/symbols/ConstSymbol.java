@@ -17,7 +17,7 @@ public final class ConstSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
         return Stream.of(new Context(suitTable));
     }
 
@@ -44,7 +44,7 @@ public final class ConstSymbol extends Symbol {
     }
 
     @Override
-    public int getResolved() {
+    public int getResolvedStrain() {
         return strain;
     }
 
@@ -54,7 +54,7 @@ public final class ConstSymbol extends Symbol {
     }
 
     @Override
-    public boolean nonConvential() {
+    public boolean isNonConvential() {
         return false;
     }
 }

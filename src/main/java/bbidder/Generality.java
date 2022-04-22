@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  *
  */
 public abstract class Generality implements BiPredicate<Players, Auction> {
-    public abstract Stream<Context> resolveSymbols(SuitTable suitTable);
+    public abstract Stream<Context> resolveSuits(SuitTable suitTable);
 
     public final class Context {
         public final SuitTable suitTable;

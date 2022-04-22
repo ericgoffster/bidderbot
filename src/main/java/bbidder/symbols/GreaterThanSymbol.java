@@ -42,25 +42,25 @@ public final class GreaterThanSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return symbol.resolveSymbols(suitTable)
-                .flatMap(e1 -> other.resolveSymbols(e1.suitTable)
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable)
+                .flatMap(e1 -> other.resolveSuits(e1.suitTable)
                         .map(e2 -> new GreaterThanSymbol(e1.getSymbol(), level, e2.getSymbol()).new Context(e2.suitTable)));
     }
 
     @Override
-    public int getResolved() {
-        return symbol.getResolved();
+    public int getResolvedStrain() {
+        return symbol.getResolvedStrain();
     }
 
     @Override
     public boolean compatibleWith(Bid bid) {
-        Bid comparisonBid = Bid.valueOf(level, other.getResolved());
+        Bid comparisonBid = Bid.valueOf(level, other.getResolvedStrain());
         return symbol.compatibleWith(bid) && bid.compareTo(comparisonBid) > 0;
     }
 
     @Override
-    public boolean nonConvential() {
-        return symbol.nonConvential();
+    public boolean isNonConvential() {
+        return symbol.isNonConvential();
     }
 }

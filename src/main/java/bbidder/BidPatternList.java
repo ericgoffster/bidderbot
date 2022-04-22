@@ -109,8 +109,8 @@ public final class BidPatternList {
      * 
      * @return The list of resolved bidding pattern contexts
      */
-    public Stream<Context> resolveSymbols(SuitTable suits) {
-        return withOpposingBidding().addInitialPasses().stream().flatMap(bpl -> bpl.resolveSymbols(BidPatternList.EMPTY, suits));
+    public Stream<Context> resolveSuits(SuitTable suits) {
+        return withOpposingBidding().addInitialPasses().stream().flatMap(bpl -> bpl.resolveSuits(BidPatternList.EMPTY, suits));
     }
 
     /**
@@ -274,7 +274,7 @@ public final class BidPatternList {
      *            The previous context.
      * @return The list of resolved bidding pattern contexts
      */
-    private Stream<Context> resolveSymbols(BidPatternList previous, SuitTable suitTable) {
+    private Stream<Context> resolveSuits(BidPatternList previous, SuitTable suitTable) {
         if (bids.isEmpty()) {
             return Stream.of(previous.new Context(suitTable));
         }
@@ -282,8 +282,8 @@ public final class BidPatternList {
         // evaluate the remaining bids in the context of that bid.
         BidPatternList exceptFirst = exceptFirst();
         BidPattern first = bids.get(0);
-        return first.resolveSymbols(previous.getContract(), suitTable)
-                .flatMap(b -> exceptFirst.resolveSymbols(previous.withBidAdded(b.getBidPattern()), b.suitTable));
+        return first.resolveSuits(previous.getContract(), suitTable)
+                .flatMap(b -> exceptFirst.resolveSuits(previous.withBidAdded(b.getBidPattern()), b.suitTable));
     }
 
     /**

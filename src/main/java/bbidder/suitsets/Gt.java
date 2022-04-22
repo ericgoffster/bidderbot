@@ -19,7 +19,7 @@ public final class Gt implements SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        Integer st = symbol.getResolved();
+        Integer st = symbol.getResolvedStrain();
         return (short) (0xf & ~((1 << (st + 1)) - 1));
     }
 
@@ -46,7 +46,7 @@ public final class Gt implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSymbols(SuitTable suitTable) {
-        return symbol.resolveSymbols(suitTable).map(e -> new SuitSetContext(new Gt(e.getSymbol()), suitTable));
+    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new SuitSetContext(new Gt(e.getSymbol()), suitTable));
     }
 }

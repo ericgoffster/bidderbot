@@ -36,7 +36,7 @@ public final class Unbid implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSymbols(SuitTable suitTable) {
+    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable) {
         return Stream.of(new SuitSetContext(this, suitTable));
     }
 

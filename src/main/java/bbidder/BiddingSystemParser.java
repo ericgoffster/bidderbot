@@ -108,7 +108,7 @@ public final class BiddingSystemParser {
                             }
                         } else if (!ln.equals("")) {
                             try {
-                                BidInference.valueOf(here, reg, ln).resolveSymbols().forEach(inferences);
+                                BidInference.valueOf(here, reg, ln).resolveSuits().forEach(inferences);
                             } catch (Exception e) {
                                 reportErrors.accept(new ParseException(here, e));
                             }

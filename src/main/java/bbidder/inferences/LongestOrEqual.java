@@ -32,14 +32,14 @@ public final class LongestOrEqual extends Inference {
     @Override
     public IBoundInference bind(Players players) {
         int iamong = among == null ? 0xf : among.evaluate(players);
-        int strain = suit.getResolved();
+        int strain = suit.getResolvedStrain();
         return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isLongerOrEqual(strain, iamong)));
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return suit.resolveSymbols(suitTable)
-                .flatMap(e1 -> among.resolveSymbols(e1.suitTable).map(e2 -> new LongestOrEqual(e1.getSymbol(), e2.suitSet).new Context(e2.suitTable)));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return suit.resolveSuits(suitTable)
+                .flatMap(e1 -> among.resolveSuits(e1.suitTable).map(e2 -> new LongestOrEqual(e1.getSymbol(), e2.suitSet).new Context(e2.suitTable)));
     }
 
     public static LongestOrEqual valueOf(String str) {

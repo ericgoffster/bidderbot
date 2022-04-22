@@ -103,7 +103,7 @@ public class BidPatternListTest {
     public void test2() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         BidPatternList bpl = BidPatternList.valueOf(reg, "1C");
-        List<Context> l = bpl.resolveSymbols(SuitTable.EMPTY).collect(Collectors.toList());
+        List<Context> l = bpl.resolveSuits(SuitTable.EMPTY).collect(Collectors.toList());
         assertEquals(4, l.size());
     }
 }

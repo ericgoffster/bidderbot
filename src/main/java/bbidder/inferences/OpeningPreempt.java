@@ -35,14 +35,14 @@ public final class OpeningPreempt extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        int strain = symbol.getResolved();
+        int strain = symbol.getResolvedStrain();
         return AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
                 ShapeBoundInf.create(ShapeSet.create(shape -> isPremptive(strain, level, shape))));
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return symbol.resolveSymbols(suitTable).map(e -> new OpeningPreempt(e.getSymbol(), level).new Context(e.suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new OpeningPreempt(e.getSymbol(), level).new Context(e.suitTable));
     }
 
     public static OpeningPreempt valueOf(String str) {

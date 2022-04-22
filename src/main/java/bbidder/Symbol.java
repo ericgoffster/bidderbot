@@ -2,11 +2,16 @@ package bbidder;
 
 import java.util.stream.Stream;
 
+/**
+ * Represents a symbol representing a strain.
+ * @author goffster
+ *
+ */
 public abstract class Symbol {
     /**
-     * @return The resolved value
+     * @return The resolved strain
      */
-    public abstract int getResolved();
+    public abstract int getResolvedStrain();
 
     /**
      * @param bid
@@ -19,9 +24,9 @@ public abstract class Symbol {
      * 
      * @return true if the given bid should only be considered if the bid was not previously defined.
      */
-    public abstract boolean nonConvential();
+    public abstract boolean isNonConvential();
 
-    public abstract Stream<Context> resolveSymbols(SuitTable suitTable);
+    public abstract Stream<Context> resolveSuits(SuitTable suitTable);
 
     public final class Context {
         public final SuitTable suitTable;

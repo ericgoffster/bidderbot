@@ -66,7 +66,7 @@ public final class BidPattern {
      * @return A pattern where the level is "jump" based.
      */
     public static BidPattern createJump(Symbol symbol, int jumpLevel) {
-        return new BidPattern(false, symbol, null, null, jumpLevel, null, symbol.nonConvential());
+        return new BidPattern(false, symbol, null, null, jumpLevel, null, symbol.isNonConvential());
     }
 
     /**
@@ -89,7 +89,7 @@ public final class BidPattern {
      * @return A bid that is the level of a suit
      */
     public static BidPattern createBid(int level, Symbol symbol) {
-        return new BidPattern(false, symbol, level, null, null, null, symbol.nonConvential());
+        return new BidPattern(false, symbol, level, null, null, null, symbol.isNonConvential());
     }
 
     /**
@@ -110,24 +110,24 @@ public final class BidPattern {
      */
     private Optional<BidPattern> withSymbol(Contract contract, Symbol symbol) {
         if (level != null) {
-            int resolved = symbol.getResolved();
+            int resolved = symbol.getResolvedStrain();
             Bid b = Bid.valueOf(level, resolved);
             if (contract != null && !contract.isLegalBid(b)) {
                 return Optional.empty();
             }
             if (symbol.compatibleWith(b)) {
-                return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional));
+                return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional));
             } else {
                 return Optional.empty();
             }
         }
         if (jumpLevel != null) {
             if (contract != null) {
-                int resolved = symbol.getResolved();
+                int resolved = symbol.getResolvedStrain();
                 Bid b = contract.getBid(jumpLevel, resolved);
                 if (symbol.compatibleWith(b) && contract.isLegalBid(b)) {
                     return Optional
-                            .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional));
+                            .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional));
                 } else {
                     return Optional.empty();
                 }
@@ -143,14 +143,14 @@ public final class BidPattern {
      *            The symbols
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public Stream<Context> resolveSymbols(Contract contract, SuitTable suitTable) {
+    public Stream<Context> resolveSuits(Contract contract, SuitTable suitTable) {
         if (generality != null) {
-            return generality.resolveSymbols(suitTable).map(e -> createWild(e.getGenerality()).new Context(e.suitTable));
+            return generality.resolveSuits(suitTable).map(e -> createWild(e.getGenerality()).new Context(e.suitTable));
         }
         if (simpleBid != null) {
             return Stream.of(new Context(suitTable));
         }
-        return symbol.resolveSymbols(suitTable).flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.suitTable)));
+        return symbol.resolveSuits(suitTable).flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.suitTable)));
     }
 
     /**
@@ -165,7 +165,7 @@ public final class BidPattern {
         if (simpleBid != null) {
             return Optional.of(simpleBid);
         }
-        int strain = symbol.getResolved();
+        int strain = symbol.getResolvedStrain();
         if (jumpLevel != null) {
             Bid b = auction.getContract().getBid(jumpLevel, strain);
             if (level != null && b.level != level.intValue()) {

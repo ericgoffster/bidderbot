@@ -21,16 +21,16 @@ public final class TwoSuitedGenerality extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return longer.resolveSymbols(suitTable)
-                .flatMap(e1 -> shorter.resolveSymbols(e1.suitTable)
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return longer.resolveSuits(suitTable)
+                .flatMap(e1 -> shorter.resolveSuits(e1.suitTable)
                         .map(e2 -> new TwoSuitedGenerality(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));
     }
 
     @Override
     public boolean test(Players players, Auction bidList) {
-        int l = longer.getResolved();
-        int s = shorter.getResolved();
+        int l = longer.getResolvedStrain();
+        int s = shorter.getResolvedStrain();
         if (players.me.infSummary.minLenInSuit(s) + players.partner.infSummary.minLenInSuit(s) >= 8) {
             return false;
         }

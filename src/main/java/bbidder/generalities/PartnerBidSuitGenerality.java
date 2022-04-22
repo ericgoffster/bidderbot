@@ -19,13 +19,13 @@ public final class PartnerBidSuitGenerality extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return symbol.resolveSymbols(suitTable).map(e -> new PartnerBidSuitGenerality(e.getSymbol()).new Context(e.suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new PartnerBidSuitGenerality(e.getSymbol()).new Context(e.suitTable));
     }
 
     @Override
     public boolean test(Players players, Auction bidList) {
-        int suit = symbol.getResolved();
+        int suit = symbol.getResolvedStrain();
         if (players.me.infSummary.minLenInSuit(suit) + players.partner.infSummary.minLenInSuit(suit) >= 8) {
             return false;
         }

@@ -30,15 +30,15 @@ public final class RebiddableSecondSuit extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        int strainLonger = longer.getResolved();
-        int strainShorter = shorter.getResolved();
+        int strainLonger = longer.getResolvedStrain();
+        int strainShorter = shorter.getResolvedStrain();
         return createrBound(strainLonger, strainShorter, players.me.infSummary, players.partner.infSummary);
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return longer.resolveSymbols(suitTable)
-                .flatMap(e1 -> shorter.resolveSymbols(e1.suitTable)
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return longer.resolveSuits(suitTable)
+                .flatMap(e1 -> shorter.resolveSuits(e1.suitTable)
                         .map(e2 -> new RebiddableSecondSuit(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));
     }
 

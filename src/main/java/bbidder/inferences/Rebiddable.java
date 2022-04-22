@@ -28,13 +28,13 @@ public final class Rebiddable extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        int strain = symbol.getResolved();
+        int strain = symbol.getResolvedStrain();
         return createrBound(strain, players.me.infSummary, players.partner.infSummary);
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return symbol.resolveSymbols(suitTable).map(e -> new Rebiddable(e.getSymbol()).new Context(e.suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new Rebiddable(e.getSymbol()).new Context(e.suitTable));
     }
 
     private IBoundInference createrBound(int s, InfSummary meSummary, InfSummary partnerSummary) {

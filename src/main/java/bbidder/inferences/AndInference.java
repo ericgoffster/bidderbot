@@ -31,9 +31,9 @@ public final class AndInference extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        return i1.resolveSymbols(suitTable)
-                .flatMap(e1 -> i2.resolveSymbols(e1.suitTable)
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return i1.resolveSuits(suitTable)
+                .flatMap(e1 -> i2.resolveSuits(e1.suitTable)
                         .map(e2 -> new AndInference(e1.getInference(), e2.getInference()).new Context(e2.suitTable)));
     }
 

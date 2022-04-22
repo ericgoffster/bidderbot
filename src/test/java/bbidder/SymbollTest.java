@@ -17,7 +17,7 @@ public class SymbollTest {
     @Test
     public void testConst() {
         Symbol sym = new ConstSymbol(3);
-        assertEquals(3, sym.getResolved());
+        assertEquals(3, sym.getResolvedStrain());
         assertEquals("S", sym.toString());
     }
 
