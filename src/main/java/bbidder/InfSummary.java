@@ -14,7 +14,7 @@ public class InfSummary {
     public final StopperSet stoppers;
     public final StopperSet partialStoppers;
     
-    public AtomicReference<Stat[]> stats;
+    public final AtomicReference<Stat[]> stats;
 
     public InfSummary(ShapeSet shape, Range tpts, StopperSet stoppers, StopperSet partialStoppers) {
         super();
