@@ -26,7 +26,7 @@ public final class BidPattern {
     public final Symbol symbol;
     public final Integer level;
     public final Bid simpleBid;
-    private final Integer jumpLevel;
+    public final Integer jumpLevel;
     public final Generality generality;
     public final boolean isNonConventional;
 
@@ -53,27 +53,6 @@ public final class BidPattern {
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional);
-    }
-
-    /**
-     * @return The number of jumps. Null if N/A
-     */
-    public Integer getJumpLevel() {
-        return jumpLevel;
-    }
-
-    /**
-     * @return The strain part. Null if N/A (i.e. for pass)
-     */
-    public Symbol getSymbol() {
-        return symbol;
-    }
-
-    /**
-     * @return The level part. Null if N/A
-     */
-    public Integer getLevel() {
-        return level;
     }
 
     /**
@@ -167,7 +146,7 @@ public final class BidPattern {
         if (simpleBid != null) {
             return Stream.of(new Context(symbols));
         }
-        return getSymbol().resolveSymbols(symbols)
+        return symbol.resolveSymbols(symbols)
                 .flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.symbols)));
     }
 
@@ -184,9 +163,8 @@ public final class BidPattern {
             return simpleBid;
         }
         int strain = symbol.getResolved();
-        if (getJumpLevel() != null) {
-            int newLevel = getJumpLevel();
-            Bid b = auction.getContract().getBid(newLevel, strain);
+        if (jumpLevel != null) {
+            Bid b = auction.getContract().getBid(jumpLevel, strain);
             if (level != null && b.level != level.intValue()) {
                 return null;
             }
@@ -195,7 +173,7 @@ public final class BidPattern {
             }
             return b;
         }
-        return Bid.valueOf(getLevel(), strain);
+        return Bid.valueOf(level, strain);
     }
 
     @Override
