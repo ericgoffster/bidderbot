@@ -44,4 +44,4 @@ test AQx Axx Ax Axxxx:1♣ 1♦ 2N
 
 include 1over1resprebids.bidding
 include reverses.bidding
-include new_minor_forcing.bidding
+include 1Nover1over1_rebids.bidding
