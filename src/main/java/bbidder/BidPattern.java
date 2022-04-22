@@ -131,7 +131,17 @@ public final class BidPattern {
             int resolved = symbol.getResolved();
             Bid b = Bid.valueOf(level, resolved);
             if (symbol.compatibleWith(b)) {
-                return new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), level, b, jumpLevel, generality, isNonConventional);
+                return new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional);
+            }
+        }
+        if (jumpLevel != null) {
+            Contract contract = previous.getContract();
+            if (contract != null) {
+                int resolved = symbol.getResolved();
+                Bid b = contract.getBid(jumpLevel, resolved);
+                if (symbol.compatibleWith(b)) {
+                    return new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional);
+                }
             }
         }
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional);
