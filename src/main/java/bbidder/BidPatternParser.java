@@ -14,39 +14,48 @@ public class BidPatternParser implements Parser<BidPattern> {
     }
     private BidPattern parseInterior(Input inp) throws IOException {
         inp.advanceWhite();
+        Integer jumpLevel = null;
+        boolean reverse = false;
+        boolean nonreverse = false;
+        String str;
         if (inp.readKeyword(BidPattern.STR_NONJUMP)) {
-            return BidPattern.createJump(parseSuit(inp), 0);
+            jumpLevel = 0;
+            str = parseSuit(inp);
         } else if (inp.readKeyword(BidPattern.STR_DOUBLEJUMP)) {
-            return BidPattern.createJump(parseSuit(inp), 2);
+            jumpLevel = 2;
+            str = parseSuit(inp);
         } else if (inp.readKeyword(BidPattern.STR_JUMP)) {
-            return BidPattern.createJump(parseSuit(inp), 1);
+            jumpLevel = 1;
+            str = parseSuit(inp);
         } else if (inp.readKeyword(BidPattern.STR_REVERSE)) {
-            return BidPattern.createReverse(parseSuit(inp));
+            reverse = true;
+            str = parseSuit(inp);
         } else if (inp.readKeyword(BidPattern.STR_NONREVERSE)) {
-            return BidPattern.createNonReverse(parseSuit(inp));
+            nonreverse = true;
+            str = parseSuit(inp);
         } else {
-            String str = inp.readToken(ch -> ch != ')');
+            str = parseSuit(inp);   
             if (str.length() == 0) {
                 return null;
             }
             Bid simpleBid = Bid.fromStr(str);
             if (simpleBid != null) {
                 return BidPattern.createSimpleBid(simpleBid);
-            } else {
-                int level;
-                try {
-                    level = Integer.parseInt(str.substring(0, 1)) - 1;
-                } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException("Invalid bid: '" + str + "'");
-                }
-                if (level < 0 || level > 6) {
-                    throw new IllegalArgumentException("Invalid bid: '" + str + "'");
-                }
-                if (!BiddingContext.isValidSuit(str.substring(1))) {
-                    throw new IllegalArgumentException("Invalid bid: " + str);
-                }
-                return BidPattern.createBid(level, str.substring(1));
             }
+        }
+        {
+            Integer level = null;
+            if (str.length() > 0) {
+                char ch = str.charAt(0);
+                if (ch >= '1' && ch <= '7') {
+                    level = ch - '1';
+                    str = str.substring(1);
+                }
+            }
+            if (!BiddingContext.isValidSuit(str)) {
+                throw new IllegalArgumentException("Invalid bid: " + str);
+            }
+            return BidPattern.createBid(jumpLevel, reverse, nonreverse, level, str);
         }
     }
 

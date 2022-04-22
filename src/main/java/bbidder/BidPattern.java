@@ -115,30 +115,34 @@ public class BidPattern {
                 && nonreverse == other.nonreverse && reverse == other.reverse && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol)
                 && Objects.equals(generality, other.generality);
     }
+    
+    public String getLevelString() {
+        return level == null ? "" : String.valueOf(level);
+    }
 
     private String _getString() {
         if (simpleBid != null) {
             return simpleBid.toString();
         }
         if (reverse) {
-            return STR_REVERSE + symbol;
+            return STR_REVERSE + getLevelString() + symbol;
         }
         if (nonreverse) {
-            return STR_NONREVERSE + symbol;
+            return STR_NONREVERSE + getLevelString() + symbol;
         }
         if (jumpLevel != null) {
             switch (jumpLevel.intValue()) {
             case 0:
-                return STR_NONJUMP + symbol;
+                return STR_NONJUMP + getLevelString() + symbol;
             case 1:
-                return STR_JUMP + symbol;
+                return STR_JUMP + getLevelString() + symbol;
             case 2:
-                return STR_DOUBLEJUMP + symbol;
+                return STR_DOUBLEJUMP + getLevelString() + symbol;
             default:
                 throw new IllegalStateException();
             }
         }
-        return (level + 1) + symbol;
+        return getLevelString() + symbol;
     }
 
     /**
@@ -240,6 +244,9 @@ public class BidPattern {
         }
         if (reverse) {
             Bid b = bidList.nextLevel(strain);
+            if (level != null && b.level != level.intValue()) {
+                return null;
+            }
             if (!bidList.isReverse(b)) {
                 return null;
             } else {
@@ -248,6 +255,9 @@ public class BidPattern {
         }
         if (nonreverse) {
             Bid b = bidList.nextLevel(strain);
+            if (level != null && b.level != level.intValue()) {
+                return null;
+            }
             if (!bidList.isNonReverse(b)) {
                 return null;
             } else {
@@ -262,5 +272,9 @@ public class BidPattern {
             return bidList.getBid(newLevel, strain);
         }
         return Bid.valueOf(getLevel(), strain);
+    }
+
+    public static BidPattern createBid(Integer jumpLevel, boolean reverse, boolean nonreverse, Integer level, String symbol) {
+        return new BidPattern(false, symbol, level, null, jumpLevel, reverse, nonreverse, null);
     }
 }
