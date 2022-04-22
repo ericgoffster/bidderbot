@@ -5,32 +5,42 @@
 # H = ♥
 # S = ♠
 
-1♣ 1♦ 1♥ 2♠ => 4+♠, gf+;
+1♣ 1♦
+1♥ 2♠ => 4+♠, gf+;
 test AKxx x xxxxx AKx:1♣ 1♦ 1♥ 2♠;
 
-1x 1y 1z 2z => min, fit z;
+1x 1y
+1z 2z => min, fit z;
 test Qxxx Kxxx x Qxxx:1♣ 1♥ 1♠ 2♠;
 
-1x 1y 1z 3z => inv, fit z;
+1x 1y
+1z 3z => inv, fit z;
 test Kxxx Kxxx x Axxx:1♣ 1♥ 1♠ 3♠;
 
-1x 1y 1z 2x => min, fit x;
+1x 1y
+1z 2x => min, fit x;
 test Qxx Kxxx x Qxxxx:1♣ 1♥ 1♠ 2♣;
 
-1x 1y 1z 3x => inv, fit x;
+1x 1y
+1z 3x => inv, fit x;
 test Axx Kxxx x Kxxxx:1♣ 1♥ 1♠ 3♣;
 
-1x 1y 1z 1N => min;
+1x 1y
+1z 1N => min;
 test Qxx Kx xxxxx Qxx:1♣ 1♦ 1♥ 1N;
 
-1x 1y 1z 2N => balanced, inv;
+1x 1y
+1z 2N => balanced, inv;
 test AQx Kx xxxxx Qxx:1♣ 1♦ 1♥ 2N;
 
-1x 1y 1z 3N => balanced, gf;
+1x 1y
+1z 3N => balanced, gf;
 test AKx Ax xxxxx Kxx:1♣ 1♦ 1♥ 3N;
 
-1x 1y 1z NJw => gf+;
+1x 1y
+1z NJw => gf+;
 test AKxx x xxxxx AKx:1♣ 1♦ 1♥ 2♠;
 
-1x 1y NJz:<2x NJw => gf+;
+1x 1y
+NJz:<2x NJw => gf+;
 test AKxxxx x xxx AKx:1♦ 1♠ 2♣ 2♥;

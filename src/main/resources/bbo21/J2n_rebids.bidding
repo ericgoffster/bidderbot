@@ -5,17 +5,22 @@
 # H = ♥
 # S = ♠
 
-1M 2N 4x => 5+ x, 2 of top 3 in x;
+1M 2N
+4x => 5+ x, 2 of top 3 in x;
 test AQxxx x KQxxx Ax: 1♠ 2N 4♦;
 
-1M 2N 3x => 1- x;
+1M 2N
+3x => 1- x;
 test AQxxx x KQxx Axx: 1♠ 2N 3♥;
 
-1M 2N 3N => 15-17 hcp;
+1M 2N
+3N => 15-17 hcp;
 test AQxxx xx KQxx Ax: 1♠ 2N 3N;
 
-1M 2N 3M => 18+ hcp;
+1M 2N
+3M => 18+ hcp;
 test AQxxx Ax KQxx Ax: 1♠ 2N 3♠;
 
-1M 2N 4M =>;
+1M 2N
+4M =>;
 test AQxxx xx Kxxx Ax: 1♠ 2N 4♠;

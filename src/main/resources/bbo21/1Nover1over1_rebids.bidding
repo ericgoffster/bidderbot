@@ -5,28 +5,36 @@
 # H = ♥
 # S = ♠
 
-1y 1M 1N 4M => gf, 6+M;
+1y 1M
+1N 4M => gf, 6+M;
 test Ax Axxxxx xx AQx: 1C 1H 1N 4H;
 
-1y 1x 1N 3x => inv, 6+x;
+1y 1x
+1N 3x => inv, 6+x;
 test Qx Axxxxx xx Axx: 1C 1H 1N 3H;
 
-1y 1x 1N 2x => min, 6+x;
+1y 1x
+1N 2x => min, 6+x;
 test xx Axxxxx xx xxx: 1C 1H 1N 2H;
 
-1m 1M 1N 2om => 12+ tpts, 5+ M;
+1m 1M
+1N 2om => 12+ tpts, 5+ M;
 test Axx AQJxx xx xxx: 1C 1H 1N 2D;
 
-1H 1S 1N 2C => 12+ tpts, 5+ M;
+1H 1S
+1N 2C => 12+ tpts, 5+ M;
 test AQJxx xx Axx xxx: 1H 1S 1N 2C;
 
-1m 1M 1N 3om => min, 6+ om;
+1m 1M
+1N 3om => min, 6+ om;
 test x xxxx AQxxxx xx: 1C 1H 1N 3D;
 
-1y 1x 1N 3y => inv, fit y;
+1y 1x
+1N 3y => inv, fit y;
 test x Kxxx xx AQxxxx: 1C 1H 1N 3C;
 
-1y 1x 1N 2y => min, fit y;
+1y 1x
+1N 2y => min, fit y;
 test Ax xxxx xx Axxxx: 1C 1H 1N 2C;
 
 include new_minor_forcing_1.bidding;
