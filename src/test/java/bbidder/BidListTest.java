@@ -23,7 +23,7 @@ public class BidListTest {
 
     @Test
     public void testGetLastBid() {
-        assertEquals(Auction.valueOf("1C (1D) 1H (X) XX").getLastBid(), Bid.XX);
+        assertEquals(Auction.valueOf("1C (1D) 1H (X) XX").getLastBid().get(), Bid.XX);
     }
 
     @Test

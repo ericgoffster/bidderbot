@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import bbidder.utils.SplitUtil;
 
@@ -101,11 +102,11 @@ public final class Auction {
     /**
      * @return The last bid in the sequence. null if empty.
      */
-    public Bid getLastBid() {
+    public Optional<Bid> getLastBid() {
         if (bids.isEmpty()) {
-            return null;
+            return Optional.empty();
         }
-        return bids.get(bids.size() - 1);
+        return Optional.of(bids.get(bids.size() - 1));
     }
 
     /**

@@ -37,7 +37,7 @@ public final class BiddingTest {
     public TestResult getResult(BiddingSystem bs) {
         BiddingState state = new BiddingState(bs);
         Auction exceptLast = bids.exceptLast();
-        Bid expected = bids.getLastBid();
+        Bid expected = bids.getLastBid().get();
         try {
             for (Bid bid : exceptLast.getBids()) {
                 DebugUtils.breakpoint();

@@ -114,17 +114,17 @@ public final class BiddingSystem {
         if (bids.getBids().size() == 0) {
             return ConstBoundInference.create(false);
         }
-        Bid lastBid = bids.getLastBid();
+        Bid lastBid = bids.getLastBid().get();
         List<IBoundInference> positive = new ArrayList<>();
         List<IBoundInference> negative = new ArrayList<>();
         List<PossibleBid> possible = getPossibleBids(bids.exceptLast(), players);
-        for (PossibleBid i : possible) {
+        possible.forEach(i -> {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
                 positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
             }
-            negative.add(inf);
-        }
+            negative.add(inf);            
+        });
 
         if (positive.isEmpty() && lastBid != Bid.P) {
             throw new RuntimeException("Unrecognized bidding: " + bids);
