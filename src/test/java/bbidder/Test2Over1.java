@@ -32,6 +32,7 @@ public class Test2Over1 {
             if (!test.anti && !result.found.possibleBid.bid.equals(result.expected)) {
                 hadError.set(true);
                 InfSummary partnerSummary = result.state.players.partner.infSummary;
+                System.err.println("Bidding: " + result.bids);
                 System.err
                         .println("You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
                 System.err.println("My summary " + result.state.players.me.infSummary);
@@ -58,10 +59,10 @@ public class Test2Over1 {
                         System.err.println("       " + bi);
                     }
                 }
-                DebugUtils.debugMode = true;
-                DebugUtils.breakpoint();
+                //DebugUtils.debugMode = true;
+                //DebugUtils.breakpoint();
                 test.getResult(bs);
-                DebugUtils.debugMode = false;
+                //DebugUtils.debugMode = false;
             } else if (test.anti && result.found.possibleBid.bid.equals(result.expected)) {
                 hadError.set(true);
                 InfSummary partnerSummary = result.state.players.partner.infSummary;

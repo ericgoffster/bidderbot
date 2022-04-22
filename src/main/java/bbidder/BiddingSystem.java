@@ -134,6 +134,7 @@ public class BiddingSystem {
         }
         Bid lastBid = bids.getLastBid();
         List<IBoundInference> positive = new ArrayList<>();
+        List<IBoundInference> positiveWild = new ArrayList<>();
         List<IBoundInference> negative = new ArrayList<>();
         List<IBoundInference> negativeWild = new ArrayList<>();
         List<PossibleBid> possible = getPossibleBids(bids.exceptLast(), players);
@@ -141,7 +142,7 @@ public class BiddingSystem {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
                 if (i.inf.bids.positionOfWild() < 0) {
-                    positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
+                    positiveWild.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
                 } else {
                     positive.add(AndBoundInf.create(inf, OrBoundInf.create(negativeWild).negate()));
                 }
@@ -155,10 +156,13 @@ public class BiddingSystem {
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
-            negative.addAll(negativeWild);
+            positiveWild.add(OrBoundInf.create(positive).negate());
             positive.add(OrBoundInf.create(negative).negate());
         }
-        return OrBoundInf.create(positive);
+        if (positive.size() > 0) {
+            return OrBoundInf.create(positive);
+        }
+        return OrBoundInf.create(positiveWild);
     }
 
     /**
