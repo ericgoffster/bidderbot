@@ -14,8 +14,8 @@ public final class TrueGenerality extends Generality {
     }
 
     @Override
-    public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
-        return List.of(new GeneralityContext(symbols));
+    public List<Context> resolveSymbols(SymbolTable symbols) {
+        return List.of(new Context(symbols));
     }
 
     @Override

@@ -30,9 +30,9 @@ public final class AndGenerality extends Generality {
     }
 
     @Override
-    public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
+    public List<Context> resolveSymbols(SymbolTable symbols) {
         return ListUtil.flatMap(g1.resolveSymbols(symbols), e1 -> ListUtil.map(g2.resolveSymbols(e1.symbols),
-                e2 -> new AndGenerality(e1.getGenerality(), e2.getGenerality()).new GeneralityContext(e2.symbols)));
+                e2 -> new AndGenerality(e1.getGenerality(), e2.getGenerality()).new Context(e2.symbols)));
     }
 
     @Override

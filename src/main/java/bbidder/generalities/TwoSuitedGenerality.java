@@ -23,9 +23,9 @@ public final class TwoSuitedGenerality extends Generality {
     }
 
     @Override
-    public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
+    public List<Context> resolveSymbols(SymbolTable symbols) {
         return ListUtil.flatMap(longer.resolveSymbols(symbols), e1 -> ListUtil.map(shorter.resolveSymbols(e1.symbols),
-                e2 -> new TwoSuitedGenerality(e1.getSymbol(), e2.getSymbol()).new GeneralityContext(e2.symbols)));
+                e2 -> new TwoSuitedGenerality(e1.getSymbol(), e2.getSymbol()).new Context(e2.symbols)));
     }
 
     @Override

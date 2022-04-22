@@ -21,8 +21,8 @@ public final class FitEstablished extends Generality {
     }
 
     @Override
-    public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new FitEstablished(e.getSymbol()).new GeneralityContext(e.symbols));
+    public List<Context> resolveSymbols(SymbolTable symbols) {
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new FitEstablished(e.getSymbol()).new Context(e.symbols));
     }
 
     @Override

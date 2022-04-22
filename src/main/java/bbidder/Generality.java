@@ -11,12 +11,12 @@ import java.util.function.BiPredicate;
  *
  */
 public abstract class Generality implements BiPredicate<Players, Auction> {
-    public abstract List<GeneralityContext> resolveSymbols(SymbolTable symbols);
+    public abstract List<Context> resolveSymbols(SymbolTable symbols);
     
-    public final class GeneralityContext {
+    public final class Context {
         public final SymbolTable symbols;
 
-        public GeneralityContext(SymbolTable symbols) {
+        public Context(SymbolTable symbols) {
             super();
             this.symbols = symbols;
         }
