@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import bbidder.BidList;
 import bbidder.BiddingContext;
 import bbidder.Generality;
+import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Strain;
 
@@ -24,6 +26,12 @@ public class FitEstablished implements Generality {
             result.add(bc.withGeneralityAdded(new FitEstablished(Strain.getName(e.getKey()))));
          }
         return result;
+    }
+    
+    @Override
+    public boolean matches(Players players, BidList bidList) {
+        int s = Strain.getStrain(symbol);
+        return players.partner.infSummary.getSuit(s).lowest() + players.me.infSummary.getSuit(s).lowest() >= 8;
     }
     
     public static FitEstablished valueOf(String str) {
