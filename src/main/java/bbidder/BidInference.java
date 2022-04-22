@@ -14,7 +14,7 @@ import bbidder.inferences.TrueInference;
  *
  */
 public class BidInference {
-    public static BidInference EMPTY = new BidInference(null, BidPatternList.EMPTY, TrueInference.T);
+    public static BidInference EMPTY = new BidInference("System", BidPatternList.EMPTY, TrueInference.T);
     public final String where;
     public final BidPatternList bids;
     public final Inference inferences;
@@ -24,15 +24,6 @@ public class BidInference {
         this.where = where;
         this.bids = bids;
         this.inferences = inferences;
-    }
-
-    /**
-     * @param where
-     *            The where tag.
-     * @return A bid inference with the "where" tag set.
-     */
-    public BidInference at(String where) {
-        return new BidInference(where, bids, inferences);
     }
 
     /**
@@ -59,13 +50,15 @@ public class BidInference {
     }
 
     /**
+     * @param where 
+     *            Where is it located.
      * @param reg
      *            The inference registry
      * @param str
      *            The string to parse.
      * @return A BidInference parsed from the string
      */
-    public static BidInference valueOf(InferenceRegistry reg, String str) {
+    public static BidInference valueOf(String where, InferenceRegistry reg, String str) {
         if (str == null) {
             return null;
         }
@@ -73,7 +66,7 @@ public class BidInference {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        return new BidInference(null, BidPatternList.valueOf(reg, parts[0]), reg.parseInference(parts[1]));
+        return new BidInference(where, BidPatternList.valueOf(reg, parts[0]), reg.parseInference(parts[1]));
     }
 
     /**

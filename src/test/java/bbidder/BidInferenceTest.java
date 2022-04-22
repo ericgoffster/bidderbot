@@ -13,7 +13,7 @@ public class BidInferenceTest {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         assertEquals(
                 BidInference.EMPTY.withBidAdded(BidPattern.createSimpleBid(Bid._1N)).withInferenceAdded(new HCPRange(15, 17)).withInferenceAdded(new Balanced()),
-                BidInference.valueOf(reg, "1N => 15-17 hcp, balanced"));
+                BidInference.valueOf(null, reg, "1N => 15-17 hcp, balanced"));
     }
 
     @Test
