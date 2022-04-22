@@ -3,7 +3,7 @@ package bbidder.generalities;
 import java.util.List;
 
 import bbidder.BidList;
-import bbidder.BiddingContext;
+import bbidder.BidPatternContext;
 import bbidder.Generality;
 import bbidder.Players;
 
@@ -14,7 +14,7 @@ public class TrueGenerality implements Generality {
     }
 
     @Override
-    public List<BiddingContext> resolveSymbols(BiddingContext bc) {
+    public List<BidPatternContext> resolveSymbols(BidPatternContext bc) {
         return List.of(bc.withGeneralityAdded(this));
     }
 

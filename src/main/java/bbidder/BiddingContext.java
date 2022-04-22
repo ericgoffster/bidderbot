@@ -21,11 +21,11 @@ import java.util.regex.Pattern;
 public final class BiddingContext {
     public static final BiddingContext EMPTY = new BiddingContext(BidInference.EMPTY, Map.of());
     static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
-    private final BidInference bidInference;
+    public final BidInference bidInference;
 
     private final Map<String, Integer> suits;
 
-    private BiddingContext(BidInference bidInference, Map<String, Integer> suits) {
+    public BiddingContext(BidInference bidInference, Map<String, Integer> suits) {
         super();
         this.bidInference = bidInference;
         this.suits = suits;

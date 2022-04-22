@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BidList;
-import bbidder.BiddingContext;
+import bbidder.BidPatternContext;
 import bbidder.Generality;
 import bbidder.Players;
 
@@ -30,9 +30,9 @@ public class AndGenerality implements Generality {
     }
 
     @Override
-    public List<BiddingContext> resolveSymbols(BiddingContext bc) {
-        List<BiddingContext> result = new ArrayList<>();
-        for (BiddingContext bc2 : g1.resolveSymbols(bc)) {
+    public List<BidPatternContext> resolveSymbols(BidPatternContext bc) {
+        List<BidPatternContext> result = new ArrayList<>();
+        for (BidPatternContext bc2 : g1.resolveSymbols(bc)) {
             result.addAll(g2.resolveSymbols(bc2));
         }
         return result;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import bbidder.BidList;
-import bbidder.BiddingContext;
+import bbidder.BidPatternContext;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SplitUtil;
@@ -24,10 +24,10 @@ public class TwoSuitedGenerality implements Generality {
     }
 
     @Override
-    public List<BiddingContext> resolveSymbols(BiddingContext bc) {
-        List<BiddingContext> result = new ArrayList<>();
-        for (Entry<Symbol, BiddingContext> e : bc.resolveSymbols(longer).entrySet()) {
-            for (Entry<Symbol, BiddingContext> e2 : e.getValue().resolveSymbols(shorter).entrySet()) {
+    public List<BidPatternContext> resolveSymbols(BidPatternContext bc) {
+        List<BidPatternContext> result = new ArrayList<>();
+        for (Entry<Symbol, BidPatternContext> e : bc.resolveSymbols(longer).entrySet()) {
+            for (Entry<Symbol, BidPatternContext> e2 : e.getValue().resolveSymbols(shorter).entrySet()) {
                 result.add(e2.getValue().withGeneralityAdded(new TwoSuitedGenerality(e.getKey(), e2.getKey())));                
             }
         }

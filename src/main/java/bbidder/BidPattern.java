@@ -190,7 +190,11 @@ public class BidPattern {
      */
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         if (generality != null) {
-            return generality.resolveSymbols(bc.withBidAdded(createWild(TrueGenerality.T)));
+            List<BiddingContext> l = new ArrayList<>();
+            for(BidPatternContext b: generality.resolveSymbols(new BidPatternContext(createWild(TrueGenerality.T), bc.getSuits()))) {
+                l.add(new BiddingContext(bc.bidInference.withBidAdded(b.bid), b.getSuits()));
+            }
+            return l;
         }
         if (simpleBid != null) {
             return List.of(bc.withBidAdded(this));
