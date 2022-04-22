@@ -165,7 +165,7 @@ public class BiddingSystem {
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
-            positiveWild.add(OrBoundInf.create(positiveWild).negate());
+            positiveWild.add(OrBoundInf.create(negativeWild).negate());
             positive.add(OrBoundInf.create(negative).negate());
         }
         if (positive.size() > 0) {
