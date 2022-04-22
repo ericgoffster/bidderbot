@@ -30,6 +30,12 @@
         1♠ 2♣;
 
 1x 1y
+1z 2y => min, 6+ y;
+    test xx KQxxxx xx Qxx:
+        1♣ 1♥
+        1♠ 2♥;
+
+1x 1y
 1z 3x => inv, fit x;
     test Axx Kxxx x Kxxxx:
         1♣ 1♥
@@ -40,6 +46,12 @@
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1♥ 1N;
+
+1x 1y
+1z 3y => inv, 6+ y;
+    test xx KQxxxx xx Axx:
+        1♣ 1♥
+        1♠ 3♥;
 
 1x 1y
 1z 2N => balanced, inv;
