@@ -134,7 +134,9 @@ public class BiddingSystem {
         for (PossibleBid i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
-                positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
+                if (i.inf.bids.positionOfWild() < 0 || negative.isEmpty()) {
+                    positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));                    
+                }
             }
             negative.add(inf);
         }

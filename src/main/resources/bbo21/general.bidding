@@ -10,3 +10,6 @@ test AQxxx Axx Axx xx: 1S 2N 4S P
 
 [fit_established M] 4M => gf
 test AQxxx Axxx Ax xx: 1S 3S 4S
+
+[] 4M => gf, fit M
+test AQxxx Axxx Ax xx: 1C 1H 2H 4H
