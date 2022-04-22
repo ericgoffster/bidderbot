@@ -44,7 +44,35 @@ public class SteppedSymbol implements Symbol {
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
         List<Symbol> l = new ArrayList<>();
         for(Symbol s: sym.boundSymbols(suits)) {
-            l.add(new BoundSymbol(transform(s.getResolved()), this));
+            int resolved = transform(s.getResolved());
+            l.add(new Symbol() {
+
+                @Override
+                public Integer evaluate(Map<String, Integer> suits) {
+                    return resolved;
+                }
+
+                @Override
+                public Map<String, Integer> unevaluate(int strain) {
+                    return Map.of();
+                }
+
+                @Override
+                public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+                    return List.of(this);
+                }
+
+                @Override
+                public int getResolved() {
+                    return resolved;
+                }
+
+                @Override
+                public boolean compatibleWith(Bid bid) {
+                    return s.compatibleWith(bid) && bid.strain == resolved;
+                }
+
+            });
         }
         return l;
     }

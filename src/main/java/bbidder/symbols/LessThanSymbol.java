@@ -1,5 +1,6 @@
 package bbidder.symbols;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -51,35 +52,40 @@ public class LessThanSymbol implements Symbol {
 
     @Override
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
-        int resolved = sym.getResolved();
-        return List.of(new Symbol() {
+        List<Symbol> old = sym.boundSymbols(suits);
+        List<Symbol> l = new ArrayList<>();
+        for(Symbol s: old) {
+            int resolved = s.getResolved();
+            l.add(new Symbol() {
 
-            @Override
-            public Integer evaluate(Map<String, Integer> suits) {
-                return resolved;
-            }
+                @Override
+                public Integer evaluate(Map<String, Integer> suits) {
+                    return resolved;
+                }
 
-            @Override
-            public Map<String, Integer> unevaluate(int strain) {
-                return Map.of();
-            }
+                @Override
+                public Map<String, Integer> unevaluate(int strain) {
+                    return Map.of();
+                }
 
-            @Override
-            public List<Symbol> boundSymbols(Map<String, Integer> suits) {
-                return List.of(this);
-            }
+                @Override
+                public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+                    return List.of(this);
+                }
 
-            @Override
-            public int getResolved() {
-                return resolved;
-            }
+                @Override
+                public int getResolved() {
+                    return resolved;
+                }
 
-            @Override
-            public boolean compatibleWith(Bid bid) {
-                return LessThanSymbol.this.compatibleWith(bid);
-            }
-            
-        });
+                @Override
+                public boolean compatibleWith(Bid bid) {
+                    return s.compatibleWith(bid) && level > bid.level && bid.strain == resolved;
+                }
+
+            });
+        }
+        return l;
     }
 
     @Override
@@ -89,6 +95,6 @@ public class LessThanSymbol implements Symbol {
     
     @Override
     public boolean compatibleWith(Bid bid) {
-        return level > bid.level;
+        return level > bid.level && sym.compatibleWith(bid);
     }
 }
