@@ -5,10 +5,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class RangeOf {
-    public static Pattern PATT_MIN_TO_MAX = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
-    public static Pattern PATT_MAX = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(.*)");
-    public static Pattern PATT_MIN = Pattern.compile("\\s*(\\d+)\\s*\\+\\s*(.*)");
-    public static Pattern PATT_EXACT = Pattern.compile("\\s*(\\d+)\\s*(.*)");
+    private static Pattern PATT_MIN_TO_MAX = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
+    private static Pattern PATT_MAX = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(.*)");
+    private static Pattern PATT_MIN = Pattern.compile("\\s*(\\d+)\\s*\\+\\s*(.*)");
+    private static Pattern PATT_EXACT = Pattern.compile("\\s*(\\d+)\\s*(.*)");
 
     public final Integer min;
     public final Integer max;

@@ -17,7 +17,7 @@ import bbidder.inferences.bound.TotalPtsBoundInf;
  *
  */
 public final class TotalPointsRange extends Inference {
-    public final Range rng;
+    private final Range rng;
 
     public TotalPointsRange(Integer min, Integer max) {
         super();

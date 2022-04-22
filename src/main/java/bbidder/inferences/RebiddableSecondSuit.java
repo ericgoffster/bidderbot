@@ -18,10 +18,10 @@ import bbidder.SymbolTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 public final class RebiddableSecondSuit extends Inference {
-    public final Symbol longer;
-    public final Symbol shorter;
+    private final Symbol longer;
+    private final Symbol shorter;
 
-    public static Pattern PATT_FIT = Pattern.compile("\\s*rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PATT_FIT = Pattern.compile("\\s*rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
     public RebiddableSecondSuit(Symbol longer, Symbol shorter) {
         super();

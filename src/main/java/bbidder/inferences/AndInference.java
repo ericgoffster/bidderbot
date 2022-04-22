@@ -17,8 +17,8 @@ import bbidder.inferences.bound.AndBoundInf;
  *
  */
 public final class AndInference extends Inference {
-    public final Inference i1;
-    public final Inference i2;
+    private final Inference i1;
+    private final Inference i2;
 
     private AndInference(Inference i1, Inference i2) {
         this.i1 = i1;

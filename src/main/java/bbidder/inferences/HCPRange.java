@@ -17,7 +17,7 @@ import bbidder.inferences.bound.HcpBoundInf;
  *
  */
 public final class HCPRange extends Inference {
-    public final Range rng;
+    private final Range rng;
 
     public HCPRange(Integer min, Integer max) {
         super();

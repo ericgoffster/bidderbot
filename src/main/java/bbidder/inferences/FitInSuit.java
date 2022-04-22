@@ -25,9 +25,9 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class FitInSuit extends Inference {
-    public final Symbol symbol;
+    private final Symbol symbol;
 
-    public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
     public FitInSuit(Symbol suit) {
         super();
@@ -43,15 +43,6 @@ public final class FitInSuit extends Inference {
     @Override
     public List<Context> resolveSymbols(SymbolTable symbols) {
         return ListUtil.map(symbol.resolveSymbols(symbols), e -> new FitInSuit(e.getSymbol()).new Context(e.symbols));
-    }
-
-    private IBoundInference createrBound(int s, InfSummary partnerSummary) {
-        int n = 8 - partnerSummary.minLenInSuit(s);
-        if (n <= 0) {
-            return ConstBoundInference.T;
-        }
-        Range r = Range.atLeast(n, 13);
-        return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
     }
 
     public static Inference valueOf(String str) {
@@ -89,5 +80,14 @@ public final class FitInSuit extends Inference {
             return false;
         FitInSuit other = (FitInSuit) obj;
         return Objects.equals(symbol, other.symbol);
+    }
+
+    private IBoundInference createrBound(int s, InfSummary partnerSummary) {
+        int n = 8 - partnerSummary.minLenInSuit(s);
+        if (n <= 0) {
+            return ConstBoundInference.T;
+        }
+        Range r = Range.atLeast(n, 13);
+        return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
     }
 }

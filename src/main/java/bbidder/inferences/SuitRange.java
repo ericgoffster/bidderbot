@@ -21,8 +21,8 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class SuitRange extends Inference {
-    public final Symbol symbol;
-    public final Range rng;
+    private final Symbol symbol;
+    private final Range rng;
 
     public SuitRange(Symbol symbol, Integer min, Integer max) {
         super();

@@ -20,11 +20,11 @@ import bbidder.inferences.bound.SpecificCardsBoundInf;
  * Represents the inference of a specific cards in a suit.
  */
 public final class SpecificCards extends Inference {
-    public final Symbol symbol;
-    public final Range rng;
-    public final int top;
+    private final Symbol symbol;
+    private final Range rng;
+    private final int top;
 
-    public static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
     public SpecificCards(Symbol symbol, Range rng, int top) {
         super();

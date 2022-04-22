@@ -22,8 +22,8 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class LongestOrEqual extends Inference {
-    public final Symbol suit;
-    public final SuitSet among;
+    private final Symbol suit;
+    private final SuitSet among;
 
     public LongestOrEqual(Symbol suit, SuitSet among) {
         this.suit = suit;
