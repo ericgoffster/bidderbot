@@ -52,38 +52,7 @@ public final class Auction {
      * @return true if the bid represents a legal bid in the auction
      */
     public boolean isLegalBid(Bid bid) {
-        Contract contract = getContract();
-        if (contract.winningBid != Bid.P && bid.isSuitBid() && bid.ordinal() < contract.winningBid.ordinal()) {
-            return false;
-        }
-
-        if (bid == Bid.XX) {
-            if (contract.redoubled) {
-                return false;
-            }
-            if (!contract.doubled) {
-                return false;
-            }
-            if (contract.position % 2 != bids.size() % 2) {
-                return false;
-            }
-        }
-        if (bid == Bid.X) {
-            if (contract.redoubled || contract.doubled) {
-                return false;
-            }
-            if (contract.winningBid == Bid.P) {
-                return false;
-            }
-            if (contract.position % 2 == bids.size() % 2) {
-                return false;
-            }
-        }
-
-        if (contract.isCompleted()) {
-            return false;
-        }
-        return true;
+        return getContract().isLegalBid(bid);
     }
 
     /**

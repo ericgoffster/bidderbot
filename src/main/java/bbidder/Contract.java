@@ -70,4 +70,48 @@ public final class Contract {
         }
         return b;
     }
+    
+    /**
+     * 
+     * @param bid
+     *            The bid to test
+     * @return true if the bid represents a legal bid in the auction
+     */
+    public boolean isLegalBid(Bid bid) {
+        if (isCompleted()) {
+            return false;
+        }
+        
+        switch(bid) {
+        case P:
+            return true;
+        case XX:
+            if (redoubled) {
+                return false;
+            }
+            if (!doubled) {
+                return false;
+            }
+            if (numPasses % 2 != 0) {
+                return false;
+            }
+            return true;
+        case X:
+            if (redoubled || doubled) {
+                return false;
+            }
+            if (winningBid == Bid.P) {
+                return false;
+            }
+            if (numPasses % 2 != 0) {
+                return false;
+            }
+            return true;
+        default:
+            if (winningBid != Bid.P && bid.ordinal() < winningBid.ordinal()) {
+                return false;
+            }
+            return true;
+        }
+    }
 }
