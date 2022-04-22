@@ -76,6 +76,10 @@ public final class BiddingContext {
     public BiddingContext withInferenceAdded(Inference i) {
         return new BiddingContext(bidInference.withInferenceAdded(i), suits);
     }
+    
+    public BiddingContext withGeneralityAdded(Generality g) {
+        return withLastBidReplaced(bidInference.bids.getLastBid().withGeneralityAdded(g));
+    }
 
     /**
      * @param symbol

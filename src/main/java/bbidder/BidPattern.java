@@ -3,6 +3,10 @@ package bbidder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+
+import bbidder.generalities.AndGenerality;
+import bbidder.generalities.TrueGenerality;
+
 import java.util.Objects;
 
 /**
@@ -59,6 +63,9 @@ public class BidPattern {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, wild, generality);
     }
 
+    public BidPattern withGeneralityAdded(Generality g) {
+        return withGenerality(AndGenerality.create(generality, g));
+    }
     /**
      * @return The number of jumps. Null if N/A
      */
@@ -203,7 +210,7 @@ public class BidPattern {
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         if (wild) {
             if (generality != null) {
-                return generality.resolveSymbols(bc.withBidAdded(createWild(null)));
+                return generality.resolveSymbols(bc.withBidAdded(createWild(TrueGenerality.T)));
             }
             return List.of(bc.withBidAdded(this));
         }

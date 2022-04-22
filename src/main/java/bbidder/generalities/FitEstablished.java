@@ -1,8 +1,12 @@
-package bbidder;
+package bbidder.generalities;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+
+import bbidder.BiddingContext;
+import bbidder.Generality;
+import bbidder.Strain;
 
 public class FitEstablished implements Generality {
     public final String symbol;
@@ -15,12 +19,9 @@ public class FitEstablished implements Generality {
     @Override
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         List<BiddingContext> result = new ArrayList<>();
-        BidPattern b = bc.getInference().bids.getLastBid();
         for (Entry<Integer, BiddingContext> e : bc.resolveSymbols(symbol).entrySet()) {
-            Generality g2 = AndGenerality.create(b.generality, new FitEstablished(Strain.getName(e.getKey())));
-            BidPattern b2 = b.withGenerality(g2);
-            result.add(e.getValue().withLastBidReplaced(b2));
-        }
+            result.add(bc.withGeneralityAdded(new FitEstablished(Strain.getName(e.getKey()))));
+         }
         return result;
     }
 

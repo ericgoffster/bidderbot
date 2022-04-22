@@ -1,7 +1,10 @@
-package bbidder;
+package bbidder.generalities;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import bbidder.BiddingContext;
+import bbidder.Generality;
 
 public class AndGenerality implements Generality {
     public final Generality g1;
@@ -14,10 +17,10 @@ public class AndGenerality implements Generality {
     }
     
     public static Generality create(Generality g1, Generality g2) {
-        if (g1 == null) {
+        if (g1.equals(TrueGenerality.T)) {
             return g2;
         }
-        if (g2 == null) {
+        if (g2.equals(TrueGenerality.T)) {
             return g1;
         }
         return new AndGenerality(g1, g2);
