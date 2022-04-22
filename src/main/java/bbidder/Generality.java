@@ -10,6 +10,6 @@ import java.util.function.BiPredicate;
  * @author goffster
  *
  */
-public interface Generality extends BiPredicate<Players, Auction> {
-    public List<GeneralityContext> resolveSymbols(SymbolTable symbols);
+public abstract class Generality implements BiPredicate<Players, Auction> {
+    public abstract List<GeneralityContext> resolveSymbols(SymbolTable symbols);
 }

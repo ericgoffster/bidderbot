@@ -41,8 +41,8 @@ public final class FitInSuit extends Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new FitInSuit(e.getSymbol()), e.symbols));
+    public List<Context> resolveSymbols(SymbolTable symbols) {
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new FitInSuit(e.getSymbol()).new Context(e.symbols));
     }
 
     private IBoundInference createrBound(int s, InfSummary partnerSummary) {

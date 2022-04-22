@@ -40,8 +40,8 @@ public final class CombinedTotalPointsRange extends Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
-        return List.of(new InferenceContext(this, suits));
+    public List<Context> resolveSymbols(SymbolTable suits) {
+        return List.of(new Context(suits));
     }
 
     private static Range createRange(String str, Map<String, Integer> m) {

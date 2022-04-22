@@ -34,8 +34,8 @@ public final class Rebiddable extends Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new Rebiddable(e.getSymbol()), e.symbols));
+    public List<Context> resolveSymbols(SymbolTable symbols) {
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new Rebiddable(e.getSymbol()).new Context(e.symbols));
     }
 
     private IBoundInference createrBound(int s, InfSummary meSummary, InfSummary partnerSummary) {

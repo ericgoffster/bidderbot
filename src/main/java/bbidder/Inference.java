@@ -20,16 +20,18 @@ public abstract class Inference {
      * @return A list of inferences representing this inference bound to all possible
      *         symbols.
      */
-    public abstract List<InferenceContext> resolveSymbols(SymbolTable symbols);
+    public abstract List<Context> resolveSymbols(SymbolTable symbols);
     
-    public static final class InferenceContext {
-        public final Inference inference;
+    public final class Context {
         public final SymbolTable symbols;
 
-        public InferenceContext(Inference inference, SymbolTable symbols) {
+        public Context(SymbolTable symbols) {
             super();
-            this.inference = inference;
             this.symbols = symbols;
+        }
+
+        public Inference getInference() {
+            return Inference.this;
         }
     }
 }

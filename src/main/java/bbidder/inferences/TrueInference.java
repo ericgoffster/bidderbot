@@ -26,8 +26,8 @@ public final class TrueInference extends Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        return List.of(new InferenceContext(this, symbols));
+    public List<Context> resolveSymbols(SymbolTable symbols) {
+        return List.of(new Context(symbols));
     }
 
     @Override

@@ -38,9 +38,9 @@ public final class LongestOrEqual extends Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
+    public List<Context> resolveSymbols(SymbolTable symbols) {
         return ListUtil.flatMap(suit.resolveSymbols(symbols), e1 -> ListUtil.map(among.resolveSymbols(e1.symbols),
-                e2 -> new InferenceContext(new LongestOrEqual(e1.getSymbol(), e2.suitSet), e2.symbols)));
+                e2 -> new LongestOrEqual(e1.getSymbol(), e2.suitSet).new Context(e2.symbols)));
     }
 
     public static LongestOrEqual valueOf(String str) {

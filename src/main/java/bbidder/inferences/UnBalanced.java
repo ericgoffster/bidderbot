@@ -27,8 +27,8 @@ public final class UnBalanced extends Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        return List.of(new InferenceContext(this, symbols));
+    public List<Context> resolveSymbols(SymbolTable symbols) {
+        return List.of(new Context(symbols));
     }
 
     public static UnBalanced valueOf(String str) {

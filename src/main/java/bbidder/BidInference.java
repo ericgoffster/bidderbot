@@ -46,7 +46,7 @@ public final class BidInference {
      */
     public List<BidInference> resolveSymbols() {
         return ListUtil.flatMap(bids.resolveSymbols(SymbolTable.EMPTY), e1 -> ListUtil.map(inferences.resolveSymbols(e1.symbols),
-                e2 -> new BidInference(where, e1.getBids(), e2.inference)));
+                e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
     }
 
     @Override

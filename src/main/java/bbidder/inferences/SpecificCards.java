@@ -40,8 +40,8 @@ public final class SpecificCards extends Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new SpecificCards(e.getSymbol(), rng, top), e.symbols));
+    public List<Context> resolveSymbols(SymbolTable symbols) {
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SpecificCards(e.getSymbol(), rng, top).new Context(e.symbols));
     }
 
     private static IBoundInference createBound(NOfTop spec) {

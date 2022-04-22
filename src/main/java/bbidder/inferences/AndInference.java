@@ -31,9 +31,9 @@ public final class AndInference extends Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
+    public List<Context> resolveSymbols(SymbolTable symbols) {
         return ListUtil.flatMap(i1.resolveSymbols(symbols), e1 -> ListUtil.map(i2.resolveSymbols(e1.symbols),
-                e2 -> new InferenceContext(new AndInference(e1.inference, e2.inference), e2.symbols)));
+                e2 -> new AndInference(e1.getInference(), e2.getInference()).new Context(e2.symbols)));
     }
 
     public static Inference create(Inference i1, Inference i2) {
