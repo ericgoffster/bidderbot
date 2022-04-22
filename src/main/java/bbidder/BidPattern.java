@@ -2,7 +2,6 @@ package bbidder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Objects;
 
 import bbidder.symbols.ConstSymbol;
@@ -144,8 +143,8 @@ public final class BidPattern {
             return List.of(new BidPatternContext(this, symbols));
         }
         List<BidPatternContext> result = new ArrayList<>();
-        for (Entry<Symbol, SymbolTable> e : getSymbol().resolveSymbol(symbols).entrySet()) {
-            result.add(new BidPatternContext(bindSuit(e.getKey()), e.getValue()));
+        for (var e : getSymbol().resolveSymbol(symbols)) {
+            result.add(new BidPatternContext(bindSuit(e.symbol), e.symbols));
         }
         return result;
     }

@@ -43,8 +43,8 @@ public final class SpecificCards implements Inference {
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : symbol.resolveSymbol(symbols).entrySet()) {
-            l.add(new InferenceContext(new SpecificCards(e.getKey(), rng, top), e.getValue()));
+        for (var e : symbol.resolveSymbol(symbols)) {
+            l.add(new InferenceContext(new SpecificCards(e.symbol, rng, top), e.symbols));
         }
         return l;
     }

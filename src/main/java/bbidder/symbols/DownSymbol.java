@@ -2,13 +2,12 @@ package bbidder.symbols;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.List;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.Symbol;
+import bbidder.SymbolContext;
 import bbidder.SymbolTable;
 
 public final class DownSymbol implements Symbol {
@@ -57,13 +56,9 @@ public final class DownSymbol implements Symbol {
     }
     
     @Override
-    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
-        ArrayList<Entry<Symbol, SymbolTable>> l = new ArrayList<>(symbol.resolveSymbol(symbols).entrySet());
+    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
+        List<SymbolContext> l = new ArrayList<>(symbol.resolveSymbol(symbols));
         Collections.reverse(l);
-        Map<Symbol, SymbolTable> m = new LinkedHashMap<>();
-        for(Entry<Symbol, SymbolTable> e: l) {
-            m.put(e.getKey(), e.getValue());
-        }
-        return m;
+        return l;
     }
 }

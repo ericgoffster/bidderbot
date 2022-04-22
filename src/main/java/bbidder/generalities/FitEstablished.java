@@ -2,7 +2,6 @@ package bbidder.generalities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Objects;
 
 import bbidder.Auction;
@@ -25,8 +24,8 @@ public final class FitEstablished implements Generality {
     @Override
     public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
         List<GeneralityContext> result = new ArrayList<>();
-        for (Entry<Symbol, SymbolTable> e : symbol.resolveSymbol(symbols).entrySet()) {
-            result.add(new GeneralityContext(new FitEstablished(e.getKey()), e.getValue()));
+        for (var e : symbol.resolveSymbol(symbols)) {
+            result.add(new GeneralityContext(new FitEstablished(e.symbol), e.symbols));
         }
         return result;
     }

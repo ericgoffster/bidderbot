@@ -48,8 +48,8 @@ public final class LookupSet implements SuitSet {
     @Override
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
         List<SuitSetContext> l = new ArrayList<>();
-        for(var e: symbol.resolveSymbol(symbols).entrySet()) {
-            l.add(new SuitSetContext(new LookupSet(e.getKey()), e.getValue()));
+        for(var e: symbol.resolveSymbol(symbols)) {
+            l.add(new SuitSetContext(new LookupSet(e.symbol), e.symbols));
         }
         return l;
     }

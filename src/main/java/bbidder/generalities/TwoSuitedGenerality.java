@@ -2,7 +2,6 @@ package bbidder.generalities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import bbidder.Auction;
 import bbidder.Generality;
@@ -27,9 +26,9 @@ public final class TwoSuitedGenerality implements Generality {
     @Override
     public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
         List<GeneralityContext> result = new ArrayList<>();
-        for (Entry<Symbol, SymbolTable> e1 : longer.resolveSymbol(symbols).entrySet()) {
-            for (Entry<Symbol, SymbolTable> e2 : shorter.resolveSymbol(e1.getValue()).entrySet()) {
-                result.add(new GeneralityContext(new TwoSuitedGenerality(e1.getKey(), e2.getKey()), e1.getValue()));
+        for (var e1 : longer.resolveSymbol(symbols)) {
+            for (var e2 : shorter.resolveSymbol(e1.symbols)) {
+                result.add(new GeneralityContext(new TwoSuitedGenerality(e1.symbol, e2.symbol), e2.symbols));
             }
         }
         return result;

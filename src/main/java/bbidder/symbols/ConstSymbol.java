@@ -1,11 +1,12 @@
 package bbidder.symbols;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.Strain;
 import bbidder.Symbol;
+import bbidder.SymbolContext;
 import bbidder.SymbolTable;
 
 public final class ConstSymbol implements Symbol {
@@ -17,8 +18,8 @@ public final class ConstSymbol implements Symbol {
     }
     
     @Override
-    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
-        return Map.of(this, symbols);
+    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
+        return List.of(new SymbolContext(this, symbols));
     }
 
     @Override

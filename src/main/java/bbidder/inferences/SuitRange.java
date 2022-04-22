@@ -51,8 +51,8 @@ public final class SuitRange implements Inference {
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : symbol.resolveSymbol(symbols).entrySet()) {
-            l.add(new InferenceContext(new SuitRange(e.getKey(), rng), e.getValue()));
+        for (var e : symbol.resolveSymbol(symbols)) {
+            l.add(new InferenceContext(new SuitRange(e.symbol, rng), e.symbols));
         }
         return l;
     }

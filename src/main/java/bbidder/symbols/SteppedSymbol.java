@@ -1,11 +1,12 @@
 package bbidder.symbols;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.Symbol;
+import bbidder.SymbolContext;
 import bbidder.SymbolTable;
 
 public final class SteppedSymbol implements Symbol {
@@ -41,13 +42,12 @@ public final class SteppedSymbol implements Symbol {
     }
     
     @Override
-    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
-        Map<Symbol, SymbolTable> old = symbol.resolveSymbol(symbols);
-        Map<Symbol, SymbolTable> m = new LinkedHashMap<>();
-        for(var e: old.entrySet()) {
-            m.put(new SteppedSymbol(e.getKey(), delta), e.getValue());
+    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
+        List<SymbolContext> l = new ArrayList<>();
+        for(var e: symbol.resolveSymbol(symbols)) {
+            l.add(new SymbolContext(new SteppedSymbol(e.symbol, delta), e.symbols));
         }
-        return m;
+        return l;
     }
 
     private int transform(Integer s) {

@@ -49,8 +49,8 @@ public final class Gt implements SuitSet {
     @Override
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
         List<SuitSetContext> l = new ArrayList<>();
-        for(var e: symbol.resolveSymbol(symbols).entrySet()) {
-            l.add(new SuitSetContext(new Gt(e.getKey()), e.getValue()));
+        for(var e: symbol.resolveSymbol(symbols)) {
+            l.add(new SuitSetContext(new Gt(e.symbol), symbols));
         }
         return l;
     }

@@ -44,8 +44,8 @@ public final class FitInSuit implements Inference {
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : suit.resolveSymbol(symbols).entrySet()) {
-            l.add(new InferenceContext(new FitInSuit(e.getKey()), e.getValue()));
+        for (var e : suit.resolveSymbol(symbols)) {
+            l.add(new InferenceContext(new FitInSuit(e.symbol), e.symbols));
         }
         return l;
     }

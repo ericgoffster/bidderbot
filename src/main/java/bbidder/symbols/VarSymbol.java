@@ -1,13 +1,14 @@
 package bbidder.symbols;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.BitUtil;
 import bbidder.Constants;
 import bbidder.Symbol;
+import bbidder.SymbolContext;
 import bbidder.SymbolTable;
 
 public final class VarSymbol implements Symbol {
@@ -46,17 +47,17 @@ public final class VarSymbol implements Symbol {
     }
 
     @Override
-    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
+    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
         if (symbols.containsKey(varName)) {
-            return Map.of(new ConstSymbol(symbols.get(varName)), symbols);
+            return List.of(new SymbolContext(new ConstSymbol(symbols.get(varName)), symbols));
         }
-        LinkedHashMap<Symbol, SymbolTable> map = new LinkedHashMap<>();
+        List<SymbolContext> l = new ArrayList<>();
         for(int s: BitUtil.iterate(Constants.ALL_SUITS)) {
             if (!symbols.containsValue(s)) {
-                map.put(new ConstSymbol(s), symbols.add(varName, s));
+                l.add(new SymbolContext(new ConstSymbol(s), symbols.add(varName, s)));
             }
         }
-        return map;
+        return l;
     }
 
     @Override

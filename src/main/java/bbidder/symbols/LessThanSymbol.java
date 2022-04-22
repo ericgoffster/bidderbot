@@ -1,11 +1,12 @@
 package bbidder.symbols;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.Symbol;
+import bbidder.SymbolContext;
 import bbidder.SymbolTable;
 
 public final class LessThanSymbol implements Symbol {
@@ -43,14 +44,14 @@ public final class LessThanSymbol implements Symbol {
     }
 
     @Override
-    public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
-        Map<Symbol, SymbolTable> m = new LinkedHashMap<>();
-        for(var e1: symbol.resolveSymbol(symbols).entrySet()) {
-            for(var e2: other.resolveSymbol(e1.getValue()).entrySet()) {
-                m.put(new LessThanSymbol(e1.getKey(), level, e2.getKey()), e2.getValue());
+    public List<SymbolContext> resolveSymbol(SymbolTable symbols) {
+        List<SymbolContext> l = new ArrayList<>();
+        for(var e1: symbol.resolveSymbol(symbols)) {
+            for(var e2: other.resolveSymbol(e1.symbols)) {
+                l.add(new SymbolContext(new LessThanSymbol(e1.symbol, level, e2.symbol), e2.symbols));
             }
         }
-        return m;
+        return l;
     }
 
     @Override

@@ -45,8 +45,8 @@ public final class OpeningPreempt implements Inference {
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : suit.resolveSymbol(symbols).entrySet()) {
-            l.add(new InferenceContext(new OpeningPreempt(e.getKey(), level), e.getValue()));
+        for (var e : suit.resolveSymbol(symbols)) {
+            l.add(new InferenceContext(new OpeningPreempt(e.symbol, level), e.symbols));
         }
         return l;
     }

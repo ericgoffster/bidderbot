@@ -1,6 +1,6 @@
 package bbidder;
 
-import java.util.Map;
+import java.util.List;
 
 public interface Symbol {
     /**
@@ -20,5 +20,5 @@ public interface Symbol {
      */
     boolean nonConvential();
     
-    Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols);
+    List<SymbolContext> resolveSymbol(SymbolTable symbols);
 }
