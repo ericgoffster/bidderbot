@@ -25,10 +25,6 @@ public final class BidPatternList {
         this.bids = bids;
     }
 
-    public static BidPatternList create(List<BidPattern> bids) {
-        return new BidPatternList(new ArrayList<>(bids));
-    }
-
     /**
      * @return The last bid
      */
@@ -74,37 +70,42 @@ public final class BidPatternList {
     }
 
     /**
-     * @param pattern
-     *            pattern
-     * @param bc
-     *            The bidding context
-     * @return A list of contexts representing the symbol bound to actual values
+     * @return true if PASS can be added to beginning.
      */
-    public List<BidPatternListContext> resolveSymbols(BidPattern pattern, BidPatternListContext bc) {
-        List<BidPatternListContext> l = new ArrayList<>();
-        for (BidPatternContext b : pattern.resolveSymbols(bc.suits)) {
-            l.add(new BidPatternListContext(bc.bids.withBidAdded(b.bidPattern), b.suits));
-        }
-        return l;
+    public boolean canPrependPass() {
+        return numInitialPasses() < 3 || numInitialPasses() == 3 && bids.size() == 3;
     }
     
+    /**
+     * @return A new bid pattern list with PASS added to the beginning.
+     */
+    public BidPatternList withPassPrepended() {
+        List<BidPattern> l = new ArrayList<>(bids);
+        l.add(0, BidPattern.PASS.withIsOpposition(!bids.get(0).isOpposition));
+        return new BidPatternList(l);
+    }
+    
+    /**
+     * Creates bidding sequences in the first, second, third or fourth chair.
+     * @return List of sequences with 0-3 passes added to the beginning
+     */
     public List<BidPatternList> addInitialPasses() {
-        if (bids.get(0).generality != null || isCompleted()) {
+        // Generalities already take care of initial passes
+        if (bids.get(0).generality != null) {
             return List.of(this);
         } else {
-            List<BidPatternList> passes = new ArrayList<>();
-            passes.add(this);
+            List<BidPatternList> list = new ArrayList<>();
+            BidPatternList prev = this;
+            list.add(prev);
+            // Add up to 3 passes
             for(int i = 0; i < 3; i++) {
-                BidPatternList prev = passes.get(passes.size() - 1);
-                List<BidPattern> l = new ArrayList<>(prev.bids);
-                l.add(0, BidPattern.PASS.withIsOpposition(!l.get(0).isOpposition));
-                BidPatternList bpl = new BidPatternList(l);
-                if (bpl.numInitialPasses() > 4 || bpl.numInitialPasses() == 4 && l.size() > 4) {
+                if (!prev.canPrependPass()) {
                     break;
                 }
-                passes.add(bpl);
+                prev = prev.withPassPrepended();
+                list.add(prev);
             }
-            return passes;
+            return list;
         }
     }
 
@@ -117,37 +118,33 @@ public final class BidPatternList {
      * 
      * @return The list of resolved bidding pattern contexts
      */
-    public List<BidPatternListContext> resolveFirstSymbol(SymbolTable suits) {
-        BidPatternList withOpp = withOpposingBidding();
-        // If there are no bids, then we are done
-        if (withOpp.bids.isEmpty()) {
-            return List.of(new BidPatternListContext(BidPatternList.EMPTY, suits));
-        }
-        BidPattern pattern = withOpp.bids.get(0);
-
-        // If the first bid is a generality, then the generality
-        // takes care of all chairs
-        if (pattern.generality != null) {
-            return withOpp.resolveSymbols(new BidPatternListContext(BidPatternList.EMPTY, suits));
-        }
-        
+    public List<BidPatternListContext> resolveSymbols(SymbolTable suits) {
         List<BidPatternListContext> list = new ArrayList<>();
-        for(BidPatternList bpl: withOpp.addInitialPasses()) {
-            list.addAll(bpl.resolveSymbols(new BidPatternListContext(BidPatternList.EMPTY, suits)));
+        for(BidPatternList bpl: withOpposingBidding().addInitialPasses()) {
+            list.addAll(bpl.resolveSymbols(BidPatternList.EMPTY, suits));
         }
         return list;
     }
     
     /**
-     * Evaluate
+     * Resolve the symbols starting from a previous context
      * @param ctx
-     * @param isOpp
-     * @return
+     *             The previous context.
+     * @return The list of resolved bidding pattern contexts
      */
-    private List<BidPatternListContext> resolveSymbols(BidPatternListContext ctx) {
+    private List<BidPatternListContext> resolveSymbols(BidPatternList previous, SymbolTable suits) {
+        if (bids.isEmpty()) {
+            return List.of(new BidPatternListContext(previous, suits));
+        }
+        // For each context gotten from the first bid,
+        // evaluate the remaining bids in the context of that bid.
+        BidPatternList exceptFirst = exceptFirst();
+        List<BidPatternListContext> list = new ArrayList<>();
         BidPattern pattern = bids.get(0);
-        boolean isOpp = pattern.generality != null ? bids.get(1).isOpposition : !pattern.isOpposition;
-        return exceptFirst().resolveRemainingSymbols(ctx, resolveSymbols(pattern, ctx), isOpp);
+        for (BidPatternContext b : pattern.resolveSymbols(suits)) {
+            list.addAll(exceptFirst.resolveSymbols(previous.withBidAdded(b.bidPattern), b.suits));
+        }
+        return list;
     }
 
     /**
@@ -238,6 +235,11 @@ public final class BidPatternList {
         }
     }
     
+    /**
+     * Given unopposed bidding sequences, will insert
+     * passes where the opposing bidding is missing.
+     * @return The new bid pattern list with passes inserted in the middle.
+     */
     public BidPatternList withOpposingBidding() {
         if (bids.isEmpty()) {
             throw new IllegalStateException("List must be non-empty");
@@ -313,33 +315,9 @@ public final class BidPatternList {
         return -1;
     }
 
-    private List<BidPatternListContext> resolveRemainingSymbols(BidPatternListContext ctx, List<BidPatternListContext> contexts, boolean isOpp) {
-        // If we are already done then it is invalid to add any more bids
-        if (ctx.bids.isCompleted() && !bids.isEmpty()) {
-            return List.of();
-        }
-
-        // If no more bids then we are done
-        if (bids.isEmpty()) {
-            if (!isOpp) {
-                throw new IllegalArgumentException("last bid must be made by 'we'");
-            }
-            return contexts;
-        }
-
-        BidPattern pattern = bids.get(0);
-
-        List<BidPatternListContext> l = new ArrayList<>();
-        for (BidPatternListContext newCtx : contexts) {
-            if (pattern.generality != null) {
-                l.addAll(resolveSymbols(newCtx));
-            } else {
-                l.addAll(resolveSymbols(newCtx));
-            }
-        }
-        return l;
-    }
-
+    /**
+     * @return The number of initial passes.
+     */
     private int numInitialPasses() {
         for(int i = 0; i < bids.size(); i++) {
             if (!bids.get(i).isPass()) {
@@ -347,14 +325,5 @@ public final class BidPatternList {
             }
         }
         return bids.size();
-    }
-    
-    private boolean isCompleted() {
-        int sz = bids.size();
-        return sz >= 4
-                && bids.get(bids.size() - 1).isPass()
-                && bids.get(bids.size() - 2).isPass()
-                && bids.get(bids.size() - 3).isPass()
-                && bids.get(bids.size() - 4).isPass();
     }
 }
