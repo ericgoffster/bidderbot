@@ -35,7 +35,7 @@ test xx AQxxxx xx xxx: 1C 1H 1N 2H
 
 [i_bid_suit x] J3x => inv, rebiddable x
 test xx AQxxxx xx Kxx: 1C 1H 1N 3H
-antitest xx AQxxx xxx Kxx: 1C 1H 1N 3H
+anti_test xx AQxxx xxx Kxx: 1C 1H 1N 3H
 
 [i_bid_suit M] 4M => gf, rebiddable M
 test Ax AQxxxx xx Kxx: 1C 1H 1N 4H

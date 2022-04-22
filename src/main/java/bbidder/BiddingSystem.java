@@ -229,7 +229,7 @@ public class BiddingSystem {
                     } catch (Exception e) {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }
-                } else if (comm.length == 2 && comm[0].equalsIgnoreCase("antitest")) {
+                } else if (comm.length == 2 && comm[0].equalsIgnoreCase("anti_test")) {
                     try {
                         tests.add(BiddingTest.valueOf(true, where + ":" + lineno, comm[1]));
                     } catch (Exception e) {
