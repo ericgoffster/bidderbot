@@ -77,6 +77,16 @@ public class InfSummary {
     public double avgLenInSuit(int suit) {
         return getStat(suit).avg;
     }
+    
+    public short getBidSuits() {
+        short suits = 0;
+        for(int i = 0; i < 4; i++) {
+            if (avgLenInSuit(i) >= 4) {
+                suits |= (1 << i);
+            }
+        }
+        return suits;
+    }
 
     @Override
     public int hashCode() {

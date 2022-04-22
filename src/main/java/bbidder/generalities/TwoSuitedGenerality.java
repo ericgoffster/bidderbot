@@ -45,10 +45,10 @@ public class TwoSuitedGenerality implements Generality {
         if (players.me.infSummary.minLenInSuit(l) + players.partner.infSummary.minLenInSuit(l) >= 8) {
             return false;
         }
-        if (players.me.infSummary.avgLenInSuit(s) < 4) {
+        if ((players.me.infSummary.getBidSuits() & (1 << l)) == 0) {
             return false;
         }
-        if (players.me.infSummary.avgLenInSuit(l) < 4) {
+        if ((players.me.infSummary.getBidSuits() & (1 << s)) == 0) {
             return false;
         }
         if (players.me.infSummary.avgLenInSuit(l) > players.me.infSummary.avgLenInSuit(s)) {

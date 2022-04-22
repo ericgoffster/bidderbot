@@ -15,7 +15,6 @@ import bbidder.Range;
 import bbidder.ShapeSet;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 import bbidder.symbols.ConstSymbol;
 
@@ -45,12 +44,6 @@ public class Rebiddable implements Inference {
     }
 
     private IBoundInference createrBound(int s, InfSummary meSummary, InfSummary partnerSummary) {
-        if (meSummary.minLenInSuit(s) + partnerSummary.minLenInSuit(s) >= 8) {
-            return ConstBoundInference.F;
-        }
-        if (meSummary.avgLenInSuit(s) < 4) {
-            return ConstBoundInference.F;
-        }
         int n = meSummary.minLenInSuit(s);
         Range r;
         if (n <= 0) {

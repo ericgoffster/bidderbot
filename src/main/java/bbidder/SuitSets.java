@@ -120,14 +120,9 @@ public class SuitSets {
 
         @Override
         public short evaluate(Players players) {
-            short suits = 0;
-            for (int suit = 0; suit < 4; suit++) {
-                if (players.lho.infSummary.avgLenInSuit(suit) < 4 && players.rho.infSummary.avgLenInSuit(suit) < 4
-                        && players.partner.infSummary.avgLenInSuit(suit) < 4 && players.me.infSummary.avgLenInSuit(suit) < 4) {
-                    suits |= (1 << suit);
-                }
-            }
-            return suits;
+            short allBid = (short)(players.lho.infSummary.getBidSuits() | players.rho.infSummary.getBidSuits()
+                    | players.partner.infSummary.getBidSuits() | players.me.infSummary.getBidSuits());
+            return (short)(0xf ^ allBid);
         }
 
         @Override
