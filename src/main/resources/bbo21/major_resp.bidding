@@ -7,45 +7,59 @@
 
 P 1M
 2♣ => 11+ tpts, fit M;
-    test xxx KJx Kx Axxxx:P 1♥ 2♣;
+    test xxx KJx Kx Axxxx:
+        P 1♥ 2♣;
 
 P 1M
 2M => 6-10 tpts, fit M;
-    test xxx Kxx Kx xxxxx:P 1♥ 2♥;
+    test xxx Kxx Kx xxxxx:
+        P 1♥ 2♥;
 
 1M 2M => min, fit M;
-    test xxx Kxx Kx xxxxx:1♥ 2♥;
+    test xxx Kxx Kx xxxxx:
+        1♥ 2♥;
 
 1M DJy => gf+, 1- y, 4+ M;
-    test x Kxxx Axx Axxxx:1♥ 3♠;
-    test Kxxx x Axx Axxxx:1♠ 4♥;
+    test x Kxxx Axx Axxxx:
+        1♥ 3♠;
+    test Kxxx x Axx Axxxx:
+        1♠ 4♥;
 
 1H 2S => 5+ S, 4+H, 15-18 tpts;
-    test KQJ98 Q963 A4 A6:1♥ 2♠;
+    test KQJ98 Q963 A4 A6:
+        1♥ 2♠;
 
 1M 2N => gf+, 4+ M;
-    test AQx Axxx Kx xxxx:1♥ 2N;
+    test AQx Axxx Kx xxxx:
+        1♥ 2N;
 
 1M 3M => inv, 4+ M;
-    test xxx Kxxx Kx KQxx:1♥ 3♥;
+    test xxx Kxxx Kx KQxx:
+        1♥ 3♥;
 
 1M 3m => inv, 6+ m;
-    test Qxx x xxx AQJxxx:1♥ 3♣;
+    test Qxx x xxx AQJxxx:
+        1♥ 3♣;
 
 1M 1N => inv, 3 M;
-    test Kx KJx xxx Axxxx :1♥ 1N;
+    test Kx KJx xxx Axxxx :
+        1♥ 1N;
 
 1M NJy:down => gf+, 5+ y, longest_or_equal y among unbid;
 1M NJy => gf+, 4 y, longest_or_equal y among unbid;
-    test AQxxx xx Axx Kxx :1♥ 1♠;
-    test Kxx xx Axx AQxxx :1♥ 2♣;
+    test AQxxx xx Axx Kxx :
+        1♥ 1♠;
+    test Kxx xx Axx AQxxx :
+        1♥ 2♣;
 
 1♥ 1♠:down => min+, 4+ ♠;
-    test Kxxx xx Axx Qxxx :1♥ 1♠;
+    test Kxxx xx Axx Qxxx :
+        1♥ 1♠;
 
 # Catch all
 1M 1N => min+;
-    test xxx xx AKxx Qxxx :1♥ 1N;
+    test xxx xx AKxx Qxxx :
+        1♥ 1N;
 
 include simple_major_raise.bidding;
 include j2n_rebids.bidding;

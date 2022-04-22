@@ -7,24 +7,30 @@
 
 1N 2N
 3♣ => always;
-    test AQX KJxx AJxx xx: 1N 2N 3♣;
+    test AQX KJxx AJxx xx:
+        1N 2N 3♣;
 
 1N 3C
 3♦ => always;
-    test AQX KJxx xx AJxx: 1N 3♣ 3♦;
+    test AQX KJxx xx AJxx:
+        1N 3♣ 3♦;
 
 1N 2N
 3♣ 3x => 1-x;
-    test AQx x Kxx AQxxxx: 1N 2N 3♣ 3♥;
+    test AQx x Kxx AQxxxx:
+        1N 2N 3♣ 3♥;
 
 1N 3♣
 3♦ 3x => 1-x;
-    test AQx x AQxxxx Kxx: 1N 3♣ 3♦ 3♥;
+    test AQx x AQxxxx Kxx:
+        1N 3♣ 3♦ 3♥;
 
 1N 2N
 3♣ 3N => slaminv;
-    test AQx xx Kx AQxxxx: 1N 2N 3♣ 3N;
+    test AQx xx Kx AQxxxx:
+        1N 2N 3♣ 3N;
 
 1N 3♣
 3♦ 3N => slaminv;
-    test AQx xx AQxxxx Kx: 1N 3♣ 3♦ 3N;
+    test AQx xx AQxxxx Kx:
+        1N 3♣ 3♦ 3N;

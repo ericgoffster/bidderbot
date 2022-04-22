@@ -6,34 +6,48 @@
 # S = ♠
 
 2N 3♣ => gf+, 4M;
-    test AJxxx Axxx xx xx:2N 3♣;
-    test AJxx Axxxx xx xx:2N 3♣;
+    test AJxxx Axxx xx xx:
+        2N 3♣;
+    test AJxx Axxxx xx xx:
+        2N 3♣;
 
 2N 3M-1 => slaminv, 6+M;
-    test Axxxxx x Axx Jxx:2N 3♥;
-    test x Axxxxx Axx Jxx:2N 3♦;
+    test Axxxxx x Axx Jxx:
+        2N 3♥;
+    test x Axxxxx Axx Jxx:
+        2N 3♦;
 
 2N 4M-1 => 6+M, gf+;
-    test Axxxxx x xxx Jxx:2N 4♥;
-    test x Axxxxx xxx Jxx:2N 4♦;
+    test Axxxxx x xxx Jxx:
+        2N 4♥;
+    test x Axxxxx xxx Jxx:
+        2N 4♦;
 
 2N 3M-1 => 5+M;
-    test Axxxx xx Axx Jxx:2N 3♥;
-    test xx Axxxx Axx Jxx:2N 3♦;
+    test Axxxx xx Axx Jxx:
+        2N 3♥;
+    test xx Axxxx Axx Jxx:
+        2N 3♦;
 
 2N 3N => gf;
-    test Axx xx Axxxx Jxx:2N 3N;
-    test xx Axx Axxxx Jxx:2N 3N;
+    test Axx xx Axxxx Jxx:
+        2N 3N;
+    test xx Axx Axxxx Jxx:
+        2N 3N;
 
 2N 3♠ => gf+, 4+C, 4+D;
-    test Axx x Axxxx Axxx:2N 3♠;
+    test Axx x Axxxx Axxx:
+        2N 3♠;
 
 2N 4N => slaminv;
-    test Axx xx AJxxx Qxx:2N 4N;
-    test xx Axx AJxxx Qxx:2N 4N;
+    test Axx xx AJxxx Qxx:
+        2N 4N;
+    test xx Axx AJxxx Qxx:
+        2N 4N;
 
 2N 5N => grandinv;
-    test Axx Axx AQxx Qxx:2N 5N;
+    test Axx Axx AQxx Qxx:
+        2N 5N;
 
 include stayman.bidding;
 include jacobyxfer.bidding;

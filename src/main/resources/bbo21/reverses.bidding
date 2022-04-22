@@ -8,53 +8,67 @@
 # Jump rebid first suit with gf hand and a powerful suit
 1x 1y
 NJz:>2x 3y => 6+ y, 9+ tpts;
-    test KQJxxx xx Axx xx:1♣ 1♠ 2♥ 3♠;
-    test AQTxxx xx Axx xx:1♣ 1♠ 2♥ 3♠;
+    test KQJxxx xx Axx xx:
+        1♣ 1♠ 2♥ 3♠;
+    test AQTxxx xx Axx xx:
+        1♣ 1♠ 2♥ 3♠;
 
 # Rebid first suit with minimum hand and 5+ in that suit
 1x 1y
 NJz:>2x 2y => 5+ y, 7+ tpts;
-    test KQJxx Qx xxxx xx:1♣ 1♠ 2♥ 2♠;
+    test KQJxx Qx xxxx xx:
+        1♣ 1♠ 2♥ 2♠;
 
 # gf simple raise of first suit.
 1x 1y
 NJz:>2x NJx => fit x, gf;
-    test KQxx x xxxx Axxx:1♣ 1♠ 2♥ 3♣;
+    test KQxx x xxxx Axxx:
+        1♣ 1♠ 2♥ 3♣;
 
 # slam inv with jump raise of first suit
 1x 1y
 NJz:>2x Jx => fit x, slaminv+;
-    test KQxx x Kxxx AKxx:1♣ 1♠ 2♥ 4♣;
+    test KQxx x Kxxx AKxx:
+        1♣ 1♠ 2♥ 4♣;
 
 # simple raise of second suit with gf+
 1x 1y
 NJz:>2x NJz => fit z, gf+;
-    test x KQxx xxxx Axxx:1♣ 1♠ 2♥ 3♣;
+    test x KQxx xxxx Axxx:
+        1♣ 1♠ 2♥ 3♣;
 
 # 4sf with generic game force
 1x 1y
 NJz:>2x NJw => gf;
-    test AQxx xxx xxxx Ax:1♣ 1♠ 2♥ 3♦;
+    test AQxx xxx xxxx Ax:
+        1♣ 1♠ 2♥ 3♦;
 
 # 2N artficial weak
 1x 1y
 NJz:>2x 2N => always;
-    test KQxx xx xxxx xxx:1♣ 1♠ 2♥ 2N;
-    test KQxxx xxx xxx xx:1♣ 1♠ 2♥ 2N;
+    test KQxx xx xxxx xxx:
+        1♣ 1♠ 2♥ 2N;
+    test KQxxx xxx xxx xx:
+        1♣ 1♠ 2♥ 2N;
 
 1x 1y
 NJz:>2x 2N 3z => 5+ z;
-    test - AQxxx KQ AKxxxx:1♣ 1♠ 2♥ 2N 3♥;
+    test - AQxxx KQ AKxxxx:
+        1♣ 1♠ 2♥ 2N 3♥;
 
 1x 1y
 NJz:>2x 2N 3x => 6+ x;
-    test - AQxx AKxxxx KQx:1♦ 1♠ 2♥ 2N 3♦;
+    test - AQxx AKxxxx KQx:
+        1♦ 1♠ 2♥ 2N 3♦;
 
 1x 1y
 NJz:>2x 2N 3N => gf, stoppers unbid;
-    test x AKJx AQxxx KQx:1♦ 1♠ 2♥ 2N 3N;
+    test x AKJx AQxxx KQx:
+        1♦ 1♠ 2♥ 2N 3N;
 
 1x 1y
 NJz:>2x 2N 3♣ => always;
-    test x AQxx KJx AQxxx:1♣ 1♠ 2♥ 2N 3♣;
-    test Kx AKJx AKxxx Qx:1♦ 1♠ 2♥ 2N 3♣;
+    test x AQxx KJx AQxxx:
+        1♣ 1♠ 2♥ 2N 3♣;
+    test Kx AKJx AKxxx Qx:
+        1♦ 1♠ 2♥ 2N 3♣;
