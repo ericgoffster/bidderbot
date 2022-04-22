@@ -1,14 +1,14 @@
 package bbidder.inferences;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.Range;
+import bbidder.SymbolTable;
 import bbidder.inferences.bound.TotalPtsBoundInf;
 
 /**
@@ -36,7 +36,7 @@ public class TotalPointsRange implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(Map<String, Integer> suits) {
+    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
         return List.of(new InferenceContext(this, suits));
     }
 

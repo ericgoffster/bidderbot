@@ -2,18 +2,18 @@ package bbidder.inferences;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
 import bbidder.Symbol;
 import bbidder.SymbolContext;
 import bbidder.SymbolParser;
+import bbidder.SymbolTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -50,7 +50,7 @@ public class SuitRange implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(Map<String, Integer> suits) {
+    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
         List<InferenceContext> l = new ArrayList<>();
         for (var e : SymbolContext.resolveSymbols(suits, suit).entrySet()) {
             l.add(new InferenceContext(new SuitRange(e.getKey(), rng), e.getValue()));

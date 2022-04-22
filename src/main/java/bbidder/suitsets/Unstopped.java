@@ -1,9 +1,8 @@
 package bbidder.suitsets;
 
-import java.util.Map;
-
 import bbidder.Players;
 import bbidder.SuitSet;
+import bbidder.SymbolTable;
 
 public class Unstopped implements SuitSet {
     public Unstopped() {
@@ -39,7 +38,7 @@ public class Unstopped implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(Map<String, Integer> bc) {
+    public SuitSet replaceVars(SymbolTable bc) {
         return this;
     }
     

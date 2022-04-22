@@ -1,12 +1,12 @@
 package bbidder.suitsets;
 
-import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSets;
 import bbidder.Symbol;
+import bbidder.SymbolTable;
 
 public class LookupSet implements SuitSet {
     final Symbol strain;
@@ -44,7 +44,7 @@ public class LookupSet implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(Map<String, Integer> bc) {
+    public SuitSet replaceVars(SymbolTable bc) {
         return new LookupSet(SuitSets.bind(bc, strain));
     }
 }

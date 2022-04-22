@@ -2,11 +2,11 @@ package bbidder.symbols;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.Symbol;
+import bbidder.SymbolTable;
 
 public class LessThanSymbol implements Symbol {
     public final Symbol sym;
@@ -43,7 +43,7 @@ public class LessThanSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(Map<String, Integer> suits) {
+    public Symbol evaluate(SymbolTable suits) {
         Symbol evaluate = sym.evaluate(suits);
         if (evaluate == null) {
             return null;
@@ -52,12 +52,12 @@ public class LessThanSymbol implements Symbol {
     }
 
     @Override
-    public Map<String, Integer> unevaluate(int strain) {
+    public SymbolTable unevaluate(int strain) {
         return sym.unevaluate(strain);
     }
     
     @Override
-    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+    public List<Symbol> boundSymbols(SymbolTable suits) {
         List<Symbol> boundOthers = other.boundSymbols(suits);
         if (boundOthers.size() != 1) {
             throw new IllegalArgumentException("undefined smybol: " + other);

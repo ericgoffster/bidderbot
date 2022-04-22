@@ -16,6 +16,16 @@ public class SymbolTable {
         return new SymbolTable(newSuits);
     }
     
+    public boolean containsValue(int v) {
+        return suits.containsValue(v);
+    }
+    
+    public SymbolTable add(SymbolTable other) {
+        Map<String, Integer> newSuits = new HashMap<>(suits);
+        newSuits.putAll(other.suits);
+        return new SymbolTable(newSuits);
+    }
+    
     @Override
     public String toString() {
         return suits.toString();
@@ -34,5 +44,11 @@ public class SymbolTable {
             return false;
         SymbolTable other = (SymbolTable) obj;
         return Objects.equals(suits, other.suits);
+    }
+    public boolean containsKey(String string) {
+        return suits.containsKey(string);
+    }
+    public Integer get(String string) {
+        return suits.get(string);
     }
 }

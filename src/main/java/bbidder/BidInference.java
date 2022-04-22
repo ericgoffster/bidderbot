@@ -2,7 +2,6 @@ package bbidder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import bbidder.inferences.AndInference;
@@ -92,8 +91,8 @@ public class BidInference {
      */
     public List<BidInference> resolveSymbols() {
         List<BidInference> result = new ArrayList<>();
-        for (BidPatternListContext bplc : bids.resolveFirstSymbol(Map.of())) {
-            for (InferenceContext bc : inferences.resolveSymbols(bplc.getSuits())) {
+        for (BidPatternListContext bplc : bids.resolveFirstSymbol(SymbolTable.EMPTY)) {
+            for (InferenceContext bc : inferences.resolveSymbols(bplc.suits)) {
                 result.add(BidInference.EMPTY.at(where).withBids(bplc.bids).withInference(bc.inference));
             }
         }

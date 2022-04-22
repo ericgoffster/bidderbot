@@ -2,11 +2,11 @@ package bbidder.symbols;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.Symbol;
+import bbidder.SymbolTable;
 
 public class SteppedSymbol implements Symbol {
     public final Symbol sym;
@@ -41,7 +41,7 @@ public class SteppedSymbol implements Symbol {
     }
     
     @Override
-    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+    public List<Symbol> boundSymbols(SymbolTable suits) {
         List<Symbol> l = new ArrayList<>();
         for(Symbol s: sym.boundSymbols(suits)) {
             l.add(new SteppedSymbol(s, delta));
@@ -50,7 +50,7 @@ public class SteppedSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(Map<String, Integer> suits) {
+    public Symbol evaluate(SymbolTable suits) {
         Symbol s = sym.evaluate(suits);
         if (s == null) {
             return null;
@@ -63,7 +63,7 @@ public class SteppedSymbol implements Symbol {
     }
 
     @Override
-    public Map<String, Integer> unevaluate(int strain) {
+    public SymbolTable unevaluate(int strain) {
         return sym.unevaluate(untransform(strain));
     }
 

@@ -1,14 +1,14 @@
 package bbidder.inferences;
 
 import java.util.List;
-import java.util.Map;
 
-import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.Shape;
 import bbidder.ShapeSet;
+import bbidder.SymbolTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -28,7 +28,7 @@ public class UnBalanced implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(Map<String, Integer> suits) {
+    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
         return List.of(new InferenceContext(this, suits));
     }
 

@@ -1,10 +1,10 @@
 package bbidder.suitsets;
 
-import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Players;
 import bbidder.SuitSet;
+import bbidder.SymbolTable;
 
 public class And implements SuitSet {
     final SuitSet s1;
@@ -44,7 +44,7 @@ public class And implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(Map<String, Integer> bc) {
+    public SuitSet replaceVars(SymbolTable bc) {
         return new And(s1.replaceVars(bc), s2.replaceVars(bc));
     }
 }

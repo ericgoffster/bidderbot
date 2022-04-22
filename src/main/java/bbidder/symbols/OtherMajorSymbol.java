@@ -1,11 +1,11 @@
 package bbidder.symbols;
 
 import java.util.List;
-import java.util.Map;
 
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.Symbol;
+import bbidder.SymbolTable;
 
 public class OtherMajorSymbol implements Symbol {
     public OtherMajorSymbol() {
@@ -34,7 +34,7 @@ public class OtherMajorSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(Map<String, Integer> suits) {
+    public Symbol evaluate(SymbolTable suits) {
         if (suits.containsKey("M")) {
             return new ConstSymbol(otherMajor(suits.get("M")));
         }
@@ -50,12 +50,12 @@ public class OtherMajorSymbol implements Symbol {
     }
 
     @Override
-    public Map<String, Integer> unevaluate(int strain) {
-        return Map.of("OM", strain);
+    public SymbolTable unevaluate(int strain) {
+        return SymbolTable.EMPTY.add("OM", strain);
     }
 
     @Override
-    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+    public List<Symbol> boundSymbols(SymbolTable suits) {
         if (suits.containsKey("M") || suits.containsKey("OM")) {
             return List.of(evaluate(suits));
         }

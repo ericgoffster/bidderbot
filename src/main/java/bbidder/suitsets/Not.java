@@ -1,10 +1,10 @@
 package bbidder.suitsets;
 
-import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Players;
 import bbidder.SuitSet;
+import bbidder.SymbolTable;
 
 public class Not implements SuitSet {
     final SuitSet ss;
@@ -42,7 +42,7 @@ public class Not implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(Map<String, Integer> bc) {
+    public SuitSet replaceVars(SymbolTable bc) {
         return new Not(ss.replaceVars(bc));
     }
 }

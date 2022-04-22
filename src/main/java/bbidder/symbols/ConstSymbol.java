@@ -1,12 +1,12 @@
 package bbidder.symbols;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.Strain;
 import bbidder.Symbol;
+import bbidder.SymbolTable;
 
 public class ConstSymbol implements Symbol {
     public final int strain;
@@ -39,20 +39,20 @@ public class ConstSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(Map<String, Integer> suits) {
+    public Symbol evaluate(SymbolTable suits) {
         return this;
     }
 
     @Override
-    public Map<String, Integer> unevaluate(int strain) {
+    public SymbolTable unevaluate(int strain) {
         if (strain != this.strain) {
             throw new IllegalArgumentException();
         }
-        return Map.of();
+        return SymbolTable.EMPTY;
     }
     
     @Override
-    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+    public List<Symbol> boundSymbols(SymbolTable suits) {
         return List.of(this);
     }
 

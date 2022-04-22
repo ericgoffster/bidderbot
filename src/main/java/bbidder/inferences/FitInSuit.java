@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +16,7 @@ import bbidder.ShapeSet;
 import bbidder.Symbol;
 import bbidder.SymbolContext;
 import bbidder.SymbolParser;
+import bbidder.SymbolTable;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -43,7 +43,7 @@ public class FitInSuit implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(Map<String, Integer> suits) {
+    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
         List<InferenceContext> l = new ArrayList<>();
         for (var e : SymbolContext.resolveSymbols(suits, suit).entrySet()) {
             l.add(new InferenceContext(new FitInSuit(e.getKey()), e.getValue()));

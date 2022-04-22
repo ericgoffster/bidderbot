@@ -1,9 +1,8 @@
 package bbidder.suitsets;
 
-import java.util.Map;
-
 import bbidder.Players;
 import bbidder.SuitSet;
+import bbidder.SymbolTable;
 
 public class Unbid implements SuitSet {
     public Unbid() {
@@ -34,7 +33,7 @@ public class Unbid implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(Map<String, Integer> bc) {
+    public SuitSet replaceVars(SymbolTable bc) {
         return this;
     }
     

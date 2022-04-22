@@ -1,7 +1,6 @@
 package bbidder;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * A Bridge inference.
@@ -9,5 +8,5 @@ import java.util.Map;
 public interface Inference {
     public IBoundInference bind(Players players);
 
-    public List<InferenceContext> resolveSymbols(Map<String, Integer> suits);
+    public List<InferenceContext> resolveSymbols(SymbolTable suits);
 }

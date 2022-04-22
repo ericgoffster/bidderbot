@@ -15,7 +15,7 @@ public class TrueGenerality implements Generality {
 
     @Override
     public List<BidPatternContext> resolveSymbols(BidPatternContext bc) {
-        return List.of(new BidPatternContext(bc.bid.withGeneralityAdded(this), bc.getSuits()));
+        return List.of(new BidPatternContext(bc.bid.withGeneralityAdded(this), bc.suits));
     }
 
     @Override

@@ -1,14 +1,13 @@
 package bbidder;
 
 import java.util.List;
-import java.util.Map;
 
 public interface Symbol {
-    public Symbol evaluate(Map<String, Integer> suits);
+    public Symbol evaluate(SymbolTable suits);
 
-    public Map<String, Integer> unevaluate(int strain);
+    public SymbolTable unevaluate(int strain);
 
-    public List<Symbol> boundSymbols(Map<String, Integer> suits);
+    public List<Symbol> boundSymbols(SymbolTable suits);
 
     public int getResolved();
     

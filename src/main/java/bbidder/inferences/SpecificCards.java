@@ -2,20 +2,20 @@ package bbidder.inferences;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
 import bbidder.NOfTop;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.Symbol;
 import bbidder.SymbolContext;
 import bbidder.SymbolParser;
+import bbidder.SymbolTable;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
 
 /**
@@ -42,7 +42,7 @@ public class SpecificCards implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(Map<String, Integer> suits) {
+    public List<InferenceContext> resolveSymbols(SymbolTable suits) {
         List<InferenceContext> l = new ArrayList<>();
         for (var e : SymbolContext.resolveSymbols(suits, suit).entrySet()) {
             l.add(new InferenceContext(new SpecificCards(e.getKey(), rng, top), e.getValue()));

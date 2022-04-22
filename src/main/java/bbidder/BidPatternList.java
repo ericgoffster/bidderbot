@@ -5,7 +5,6 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -78,8 +77,8 @@ public class BidPatternList {
      */
     public List<BidPatternListContext> resolveSymbols(BidPattern pattern, BidPatternListContext bc) {
         List<BidPatternListContext> l = new ArrayList<>();
-        for(BidPatternContext b: pattern.resolveSymbols(bc.getSuits())) {
-            l.add(new BidPatternListContext(bc.bids.withBidAdded(b.bid), b.getSuits()));
+        for(BidPatternContext b: pattern.resolveSymbols(bc.suits)) {
+            l.add(new BidPatternListContext(bc.bids.withBidAdded(b.bid), b.suits));
         }
         return l;
     }
@@ -91,7 +90,7 @@ public class BidPatternList {
      * 
      * @return The list of resolved bidding contexts
      */
-    public List<BidPatternListContext> resolveFirstSymbol(Map<String, Integer> suits) {
+    public List<BidPatternListContext> resolveFirstSymbol(SymbolTable suits) {
         // If there are no bids, then we are done
         BidPatternListContext empty = new BidPatternListContext(BidPatternList.EMPTY, suits);
         if (bids.isEmpty()) {

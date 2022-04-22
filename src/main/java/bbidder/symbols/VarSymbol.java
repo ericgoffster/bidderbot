@@ -1,12 +1,12 @@
 package bbidder.symbols;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.Symbol;
+import bbidder.SymbolTable;
 
 public class VarSymbol implements Symbol {
     public final String v;
@@ -39,7 +39,7 @@ public class VarSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(Map<String, Integer> suits) {
+    public Symbol evaluate(SymbolTable suits) {
         if (suits.containsKey(v)) {
             return new ConstSymbol(suits.get(v));
         }
@@ -52,12 +52,12 @@ public class VarSymbol implements Symbol {
     }
 
     @Override
-    public Map<String, Integer> unevaluate(int strain) {
-        return Map.of(v, strain);
+    public SymbolTable unevaluate(int strain) {
+        return SymbolTable.EMPTY.add(v, strain);
     }
 
     @Override
-    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+    public List<Symbol> boundSymbols(SymbolTable suits) {
         if (suits.containsKey(v)) {
             return List.of(evaluate(suits));
         }

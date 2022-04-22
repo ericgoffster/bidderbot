@@ -2,7 +2,6 @@ package bbidder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -189,7 +188,7 @@ public class BidPattern {
      *            The suits
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public List<BidPatternContext> resolveSymbols(Map<String, Integer> suits) {
+    public List<BidPatternContext> resolveSymbols(SymbolTable suits) {
         if (generality != null) {
             return generality.resolveSymbols(new BidPatternContext(createWild(TrueGenerality.T), suits));
         }
@@ -197,7 +196,7 @@ public class BidPattern {
             return List.of(new BidPatternContext(this, suits));
         }
         List<BidPatternContext> result = new ArrayList<>();
-        for (Entry<Symbol, Map<String, Integer>> e : SymbolContext.resolveSymbols(suits, getSymbol()).entrySet()) {
+        for (Entry<Symbol, SymbolTable> e : SymbolContext.resolveSymbols(suits, getSymbol()).entrySet()) {
             result.add(new BidPatternContext(bindSuit(e.getKey()), e.getValue()));
         }
         return result;
