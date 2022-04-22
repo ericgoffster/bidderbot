@@ -13,4 +13,6 @@ public interface Symbol {
     public int getResolved();
     
     public Comparator<Integer> direction();
+    
+    public boolean levelAllowed(int level);
 }

@@ -78,4 +78,9 @@ public class MinorSymbol implements Symbol {
     public Comparator<Integer> direction() {
         return Integer::compare;
     }    
+
+    @Override
+    public boolean levelAllowed(int level) {
+        return true;
+    }
 }

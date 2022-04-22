@@ -63,5 +63,10 @@ public class ConstSymbol implements Symbol {
     @Override
     public Comparator<Integer> direction() {
         return Integer::compare;
-    }    
+    }
+
+    @Override
+    public boolean levelAllowed(int level) {
+        return true;
+    }
 }

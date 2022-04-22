@@ -1,9 +1,13 @@
 package bbidder;
 
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.DownSymbol;
+import bbidder.symbols.EqualLevel;
+import bbidder.symbols.GreaterThanLevel;
+import bbidder.symbols.LessThanLevelSymbol;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.MinorSymbol;
 import bbidder.symbols.NotSymbol;
@@ -13,6 +17,10 @@ import bbidder.symbols.SteppedSymbol;
 import bbidder.symbols.VarSymbol;
 
 public class SymbolParser {
+    
+    public static Pattern LESS_THAN = Pattern.compile("<(\\d+)");
+    public static Pattern EQUAL_TO = Pattern.compile("=(\\d+)");
+    public static Pattern GREATER_THAN = Pattern.compile(">(\\d+)");
 
     /**
      * @param symbol
@@ -30,13 +38,36 @@ public class SymbolParser {
                 return new SteppedSymbol(sym, Integer.parseInt(m.group(2)));
             }
         }
-        if (symbol.toLowerCase().endsWith(":down")) {
-            Symbol sym = parseSymbol(symbol.substring(0, symbol.length() - 5));
+        int pos = symbol.lastIndexOf(":");
+        if (pos >= 0) {
+            Symbol sym = parseSymbol(symbol.substring(0, pos));
             if (sym == null) {
                 return null;
             }
-            return new DownSymbol(sym);
-        }
+            String tag = symbol.substring(pos + 1);
+            if (tag.toLowerCase().equals("down")) {
+                return new DownSymbol(sym);
+            }
+            {
+                Matcher m = LESS_THAN.matcher(tag);
+                if (m.matches()) {
+                    return new LessThanLevelSymbol(sym, Integer.parseInt(m.group(1)));
+                }
+            }
+            {
+                Matcher m = GREATER_THAN.matcher(tag);
+                if (m.matches()) {
+                    return new GreaterThanLevel(sym, Integer.parseInt(m.group(1)));
+                }
+            }
+            {
+                Matcher m = EQUAL_TO.matcher(tag);
+                if (m.matches()) {
+                    return new EqualLevel(sym, Integer.parseInt(m.group(1)));
+                }
+            }
+            return null;
+        } 
         if (symbol.startsWith("~")) {
             Symbol sym = parseSymbol(symbol.substring(1));
             if (sym == null) {

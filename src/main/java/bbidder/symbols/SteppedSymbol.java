@@ -82,4 +82,8 @@ public class SteppedSymbol implements Symbol {
     public Comparator<Integer> direction() {
         return sym.direction();
     }
+    @Override
+    public boolean levelAllowed(int level) {
+        return sym.levelAllowed(level);
+    }
 }

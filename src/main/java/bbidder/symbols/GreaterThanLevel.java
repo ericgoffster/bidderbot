@@ -6,22 +6,24 @@ import java.util.Objects;
 
 import bbidder.Symbol;
 
-public class DownSymbol implements Symbol {
+public class GreaterThanLevel implements Symbol {
     public final Symbol sym;
+    public final int level;
 
-    public DownSymbol(Symbol sym) {
+    public GreaterThanLevel(Symbol sym, int level) {
         super();
         this.sym = sym;
+        this.level = level;
     }
 
     @Override
     public String toString() {
-        return sym + ":down";
+        return sym + ":>"+level;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sym);
+        return Objects.hash(level, sym);
     }
 
     @Override
@@ -32,8 +34,8 @@ public class DownSymbol implements Symbol {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        DownSymbol other = (DownSymbol) obj;
-        return Objects.equals(sym, other.sym);
+        GreaterThanLevel other = (GreaterThanLevel) obj;
+        return level == other.level && Objects.equals(sym, other.sym);
     }
 
     @Override
@@ -60,9 +62,9 @@ public class DownSymbol implements Symbol {
     public Comparator<Integer> direction() {
         return sym.direction().reversed();
     }
-
+    
     @Override
     public boolean levelAllowed(int level) {
-        return sym.levelAllowed(level);
+        return level > this.level;
     }
 }
