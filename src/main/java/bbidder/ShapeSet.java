@@ -18,7 +18,7 @@ public class ShapeSet implements Iterable<Shape> {
     }
 
     public ShapeSet(Iterable<Shape> list) {
-        this.shapes = createShapes(list);
+        this(createShapes(list));
     }
 
     private static BitSet createShapes(Iterable<Shape> list) {
@@ -30,7 +30,7 @@ public class ShapeSet implements Iterable<Shape> {
     }
 
     public ShapeSet(Predicate<Shape> pred) {
-        this.shapes = createShapes(pred);
+        this(createShapes(pred));
     }
 
     private static BitSet createShapes(Predicate<Shape> pred) {
