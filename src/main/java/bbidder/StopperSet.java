@@ -150,20 +150,6 @@ public final class StopperSet implements Iterable<Stoppers> {
 
     @Override
     public Iterator<Stoppers> iterator() {
-        Iterable<Integer> iterable = BitUtil.iterate(stoppers);
-        return new Iterator<>() {
-            Iterator<Integer> i = iterable.iterator();
-
-            @Override
-            public boolean hasNext() {
-                return i.hasNext();
-            }
-
-            @Override
-            public Stoppers next() {
-                return Stoppers.values()[i.next()];
-            }
-
-        };
+        return BitUtil.stream(stoppers).mapToObj(i -> Stoppers.values()[i]).iterator();
     }
 }
