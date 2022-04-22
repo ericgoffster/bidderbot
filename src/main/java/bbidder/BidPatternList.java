@@ -46,12 +46,10 @@ public class BidPatternList {
 
     /*
      * Retrieves the list of bidding contexts for this bid pattern list.
+     * If first bid is "we" when we allow for either
+     *    [bid] or [(P), bid]
      */
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
-        // no patterns, then a wide open context.
-        if (bids.isEmpty()) {
-            return List.of(bc);
-        }
         BidPattern pattern = bids.get(0);
         List<BiddingContext> l = new ArrayList<>();
         l.addAll(resolveSymbols(bc, true));
@@ -61,6 +59,11 @@ public class BidPatternList {
         return l;
     }
     
+    /**
+     * Resolve the first symbol.
+     * Allow for first, second, third or fourth chair openings
+     * @return The list of resolved bidding contexts
+     */
     public List<BiddingContext> resolveFirstSymbol() {
         if (bids.isEmpty()) {
             return List.of(BiddingContext.EMPTY);
@@ -146,7 +149,7 @@ public class BidPatternList {
         return new BidPatternList(bids.subList(1, bids.size())).resolveSymbols(ctx, pattern, !isOpp);
     }
 
-    public List<BiddingContext> resolveGenerality(BiddingContext ctx, BidPattern pattern) {
+    private List<BiddingContext> resolveGenerality(BiddingContext ctx, BidPattern pattern) {
         BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
         List<BiddingContext> l = new ArrayList<>();
         for (BiddingContext newCtx : pattern.resolveSymbols(ctx)) {
