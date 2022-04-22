@@ -116,37 +116,24 @@ public class BiddingSystem {
         }
         Bid lastBid = bids.getLastBid();
         List<IBoundInference> positive = new ArrayList<>();
-        List<IBoundInference> positiveWild = new ArrayList<>();
         List<IBoundInference> negative = new ArrayList<>();
-        List<IBoundInference> negativeWild = new ArrayList<>();
         List<PossibleBid> possible = getPossibleBids(bids.exceptLast(), players);
         for (PossibleBid i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
-                if (i.inf.bids.positionOfWild() < 0) {
-                    positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
-                } else {
-                    positiveWild.add(AndBoundInf.create(inf, OrBoundInf.create(negativeWild).negate()));
-                }
+                positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
             }
-            if (i.inf.bids.positionOfWild() < 0) {
-                negative.add(inf);
-            }
-            negativeWild.add(inf);
+            negative.add(inf);
         }
         
-        if (positive.isEmpty() && positiveWild.isEmpty() && lastBid != Bid.P) {
+        if (positive.isEmpty() && lastBid != Bid.P) {
             throw new RuntimeException("Unrecognized bidding: " + bids);
         }
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
-            positiveWild.add(OrBoundInf.create(negativeWild).negate());
             positive.add(OrBoundInf.create(negative).negate());
         }
-        if (positive.size() > 0) {
-            return OrBoundInf.create(positive);
-        }
-        return OrBoundInf.create(positiveWild);
+        return OrBoundInf.create(positive);
     }
 }

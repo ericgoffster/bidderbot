@@ -73,10 +73,10 @@ anti_test xx AQxxx xxx Kxx:
         1C 1H
         2C 4H;
 
-[i_bid_suit y, unbid_suit x] NJx:<4C => gf, 4+ x;
-    test xx AQxxx Qxxx Ax:
-        1C 1H
-        2C 2D;
+#[i_bid_suit y, unbid_suit x] NJx:<4C:>1N => gf, 4+ x;
+#    test xx AQxxx Qxxx Ax:
+#        1C 1H
+#        2C 2D;
 
 [] 3N => gf, partial_stoppers unstopped;
     test Axx AQxx Qxx Qxx:
