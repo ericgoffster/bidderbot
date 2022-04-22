@@ -111,10 +111,10 @@ public class ShapeSet implements Iterable<Shape> {
             tot += s.p;
         }
         Stat[] stats = new Stat[4];
-        stats[0] = new Stat(new Range(bits[0], 13), sum[0] / tot);
-        stats[1] = new Stat(new Range(bits[1], 13), sum[1] / tot);
-        stats[2] = new Stat(new Range(bits[2], 13), sum[2] / tot);
-        stats[3] = new Stat(new Range(bits[3], 13), sum[3] / tot);
+        stats[0] = new Stat(0, new Range(bits[0], 13), sum[0] / tot);
+        stats[1] = new Stat(1, new Range(bits[1], 13), sum[1] / tot);
+        stats[2] = new Stat(2, new Range(bits[2], 13), sum[2] / tot);
+        stats[3] = new Stat(3, new Range(bits[3], 13), sum[3] / tot);
         return stats;
     }
 
@@ -123,20 +123,15 @@ public class ShapeSet implements Iterable<Shape> {
         if (isEmpty()) {
             return "none";
         }
-        short[] ranges = { 0, 0, 0, 0 };
-        for (Shape shape : this) {
-            for (int s = 0; s < 4; s++) {
-                ranges[s] |= 1 << shape.numInSuit(s);
-            }
-        }
+        Stat[] stats = getStats();
         List<String> str = new ArrayList<>();
         for (int s = 0; s < 4; s++) {
-            Range rn = new Range(ranges[s], 13);
+            Range rn = stats[s].range;
             if (rn.isEmpty()) {
                 return "{}";
             }
             if (!rn.unBounded()) {
-                str.add(rn + " " + Strain.getName(s));
+                str.add(stats[s].toString());
             }
         }
         if (str.size() == 0) {
@@ -204,13 +199,19 @@ public class ShapeSet implements Iterable<Shape> {
     }
     
     public static class Stat {
+        final int suit;
         final Range range;
         final double avg;
-        public Stat(Range range, double avg) {
+        public Stat(int suit, Range range, double avg) {
             super();
+            this.suit = suit;
             this.range = range;
             this.avg = avg;
         }
         
+        @Override
+        public String toString() {
+            return range + " " + Strain.getName(suit) + " average " + avg;
+        }
     }
 }
