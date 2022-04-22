@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -19,27 +20,27 @@ import java.util.regex.Pattern;
  *
  */
 public final class BiddingContext {
-    public static final BiddingContext EMPTY = new BiddingContext(BidPatternList.EMPTY, Map.of());
+    public static final BiddingContext EMPTY = new BiddingContext(new BidInference(null, BidPatternList.EMPTY, new InferenceList(List.of())), Map.of());
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
-    private final BidPatternList bids;
+    private final BidInference inf;
     
     private final Map<String, Integer> suits;
 
-    private BiddingContext(BidPatternList boundBidList, Map<String, Integer> suits) {
+    private BiddingContext(BidInference inf, Map<String, Integer> suits) {
         super();
-        this.bids = boundBidList;
+        this.inf = inf;
         this.suits = suits;
     }
 
     /**
      * @return The list of bids.
      */
-    public BidPatternList getBids() {
-        return bids;
+    public BidInference getInference() {
+        return inf;
     }
     
-    public static BiddingContext create(BidPatternList bidList) {
-        return new BiddingContext(bidList, Map.of());
+    public static BiddingContext create(BidInference inf) {
+        return new BiddingContext(inf, Map.of());
     }
 
     /**
@@ -50,7 +51,7 @@ public final class BiddingContext {
     }
     
     public BiddingContext withBidAdded(BidPattern patt) {
-        return new BiddingContext(bids.withBidAdded(patt), suits);
+        return new BiddingContext(inf.withBidAdded(patt), suits);
     }
 
     /**
@@ -117,7 +118,7 @@ public final class BiddingContext {
             if (!suits.containsValue(strain)) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
                 putSuit(newSuits, suit, strain);
-                m.put(strain, new BiddingContext(bids, newSuits));
+                m.put(strain, new BiddingContext(inf, newSuits));
             }
         }
         return reverse ? m.descendingMap() : m;
@@ -157,14 +158,14 @@ public final class BiddingContext {
     @Override
     public String toString() {
         if (suits.isEmpty()) {
-            return bids.toString();
+            return inf.toString();
         }
-        return bids + " where " + suits;
+        return inf + " where " + suits;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bids, suits);
+        return Objects.hash(inf, suits);
     }
 
     @Override
@@ -176,7 +177,7 @@ public final class BiddingContext {
         if (getClass() != obj.getClass())
             return false;
         BiddingContext other = (BiddingContext) obj;
-        return Objects.equals(bids, other.bids) && Objects.equals(suits, other.suits);
+        return Objects.equals(inf, other.inf) && Objects.equals(suits, other.suits);
     }
 
     private static void putSuit(Map<String, Integer> suits, String symbol, int strain) {

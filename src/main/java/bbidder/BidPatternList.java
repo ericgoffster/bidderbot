@@ -44,11 +44,11 @@ public class BidPatternList {
         // Add in first hand passing
         BidPattern pattern = bids.get(0);
         List<BiddingContext> l = new ArrayList<>();
-        l.addAll(resolveSuits(BiddingContext.create(new BidPatternList(List.of(BidPattern.PASS, BidPattern.PASS))), true));
-        l.addAll(resolveSuits(BiddingContext.create(new BidPatternList(List.of(BidPattern.PASS))), true));
-        l.addAll(resolveSuits(BiddingContext.create(new BidPatternList(List.of())), true));
+        l.addAll(resolveSuits(BiddingContext.EMPTY.withBidAdded(BidPattern.PASS).withBidAdded(BidPattern.PASS), true));
+        l.addAll(resolveSuits(BiddingContext.EMPTY.withBidAdded(BidPattern.PASS), true));
+        l.addAll(resolveSuits(BiddingContext.EMPTY, true));
         if (!pattern.isOpposition) {
-            l.addAll(resolveSuits(BiddingContext.create(new BidPatternList(List.of())), false));
+            l.addAll(resolveSuits(BiddingContext.EMPTY, false));
         }
         return l;
     }
@@ -99,7 +99,7 @@ public class BidPatternList {
             }
             return List.of(ctx);
         }
-        if (ctx.getBids().isCompleted()) {
+        if (ctx.getInference().bids.isCompleted()) {
             return List.of();
         }
         // If it is the opps turn and the next bid is not opp, then assume pass for opps

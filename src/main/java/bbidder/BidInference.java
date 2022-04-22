@@ -27,6 +27,10 @@ public class BidInference {
     public BidInference at(String where) {
         return new BidInference(where, bids, inferences);
     }
+    
+    public BidInference withBidAdded(BidPattern patt) {
+        return new BidInference(where, bids.withBidAdded(patt), inferences);
+    }
 
     /**
      * @param reg
@@ -51,7 +55,7 @@ public class BidInference {
         for (BiddingContext ctx : bids.resolveSuits()) {
             for(MappedInferenceList mil: inferences.resolveSuits(ctx)) {
                 // Catch any errors
-                result.add(new BidInference(where, mil.ctx.getBids(), mil.inf));
+                result.add(new BidInference(where, mil.ctx.getInference().bids, mil.inf));
             }
         }
         return result;
