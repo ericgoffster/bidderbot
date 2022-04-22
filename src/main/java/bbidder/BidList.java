@@ -60,6 +60,11 @@ public class BidList {
         }
     }
 
+    /**
+     * 
+     * @param bid The bid to test
+     * @return true if the bid represents a legal bid in the auction
+     */
     public boolean isLegalBid(Bid bid) {
         Contract contract = getContract();
         if (contract.winningBid != Bid.P && bid.isSuitBid() && bid.ordinal() < contract.winningBid.ordinal()) {
@@ -261,6 +266,11 @@ public class BidList {
         return Objects.equals(bids, other.bids);
     }
 
+    /**
+     * 
+     * @param bid The bid to test
+     * @return true if the given bid would be a reverse.
+     */
     public boolean isReverse(Bid bid) {
         Bid myLastBid = bids.size() >= 4 ? bids.get(bids.size() - 4) : null;
         Bid partnerLastBid = bids.size() >= 2 ? bids.get(bids.size() - 2) : null;
@@ -275,6 +285,11 @@ public class BidList {
         return true;
     }
 
+    /**
+     * 
+     * @param bid The bid to test
+     * @return true if the given bid would be a non-reverse.
+     */
     public boolean isNonReverse(Bid bid) {
         Bid myLastBid = bids.size() >= 4 ? bids.get(bids.size() - 4) : null;
         Bid partnerLastBid = bids.size() >= 2 ? bids.get(bids.size() - 2) : null;
@@ -289,6 +304,11 @@ public class BidList {
         return true;
     }
 
+    /**
+     * 
+     * @param strain The bid strain
+     * @return The next possible level of the given strain.
+     */
     public Bid nextLevel(int strain) {
         Bid lastBidSuit = getLastSuitBid();
         if (strain > lastBidSuit.strain) {
@@ -298,11 +318,17 @@ public class BidList {
         }
     }
 
-    public Bid getBid(int jl, int strain) {
+    /**
+     * 
+     * @param jumpLevel The number of levels to jump
+     * @param strain The bidding strain
+     * @return The bid, jumping the requisite number of jumps.
+     */
+    public Bid getBid(int jumpLevel, int strain) {
         Bid b = nextLevel(strain);
-        while (jl > 0) {
+        while (jumpLevel > 0) {
             b = b.raise();
-            jl--;
+            jumpLevel--;
         }
         return b;
     }
