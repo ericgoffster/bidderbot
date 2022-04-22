@@ -1,6 +1,5 @@
 package bbidder;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -133,20 +132,12 @@ public final class BidPattern {
      */
     public List<BidPatternContext> resolveSymbols(SymbolTable symbols) {
         if (generality != null) {
-            List<BidPatternContext> l = new ArrayList<>();
-            for(GeneralityContext gc: generality.resolveSymbols(symbols)) {
-                l.add(new BidPatternContext(createWild(gc.generality), gc.symbols));
-            }
-            return l;
+            return ListUtil.map(generality.resolveSymbols(symbols), e -> new BidPatternContext(createWild(e.generality), e.symbols));
         }
         if (simpleBid != null) {
             return List.of(new BidPatternContext(this, symbols));
         }
-        List<BidPatternContext> result = new ArrayList<>();
-        for (var e : getSymbol().resolveSymbols(symbols)) {
-            result.add(new BidPatternContext(bindSuit(e.symbol), e.symbols));
-        }
-        return result;
+        return ListUtil.map(getSymbol().resolveSymbols(symbols), e -> new BidPatternContext(bindSuit(e.symbol), e.symbols));
     }
 
     /**
