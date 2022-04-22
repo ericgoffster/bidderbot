@@ -16,10 +16,6 @@ public final class SymbolTable {
         return new SymbolTable(newSuits);
     }
     
-    public boolean containsValue(int v) {
-        return suits.containsValue(v);
-    }
-    
     public SymbolTable add(SymbolTable other) {
         Map<String, Integer> newSuits = new HashMap<>(suits);
         newSuits.putAll(other.suits);
@@ -50,5 +46,13 @@ public final class SymbolTable {
     }
     public Integer get(String string) {
         return suits.get(string);
+    }
+    
+    public int values() {
+        int patt = 0 ;
+        for(int v: suits.values()) {
+            patt |= (1 << v);
+        }
+        return patt;
     }
 }

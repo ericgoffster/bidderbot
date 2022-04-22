@@ -52,10 +52,8 @@ public final class VarSymbol implements Symbol {
             return List.of(new SymbolContext(new ConstSymbol(symbols.get(varName)), symbols));
         }
         List<SymbolContext> l = new ArrayList<>();
-        for(int s: BitUtil.iterate(Constants.ALL_SUITS)) {
-            if (!symbols.containsValue(s)) {
-                l.add(new SymbolContext(new ConstSymbol(s), symbols.add(varName, s)));
-            }
+        for(int s: BitUtil.iterate(Constants.ALL_SUITS ^ symbols.values())) {
+            l.add(new SymbolContext(new ConstSymbol(s), symbols.add(varName, s)));
         }
         return l;
     }

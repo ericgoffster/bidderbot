@@ -50,10 +50,8 @@ public final class OtherMajorSymbol implements Symbol {
             return List.of(new SymbolContext(new ConstSymbol(otherMajor(symbols.get("M"))), symbols));
         }
         List<SymbolContext> l = new ArrayList<>();
-        for(int s: BitUtil.iterate(Constants.MAJORS)) {
-            if (!symbols.containsValue(s)) {
-               l.add(new SymbolContext(new ConstSymbol(s), symbols.add("OM", s)));
-            }
+        for(int s: BitUtil.iterate(Constants.MAJORS & ~symbols.values())) {
+            l.add(new SymbolContext(new ConstSymbol(s), symbols.add("OM", s)));
         }
         return l;
     }

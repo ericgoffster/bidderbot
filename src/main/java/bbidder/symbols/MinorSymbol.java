@@ -50,10 +50,8 @@ public final class MinorSymbol implements Symbol {
             return List.of(new SymbolContext(new ConstSymbol(otherMinor(symbols.get("om"))), symbols));
         }
         List<SymbolContext> l = new ArrayList<>();
-        for(int s: BitUtil.iterate(Constants.MINORS)) {
-            if (!symbols.containsValue(s)) {
-                l.add(new SymbolContext(new ConstSymbol(s), symbols.add("m", s)));
-            }
+        for(int s: BitUtil.iterate(Constants.MINORS & ~symbols.values())) {
+            l.add(new SymbolContext(new ConstSymbol(s), symbols.add("m", s)));
         }
         return l;
     }
