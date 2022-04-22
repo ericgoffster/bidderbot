@@ -12,6 +12,14 @@ import org.junit.jupiter.api.Test;
 
 public class Test2Over1 {
     public static BiddingSystem bs;
+    
+    public void showSummary(String label, InfSummary summary) {
+        System.err.println(label);
+        System.err.println("   " + summary.shape);
+        System.err.println("   total points: " + summary.tpts);
+        System.err.println("   stoppers: " + summary.stoppers);
+        System.err.println("   partial: " + summary.partialStoppers);
+    }
 
     @Test
     public void test() throws Throwable {
@@ -38,8 +46,8 @@ public class Test2Over1 {
                 System.err.println("Bidding: " + result.bids);
                 System.err
                         .println("You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
-                System.err.println("My summary " + result.state.players.me.infSummary);
-                System.err.println("Partner summary " + partnerSummary);
+                showSummary("My summary", result.state.players.me.infSummary);
+                showSummary("Partner summary", partnerSummary);
                 System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
                 System.err.println("But I got an exception: ");
                 result.ex.printStackTrace();
@@ -50,8 +58,8 @@ public class Test2Over1 {
                 System.err.println("Bidding: " + result.bids);
                 System.err
                         .println("You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
-                System.err.println("My summary " + result.state.players.me.infSummary);
-                System.err.println("Partner summary " + partnerSummary);
+                showSummary("My summary", result.state.players.me.infSummary);
+                showSummary("Partner summary", partnerSummary);
                 System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
                 if (result.found.possibleBid.inf != null) {
                     System.err.println("But " + result.found.possibleBid.inf.where + " dictates I should bid " + result.found.possibleBid.bid);
@@ -83,8 +91,8 @@ public class Test2Over1 {
                 InfSummary partnerSummary = result.state.players.partner.infSummary;
                 System.err
                         .println("You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
-                System.err.println("My summary " + result.state.players.me.infSummary);
-                System.err.println("Partner summary " + partnerSummary);
+                showSummary("My summary", result.state.players.me.infSummary);
+                showSummary("Partner summary", partnerSummary);
                 System.err.println("Test at " + result.where + " claims I should *not* have bid " + result.expected + " but I did");
                 DebugUtils.debugMode = true;
                 DebugUtils.breakpoint();
