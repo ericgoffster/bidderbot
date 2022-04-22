@@ -29,4 +29,4 @@ test x Kxxx xx AQxxxx: 1C 1H 1N 3C
 1y 1x 1N 2y => min, fit y
 test Ax xxxx xx Axxxx: 1C 1H 1N 2C
 
-include new_minor_forcing.bidding
+include new_minor_forcing_1.bidding
