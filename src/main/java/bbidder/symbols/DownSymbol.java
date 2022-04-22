@@ -12,6 +12,7 @@ import bbidder.Symbol;
 import bbidder.SuitTable;
 
 public final class DownSymbol extends Symbol {
+    public static final String NAME = "down";
     private final Symbol symbol;
 
     public DownSymbol(Symbol symbol) {
@@ -21,7 +22,7 @@ public final class DownSymbol extends Symbol {
 
     @Override
     public String toString() {
-        return symbol + ":down";
+        return symbol + ":" + NAME;
     }
 
     @Override

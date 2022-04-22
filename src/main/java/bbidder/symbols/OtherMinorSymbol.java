@@ -10,13 +10,15 @@ import bbidder.SuitTable;
 import bbidder.utils.BitUtil;
 
 public final class OtherMinorSymbol extends Symbol {
+    public static final String NAME = "om";
+
     public OtherMinorSymbol() {
         super();
     }
 
     @Override
     public String toString() {
-        return "om";
+        return NAME;
     }
 
     @Override
@@ -42,16 +44,16 @@ public final class OtherMinorSymbol extends Symbol {
 
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {
-        Integer om = suitTable.getSuit("om");
+        Integer om = suitTable.getSuit(NAME);
         if (om != null) {
             return Stream.of(new ConstSymbol(om).new Context(suitTable));
         }
-        Integer m = suitTable.getSuit("m");
+        Integer m = suitTable.getSuit(MinorSymbol.NAME);
         if (m != null) {
             return Stream.of(new ConstSymbol(otherMinor(m)).new Context(suitTable));
         }
         return StreamSupport.stream(BitUtil.iterate(Constants.MINORS & ~suitTable.getSuits()).spliterator(), false)
-                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded("om", s)));
+                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
     }
 
     private static Integer otherMinor(Integer strain) {

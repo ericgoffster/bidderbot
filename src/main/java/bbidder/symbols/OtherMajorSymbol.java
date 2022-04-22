@@ -10,13 +10,15 @@ import bbidder.SuitTable;
 import bbidder.utils.BitUtil;
 
 public final class OtherMajorSymbol extends Symbol {
+    public static final String NAME = "OM";
+
     public OtherMajorSymbol() {
         super();
     }
 
     @Override
     public String toString() {
-        return "OM";
+        return NAME;
     }
 
     @Override
@@ -42,16 +44,16 @@ public final class OtherMajorSymbol extends Symbol {
 
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {
-        Integer OM = suitTable.getSuit("OM");
+        Integer OM = suitTable.getSuit(NAME);
         if (OM != null) {
             return Stream.of(new ConstSymbol(OM).new Context(suitTable));
         }
-        Integer M = suitTable.getSuit("M");
+        Integer M = suitTable.getSuit(MajorSymbol.NAME);
         if (M != null) {
             return Stream.of(new ConstSymbol(otherMajor(M)).new Context(suitTable));
         }
         return StreamSupport.stream(BitUtil.iterate(Constants.MAJORS & ~suitTable.getSuits()).spliterator(), false)
-                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded("OM", s)));
+                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
     }
 
     private static Integer otherMajor(Integer strain) {

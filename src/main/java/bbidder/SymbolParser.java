@@ -15,10 +15,15 @@ import bbidder.symbols.OtherMinorSymbol;
 import bbidder.symbols.SteppedSymbol;
 import bbidder.symbols.VarSymbol;
 
+/**
+ * Parses a Symbol
+ * @author goffster
+ *
+ */
 public final class SymbolParser {
-    static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
-    public static Pattern LESS_THAN = Pattern.compile("<(\\d+)(.+)");
-    public static Pattern GREATER_THAN = Pattern.compile(">(\\d+)(.+)");
+    private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
+    private static Pattern LESS_THAN = Pattern.compile("<(\\d+)(.+)");
+    private static Pattern GREATER_THAN = Pattern.compile(">(\\d+)(.+)");
 
     /**
      * @param str
@@ -43,10 +48,10 @@ public final class SymbolParser {
                 return null;
             }
             String tag = str.substring(pos + 1);
-            if (tag.equalsIgnoreCase("down")) {
+            if (tag.equalsIgnoreCase(DownSymbol.NAME)) {
                 return new DownSymbol(symbol);
             }
-            if (tag.equalsIgnoreCase("nonconventional")) {
+            if (tag.equalsIgnoreCase(NonConventional.NAME)) {
                 return new NonConventional(symbol);
             }
             {
@@ -65,16 +70,16 @@ public final class SymbolParser {
             }
             return null;
         }
-        if (str.equals("om")) {
+        if (str.equals(OtherMinorSymbol.NAME)) {
             return new OtherMinorSymbol();
         }
-        if (str.equals("OM")) {
+        if (str.equals(OtherMajorSymbol.NAME)) {
             return new OtherMajorSymbol();
         }
-        if (str.equals("m")) {
+        if (str.equals(MinorSymbol.NAME)) {
             return new MinorSymbol();
         }
-        if (str.equals("M")) {
+        if (str.equals(MajorSymbol.NAME)) {
             return new MajorSymbol();
         }
         Integer strain = Strain.getStrain(str);

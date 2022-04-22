@@ -8,6 +8,7 @@ import bbidder.Symbol;
 import bbidder.SuitTable;
 
 public final class NonConventional extends Symbol {
+    public static final String NAME = "nonconventional";
     private final Symbol symbol;
 
     public NonConventional(Symbol symbol) {
@@ -17,7 +18,7 @@ public final class NonConventional extends Symbol {
 
     @Override
     public String toString() {
-        return symbol + ":nonconventional";
+        return symbol + ":" + NAME;
     }
 
     @Override
