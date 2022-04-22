@@ -2,12 +2,11 @@ package bbidder.symbols;
 
 import java.util.Objects;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import bbidder.Bid;
 import bbidder.Constants;
-import bbidder.Symbol;
 import bbidder.SuitTable;
+import bbidder.Symbol;
 import bbidder.utils.BitUtil;
 
 public final class VarSymbol extends Symbol {
@@ -51,8 +50,8 @@ public final class VarSymbol extends Symbol {
         if (suit != null) {
             return Stream.of(new ConstSymbol(suit).new Context(suitTable));
         }
-        return StreamSupport.stream(BitUtil.iterate(Constants.ALL_SUITS & ~suitTable.getSuits()).spliterator(), false)
-                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(varName, s)));
+        return BitUtil.stream(Constants.ALL_SUITS & ~suitTable.getSuits())
+                .mapToObj(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(varName, s)));
     }
 
     @Override
