@@ -315,6 +315,9 @@ public class BidList {
      */
     public Bid nextLevel(int strain) {
         Bid lastBidSuit = getLastSuitBid();
+        if (lastBidSuit == null) {
+            return Bid.valueOf(0, strain);
+        }
         if (strain > lastBidSuit.strain) {
             return Bid.valueOf(lastBidSuit.level, strain);
         } else {

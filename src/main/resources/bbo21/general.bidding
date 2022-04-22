@@ -26,5 +26,8 @@ test AQxx Axxx xx AQx: 1C 1H 3H
 [] 2M => min, fit M
 test Axxx Axxx xx Axx: 1C 1H 2H
 
-[] NJ2x => min, rebiddable x
+#[i_am_two_suited x y] NJy => rebiddable_2nd y
+#test AQxxx x x AQxxxx: 1C 1H 1S 2H 2S
+
+[i_bid_suit x] NJ2x => min, rebiddable x
 test xx AQxxxx xx xxx: 1C 1H 1N 2H
