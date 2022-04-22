@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import bbidder.BidList;
-import bbidder.BidPatternContext;
 import bbidder.Generality;
+import bbidder.GeneralityContext;
 import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
@@ -24,10 +24,10 @@ public class PartnerBidSuitGenerality implements Generality {
     }
 
     @Override
-    public List<BidPatternContext> resolveSymbols(BidPatternContext bc) {
-        List<BidPatternContext> result = new ArrayList<>();
-        for (Entry<Symbol, SymbolTable> e : SymbolContext.resolveSymbols(bc.suits, symbol).entrySet()) {
-            result.add(new BidPatternContext(bc.bid.withGeneralityAdded(new PartnerBidSuitGenerality(e.getKey())), e.getValue()));
+    public List<GeneralityContext> resolveSymbols(SymbolTable bc) {
+        List<GeneralityContext> result = new ArrayList<>();
+        for (Entry<Symbol, SymbolTable> e : SymbolContext.resolveSymbols(bc, symbol).entrySet()) {
+            result.add(new GeneralityContext(new PartnerBidSuitGenerality(e.getKey()), e.getValue()));
         }
         return result;
     }

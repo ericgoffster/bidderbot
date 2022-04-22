@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 import java.util.Objects;
 
 import bbidder.generalities.AndGenerality;
-import bbidder.generalities.TrueGenerality;
 import bbidder.symbols.ConstSymbol;
 
 /**
@@ -190,7 +189,11 @@ public class BidPattern {
      */
     public List<BidPatternContext> resolveSymbols(SymbolTable suits) {
         if (generality != null) {
-            return generality.resolveSymbols(new BidPatternContext(createWild(TrueGenerality.T), suits));
+            List<BidPatternContext> l = new ArrayList<>();
+            for(GeneralityContext gc: generality.resolveSymbols(suits)) {
+                l.add(new BidPatternContext(createWild(gc.generality), gc.suits));
+            }
+            return l;
         }
         if (simpleBid != null) {
             return List.of(new BidPatternContext(this, suits));

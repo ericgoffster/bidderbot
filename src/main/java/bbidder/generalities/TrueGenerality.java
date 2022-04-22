@@ -3,9 +3,10 @@ package bbidder.generalities;
 import java.util.List;
 
 import bbidder.BidList;
-import bbidder.BidPatternContext;
 import bbidder.Generality;
+import bbidder.GeneralityContext;
 import bbidder.Players;
+import bbidder.SymbolTable;
 
 public class TrueGenerality implements Generality {
     public static TrueGenerality T = new TrueGenerality();
@@ -14,8 +15,8 @@ public class TrueGenerality implements Generality {
     }
 
     @Override
-    public List<BidPatternContext> resolveSymbols(BidPatternContext bc) {
-        return List.of(new BidPatternContext(bc.bid.withGeneralityAdded(this), bc.suits));
+    public List<GeneralityContext> resolveSymbols(SymbolTable bc) {
+        return List.of(new GeneralityContext(this, bc));
     }
 
     @Override
