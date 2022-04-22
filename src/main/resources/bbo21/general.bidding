@@ -33,10 +33,10 @@ test Axxx Axxx xx Axx: 1C 1H 2H
 test AQxxx x x AQxxxx: 1C 1H 1S 2H 2S
 test xx x AQxxx AQxxx: 1D 1H 2C 2H 3C
 
-[i_bid_suit x] NJ2x => min, rebiddable x
+[i_bid_suit x] NJx:<2N => min, rebiddable x
 test xx AQxxxx xx xxx: 1C 1H 1N 2H
 
-[i_bid_suit x] J3x => inv, rebiddable x
+[i_bid_suit x] Jx:<3N => inv, rebiddable x
 test xx AQxxxx xx Kxx: 1C 1H 1N 3H
 anti_test xx AQxxx xxx Kxx: 1C 1H 1N 3H
 

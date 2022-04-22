@@ -228,8 +228,4 @@ public class BidPattern {
         }
         return Bid.valueOf(getLevel(), strain);
     }
-
-    public static BidPattern createBid(Integer jumpLevel, Integer level, Symbol symbol) {
-        return new BidPattern(false, symbol, level, null, jumpLevel, null);
-    }
 }
