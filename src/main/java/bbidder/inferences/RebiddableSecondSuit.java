@@ -14,7 +14,6 @@ import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
 import bbidder.Symbol;
-import bbidder.SymbolContext;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.ShapeBoundInf;
@@ -41,8 +40,8 @@ public final class RebiddableSecondSuit implements Inference {
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : SymbolContext.resolveSymbols(symbols, longer).entrySet()) {
-            for (var e2 : SymbolContext.resolveSymbols(e.getValue(), shorter).entrySet()) {
+        for (var e : longer.resolveSymbol(symbols).entrySet()) {
+            for (var e2 : shorter.resolveSymbol(e.getValue()).entrySet()) {
                 l.add(new InferenceContext(new RebiddableSecondSuit(e.getKey(), e2.getKey()), e2.getValue()));
             }
         }

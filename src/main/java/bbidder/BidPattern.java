@@ -144,7 +144,7 @@ public final class BidPattern {
             return List.of(new BidPatternContext(this, symbols));
         }
         List<BidPatternContext> result = new ArrayList<>();
-        for (Entry<Symbol, SymbolTable> e : SymbolContext.resolveSymbols(symbols, getSymbol()).entrySet()) {
+        for (Entry<Symbol, SymbolTable> e : getSymbol().resolveSymbol(symbols).entrySet()) {
             result.add(new BidPatternContext(bindSuit(e.getKey()), e.getValue()));
         }
         return result;

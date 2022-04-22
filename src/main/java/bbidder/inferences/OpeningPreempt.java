@@ -13,7 +13,6 @@ import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
-import bbidder.SymbolContext;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.AndBoundInf;
@@ -46,7 +45,7 @@ public final class OpeningPreempt implements Inference {
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : SymbolContext.resolveSymbols(symbols, suit).entrySet()) {
+        for (var e : suit.resolveSymbol(symbols).entrySet()) {
             l.add(new InferenceContext(new OpeningPreempt(e.getKey(), level), e.getValue()));
         }
         return l;

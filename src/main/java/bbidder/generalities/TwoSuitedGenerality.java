@@ -10,7 +10,6 @@ import bbidder.GeneralityContext;
 import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
-import bbidder.SymbolContext;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 
@@ -28,8 +27,8 @@ public final class TwoSuitedGenerality implements Generality {
     @Override
     public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
         List<GeneralityContext> result = new ArrayList<>();
-        for (Entry<Symbol, SymbolTable> e1 : SymbolContext.resolveSymbols(symbols, longer).entrySet()) {
-            for (Entry<Symbol, SymbolTable> e2 : SymbolContext.resolveSymbols(e1.getValue(), shorter).entrySet()) {
+        for (Entry<Symbol, SymbolTable> e1 : longer.resolveSymbol(symbols).entrySet()) {
+            for (Entry<Symbol, SymbolTable> e2 : shorter.resolveSymbol(e1.getValue()).entrySet()) {
                 result.add(new GeneralityContext(new TwoSuitedGenerality(e1.getKey(), e2.getKey()), e1.getValue()));
             }
         }

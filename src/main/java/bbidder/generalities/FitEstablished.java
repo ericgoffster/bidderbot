@@ -11,7 +11,6 @@ import bbidder.GeneralityContext;
 import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
-import bbidder.SymbolContext;
 import bbidder.SymbolParser;
 import bbidder.SymbolTable;
 
@@ -26,7 +25,7 @@ public final class FitEstablished implements Generality {
     @Override
     public List<GeneralityContext> resolveSymbols(SymbolTable symbols) {
         List<GeneralityContext> result = new ArrayList<>();
-        for (Entry<Symbol, SymbolTable> e : SymbolContext.resolveSymbols(symbols, symbol).entrySet()) {
+        for (Entry<Symbol, SymbolTable> e : symbol.resolveSymbol(symbols).entrySet()) {
             result.add(new GeneralityContext(new FitEstablished(e.getKey()), e.getValue()));
         }
         return result;
