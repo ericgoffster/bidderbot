@@ -1,9 +1,11 @@
-package bbidder;
+package bbidder.symbols;
 
 import static bbidder.Constants.ALL_SUITS;
 
 import java.util.Map;
 import java.util.Objects;
+
+import bbidder.Symbol;
 
 public class VarSymbol implements Symbol {
     public final String v;

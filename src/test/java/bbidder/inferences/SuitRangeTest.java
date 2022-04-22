@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.ConstSymbol;
 import bbidder.Hand;
 import bbidder.Players;
 import bbidder.Symbol;
+import bbidder.symbols.ConstSymbol;
 
 public class SuitRangeTest {
     @Test

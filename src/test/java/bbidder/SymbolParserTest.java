@@ -4,6 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.symbols.ConstSymbol;
+import bbidder.symbols.DownSymbol;
+import bbidder.symbols.MajorSymbol;
+import bbidder.symbols.MinorSymbol;
+import bbidder.symbols.NotSymbol;
+import bbidder.symbols.OtherMajorSymbol;
+import bbidder.symbols.OtherMinorSymbol;
+import bbidder.symbols.SteppedSymbol;
+import bbidder.symbols.VarSymbol;
+
 public class SymbolParserTest {
     @Test
     public void test() {

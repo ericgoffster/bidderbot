@@ -1,19 +1,21 @@
-package bbidder;
+package bbidder.symbols;
 
 import java.util.Map;
 import java.util.Objects;
 
-public class DownSymbol implements Symbol {
+import bbidder.Symbol;
+
+public class NotSymbol implements Symbol {
     public final Symbol sym;
 
-    public DownSymbol(Symbol sym) {
+    public NotSymbol(Symbol sym) {
         super();
         this.sym = sym;
     }
     
     @Override
     public String toString() {
-        return sym + ":down";
+        return "~" + sym;
     }
 
     @Override
@@ -29,23 +31,23 @@ public class DownSymbol implements Symbol {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        DownSymbol other = (DownSymbol) obj;
+        NotSymbol other = (NotSymbol) obj;
         return Objects.equals(sym, other.sym);
+    }
+    
+    @Override
+    public short getSuitClass(Map<String, Integer> suits) {
+        return (short) (0xf ^ sym.getSuitClass(suits));
     }
 
     @Override
     public Integer evaluate(Map<String, Integer> suits) {
-        return sym.evaluate(suits);
+        return suits.get(toString());
     }
     
     @Override
     public Map<String, Integer> unevaluate(int strain) {
-        return sym.unevaluate(strain);
-    }
-
-    @Override
-    public short getSuitClass(Map<String, Integer> suits) {
-        return sym.getSuitClass(suits);
+        return Map.of(toString(), strain);
     }
     
     @Override

@@ -1,17 +1,20 @@
-package bbidder;
+package bbidder.symbols;
 
 import static bbidder.Constants.MINORS;
 
 import java.util.Map;
 
-public class OtherMinorSymbol implements Symbol {
-    public OtherMinorSymbol() {
+import bbidder.Constants;
+import bbidder.Symbol;
+
+public class MinorSymbol implements Symbol {
+    public MinorSymbol() {
         super();
     }
     
     @Override
     public String toString() {
-        return "om";
+        return "m";
     }
 
     @Override
@@ -32,10 +35,10 @@ public class OtherMinorSymbol implements Symbol {
     
     @Override
     public Integer evaluate(Map<String, Integer> suits) {
-        if (suits.containsKey("m")) {
-            return otherMinor(suits.get("m"));
+        if (suits.containsKey("om")) {
+            return otherMinor(suits.get("om"));
         }
-        return suits.get("om");
+        return suits.get("m");
     }
     
     @Override
@@ -45,7 +48,7 @@ public class OtherMinorSymbol implements Symbol {
 
     @Override
     public Map<String, Integer> unevaluate(int strain) {
-        return Map.of("om", strain);        
+        return Map.of("m", strain);
     }
     
     @Override

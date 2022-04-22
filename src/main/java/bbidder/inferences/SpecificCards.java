@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bbidder.BiddingContext;
-import bbidder.ConstSymbol;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.NOfTop;
@@ -16,6 +15,7 @@ import bbidder.Range;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
+import bbidder.symbols.ConstSymbol;
 
 /**
  * Represents the inference of a specific cards in a suit.

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
-import bbidder.ConstSymbol;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -15,6 +14,7 @@ import bbidder.SuitSets.SuitSet;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.inferences.bound.ShapeBoundInf;
+import bbidder.symbols.ConstSymbol;
 
 /**
  * Represents the inference of a suit than is longest or equal among other suits.

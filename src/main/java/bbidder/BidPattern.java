@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import bbidder.generalities.AndGenerality;
 import bbidder.generalities.TrueGenerality;
+import bbidder.symbols.ConstSymbol;
 
 import java.util.Objects;
 

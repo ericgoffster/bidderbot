@@ -7,12 +7,12 @@ import java.util.Objects;
 
 import bbidder.BidList;
 import bbidder.BiddingContext;
-import bbidder.ConstSymbol;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
+import bbidder.symbols.ConstSymbol;
 
 public class FitEstablished implements Generality {
     public final Symbol symbol;

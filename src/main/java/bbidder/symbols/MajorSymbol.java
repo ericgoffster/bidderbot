@@ -1,17 +1,20 @@
-package bbidder;
+package bbidder.symbols;
 
 import static bbidder.Constants.MAJORS;
 
 import java.util.Map;
 
-public class OtherMajorSymbol implements Symbol {
-    public OtherMajorSymbol() {
+import bbidder.Constants;
+import bbidder.Symbol;
+
+public class MajorSymbol implements Symbol {
+    public MajorSymbol() {
         super();
     }
     
     @Override
     public String toString() {
-        return "OM";
+        return "M";
     }
 
     @Override
@@ -32,10 +35,10 @@ public class OtherMajorSymbol implements Symbol {
     
     @Override
     public Integer evaluate(Map<String, Integer> suits) {
-        if (suits.containsKey("M")) {
-            return otherMajor(suits.get("M"));
+        if (suits.containsKey("OM")) {
+            return otherMajor(suits.get("OM"));
         }
-        return suits.get("OM");
+        return suits.get("M");
     }
     
     @Override
@@ -45,7 +48,7 @@ public class OtherMajorSymbol implements Symbol {
 
     @Override
     public Map<String, Integer> unevaluate(int strain) {
-        return Map.of("OM", strain);
+        return Map.of("M", strain);
     }
     
     @Override

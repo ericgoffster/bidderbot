@@ -9,6 +9,7 @@ import bbidder.inferences.HCPRange;
 import bbidder.inferences.LongestOrEqual;
 import bbidder.inferences.OpeningPreempt;
 import bbidder.inferences.SuitRange;
+import bbidder.symbols.ConstSymbol;
 
 public class InferenceRegistryTest {
     @Test

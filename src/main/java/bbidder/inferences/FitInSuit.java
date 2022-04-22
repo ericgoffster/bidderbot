@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bbidder.BiddingContext;
-import bbidder.ConstSymbol;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
@@ -18,6 +17,7 @@ import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
+import bbidder.symbols.ConstSymbol;
 
 /**
  * Represents the inference of a range of lengths of a suit.

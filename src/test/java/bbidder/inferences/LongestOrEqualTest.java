@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.ConstSymbol;
 import bbidder.Hand;
 import bbidder.Players;
 import bbidder.SuitSets;
 import bbidder.SuitSets.SuitSet;
+import bbidder.symbols.ConstSymbol;
+import bbidder.symbols.VarSymbol;
 import bbidder.Symbol;
-import bbidder.VarSymbol;
 
 public class LongestOrEqualTest {
     SuitSet ALL = SuitSets.lookupSuitSet("ALL");

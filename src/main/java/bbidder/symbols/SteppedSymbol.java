@@ -1,7 +1,9 @@
-package bbidder;
+package bbidder.symbols;
 
 import java.util.Map;
 import java.util.Objects;
+
+import bbidder.Symbol;
 
 public class SteppedSymbol implements Symbol {
     public final Symbol sym;

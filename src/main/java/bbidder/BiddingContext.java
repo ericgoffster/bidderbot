@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import bbidder.symbols.DownSymbol;
+
 /**
  * A bidding context is used to build BidInference's.
  * A bidding context consists of the current BidInference, and the current symbol table.

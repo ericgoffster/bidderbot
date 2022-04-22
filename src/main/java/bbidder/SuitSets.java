@@ -13,6 +13,8 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.Objects;
 
+import bbidder.symbols.ConstSymbol;
+
 public class SuitSets {
     public interface SuitSet {
         public short evaluate(Players players);

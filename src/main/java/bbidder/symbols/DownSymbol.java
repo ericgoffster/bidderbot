@@ -1,24 +1,26 @@
-package bbidder;
+package bbidder.symbols;
 
 import java.util.Map;
 import java.util.Objects;
 
-public class ConstSymbol implements Symbol {
-    public final int strain;
+import bbidder.Symbol;
 
-    public ConstSymbol(int strain) {
+public class DownSymbol implements Symbol {
+    public final Symbol sym;
+
+    public DownSymbol(Symbol sym) {
         super();
-        this.strain = strain;
+        this.sym = sym;
     }
     
     @Override
     public String toString() {
-        return Strain.getName(strain);
+        return sym + ":down";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(strain);
+        return Objects.hash(sym);
     }
 
     @Override
@@ -29,30 +31,27 @@ public class ConstSymbol implements Symbol {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ConstSymbol other = (ConstSymbol) obj;
-        return strain == other.strain;
+        DownSymbol other = (DownSymbol) obj;
+        return Objects.equals(sym, other.sym);
     }
 
     @Override
     public Integer evaluate(Map<String, Integer> suits) {
-        return strain;
+        return sym.evaluate(suits);
     }
     
     @Override
     public Map<String, Integer> unevaluate(int strain) {
-        if (strain != this.strain) {
-            throw new IllegalArgumentException();
-        }
-        return Map.of();
+        return sym.unevaluate(strain);
     }
 
     @Override
     public short getSuitClass(Map<String, Integer> suits) {
-        return (short) (1 << strain);
+        return sym.getSuitClass(suits);
     }
     
     @Override
     public int getResolved() {
-        return strain;
+        throw new IllegalStateException(this + " not resolved");
     }
 }

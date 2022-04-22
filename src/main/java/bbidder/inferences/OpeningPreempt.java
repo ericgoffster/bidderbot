@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
-import bbidder.ConstSymbol;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -18,6 +17,7 @@ import bbidder.SymbolParser;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.HcpBoundInf;
 import bbidder.inferences.bound.ShapeBoundInf;
+import bbidder.symbols.ConstSymbol;
 
 /**
  * Represents the inference of a premptive hand of varying levels.

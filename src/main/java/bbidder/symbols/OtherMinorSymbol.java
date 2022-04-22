@@ -1,17 +1,20 @@
-package bbidder;
+package bbidder.symbols;
 
-import static bbidder.Constants.MAJORS;
+import static bbidder.Constants.MINORS;
 
 import java.util.Map;
 
-public class MajorSymbol implements Symbol {
-    public MajorSymbol() {
+import bbidder.Constants;
+import bbidder.Symbol;
+
+public class OtherMinorSymbol implements Symbol {
+    public OtherMinorSymbol() {
         super();
     }
     
     @Override
     public String toString() {
-        return "M";
+        return "om";
     }
 
     @Override
@@ -32,10 +35,10 @@ public class MajorSymbol implements Symbol {
     
     @Override
     public Integer evaluate(Map<String, Integer> suits) {
-        if (suits.containsKey("OM")) {
-            return otherMajor(suits.get("OM"));
+        if (suits.containsKey("m")) {
+            return otherMinor(suits.get("m"));
         }
-        return suits.get("M");
+        return suits.get("om");
     }
     
     @Override
@@ -45,28 +48,28 @@ public class MajorSymbol implements Symbol {
 
     @Override
     public Map<String, Integer> unevaluate(int strain) {
-        return Map.of("M", strain);
+        return Map.of("om", strain);        
     }
     
     @Override
     public short getSuitClass(Map<String, Integer> suits) {
-        if (suits.containsKey("M") || suits.containsKey("OM")) {
+        if (suits.containsKey("m") || suits.containsKey("om")) {
             return (short)(1 << evaluate(suits));
         }
-        return MAJORS;
+        return MINORS;
     }
 
-    private static Integer otherMajor(Integer strain) {
+    private static Integer otherMinor(Integer strain) {
         if (strain == null) {
             return null;
         }
         switch (strain.intValue()) {
-        case Constants.HEART:
-            return Constants.SPADE;
-        case Constants.SPADE:
-            return Constants.HEART;
+        case Constants.CLUB:
+            return Constants.DIAMOND;
+        case Constants.DIAMOND:
+            return Constants.CLUB;
         default:
-            throw new IllegalArgumentException("invalid major");
+            throw new IllegalArgumentException("invalid minor");
         }
     }
 }

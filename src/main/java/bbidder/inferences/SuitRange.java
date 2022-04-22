@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import bbidder.BiddingContext;
-import bbidder.ConstSymbol;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -14,6 +13,7 @@ import bbidder.ShapeSet;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.inferences.bound.ShapeBoundInf;
+import bbidder.symbols.ConstSymbol;
 
 /**
  * Represents the inference of a range of lengths of a suit.
