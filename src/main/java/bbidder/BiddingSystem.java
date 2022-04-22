@@ -131,9 +131,8 @@ public class BiddingSystem {
             }
             if (i.inf.bids.positionOfWild() < 0) {
                 negative.add(inf);
-            } else {
-                negativeWild.add(inf);
             }
+            negativeWild.add(inf);
         }
         
         if (positive.isEmpty() && positiveWild.isEmpty() && lastBid != Bid.P) {
