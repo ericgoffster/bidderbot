@@ -50,3 +50,4 @@ include 1n/resp.bidding
 include 2n/resp.bidding
 include solowayrebids.bidding
 include 1n_forcing.bidding
+include rev_drury.bidding
