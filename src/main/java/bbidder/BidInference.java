@@ -1,8 +1,7 @@
 package bbidder;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import bbidder.utils.SplitUtil;
 
@@ -47,9 +46,9 @@ public final class BidInference {
     /**
      * @return A list of bid inferences with all suit variables resolved.
      */
-    public List<BidInference> resolveSymbols() {
+    public Stream<BidInference> resolveSymbols() {
         return bids.resolveSymbols(SymbolTable.EMPTY).flatMap(
-                e1 -> inferences.resolveSymbols(e1.symbols).map(e2 -> new BidInference(where, e1.getBids(), e2.getInference()))).collect(Collectors.toList());
+                e1 -> inferences.resolveSymbols(e1.symbols).map(e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
     }
 
     @Override
