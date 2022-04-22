@@ -40,6 +40,10 @@ public final class BidPattern {
         this.jumpLevel = jumpLevel;
         this.generality = generality;
     }
+    
+    public boolean isPass() {
+        return simpleBid == Bid.P;
+    }
 
     /**
      * @param isOpposition

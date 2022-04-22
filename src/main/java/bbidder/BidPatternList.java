@@ -107,7 +107,7 @@ public final class BidPatternList {
         // If the first bid is a generality, then the generality
         // takes care of all chairs
         if (pattern.generality != null) {
-            return resolve(new BidPatternListContext(BidPatternList.EMPTY, suits), bids.get(1).isOpposition);
+            return resolveSymbols(new BidPatternListContext(BidPatternList.EMPTY, suits), bids.get(1).isOpposition);
         }
 
         boolean isOpp = pattern.isOpposition;
@@ -116,16 +116,21 @@ public final class BidPatternList {
         List<BidPatternListContext> list = new ArrayList<>();
         List<BidPattern> passes = new ArrayList<>();
         for(int i = 0; i < 4; i++) {
-            list.addAll(resolve(new BidPatternListContext(new BidPatternList(passes), suits), !isOpp));
+            list.addAll(resolveSymbols(new BidPatternListContext(new BidPatternList(passes), suits), !isOpp));
             passes.add(0, BidPattern.PASS.withIsOpposition((i % 2 == 0) ^ isOpp));
         }
         return list;
     }
     
-    public List<BidPatternListContext> resolve(BidPatternListContext ctx, boolean isOpp) {
+    /**
+     * Evaluate
+     * @param ctx
+     * @param isOpp
+     * @return
+     */
+    private List<BidPatternListContext> resolveSymbols(BidPatternListContext ctx, boolean isOpp) {
         BidPattern pattern = bids.get(0);
-        BidPatternList exceptFirst = exceptFirst();
-        return exceptFirst.resolveRemainingSymbols(ctx, resolveSymbols(pattern, ctx), isOpp);
+        return exceptFirst().resolveRemainingSymbols(ctx, resolveSymbols(pattern, ctx), isOpp);
     }
 
     /**
@@ -272,31 +277,22 @@ public final class BidPatternList {
 
         BidPattern pattern = bids.get(0);
 
-        if (pattern.generality != null) {
-            boolean newIsOpp = bids.get(1).isOpposition;
-            List<BidPatternListContext> l = new ArrayList<>();
-            for (BidPatternListContext newCtx : contexts) {
-                l.addAll(resolve(newCtx, newIsOpp));
-            }
-            return l;
-        }
-        if (isOpp && !pattern.isOpposition) {
-            BidPattern pass = BidPattern.PASS.withIsOpposition(isOpp);
-            List<BidPatternListContext> l = new ArrayList<>();
-            for (BidPatternListContext newCtx : contexts) {
-                l.addAll(resolveRemainingSymbols(newCtx, resolveSymbols(pass, newCtx), !isOpp));
-            }
-            return l;
-        }
         List<BidPatternListContext> l = new ArrayList<>();
         for (BidPatternListContext newCtx : contexts) {
-            l.addAll(resolve(newCtx, !isOpp));
+            if (pattern.generality != null) {
+                boolean newIsOpp = bids.get(1).isOpposition;
+                l.addAll(resolveSymbols(newCtx, newIsOpp));
+            } else if (isOpp && !pattern.isOpposition) {
+                l.addAll(resolveRemainingSymbols(newCtx, resolveSymbols(BidPattern.PASS.withIsOpposition(isOpp), newCtx), !isOpp));
+            } else {
+                l.addAll(resolveSymbols(newCtx, !isOpp));
+            }
         }
         return l;
     }
 
     private boolean isCompleted() {
-        return bids.size() >= 4 && bids.get(bids.size() - 1).equals(BidPattern.PASS) && bids.get(bids.size() - 2).equals(BidPattern.PASS)
-                && bids.get(bids.size() - 3).equals(BidPattern.PASS) && bids.get(bids.size() - 4).equals(BidPattern.PASS);
+        return bids.size() >= 4 && bids.get(bids.size() - 1).isPass() && bids.get(bids.size() - 2).isPass()
+                && bids.get(bids.size() - 3).isPass() && bids.get(bids.size() - 4).isPass();
     }
 }
