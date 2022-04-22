@@ -1,9 +1,8 @@
 package bbidder;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import bbidder.symbols.ConstSymbol;
 
@@ -127,17 +126,17 @@ public final class BidPattern {
      *            The new symbol
      * @return A bid with the suit bound to a specific strain
      */
-    private BidPattern withSymbol(Contract contract, Symbol symbol) {
+    private Optional<BidPattern> withSymbol(Contract contract, Symbol symbol) {
         if (level != null) {
             int resolved = symbol.getResolved();
             Bid b = Bid.valueOf(level, resolved);
             if (contract != null && !contract.isLegalBid(b)) {
-                return null;
+                return Optional.empty();
             }
             if (symbol.compatibleWith(b)) {
-                return new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional);
+                return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional));
             } else {
-                return null;
+                return Optional.empty();
             }
         }
         if (jumpLevel != null) {
@@ -145,13 +144,13 @@ public final class BidPattern {
                 int resolved = symbol.getResolved();
                 Bid b = contract.getBid(jumpLevel, resolved);
                 if (symbol.compatibleWith(b) && contract.isLegalBid(b)) {
-                    return new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional);
+                    return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional));
                 } else {
-                    return null;
+                    return Optional.empty();
                 }
             }
         }
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional);
+        return Optional.of(new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional));
     }
 
     /**
@@ -161,21 +160,15 @@ public final class BidPattern {
      *            The suits
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public List<Context> resolveSymbols(Contract contract, SymbolTable symbols) {
+    public Stream<Context> resolveSymbols(Contract contract, SymbolTable symbols) {
         if (generality != null) {
-            return generality.resolveSymbols(symbols).map(e -> createWild(e.getGenerality()).new Context(e.symbols)).collect(Collectors.toList());
+            return generality.resolveSymbols(symbols).map(e -> createWild(e.getGenerality()).new Context(e.symbols));
         }
         if (simpleBid != null) {
-            return List.of(new Context(symbols));
+            return Stream.of(new Context(symbols));
         }
-        List<Context> l = new ArrayList<>();
-        for (var e : getSymbol().resolveSymbols(symbols).collect(Collectors.toList())) {
-            BidPattern newSym = withSymbol(contract, e.getSymbol());
-            if (newSym != null) {
-                l.add(newSym.new Context(e.symbols));
-            }
-        }
-        return l;
+        return getSymbol().resolveSymbols(symbols)
+                .flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.symbols)));
     }
 
     /**

@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
-import bbidder.utils.ListUtil;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Represents the bid patterns as read in from the notes.
@@ -110,7 +110,7 @@ public final class BidPatternList {
      * @return The list of resolved bidding pattern contexts
      */
     public List<Context> resolveSymbols(SymbolTable suits) {
-        return ListUtil.flatMap(withOpposingBidding().addInitialPasses(), bpl -> bpl.resolveSymbols(BidPatternList.EMPTY, suits));
+        return withOpposingBidding().addInitialPasses().stream().flatMap(bpl -> bpl.resolveSymbols(BidPatternList.EMPTY, suits)).collect(Collectors.toList());
     }
 
     /**
@@ -274,16 +274,16 @@ public final class BidPatternList {
      *            The previous context.
      * @return The list of resolved bidding pattern contexts
      */
-    private List<Context> resolveSymbols(BidPatternList previous, SymbolTable symbols) {
+    private Stream<Context> resolveSymbols(BidPatternList previous, SymbolTable symbols) {
         if (bids.isEmpty()) {
-            return List.of(previous.new Context(symbols));
+            return Stream.of(previous.new Context(symbols));
         }
         // For each context gotten from the first bid,
         // evaluate the remaining bids in the context of that bid.
         BidPatternList exceptFirst = exceptFirst();
         BidPattern first = bids.get(0);
-        return ListUtil.flatMap(first.resolveSymbols(previous.getContract(), symbols),
-                b -> exceptFirst.resolveSymbols(previous.withBidAdded(b.getBidPattern()), b.symbols));
+        return first.resolveSymbols(previous.getContract(), symbols)
+                .flatMap(b -> exceptFirst.resolveSymbols(previous.withBidAdded(b.getBidPattern()), b.symbols));
     }
 
     /**
