@@ -159,6 +159,10 @@ public final class BitUtil {
     public static Iterable<Integer> iterate(short pattern) {
         return iterate(toLong(pattern));
     }
+    
+    public static IntStream stream(short pattern) {
+        return StreamSupport.stream(iterate(pattern).spliterator(), false).mapToInt(i -> i.intValue());
+    }
 
     /**
      * @param pattern

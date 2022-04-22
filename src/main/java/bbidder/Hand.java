@@ -101,7 +101,7 @@ public final class Hand {
         case '9':
             return cRank - '2';
         case 'X':
-            return BitUtil.iterate(avail).iterator().next();
+            return BitUtil.stream(avail).findFirst().getAsInt();
         default:
             throw new IllegalArgumentException("Invalid rank: " + cRank);
         }
