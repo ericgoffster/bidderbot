@@ -54,9 +54,9 @@ public class MajorSymbol implements Symbol {
     @Override
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
         if (suits.containsKey("M") || suits.containsKey("OM")) {
-            return List.of(new BoundSymbol(evaluate(suits), this));
+            return List.of(new ConstSymbol(evaluate(suits)));
         }
-        return List.of(new BoundSymbol(Constants.HEART, this), new BoundSymbol(Constants.SPADE, this));
+        return List.of(new ConstSymbol(Constants.HEART), new ConstSymbol(Constants.SPADE));
     }
 
     private static Integer otherMajor(Integer strain) {

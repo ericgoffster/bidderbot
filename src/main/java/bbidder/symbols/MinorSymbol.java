@@ -54,9 +54,9 @@ public class MinorSymbol implements Symbol {
     @Override
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
         if (suits.containsKey("m") || suits.containsKey("om")) {
-            return List.of(new BoundSymbol(evaluate(suits), this));
+            return List.of(new ConstSymbol(evaluate(suits)));
         }
-        return List.of(new BoundSymbol(Constants.CLUB, this), new BoundSymbol(Constants.DIAMOND, this));
+        return List.of(new ConstSymbol(Constants.CLUB), new ConstSymbol(Constants.DIAMOND));
     }
 
     private static Integer otherMinor(Integer strain) {

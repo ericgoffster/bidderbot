@@ -71,16 +71,6 @@ public class SteppedSymbol implements Symbol {
         return (strain + delta) % 5;
     }
 
-    /**
-     * 
-     * @param suits
-     *            The suits to rotate
-     * @return The suits, rotated down once.
-     */
-    public static short rotateDown(short suits) {
-        return (short) ((suits >> 1) | ((suits & 1) << 4));
-    }
-
     @Override
     public int getResolved() {
         throw new IllegalStateException(this + " not resolved");
