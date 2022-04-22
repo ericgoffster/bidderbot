@@ -72,12 +72,16 @@ public class BidPatternList {
      * Resolve the first symbol.
      * Allow for first, second, third or fourth chair openings
      * 
+     * @param where
+     *            Where we are
+     * 
      * @return The list of resolved bidding contexts
      */
-    public List<BiddingContext> resolveFirstSymbol() {
+    public List<BiddingContext> resolveFirstSymbol(String where) {
         // If there are no bids, then we are done
+        BiddingContext empty = BiddingContext.EMPTY.at(where);
         if (bids.isEmpty()) {
-            return List.of(BiddingContext.EMPTY);
+            return List.of(empty);
         }
         BidPattern pattern = bids.get(0);
         BidPatternList exceptFirst = exceptFirst();
@@ -85,7 +89,7 @@ public class BidPatternList {
         // If the first bid is a generality, then the generality
         // takes care of all chairs
         if (pattern.generality != null) {
-            BiddingContext ctx = BiddingContext.EMPTY;
+            BiddingContext ctx = empty;
             return exceptFirst.resolveSymbols(ctx, pattern.resolveSymbols(ctx), bids.get(1).isOpposition);
         }
 
@@ -94,13 +98,13 @@ public class BidPatternList {
         BidPattern p1 = BidPattern.PASS.withIsOpposition(!isOpp);
         BidPattern p2 = BidPattern.PASS.withIsOpposition(isOpp);
         List<BiddingContext> list = new ArrayList<>();
-        BiddingContext ctx = BiddingContext.EMPTY;
+        BiddingContext ctx = empty;
         list.addAll(exceptFirst.resolveSymbols(ctx, pattern.resolveSymbols(ctx), !isOpp));
-        BiddingContext ctx1 = BiddingContext.EMPTY.withBidAdded(p1);
+        BiddingContext ctx1 = empty.withBidAdded(p1);
         list.addAll(exceptFirst.resolveSymbols(ctx1, pattern.resolveSymbols(ctx1), !isOpp));
-        BiddingContext ctx2 = BiddingContext.EMPTY.withBidAdded(p2).withBidAdded(p1);
+        BiddingContext ctx2 = empty.withBidAdded(p2).withBidAdded(p1);
         list.addAll(exceptFirst.resolveSymbols(ctx2, pattern.resolveSymbols(ctx2), !isOpp));
-        BiddingContext ctx3 = BiddingContext.EMPTY.withBidAdded(p1).withBidAdded(p2).withBidAdded(p1);
+        BiddingContext ctx3 = empty.withBidAdded(p1).withBidAdded(p2).withBidAdded(p1);
         list.addAll(exceptFirst.resolveSymbols(ctx3, pattern.resolveSymbols(ctx3), !isOpp));
         return list;
     }

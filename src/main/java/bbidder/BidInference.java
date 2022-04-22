@@ -25,6 +25,10 @@ public class BidInference {
         this.bids = bids;
         this.inferences = inferences;
     }
+    
+    public BidInference at(String where) {
+        return new BidInference(where, bids, inferences);
+    }
 
     /**
      * @param patt
@@ -80,7 +84,7 @@ public class BidInference {
      */
     public List<BidInference> resolveSymbols() {
         List<BidInference> result = new ArrayList<>();
-        for (BiddingContext bc2 : bids.resolveFirstSymbol()) {
+        for (BiddingContext bc2 : bids.resolveFirstSymbol(where)) {
             for (BiddingContext bc : inferences.resolveSymbols(bc2)) {
                 result.add(bc.getInference());
             }

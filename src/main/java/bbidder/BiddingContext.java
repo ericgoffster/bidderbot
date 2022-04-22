@@ -32,6 +32,10 @@ public final class BiddingContext {
         this.bidInference = bidInference;
         this.suits = suits;
     }
+    
+    public BiddingContext at(String where) {
+        return new BiddingContext(bidInference.at(where), suits);
+    }
 
     /**
      * @return The bid inference.
