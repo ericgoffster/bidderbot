@@ -1,6 +1,5 @@
 package bbidder.symbols;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -58,7 +57,7 @@ public class OtherMajorSymbol implements Symbol {
         if (suits.containsKey("M") || suits.containsKey("OM")) {
             return List.of(new BoundSymbol(evaluate(suits), this));
         }
-        return List.of(new BoundSymbol(Constants.SPADE, this), new BoundSymbol(Constants.HEART, this));
+        return List.of(new BoundSymbol(Constants.HEART, this), new BoundSymbol(Constants.SPADE, this));
     }
 
     private static Integer otherMajor(Integer strain) {
@@ -75,12 +74,6 @@ public class OtherMajorSymbol implements Symbol {
         }
     }
     
-    @Override
-    public Comparator<Symbol> direction() {
-        return (a, b) -> Integer.compare(a.getResolved(), b.getResolved());
-    }    
-
-
     @Override
     public Predicate<Bid> levelTest() {
         return level -> true;

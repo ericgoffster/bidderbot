@@ -1,6 +1,6 @@
 package bbidder.symbols;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -51,7 +51,11 @@ public class DownSymbol implements Symbol {
     
     @Override
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
-        return sym.boundSymbols(suits);
+        List<Symbol> l = new ArrayList<>();
+        for(Symbol s: sym.boundSymbols(suits)) {
+            l.add(0, s);
+        }
+        return l;
     }
 
     @Override
@@ -59,11 +63,6 @@ public class DownSymbol implements Symbol {
         throw new IllegalStateException(this + " not resolved");
     }
     
-    @Override
-    public Comparator<Symbol> direction() {
-        return sym.direction().reversed();
-    }
-
     @Override
     public Predicate<Bid> levelTest() {
         return sym.levelTest();

@@ -1,7 +1,6 @@
 package bbidder.symbols;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -88,11 +87,6 @@ public class SteppedSymbol implements Symbol {
         throw new IllegalStateException(this + " not resolved");
     }
     
-    @Override
-    public Comparator<Symbol> direction() {
-        return sym.direction();
-    }
-
     @Override
     public Predicate<Bid> levelTest() {
         return sym.levelTest();

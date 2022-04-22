@@ -2,9 +2,9 @@ package bbidder;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import bbidder.symbols.BoundSymbol;
@@ -112,7 +112,7 @@ public final class BiddingContext {
                 return Map.of(new BoundSymbol(strain, symbol), this);
             }
         }
-        TreeMap<Symbol, BiddingContext> m = new TreeMap<>(symbol.direction());
+        Map<Symbol, BiddingContext> m = new LinkedHashMap<Symbol, BiddingContext>();
         for (Symbol newSym: symbol.boundSymbols(suits)) {
             if (!suits.containsValue(newSym.getResolved())) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);

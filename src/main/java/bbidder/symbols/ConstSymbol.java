@@ -1,6 +1,5 @@
 package bbidder.symbols;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -61,11 +60,6 @@ public class ConstSymbol implements Symbol {
     @Override
     public int getResolved() {
         throw new IllegalStateException();
-    }
-
-    @Override
-    public Comparator<Symbol> direction() {
-        return (a, b) -> Integer.compare(a.getResolved(), b.getResolved());
     }
 
     @Override

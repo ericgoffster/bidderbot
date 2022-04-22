@@ -1,6 +1,5 @@
 package bbidder.symbols;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -75,12 +74,6 @@ public class OtherMinorSymbol implements Symbol {
         }
     }
     
-    @Override
-    public Comparator<Symbol> direction() {
-        return (a, b) -> Integer.compare(a.getResolved(), b.getResolved());
-    }    
-
-
     @Override
     public Predicate<Bid> levelTest() {
         return level -> true;

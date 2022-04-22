@@ -1,6 +1,5 @@
 package bbidder.symbols;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -60,13 +59,8 @@ public class VarSymbol implements Symbol {
         if (suits.containsKey(v)) {
             return List.of(new BoundSymbol(evaluate(suits), this));
         }
-        return List.of(new BoundSymbol(Constants.SPADE, this), new BoundSymbol(Constants.HEART, this), new BoundSymbol(Constants.DIAMOND, this), new BoundSymbol(Constants.CLUB, this));
+        return List.of(new BoundSymbol(Constants.CLUB, this), new BoundSymbol(Constants.DIAMOND, this), new BoundSymbol(Constants.HEART, this), new BoundSymbol(Constants.SPADE, this));
     }
-
-    @Override
-    public Comparator<Symbol> direction() {
-        return (a, b) -> Integer.compare(a.getResolved(), b.getResolved());
-    }    
 
     @Override
     public Predicate<Bid> levelTest() {
