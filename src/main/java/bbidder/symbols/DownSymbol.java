@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import bbidder.Bid;
 import bbidder.Symbol;
@@ -64,7 +63,7 @@ public class DownSymbol implements Symbol {
     }
     
     @Override
-    public Predicate<Bid> levelTest() {
-        return sym.levelTest();
+    public boolean compatibleWith(Bid bid) {
+        return sym.compatibleWith(bid);
     }
 }

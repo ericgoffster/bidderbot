@@ -3,7 +3,6 @@ package bbidder.symbols;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import bbidder.Bid;
 import bbidder.Symbol;
@@ -61,7 +60,7 @@ public class GreaterThanSymbol implements Symbol {
     }
     
     @Override
-    public Predicate<Bid> levelTest() {
-        return lev -> level < lev.level;
+    public boolean compatibleWith(Bid bid) {
+        return level < bid.level;
     }
 }

@@ -253,7 +253,7 @@ public class BidPattern {
             if (level != null && b.level != level.intValue()) {
                 return null;
             }
-            if (!symbol.levelTest().test(b)) {
+            if (!symbol.compatibleWith(b)) {
                 return null;
             }
             if (!bidList.isReverse(b)) {
@@ -267,7 +267,7 @@ public class BidPattern {
             if (level != null && b.level != level.intValue()) {
                 return null;
             }
-            if (!symbol.levelTest().test(b)) {
+            if (!symbol.compatibleWith(b)) {
                 return null;
             }
             if (!bidList.isNonReverse(b)) {
@@ -282,7 +282,7 @@ public class BidPattern {
             if (level != null && b.level != level.intValue()) {
                 return null;
             }
-            if (!symbol.levelTest().test(b)) {
+            if (!symbol.compatibleWith(b)) {
                 return null;
             }
             return b;

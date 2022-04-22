@@ -2,7 +2,6 @@ package bbidder;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 public interface Symbol {
     public Integer evaluate(Map<String, Integer> suits);
@@ -13,5 +12,5 @@ public interface Symbol {
 
     public int getResolved();
     
-    public Predicate<Bid> levelTest();
+    public boolean compatibleWith(Bid bid);
 }

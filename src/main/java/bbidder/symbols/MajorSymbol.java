@@ -2,7 +2,6 @@ package bbidder.symbols;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 import bbidder.Bid;
 import bbidder.Constants;
@@ -75,7 +74,7 @@ public class MajorSymbol implements Symbol {
     }
 
     @Override
-    public Predicate<Bid> levelTest() {
-        return level -> true;
+    public boolean compatibleWith(Bid bid) {
+        return true;
     }
 }

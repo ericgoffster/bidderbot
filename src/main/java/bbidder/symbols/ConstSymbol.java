@@ -3,7 +3,6 @@ package bbidder.symbols;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import bbidder.Bid;
 import bbidder.Strain;
@@ -63,7 +62,7 @@ public class ConstSymbol implements Symbol {
     }
 
     @Override
-    public Predicate<Bid> levelTest() {
-        return level -> true;
+    public boolean compatibleWith(Bid bid) {
+        return bid.strain == strain;
     }
 }
