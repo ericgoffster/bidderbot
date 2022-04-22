@@ -14,6 +14,7 @@ import bbidder.inferences.bound.ConstBoundInference;
  *
  */
 public class InferenceList {
+    public static final InferenceList EMPTY = new InferenceList(List.of());
     public final List<Inference> inferences;
 
     public InferenceList(List<Inference> inferences) {

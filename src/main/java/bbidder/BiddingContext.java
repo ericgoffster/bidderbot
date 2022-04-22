@@ -2,7 +2,6 @@ package bbidder;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -20,7 +19,7 @@ import java.util.regex.Pattern;
  *
  */
 public final class BiddingContext {
-    public static final BiddingContext EMPTY = new BiddingContext(new BidInference(null, BidPatternList.EMPTY, new InferenceList(List.of())), Map.of());
+    public static final BiddingContext EMPTY = new BiddingContext(new BidInference(null, BidPatternList.EMPTY, InferenceList.EMPTY), Map.of());
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     private final BidInference inf;
     
