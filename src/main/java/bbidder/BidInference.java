@@ -93,8 +93,7 @@ public class BidInference {
     public List<BidInference> resolveSymbols() {
         List<BidInference> result = new ArrayList<>();
         for (BidPatternListContext bplc : bids.resolveFirstSymbol(Map.of())) {
-            InferenceContext bc2 = new InferenceContext(TrueInference.T, bplc.getSuits());
-            for (InferenceContext bc : inferences.resolveSymbols(bc2)) {
+            for (InferenceContext bc : inferences.resolveSymbols(bplc.getSuits())) {
                 result.add(BidInference.EMPTY.at(where).withBids(bplc.bids).withInference(bc.inference));
             }
         }

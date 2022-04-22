@@ -6,8 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import bbidder.inferences.AndInference;
-
 public final class InferenceContext {
     public final Inference inference;
 
@@ -24,10 +22,6 @@ public final class InferenceContext {
      */
     public Map<String, Integer> getSuits() {
         return Collections.unmodifiableMap(suits);
-    }
-
-    public InferenceContext withInferenceAdded(Inference inf) {
-        return new InferenceContext(AndInference.create(inference, inf), suits);
     }
 
     public Map<Symbol, InferenceContext> resolveSymbols(Symbol symbol) {

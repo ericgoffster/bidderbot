@@ -1,8 +1,8 @@
 package bbidder.suitsets;
 
+import java.util.Map;
 import java.util.Objects;
 
-import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.SuitSet;
 
@@ -44,7 +44,7 @@ public class And implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(InferenceContext bc) {
+    public SuitSet replaceVars(Map<String, Integer> bc) {
         return new And(s1.replaceVars(bc), s2.replaceVars(bc));
     }
 }

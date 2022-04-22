@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.InferenceContext;
 import bbidder.Hand;
 import bbidder.Players;
 import bbidder.SuitSet;
@@ -45,12 +44,11 @@ public class LongestOrEqualTest {
 
     @Test
     public void testHigherRankingOfNotSpades() {
-        InferenceContext empty = new InferenceContext(TrueInference.T, Map.of());
         assertTrue(
-                new LongestOrEqual(new ConstSymbol(2), SuitSets.lookupSuitSet("~S").replaceVars(empty)).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+                new LongestOrEqual(new ConstSymbol(2), SuitSets.lookupSuitSet("~S").replaceVars(Map.of())).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertTrue(
-                new LongestOrEqual(new ConstSymbol(1), SuitSets.lookupSuitSet("~S").replaceVars(empty)).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+                new LongestOrEqual(new ConstSymbol(1), SuitSets.lookupSuitSet("~S").replaceVars(Map.of())).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
         assertFalse(
-                new LongestOrEqual(new ConstSymbol(0), SuitSets.lookupSuitSet("~S").replaceVars(empty)).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
+                new LongestOrEqual(new ConstSymbol(0), SuitSets.lookupSuitSet("~S").replaceVars(Map.of())).bind(new Players()).matches(Hand.valueOf("AKQJ AKQJ 7654 3")));
     }
 }

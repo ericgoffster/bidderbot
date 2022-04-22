@@ -1,10 +1,11 @@
 package bbidder.inferences;
 
 import java.util.List;
+import java.util.Map;
 
-import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.inferences.bound.ConstBoundInference;
 
@@ -24,8 +25,8 @@ public class Always implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(InferenceContext context) {
-        return List.of(context.withInferenceAdded(this));
+    public List<InferenceContext> resolveSymbols(Map<String, Integer> suits) {
+        return List.of(new InferenceContext(this, suits));
     }
 
     public static Always valueOf(String str) {

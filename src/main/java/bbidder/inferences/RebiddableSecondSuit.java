@@ -2,18 +2,20 @@ package bbidder.inferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import bbidder.InferenceContext;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
+import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
 import bbidder.Symbol;
+import bbidder.SymbolContext;
 import bbidder.SymbolParser;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -37,11 +39,11 @@ public class RebiddableSecondSuit implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(InferenceContext context) {
+    public List<InferenceContext> resolveSymbols(Map<String, Integer> suits) {
         List<InferenceContext> l = new ArrayList<>();
-        for (var e : context.resolveSymbols(longer).entrySet()) {
-            for (var e2 : e.getValue().resolveSymbols(shorter).entrySet()) {
-                l.add(e2.getValue().withInferenceAdded(new RebiddableSecondSuit(e.getKey(), e2.getKey())));
+        for (var e : SymbolContext.resolveSymbols(suits, longer).entrySet()) {
+            for (var e2 : SymbolContext.resolveSymbols(e.getValue(), shorter).entrySet()) {
+                l.add(new InferenceContext(new RebiddableSecondSuit(e.getKey(), e2.getKey()), e2.getValue()));
             }
         }
         return l;

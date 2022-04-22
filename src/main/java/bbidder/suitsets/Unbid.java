@@ -1,6 +1,7 @@
 package bbidder.suitsets;
 
-import bbidder.InferenceContext;
+import java.util.Map;
+
 import bbidder.Players;
 import bbidder.SuitSet;
 
@@ -33,7 +34,7 @@ public class Unbid implements SuitSet {
     }
 
     @Override
-    public SuitSet replaceVars(InferenceContext bc) {
+    public SuitSet replaceVars(Map<String, Integer> bc) {
         return this;
     }
     

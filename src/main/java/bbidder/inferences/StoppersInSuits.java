@@ -1,12 +1,13 @@
 package bbidder.inferences;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-import bbidder.InferenceContext;
 import bbidder.BitUtil;
 import bbidder.IBoundInference;
 import bbidder.Inference;
+import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.StopperSet;
@@ -60,8 +61,8 @@ public class StoppersInSuits implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(InferenceContext context) {
-        return List.of(context.withInferenceAdded(new StoppersInSuits(suits.replaceVars(context), partial)));
+    public List<InferenceContext> resolveSymbols(Map<String, Integer> insuits) {
+        return List.of(new InferenceContext(new StoppersInSuits(suits.replaceVars(insuits), partial), insuits));
     }
 
     @Override

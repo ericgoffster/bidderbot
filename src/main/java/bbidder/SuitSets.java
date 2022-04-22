@@ -11,6 +11,7 @@ import static bbidder.Constants.ROUND;
 import java.io.CharArrayReader;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Map;
 
 import bbidder.suitsets.And;
 import bbidder.suitsets.ConstSet;
@@ -22,8 +23,8 @@ import bbidder.suitsets.Unstopped;
 
 public class SuitSets {
 
-    public static Symbol bind(InferenceContext bc, Symbol symbol) {
-        Symbol evaluate = symbol.evaluate(bc.getSuits());
+    public static Symbol bind(Map<String, Integer> bc, Symbol symbol) {
+        Symbol evaluate = symbol.evaluate(bc);
         if (evaluate == null) {
             throw new IllegalArgumentException(symbol + " undefined");
         }

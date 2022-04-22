@@ -1,6 +1,7 @@
 package bbidder.inferences;
 
 import java.util.List;
+import java.util.Map;
 
 import bbidder.InferenceContext;
 import bbidder.IBoundInference;
@@ -27,8 +28,8 @@ public class UnBalanced implements Inference {
     }
 
     @Override
-    public List<InferenceContext> resolveSymbols(InferenceContext context) {
-        return List.of(context.withInferenceAdded(this));
+    public List<InferenceContext> resolveSymbols(Map<String, Integer> suits) {
+        return List.of(new InferenceContext(this, suits));
     }
 
     public static UnBalanced valueOf(String str) {
