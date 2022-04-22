@@ -23,7 +23,7 @@ import bbidder.inferences.bound.StoppersBoundInf;
  * @author goffster
  *
  */
-public final class StoppersInSuits implements Inference {
+public final class StoppersInSuits extends Inference {
     public final SuitSet suits;
     public final boolean partial;
 

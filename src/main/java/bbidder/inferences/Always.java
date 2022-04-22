@@ -15,7 +15,7 @@ import bbidder.inferences.bound.ConstBoundInference;
  * @author goffster
  *
  */
-public final class Always implements Inference {
+public final class Always extends Inference {
     public Always() {
     }
 

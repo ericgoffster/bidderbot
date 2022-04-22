@@ -17,7 +17,7 @@ import bbidder.inferences.bound.AndBoundInf;
  * @author goffster
  *
  */
-public final class AndInference implements Inference {
+public final class AndInference extends Inference {
     public final Inference i1;
     public final Inference i2;
 

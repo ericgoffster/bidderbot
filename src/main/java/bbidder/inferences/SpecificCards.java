@@ -20,7 +20,7 @@ import bbidder.inferences.bound.SpecificCardsBoundInf;
 /**
  * Represents the inference of a specific cards in a suit.
  */
-public final class SpecificCards implements Inference {
+public final class SpecificCards extends Inference {
     public final Symbol symbol;
     public final Range rng;
     public final int top;
