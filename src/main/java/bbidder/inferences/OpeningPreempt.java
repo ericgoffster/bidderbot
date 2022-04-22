@@ -8,7 +8,6 @@ import bbidder.BiddingContext;
 import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.MappedInf;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.Shape;
@@ -43,10 +42,10 @@ public class OpeningPreempt implements Inference {
     }
     
     @Override
-    public List<MappedInf> resolveSuits(BiddingContext context) {
-        List<MappedInf> l = new ArrayList<>();
+    public List<BiddingContext> resolveSuits(BiddingContext context) {
+        List<BiddingContext> l = new ArrayList<>();
         for (var e : context.getMappedBiddingContexts(suit).entrySet()) {
-            l.add(new MappedInf(new OpeningPreempt(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), level), e.getValue()));
+            l.add(e.getValue().withInferenceAdded(new OpeningPreempt(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), level)));
         }
         return l;
     }

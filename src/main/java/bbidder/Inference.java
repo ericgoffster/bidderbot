@@ -7,5 +7,5 @@ import java.util.List;
  */
 public interface Inference {
     public IBoundInference bind(Players players);
-    public List<MappedInf> resolveSuits(BiddingContext context);
+    public List<BiddingContext> resolveSuits(BiddingContext context);
 }

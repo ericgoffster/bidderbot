@@ -7,12 +7,11 @@ import bbidder.BiddingContext;
 import bbidder.BitUtil;
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.SuitSets;
-import bbidder.SuitSets.SuitSet;
-import bbidder.MappedInf;
 import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.StopperSet;
+import bbidder.SuitSets;
+import bbidder.SuitSets.SuitSet;
 import bbidder.inferences.bound.PartialStoppersBoundInf;
 import bbidder.inferences.bound.StoppersBoundInf;
 
@@ -61,8 +60,8 @@ public class StoppersInSuits implements Inference {
     }
     
     @Override
-    public List<MappedInf> resolveSuits(BiddingContext context) {
-        return List.of(new MappedInf(new StoppersInSuits(suits.replaceVars(context), partial), context));
+    public List<BiddingContext> resolveSuits(BiddingContext context) {
+        return List.of(context.withInferenceAdded(new StoppersInSuits(suits.replaceVars(context), partial)));
     }
 
     @Override

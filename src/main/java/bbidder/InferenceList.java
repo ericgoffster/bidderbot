@@ -20,6 +20,12 @@ public class InferenceList {
         super();
         this.inferences = inferences;
     }
+    
+    public InferenceList withInferenceAdded(Inference i) {
+        List<Inference> l = new ArrayList<>(inferences);
+        l.add(i);
+        return new InferenceList(l);
+    }
 
     /**
      * @param players
@@ -34,17 +40,13 @@ public class InferenceList {
         return result;
     }
     
-    public List<MappedInferenceList> resolveSuits(BiddingContext context) {
-        List<MappedInferenceList> list = new ArrayList<>();
-        list.add(new MappedInferenceList(new InferenceList(List.of()), context));
+    public List<BiddingContext> resolveSuits(BiddingContext context) {
+        List<BiddingContext> list = new ArrayList<>();
+        list.add(context);
         for (Inference i : inferences) {
-            List<MappedInferenceList> newList = new ArrayList<>();
-            for (MappedInferenceList bi2 : list) {
-                for (MappedInf bi : i.resolveSuits(bi2.ctx)) {
-                    List<Inference> l = new ArrayList<>(bi2.inf.inferences);
-                    l.add(bi.inf);
-                    newList.add(new MappedInferenceList(new InferenceList(l), bi.ctx));
-                }
+            List<BiddingContext> newList = new ArrayList<>();
+            for (BiddingContext bi2 : list) {
+                newList.addAll(i.resolveSuits(bi2));
             }
             list = newList;
         }

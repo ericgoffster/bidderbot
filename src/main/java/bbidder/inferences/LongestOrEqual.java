@@ -8,12 +8,11 @@ import bbidder.BiddingContext;
 import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.SuitSets;
-import bbidder.SuitSets.SuitSet;
-import bbidder.MappedInf;
 import bbidder.Players;
 import bbidder.ShapeSet;
 import bbidder.Strain;
+import bbidder.SuitSets;
+import bbidder.SuitSets.SuitSet;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -39,10 +38,10 @@ public class LongestOrEqual implements Inference {
     }
     
     @Override
-    public List<MappedInf> resolveSuits(BiddingContext context) {
-        List<MappedInf> l = new ArrayList<>();
+    public List<BiddingContext> resolveSuits(BiddingContext context) {
+        List<BiddingContext> l = new ArrayList<>();
         for (var e : context.getMappedBiddingContexts(suit).entrySet()) {
-            l.add(new MappedInf(new LongestOrEqual(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), among.replaceVars(context)), e.getValue()));
+            l.add(e.getValue().withInferenceAdded(new LongestOrEqual(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), among.replaceVars(context))));
         }
         return l;
     }

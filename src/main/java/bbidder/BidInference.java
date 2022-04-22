@@ -32,6 +32,10 @@ public class BidInference {
         return new BidInference(where, bids.withBidAdded(patt), inferences);
     }
 
+    public BidInference withInferenceAdded(Inference i) {
+        return new BidInference(where, bids, inferences.withInferenceAdded(i));
+    }
+
     /**
      * @param reg
      *            The inference registry
@@ -53,9 +57,9 @@ public class BidInference {
     public List<BidInference> resolveSuits() {
         List<BidInference> result = new ArrayList<>();
         for (BiddingContext ctx : bids.resolveSuits()) {
-            for(MappedInferenceList mil: inferences.resolveSuits(ctx)) {
+            for(BiddingContext mil: inferences.resolveSuits(ctx)) {
                 // Catch any errors
-                result.add(new BidInference(where, mil.ctx.getInference().bids, mil.inf));
+                result.add(mil.getInference());
             }
         }
         return result;

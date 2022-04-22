@@ -7,7 +7,6 @@ import java.util.Objects;
 import bbidder.BiddingContext;
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.MappedInf;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.SplitUtil;
@@ -41,8 +40,8 @@ public class CombinedTotalPointsRange implements Inference {
     }
     
     @Override
-    public List<MappedInf> resolveSuits(BiddingContext context) {
-        return List.of(new MappedInf(this, context));
+    public List<BiddingContext> resolveSuits(BiddingContext context) {
+        return List.of(context.withInferenceAdded(this));
     }
 
     public static Range createRange(String str, Map<String, Integer> m) {

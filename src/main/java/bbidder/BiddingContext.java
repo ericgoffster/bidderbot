@@ -54,6 +54,10 @@ public final class BiddingContext {
         return new BiddingContext(inf.withBidAdded(patt), suits);
     }
 
+    public BiddingContext withInferenceAdded(Inference i) {
+        return new BiddingContext(inf.withInferenceAdded(i), suits);
+    }
+
     /**
      * @param symbol
      *            The symbol

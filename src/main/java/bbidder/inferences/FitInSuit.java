@@ -11,7 +11,6 @@ import bbidder.Constants;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
-import bbidder.MappedInf;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
@@ -42,10 +41,10 @@ public class FitInSuit implements Inference {
     }
     
     @Override
-    public List<MappedInf> resolveSuits(BiddingContext context) {
-        List<MappedInf> l = new ArrayList<>();
+    public List<BiddingContext> resolveSuits(BiddingContext context) {
+        List<BiddingContext> l = new ArrayList<>();
         for (var e : context.getMappedBiddingContexts(suit).entrySet()) {
-            l.add(new MappedInf(new FitInSuit(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey()))), e.getValue()));
+            l.add(e.getValue().withInferenceAdded(new FitInSuit(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())))));
         }
         return l;
     }
