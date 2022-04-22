@@ -2,7 +2,6 @@ package bbidder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -25,7 +24,7 @@ public class BidPattern {
     public static final BidPattern PASS = createSimpleBid(Bid.P);
     public static final BidPattern WILD = new BidPattern(false, null, null, null, null, false, false, true);
     public final boolean isOpposition;
-    public final String suit;
+    public final String symbol;
     public final Integer level;
     public final Bid simpleBid;
     private final Integer jumpLevel;
@@ -33,11 +32,11 @@ public class BidPattern {
     public final boolean nonreverse;
     public final boolean wild;
 
-    private BidPattern(boolean isOpposition, String suit, Integer level, Bid simpleBid, Integer jumpLevel, boolean reverse, boolean notreverse,
+    private BidPattern(boolean isOpposition, String symbol, Integer level, Bid simpleBid, Integer jumpLevel, boolean reverse, boolean notreverse,
             boolean wild) {
         super();
         this.isOpposition = isOpposition;
-        this.suit = suit;
+        this.symbol = symbol;
         this.level = level;
         this.simpleBid = simpleBid;
         this.jumpLevel = jumpLevel;
@@ -52,7 +51,7 @@ public class BidPattern {
      * @return A Bid Pattern with isOpposition set.
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
-        return new BidPattern(isOpposition, suit, level, simpleBid, jumpLevel, reverse, nonreverse, wild);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, wild);
     }
 
     /**
@@ -66,7 +65,7 @@ public class BidPattern {
      * @return The suit part.
      */
     public String getSuit() {
-        return suit;
+        return symbol;
     }
 
     /**
@@ -107,7 +106,7 @@ public class BidPattern {
 
     @Override
     public int hashCode() {
-        return Objects.hash(isOpposition, jumpLevel, level, nonreverse, reverse, simpleBid, suit, wild);
+        return Objects.hash(isOpposition, jumpLevel, level, nonreverse, reverse, simpleBid, symbol, wild);
     }
 
     @Override
@@ -120,7 +119,7 @@ public class BidPattern {
             return false;
         BidPattern other = (BidPattern) obj;
         return isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
-                && nonreverse == other.nonreverse && reverse == other.reverse && simpleBid == other.simpleBid && Objects.equals(suit, other.suit)
+                && nonreverse == other.nonreverse && reverse == other.reverse && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol)
                 && wild == other.wild;
     }
 
@@ -129,38 +128,55 @@ public class BidPattern {
             return simpleBid.toString();
         }
         if (reverse) {
-            return STR_REVERSE + suit;
+            return STR_REVERSE + symbol;
         }
         if (nonreverse) {
-            return STR_NONREVERSE + suit;
+            return STR_NONREVERSE + symbol;
         }
         if (jumpLevel != null) {
             switch (jumpLevel.intValue()) {
             case 0:
-                return STR_NONJUMP + suit;
+                return STR_NONJUMP + symbol;
             case 1:
-                return STR_JUMP + suit;
+                return STR_JUMP + symbol;
             case 2:
-                return STR_DOUBLEJUMP + suit;
+                return STR_DOUBLEJUMP + symbol;
             default:
                 throw new IllegalStateException();
             }
         }
-        return (level + 1) + suit;
+        return (level + 1) + symbol;
     }
 
+    /**
+     * @param suit The suit
+     * @param jumpLevel The number of jumps
+     * @return A pattern where the level is "jump" based.
+     */
     public static BidPattern createJump(String suit, int jumpLevel) {
         return new BidPattern(false, suit, null, null, jumpLevel, false, false, false);
     }
 
+    /**
+     * @param suit The suit to reverse
+     * @return A bid that is the reverse of a suit
+     */
     public static BidPattern createReverse(String suit) {
         return new BidPattern(false, suit, null, null, 0, true, false, false);
     }
 
+    /**
+     * @param suit to non-reverse
+     * @return A bid that is the non-reverse reverse of a suit
+     */
     public static BidPattern createNonReverse(String suit) {
         return new BidPattern(false, suit, null, null, 0, false, true, false);
     }
 
+    /**
+     * @param simpleBid The simple bid
+     * @return A simple "constant" bid
+     */
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
             return new BidPattern(false, String.valueOf(Constants.STR_ALL_SUITS.charAt(simpleBid.strain)), simpleBid.level, simpleBid, null, false,
@@ -169,10 +185,20 @@ public class BidPattern {
         return new BidPattern(false, null, null, simpleBid, null, false, false, false);
     }
 
+    /**
+     * 
+     * @param level The level
+     * @param suit The suitz
+     * @return A bid that is the level of a suit
+     */
     public static BidPattern createBid(int level, String suit) {
         return new BidPattern(false, suit, level, null, null, false, false, false);
     }
 
+    /**
+     * @param strain The strain
+     * @return A bid with the suit bound to a specific strain
+     */
     public BidPattern bindSuit(int strain) {
         if (level != null) {
             return createSimpleBid(Bid.valueOf(level, strain));
@@ -181,15 +207,17 @@ public class BidPattern {
                 wild);
     }
 
+    /**
+     * @param bc The bidding context
+     * @return A list of contexts representing the symbol bound to actual values
+     */
     public List<BiddingContext> resolveSuits(BiddingContext bc) {
         if (simpleBid != null || wild) {
             return List.of(bc.withBidAdded(this));
         }
         List<BiddingContext> result = new ArrayList<>();
-        Map<Integer, BiddingContext> m = bc.resolveSuits(getSuit());
-        for (Entry<Integer, BiddingContext> e : m.entrySet()) {
-            BiddingContext bc2 = e.getValue();
-            result.add(bc2.withBidAdded(bindSuit(e.getKey())));
+        for (Entry<Integer, BiddingContext> e : bc.resolveSuits(getSuit()).entrySet()) {
+            result.add(e.getValue().withBidAdded(bindSuit(e.getKey())));
         }
         return result;
     }
@@ -206,7 +234,7 @@ public class BidPattern {
         if (simpleBid != null) {
             return simpleBid;
         }
-        Integer strain = Strain.getStrain(suit);
+        Integer strain = Strain.getStrain(symbol);
         if (strain == null) {
             throw new IllegalStateException();
         }
