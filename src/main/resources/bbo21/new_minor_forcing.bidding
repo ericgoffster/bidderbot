@@ -4,3 +4,10 @@
 # D = ♦
 # H = ♥
 # S = ♠
+
+1m 1M 1N 2om 2OM => inv, 4OM
+test Ax Axxx Axxx xxx: 1D 1S 1N 2C 2H
+test Axx Axxx Axxx xx: 1D 1S 1N 2C 2H
+
+1m 1M 1N 2om 2M => inv, 3M
+test Axx Axx Axxx xxx: 1D 1S 1N 2C 2S
