@@ -11,7 +11,6 @@ import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.symbols.BoundSymbol;
 
 public class IBidSuitGenerality implements Generality {
     public final Symbol symbol;
@@ -25,8 +24,8 @@ public class IBidSuitGenerality implements Generality {
     @Override
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         List<BiddingContext> result = new ArrayList<>();
-        for (Entry<Integer, BiddingContext> e : bc.resolveSymbols(symbol).entrySet()) {
-            result.add(e.getValue().withGeneralityAdded(new IBidSuitGenerality(new BoundSymbol(e.getKey(), symbol))));                
+        for (Entry<Symbol, BiddingContext> e : bc.resolveSymbols(symbol).entrySet()) {
+            result.add(e.getValue().withGeneralityAdded(new IBidSuitGenerality(e.getKey())));                
         }
         return result;
     }

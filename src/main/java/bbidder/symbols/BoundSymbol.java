@@ -65,7 +65,7 @@ public class BoundSymbol implements Symbol {
     }
 
     @Override
-    public Comparator<Integer> direction() {
+    public Comparator<Symbol> direction() {
         return from.direction();
     }
 

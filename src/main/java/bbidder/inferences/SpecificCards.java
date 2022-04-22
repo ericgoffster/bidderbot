@@ -15,7 +15,6 @@ import bbidder.Range;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
-import bbidder.symbols.BoundSymbol;
 
 /**
  * Represents the inference of a specific cards in a suit.
@@ -44,7 +43,7 @@ public class SpecificCards implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new SpecificCards(new BoundSymbol(e.getKey(), suit), rng, top)));
+            l.add(e.getValue().withInferenceAdded(new SpecificCards(e.getKey(), rng, top)));
         }
         return l;
     }

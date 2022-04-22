@@ -13,7 +13,7 @@ public interface Symbol {
 
     public int getResolved();
     
-    public Comparator<Integer> direction();
+    public Comparator<Symbol> direction();
     
     public Predicate<Bid> levelTest();
 }

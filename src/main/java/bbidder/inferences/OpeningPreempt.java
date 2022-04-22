@@ -17,7 +17,6 @@ import bbidder.SymbolParser;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.HcpBoundInf;
 import bbidder.inferences.bound.ShapeBoundInf;
-import bbidder.symbols.BoundSymbol;
 
 /**
  * Represents the inference of a premptive hand of varying levels.
@@ -46,7 +45,7 @@ public class OpeningPreempt implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new OpeningPreempt(new BoundSymbol(e.getKey(), suit), level)));
+            l.add(e.getValue().withInferenceAdded(new OpeningPreempt(e.getKey(), level)));
         }
         return l;
     }

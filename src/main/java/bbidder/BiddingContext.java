@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import bbidder.symbols.BoundSymbol;
+
 /**
  * A bidding context is used to build BidInference's.
  * A bidding context consists of the current BidInference, and the current symbol table.
@@ -100,22 +102,22 @@ public final class BiddingContext {
      * @return a map of strains to new bidding contexts. Each key in the map represents a possible bid strain
      *         for the given suit symbol.
      */
-    public Map<Integer, BiddingContext> resolveSymbols(Symbol symbol) {
+    public Map<Symbol, BiddingContext> resolveSymbols(Symbol symbol) {
         {
             Integer strain = getSuit(symbol);
             if (strain != null) {
                 if (strain < 0 || strain > 4) {
                     throw new IllegalArgumentException("Invalid strain");
                 }
-                return Map.of(strain, this);
+                return Map.of(new BoundSymbol(strain, symbol), this);
             }
         }
-        TreeMap<Integer, BiddingContext> m = new TreeMap<>(symbol.direction());
+        TreeMap<Symbol, BiddingContext> m = new TreeMap<>(symbol.direction());
         for (int strain : BitUtil.iterate(symbol.getSuitClass(suits))) {
             if (!suits.containsValue(strain)) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
                 newSuits.putAll(symbol.unevaluate(strain));
-                m.put(strain, new BiddingContext(bidInference, newSuits));
+                m.put(new BoundSymbol(strain, symbol), new BiddingContext(bidInference, newSuits));
             }
         }
         return m;

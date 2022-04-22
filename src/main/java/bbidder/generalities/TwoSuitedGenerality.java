@@ -11,7 +11,6 @@ import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.symbols.BoundSymbol;
 
 public class TwoSuitedGenerality implements Generality {
     public final Symbol longer;
@@ -27,9 +26,9 @@ public class TwoSuitedGenerality implements Generality {
     @Override
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         List<BiddingContext> result = new ArrayList<>();
-        for (Entry<Integer, BiddingContext> e : bc.resolveSymbols(longer).entrySet()) {
-            for (Entry<Integer, BiddingContext> e2 : e.getValue().resolveSymbols(shorter).entrySet()) {
-                result.add(e2.getValue().withGeneralityAdded(new TwoSuitedGenerality(new BoundSymbol(e.getKey(), longer), new BoundSymbol(e2.getKey(), shorter))));                
+        for (Entry<Symbol, BiddingContext> e : bc.resolveSymbols(longer).entrySet()) {
+            for (Entry<Symbol, BiddingContext> e2 : e.getValue().resolveSymbols(shorter).entrySet()) {
+                result.add(e2.getValue().withGeneralityAdded(new TwoSuitedGenerality(e.getKey(), e2.getKey())));                
             }
         }
         return result;

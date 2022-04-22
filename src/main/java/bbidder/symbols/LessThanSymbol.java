@@ -61,7 +61,7 @@ public class LessThanSymbol implements Symbol {
     }
     
     @Override
-    public Comparator<Integer> direction() {
+    public Comparator<Symbol> direction() {
         return sym.direction();
     }
     

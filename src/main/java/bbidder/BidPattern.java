@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import bbidder.generalities.AndGenerality;
 import bbidder.generalities.TrueGenerality;
-import bbidder.symbols.BoundSymbol;
 import bbidder.symbols.ConstSymbol;
 
 /**
@@ -206,15 +205,15 @@ public class BidPattern {
     }
 
     /**
-     * @param strain
-     *            The strain
+     * @param symbol
+     *            The new symbol
      * @return A bid with the suit bound to a specific strain
      */
-    public BidPattern bindSuit(int strain) {
+    public BidPattern bindSuit(Symbol symbol) {
         if (level != null) {
-            return createSimpleBid(Bid.valueOf(level, strain));
+            return createSimpleBid(Bid.valueOf(level, symbol.getResolved()));
         }
-        return new BidPattern(isOpposition, new BoundSymbol(strain, getSymbol()), level, simpleBid, jumpLevel, reverse, nonreverse, generality);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, generality);
     }
 
     /**
@@ -230,7 +229,7 @@ public class BidPattern {
             return List.of(bc.withBidAdded(this));
         }
         List<BiddingContext> result = new ArrayList<>();
-        for (Entry<Integer, BiddingContext> e : bc.resolveSymbols(getSymbol()).entrySet()) {
+        for (Entry<Symbol, BiddingContext> e : bc.resolveSymbols(getSymbol()).entrySet()) {
             result.add(e.getValue().withBidAdded(bindSuit(e.getKey())));
         }
         return result;

@@ -77,8 +77,8 @@ public class MajorSymbol implements Symbol {
     }
 
     @Override
-    public Comparator<Integer> direction() {
-        return Integer::compare;
+    public Comparator<Symbol> direction() {
+        return (a, b) -> Integer.compare(a.getResolved(), b.getResolved());
     }
 
     @Override
