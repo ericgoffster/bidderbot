@@ -68,13 +68,13 @@ public final class BiddingSystem {
         DebugUtils.breakpointGetPossibleBid(bids, players);
         List<PossibleBid> l = new ArrayList<>();
         Set<Bid> matched = new HashSet<>();
-        for (BidInference i : inferences) {
+        inferences.forEach(i -> {
             i.bids.getMatch(bids, players, matched).ifPresent(match -> {
                 DebugUtils.breakpointGetPossibleBid(bids, players, match, i);
                 l.add(new PossibleBid(i, match));
                 matched.add(match);
-            });
-        }
+            });            
+        });
         if (l.isEmpty()) {
             DebugUtils.breakpointGetPossibleBid(bids, players, l);
         }
@@ -94,15 +94,11 @@ public final class BiddingSystem {
      */
     public BidSource getBid(Auction bids, Players players, Hand hand) {
         List<PossibleBid> possible = getPossibleBids(bids, players);
-        for (PossibleBid i : possible) {
-            IBoundInference inf = i.inf.inferences.bind(players);
-            if (inf.test(hand)) {
-                return new BidSource(i, possible);
-            }
-        }
-
-        // For now always pass, this will get smarter.
-        return new BidSource(new PossibleBid(null, Bid.P), possible);
+        return possible.stream()
+                .filter(i -> i.inf.inferences.bind(players).test(hand))
+                .findFirst()
+                .map(i -> new BidSource(i, possible))
+                .orElse(new BidSource(new PossibleBid(null, Bid.P), possible));
     }
 
     /**
