@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import bbidder.BidList;
+import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.GeneralityContext;
 import bbidder.Players;
@@ -33,7 +33,7 @@ public final class UnbidSuitGenerality implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, BidList bidList) {
+    public boolean matches(Players players, Auction bidList) {
         int suit = symbol.getResolved();
         int bidSuits = players.me.infSummary.getBidSuits() |  players.partner.infSummary.getBidSuits() | players.lho.infSummary.getBidSuits() | players.rho.infSummary.getBidSuits();
         if ((bidSuits & (1 << suit)) != 0) {

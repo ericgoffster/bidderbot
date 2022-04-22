@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import bbidder.BidList;
+import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.GeneralityContext;
 import bbidder.Players;
@@ -33,7 +33,7 @@ public final class PartnerBidSuitGenerality implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, BidList bidList) {
+    public boolean matches(Players players, Auction bidList) {
         int suit = symbol.getResolved();
         if (players.me.infSummary.minLenInSuit(suit) + players.partner.infSummary.minLenInSuit(suit) >= 8) {
             return false;

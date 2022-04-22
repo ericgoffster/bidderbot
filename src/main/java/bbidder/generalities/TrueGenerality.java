@@ -2,7 +2,7 @@ package bbidder.generalities;
 
 import java.util.List;
 
-import bbidder.BidList;
+import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.GeneralityContext;
 import bbidder.Players;
@@ -20,7 +20,7 @@ public final class TrueGenerality implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, BidList bidList) {
+    public boolean matches(Players players, Auction bidList) {
         return true;
     }
 

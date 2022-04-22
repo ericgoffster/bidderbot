@@ -14,10 +14,10 @@ import bbidder.inferences.bound.AndBoundInf;
 public final class BiddingState {
     public final BiddingSystem we;
     public final BiddingSystem they;
-    public final BidList bidding;
+    public final Auction bidding;
     public final Players players;
 
-    private BiddingState(BiddingSystem we, BiddingSystem they, BidList bidding, Players players) {
+    private BiddingState(BiddingSystem we, BiddingSystem they, Auction bidding, Players players) {
         super();
         this.we = we;
         this.they = they;
@@ -46,7 +46,7 @@ public final class BiddingState {
     public BiddingState(BiddingSystem we, BiddingSystem they) {
         this.we = we;
         this.they = they;
-        this.bidding = BidList.create(List.of());
+        this.bidding = Auction.create(List.of());
         this.players = new Players();
     }
 
@@ -56,7 +56,7 @@ public final class BiddingState {
      * @return A new Bidding State with the given bid made.
      */
     public BiddingState withBid(Bid bid) {
-        BidList newBidList = bidding.withBidAdded(bid);
+        Auction newBidList = bidding.withBidAdded(bid);
         IBoundInference inference = we.getInference(newBidList, players);
         IBoundInference newInf = AndBoundInf.create(inference, players.me.inf);
         InfSummary newSummary = newInf.getSummary();

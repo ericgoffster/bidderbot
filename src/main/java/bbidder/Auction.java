@@ -11,10 +11,10 @@ import java.util.Objects;
  * @author goffster
  *
  */
-public final class BidList {
+public final class Auction {
     private final List<Bid> bids;
 
-    private BidList(List<Bid> bids) {
+    private Auction(List<Bid> bids) {
         super();
         this.bids = bids;
     }
@@ -27,16 +27,16 @@ public final class BidList {
     }
 
     /**
-     * Creates a bid list from a list of bids.
+     * Creates an auction from a list of bids.
      * 
      * @param bids
      *            The list of bids.
-     * @return The new bid List.
+     * @return The new auction.
      * @throws IllegalArgumentException
      *             If the auction is not valid.
      */
-    public static BidList create(List<Bid> bids) {
-        BidList bl = new BidList(List.of());
+    public static Auction create(List<Bid> bids) {
+        Auction bl = new Auction(List.of());
         for (Bid b : bids) {
             bl = bl.withBidAdded(b);
         }
@@ -108,13 +108,13 @@ public final class BidList {
      * @throws IllegalArgumentException
      *             If the auction is not valid.
      */
-    public BidList withBidAdded(Bid bid) {
+    public Auction withBidAdded(Bid bid) {
         if (!isLegalBid(bid)) {
             throw new IllegalArgumentException("Invalid bid '" + bid + "'");
         }
         List<Bid> newBids = new ArrayList<>(bids);
         newBids.add(bid);
-        return new BidList(newBids);
+        return new Auction(newBids);
     }
 
     /**
@@ -150,7 +150,7 @@ public final class BidList {
      *            The bid to add
      * @return A new bid list with the given bid prepended
      */
-    public BidList withBidPrepended(Bid bid) {
+    public Auction withBidPrepended(Bid bid) {
         List<Bid> newBids = new ArrayList<>();
         newBids.add(bid);
         newBids.addAll(bids);
@@ -176,25 +176,60 @@ public final class BidList {
     }
 
     /**
-     * @return A bid list of everything exception the last bid. No-op if already empty.
+     * @return An auction of all bids except the last bid. No-op if already empty.
      */
-    public BidList exceptLast() {
+    public Auction exceptLast() {
         if (bids.isEmpty()) {
             return this;
         }
-        return new BidList(bids.subList(0, bids.size() - 1));
+        return new Auction(bids.subList(0, bids.size() - 1));
     }
 
     /**
      * @param n
      *            The number of bids to return
-     * @return A bid list of just the first "n" bids,
+     * @return An auction of just the first "n" bids,
      */
-    public BidList firstN(int n) {
+    public Auction firstN(int n) {
         if (bids.size() < n) {
             return this;
         }
-        return new BidList(bids.subList(0, n));
+        return new Auction(bids.subList(0, n));
+    }
+
+    /**
+     * 
+     * @param strain
+     *            The bid strain
+     * @return The next possible level of the given strain.
+     */
+    public Bid nextLevel(int strain) {
+        Bid lastBidSuit = getLastSuitBid();
+        if (lastBidSuit == null) {
+            return Bid.valueOf(0, strain);
+        }
+        if (strain > lastBidSuit.strain) {
+            return Bid.valueOf(lastBidSuit.level, strain);
+        } else {
+            return Bid.valueOf(lastBidSuit.level + 1, strain);
+        }
+    }
+
+    /**
+     * 
+     * @param jumpLevel
+     *            The number of levels to jump
+     * @param strain
+     *            The bidding strain
+     * @return The bid, jumping the requisite number of jumps.
+     */
+    public Bid getBid(int jumpLevel, int strain) {
+        Bid b = nextLevel(strain);
+        while (jumpLevel > 0) {
+            b = b.raise();
+            jumpLevel--;
+        }
+        return b;
     }
 
     /**
@@ -204,7 +239,7 @@ public final class BidList {
      * @throws IllegalArgumentException
      *             If the auction is not valid or bids cant be parsed.
      */
-    public static BidList valueOf(String str) {
+    public static Auction valueOf(String str) {
         if (str == null) {
             return null;
         }
@@ -263,42 +298,7 @@ public final class BidList {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        BidList other = (BidList) obj;
+        Auction other = (Auction) obj;
         return Objects.equals(bids, other.bids);
-    }
-
-    /**
-     * 
-     * @param strain
-     *            The bid strain
-     * @return The next possible level of the given strain.
-     */
-    public Bid nextLevel(int strain) {
-        Bid lastBidSuit = getLastSuitBid();
-        if (lastBidSuit == null) {
-            return Bid.valueOf(0, strain);
-        }
-        if (strain > lastBidSuit.strain) {
-            return Bid.valueOf(lastBidSuit.level, strain);
-        } else {
-            return Bid.valueOf(lastBidSuit.level + 1, strain);
-        }
-    }
-
-    /**
-     * 
-     * @param jumpLevel
-     *            The number of levels to jump
-     * @param strain
-     *            The bidding strain
-     * @return The bid, jumping the requisite number of jumps.
-     */
-    public Bid getBid(int jumpLevel, int strain) {
-        Bid b = nextLevel(strain);
-        while (jumpLevel > 0) {
-            b = b.raise();
-            jumpLevel--;
-        }
-        return b;
     }
 }

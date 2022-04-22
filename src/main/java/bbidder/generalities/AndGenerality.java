@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.BidList;
+import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.GeneralityContext;
 import bbidder.Players;
@@ -42,7 +42,7 @@ public final class AndGenerality implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, BidList bidList) {
+    public boolean matches(Players players, Auction bidList) {
         return g1.matches(players, bidList) && g2.matches(players, bidList);
     }
 

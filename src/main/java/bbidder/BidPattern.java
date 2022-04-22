@@ -204,7 +204,7 @@ public final class BidPattern {
      *            The current list of bids.
      * @return The bid associated with the given pattern.
      */
-    public Bid resolveToBid(BidList bidList) {
+    public Bid resolveToBid(Auction bidList) {
         if (simpleBid != null) {
             return simpleBid;
         }

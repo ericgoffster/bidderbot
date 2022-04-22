@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import bbidder.BidList;
+import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.GeneralityContext;
 import bbidder.Players;
@@ -37,7 +37,7 @@ public final class TwoSuitedGenerality implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, BidList bidList) {
+    public boolean matches(Players players, Auction bidList) {
         int l = longer.getResolved();
         int s = shorter.getResolved();
         if (players.me.infSummary.minLenInSuit(s) + players.partner.infSummary.minLenInSuit(s) >= 8) {

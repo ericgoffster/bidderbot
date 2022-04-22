@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-import bbidder.BidList;
+import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.GeneralityContext;
 import bbidder.Players;
@@ -33,7 +33,7 @@ public final class FitEstablished implements Generality {
     }
 
     @Override
-    public boolean matches(Players players, BidList bidList) {
+    public boolean matches(Players players, Auction bidList) {
         int s = symbol.getResolved();
         return players.partner.infSummary.minLenInSuit(s) + players.me.infSummary.minLenInSuit(s) >= 8;
     }

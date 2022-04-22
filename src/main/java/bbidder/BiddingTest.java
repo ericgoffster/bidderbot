@@ -8,11 +8,11 @@ package bbidder;
  */
 public final class BiddingTest {
     public final Hand hand;
-    public final BidList bids;
+    public final Auction bids;
     public final String where;
     public final boolean anti;
 
-    public BiddingTest(String where, Hand hand, BidList bids, boolean anti) {
+    public BiddingTest(String where, Hand hand, Auction bids, boolean anti) {
         super();
         if (hand.size() != 13) {
             throw new IllegalArgumentException("Hand does not have 13 cards: '" + hand + '"');
@@ -33,7 +33,7 @@ public final class BiddingTest {
      */
     public TestResult getResult(BiddingSystem bs) {
         BiddingState state = new BiddingState(bs);
-        BidList exceptLast = bids.exceptLast();
+        Auction exceptLast = bids.exceptLast();
         Bid expected = bids.getLastBid();
         try {
             for (Bid bid : exceptLast.getBids()) {
@@ -68,6 +68,6 @@ public final class BiddingTest {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Expected <hand>:<bids> '" + str + "'");
         }
-        return new BiddingTest(where, Hand.valueOf(parts[0]), BidList.valueOf(parts[1]), anti);
+        return new BiddingTest(where, Hand.valueOf(parts[0]), Auction.valueOf(parts[1]), anti);
     }
 }

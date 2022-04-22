@@ -12,7 +12,7 @@ public final class DebugUtils {
         }
     }
 
-    public static void breakpointGetPossibleBid(BidList bids, Players players, Bid match, BidInference i) {
+    public static void breakpointGetPossibleBid(Auction bids, Players players, Bid match, BidInference i) {
         if (debugMode) {
             System.out.println("getPossible bids:");
             System.out.println("   bids:" + bids);
@@ -23,12 +23,12 @@ public final class DebugUtils {
         }
     }
 
-    public static void breakpointGetPossibleBid(BidList bids, Players players) {
+    public static void breakpointGetPossibleBid(Auction bids, Players players) {
         if (debugMode) {
         }        
     }
 
-    public static void breakpointGetPossibleBid(BidList bids, Players players, List<PossibleBid> l) {
+    public static void breakpointGetPossibleBid(Auction bids, Players players, List<PossibleBid> l) {
         if (debugMode) {
             if (l.isEmpty()) {
                 System.out.println("getPossible bids returned nothing:");
@@ -39,7 +39,7 @@ public final class DebugUtils {
         }        
     }
 
-    public static void breakpointNoBid(BidList bidding, Bid bid, Players players) {
+    public static void breakpointNoBid(Auction bidding, Bid bid, Players players) {
         if (debugMode) {
             System.out.println(bid + " made no sense for "+ bidding);
             System.out.println("   me:" + players.me.infSummary);

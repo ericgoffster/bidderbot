@@ -63,7 +63,7 @@ public final class BiddingSystem {
      *            The players
      * @return A list of all possible bids given the list of bids.
      */
-    public List<PossibleBid> getPossibleBids(BidList bids, Players players) {
+    public List<PossibleBid> getPossibleBids(Auction bids, Players players) {
         DebugUtils.breakpointGetPossibleBid(bids, players);
         List<PossibleBid> l = new ArrayList<>();
         Set<Bid> matched = new HashSet<>();
@@ -92,7 +92,7 @@ public final class BiddingSystem {
      *            The hand to evaluate
      * @return The right bid
      */
-    public BidSource getBid(BidList bids, Players players, Hand hand) {
+    public BidSource getBid(Auction bids, Players players, Hand hand) {
         List<PossibleBid> possible = getPossibleBids(bids, players);
         for (PossibleBid i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
@@ -114,7 +114,7 @@ public final class BiddingSystem {
      *            The like hands for everyone so far.
      * @return The inference The inference from the bid.
      */
-    public IBoundInference getInference(BidList bids, Players players) {
+    public IBoundInference getInference(Auction bids, Players players) {
         if (bids.getBids().size() == 0) {
             return ConstBoundInference.create(false);
         }
