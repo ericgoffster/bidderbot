@@ -52,8 +52,35 @@ public class NotSymbol implements Symbol {
         List<Symbol> old = sym.boundSymbols(suits);
         List<Symbol> l = new ArrayList<>();
         for(int i = 0; i < 4; i++) {
-            if (!findStrain(i, old)) {
-                l.add(new BoundSymbol(i, sym));
+            int resolved = i;
+            if (!findStrain(resolved, old)) {
+                l.add(new Symbol() {
+
+                    @Override
+                    public Integer evaluate(Map<String, Integer> suits) {
+                        return resolved;
+                    }
+
+                    @Override
+                    public Map<String, Integer> unevaluate(int strain) {
+                        return Map.of();
+                    }
+
+                    @Override
+                    public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+                        return List.of(this);
+                    }
+
+                    @Override
+                    public int getResolved() {
+                        return resolved;
+                    }
+
+                    @Override
+                    public boolean compatibleWith(Bid bid) {
+                        return bid.strain == resolved;
+                    }
+                });
             }
         }
         return l;
