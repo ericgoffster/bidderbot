@@ -84,14 +84,6 @@ public class BidPatternList {
         return l;
     }
     
-    public List<BiddingContext> resolveFirstSymbol(String where) {
-        List<BiddingContext> l = new ArrayList<>();
-        for(BidPatternListContext bplc: resolveFirstSymbol()) {
-            l.add(new BiddingContext(BidInference.EMPTY.at(where).withBids(bplc.bids), bplc.getSuits()));
-        }
-        return l;
-    }
-
     /**
      * Resolve the first symbol.
      * Allow for first, second, third or fourth chair openings

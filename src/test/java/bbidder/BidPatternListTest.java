@@ -38,7 +38,7 @@ public class BidPatternListTest {
     public void test2() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         BidPatternList bpl = BidPatternList.valueOf(reg, "1C");
-        List<BiddingContext> l = bpl.resolveFirstSymbol("where");
+        List<BidPatternListContext> l = bpl.resolveFirstSymbol();
         assertEquals(4, l.size());
     }
 }

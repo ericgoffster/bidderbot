@@ -50,15 +50,6 @@ public final class BiddingContext {
     }
 
     /**
-     * @param patt
-     *            The bid pattern to add.
-     * @return A new BiddingContext with the given bid added to the bid list.
-     */
-    public BiddingContext withBidAdded(BidPattern patt) {
-        return new BiddingContext(bidInference.withBidAdded(patt), suits);
-    }
-
-    /**
      * @param inf
      *            The inference to add.
      * @return A new BiddingContext with the given inference added to the inference list.
