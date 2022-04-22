@@ -58,76 +58,22 @@ public final class BidPattern {
     }
 
     /**
-     * @return The suit part.
+     * @return The strain part.  Null if N/A (i.e. for pass)
      */
     public Symbol getSymbol() {
         return symbol;
     }
 
     /**
-     * @return The level part.
+     * @return The level part.  Null if N/A
      */
     public Integer getLevel() {
         return level;
     }
 
-    @Override
-    public String toString() {
-        if (generality != null) {
-            return "[" + generality + "]";
-        }
-        String s = _getString();
-        if (isOpposition) {
-            return "(" + s + ")";
-        }
-        return s;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(isOpposition, jumpLevel, level, simpleBid, symbol, generality);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        BidPattern other = (BidPattern) obj;
-        return isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
-                && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol)
-                && Objects.equals(generality, other.generality);
-    }
-
-    public String getLevelString() {
-        return level == null ? "" : String.valueOf(level + 1);
-    }
-
-    private String _getString() {
-        if (simpleBid != null) {
-            return simpleBid.toString();
-        }
-        if (jumpLevel != null) {
-            switch (jumpLevel.intValue()) {
-            case 0:
-                return STR_NONJUMP + getLevelString() + symbol;
-            case 1:
-                return STR_JUMP + getLevelString() + symbol;
-            case 2:
-                return STR_DOUBLEJUMP + getLevelString() + symbol;
-            default:
-                throw new IllegalStateException();
-            }
-        }
-        return getLevelString() + symbol;
-    }
-
     /**
      * @param symbol
-     *            The suit
+     *            The strain
      * @param jumpLevel
      *            The number of jumps
      * @return A pattern where the level is "jump" based.
@@ -149,7 +95,6 @@ public final class BidPattern {
     }
 
     /**
-     * 
      * @param level
      *            The level
      * @param symbol
@@ -160,6 +105,11 @@ public final class BidPattern {
         return new BidPattern(false, symbol, level, null, null, null);
     }
 
+    /**
+     * @param generality
+     *            The generality.
+     * @return A bid that represents a seires of bids that fit a generality
+     */
     public static BidPattern createWild(Generality generality) {
         return new BidPattern(false, null, null, null, null, generality);
     }
@@ -200,18 +150,18 @@ public final class BidPattern {
      * At this point, the bid pattern's suit has already been
      * resolved, so we just need to determine the level.
      * 
-     * @param bidList
+     * @param auction
      *            The current list of bids.
-     * @return The bid associated with the given pattern.
+     * @return The bid associated with the given pattern.  Null, if not valid.
      */
-    public Bid resolveToBid(Auction bidList) {
+    public Bid resolveToBid(Auction auction) {
         if (simpleBid != null) {
             return simpleBid;
         }
         int strain = symbol.getResolved();
         if (getJumpLevel() != null) {
             int newLevel = getJumpLevel();
-            Bid b = bidList.getBid(newLevel, strain);
+            Bid b = auction.getBid(newLevel, strain);
             if (level != null && b.level != level.intValue()) {
                 return null;
             }
@@ -221,5 +171,55 @@ public final class BidPattern {
             return b;
         }
         return Bid.valueOf(getLevel(), strain);
+    }
+
+    @Override
+    public String toString() {
+        if (generality != null) {
+            return "[" + generality + "]";
+        }
+        String s = _getString();
+        if (isOpposition) {
+            return "(" + s + ")";
+        }
+        return s;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isOpposition, jumpLevel, level, simpleBid, symbol, generality);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BidPattern other = (BidPattern) obj;
+        return isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
+                && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol)
+                && Objects.equals(generality, other.generality);
+    }
+
+    private String _getString() {
+        if (simpleBid != null) {
+            return simpleBid.toString();
+        }
+        if (jumpLevel != null) {
+            switch (jumpLevel.intValue()) {
+            case 0:
+                return STR_NONJUMP + symbol;
+            case 1:
+                return STR_JUMP + symbol;
+            case 2:
+                return STR_DOUBLEJUMP + symbol;
+            default:
+                throw new IllegalStateException();
+            }
+        }
+        return String.valueOf(level + 1) + symbol;
     }
 }
