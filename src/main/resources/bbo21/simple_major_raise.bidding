@@ -8,34 +8,41 @@
 1M 2M
 4M => gf;
     test AKxxxx AKx Ax xx:
-        1♠ 2♠ 4♠;
+        1♠ 2♠
+        4♠;
 
 1♠ 2♠
 2N => inv, 1- x;
     test AKxxx Axx Kxxx x:
-        1♠ 2♠ 2N;
+        1♠ 2♠
+        2N;
 
 1♥ 2♥
 2♠ => inv, 1- x;
     test Axx AKxxx Kxxx x:
-        1♥ 2♥ 2♠;
+        1♥ 2♥
+        2♠;
 
 1♥ 2♥
 2N => inv, 3+ ♠, 1 of top 3 in ♠;
     test Kxx AKxxx AQx xx:
-        1♥ 2♥ 2N;
+        1♥ 2♥
+        2N;
 
 1♥ 2♥
 3m => inv, 3+ m, 1 of top 3 in m;
     test AQx AKxxx Kxx xx:
-        1♥ 2♥ 3♦;
+        1♥ 2♥
+        3♦;
 
 1♠ 2♠
 NJx => inv, 3+ x, 1 of top 3 in x;
     test AKxxx AQx Kxx xx:
-        1♠ 2♠ 3♦;
+        1♠ 2♠
+        3♦;
 
 1M 2M
 3M => inv;
     test AKxxxx AQx Kx xx:
-        1♠ 2♠ 3♠;
+        1♠ 2♠
+        3♠;

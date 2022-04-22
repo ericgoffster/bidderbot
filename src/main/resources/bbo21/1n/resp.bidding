@@ -6,61 +6,84 @@
 # S = ♠
 
 1N 2♣ => inv+, 5+M, 4OM;
-    test AJxxx Axxx xx xx:1N 2♣;
+    test AJxxx Axxx xx xx:
+        1N 2♣;
 
 1N 2M-1 => slaminv, 6+M;
-    test AQxxxx x AKx Jxx:1N 2♥;
-    test x AQxxxx AKx Jxx:1N 2♦;
+    test AQxxxx x AKx Jxx:
+        1N 2♥;
+    test x AQxxxx AKx Jxx:
+        1N 2♦;
 
 1N 4M-1 => 6+M, gf+;
-    test AQxxxx Kxx Qx xx:1N 4♥;
-    test Kxx AQxxxx Qx xx:1N 4♦;
+    test AQxxxx Kxx Qx xx:
+        1N 4♥;
+    test Kxx AQxxxx Qx xx:
+        1N 4♦;
 
 1N 2M-1 => 5+M;
-    test Axxxx xxx Qxx xx:1N 2♥;
-    test xxx Axxxx Qxx xx:1N 2♦;
+    test Axxxx xxx Qxx xx:
+        1N 2♥;
+    test xxx Axxxx Qxx xx:
+        1N 2♦;
 
 1N 3♦ => gf+, 1-♦, 4+♣, 4♥, 4♠;
-    test Axxx Axxx x Axxx:1N 3♦;
+    test Axxx Axxx x Axxx:
+        1N 3♦;
 
 1N 3M => gf+, 1-M, 4+♣, 4+♦, 4OM;
-    test Axxx x Axxx Axxx:1N 3♥;
-    test x Axxx Axxx Axxx:1N 3♠;
+    test Axxx x Axxx Axxx:
+        1N 3♥;
+    test x Axxx Axxx Axxx:
+        1N 3♠;
 
 1N 2♣ => inv+, 4M;
-    test Axx AJxx xxxx xx:1N 2♣;
-    test Axxx AJx xxxx xx:1N 2♣;
+    test Axx AJxx xxxx xx:
+        1N 2♣;
+    test Axxx AJx xxxx xx:
+        1N 2♣;
 
 1N 2♠ => gf+, 5+m, 4+om;
-    test Axx x AKxxx AKxx:1N 2♠;
-    test Axx x AKxx AKxxx:1N 2♠;
+    test Axx x AKxxx AKxx:
+        1N 2♠;
+    test Axx x AKxx AKxxx:
+        1N 2♠;
 
 1N 3N => gf;
-    test Axx Axx Qxxxx Kx:1N 3N;
+    test Axx Axx Qxxxx Kx:
+        1N 3N;
 
 1N 2♠ => gf+, 4+♣, 4+♦;
-    test Axx xx AKxx AKxx:1N 2♠;
+    test Axx xx AKxx AKxx:
+        1N 2♠;
 
 1N 4N => slaminv;
-    test Axx Axx Axxx Kxx:1N 3N;
+    test Axx Axx Axxx Kxx:
+        1N 3N;
 
 1N 5N => grandinv;
-    test Axx Axx AKxx AQx:1N 5N;
+    test Axx Axx AKxx AQx:
+        1N 5N;
 
 1N 6N => slam;
-    test Axx Axx AKxx Kxx:1N 6N;
+    test Axx Axx AKxx Kxx:
+        1N 6N;
 
 1N 7N => grand;
-    test AQx Axx AKxx AQx:1N 7N;
+    test AQx Axx AKxx AQx:
+        1N 7N;
 
 1N 2♣ => inv+;
-    test Axxx AJx xxxx xx:1N 2♣;
+    test Axxx AJx xxxx xx:
+        1N 2♣;
 
 1N 3♣ => 6+♦;
-    test x xxx QJxxxx xxx:1N 3♣;
+    test x xxx QJxxxx xxx:
+        1N 3♣;
 
 1N 2N => 6+♣;
-    test x xxx xxx QJxxxx:1N 2N;
+    test x xxx xxx QJxxxx:
+        1N 2N;
 
 include stayman.bidding;
 include jacobyxfer.bidding;

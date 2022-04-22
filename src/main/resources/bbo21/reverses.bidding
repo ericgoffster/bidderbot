@@ -35,40 +35,54 @@ NJz:>2x Jx => fit x, slaminv+;
 1x 1y
 NJz:>2x NJz => fit z, gf+;
     test x KQxx xxxx Axxx:
-        1♣ 1♠ 2♥ 3♣;
+        1♣ 1♠
+        2♥ 3♣;
 
 # 4sf with generic game force
 1x 1y
 NJz:>2x NJw => gf;
     test AQxx xxx xxxx Ax:
-        1♣ 1♠ 2♥ 3♦;
+        1♣ 1♠
+        2♥ 3♦;
 
 # 2N artficial weak
 1x 1y
 NJz:>2x 2N => always;
     test KQxx xx xxxx xxx:
-        1♣ 1♠ 2♥ 2N;
+        1♣ 1♠
+        2♥ 2N;
     test KQxxx xxx xxx xx:
-        1♣ 1♠ 2♥ 2N;
+        1♣ 1♠
+        2♥ 2N;
 
 1x 1y
 NJz:>2x 2N 3z => 5+ z;
     test - AQxxx KQ AKxxxx:
-        1♣ 1♠ 2♥ 2N 3♥;
+        1♣ 1♠
+        2♥ 2N
+        3♥;
 
 1x 1y
 NJz:>2x 2N 3x => 6+ x;
     test - AQxx AKxxxx KQx:
-        1♦ 1♠ 2♥ 2N 3♦;
+        1♦ 1♠
+        2♥ 2N
+        3♦;
 
 1x 1y
 NJz:>2x 2N 3N => gf, stoppers unbid;
     test x AKJx AQxxx KQx:
-        1♦ 1♠ 2♥ 2N 3N;
+        1♦ 1♠
+        2♥ 2N
+        3N;
 
 1x 1y
 NJz:>2x 2N 3♣ => always;
     test x AQxx KJx AQxxx:
-        1♣ 1♠ 2♥ 2N 3♣;
+        1♣ 1♠
+        2♥ 2N
+        3♣;
     test Kx AKJx AKxxx Qx:
-        1♦ 1♠ 2♥ 2N 3♣;
+        1♦ 1♠
+        2♥ 2N
+        3♣;
