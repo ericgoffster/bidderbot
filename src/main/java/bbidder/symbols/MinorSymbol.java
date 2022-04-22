@@ -1,11 +1,11 @@
 package bbidder.symbols;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import bbidder.Bid;
 import bbidder.BitUtil;
 import bbidder.Constants;
+import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolContext;
 import bbidder.SymbolTable;
@@ -49,11 +49,7 @@ public final class MinorSymbol implements Symbol {
         if (symbols.containsKey("om")) {
             return List.of(new SymbolContext(new ConstSymbol(otherMinor(symbols.get("om"))), symbols));
         }
-        List<SymbolContext> l = new ArrayList<>();
-        for(int s: BitUtil.iterate(Constants.MINORS & ~symbols.values())) {
-            l.add(new SymbolContext(new ConstSymbol(s), symbols.add("m", s)));
-        }
-        return l;
+        return ListUtil.map(BitUtil.iterate(Constants.MINORS & ~symbols.values()), s -> new SymbolContext(new ConstSymbol(s), symbols.add("m", s)));
     }
 
     private static Integer otherMinor(Integer strain) {

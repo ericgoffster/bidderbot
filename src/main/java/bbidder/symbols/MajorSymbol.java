@@ -1,11 +1,11 @@
 package bbidder.symbols;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import bbidder.Bid;
 import bbidder.BitUtil;
 import bbidder.Constants;
+import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolContext;
 import bbidder.SymbolTable;
@@ -49,11 +49,7 @@ public final class MajorSymbol implements Symbol {
         if (symbols.containsKey("OM")) {
             return List.of(new SymbolContext(new ConstSymbol(otherMajor(symbols.get("OM"))), symbols));
         }
-        List<SymbolContext> l = new ArrayList<>();
-        for(int s: BitUtil.iterate(Constants.MAJORS & ~symbols.values())) {
-            l.add(new SymbolContext(new ConstSymbol(s), symbols.add("M", s)));
-        }
-        return l;
+        return ListUtil.map(BitUtil.iterate(Constants.MAJORS & ~symbols.values()), s -> new SymbolContext(new ConstSymbol(s), symbols.add("M", s)));
     }
 
     private static Integer otherMajor(Integer strain) {

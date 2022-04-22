@@ -1,12 +1,12 @@
 package bbidder.symbols;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.BitUtil;
 import bbidder.Constants;
+import bbidder.ListUtil;
 import bbidder.Symbol;
 import bbidder.SymbolContext;
 import bbidder.SymbolTable;
@@ -51,11 +51,7 @@ public final class VarSymbol implements Symbol {
         if (symbols.containsKey(varName)) {
             return List.of(new SymbolContext(new ConstSymbol(symbols.get(varName)), symbols));
         }
-        List<SymbolContext> l = new ArrayList<>();
-        for(int s: BitUtil.iterate(Constants.ALL_SUITS ^ symbols.values())) {
-            l.add(new SymbolContext(new ConstSymbol(s), symbols.add(varName, s)));
-        }
-        return l;
+        return ListUtil.map(BitUtil.iterate(Constants.ALL_SUITS & ~symbols.values()), s -> new SymbolContext(new ConstSymbol(s), symbols.add(varName, s)));
     }
 
     @Override
