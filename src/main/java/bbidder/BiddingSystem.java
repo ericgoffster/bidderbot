@@ -75,12 +75,14 @@ public class BiddingSystem {
     /**
      * @param bids
      *            The list of bids
+     * @param players 
+     *            The players
      * @return A list of all possible bids given the list of bids.
      */
-    public List<PossibleBid> getPossibleBids(BidList bids) {
+    public List<PossibleBid> getPossibleBids(BidList bids, Players players) {
         List<PossibleBid> l = new ArrayList<>();
         for (BidInference i : inferences) {
-            Bid match = i.bids.getMatch(bids);
+            Bid match = i.bids.getMatch(bids, players);
             if (match != null) {
                 l.add(new PossibleBid(i, match));
             }
@@ -100,7 +102,7 @@ public class BiddingSystem {
      * @return The right bid
      */
     public BidSource getBid(BidList bids, Players players, Hand hand) {
-        List<PossibleBid> possible = getPossibleBids(bids);
+        List<PossibleBid> possible = getPossibleBids(bids, players);
         for (PossibleBid i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (inf.matches(hand)) {
@@ -128,7 +130,7 @@ public class BiddingSystem {
         Bid lastBid = bids.getLastBid();
         List<IBoundInference> positive = new ArrayList<>();
         List<IBoundInference> negative = new ArrayList<>();
-        List<PossibleBid> possible = getPossibleBids(bids.exceptLast());
+        List<PossibleBid> possible = getPossibleBids(bids.exceptLast(), players);
         for (PossibleBid i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {

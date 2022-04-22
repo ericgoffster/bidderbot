@@ -160,9 +160,11 @@ public class BidPatternList {
      * 
      * @param bidList
      *            The bidList to match.
+     * @param players
+     *            the players
      * @return The last bid. null if there was no match.
      */
-    public Bid getMatch(BidList bidList) {
+    public Bid getMatch(BidList bidList, Players players) {
         List<Bid> theBids = bidList.getBids();
         int wildSize = theBids.size() - bids.size() + 2;
         int wildPos = positionOfWild();

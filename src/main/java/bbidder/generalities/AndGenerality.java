@@ -3,8 +3,10 @@ package bbidder.generalities;
 import java.util.ArrayList;
 import java.util.List;
 
+import bbidder.BidList;
 import bbidder.BiddingContext;
 import bbidder.Generality;
+import bbidder.Players;
 
 public class AndGenerality implements Generality {
     public final Generality g1;
@@ -33,6 +35,11 @@ public class AndGenerality implements Generality {
             result.addAll(g2.resolveSymbols(bc2)) ;
         }
         return result;
+    }
+    
+    @Override
+    public boolean matches(Players players, BidList bidList) {
+        return g1.matches(players, bidList) && g2.matches(players, bidList);
     }
 
 }
