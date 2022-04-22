@@ -44,15 +44,11 @@ public final class GreaterThanSymbol implements Symbol {
 
     @Override
     public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
-        Map<Symbol, SymbolTable> boundOthers = other.resolveSymbol(symbols);
-        if (boundOthers.size() != 1) {
-            throw new IllegalArgumentException("undefined smybol: " + other);
-        }
-        Symbol bo = boundOthers.keySet().iterator().next();
-        Map<Symbol, SymbolTable> old = symbol.resolveSymbol(symbols);
         Map<Symbol, SymbolTable> m = new LinkedHashMap<>();
-        for(var e: old.entrySet()) {
-            m.put(new GreaterThanSymbol(e.getKey(), level, bo), e.getValue());
+        for(var e1: symbol.resolveSymbol(symbols).entrySet()) {
+            for(var e2: other.resolveSymbol(e1.getValue()).entrySet()) {
+                m.put(new GreaterThanSymbol(e1.getKey(), level, e2.getKey()), e2.getValue());
+            }
         }
         return m;
     }
