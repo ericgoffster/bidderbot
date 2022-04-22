@@ -59,30 +59,12 @@ public final class BiddingContext {
     }
 
     /**
-     * @param patt
-     *            The bid pattern to add.
-     * @return A new BiddingContext with the last bid replaced.
-     */
-    public BiddingContext withLastBidReplaced(BidPattern patt) {
-        return new BiddingContext(bidInference.withLastBidReplaced(patt), suits);
-    }
-
-    /**
      * @param inf
      *            The inference to add.
      * @return A new BiddingContext with the given inference added to the inference list.
      */
     public BiddingContext withInferenceAdded(Inference inf) {
         return new BiddingContext(bidInference.withInferenceAdded(inf), suits);
-    }
-
-    /**
-     * @param generality
-     *            The generality to add.
-     * @return A new BiddingContext with the given generality added to the last bid.
-     */
-    public BiddingContext withGeneralityAdded(Generality generality) {
-        return withLastBidReplaced(bidInference.bids.getLastBid().withGeneralityAdded(generality));
     }
 
     /**
