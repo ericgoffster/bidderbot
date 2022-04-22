@@ -3,7 +3,6 @@ package bbidder;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.jupiter.api.Test;
@@ -19,11 +18,10 @@ public class Test2Over1 {
             ex.printStackTrace();
         });
         assertFalse(hadError.get());
-        Random r = new Random();
         for (BiddingTest test : bs.getTests()) {
             TestResult result;
             try {
-                result = test.getResult(r, bs);
+                result = test.getResult(bs);
             } catch (Exception e) {
                 hadError.set(true);
                 System.err.println("At " + test.where);
@@ -60,7 +58,7 @@ public class Test2Over1 {
                         System.err.println("       " + bi);
                     }
                 }
-                test.getResult(r, bs);
+                test.getResult(bs);
             }
         }
         System.out.println("tests = " + bs.getTests().size());

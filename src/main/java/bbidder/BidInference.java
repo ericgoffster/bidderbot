@@ -28,25 +28,31 @@ public class BidInference {
 
     /**
      * @param patt
-     *            The bid to add
-     * @return A bid inference with the given bid added
+     *            The bid pattern to add
+     * @return A bid inference with the given bid pattern added
      */
     public BidInference withBidAdded(BidPattern patt) {
         return new BidInference(where, bids.withBidAdded(patt), inferences);
     }
 
+    /**
+     * 
+     * @param patt
+     *            The bid pattern to add
+     * @return A bid inference with the last bid pattern replaced.
+     */
     public BidInference withLastBidReplaced(BidPattern patt) {
         return new BidInference(where, bids.withLastBidReplaced(patt), inferences);
     }
 
     /**
      * 
-     * @param i
+     * @param inf
      *            The inference to add
      * @return A bid inference with the given inference added
      */
-    public BidInference withInferenceAdded(Inference i) {
-        return new BidInference(where, bids, AndInference.create(inferences, i));
+    public BidInference withInferenceAdded(Inference inf) {
+        return new BidInference(where, bids, AndInference.create(inferences, inf));
     }
 
     /**

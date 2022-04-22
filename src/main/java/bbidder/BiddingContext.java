@@ -34,7 +34,7 @@ public final class BiddingContext {
     }
 
     /**
-     * @return The list of bids.
+     * @return The bid inference.
      */
     public BidInference getInference() {
         return bidInference;
@@ -59,23 +59,28 @@ public final class BiddingContext {
     /**
      * @param patt
      *            The bid pattern to add.
-     * @return A new BiddingContext with the given bid added to the bid list.
+     * @return A new BiddingContext with the last bid replaced.
      */
     public BiddingContext withLastBidReplaced(BidPattern patt) {
         return new BiddingContext(bidInference.withLastBidReplaced(patt), suits);
     }
 
     /**
-     * @param i
-     *            An inference
+     * @param inf
+     *            The inference to add.
      * @return A new BiddingContext with the given inference added to the inference list.
      */
-    public BiddingContext withInferenceAdded(Inference i) {
-        return new BiddingContext(bidInference.withInferenceAdded(i), suits);
+    public BiddingContext withInferenceAdded(Inference inf) {
+        return new BiddingContext(bidInference.withInferenceAdded(inf), suits);
     }
 
-    public BiddingContext withGeneralityAdded(Generality g) {
-        return withLastBidReplaced(bidInference.bids.getLastBid().withGeneralityAdded(g));
+    /**
+     * @param generality
+     *            The generality to add.
+     * @return A new BiddingContext with the given generality added to the last bid.
+     */
+    public BiddingContext withGeneralityAdded(Generality generality) {
+        return withLastBidReplaced(bidInference.bids.getLastBid().withGeneralityAdded(generality));
     }
 
     /**
@@ -89,9 +94,9 @@ public final class BiddingContext {
 
     /**
      * @param symbol
-     *            The suit to match.
+     *            The suit symbol to match.
      * @return a map of strains to new bidding contexts. Each key in the map represents a possible bid strain
-     *         for the given suit.
+     *         for the given suit symbol.
      */
     public Map<Integer, BiddingContext> resolveSymbols(Symbol symbol) {
         {

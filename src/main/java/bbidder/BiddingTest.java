@@ -1,7 +1,5 @@
 package bbidder;
 
-import java.util.Random;
-
 /**
  * Represents the test of a bid.
  * 
@@ -23,7 +21,15 @@ public class BiddingTest {
         this.bids = bids;
     }
 
-    public TestResult getResult(Random r, BiddingSystem bs) {
+    /**
+     * Retrieve a result for the current test
+     * 
+     * @param bs
+     *            The bidding system
+     * @return
+     *         The result after running the test
+     */
+    public TestResult getResult(BiddingSystem bs) {
         BiddingState state = new BiddingState(bs);
         BidList exceptLast = bids.exceptLast();
         for (Bid bid : exceptLast.getBids()) {
@@ -39,6 +45,16 @@ public class BiddingTest {
         return hand + ":" + bids;
     }
 
+    /**
+     * Parses a test.
+     * 
+     * @param where
+     *            Where the test was defined
+     * @param str
+     *            The string to parse
+     * @return
+     *         The bidding test
+     */
     public static BiddingTest valueOf(String where, String str) {
         String[] parts = SplitUtil.split(str, ":", 2);
         if (parts.length != 2) {

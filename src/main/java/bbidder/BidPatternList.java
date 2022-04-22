@@ -48,11 +48,6 @@ public class BidPatternList {
      * Retrieves the list of bidding contexts for this bid pattern list.
      */
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
-        // no patterns, then a wide open context.
-        if (bids.isEmpty()) {
-            return List.of(bc);
-        }
-
         // Add in first hand passing
         List<BiddingContext> l = new ArrayList<>();
         l.addAll(resolveSymbols(bc.withBidAdded(BidPattern.PASS).withBidAdded(BidPattern.PASS), true));
