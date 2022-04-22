@@ -47,8 +47,8 @@ public final class BidInference {
      * @return A list of bid inferences with all suit variables resolved.
      */
     public Stream<BidInference> resolveSymbols() {
-        return bids.resolveSymbols(SymbolTable.EMPTY).flatMap(
-                e1 -> inferences.resolveSymbols(e1.symbols).map(e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
+        return bids.resolveSymbols(SymbolTable.EMPTY)
+                .flatMap(e1 -> inferences.resolveSymbols(e1.symbols).map(e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
     }
 
     @Override

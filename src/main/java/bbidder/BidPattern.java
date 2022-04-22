@@ -123,7 +123,8 @@ public final class BidPattern {
                 int resolved = symbol.getResolved();
                 Bid b = contract.getBid(jumpLevel, resolved);
                 if (symbol.compatibleWith(b) && contract.isLegalBid(b)) {
-                    return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional));
+                    return Optional
+                            .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolved()), b.level, b, null, null, isNonConventional));
                 } else {
                     return Optional.empty();
                 }
@@ -146,8 +147,7 @@ public final class BidPattern {
         if (simpleBid != null) {
             return Stream.of(new Context(symbols));
         }
-        return symbol.resolveSymbols(symbols)
-                .flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.symbols)));
+        return symbol.resolveSymbols(symbols).flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.symbols)));
     }
 
     /**

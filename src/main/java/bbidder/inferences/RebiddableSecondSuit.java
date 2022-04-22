@@ -37,8 +37,9 @@ public final class RebiddableSecondSuit extends Inference {
 
     @Override
     public Stream<Context> resolveSymbols(SymbolTable symbols) {
-        return longer.resolveSymbols(symbols).flatMap(e1 -> shorter.resolveSymbols(e1.symbols).map(
-                e2 -> new RebiddableSecondSuit(e1.getSymbol(), e2.getSymbol()).new Context(e2.symbols)));
+        return longer.resolveSymbols(symbols)
+                .flatMap(e1 -> shorter.resolveSymbols(e1.symbols)
+                        .map(e2 -> new RebiddableSecondSuit(e1.getSymbol(), e2.getSymbol()).new Context(e2.symbols)));
     }
 
     private static IBoundInference createrBound(int strainLonger, int strainShorter, InfSummary meSummary, InfSummary partnerSummary) {
