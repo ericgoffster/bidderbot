@@ -36,17 +36,6 @@ public final class MajorSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable symbols) {
-        if (symbols.containsKey("OM")) {
-            return new ConstSymbol(otherMajor(symbols.get("OM")));
-        }
-        if (symbols.containsKey("M")) {
-            return new ConstSymbol(symbols.get("M"));
-        }
-        return null;
-    }
-
-    @Override
     public int getResolved() {
         throw new IllegalStateException(this + " not resolved");
     }

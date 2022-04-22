@@ -11,6 +11,7 @@ import static bbidder.Constants.ROUND;
 import java.io.CharArrayReader;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Map;
 
 import bbidder.suitsets.And;
 import bbidder.suitsets.ConstSet;
@@ -23,7 +24,11 @@ import bbidder.suitsets.Unstopped;
 public final class SuitSets {
 
     public static Symbol bind(SymbolTable symbols, Symbol symbol) {
-        Symbol evaluate = symbol.evaluate(symbols);
+        Map<Symbol, SymbolTable> boundOthers = symbol.resolveSymbol(symbols);
+        if (boundOthers.size() != 1) {
+            throw new IllegalArgumentException("undefined smybol: " + symbol);
+        }
+        Symbol evaluate = boundOthers.keySet().iterator().next();
         if (evaluate == null) {
             throw new IllegalArgumentException(symbol + " undefined");
         }

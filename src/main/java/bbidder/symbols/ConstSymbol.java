@@ -44,11 +44,6 @@ public final class ConstSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable symbols) {
-        return this;
-    }
-
-    @Override
     public int getResolved() {
         return strain;
     }

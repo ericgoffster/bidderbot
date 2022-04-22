@@ -43,15 +43,6 @@ public final class GreaterThanSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable symbols) {
-        Symbol evaluate = symbol.evaluate(symbols);
-        if (evaluate == null) {
-            return null;
-        }
-        return new GreaterThanSymbol(evaluate, level, other);
-    }
-
-    @Override
     public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
         Map<Symbol, SymbolTable> boundOthers = other.resolveSymbol(symbols);
         if (boundOthers.size() != 1) {

@@ -42,15 +42,6 @@ public final class DownSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable symbols) {
-        Symbol evaluate = symbol.evaluate(symbols);
-        if (evaluate == null) {
-            return null;
-        }
-        return new DownSymbol(evaluate);
-    }
-
-    @Override
     public int getResolved() {
         return symbol.getResolved();
     }

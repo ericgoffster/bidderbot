@@ -36,17 +36,6 @@ public final class OtherMinorSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable symbols) {
-        if (symbols.containsKey("m")) {
-            return new ConstSymbol(otherMinor(symbols.get("m")));
-        }
-        if (symbols.containsKey("om")) {
-            return new ConstSymbol(symbols.get("om"));
-        }
-        return null;
-    }
-
-    @Override
     public int getResolved() {
         throw new IllegalStateException(this + " not resolved");
     }

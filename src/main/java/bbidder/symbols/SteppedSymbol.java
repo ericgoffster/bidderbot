@@ -50,15 +50,6 @@ public final class SteppedSymbol implements Symbol {
         return m;
     }
 
-    @Override
-    public Symbol evaluate(SymbolTable symbols) {
-        Symbol s = symbol.evaluate(symbols);
-        if (s == null) {
-            return null;
-        }
-        return new ConstSymbol(transform(s.getResolved()));
-    }
-
     private int transform(Integer s) {
         return (s + 5 - delta) % 5;
     }

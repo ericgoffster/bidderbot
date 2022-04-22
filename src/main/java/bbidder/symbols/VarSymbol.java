@@ -41,14 +41,6 @@ public final class VarSymbol implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable symbols) {
-        if (symbols.containsKey(varName)) {
-            return new ConstSymbol(symbols.get(varName));
-        }
-        return null;
-    }
-
-    @Override
     public int getResolved() {
         throw new IllegalStateException(this + " not resolved");
     }

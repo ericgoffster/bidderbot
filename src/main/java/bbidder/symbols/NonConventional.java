@@ -39,15 +39,6 @@ public final class NonConventional implements Symbol {
     }
 
     @Override
-    public Symbol evaluate(SymbolTable symbols) {
-        Symbol evaluate = symbol.evaluate(symbols);
-        if (evaluate == null) {
-            return null;
-        }
-        return new NonConventional(evaluate);
-    }
-
-    @Override
     public Map<Symbol, SymbolTable> resolveSymbol(SymbolTable symbols) {
         Map<Symbol, SymbolTable> old = symbol.resolveSymbol(symbols);
         Map<Symbol, SymbolTable> m = new LinkedHashMap<>();
