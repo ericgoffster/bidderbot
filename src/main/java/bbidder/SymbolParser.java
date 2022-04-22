@@ -5,9 +5,8 @@ import java.util.regex.Pattern;
 
 import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.DownSymbol;
-import bbidder.symbols.EqualLevel;
-import bbidder.symbols.GreaterThanLevel;
-import bbidder.symbols.LessThanLevelSymbol;
+import bbidder.symbols.GreaterThanSymbol;
+import bbidder.symbols.LessThanSymbol;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.MinorSymbol;
 import bbidder.symbols.NotSymbol;
@@ -19,7 +18,6 @@ import bbidder.symbols.VarSymbol;
 public class SymbolParser {
     
     public static Pattern LESS_THAN = Pattern.compile("<(\\d+)");
-    public static Pattern EQUAL_TO = Pattern.compile("=(\\d+)");
     public static Pattern GREATER_THAN = Pattern.compile(">(\\d+)");
 
     /**
@@ -51,19 +49,13 @@ public class SymbolParser {
             {
                 Matcher m = LESS_THAN.matcher(tag);
                 if (m.matches()) {
-                    return new LessThanLevelSymbol(sym, Integer.parseInt(m.group(1)) - 1);
+                    return new LessThanSymbol(sym, Integer.parseInt(m.group(1)) - 1);
                 }
             }
             {
                 Matcher m = GREATER_THAN.matcher(tag);
                 if (m.matches()) {
-                    return new GreaterThanLevel(sym, Integer.parseInt(m.group(1)) - 1);
-                }
-            }
-            {
-                Matcher m = EQUAL_TO.matcher(tag);
-                if (m.matches()) {
-                    return new EqualLevel(sym, Integer.parseInt(m.group(1)) - 1);
+                    return new GreaterThanSymbol(sym, Integer.parseInt(m.group(1)) - 1);
                 }
             }
             return null;

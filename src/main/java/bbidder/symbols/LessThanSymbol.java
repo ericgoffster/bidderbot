@@ -8,11 +8,11 @@ import java.util.function.Predicate;
 import bbidder.Bid;
 import bbidder.Symbol;
 
-public class GreaterThanLevel implements Symbol {
+public class LessThanSymbol implements Symbol {
     public final Symbol sym;
     public final int level;
 
-    public GreaterThanLevel(Symbol sym, int level) {
+    public LessThanSymbol(Symbol sym, int level) {
         super();
         this.sym = sym;
         this.level = level;
@@ -20,7 +20,7 @@ public class GreaterThanLevel implements Symbol {
 
     @Override
     public String toString() {
-        return sym + ":>"+level;
+        return sym + ":<"+(level + 1);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class GreaterThanLevel implements Symbol {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        GreaterThanLevel other = (GreaterThanLevel) obj;
+        LessThanSymbol other = (LessThanSymbol) obj;
         return level == other.level && Objects.equals(sym, other.sym);
     }
 
@@ -67,6 +67,6 @@ public class GreaterThanLevel implements Symbol {
     
     @Override
     public Predicate<Bid> levelTest() {
-        return lev -> level < lev.level;
+        return lev -> level > lev.level;
     }
 }
