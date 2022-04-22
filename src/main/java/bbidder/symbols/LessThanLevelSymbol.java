@@ -61,11 +61,11 @@ public class LessThanLevelSymbol implements Symbol {
     
     @Override
     public Comparator<Integer> direction() {
-        return sym.direction().reversed();
+        return sym.direction();
     }
     
     @Override
     public Predicate<Integer> levelTest() {
-        return lev -> level < lev;
+        return lev -> level > lev;
     }
 }

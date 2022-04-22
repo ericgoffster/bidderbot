@@ -61,7 +61,7 @@ public class EqualLevel implements Symbol {
     
     @Override
     public Comparator<Integer> direction() {
-        return sym.direction().reversed();
+        return sym.direction();
     }
 
     @Override
