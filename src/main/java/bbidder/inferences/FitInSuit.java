@@ -17,7 +17,7 @@ import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
-import bbidder.symbols.ConstSymbol;
+import bbidder.symbols.BoundSymbol;
 
 /**
  * Represents the inference of a range of lengths of a suit.
@@ -45,7 +45,7 @@ public class FitInSuit implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new FitInSuit(new ConstSymbol(e.getKey()))));
+            l.add(e.getValue().withInferenceAdded(new FitInSuit(new BoundSymbol(e.getKey(), suit))));
         }
         return l;
     }

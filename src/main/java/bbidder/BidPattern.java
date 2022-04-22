@@ -3,12 +3,12 @@ package bbidder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import bbidder.generalities.AndGenerality;
 import bbidder.generalities.TrueGenerality;
+import bbidder.symbols.BoundSymbol;
 import bbidder.symbols.ConstSymbol;
-
-import java.util.Objects;
 
 /**
  * Represents an immutable matchable bid pattern.
@@ -214,7 +214,7 @@ public class BidPattern {
         if (level != null) {
             return createSimpleBid(Bid.valueOf(level, strain));
         }
-        return new BidPattern(isOpposition, new ConstSymbol(strain), level, simpleBid, jumpLevel, reverse, nonreverse, generality);
+        return new BidPattern(isOpposition, new BoundSymbol(strain, getSymbol()), level, simpleBid, jumpLevel, reverse, nonreverse, generality);
     }
 
     /**

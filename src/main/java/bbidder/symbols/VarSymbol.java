@@ -5,6 +5,7 @@ import static bbidder.Constants.ALL_SUITS;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import bbidder.Symbol;
 
@@ -67,7 +68,7 @@ public class VarSymbol implements Symbol {
     }    
 
     @Override
-    public boolean levelAllowed(int level) {
-        return true;
+    public Predicate<Integer> levelTest() {
+        return level -> true;
     }
 }

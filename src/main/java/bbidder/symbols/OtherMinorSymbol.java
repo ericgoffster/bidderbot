@@ -4,6 +4,7 @@ import static bbidder.Constants.MINORS;
 
 import java.util.Comparator;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import bbidder.Constants;
 import bbidder.Symbol;
@@ -79,8 +80,9 @@ public class OtherMinorSymbol implements Symbol {
         return Integer::compare;
     }    
 
+
     @Override
-    public boolean levelAllowed(int level) {
-        return true;
+    public Predicate<Integer> levelTest() {
+        return level -> true;
     }
 }

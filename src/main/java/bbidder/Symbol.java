@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.Comparator;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public interface Symbol {
     public Integer evaluate(Map<String, Integer> suits);
@@ -14,5 +15,5 @@ public interface Symbol {
     
     public Comparator<Integer> direction();
     
-    public boolean levelAllowed(int level);
+    public Predicate<Integer> levelTest();
 }

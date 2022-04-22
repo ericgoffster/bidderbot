@@ -11,7 +11,7 @@ import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.symbols.ConstSymbol;
+import bbidder.symbols.BoundSymbol;
 
 public class PartnerBidSuitGenerality implements Generality {
     public final Symbol symbol;
@@ -26,7 +26,7 @@ public class PartnerBidSuitGenerality implements Generality {
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         List<BiddingContext> result = new ArrayList<>();
         for (Entry<Integer, BiddingContext> e : bc.resolveSymbols(symbol).entrySet()) {
-            result.add(e.getValue().withGeneralityAdded(new PartnerBidSuitGenerality(new ConstSymbol(e.getKey()))));                
+            result.add(e.getValue().withGeneralityAdded(new PartnerBidSuitGenerality(new BoundSymbol(e.getKey(), symbol))));                
         }
         return result;
     }

@@ -5,24 +5,27 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import bbidder.Strain;
 import bbidder.Symbol;
 
-public class DownSymbol implements Symbol {
-    public final Symbol sym;
+public class BoundSymbol implements Symbol {
+    public final int strain;
+    private final Symbol from;
 
-    public DownSymbol(Symbol sym) {
+    public BoundSymbol(int strain, Symbol from) {
         super();
-        this.sym = sym;
+        this.strain = strain;
+        this.from = from;
     }
 
     @Override
     public String toString() {
-        return sym + ":down";
+        return Strain.getName(strain);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sym);
+        return Objects.hash(strain);
     }
 
     @Override
@@ -33,37 +36,40 @@ public class DownSymbol implements Symbol {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        DownSymbol other = (DownSymbol) obj;
-        return Objects.equals(sym, other.sym);
+        BoundSymbol other = (BoundSymbol) obj;
+        return strain == other.strain;
     }
 
     @Override
     public Integer evaluate(Map<String, Integer> suits) {
-        return sym.evaluate(suits);
+        return strain;
     }
 
     @Override
     public Map<String, Integer> unevaluate(int strain) {
-        return sym.unevaluate(strain);
+        if (strain != this.strain) {
+            throw new IllegalArgumentException();
+        }
+        return Map.of();
     }
 
     @Override
     public short getSuitClass(Map<String, Integer> suits) {
-        return sym.getSuitClass(suits);
+        return (short) (1 << strain);
     }
 
     @Override
     public int getResolved() {
-        throw new IllegalStateException(this + " not resolved");
+        return strain;
     }
-    
+
     @Override
     public Comparator<Integer> direction() {
-        return sym.direction().reversed();
+        return from.direction();
     }
 
     @Override
     public Predicate<Integer> levelTest() {
-        return sym.levelTest();
+        return from.levelTest();
     }
 }

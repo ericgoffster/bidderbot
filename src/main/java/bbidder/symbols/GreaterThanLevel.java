@@ -3,6 +3,7 @@ package bbidder.symbols;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import bbidder.Symbol;
 
@@ -64,7 +65,7 @@ public class GreaterThanLevel implements Symbol {
     }
     
     @Override
-    public boolean levelAllowed(int level) {
-        return level > this.level;
+    public Predicate<Integer> levelTest() {
+        return lev -> level > lev;
     }
 }

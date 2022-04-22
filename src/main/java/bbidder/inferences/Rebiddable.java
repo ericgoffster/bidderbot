@@ -16,7 +16,7 @@ import bbidder.ShapeSet;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.inferences.bound.ShapeBoundInf;
-import bbidder.symbols.ConstSymbol;
+import bbidder.symbols.BoundSymbol;
 
 public class Rebiddable implements Inference {
     public final Symbol suit;
@@ -38,7 +38,7 @@ public class Rebiddable implements Inference {
     public List<BiddingContext> resolveSymbols(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(suit).entrySet()) {
-            l.add(e.getValue().withInferenceAdded(new Rebiddable(new ConstSymbol(e.getKey()))));
+            l.add(e.getValue().withInferenceAdded(new Rebiddable(new BoundSymbol(e.getKey(), suit))));
         }
         return l;
     }

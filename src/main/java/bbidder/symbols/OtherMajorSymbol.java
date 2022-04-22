@@ -4,6 +4,7 @@ import static bbidder.Constants.MAJORS;
 
 import java.util.Comparator;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import bbidder.Constants;
 import bbidder.Symbol;
@@ -79,8 +80,9 @@ public class OtherMajorSymbol implements Symbol {
         return Integer::compare;
     }    
 
+
     @Override
-    public boolean levelAllowed(int level) {
-        return true;
+    public Predicate<Integer> levelTest() {
+        return level -> true;
     }
 }

@@ -3,6 +3,7 @@ package bbidder.symbols;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import bbidder.Symbol;
 
@@ -82,8 +83,9 @@ public class SteppedSymbol implements Symbol {
     public Comparator<Integer> direction() {
         return sym.direction();
     }
+
     @Override
-    public boolean levelAllowed(int level) {
-        return sym.levelAllowed(level);
+    public Predicate<Integer> levelTest() {
+        return sym.levelTest();
     }
 }

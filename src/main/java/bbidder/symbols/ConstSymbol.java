@@ -3,6 +3,7 @@ package bbidder.symbols;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import bbidder.Strain;
 import bbidder.Symbol;
@@ -66,7 +67,7 @@ public class ConstSymbol implements Symbol {
     }
 
     @Override
-    public boolean levelAllowed(int level) {
-        return true;
+    public Predicate<Integer> levelTest() {
+        return level -> true;
     }
 }

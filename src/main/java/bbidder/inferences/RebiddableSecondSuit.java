@@ -16,7 +16,7 @@ import bbidder.ShapeSet;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.inferences.bound.ShapeBoundInf;
-import bbidder.symbols.ConstSymbol;
+import bbidder.symbols.BoundSymbol;
 
 public class RebiddableSecondSuit implements Inference {
     public final Symbol longer;
@@ -42,7 +42,7 @@ public class RebiddableSecondSuit implements Inference {
         List<BiddingContext> l = new ArrayList<>();
         for (var e : context.resolveSymbols(longer).entrySet()) {
             for (var e2 : e.getValue().resolveSymbols(shorter).entrySet()) {
-                l.add(e2.getValue().withInferenceAdded(new RebiddableSecondSuit(new ConstSymbol(e.getKey()), new ConstSymbol(e2.getKey()))));
+                l.add(e2.getValue().withInferenceAdded(new RebiddableSecondSuit(new BoundSymbol(e.getKey(), longer), new BoundSymbol(e2.getKey(), shorter))));
             }
         }
         return l;
