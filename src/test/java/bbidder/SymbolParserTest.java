@@ -8,7 +8,6 @@ import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.DownSymbol;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.MinorSymbol;
-import bbidder.symbols.NotSymbol;
 import bbidder.symbols.OtherMajorSymbol;
 import bbidder.symbols.OtherMinorSymbol;
 import bbidder.symbols.SteppedSymbol;
@@ -28,6 +27,5 @@ public class SymbolParserTest {
         assertEquals(new SteppedSymbol(new VarSymbol("x"), 1), SymbolParser.parseSymbol("x-1"));
         assertEquals(new DownSymbol(new VarSymbol("x")), SymbolParser.parseSymbol("x:down"));
         assertEquals(new DownSymbol(new VarSymbol("x")), SymbolParser.parseSymbol("x:Down"));
-        assertEquals(new NotSymbol(new VarSymbol("x")), SymbolParser.parseSymbol("~x"));
     }
 }

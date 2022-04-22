@@ -10,7 +10,6 @@ import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.DownSymbol;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.MinorSymbol;
-import bbidder.symbols.NotSymbol;
 import bbidder.symbols.OtherMajorSymbol;
 import bbidder.symbols.OtherMinorSymbol;
 import bbidder.symbols.SteppedSymbol;
@@ -86,13 +85,5 @@ public class SymbollTest {
         assertEquals(Map.of("x", 2), sym.unevaluate(0));
         assertEquals(Map.of("x", 1), sym.unevaluate(4));
         assertEquals("x-2", sym.toString());
-    }
-
-    @Test
-    public void testNot() {
-        Symbol sym = new NotSymbol(new VarSymbol("x"));
-        assertEquals(2, sym.evaluate(Map.of("x", 1, "~x", 2)).getResolved());
-        assertEquals(Map.of("~x", 2), sym.unevaluate(2));
-        assertEquals("~x", sym.toString());
     }
 }

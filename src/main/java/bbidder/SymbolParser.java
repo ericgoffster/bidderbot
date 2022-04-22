@@ -9,7 +9,6 @@ import bbidder.symbols.GreaterThanSymbol;
 import bbidder.symbols.LessThanSymbol;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.MinorSymbol;
-import bbidder.symbols.NotSymbol;
 import bbidder.symbols.OtherMajorSymbol;
 import bbidder.symbols.OtherMinorSymbol;
 import bbidder.symbols.SteppedSymbol;
@@ -62,13 +61,6 @@ public class SymbolParser {
             }
             return null;
         } 
-        if (symbol.startsWith("~")) {
-            Symbol sym = parseSymbol(symbol.substring(1));
-            if (sym == null) {
-                return null;
-            }
-            return new NotSymbol(sym);
-        }
         if (symbol.equals("om")) {
             return new OtherMinorSymbol();
         }

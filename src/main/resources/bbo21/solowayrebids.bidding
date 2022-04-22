@@ -5,15 +5,15 @@
 # H = ♥
 # S = ♠
 
-1x JM Jy => 5+y
+1x J2z Jy => 5+y
 test xx x AQJxx KQxxx: 1♦ 2♠ 4♣
 test xx AQJxx x KQxxx: 1♥ 2♠ 4♣
 
-1x JM 3y => 3+ y, 2+ of top 3 in y
+1x J2z NJy => 3+ y, 2+ of top 3 in y
 test xx Jxx AQJxx KQx: 1♦ 2♠ 3♣
 
-1x JM 3M => 3+ M
+1x J2z 3z => 3+ z
 test Qxx Jx AQJxx Kxx: 1♦ 2♠ 3♠
 
-1x JM 3N => balanced, partial_stoppers unbid
+1x J2z 3N => balanced, partial_stoppers unbid
 test Qx Jxx AQJxx Kxx: 1♦ 2♠ 3N

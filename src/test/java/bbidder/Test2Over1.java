@@ -93,10 +93,10 @@ public class Test2Over1 {
             }
         }
         System.out.println("tests = " + bs.getTests().size());
-        assertTrue(bs.getTests().size() > 0);
-        assertFalse(hadError.get());
         try(OutputStream os = new FileOutputStream(new File("/tmp/bids.txt"))) {
             bs.dump(os);
         }
+        assertTrue(bs.getTests().size() > 0);
+        assertFalse(hadError.get());
     }
 }
