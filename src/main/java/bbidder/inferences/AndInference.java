@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.SymbolTable;

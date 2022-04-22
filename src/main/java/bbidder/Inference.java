@@ -21,4 +21,15 @@ public abstract class Inference {
      *         symbols.
      */
     public abstract List<InferenceContext> resolveSymbols(SymbolTable symbols);
+    
+    public static final class InferenceContext {
+        public final Inference inference;
+        public final SymbolTable symbols;
+
+        public InferenceContext(Inference inference, SymbolTable symbols) {
+            super();
+            this.inference = inference;
+            this.symbols = symbols;
+        }
+    }
 }

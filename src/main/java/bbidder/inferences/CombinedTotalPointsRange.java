@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.SplitUtil;

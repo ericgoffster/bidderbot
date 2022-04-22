@@ -4,7 +4,6 @@ import java.util.List;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.Players;
 import bbidder.SymbolTable;
 import bbidder.inferences.bound.ConstBoundInference;

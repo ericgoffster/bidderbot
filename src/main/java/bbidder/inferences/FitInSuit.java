@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
-import bbidder.InferenceContext;
 import bbidder.ListUtil;
 import bbidder.Players;
 import bbidder.Range;
