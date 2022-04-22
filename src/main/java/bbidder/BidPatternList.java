@@ -155,7 +155,7 @@ public final class BidPatternList {
         if (theNextBid == null || !auction.isLegalBid(theNextBid)) {
             return null;
         }
-        if (matched.contains(theNextBid) && lastPatt.symbol != null && lastPatt.symbol.nonConvential()) {
+        if (matched.contains(theNextBid) && lastPatt.isNonConventional) {
             return null;
         }
         return theNextBid;
@@ -317,5 +317,28 @@ public final class BidPatternList {
         public BidPatternList getBids() {
             return BidPatternList.this;
         }
+    }
+    
+    public Contract getContract() {
+        boolean redoubled = false;
+        boolean doubled = false;
+        for (int i = bids.size() - 1; i >= 0; i--) {
+            BidPattern bidPattern = bids.get(i);
+            Bid bid = bidPattern.simpleBid;
+            if (bid == null) {
+                return null;
+            }
+            if (bid.isSuitBid()) {
+                return new Contract(i, bid, doubled, redoubled);
+            }
+            if (bid == Bid.X) {
+                doubled = true;
+            }
+            if (bid == Bid.XX) {
+                redoubled = true;
+            }
+        }
+        return new Contract(0, Bid.P, false, false);
+ 
     }
 }

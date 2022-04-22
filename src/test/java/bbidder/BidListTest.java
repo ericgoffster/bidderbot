@@ -15,13 +15,6 @@ public class BidListTest {
     }
 
     @Test
-    public void testNextLegalBid() {
-        assertEquals(Auction.valueOf("1C (1D) 1H (X) XX").nextLegalBidOf(0), Bid._2C);
-        assertEquals(Auction.valueOf("1C (1D) 1H (X) XX").nextLegalBidOf(3), Bid._1S);
-        assertEquals(Auction.valueOf("1C (1D) 1H (X) XX").nextLegalBidOf(4), Bid._1N);
-    }
-
-    @Test
     public void testGetContract() {
         assertEquals(Auction.valueOf("1C (1D) 1H (X) XX").getContract(), new Contract(2, Bid._1H, true, true));
         assertEquals(Auction.valueOf("1C (1D) 1H (X)").getContract(), new Contract(2, Bid._1H, true, false));

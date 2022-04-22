@@ -44,4 +44,24 @@ public final class Contract {
         }
         return winningBid + (redoubled ? "XX" : doubled ? "X" : "") + " by " + position;
     }
+    
+    public Bid nextLevel(int strain) {
+        if (winningBid == Bid.P) {
+            return Bid.valueOf(0, strain);
+        }
+        if (strain > winningBid.strain) {
+            return Bid.valueOf(winningBid.level, strain);
+        } else {
+            return Bid.valueOf(winningBid.level + 1, strain);
+        }
+    }
+    
+    public Bid getBid(int jumpLevel, int strain) {
+        Bid b = nextLevel(strain);
+        while (jumpLevel > 0) {
+            b = b.raise();
+            jumpLevel--;
+        }
+        return b;
+    }
 }

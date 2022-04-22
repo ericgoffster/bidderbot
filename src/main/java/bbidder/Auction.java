@@ -46,23 +46,6 @@ public final class Auction {
     }
 
     /**
-     * @param strain
-     *            The strain
-     * @return the next legal bid of a strain
-     */
-    public Bid nextLegalBidOf(int strain) {
-        Contract contract = getContract();
-        if (contract.winningBid == Bid.P) {
-            return Bid.valueOf(1, strain);
-        }
-        if (strain > contract.winningBid.strain) {
-            return Bid.valueOf(contract.winningBid.level, strain);
-        } else {
-            return Bid.valueOf(contract.winningBid.level + 1, strain);
-        }
-    }
-
-    /**
      * 
      * @param bid
      *            The bid to test
@@ -148,18 +131,6 @@ public final class Auction {
     }
 
     /**
-     * @param bid
-     *            The bid to add
-     * @return A new bid list with the given bid prepended
-     */
-    public Auction withBidPrepended(Bid bid) {
-        List<Bid> newBids = new ArrayList<>();
-        newBids.add(bid);
-        newBids.addAll(bids);
-        return create(newBids);
-    }
-
-    /**
      * @return The last bid in the sequence. null if empty.
      */
     public Bid getLastBid() {
@@ -197,41 +168,6 @@ public final class Auction {
             return this;
         }
         return new Auction(bids.subList(0, n));
-    }
-
-    /**
-     * 
-     * @param strain
-     *            The bid strain
-     * @return The next possible level of the given strain.
-     */
-    public Bid nextLevel(int strain) {
-        Bid lastBidSuit = getLastSuitBid();
-        if (lastBidSuit == null) {
-            return Bid.valueOf(0, strain);
-        }
-        if (strain > lastBidSuit.strain) {
-            return Bid.valueOf(lastBidSuit.level, strain);
-        } else {
-            return Bid.valueOf(lastBidSuit.level + 1, strain);
-        }
-    }
-
-    /**
-     * 
-     * @param jumpLevel
-     *            The number of levels to jump
-     * @param strain
-     *            The bidding strain
-     * @return The bid, jumping the requisite number of jumps.
-     */
-    public Bid getBid(int jumpLevel, int strain) {
-        Bid b = nextLevel(strain);
-        while (jumpLevel > 0) {
-            b = b.raise();
-            jumpLevel--;
-        }
-        return b;
     }
 
     /**

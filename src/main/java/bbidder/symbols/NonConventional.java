@@ -18,7 +18,7 @@ public final class NonConventional extends Symbol {
 
     @Override
     public String toString() {
-        return symbol + ":nonvconventional";
+        return symbol + ":nonconventional";
     }
 
     @Override
