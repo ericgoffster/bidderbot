@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import bbidder.symbols.ConstSymbol;
-
 /**
  * A bidding context is used to build BidInference's.
  * A bidding context consists of the current BidInference, and the current symbol table.
@@ -93,7 +91,11 @@ public final class BiddingContext {
      * @return (0,1,2,3,4) for a given symbol, null if not found.
      */
     public Integer getSuit(Symbol symbol) {
-        return symbol.evaluate(suits);
+        Symbol evaluate = symbol.evaluate(suits);
+        if (evaluate == null) {
+            return null;
+        }
+        return evaluate.getResolved();
     }
 
     /**
@@ -104,12 +106,13 @@ public final class BiddingContext {
      */
     public Map<Symbol, BiddingContext> resolveSymbols(Symbol symbol) {
         {
-            Integer strain = getSuit(symbol);
-            if (strain != null) {
+            Symbol esymbol = symbol.evaluate(suits);
+            if (esymbol != null) {
+                int strain = esymbol.getResolved();
                 if (strain < 0 || strain > 4) {
                     throw new IllegalArgumentException("Invalid strain");
                 }
-                return Map.of(new ConstSymbol(strain), this);
+                return Map.of(esymbol, this);
             }
         }
         Map<Symbol, BiddingContext> m = new LinkedHashMap<Symbol, BiddingContext>();

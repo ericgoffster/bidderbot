@@ -39,8 +39,11 @@ public class VarSymbol implements Symbol {
     }
 
     @Override
-    public Integer evaluate(Map<String, Integer> suits) {
-        return suits.get(v);
+    public Symbol evaluate(Map<String, Integer> suits) {
+        if (suits.containsKey(v)) {
+            return new ConstSymbol(suits.get(v));
+        }
+        return null;
     }
 
     @Override
@@ -56,7 +59,7 @@ public class VarSymbol implements Symbol {
     @Override
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
         if (suits.containsKey(v)) {
-            return List.of(new ConstSymbol(evaluate(suits)));
+            return List.of(evaluate(suits));
         }
         return List.of(new ConstSymbol(Constants.CLUB), new ConstSymbol(Constants.DIAMOND), new ConstSymbol(Constants.HEART), new ConstSymbol(Constants.SPADE));
     }

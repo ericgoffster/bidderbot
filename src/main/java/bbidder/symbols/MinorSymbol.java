@@ -34,11 +34,14 @@ public class MinorSymbol implements Symbol {
     }
 
     @Override
-    public Integer evaluate(Map<String, Integer> suits) {
+    public Symbol evaluate(Map<String, Integer> suits) {
         if (suits.containsKey("om")) {
-            return otherMinor(suits.get("om"));
+            return new ConstSymbol(otherMinor(suits.get("om")));
         }
-        return suits.get("m");
+        if (suits.containsKey("m")) {
+            return new ConstSymbol(suits.get("m"));
+        }
+        return null;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class MinorSymbol implements Symbol {
     @Override
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
         if (suits.containsKey("m") || suits.containsKey("om")) {
-            return List.of(new ConstSymbol(evaluate(suits)));
+            return List.of(evaluate(suits));
         }
         return List.of(new ConstSymbol(Constants.CLUB), new ConstSymbol(Constants.DIAMOND));
     }

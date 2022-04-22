@@ -17,8 +17,8 @@ import bbidder.symbols.VarSymbol;
 
 public class SymbolParser {
     
-    public static Pattern LESS_THAN = Pattern.compile("<(\\d+)");
-    public static Pattern GREATER_THAN = Pattern.compile(">(\\d+)");
+    public static Pattern LESS_THAN = Pattern.compile("<(\\d+)(.+)");
+    public static Pattern GREATER_THAN = Pattern.compile(">(\\d+)(.+)");
 
     /**
      * @param symbol
@@ -49,13 +49,15 @@ public class SymbolParser {
             {
                 Matcher m = LESS_THAN.matcher(tag);
                 if (m.matches()) {
-                    return new LessThanSymbol(sym, Integer.parseInt(m.group(1)) - 1);
+                    Symbol other = parseSymbol(m.group(2));
+                    return new LessThanSymbol(sym, Integer.parseInt(m.group(1)) - 1, other);
                 }
             }
             {
                 Matcher m = GREATER_THAN.matcher(tag);
                 if (m.matches()) {
-                    return new GreaterThanSymbol(sym, Integer.parseInt(m.group(1)) - 1);
+                    Symbol other = parseSymbol(m.group(2));
+                    return new GreaterThanSymbol(sym, Integer.parseInt(m.group(1)) - 1, other);
                 }
             }
             return null;

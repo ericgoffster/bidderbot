@@ -34,11 +34,14 @@ public class MajorSymbol implements Symbol {
     }
 
     @Override
-    public Integer evaluate(Map<String, Integer> suits) {
+    public Symbol evaluate(Map<String, Integer> suits) {
         if (suits.containsKey("OM")) {
-            return otherMajor(suits.get("OM"));
+            return new ConstSymbol(otherMajor(suits.get("OM")));
         }
-        return suits.get("M");
+        if (suits.containsKey("M")) {
+            return new ConstSymbol(suits.get("M"));
+        }
+        return null;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class MajorSymbol implements Symbol {
     @Override
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
         if (suits.containsKey("M") || suits.containsKey("OM")) {
-            return List.of(new ConstSymbol(evaluate(suits)));
+            return List.of(evaluate(suits));
         }
         return List.of(new ConstSymbol(Constants.HEART), new ConstSymbol(Constants.SPADE));
     }

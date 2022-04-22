@@ -57,8 +57,8 @@ public class NotSymbol implements Symbol {
                 l.add(new Symbol() {
 
                     @Override
-                    public Integer evaluate(Map<String, Integer> suits) {
-                        return resolved;
+                    public Symbol evaluate(Map<String, Integer> suits) {
+                        return new ConstSymbol(resolved);
                     }
 
                     @Override
@@ -87,8 +87,11 @@ public class NotSymbol implements Symbol {
     }
 
     @Override
-    public Integer evaluate(Map<String, Integer> suits) {
-        return suits.get(toString());
+    public Symbol evaluate(Map<String, Integer> suits) {
+        if (suits.containsKey(toString())) {
+            return new ConstSymbol(suits.get(toString()));
+        }
+        return null;
     }
 
     @Override

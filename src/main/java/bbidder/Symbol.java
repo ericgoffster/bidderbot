@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface Symbol {
-    public Integer evaluate(Map<String, Integer> suits);
+    public Symbol evaluate(Map<String, Integer> suits);
 
     public Map<String, Integer> unevaluate(int strain);
 

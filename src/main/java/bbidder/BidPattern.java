@@ -8,6 +8,7 @@ import java.util.Objects;
 import bbidder.generalities.AndGenerality;
 import bbidder.generalities.TrueGenerality;
 import bbidder.symbols.ConstSymbol;
+import bbidder.symbols.LessThanSymbol;
 
 /**
  * Represents an immutable matchable bid pattern.
@@ -211,6 +212,9 @@ public class BidPattern {
      */
     public BidPattern bindSuit(Symbol symbol) {
         if (level != null) {
+            if (symbol instanceof LessThanSymbol) {
+                return createSimpleBid(Bid.valueOf(level, symbol.getResolved()));
+            }
             return createSimpleBid(Bid.valueOf(level, symbol.getResolved()));
         }
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, reverse, nonreverse, generality);

@@ -39,8 +39,8 @@ public class ConstSymbol implements Symbol {
     }
 
     @Override
-    public Integer evaluate(Map<String, Integer> suits) {
-        return strain;
+    public Symbol evaluate(Map<String, Integer> suits) {
+        return this;
     }
 
     @Override

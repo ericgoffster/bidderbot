@@ -11,21 +11,23 @@ import bbidder.Symbol;
 public class LessThanSymbol implements Symbol {
     public final Symbol sym;
     public final int level;
+    public final Symbol other;
 
-    public LessThanSymbol(Symbol sym, int level) {
+    public LessThanSymbol(Symbol sym, int level, Symbol other) {
         super();
         this.sym = sym;
         this.level = level;
+        this.other = other;
     }
 
     @Override
     public String toString() {
-        return sym + ":<"+(level + 1);
+        return sym + ":<"+level+other;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(level, sym);
+        return Objects.hash(level, sym, other);
     }
 
     @Override
@@ -37,64 +39,45 @@ public class LessThanSymbol implements Symbol {
         if (getClass() != obj.getClass())
             return false;
         LessThanSymbol other = (LessThanSymbol) obj;
-        return level == other.level && Objects.equals(sym, other.sym);
+        return level == other.level && Objects.equals(sym, other.sym) && Objects.equals(other, other.other);
     }
 
     @Override
-    public Integer evaluate(Map<String, Integer> suits) {
-        return sym.evaluate(suits);
+    public Symbol evaluate(Map<String, Integer> suits) {
+        Symbol evaluate = sym.evaluate(suits);
+        if (evaluate == null) {
+            return null;
+        }
+        return new LessThanSymbol(evaluate, level, other);
     }
 
     @Override
     public Map<String, Integer> unevaluate(int strain) {
         return sym.unevaluate(strain);
     }
-
+    
     @Override
     public List<Symbol> boundSymbols(Map<String, Integer> suits) {
+        List<Symbol> boundOthers = other.boundSymbols(suits);
+        if (boundOthers.size() != 1) {
+            throw new IllegalArgumentException("undefined smybol: " + other);
+        }
         List<Symbol> old = sym.boundSymbols(suits);
         List<Symbol> l = new ArrayList<>();
         for(Symbol s: old) {
-            int resolved = s.getResolved();
-            l.add(new Symbol() {
-
-                @Override
-                public Integer evaluate(Map<String, Integer> suits) {
-                    return resolved;
-                }
-
-                @Override
-                public Map<String, Integer> unevaluate(int strain) {
-                    return Map.of();
-                }
-
-                @Override
-                public List<Symbol> boundSymbols(Map<String, Integer> suits) {
-                    return List.of(this);
-                }
-
-                @Override
-                public int getResolved() {
-                    return resolved;
-                }
-
-                @Override
-                public boolean compatibleWith(Bid bid) {
-                    return s.compatibleWith(bid) && level > bid.level && bid.strain == resolved;
-                }
-
-            });
+            l.add(new LessThanSymbol(s, level, boundOthers.get(0)));
         }
         return l;
     }
 
     @Override
     public int getResolved() {
-        throw new IllegalStateException(this + " not resolved");
+        return sym.getResolved();
     }
     
     @Override
     public boolean compatibleWith(Bid bid) {
-        return level > bid.level && sym.compatibleWith(bid);
+        Bid comparisonBid = Bid.valueOf(level, other.getResolved());
+        return sym.compatibleWith(bid) && bid.compareTo(comparisonBid) < 0;
     }
 }

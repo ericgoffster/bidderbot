@@ -39,8 +39,12 @@ public class DownSymbol implements Symbol {
     }
 
     @Override
-    public Integer evaluate(Map<String, Integer> suits) {
-        return sym.evaluate(suits);
+    public Symbol evaluate(Map<String, Integer> suits) {
+        Symbol evaluate = sym.evaluate(suits);
+        if (evaluate == null) {
+            return null;
+        }
+        return new DownSymbol(evaluate);
     }
 
     @Override
@@ -59,7 +63,7 @@ public class DownSymbol implements Symbol {
 
     @Override
     public int getResolved() {
-        throw new IllegalStateException(this + " not resolved");
+        return sym.getResolved();
     }
     
     @Override

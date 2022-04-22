@@ -43,7 +43,7 @@ anti_test xx AQxxx xxx Kxx: 1C 1H 1N 3H
 [i_bid_suit M] 4M => gf, rebiddable M
 test Ax AQxxxx xx Kxx: 1C 1H 1N 4H
 
-[i_bid_suit y, unbid_suit x] NJx:<4 => gf, 4+ x
+[i_bid_suit y, unbid_suit x] NJx:<4C => gf, 4+ x
 test xx AQxxx Qxxx Ax: 1C 1H 2C 2D
 
 [] 3N => gf, partial_stoppers unstopped
