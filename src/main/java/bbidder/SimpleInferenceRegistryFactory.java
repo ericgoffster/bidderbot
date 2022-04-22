@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.function.Supplier;
 
+import bbidder.generalities.FitEstablished;
 import bbidder.inferences.Balanced;
 import bbidder.inferences.CombinedTotalPointsRange;
 import bbidder.inferences.FitInSuit;
@@ -32,6 +33,8 @@ public class SimpleInferenceRegistryFactory implements Supplier<InferenceRegistr
         reg.addInference(CombinedTotalPointsRange::valueOf);
         reg.addInference(SpecificCards::valueOf);
         reg.addInference(StoppersInSuits::valueOf);
+        
+        reg.addGenerality(FitEstablished::valueOf);
         return reg;
     }
 
