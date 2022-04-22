@@ -193,13 +193,12 @@ public class BidPattern {
         if (generality != null) {
             return generality.resolveSymbols(new BidPatternContext(createWild(TrueGenerality.T), suits));
         }
-        BidPatternContext bc = new BidPatternContext(this, suits);
         if (simpleBid != null) {
-            return List.of(bc);
+            return List.of(new BidPatternContext(this, suits));
         }
         List<BidPatternContext> result = new ArrayList<>();
-        for (Entry<Symbol, BidPatternContext> e : bc.resolveSymbols(getSymbol()).entrySet()) {
-            result.add(new BidPatternContext(bindSuit(e.getKey()), e.getValue().getSuits()));
+        for (Entry<Symbol, Map<String, Integer>> e : SymbolContext.resolveSymbols(suits, getSymbol()).entrySet()) {
+            result.add(new BidPatternContext(bindSuit(e.getKey()), e.getValue()));
         }
         return result;
     }

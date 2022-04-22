@@ -2,6 +2,7 @@ package bbidder.generalities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
+import bbidder.SymbolContext;
 import bbidder.SymbolParser;
 
 public class FitEstablished implements Generality {
@@ -24,8 +26,8 @@ public class FitEstablished implements Generality {
     @Override
     public List<BidPatternContext> resolveSymbols(BidPatternContext bc) {
         List<BidPatternContext> result = new ArrayList<>();
-        for (Entry<Symbol, BidPatternContext> e : bc.resolveSymbols(symbol).entrySet()) {
-            result.add(e.getValue().withGeneralityAdded(new FitEstablished(e.getKey())));
+        for (Entry<Symbol, Map<String, Integer>> e : SymbolContext.resolveSymbols(bc.getSuits(), symbol).entrySet()) {
+            result.add(new BidPatternContext(bc.bid.withGeneralityAdded(new FitEstablished(e.getKey())), e.getValue()));
         }
         return result;
     }

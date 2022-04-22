@@ -2,6 +2,7 @@ package bbidder.generalities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import bbidder.BidList;
@@ -10,6 +11,7 @@ import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
+import bbidder.SymbolContext;
 import bbidder.SymbolParser;
 
 public class TwoSuitedGenerality implements Generality {
@@ -26,9 +28,9 @@ public class TwoSuitedGenerality implements Generality {
     @Override
     public List<BidPatternContext> resolveSymbols(BidPatternContext bc) {
         List<BidPatternContext> result = new ArrayList<>();
-        for (Entry<Symbol, BidPatternContext> e : bc.resolveSymbols(longer).entrySet()) {
-            for (Entry<Symbol, BidPatternContext> e2 : e.getValue().resolveSymbols(shorter).entrySet()) {
-                result.add(e2.getValue().withGeneralityAdded(new TwoSuitedGenerality(e.getKey(), e2.getKey())));                
+        for (Entry<Symbol, Map<String, Integer>> e : SymbolContext.resolveSymbols(bc.getSuits(), longer).entrySet()) {
+            for (Entry<Symbol, Map<String, Integer>> e2 : SymbolContext.resolveSymbols(e.getValue(), shorter).entrySet()) {
+                result.add(new BidPatternContext(bc.bid.withGeneralityAdded(new TwoSuitedGenerality(e.getKey(), e2.getKey())), e.getValue()));
             }
         }
         return result;
