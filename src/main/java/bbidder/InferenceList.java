@@ -40,9 +40,7 @@ public class InferenceList {
         return result;
     }
     
-    public List<BiddingContext> resolveSuits(BiddingContext context) {
-        List<BiddingContext> list = new ArrayList<>();
-        list.add(context);
+    public List<BiddingContext> resolveSuits(List<BiddingContext> list) {
         for (Inference i : inferences) {
             List<BiddingContext> newList = new ArrayList<>();
             for (BiddingContext bi2 : list) {

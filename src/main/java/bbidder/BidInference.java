@@ -56,11 +56,8 @@ public class BidInference {
 
     public List<BidInference> resolveSuits() {
         List<BidInference> result = new ArrayList<>();
-        for (BiddingContext ctx : bids.resolveSuits()) {
-            for(BiddingContext mil: inferences.resolveSuits(ctx)) {
-                // Catch any errors
-                result.add(mil.getInference());
-            }
+        for(BiddingContext bc: inferences.resolveSuits(bids.resolveSuits())) {
+            result.add(bc.getInference());
         }
         return result;
     }
