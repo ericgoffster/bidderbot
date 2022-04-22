@@ -13,6 +13,7 @@ import bbidder.ShapeSet;
 import bbidder.SuitSets;
 import bbidder.SuitSets.SuitSet;
 import bbidder.Symbol;
+import bbidder.SymbolParser;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -58,13 +59,13 @@ public class LongestOrEqual implements Inference {
         str = str.substring(16).trim();
         int pos = str.indexOf("among");
         if (pos >= 0) {
-            Symbol sym = BiddingContext.parseSymbol(str.substring(0, pos).trim());
+            Symbol sym = SymbolParser.parseSymbol(str.substring(0, pos).trim());
             if (sym == null) {
                 return null;
             }
             return new LongestOrEqual(sym, SuitSets.lookupSuitSet(str.substring(pos + 5).trim()));
         }
-        Symbol sym = BiddingContext.parseSymbol(str);
+        Symbol sym = SymbolParser.parseSymbol(str);
         if (sym == null) {
             return null;
         }

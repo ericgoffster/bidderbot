@@ -14,6 +14,7 @@ import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.SplitUtil;
 import bbidder.Symbol;
+import bbidder.SymbolParser;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.HcpBoundInf;
 import bbidder.inferences.bound.ShapeBoundInf;
@@ -61,7 +62,7 @@ public class OpeningPreempt implements Inference {
         if (!parts[0].equalsIgnoreCase("opening_preempt")) {
             return null;
         }
-        Symbol sym = BiddingContext.parseSymbol(parts[2]);
+        Symbol sym = SymbolParser.parseSymbol(parts[2]);
         if (sym == null) {
             return null;
         }

@@ -12,6 +12,7 @@ import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
 import bbidder.Symbol;
+import bbidder.SymbolParser;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -68,7 +69,7 @@ public class SuitRange implements Inference {
         if (rng == null) {
             return null;
         }
-        Symbol sym = BiddingContext.parseSymbol(rng.of);
+        Symbol sym = SymbolParser.parseSymbol(rng.of);
         if (sym != null) {
             return new SuitRange(sym, Range.between(rng.min, rng.max, 13));
         } else {

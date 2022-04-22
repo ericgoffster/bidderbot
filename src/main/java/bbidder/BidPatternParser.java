@@ -52,7 +52,7 @@ public class BidPatternParser implements Parser<BidPattern> {
                     str = str.substring(1);
                 }
             }
-            Symbol sym = BiddingContext.parseSymbol(str);
+            Symbol sym = SymbolParser.parseSymbol(str);
             if (sym == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }

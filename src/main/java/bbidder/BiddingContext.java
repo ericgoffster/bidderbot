@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -21,7 +20,7 @@ import java.util.regex.Pattern;
  */
 public final class BiddingContext {
     public static final BiddingContext EMPTY = new BiddingContext(BidInference.EMPTY, Map.of());
-    private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
+    static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     private final BidInference bidInference;
 
     private final Map<String, Integer> suits;
@@ -86,18 +85,6 @@ public final class BiddingContext {
         return symbol.evaluate(suits);
     }
     
-    public Symbol bind(Symbol symbol) {
-        Integer strain = getSuit(symbol);
-        if (strain == null) {
-            throw new IllegalArgumentException(symbol + " undefined");
-        }
-        return new ConstSymbol(strain);
-    }
-    
-    public static short getSuitClass(Symbol str) {
-        return str.getSuitClass();
-    }
-
     /**
      * @param symbol
      *            The suit to match.
@@ -105,11 +92,6 @@ public final class BiddingContext {
      *         for the given suit.
      */
     public Map<Integer, BiddingContext> resolveSymbols(Symbol symbol) {
-        boolean reverse = false;
-        if (symbol instanceof DownSymbol) {
-            reverse = true;
-            symbol = ((DownSymbol) symbol).sym;
-        }
         {
             Integer strain = getSuit(symbol);
             if (strain != null) {
@@ -120,60 +102,14 @@ public final class BiddingContext {
             }
         }
         TreeMap<Integer, BiddingContext> m = new TreeMap<>();
-        for (int strain : BitUtil.iterate(getSuitClass(symbol))) {
+        for (int strain : BitUtil.iterate(symbol.getSuitClass())) {
             if (!suits.containsValue(strain)) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
-                putSuit(newSuits, symbol, strain);
+                symbol.unevaluate(newSuits, strain);
                 m.put(strain, new BiddingContext(bidInference, newSuits));
             }
         }
-        return reverse ? m.descendingMap() : m;
-    }
-
-    /**
-     * @param symbol
-     *            The symbol to test
-     * @return true, if the symbol is syntactically a valid suit.
-     */
-    public static Symbol parseSymbol(String symbol) {
-        {
-            Matcher m = SUIT_PATTERN.matcher(symbol);
-            if (m.matches()) {
-                Symbol sym = parseSymbol(m.group(1));
-                if (sym == null) {
-                    return null;
-                }
-                return new SteppedSymbol(sym, Integer.parseInt(m.group(2)));
-            }
-        }
-        if (symbol.endsWith(":down")) {
-            Symbol sym = parseSymbol(symbol.substring(0, symbol.length() - 5));
-            if (sym == null) {
-                return null;
-            }
-            return new DownSymbol(sym);
-        }
-        if (symbol.startsWith("~")) {
-            Symbol sym = parseSymbol(symbol.substring(1));
-            if (sym == null) {
-                return null;
-            }
-            return new NotSymbol(sym);
-        }
-        if (symbol.equals("om")) {
-            return new VarSymbol(symbol);
-        }
-        if (symbol.equals("OM")) {
-            return new VarSymbol(symbol);
-        }
-        Integer strain = Strain.getStrain(symbol);
-        if (strain != null) {
-            return new ConstSymbol(strain);
-        }
-        if (symbol.length() == 1) {
-            return new VarSymbol(symbol);
-        }
-        return null;
+        return symbol instanceof DownSymbol ? m.descendingMap() : m;
     }
 
     @Override
@@ -199,9 +135,5 @@ public final class BiddingContext {
             return false;
         BiddingContext other = (BiddingContext) obj;
         return Objects.equals(bidInference, other.bidInference) && Objects.equals(suits, other.suits);
-    }
-
-    private static void putSuit(Map<String, Integer> suits, Symbol symbol, int strain) {
-        symbol.unevaluate(suits, strain);
     }
 }

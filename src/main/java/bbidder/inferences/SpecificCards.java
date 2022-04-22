@@ -14,6 +14,7 @@ import bbidder.NOfTop;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.Symbol;
+import bbidder.SymbolParser;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
 
 /**
@@ -62,7 +63,7 @@ public class SpecificCards implements Inference {
             if (m.matches()) {
                 int top = Integer.parseInt(m.group(1));
                 String suit = m.group(2);
-                Symbol sym = BiddingContext.parseSymbol(suit);
+                Symbol sym = SymbolParser.parseSymbol(suit);
                 if (sym == null) {
                     return null;
                 }

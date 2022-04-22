@@ -99,9 +99,18 @@ public class SuitSets {
 
         @Override
         public SuitSet replaceVars(BiddingContext bc) {
-            return new Gt(bc.bind(strain));
+            return new Gt(bind(bc, strain));
         }
     }
+    
+    public static Symbol bind(BiddingContext bc, Symbol symbol) {
+        Integer strain = bc.getSuit(symbol);
+        if (strain == null) {
+            throw new IllegalArgumentException(symbol + " undefined");
+        }
+        return new ConstSymbol(strain);
+    }
+    
 
     public static class Unbid implements SuitSet {
         public Unbid() {
@@ -221,7 +230,7 @@ public class SuitSets {
 
         @Override
         public SuitSet replaceVars(BiddingContext bc) {
-            return new LookupSet(bc.bind(strain));
+            return new LookupSet(bind(bc, strain));
         }
     }
 
@@ -309,7 +318,7 @@ public class SuitSets {
                     advance();
                 }
                 String strain = sb.toString();
-                Symbol sym = BiddingContext.parseSymbol(strain);
+                Symbol sym = SymbolParser.parseSymbol(strain);
                 if (sym == null) {
                     throw new IllegalArgumentException("bad symbol " + strain);
                 }
@@ -340,7 +349,7 @@ public class SuitSets {
                 case "NONE":
                     return new ConstSet(sb.toString().toUpperCase(), (short) 0);
                 default:
-                    Symbol sym = BiddingContext.parseSymbol(sb.toString());
+                    Symbol sym = SymbolParser.parseSymbol(sb.toString());
                     if (sym == null) {
                         throw new IllegalArgumentException("bad symbol " + sb);
                     }

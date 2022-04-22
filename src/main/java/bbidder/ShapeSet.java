@@ -157,17 +157,6 @@ public class ShapeSet implements Iterable<Shape> {
         return Objects.equals(shapes, other.shapes);
     }
 
-    public Range getSuit(int suit) {
-        if (this == ALL) {
-            return Range.all(13);
-        }
-        long bits = 0;
-        for (Shape s : this) {
-            bits |= (1L << s.numInSuit(suit));
-        }
-        return new Range(bits, 13);
-    }
-
     @Override
     public Iterator<Shape> iterator() {
         return new Iterator<>() {
@@ -188,16 +177,6 @@ public class ShapeSet implements Iterable<Shape> {
         };
     }
 
-    public double avgLenInSuit(int suit) {
-        double tot = 0;
-        double sum = 0;
-        for (Shape s : this) {
-            sum += s.numInSuit(suit) * s.p;
-            tot += s.p;
-        }
-        return sum / tot;
-    }
-    
     public static class Stat {
         final int suit;
         final Range range;

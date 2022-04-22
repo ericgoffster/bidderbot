@@ -15,6 +15,7 @@ import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
 import bbidder.Symbol;
+import bbidder.SymbolParser;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -64,7 +65,7 @@ public class FitInSuit implements Inference {
         }
         Matcher m = PATT_FIT.matcher(str);
         if (m.matches()) {
-            Symbol sym = BiddingContext.parseSymbol(m.group(1).trim());
+            Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
             if (sym == null) {
                 return null;
             }
