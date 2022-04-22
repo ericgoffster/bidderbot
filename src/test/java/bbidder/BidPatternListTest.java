@@ -90,8 +90,6 @@ public class BidPatternListTest {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         assertEquals(BidPatternList.valueOf(reg, "1S 1N"),
                 BidPatternList.EMPTY.withBidAdded(BidPattern.createSimpleBid(Bid._1S)).withBidAdded(BidPattern.createSimpleBid(Bid._1N)));
-        assertEquals(BidPatternList.valueOf(reg, "1S 1N").withLastBidReplaced(BidPattern.createSimpleBid(Bid._2C)),
-                BidPatternList.valueOf(reg, "1S 2C"));
     }
 
     @Test

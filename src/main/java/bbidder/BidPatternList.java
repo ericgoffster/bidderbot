@@ -58,18 +58,6 @@ public final class BidPatternList {
     }
 
     /**
-     * 
-     * @param patt
-     *            The bid pattern
-     * @return A new BidPatternList with the last bid replaced with the given bid.
-     */
-    public BidPatternList withLastBidReplaced(BidPattern patt) {
-        List<BidPattern> nbids = new ArrayList<>(bids);
-        nbids.set(nbids.size() - 1, patt);
-        return new BidPatternList(nbids);
-    }
-
-    /**
      * @return true if PASS can be added to beginning.
      */
     public boolean canPrependPass() {
