@@ -7,51 +7,51 @@
 
 2N 3♣
 3M => 4+M;
-test Axx AQxx KJx AQx: 2N 3♣ 3♥;
-test Axxx AQxx KJx AQ: 2N 3♣ 3♥;
-test Axxx AQx KJxx AQ: 2N 3♣ 3♠;
+    test Axx AQxx KJx AQx: 2N 3♣ 3♥;
+    test Axxx AQxx KJx AQ: 2N 3♣ 3♥;
+    test Axxx AQx KJxx AQ: 2N 3♣ 3♠;
 
 2N 3♣
 3♦ => always;
-test Axx AQx KJxx AQx: 2N 3♣ 3♦;
-test Axx AQx KJxx AQx: 2N 3♣ 3♦;
-test Axx AQ KJxxx AQx: 2N 3♣ 3♦;
+    test Axx AQx KJxx AQx: 2N 3♣ 3♦;
+    test Axx AQx KJxx AQx: 2N 3♣ 3♦;
+    test Axx AQ KJxxx AQx: 2N 3♣ 3♦;
 
 2N 3♣
 3♦ 4M => gf, 6M;
-test AJxxxx Jxxx x xx: 2N 3♣ 3♦ 4♠;
-test Jxxx AJxxxx x xx: 2N 3♣ 3♦ 4♥;
+    test AJxxxx Jxxx x xx: 2N 3♣ 3♦ 4♠;
+    test Jxxx AJxxxx x xx: 2N 3♣ 3♦ 4♥;
 
 2N 3♣
 3♦ 3M => gf+, 4M, 5+OM;
-test AJxxx Axxx xx xx: 2N 3♣ 3♦ 3♥;
-test AJxx Axxxx xx xx: 2N 3♣ 3♦ 3♠;
+    test AJxxx Axxx xx xx: 2N 3♣ 3♦ 3♥;
+    test AJxx Axxxx xx xx: 2N 3♣ 3♦ 3♠;
 
 2N 3♣
 3♦ 4m => slaminv+, 5+m;
-test Axx Ax Axxxx xxx: 2N 3♣ 3♥ 4♦;
-test Axx Ax xxx Axxxx: 2N 3♣ 3♥ 4♣;
+    test Axx Ax Axxxx xxx: 2N 3♣ 3♥ 4♦;
+    test Axx Ax xxx Axxxx: 2N 3♣ 3♥ 4♣;
 
 2N 3♣
 3♦ 4N => slaminv;
-test Axx Ax Axxx xxxx: 2N 3♣ 3♥ 4N;
+    test Axx Ax Axxx xxxx: 2N 3♣ 3♥ 4N;
 
 2N 3♣
 3M 4M => gf, 4+M;
-test Axx Axxx Axx xxx: 2N 3♣ 3♥ 3♠;
-test Axxx Axx Axx xxx: 2N 3♣ 3♠ 4♥;
+    test Axx Axxx Axx xxx: 2N 3♣ 3♥ 3♠;
+    test Axxx Axx Axx xxx: 2N 3♣ 3♠ 4♥;
 
 2N 3♣
 3M NJOM => slaminv+, 4+M;
-test Axx Axxx Axx xxx: 2N 3♣ 3♥ 3♠;
-test Axxx Axx Axx xxx: 2N 3♣ 3♠ 4♥;
+    test Axx Axxx Axx xxx: 2N 3♣ 3♥ 3♠;
+    test Axxx Axx Axx xxx: 2N 3♣ 3♠ 4♥;
 
 2N 3♣
 3M 4m => slaminv+, 5+m;
-test Axxx Ax Axxxx xx: 2N 3♣ 3♥ 4♦;
-test Axxx Ax xx Axxxx: 2N 3♣ 3♥ 4♣;
+    test Axxx Ax Axxxx xx: 2N 3♣ 3♥ 4♦;
+    test Axxx Ax xx Axxxx: 2N 3♣ 3♥ 4♣;
 
 2N 3♣
 3M 4N => slaminv;
-test Axxx Ax Axxx xxx: 2N 3♣ 3♥ 4N;
-test Ax Axxx Axxx xxx: 2N 3♣ 3♠ 4N;
+    test Axxx Ax Axxx xxx: 2N 3♣ 3♥ 4N;
+    test Ax Axxx Axxx xxx: 2N 3♣ 3♠ 4N;

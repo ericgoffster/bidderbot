@@ -6,45 +6,45 @@
 # S = ♠
 
 [fit_established M] 4M P => gf-;
-test AQxxx Axx Axx xx: 1S 2N 4S P;
+    test AQxxx Axx Axx xx: 1S 2N 4S P;
 
 [fit_established x] 3x P => inv-;
-test Axxxx Axx Axx xx: 1S 3S P;
+    test Axxxx Axx Axx xx: 1S 3S P;
 
 [fit_established x] 2x P => min-;
-test xxx Axxx Kx xxxx: 1C 1H 2H P;
+    test xxx Axxx Kx xxxx: 1C 1H 2H P;
 
 [fit_established M] 4M => gf;
-test AQxxx Axxx Ax xx: 1S 3S 4S;
+    test AQxxx Axxx Ax xx: 1S 3S 4S;
 
 [fit_established M] 3M => inv;
-test AQxx Axx xxxx xx: 1C 1S 2S 3S;
+    test AQxx Axx xxxx xx: 1C 1S 2S 3S;
 
 [partner_bid_suit M] 4M => gf, fit M;
-test AQxx Axxx x AKxx: 1C 1H 4H;
+    test AQxx Axxx x AKxx: 1C 1H 4H;
 
 [partner_bid_suit M] 3M => inv, fit M;
-test AQxx Axxx xx AQx: 1C 1H 3H;
+    test AQxx Axxx xx AQx: 1C 1H 3H;
 
 [partner_bid_suit M] 2M => min, fit M;
-test Axxx Axxx xx Axx: 1C 1H 2H;
+    test Axxx Axxx xx Axx: 1C 1H 2H;
 
 [i_am_two_suited x y] NJy => rebiddable_2nd x y;
-test AQxxx x x AQxxxx: 1C 1H 1S 2H 2S;
-test xx x AQxxx AQxxx: 1D 1H 2C 2H 3C;
+    test AQxxx x x AQxxxx: 1C 1H 1S 2H 2S;
+    test xx x AQxxx AQxxx: 1D 1H 2C 2H 3C;
 
 [i_bid_suit x] NJx:<2N => min, rebiddable x;
-test xx AQxxxx xx xxx: 1C 1H 1N 2H;
+    test xx AQxxxx xx xxx: 1C 1H 1N 2H;
 
 [i_bid_suit x] Jx:<3N => inv, rebiddable x;
-test xx AQxxxx xx Kxx: 1C 1H 2C 3H;
+    test xx AQxxxx xx Kxx: 1C 1H 2C 3H;
 anti_test xx AQxxx xxx Kxx: 1C 1H 2C 3H;
 
 [i_bid_suit M] 4M => gf, rebiddable M;
-test Ax AQxxxxx xx Kx: 1C 1H 2C 4H;
+    test Ax AQxxxxx xx Kx: 1C 1H 2C 4H;
 
 [i_bid_suit y, unbid_suit x] NJx:<4C => gf, 4+ x;
-test xx AQxxx Qxxx Ax: 1C 1H 2C 2D;
+    test xx AQxxx Qxxx Ax: 1C 1H 2C 2D;
 
 [] 3N => gf, partial_stoppers unstopped;
-test Axx AQxx Qxx Qxx: 1C 1H 1N 3N;
+    test Axx AQxx Qxx Qxx: 1C 1H 1N 3N;

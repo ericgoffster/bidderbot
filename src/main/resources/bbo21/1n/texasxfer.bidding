@@ -7,5 +7,5 @@
 
 1N 4M-1
 4M => always;
-test AQxx AJxx Ax xxx: 1N 4♦ 4♥;
-test AQxx AJxx Ax xxx: 1N 4♥ 4♠;
+    test AQxx AJxx Ax xxx: 1N 4♦ 4♥;
+    test AQxx AJxx Ax xxx: 1N 4♥ 4♠;

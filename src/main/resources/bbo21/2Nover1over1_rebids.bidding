@@ -7,37 +7,37 @@
 
 1m 1S
 2N 4H => gf, 6+ H;
-test Axxxxx Jxxxxx - x:
+    test Axxxxx Jxxxxx - x:
     1C 1S
     2N 4H;
 
 1m 1S
 2N 3H => gf+, 5+ H;
-test Axxxx AJxxx xx x:
+    test Axxxx AJxxx xx x:
     1C 1S
     2N 3H;
 
 1y 1M
 2N 4M => gf, 6+M;
-test xx Axxxxx xx AQx:
+    test xx Axxxxx xx AQx:
     1C 1H
     2N 4H;
 
 1y 1x
 2N 3x => 6+x;
-test xx Axxxxx xx xxx:
+    test xx Axxxxx xx xxx:
     1C 1H
     2N 3H;
 
 1m 1M
 2N 3om => 7+ tpts, 5+ M;
-test xxx AQJxx xx xxx:
+    test xxx AQJxx xx xxx:
     1C 1H
     2N 3D;
 
 1m 1H
 2N 2S => gf, 4 S;
-test Axxx AJxx xx xxx:
+    test Axxx AJxx xx xxx:
     1C 1H
     2N 3S;
 

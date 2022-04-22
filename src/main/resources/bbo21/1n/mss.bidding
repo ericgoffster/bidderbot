@@ -7,25 +7,25 @@
 
 1N 2♠
 2N => superbalanced;
-test AQx QJx AJx Qxxx: 1N 2♠ 2N;
+    test AQx QJx AJx Qxxx: 1N 2♠ 2N;
 
 1N 2♠
 3m => 4+m;
-test Ax Axxx AJx Qxxx: 1N 2♠ 3♣;
-test Ax Axxx Qxxx AJx: 1N 2♠ 3♦;
+    test Ax Axxx AJx Qxxx: 1N 2♠ 3♣;
+    test Ax Axxx Qxxx AJx: 1N 2♠ 3♦;
 
 1N 2♠
 2N => always;
-test AQxx QJxx AJx Qx: 1N 2♠ 2N;
+    test AQxx QJxx AJx Qx: 1N 2♠ 2N;
 
 1N 2♠
 3m 3M => 1-M;
-test x Axx Axxxx Axxx: 1N 2♠ 3♣ 3♠;
-test x Axx Axxx Axxxx: 1N 2♠ 3♦ 3♠;
-test Axx x Axxxx Axxx: 1N 2♠ 3♣ 3♥;
-test Axx x Axxx Axxxx: 1N 2♠ 3♦ 3♥;
+    test x Axx Axxxx Axxx: 1N 2♠ 3♣ 3♠;
+    test x Axx Axxx Axxxx: 1N 2♠ 3♦ 3♠;
+    test Axx x Axxxx Axxx: 1N 2♠ 3♣ 3♥;
+    test Axx x Axxx Axxxx: 1N 2♠ 3♦ 3♥;
 
 1N 2♠
 2N 3M => 1-M;
-test x Axx Axxxx Axxx: 1N 2♠ 2N 3♠;
-test Axx x Axxxx Axxx: 1N 2♠ 2N 3♥;
+    test x Axx Axxxx Axxx: 1N 2♠ 2N 3♠;
+    test Axx x Axxxx Axxx: 1N 2♠ 2N 3♥;

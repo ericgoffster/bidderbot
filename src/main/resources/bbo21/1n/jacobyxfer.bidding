@@ -7,21 +7,21 @@
 
 1N 2M-1
 3M => 4+M, 15- tpts;
-test AQxx AJxx Ax xxx: 1N 2♦ 3♥;
-test AQxx AJxx Ax xxx: 1N 2♥ 3♠;
+    test AQxx AJxx Ax xxx: 1N 2♦ 3♥;
+    test AQxx AJxx Ax xxx: 1N 2♥ 3♠;
 
 1N 2M-1
 2N => 4+M, superbalanced;
-test AQx Axxx Axx Qxx: 1N 2♦ 2N;
-test AQxx Axx Axx Qxx: 1N 2♥ 2N;
+    test AQx Axxx Axx Qxx: 1N 2♦ 2N;
+    test AQxx Axx Axx Qxx: 1N 2♥ 2N;
 
 1N 2M-1
 NJx => 4+M, 2-x;
-test Ax Axxx AJxx Axx: 1N 2♦ 2♠;
-test Axxx Axx AJxx Ax: 1N 2♥ 3♣;
-test Axxx Axx Ax AJxx: 1N 2♥ 3♦;
-test Axx Axxx AJxx Ax: 1N 2♦ 3♣;
-test Axx Axxx Ax AJxx: 1N 2♦ 3♦;
+    test Ax Axxx AJxx Axx: 1N 2♦ 2♠;
+    test Axxx Axx AJxx Ax: 1N 2♥ 3♣;
+    test Axxx Axx Ax AJxx: 1N 2♥ 3♦;
+    test Axx Axxx AJxx Ax: 1N 2♦ 3♣;
+    test Axx Axxx Ax AJxx: 1N 2♦ 3♦;
 
 1N 2M-1 2M =>;
 test AQxx xx AJx Axxx: 1N 2♦ 2♥;
@@ -35,13 +35,21 @@ test AJxxx Jxxxx xx x: 1N 2♦ 2♥ 2♠;
 
 1N 2M-1
 2M 3M => inv, 6+M;
-test Axx Kxxxxx xx xx: 1N 2♦ 2♥ 3♥;
-test Kxxxxx Axx xx xx: 1N 2♥ 2♠ 3♠;
+    test Axx Kxxxxx xx xx:
+        1N 2♦
+        2♥ 3♥;
+    test Kxxxxx Axx xx xx:
+        1N 2♥
+        2♠ 3♠;
 
 1N 2M-1
 2M 2N => inv;
-test Axx Kxxxx xx Jxx: 1N 2♦ 2♥ 2N;
-test Axxxx Kxx xx Jxx: 1N 2♥ 2♠ 2N;
+    test Axx Kxxxx xx Jxx:
+        1N 2♦
+        2♥ 2N;
+    test Axxxx Kxx xx Jxx:
+        1N 2♥
+        2♠ 2N;
 
 1N 2M-1
 2M 3m => gf+, 4+m;

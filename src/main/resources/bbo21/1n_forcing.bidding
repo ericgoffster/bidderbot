@@ -7,32 +7,32 @@
 
 1H 1N
 2S => inv+, 4+S;
-test AQxxx AQxxxx x x: 1H 1N 2S;
+    test AQxxx AQxxxx x x: 1H 1N 2S;
 
 1M 1N
 4M => gf, 6+ M;
-test AQJxxxx x Ax KQx: 1S 1N 3S;
+    test AQJxxxx x Ax KQx: 1S 1N 3S;
 
 1M 1N
 3M => inv, 6+ M;
-test AQJxxx xx Ax KQx: 1S 1N 3S;
+    test AQJxxx xx Ax KQx: 1S 1N 3S;
 
 1M 1N
 2M => 6+ M;
-test AQJxxx xx xx KQx: 1S 1N 2S;
+    test AQJxxx xx xx KQx: 1S 1N 2S;
 
 1M 1N
 2N => inv, balanced;
-test AQJxx Ax Axx Kxx: 1S 1N 2N;
+    test AQJxx Ax Axx Kxx: 1S 1N 2N;
 
 1M 1N
 Jx => gf, 4+x;
-test AQxxx Ax Ax KQxx: 1S 1N 3C;
+    test AQxxx Ax Ax KQxx: 1S 1N 3C;
 
 1S 1N
 2H => 4+ H;
-test AQxxx Axxx xx Kx: 1S 1N 2H;
+    test AQxxx Axxx xx Kx: 1S 1N 2H;
 
 1M 1N
 2m => longest_or_equal m among minors;
-test AQxxx xx Axxx Kx: 1S 1N 2D;
+    test AQxxx xx Axxx Kx: 1S 1N 2D;
