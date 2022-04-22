@@ -29,6 +29,10 @@ public class BidInference {
     public BidInference at(String where) {
         return new BidInference(where, bids, inferences);
     }
+    
+    public BidInference withBids(BidPatternList bids) {
+        return new BidInference(where, bids, inferences);
+    }
 
     /**
      * @param patt
