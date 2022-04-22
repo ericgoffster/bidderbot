@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -182,6 +183,26 @@ public class BidPattern {
     public BidPattern bindSuit(Symbol symbol) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality);
     }
+    
+    /**
+     * @param suits
+     *            The suits
+     * @return A list of contexts representing the symbol bound to actual values
+     */
+    public List<BidPatternContext> resolveSymbols(Map<String, Integer> suits) {
+        if (generality != null) {
+            return generality.resolveSymbols(new BidPatternContext(createWild(TrueGenerality.T), suits));
+        }
+        BidPatternContext bc = new BidPatternContext(this, suits);
+        if (simpleBid != null) {
+            return List.of(bc);
+        }
+        List<BidPatternContext> result = new ArrayList<>();
+        for (Entry<Symbol, BidPatternContext> e : bc.resolveSymbols(getSymbol()).entrySet()) {
+            result.add(new BidPatternContext(bindSuit(e.getKey()), e.getValue().getSuits()));
+        }
+        return result;
+    }
 
     /**
      * @param bc
@@ -189,21 +210,11 @@ public class BidPattern {
      * @return A list of contexts representing the symbol bound to actual values
      */
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
-        if (generality != null) {
-            List<BiddingContext> l = new ArrayList<>();
-            for(BidPatternContext b: generality.resolveSymbols(new BidPatternContext(createWild(TrueGenerality.T), bc.getSuits()))) {
-                l.add(new BiddingContext(bc.bidInference.withBidAdded(b.bid), b.getSuits()));
-            }
-            return l;
+        List<BiddingContext> l = new ArrayList<>();
+        for(BidPatternContext b: resolveSymbols(bc.getSuits())) {
+            l.add(new BiddingContext(bc.bidInference.withBidAdded(b.bid), b.getSuits()));
         }
-        if (simpleBid != null) {
-            return List.of(bc.withBidAdded(this));
-        }
-        List<BiddingContext> result = new ArrayList<>();
-        for (Entry<Symbol, BiddingContext> e : bc.resolveSymbols(getSymbol()).entrySet()) {
-            result.add(e.getValue().withBidAdded(bindSuit(e.getKey())));
-        }
-        return result;
+        return l;
     }
 
     /**
