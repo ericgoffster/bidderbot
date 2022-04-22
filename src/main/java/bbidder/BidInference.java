@@ -13,13 +13,19 @@ import java.util.Objects;
  *
  */
 public class BidInference {
+    public final String where;
     public final BidPatternList bids;
     public final InferenceList inferences;
 
-    public BidInference(BidPatternList bids, InferenceList inferences) {
+    public BidInference(String where, BidPatternList bids, InferenceList inferences) {
         super();
+        this.where = where;
         this.bids = bids;
         this.inferences = inferences;
+    }
+    
+    public BidInference at(String where) {
+        return new BidInference(where, bids, inferences);
     }
 
     /**
@@ -37,21 +43,15 @@ public class BidInference {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        return new BidInference(BidPatternList.valueOf(parts[0]), InferenceList.valueOf(reg, parts[1]));
+        return new BidInference(null, BidPatternList.valueOf(parts[0]), InferenceList.valueOf(reg, parts[1]));
     }
 
-    /**
-     * @param where
-     *            Where it came from
-     * @return The list of inferences bound to actual bidding sequences.
-     */
-    public List<BoundBidInference> getBoundInferences(String where) {
-        List<BoundBidInference> result = new ArrayList<>();
+    public List<BidInference> getBoundInferences() {
+        List<BidInference> result = new ArrayList<>();
         for (BiddingContext ctx : bids.resolveSuits()) {
             for(MappedInferenceList mil: inferences.resolveSuits(ctx)) {
-                BoundBidInference inference = new BoundBidInference(where, new BidInference(mil.ctx.getBids(), mil.inf));                
                 // Catch any errors
-                result.add(inference);
+                result.add(new BidInference(where, mil.ctx.getBids(), mil.inf));
             }
         }
         return result;

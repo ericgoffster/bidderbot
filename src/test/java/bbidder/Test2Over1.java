@@ -54,7 +54,7 @@ public class Test2Over1 {
                     } else {
                         System.err.println("   " + b);
                     }
-                    IBoundInference bi = b.inf.bind(result.state.players);
+                    IBoundInference bi = b.inf.inferences.bind(result.state.players);
                     if (b == result.found.possibility) {
                         System.err.println("       * " + bi) ;
 

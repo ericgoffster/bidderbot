@@ -23,10 +23,10 @@ import bbidder.inferences.bound.OrBoundInf;
  * Represents a compiled bidding system.
  */
 public class BiddingSystem {
-    private final List<BoundBidInference> inferences;
+    private final List<BidInference> inferences;
     private final List<BiddingTest> tests;
 
-    private BiddingSystem(List<BoundBidInference> inferences, List<BiddingTest> tests) {
+    private BiddingSystem(List<BidInference> inferences, List<BiddingTest> tests) {
         super();
         this.inferences = inferences;
         this.tests = tests;
@@ -40,7 +40,7 @@ public class BiddingSystem {
      * @return The bidding system
      */
     public static BiddingSystem load(String urlSpec, Consumer<ParseException> reportErrors) {
-        List<BoundBidInference> inferences = new ArrayList<>();
+        List<BidInference> inferences = new ArrayList<>();
         List<BiddingTest> tests = new ArrayList<>();
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         load("", urlSpec, reportErrors, inferences, tests, reg);
@@ -64,16 +64,16 @@ public class BiddingSystem {
      */
     public void dump(OutputStream os) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
-            for (BoundBidInference bi : inferences) {
+            for (BidInference bi : inferences) {
                 bw.write(bi.toString());
             }
         }
     }
     
     public static class Possibility {
-        final BoundBidInference inf;
+        final BidInference inf;
         final Bid bid;
-        public Possibility(BoundBidInference inf, Bid bid) {
+        public Possibility(BidInference inf, Bid bid) {
             super();
             this.inf = inf;
             this.bid = bid;
@@ -87,8 +87,8 @@ public class BiddingSystem {
 
     public List<Possibility> getPossible(BidList bids) {
         List<Possibility> l = new ArrayList<>();
-        for (BoundBidInference i : inferences) {
-            Bid match = i.bidInference.bids.getMatch(bids);
+        for (BidInference i : inferences) {
+            Bid match = i.bids.getMatch(bids);
             if (match != null) {
                 l.add(new Possibility(i, match));
             }
@@ -110,7 +110,7 @@ public class BiddingSystem {
     public BidSource getBid(BidList bids, Players players, Hand hand) {
         List<Possibility> possible = getPossible(bids);
         for (Possibility i : possible) {
-            IBoundInference inf = i.inf.bind(players);
+            IBoundInference inf = i.inf.inferences.bind(players);
             if (inf.matches(hand)) {
                 return new BidSource(i, possible);
             }
@@ -138,7 +138,7 @@ public class BiddingSystem {
         List<IBoundInference> negative = new ArrayList<>();
         List<Possibility> possible = getPossible(bids.exceptLast());
         for (Possibility i : possible) {
-            IBoundInference inf = i.inf.bind(players);
+            IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
                 positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
             }
@@ -162,7 +162,7 @@ public class BiddingSystem {
      * @param reportErrors
      *            The consumer of parse errors
      */
-    private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, List<BoundBidInference> inferences,
+    private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, List<BidInference> inferences,
             List<BiddingTest> tests, InferenceRegistry reg) {
         try (InputStream is = new URL(null, urlSpec, new Handler(BiddingSystem.class.getClassLoader())).openStream()) {
             load(urlSpec, is, reportErrors, inferences, tests, reg);
@@ -183,7 +183,7 @@ public class BiddingSystem {
      * @param reportErrors
      *            The consumer of parse errors
      */
-    private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, List<BoundBidInference> inferences,
+    private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, List<BidInference> inferences,
             List<BiddingTest> tests, InferenceRegistry reg) {
         int lineno = 0;
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
@@ -209,7 +209,7 @@ public class BiddingSystem {
                     }
                 } else if (!ln.equals("")) {
                     try {
-                        inferences.addAll(BidInference.valueOf(reg, ln).getBoundInferences(where + ":" + lineno));
+                        inferences.addAll(BidInference.valueOf(reg, ln).at(where + ":" + lineno).getBoundInferences());
                     } catch (Exception e) {
                         reportErrors.accept(new ParseException(where + ":" + lineno, e));
                     }

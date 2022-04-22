@@ -14,14 +14,14 @@ public class BidInferenceTest {
     public void testValueOf() {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         assertEquals(
-                new BidInference(BidPatternList.valueOf("1N"),
+                new BidInference(null, BidPatternList.valueOf("1N"),
                         new InferenceList(List.of(new HCPRange(15, 17), new Balanced()))),
                 BidInference.valueOf(reg, "1N => 15-17 hcp, balanced"));
     }
 
     @Test
     public void testToString() {
-        assertEquals("1N => 15-17 hcp,balanced", new BidInference(BidPatternList.valueOf("1N"),
+        assertEquals("1N => 15-17 hcp,balanced", new BidInference(null, BidPatternList.valueOf("1N"),
                 new InferenceList(List.of(new HCPRange(15, 17), new Balanced()))).toString());
     }
 }
