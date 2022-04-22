@@ -23,17 +23,13 @@ public abstract class Symbol {
     public abstract List<SymbolContext> resolveSymbols(SymbolTable symbols);
     
     public static final class SymbolContext {
-        private final Symbol symbol;
+        public final Symbol symbol;
         public final SymbolTable symbols;
 
         public SymbolContext(Symbol symbol, SymbolTable symbols) {
             super();
             this.symbol = symbol;
             this.symbols = symbols;
-        }
-
-        public Symbol getSymbol() {
-            return symbol;
         }
     }
 }

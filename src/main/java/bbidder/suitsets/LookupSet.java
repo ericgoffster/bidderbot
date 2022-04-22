@@ -47,6 +47,6 @@ public final class LookupSet implements SuitSet {
 
     @Override
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SuitSetContext(new LookupSet(e.getSymbol()), e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SuitSetContext(new LookupSet(e.symbol), e.symbols));
     }
 }

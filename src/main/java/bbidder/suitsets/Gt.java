@@ -48,6 +48,6 @@ public final class Gt implements SuitSet {
 
     @Override
     public List<SuitSetContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SuitSetContext(new Gt(e.getSymbol()), symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new SuitSetContext(new Gt(e.symbol), symbols));
     }
 }

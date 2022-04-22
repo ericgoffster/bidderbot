@@ -44,7 +44,7 @@ public final class OpeningPreempt implements Inference {
 
     @Override
     public List<InferenceContext> resolveSymbols(SymbolTable symbols) {
-        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new OpeningPreempt(e.getSymbol(), level), e.symbols));
+        return ListUtil.map(symbol.resolveSymbols(symbols), e -> new InferenceContext(new OpeningPreempt(e.symbol, level), e.symbols));
     }
 
     public static OpeningPreempt valueOf(String str) {

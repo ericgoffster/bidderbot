@@ -45,7 +45,7 @@ public final class LessThanSymbol extends Symbol {
     @Override
     public List<SymbolContext> resolveSymbols(SymbolTable symbols) {
         return ListUtil.flatMap(symbol.resolveSymbols(symbols), e1 -> ListUtil.map(other.resolveSymbols(e1.symbols),
-                e2 -> new SymbolContext(new LessThanSymbol(e1.getSymbol(), level, e2.getSymbol()), e2.symbols)));
+                e2 -> new SymbolContext(new LessThanSymbol(e1.symbol, level, e2.symbol), e2.symbols)));
     }
 
     @Override
