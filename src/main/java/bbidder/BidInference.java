@@ -78,8 +78,10 @@ public class BidInference {
      */
     public List<BidInference> resolveSymbols() {
         List<BidInference> result = new ArrayList<>();
-        for (BiddingContext bc : inferences.resolveSymbols(bids.resolveSymbols())) {
-            result.add(bc.getInference());
+        for (BiddingContext bc2 : bids.resolveSymbols()) {
+            for (BiddingContext bc : inferences.resolveSymbols(bc2)) {
+                result.add(bc.getInference());
+            }
         }
         return result;
     }

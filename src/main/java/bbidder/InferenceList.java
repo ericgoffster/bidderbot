@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import bbidder.inferences.bound.AndBoundInf;
-import bbidder.inferences.bound.ConstBoundInference;
+import bbidder.inferences.AndInference;
+import bbidder.inferences.TrueInference;
 
 /**
  * Represents a list of inferences read in from the notes.
@@ -14,18 +14,16 @@ import bbidder.inferences.bound.ConstBoundInference;
  *
  */
 public class InferenceList {
-    public static final InferenceList EMPTY = new InferenceList(List.of());
-    public final List<Inference> inferences;
+    public static final InferenceList EMPTY = new InferenceList(TrueInference.T);
+    public final Inference inferences;
 
-    public InferenceList(List<Inference> inferences) {
+    public InferenceList(Inference inferences) {
         super();
         this.inferences = inferences;
     }
 
     public InferenceList withInferenceAdded(Inference i) {
-        List<Inference> l = new ArrayList<>(inferences);
-        l.add(i);
-        return new InferenceList(l);
+        return new InferenceList(AndInference.create(inferences, i));
     }
 
     /**
@@ -34,22 +32,11 @@ public class InferenceList {
      * @return A bound inference representing all of the inferences as an "and"
      */
     public IBoundInference bind(Players players) {
-        IBoundInference result = ConstBoundInference.create(true);
-        for (Inference i : inferences) {
-            result = AndBoundInf.create(result, i.bind(players));
-        }
-        return result;
+        return inferences.bind(players);
     }
 
-    public List<BiddingContext> resolveSymbols(List<BiddingContext> list) {
-        for (Inference i : inferences) {
-            List<BiddingContext> newList = new ArrayList<>();
-            for (BiddingContext bi2 : list) {
-                newList.addAll(i.resolveSymbols(bi2));
-            }
-            list = newList;
-        }
-        return list;
+    public List<BiddingContext> resolveSymbols(BiddingContext bc) {
+        return inferences.resolveSymbols(bc);
     }
 
     public static InferenceList valueOf(InferenceRegistry registry, String str) {
@@ -60,18 +47,12 @@ public class InferenceList {
         for (String part : SplitUtil.split(str, ",")) {
             l.add(registry.valueOf(part));
         }
-        return new InferenceList(l);
+        return new InferenceList(AndInference.create(l));
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        String delim = "";
-        for (Inference inf : inferences) {
-            sb.append(delim).append(inf);
-            delim = ",";
-        }
-        return sb.toString();
+        return inferences.toString();
     }
 
     @Override
