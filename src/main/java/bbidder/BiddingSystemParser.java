@@ -40,7 +40,7 @@ public class BiddingSystemParser {
      * @param reportErrors
      *            The consumer of parse errors
      */
-    static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, List<BidInference> inferences,
+    private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, List<BidInference> inferences,
             List<BiddingTest> tests, InferenceRegistry reg) {
         try (InputStream is = new URL(null, urlSpec, new Handler(BiddingSystem.class.getClassLoader())).openStream()) {
             load(urlSpec, is, reportErrors, inferences, tests, reg);
@@ -61,7 +61,7 @@ public class BiddingSystemParser {
      * @param reportErrors
      *            The consumer of parse errors
      */
-    static void load(String where, InputStream is, Consumer<ParseException> reportErrors, List<BidInference> inferences,
+    private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, List<BidInference> inferences,
             List<BiddingTest> tests, InferenceRegistry reg) {
         int lineno = 0;
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
@@ -104,7 +104,7 @@ public class BiddingSystemParser {
         }
     }
 
-    static String resolveUrlSpec(String where, String urlSpec) {
+    private static String resolveUrlSpec(String where, String urlSpec) {
         if (!urlSpec.startsWith("/") && !urlSpec.contains(":")) {
             int ps = where.lastIndexOf("/");
             if (ps >= 0) {
