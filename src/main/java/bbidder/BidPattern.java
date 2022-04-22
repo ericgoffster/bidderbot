@@ -1,14 +1,10 @@
 package bbidder;
 
-import static bbidder.Constants.ALL_SUITS;
-import static bbidder.Constants.MAJORS;
-import static bbidder.Constants.MINORS;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 /**
  * Represents an immutable matchable bid pattern.
@@ -57,48 +53,6 @@ public class BidPattern {
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, suit, level, simpleBid, jumpLevel, reverse, nonreverse, wild);
-    }
-
-    public static short rotateDown(short s) {
-        return (short) ((s >> 1) | ((s & 1) << 4));
-    }
-
-    public static short getSuitClass(String str) {
-        if (str.startsWith("~")) {
-            return (short) (0xf ^ getSuitClass(str.substring(1)));
-        }
-        int pos = str.indexOf("-");
-        if (pos >= 0) {
-            int n = Integer.parseInt(str.substring(pos + 1));
-            short suits = getSuitClass(str.substring(0, pos));
-            while (n > 0) {
-                suits = rotateDown(suits);
-                n--;
-            }
-            return suits;
-        }
-        {
-            Integer strain = Strain.getStrain(str);
-            if (strain != null) {
-                if (strain < 0 || strain > 3) {
-                    throw new IllegalArgumentException("Invalid strain");
-                }
-                return (short) (1 << strain);
-            }
-        }
-
-        switch (str) {
-        case "M":
-            return MAJORS;
-        case "OM":
-            return MAJORS;
-        case "m":
-            return MINORS;
-        case "om":
-            return MINORS;
-        default:
-            return ALL_SUITS;
-        }
     }
 
     /**

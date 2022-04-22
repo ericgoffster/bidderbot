@@ -1,5 +1,9 @@
 package bbidder;
 
+import static bbidder.Constants.ALL_SUITS;
+import static bbidder.Constants.MAJORS;
+import static bbidder.Constants.MINORS;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,6 +107,53 @@ public final class BiddingContext {
         }
         return suits.get(symbol);
     }
+    
+    /**
+     * 
+     * @param suits The suits to rotate
+     * @return The suits, rotated down once.
+     */
+    public static short rotateDown(short suits) {
+        return (short) ((suits >> 1) | ((suits & 1) << 4));
+    }
+    
+    public static short getSuitClass(String str) {
+        if (str.startsWith("~")) {
+            return (short) (0xf ^ getSuitClass(str.substring(1)));
+        }
+        int pos = str.indexOf("-");
+        if (pos >= 0) {
+            int n = Integer.parseInt(str.substring(pos + 1));
+            short suits = getSuitClass(str.substring(0, pos));
+            while (n > 0) {
+                suits = rotateDown(suits);
+                n--;
+            }
+            return suits;
+        }
+        {
+            Integer strain = Strain.getStrain(str);
+            if (strain != null) {
+                if (strain < 0 || strain > 3) {
+                    throw new IllegalArgumentException("Invalid strain");
+                }
+                return (short) (1 << strain);
+            }
+        }
+
+        switch (str) {
+        case "M":
+            return MAJORS;
+        case "OM":
+            return MAJORS;
+        case "m":
+            return MINORS;
+        case "om":
+            return MINORS;
+        default:
+            return ALL_SUITS;
+        }
+    }
 
     /**
      * @param symbol
@@ -126,7 +177,7 @@ public final class BiddingContext {
             }
         }
         TreeMap<Integer, BiddingContext> m = new TreeMap<>();
-        for (int strain : BitUtil.iterate(BidPattern.getSuitClass(symbol))) {
+        for (int strain : BitUtil.iterate(getSuitClass(symbol))) {
             if (!suits.containsValue(strain)) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
                 putSuit(newSuits, symbol, strain);
