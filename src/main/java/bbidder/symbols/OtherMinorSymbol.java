@@ -42,11 +42,13 @@ public final class OtherMinorSymbol extends Symbol {
 
     @Override
     public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        if (suitTable.containsName("om")) {
-            return Stream.of(new ConstSymbol(suitTable.getSuit("om")).new Context(suitTable));
+        Integer om = suitTable.getSuit("om");
+        if (om != null) {
+            return Stream.of(new ConstSymbol(om).new Context(suitTable));
         }
-        if (suitTable.containsName("m")) {
-            return Stream.of(new ConstSymbol(otherMinor(suitTable.getSuit("m"))).new Context(suitTable));
+        Integer m = suitTable.getSuit("m");
+        if (m != null) {
+            return Stream.of(new ConstSymbol(otherMinor(m)).new Context(suitTable));
         }
         return StreamSupport.stream(BitUtil.iterate(Constants.MINORS & ~suitTable.getSuits()).spliterator(), false)
                 .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded("om", s)));

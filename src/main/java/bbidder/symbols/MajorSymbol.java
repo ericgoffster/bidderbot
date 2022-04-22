@@ -42,11 +42,13 @@ public final class MajorSymbol extends Symbol {
 
     @Override
     public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        if (suitTable.containsName("M")) {
-            return Stream.of(new ConstSymbol(suitTable.getSuit("M")).new Context(suitTable));
+        Integer M = suitTable.getSuit("M");
+        if (M != null) {
+            return Stream.of(new ConstSymbol(M).new Context(suitTable));
         }
-        if (suitTable.containsName("OM")) {
-            return Stream.of(new ConstSymbol(otherMajor(suitTable.getSuit("OM"))).new Context(suitTable));
+        Integer OM = suitTable.getSuit("OM");
+        if (OM != null) {
+            return Stream.of(new ConstSymbol(otherMajor(OM)).new Context(suitTable));
         }
         return StreamSupport.stream(BitUtil.iterate(Constants.MAJORS & ~suitTable.getSuits()).spliterator(), false)
                 .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded("M", s)));

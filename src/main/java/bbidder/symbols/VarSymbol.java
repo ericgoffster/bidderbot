@@ -47,8 +47,9 @@ public final class VarSymbol extends Symbol {
 
     @Override
     public Stream<Context> resolveSymbols(SuitTable suitTable) {
-        if (suitTable.containsName(varName)) {
-            return Stream.of(new ConstSymbol(suitTable.getSuit(varName)).new Context(suitTable));
+        Integer suit = suitTable.getSuit(varName);
+        if (suit != null) {
+            return Stream.of(new ConstSymbol(suit).new Context(suitTable));
         }
         return StreamSupport.stream(BitUtil.iterate(Constants.ALL_SUITS & ~suitTable.getSuits()).spliterator(), false)
                 .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(varName, s)));

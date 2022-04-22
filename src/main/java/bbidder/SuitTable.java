@@ -52,14 +52,17 @@ public final class SuitTable {
         return Objects.equals(suitMap, other.suitMap);
     }
 
-    public boolean containsName(String string) {
-        return suitMap.containsKey(string);
-    }
-
+    /**
+     * @param name The name to lookup.
+     * @return The suit associated with the name.  Null if not found.
+     */
     public Integer getSuit(String name) {
         return suitMap.get(name);
     }
 
+    /**
+     * @return A bitmap field contains all suits in the suit table.
+     */
     public int getSuits() {
         int patt = 0;
         for (int v : suitMap.values()) {
