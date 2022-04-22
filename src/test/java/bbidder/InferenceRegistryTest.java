@@ -16,7 +16,7 @@ public class InferenceRegistryTest {
         InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
         assertEquals(new Balanced(), reg.valueOf("balanced"));
         assertEquals(new HCPRange(10, null), reg.valueOf("10+ hcp"));
-        assertEquals(new LongestOrEqual("s", InferenceContext.lookupSuitSet("all"), null), reg.valueOf("longest_or_equal s among all"));
+        assertEquals(new LongestOrEqual("s", InferenceContext.lookupSuitSet("all")), reg.valueOf("longest_or_equal s among all"));
         assertEquals(new OpeningPreempt("S", 2), reg.valueOf("opening_preempt 2 S"));
         assertEquals(new SuitRange("s", 10, null), reg.valueOf("10+ s"));
     }

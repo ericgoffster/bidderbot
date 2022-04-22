@@ -25,30 +25,27 @@ import bbidder.inferences.bound.StoppersBoundInf;
 public class StoppersInSuits implements Inference {
     public final SuitSet suits;
     public final boolean partial;
-    public final BiddingContext ctx;
 
-    public StoppersInSuits(SuitSet suits, boolean partial, BiddingContext ctx) {
+    public StoppersInSuits(SuitSet suits, boolean partial) {
         super();
         this.suits = suits;
         this.partial = partial;
-        this.ctx = ctx;
     }
 
     public static Inference valueOf(String str) {
         String[] parts = SplitUtil.split(str, "\\s+", 2);
         if (parts.length == 2 && parts[0].equalsIgnoreCase("stoppers")) {
-            return new StoppersInSuits(InferenceContext.lookupSuitSet(parts[1]), false, null);
+            return new StoppersInSuits(InferenceContext.lookupSuitSet(parts[1]), false);
         }
         if (parts.length == 2 && parts[0].equalsIgnoreCase("partial_stoppers")) {
-            return new StoppersInSuits(InferenceContext.lookupSuitSet(parts[1]), true, null);
+            return new StoppersInSuits(InferenceContext.lookupSuitSet(parts[1]), true);
         }
         return null;
     }
 
     @Override
     public IBoundInference bind(Players players) {
-        InferenceContext context = new InferenceContext(players, ctx);
-        short theSuits = suits.evaluate(context);
+        short theSuits = suits.evaluate(players);
         StopperSet stoppers = new StopperSet(stopper -> {
             for (int s : BitUtil.iterate(theSuits)) {
                 if (!stopper.stopperIn(s)) {
@@ -65,7 +62,7 @@ public class StoppersInSuits implements Inference {
     
     @Override
     public List<MappedInf> resolveSuits(BiddingContext context) {
-        return List.of(new MappedInf(new StoppersInSuits(suits, partial, context), context));
+        return List.of(new MappedInf(new StoppersInSuits(suits.replaceVars(context), partial), context));
     }
 
     @Override
@@ -75,7 +72,7 @@ public class StoppersInSuits implements Inference {
 
     @Override
     public int hashCode() {
-        return Objects.hash(suits);
+        return Objects.hash(partial, suits);
     }
 
     @Override
@@ -87,6 +84,6 @@ public class StoppersInSuits implements Inference {
         if (getClass() != obj.getClass())
             return false;
         StoppersInSuits other = (StoppersInSuits) obj;
-        return Objects.equals(suits, other.suits);
+        return partial == other.partial && Objects.equals(suits, other.suits);
     }
 }

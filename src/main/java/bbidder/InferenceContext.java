@@ -52,7 +52,8 @@ public class InferenceContext {
     }
     
     public interface SuitSet {
-        public short evaluate(InferenceContext inf);
+        public short evaluate(Players players);
+        public SuitSet replaceVars(BiddingContext bc);
     }
 
     public static class Not implements SuitSet {
@@ -64,8 +65,8 @@ public class InferenceContext {
         }
 
         @Override
-        public short evaluate(InferenceContext inf) {
-            return (short) (0xf & ~ss.evaluate(inf));
+        public short evaluate(Players players) {
+            return (short) (0xf & ~ss.evaluate(players));
         }
 
         @Override
@@ -88,6 +89,11 @@ public class InferenceContext {
         public String toString() {
             return "~"+ss;
         }
+
+        @Override
+        public SuitSet replaceVars(BiddingContext bc) {
+            return new Not(ss.replaceVars(bc));
+        }
     }
 
     public static class Gt implements SuitSet {
@@ -99,8 +105,8 @@ public class InferenceContext {
         }
 
         @Override
-        public short evaluate(InferenceContext inf) {
-            Integer st = inf.bc.getSuit(strain);
+        public short evaluate(Players players) {
+            Integer st = Strain.getStrain(strain);
             if (st == null) {
                 throw new IllegalArgumentException("Unknown Suit: '" + strain + "'");
             }
@@ -128,6 +134,11 @@ public class InferenceContext {
         public String toString() {
             return ">"+strain;
         }
+
+        @Override
+        public SuitSet replaceVars(BiddingContext bc) {
+            return new Gt(String.valueOf(Constants.STR_ALL_SUITS.charAt(bc.getSuit(strain))));
+        }
     }
     
     public static class Unbid implements SuitSet {
@@ -136,11 +147,11 @@ public class InferenceContext {
         }
 
         @Override
-        public short evaluate(InferenceContext inf) {
+        public short evaluate(Players players) {
             short suits = 0;
             for (int suit = 0; suit < 4; suit++) {
-                if (inf.players.lho.infSummary.avgLenInSuit(suit) < 4 && inf.players.rho.infSummary.avgLenInSuit(suit) < 4
-                        && inf.players.partner.infSummary.avgLenInSuit(suit) < 4 && inf.players.me.infSummary.avgLenInSuit(suit) < 4) {
+                if (players.lho.infSummary.avgLenInSuit(suit) < 4 && players.rho.infSummary.avgLenInSuit(suit) < 4
+                        && players.partner.infSummary.avgLenInSuit(suit) < 4 && players.me.infSummary.avgLenInSuit(suit) < 4) {
                     suits |= (1 << suit);
                 }
             }
@@ -162,18 +173,23 @@ public class InferenceContext {
                 return false;
             return true;
         }
+
+        @Override
+        public SuitSet replaceVars(BiddingContext bc) {
+            return this;
+        }
     }
     
     public static class ConstSet implements SuitSet {
-        String ssuits;
-        short suits;
+        final String ssuits;
+        final short suits;
         public ConstSet(String ssuits, short suits) {
             this.ssuits = ssuits;
             this.suits = suits;
         }
 
         @Override
-        public short evaluate(InferenceContext inf) {
+        public short evaluate(Players players) {
             return suits;
         }
 
@@ -197,17 +213,22 @@ public class InferenceContext {
         public String toString() {
             return ssuits;
         }
+        
+        @Override
+        public SuitSet replaceVars(BiddingContext bc) {
+            return this;
+        }
     }
 
     public static class LookupSet implements SuitSet {
-        String strain;
+        final String strain;
         public LookupSet(String strain) {
             this.strain = strain;
         }
 
         @Override
-        public short evaluate(InferenceContext inf) {
-            Integer st = inf.bc.getSuit(strain);
+        public short evaluate(Players players) {
+            Integer st = Strain.getStrain(strain);
             if (st != null) {
                 return (short) (1 << st);
             }
@@ -234,19 +255,24 @@ public class InferenceContext {
         public String toString() {
             return strain;
         }
+
+        @Override
+        public SuitSet replaceVars(BiddingContext bc) {
+            return new LookupSet(String.valueOf(Constants.STR_ALL_SUITS.charAt(bc.getSuit(strain))));
+        }
     }
     
     public static class And implements SuitSet {
-        SuitSet s1;
-        SuitSet s2;
+        final SuitSet s1;
+        final SuitSet s2;
         public And(SuitSet s1, SuitSet s2) {
             super();
             this.s1 = s1;
             this.s2 = s2;
         }
         @Override
-        public short evaluate(InferenceContext inf) {
-            return (short)(s1.evaluate(inf) & s2.evaluate(inf));
+        public short evaluate(Players players) {
+            return (short)(s1.evaluate(players) & s2.evaluate(players));
         }
         @Override
         public int hashCode() {
@@ -266,6 +292,11 @@ public class InferenceContext {
         @Override
         public String toString() {
             return s1 + " & " + s2;
+        }
+
+        @Override
+        public SuitSet replaceVars(BiddingContext bc) {
+            return new And(s1.replaceVars(bc), s2.replaceVars(bc));
         }
     }
 

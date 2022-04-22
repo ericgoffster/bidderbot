@@ -25,18 +25,15 @@ import bbidder.inferences.bound.ShapeBoundInf;
 public class LongestOrEqual implements Inference {
     public final String suit;
     public final SuitSet among;
-    public final BiddingContext ctx;
 
-    public LongestOrEqual(String suit, SuitSet among, BiddingContext ctx) {
+    public LongestOrEqual(String suit, SuitSet among) {
         this.suit = suit;
         this.among = among;
-        this.ctx = ctx;
     }
 
     @Override
     public IBoundInference bind(Players players) {
-        InferenceContext context = new InferenceContext(players, ctx);
-        int iamong = among == null ? 0xf : among.evaluate(context);
+        int iamong = among == null ? 0xf : among.evaluate(players);
         int strain = Strain.getStrain(suit);
         return ShapeBoundInf.create(new ShapeSet(shape -> shape.isLongerOrEqual(strain, iamong)));
     }
@@ -45,7 +42,7 @@ public class LongestOrEqual implements Inference {
     public List<MappedInf> resolveSuits(BiddingContext context) {
         List<MappedInf> l = new ArrayList<>();
         for (var e : context.getMappedBiddingContexts(suit).entrySet()) {
-            l.add(new MappedInf(new LongestOrEqual(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), among, context), e.getValue()));
+            l.add(new MappedInf(new LongestOrEqual(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), among.replaceVars(context)), e.getValue()));
         }
         return l;
     }
@@ -61,12 +58,12 @@ public class LongestOrEqual implements Inference {
         str = str.substring(16).trim();
         int pos = str.indexOf("among");
         if (pos >= 0) {
-            return new LongestOrEqual(str.substring(0, pos).trim(), InferenceContext.lookupSuitSet(str.substring(pos + 5).trim()), null);
+            return new LongestOrEqual(str.substring(0, pos).trim(), InferenceContext.lookupSuitSet(str.substring(pos + 5).trim()));
         }
         if (!BiddingContext.isValidSuit(str)) {
             return null;
         }
-        return new LongestOrEqual(str, null, null);
+        return new LongestOrEqual(str, null);
     }
 
     @Override
