@@ -20,7 +20,7 @@ public class SymbolParser {
                 return new SteppedSymbol(sym, Integer.parseInt(m.group(2)));
             }
         }
-        if (symbol.endsWith(":down")) {
+        if (symbol.toLowerCase().endsWith(":down")) {
             Symbol sym = parseSymbol(symbol.substring(0, symbol.length() - 5));
             if (sym == null) {
                 return null;
@@ -35,10 +35,16 @@ public class SymbolParser {
             return new NotSymbol(sym);
         }
         if (symbol.equals("om")) {
-            return new VarSymbol(symbol);
+            return new OtherMinorSymbol();
         }
         if (symbol.equals("OM")) {
-            return new VarSymbol(symbol);
+            return new OtherMajorSymbol();
+        }
+        if (symbol.equals("m")) {
+            return new MinorSymbol();
+        }
+        if (symbol.equals("M")) {
+            return new MajorSymbol();
         }
         Integer strain = Strain.getStrain(symbol);
         if (strain != null) {
