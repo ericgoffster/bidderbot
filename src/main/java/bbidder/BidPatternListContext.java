@@ -1,8 +1,6 @@
 package bbidder;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -31,34 +29,6 @@ public final class BidPatternListContext {
      */
     public BidPatternListContext withBidAdded(BidPattern patt) {
         return new BidPatternListContext(bids.withBidAdded(patt), suits);
-    }
-
-    /**
-     * @param symbol
-     *            The suit symbol to match.
-     * @return a map of strains to new bidding contexts. Each key in the map represents a possible bid strain
-     *         for the given suit symbol.
-     */
-    public Map<Symbol, BidPatternListContext> resolveSymbols(Symbol symbol) {
-        {
-            Symbol esymbol = symbol.evaluate(suits);
-            if (esymbol != null) {
-                int strain = esymbol.getResolved();
-                if (strain < 0 || strain > 4) {
-                    throw new IllegalArgumentException("Invalid strain");
-                }
-                return Map.of(esymbol, this);
-            }
-        }
-        Map<Symbol, BidPatternListContext> m = new LinkedHashMap<Symbol, BidPatternListContext>();
-        for (Symbol newSym: symbol.boundSymbols(suits)) {
-            if (!suits.containsValue(newSym.getResolved())) {
-                Map<String, Integer> newSuits = new HashMap<>(suits);
-                newSuits.putAll(symbol.unevaluate(newSym.getResolved()));
-                m.put(newSym, new BidPatternListContext(bids, newSuits));
-            }
-        }
-        return m;
     }
 
     @Override
