@@ -34,5 +34,5 @@ P 1M
 test xx Axxxx Axx Axx: P 1H 2C 2D;
 
 P 1M
-2C 2M =>;
+2C 2M => always;
 test xx Kxxxx Qxx Axx: P 1H 2C 2H;

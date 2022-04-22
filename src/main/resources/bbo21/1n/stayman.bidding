@@ -60,7 +60,7 @@ test AJxx AQx AQx xxx: 1N 2♣ 2♥ 4N;
 
 # 2D rebid
 1N 2♣
-2♦ =>;
+2♦ => always;
 test Axx AQx KJxx Qxx: 1N 2♣ 2♦;
 
 1N 2♣

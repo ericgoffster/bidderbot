@@ -12,7 +12,7 @@ test Axxx AQxx KJx AQ: 2N 3♣ 3♥;
 test Axxx AQx KJxx AQ: 2N 3♣ 3♠;
 
 2N 3♣
-3♦ =>;
+3♦ => always;
 test Axx AQx KJxx AQx: 2N 3♣ 3♦;
 test Axx AQx KJxx AQx: 2N 3♣ 3♦;
 test Axx AQ KJxxx AQx: 2N 3♣ 3♦;

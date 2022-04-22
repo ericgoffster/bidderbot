@@ -18,5 +18,5 @@ test Axx Axx Axxx AQx: 1D 1S 2N 3C 3S;
 
 1m 1M
 2N 3om
-3N => ;
+3N => always;
 test Ax Axx Axxxx AQx: 1D 1S 2N 3C 3N;

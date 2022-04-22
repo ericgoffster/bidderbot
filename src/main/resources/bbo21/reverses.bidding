@@ -38,7 +38,7 @@ test AQxx xxx xxxx Ax:1♣ 1♠ 2♥ 3♦;
 
 # 2N artficial weak
 1x 1y
-NJz:>2x 2N =>;
+NJz:>2x 2N => always;
 test KQxx xx xxxx xxx:1♣ 1♠ 2♥ 2N;
 test KQxxx xxx xxx xx:1♣ 1♠ 2♥ 2N;
 
@@ -55,6 +55,6 @@ NJz:>2x 2N 3N => gf, stoppers unbid;
 test x AKJx AQxxx KQx:1♦ 1♠ 2♥ 2N 3N;
 
 1x 1y
-NJz:>2x 2N 3♣ =>;
+NJz:>2x 2N 3♣ => always;
 test x AQxx KJx AQxxx:1♣ 1♠ 2♥ 2N 3♣;
 test Kx AKJx AKxxx Qx:1♦ 1♠ 2♥ 2N 3♣;

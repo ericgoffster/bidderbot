@@ -75,11 +75,11 @@ test Qx AQxxx Jx Axxx: 1H 1S 1N 2C 3C;
 
 1m 1M
 1N 2om
-Njm =>;
+Njm => always;
 test xx Axx Axxxx Axx: 1D 1S 1N 2C 2D;
 test xx Axx Axx Axxxx: 1C 1S 1N 2D 3C;
 
 1H 1S
 1N 2C
-2H =>;
+2H => always;
 test Ax Axxxx xxx Axx: 1H 1S 1N 2C 2H;

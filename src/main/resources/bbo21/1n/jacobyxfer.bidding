@@ -5,15 +5,18 @@
 # H = ♥
 # S = ♠
 
-1N 2M-1 3M => 4+M, 15- tpts;
+1N 2M-1
+3M => 4+M, 15- tpts;
 test AQxx AJxx Ax xxx: 1N 2♦ 3♥;
 test AQxx AJxx Ax xxx: 1N 2♥ 3♠;
 
-1N 2M-1 2N => 4+M, superbalanced;
+1N 2M-1
+2N => 4+M, superbalanced;
 test AQx Axxx Axx Qxx: 1N 2♦ 2N;
 test AQxx Axx Axx Qxx: 1N 2♥ 2N;
 
-1N 2M-1 NJx => 4+M, 2-x;
+1N 2M-1
+NJx => 4+M, 2-x;
 test Ax Axxx AJxx Axx: 1N 2♦ 2♠;
 test Axxx Axx AJxx Ax: 1N 2♥ 3♣;
 test Axxx Axx Ax AJxx: 1N 2♥ 3♦;

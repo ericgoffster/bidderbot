@@ -15,7 +15,7 @@ test Ax Axxx AJx AKxx: 2N 3♠ 4♣;
 test Ax Axxx AKxx AJx: 2N 3♠ 4♦;
 
 2N 3♠
-3N =>;
+3N => always;
 test AQxx QJxx AJx Qx: 2N 3♠ 3N;
 
 2N 3♠

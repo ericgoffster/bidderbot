@@ -6,6 +6,6 @@
 # S = ♠
 
 2N 4M-1
-4M =>;
+4M => always;
 test AQxx AJxx Ax AJx: 1N 4♦ 4♥;
 test AQxx AJxx Ax AJx: 1N 4♥ 4♠;
