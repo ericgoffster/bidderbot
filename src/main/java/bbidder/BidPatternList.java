@@ -281,8 +281,8 @@ public final class BidPatternList {
         // For each context gotten from the first bid,
         // evaluate the remaining bids in the context of that bid.
         BidPatternList exceptFirst = exceptFirst();
-        BidPattern pattern = bids.get(0);
-        return ListUtil.flatMap(pattern.resolveSymbols(previous.getContract(), symbols),
+        BidPattern first = bids.get(0);
+        return ListUtil.flatMap(first.resolveSymbols(previous.getContract(), symbols),
                 b -> exceptFirst.resolveSymbols(previous.withBidAdded(b.getBidPattern()), b.symbols));
     }
 
