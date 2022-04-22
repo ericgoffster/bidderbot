@@ -57,7 +57,7 @@ public class SuitRange implements Inference {
     }
 
     private static IBoundInference createBound(int s, Range r) {
-        return ShapeBoundInf.create(new ShapeSet(shape -> shape.isSuitInRange(s, r)));
+        return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
     }
 
     public static Inference valueOf(String str) {

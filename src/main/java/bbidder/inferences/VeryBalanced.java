@@ -22,7 +22,7 @@ public class VeryBalanced implements Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        return ShapeBoundInf.create(new ShapeSet(Shape::isSuperBalanced));
+        return ShapeBoundInf.create(ShapeSet.create(Shape::isSuperBalanced));
     }
 
     @Override

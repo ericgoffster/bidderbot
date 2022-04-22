@@ -17,7 +17,7 @@ public class ShapeSet implements Iterable<Shape> {
         this.shapes = shapes;
     }
 
-    public ShapeSet(Iterable<Shape> list) {
+    private ShapeSet(Iterable<Shape> list) {
         this(createShapes(list));
     }
 
@@ -28,9 +28,13 @@ public class ShapeSet implements Iterable<Shape> {
         }
         return shapes;
     }
+    
+    public static ShapeSet create(Iterable<Shape> list) {
+        return new ShapeSet(createShapes(list));
+    }
 
-    public ShapeSet(Predicate<Shape> pred) {
-        this(createShapes(pred));
+    public static ShapeSet create(Predicate<Shape> pred) {
+        return new ShapeSet(createShapes(pred));
     }
 
     private static BitSet createShapes(Predicate<Shape> pred) {
@@ -50,18 +54,36 @@ public class ShapeSet implements Iterable<Shape> {
     public ShapeSet and(ShapeSet other) {
         BitSet a = (BitSet) shapes.clone();
         a.and(other.shapes);
+        if (a.cardinality() == Shape.values().length) {
+            return ALL;
+        }
+        if (a.cardinality() == 0) {
+            return NONE;
+        }
         return new ShapeSet(a);
     }
 
     public ShapeSet or(ShapeSet other) {
-        BitSet o = (BitSet) shapes.clone();
-        o.or(other.shapes);
-        return new ShapeSet(o);
+        BitSet a = (BitSet) shapes.clone();
+        a.or(other.shapes);
+        if (a.cardinality() == Shape.values().length) {
+            return ALL;
+        }
+        if (a.cardinality() == 0) {
+            return NONE;
+        }
+        return new ShapeSet(a);
     }
 
     public ShapeSet not() {
         BitSet a = (BitSet) shapes.clone();
         a.xor(ALL.shapes);
+        if (a.cardinality() == Shape.values().length) {
+            return ALL;
+        }
+        if (a.cardinality() == 0) {
+            return NONE;
+        }
         return new ShapeSet(a);
     }
 

@@ -22,7 +22,7 @@ public class Balanced implements Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        return ShapeBoundInf.create(new ShapeSet(Shape::isBalanced));
+        return ShapeBoundInf.create(ShapeSet.create(Shape::isBalanced));
     }
 
     @Override

@@ -55,7 +55,7 @@ public class FitInSuit implements Inference {
             return ConstBoundInference.T;
         }
         Range r = Range.atLeast(n, 13);
-        return ShapeBoundInf.create(new ShapeSet(shape -> shape.isSuitInRange(s, r)));
+        return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
     }
 
     public static Inference valueOf(String str) {
