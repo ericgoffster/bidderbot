@@ -158,22 +158,22 @@ public final class BidPattern {
      *            The current list of bids.
      * @return The bid associated with the given pattern. Null, if not valid.
      */
-    public Bid resolveToBid(Auction auction) {
+    public Optional<Bid> resolveToBid(Auction auction) {
         if (simpleBid != null) {
-            return simpleBid;
+            return Optional.of(simpleBid);
         }
         int strain = symbol.getResolved();
         if (jumpLevel != null) {
             Bid b = auction.getContract().getBid(jumpLevel, strain);
             if (level != null && b.level != level.intValue()) {
-                return null;
+                return Optional.empty();
             }
             if (!symbol.compatibleWith(b)) {
-                return null;
+                return Optional.empty();
             }
-            return b;
+            return Optional.of(b);
         }
-        return Bid.valueOf(level, strain);
+        return Optional.of(Bid.valueOf(level, strain));
     }
 
     @Override

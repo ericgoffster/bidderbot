@@ -69,12 +69,11 @@ public final class BiddingSystem {
         List<PossibleBid> l = new ArrayList<>();
         Set<Bid> matched = new HashSet<>();
         for (BidInference i : inferences) {
-            Bid match = i.bids.getMatch(bids, players, matched);
-            if (match != null) {
+            i.bids.getMatch(bids, players, matched).ifPresent(match -> {
                 DebugUtils.breakpointGetPossibleBid(bids, players, match, i);
                 l.add(new PossibleBid(i, match));
                 matched.add(match);
-            }
+            });
         }
         if (l.isEmpty()) {
             DebugUtils.breakpointGetPossibleBid(bids, players, l);
