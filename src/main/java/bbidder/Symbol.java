@@ -21,4 +21,15 @@ public interface Symbol {
     boolean nonConvential();
     
     List<SymbolContext> resolveSymbols(SymbolTable symbols);
+    
+    public static final class SymbolContext {
+        public final Symbol symbol;
+        public final SymbolTable symbols;
+
+        public SymbolContext(Symbol symbol, SymbolTable symbols) {
+            super();
+            this.symbol = symbol;
+            this.symbols = symbols;
+        }
+    }
 }

@@ -6,7 +6,6 @@ import java.util.Objects;
 import bbidder.Bid;
 import bbidder.Strain;
 import bbidder.Symbol;
-import bbidder.SymbolContext;
 import bbidder.SymbolTable;
 
 public final class ConstSymbol implements Symbol {

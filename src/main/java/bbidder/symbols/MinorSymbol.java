@@ -7,7 +7,6 @@ import bbidder.BitUtil;
 import bbidder.Constants;
 import bbidder.ListUtil;
 import bbidder.Symbol;
-import bbidder.SymbolContext;
 import bbidder.SymbolTable;
 
 public final class MinorSymbol implements Symbol {
