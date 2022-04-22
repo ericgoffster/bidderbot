@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-1m 1M 1N 2om => inv+, 5+ M
-test Axx AQxxx xx xxx: 1C 1H 1N 2D
+1m 1M 1N 2om => 12+ tpts, 5+ M
+test Axx AQJxx xx xxx: 1C 1H 1N 2D
 
 include new_minor_forcing.bidding
