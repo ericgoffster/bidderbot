@@ -44,21 +44,6 @@ public class BidPatternList {
         return new BidPatternList(nbids);
     }
 
-    /*
-     * Retrieves the list of bidding contexts for this bid pattern list.
-     * If first bid is "we" when we allow for either
-     *    [bid] or [(P), bid]
-     */
-    public List<BiddingContext> resolveSymbols(BiddingContext bc) {
-        BidPattern pattern = bids.get(0);
-        List<BiddingContext> l = new ArrayList<>();
-        l.addAll(resolveSymbols(bc, true));
-        if (!pattern.isOpposition) {
-            l.addAll(resolveSymbols(bc, false));
-        }
-        return l;
-    }
-    
     /**
      * Resolve the first symbol.
      * Allow for first, second, third or fourth chair openings
@@ -70,7 +55,7 @@ public class BidPatternList {
         }
         BidPattern pattern = bids.get(0);
         if (pattern.generality != null) {
-            return resolveGenerality(BiddingContext.EMPTY, pattern);
+            return new BidPatternList(bids.subList(1, bids.size())).resolveGenerality(BiddingContext.EMPTY, pattern);
         }
         boolean isOpp = pattern.isOpposition;
         BidPattern p1 = BidPattern.PASS.withIsOpposition(!isOpp);
@@ -141,7 +126,8 @@ public class BidPatternList {
         // If it is the opps turn and the next bid is not opp, then assume pass for opps
         BidPattern pattern = bids.get(0);
         if (pattern.generality != null) {
-            return resolveGenerality(ctx, pattern);
+            BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
+            return theRest.resolveGenerality(ctx, pattern);
         }
         if (isOpp && !pattern.isOpposition) {
             return resolveSymbols(ctx, BidPattern.PASS, !isOpp);
@@ -150,10 +136,11 @@ public class BidPatternList {
     }
 
     private List<BiddingContext> resolveGenerality(BiddingContext ctx, BidPattern pattern) {
-        BidPatternList theRest = new BidPatternList(bids.subList(1, bids.size()));
         List<BiddingContext> l = new ArrayList<>();
+        boolean isOpp = bids.get(0).isOpposition;
+        
         for (BiddingContext newCtx : pattern.resolveSymbols(ctx)) {
-            l.addAll(theRest.resolveSymbols(newCtx));
+            l.addAll(resolveSymbols(newCtx, isOpp));
         }
         return l;
     }
