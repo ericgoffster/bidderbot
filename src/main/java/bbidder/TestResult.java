@@ -7,8 +7,9 @@ public class TestResult {
     public final Bid expected;
     public final BidSource found;
     public final BiddingState state;
+    public final Exception ex;
 
-    public TestResult(String where, Hand hand, BidList bids, Bid expected, BidSource found, BiddingState state) {
+    public TestResult(String where, Hand hand, BidList bids, Bid expected, BidSource found, BiddingState state, Exception ex) {
         super();
         this.where = where;
         this.hand = hand;
@@ -16,6 +17,7 @@ public class TestResult {
         this.expected = expected;
         this.found = found;
         this.state = state;
+        this.ex = ex;
     }
 
     @Override

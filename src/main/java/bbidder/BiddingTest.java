@@ -34,13 +34,17 @@ public class BiddingTest {
     public TestResult getResult(BiddingSystem bs) {
         BiddingState state = new BiddingState(bs);
         BidList exceptLast = bids.exceptLast();
-        for (Bid bid : exceptLast.getBids()) {
-            DebugUtils.breakpoint();
-            state = state.withBid(bid);
-        }
         Bid expected = bids.getLastBid();
-        BidSource found = state.getBid(hand);
-        return new TestResult(where, hand, exceptLast, expected, found, state);
+        try {
+            for (Bid bid : exceptLast.getBids()) {
+                DebugUtils.breakpoint();
+                state = state.withBid(bid);
+            }
+            BidSource found = state.getBid(hand);
+            return new TestResult(where, hand, exceptLast, expected, found, state, null);
+        } catch (Exception ex) {
+            return new TestResult(where, hand, exceptLast, expected, null, state, ex);
+        }
     }
 
     @Override

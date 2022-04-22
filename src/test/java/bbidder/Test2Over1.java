@@ -32,7 +32,19 @@ public class Test2Over1 {
                 e.printStackTrace();
                 continue;
             }
-            if (!test.anti && !result.found.possibleBid.bid.equals(result.expected)) {
+            if (result.ex != null) {
+                hadError.set(true);
+                InfSummary partnerSummary = result.state.players.partner.infSummary;
+                System.err.println("Bidding: " + result.bids);
+                System.err
+                        .println("You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
+                System.err.println("My summary " + result.state.players.me.infSummary);
+                System.err.println("Partner summary " + partnerSummary);
+                System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
+                System.err.println("But I got an exception: ");
+                result.ex.printStackTrace();
+                test.getResult(bs);
+            } else if (!test.anti && !result.found.possibleBid.bid.equals(result.expected)) {
                 hadError.set(true);
                 InfSummary partnerSummary = result.state.players.partner.infSummary;
                 System.err.println("Bidding: " + result.bids);

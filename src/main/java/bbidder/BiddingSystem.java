@@ -147,9 +147,9 @@ public class BiddingSystem {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
                 if (i.inf.bids.positionOfWild() < 0) {
-                    positiveWild.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
+                    positive.add(AndBoundInf.create(inf, OrBoundInf.create(negative).negate()));
                 } else {
-                    positive.add(AndBoundInf.create(inf, OrBoundInf.create(negativeWild).negate()));
+                    positiveWild.add(AndBoundInf.create(inf, OrBoundInf.create(negativeWild).negate()));
                 }
             }
             if (i.inf.bids.positionOfWild() < 0) {
@@ -159,9 +159,9 @@ public class BiddingSystem {
             }
         }
         
-//        if (positive.isEmpty() && lastBid != Bid.P) {
-//            throw new RuntimeException("Unrecognized bidding: " + bids);
-//        }
+        if (positive.isEmpty() && positiveWild.isEmpty() && lastBid != Bid.P) {
+            throw new RuntimeException("Unrecognized bidding: " + bids);
+        }
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
