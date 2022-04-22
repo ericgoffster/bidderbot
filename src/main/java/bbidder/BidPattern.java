@@ -209,10 +209,7 @@ public class BidPattern {
      */
     public List<BiddingContext> resolveSymbols(BiddingContext bc) {
         if (wild) {
-            if (generality != null) {
-                return generality.resolveSymbols(bc.withBidAdded(createWild(TrueGenerality.T)));
-            }
-            return List.of(bc.withBidAdded(this));
+            return generality.resolveSymbols(bc.withBidAdded(createWild(TrueGenerality.T)));
         }
         if (simpleBid != null) {
             return List.of(bc.withBidAdded(this));
