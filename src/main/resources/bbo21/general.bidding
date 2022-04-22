@@ -8,14 +8,17 @@
 [fit_established M] 4M P => gf-
 test AQxxx Axx Axx xx: 1S 2N 4S P
 
-[fit_established M] 3M P => inv-
+[fit_established x] 3x P => inv-
 test Axxxx Axx Axx xx: 1S 3S P
 
-[fit_established M] 2M P => min-
+[fit_established x] 2x P => min-
 test xxx Axxx Kx xxxx: 1C 1H 2H P
 
 [fit_established M] 4M => gf
 test AQxxx Axxx Ax xx: 1S 3S 4S
+
+[fit_established M] 3M => inv
+test AQxx Axx xxxx xx: 1C 1S 2S 3S
 
 [partner_bid_suit M] 4M => gf, fit M
 test AQxx Axxx x AKxx: 1C 1H 4H
