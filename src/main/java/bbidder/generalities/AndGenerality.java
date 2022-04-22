@@ -2,6 +2,7 @@ package bbidder.generalities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import bbidder.BidList;
 import bbidder.BiddingContext;
@@ -41,5 +42,26 @@ public class AndGenerality implements Generality {
     public boolean matches(Players players, BidList bidList) {
         return g1.matches(players, bidList) && g2.matches(players, bidList);
     }
+    
+    @Override
+    public String toString() {
+        return g1 + ", " + g2;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(g1, g2);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AndGenerality other = (AndGenerality) obj;
+        return Objects.equals(g1, other.g1) && Objects.equals(g2, other.g2);
+    }
 }

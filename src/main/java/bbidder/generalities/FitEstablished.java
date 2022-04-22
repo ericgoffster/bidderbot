@@ -3,6 +3,7 @@ package bbidder.generalities;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import bbidder.BidList;
 import bbidder.BiddingContext;
@@ -45,6 +46,28 @@ public class FitEstablished implements Generality {
             }
         }
         return null;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(symbol);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        FitEstablished other = (FitEstablished) obj;
+        return Objects.equals(symbol, other.symbol);
+    }
+    
+    @Override
+    public String toString() {
+        return "fit_established " + symbol;
     }
 
 }
