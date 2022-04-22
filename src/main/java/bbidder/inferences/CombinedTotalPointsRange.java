@@ -44,7 +44,7 @@ public class CombinedTotalPointsRange implements Inference {
         return List.of(context.withInferenceAdded(this));
     }
 
-    public static Range createRange(String str, Map<String, Integer> m) {
+    private static Range createRange(String str, Map<String, Integer> m) {
         final int dir;
         if (str.endsWith("+")) {
             str = str.substring(0, str.length() - 1);
@@ -84,7 +84,7 @@ public class CombinedTotalPointsRange implements Inference {
         return Range.between(pts, maxPts, 40);
     }
 
-    public static Range createRange(String str) {
+    private static Range createRange(String str) {
         return createRange(str, STD);
     }
 
