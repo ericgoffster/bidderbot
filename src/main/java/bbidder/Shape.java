@@ -625,12 +625,6 @@ public enum Shape {
 
     public boolean isLongerOrEqual(int suit, int among) {
         int len = numInSuit(suit);
-        for (int s : BitUtil.iterate(among)) {
-            int len2 = numInSuit(s);
-            if (len2 > len) {
-                return false;
-            }
-        }
-        return true;
+        return !BitUtil.stream(among).filter(s -> numInSuit(s) > len).findFirst().isPresent();
     }
 }
