@@ -12,28 +12,26 @@ import java.util.Objects;
  */
 public class BoundBidInference {
     public final String where;
-    public final BiddingContext ctx;
-    public final InferenceList inferences;
+    public final BidInference bidInference;
 
-    public BoundBidInference(String where, BiddingContext ctx, InferenceList inferences) {
+    public BoundBidInference(String where, BidInference inferences) {
         super();
         this.where = where;
-        this.ctx = ctx;
-        this.inferences = inferences;
+        this.bidInference = inferences;
     }
 
     public IBoundInference bind(Players players) {
-        return inferences.bind(players);
+        return bidInference.inferences.bind(players);
     }
     
     @Override
     public String toString() {
-        return ctx + " => " + inferences;
+        return bidInference.toString();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ctx, inferences);
+        return Objects.hash(bidInference);
     }
 
     @Override
@@ -45,6 +43,6 @@ public class BoundBidInference {
         if (getClass() != obj.getClass())
             return false;
         BoundBidInference other = (BoundBidInference) obj;
-        return Objects.equals(ctx, other.ctx) && Objects.equals(inferences, other.inferences);
+        return Objects.equals(bidInference, other.bidInference);
     }
 }

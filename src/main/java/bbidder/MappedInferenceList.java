@@ -9,4 +9,9 @@ public class MappedInferenceList {
         this.inf = inf;
         this.ctx = ctx;
     }
+    
+    @Override
+    public String toString() {
+        return ctx + " => " + inf;
+    }
 }

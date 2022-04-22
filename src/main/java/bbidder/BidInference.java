@@ -49,7 +49,7 @@ public class BidInference {
         List<BoundBidInference> result = new ArrayList<>();
         for (BiddingContext ctx : bids.resolveSuits()) {
             for(MappedInferenceList mil: inferences.resolveSuits(ctx)) {
-                BoundBidInference inference = new BoundBidInference(where, mil.ctx, mil.inf);                
+                BoundBidInference inference = new BoundBidInference(where, new BidInference(mil.ctx.getBids(), mil.inf));                
                 // Catch any errors
                 result.add(inference);
             }
