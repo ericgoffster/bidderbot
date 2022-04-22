@@ -42,7 +42,7 @@ public class SpecificCards implements Inference {
     @Override
     public List<BiddingContext> resolveSuits(BiddingContext context) {
         List<BiddingContext> l = new ArrayList<>();
-        for (var e : context.getMappedBiddingContexts(suit).entrySet()) {
+        for (var e : context.resolveSuits(suit).entrySet()) {
             l.add(e.getValue().withInferenceAdded(new SpecificCards(String.valueOf(Constants.STR_ALL_SUITS.charAt(e.getKey())), rng, top)));
         }
         return l;

@@ -9,11 +9,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Inferences happen in the context of a series of bids.
- * This represents those bids in addition to a symbol table of suits.
- * Note this is an immutable class.
- * i.e.
- * 1M 2M (M would get bound to hearts or spades)
+ * A bidding context is used to build BidInference's.
+ * A bidding context consists of the current BidInference, and the current symbol table.
+ * A call to resolveSuits will create "N" different version of the bidding context,
+ * each with a different value of the suit that is allowed, added toe the symbol table.
+ * 
+ * Note that a BiddingContext is immutable.
  * 
  * @author goffster
  *
@@ -38,10 +39,6 @@ public final class BiddingContext {
         return inf;
     }
     
-    public static BiddingContext create(BidInference inf) {
-        return new BiddingContext(inf, Map.of());
-    }
-
     /**
      * @return The immutable symbol table.
      */
@@ -49,10 +46,18 @@ public final class BiddingContext {
         return Collections.unmodifiableMap(suits);
     }
     
+    /**
+     * @param patt The bid pattern to add.
+     * @return A new BiddingContext with the given bid added to the bid list.
+     */
     public BiddingContext withBidAdded(BidPattern patt) {
         return new BiddingContext(inf.withBidAdded(patt), suits);
     }
 
+    /**
+     * @param i An inference
+     * @return A new BiddingContext with the given inference added to the inference list.
+     */
     public BiddingContext withInferenceAdded(Inference i) {
         return new BiddingContext(inf.withInferenceAdded(i), suits);
     }
@@ -98,17 +103,18 @@ public final class BiddingContext {
     }
     
     /**
-     * @param suit The suit to match.
-     * @return a map of strains to new bidding contexts
+     * @param symbol The suit to match.
+     * @return a map of strains to new bidding contexts.  Each key in the map represents a possible bid strain
+     * for the given suit.
      */
-    public Map<Integer, BiddingContext> getMappedBiddingContexts(String suit) {
+    public Map<Integer, BiddingContext> resolveSuits(String symbol) {
         boolean reverse = false;
-        if (suit.endsWith(":down")) {
+        if (symbol.endsWith(":down")) {
             reverse = true;
-            suit = suit.substring(0, suit.length() - 5);
+            symbol = symbol.substring(0, symbol.length() - 5);
         }
         {
-            Integer strain = getSuit(suit);
+            Integer strain = getSuit(symbol);
             if (strain != null) {
                 if (strain < 0 || strain > 4) {
                     throw new IllegalArgumentException("Invalid strain");
@@ -117,10 +123,10 @@ public final class BiddingContext {
             }
         }
         TreeMap<Integer, BiddingContext> m = new TreeMap<>();
-        for (int strain : BitUtil.iterate(BidPattern.getSuitClass(suit))) {
+        for (int strain : BitUtil.iterate(BidPattern.getSuitClass(symbol))) {
             if (!suits.containsValue(strain)) {
                 Map<String, Integer> newSuits = new HashMap<>(suits);
-                putSuit(newSuits, suit, strain);
+                putSuit(newSuits, symbol, strain);
                 m.put(strain, new BiddingContext(inf, newSuits));
             }
         }

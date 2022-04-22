@@ -231,7 +231,7 @@ public class BidPattern {
             return List.of(bc.withBidAdded(this));
         }
         List<BiddingContext> result = new ArrayList<>();
-        Map<Integer, BiddingContext> m = bc.getMappedBiddingContexts(getSuit());
+        Map<Integer, BiddingContext> m = bc.resolveSuits(getSuit());
         for (Entry<Integer, BiddingContext> e : m.entrySet()) {
             BiddingContext bc2 = e.getValue();
             result.add(bc2.withBidAdded(bindSuit(e.getKey())));
