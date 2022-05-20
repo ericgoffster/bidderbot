@@ -1,0 +1,52 @@
+# Responses to a minor suit opening
+
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
+common 1m (X) {
+#	1y:down => gf+, 5+ y, longest_or_equal y among unbid;
+#	    test AQxxx Axxx x Kxx:
+#	        1♦ (X) 1♠;
+#	
+#	1y => gf+, 4 y, longest_or_equal y among unbid;
+#	    test Kxxx Ax xxx AQxx:
+#	        1♦ (X) 1♠;
+#	    test AQxx Axxx xx Kxx:
+#	        1♦ (X) 1♥;
+	
+#	1y:down => min-inv, 5+ y, longest_or_equal y among >m & unbid;
+#	    test Kxxxx Axxxx xx x:
+#	        1♦ (X) 1♠;
+#	    test Kxxxx Axxxx Qx x:
+#	        1♦ (X) 1♠;
+#	    test Kxxxx Axxx xx xx:
+#	        1♦ (X) 1♠;
+#	    test Kxxxx Axxx xx Ax:
+#	        1♦ (X) 1♠;
+	
+#	1M => min-inv, 4 M, longest_or_equal M among >m & unbid;
+#	    test Kxxx Axxx xx xxx:
+#	        1♦ (X) 1♥;
+#	    test Kxxx Axxx xx Axx:
+#	        1♦ (X) 1♥ ;
+
+#    XX => inv+;	
+#	    test Kxx Kx Axxx Kxxx:
+#	        1♦ (X) XX;
+	
+#	1N => min, balanced;
+#	    test Kxx Kx Qxxx xxxx:
+#	        1♦ (X) 1N;
+	
+#	3m => min-, 5+ m;
+#	    test KQx x Qxxxx xxxx:
+#	        1♦ (X) 3♦;
+	
+#	2m => min, 4+ m;
+#	    test KQx x Qxxx xxxxx:
+#	        1♦ (X) 2♦;
+	        
+	P => always;
+}
