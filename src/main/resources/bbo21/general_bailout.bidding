@@ -55,14 +55,18 @@
 
 [[Pass NT]]
 [] ?N P => always;
-    test xxx xxxx xxx xxx:
-        1N P;
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1N P;
         
+[] 1N:"1nt_opener" P => always;
+    test xxx xxxx xxx xxx:
+        1N P;
 [] 2N:"2nt_opener" P => always;
     test xxx xxxx xxx xxx:
+        2N P;
+    test xxx xxxx xxx xxx:
+        2C 2D
         2N P;
 
 [[Pass preference]]

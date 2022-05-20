@@ -6,7 +6,7 @@
 # S = ♠
 
 [[Bid 4 card major]]
-1N 2♣
+1N:"1nt_opener" 2♣
 2M => 4+M;
     test Axx AQxx KJxx Qx:
         1N 2♣
@@ -18,7 +18,7 @@
         1N 2♣
         2♠;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2M 4m => gf+, 4+M, 1-m;
     test AJx AQxx AQxxx x:
         1N 2♣
@@ -27,13 +27,13 @@
         1N 2♣
         2♠ 4♣;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2♠ 4♥ => gf+, 4+♠, 1-♥;
     test AJxx x AQx AQxxx:
         1N 2♣
         2♠ 4♥;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2M 3OM => slaminv+, 4M;
     test AJx Axxx Axx Axx:
         1N 2♣
@@ -42,31 +42,31 @@
         1N 2♣
         2♠ 3♥;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2♥ 2♠ => inv, 4♠, 7- fit H;
     test AJxx Axx xxx xxx:
         1N 2♣
         2♥ 2♠;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2M 2N => inv, 7- fit M;
     test AJx Axx xxxx xxx:
         1N 2♣
         2♥ 2N;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2M 3N => gf, 7- fit M;
     test AJxx AQx xxx xxx:
         1N 2♣
         2♥ 3N;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2M 3m => gf+, 5+m, 7- fit M;
     test AJx AQx AQxxx xx:
         1N 2♣
         2♥ 3♦;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2M 4N => slaminv, 7- fit M;
     test AJxx AQx AQx xxx:
         1N 2♣
@@ -74,13 +74,13 @@
 
 
 # 2D rebid
-1N 2♣
+1N:"1nt_opener" 2♣
 2♦ => always;
     test Axx AQx KJxx Qxx:
         1N 2♣
         2♦;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2♦ 2M => inv, 5+M;
     test AJxx Qxxxx xx xx:
         1N 2♣
@@ -89,13 +89,13 @@
         1N 2♣
         2♦ 2♠;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2♦ 2N => inv;
     test AJxx Kxxx xxx xx:
         1N 2♣
         2♦ 2N;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2♦ 3M => gf+, 4M, 5+OM;
     test AJxxx AQxx xx xx:
         1N 2♣
@@ -104,19 +104,19 @@
         1N 2♣
         2♦ 3♠;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2♦ 3N => gf;
     test AJxx AQxx xxx xx:
         1N 2♣
         2♦ 3N;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2♦ 3m => gf+, 5+m;
     test AJxx AQ AQxxx xx:
         1N 2♣
         2♦ 3♦;
 
-1N 2♣
+1N:"1nt_opener" 2♣
 2♦ 4N => slaminv;
     test AJxx AJxx AQx xx:
         1N 2♣
