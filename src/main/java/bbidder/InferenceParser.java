@@ -31,20 +31,18 @@ import bbidder.utils.SplitUtil;
  *
  */
 public final class InferenceParser {
-    private static final Map<String, Integer> POINT_RANGES = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35, "grand", 37);
-    private static Pattern PATT_FIT = Pattern.compile("fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    private static final Map<String, Integer> POINT_RANGES = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35,
+            "grand", 37);
     private static Pattern PATT_PREF = Pattern.compile("prefer\\s*(.*)\\s*to\\s*(.*)", Pattern.CASE_INSENSITIVE);
-    private static Pattern PATT_REBIDDABLE = Pattern.compile("rebiddable\\s*(.*)", Pattern.CASE_INSENSITIVE);
     private static Pattern PATT_LONGEQ_AMONG = Pattern.compile("longest_or_equal\\s*(.*)among\\s*(.*)", Pattern.CASE_INSENSITIVE);
     private static Pattern PATT_LONGEQ = Pattern.compile("longest_or_equal\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
-    private static Pattern PATT_REBIDDABLE_2nd_SUIT = Pattern.compile("rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
     private static Pattern PATT_SPECIFIC_CARDS = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
     private static Pattern PATT_MIN_TO_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
     private static Pattern PATT_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(.*)");
     private static Pattern PATT_MIN = Pattern.compile("(\\d+)\\s*\\+\\s*(.*)");
     private static Pattern PATT_EXACT = Pattern.compile("(\\d+)\\s*(.*)");
-    
+
     /**
      * @param str
      *            The string to parse.
@@ -70,50 +68,44 @@ public final class InferenceParser {
         {
             String s = str.trim();
             int p = 0;
-            while(p < s.length() && !Character.isWhitespace(s.charAt(p))) {
+            while (p < s.length() && !Character.isWhitespace(s.charAt(p))) {
                 p++;
             }
             tag = s.substring(0, p).toLowerCase();
             remainder = s.substring(p).trim();
         }
-        switch(tag) {
+        switch (tag) {
         case "balanced":
             if (remainder.equals("")) {
                 return Balanced.BALANCED;
-            }      
+            }
             break;
         case "superbalanced":
             if (remainder.equals("")) {
                 return VeryBalanced.VERY_BALANCED;
-            }      
+            }
             break;
         case "unbalanced":
             if (remainder.equals("")) {
                 return UnBalanced.UNBALANCED;
-            }      
+            }
             break;
         case "always":
             if (remainder.equals("")) {
                 return Always.ALWAYS;
-            }      
+            }
             break;
         case "fit": {
-            Matcher m = PATT_FIT.matcher(str.trim());
-            if (m.matches()) {
-                Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-                if (sym != null) {
-                    return new FitInSuit(sym);
-                }
+            Symbol sym = SymbolParser.parseSymbol(remainder.trim());
+            if (sym != null) {
+                return new FitInSuit(sym);
             }
             break;
         }
         case "rebiddable": {
-            Matcher m = InferenceParser.PATT_REBIDDABLE.matcher(str.trim());
-            if (m.matches()) {
-                Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-                if (sym != null) {
-                    return new Rebiddable(sym);
-                }
+            Symbol sym = SymbolParser.parseSymbol(remainder.trim());
+            if (sym != null) {
+                return new Rebiddable(sym);
             }
             break;
         }
@@ -139,10 +131,10 @@ public final class InferenceParser {
             break;
         }
         case "rebiddable_2nd": {
-            Matcher m = InferenceParser.PATT_REBIDDABLE_2nd_SUIT.matcher(str.trim());
-            if (m.matches()) {
-                Symbol longer = SymbolParser.parseSymbol(m.group(1).trim());
-                Symbol shorter = SymbolParser.parseSymbol(m.group(2).trim());
+            String[] symbols = SplitUtil.split(remainder, "\\s+", 2);
+            if (symbols.length == 2) {
+                Symbol longer = SymbolParser.parseSymbol(symbols[0]);
+                Symbol shorter = SymbolParser.parseSymbol(symbols[1]);
                 if (longer != null && shorter != null) {
                     return new RebiddableSecondSuit(longer, shorter);
                 }
@@ -153,45 +145,7 @@ public final class InferenceParser {
             return new StoppersInSuits(SuitSetParser.lookupSuitSet(remainder), false);
         case "partial_stoppers":
             return new StoppersInSuits(SuitSetParser.lookupSuitSet(remainder), true);
-        default:
-            break;
-        }
-        {
-            RangeOf rng = InferenceParser.parseRange(str.trim());
-            if (rng != null) {
-                if (rng.of.equalsIgnoreCase("hcp")) {
-                    return new HCPRange(PointRange.between(rng.min, rng.max));
-                }
-                if (rng.of.equalsIgnoreCase("tpts")) {
-                    return new TotalPointsRange(PointRange.between(rng.min, rng.max));
-                }
-                {
-                    Symbol sym = SymbolParser.parseSymbol(rng.of);
-                    if (sym != null) {
-                        return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
-                    }
-                }
-                {
-                    Matcher m = InferenceParser.PATT_SPECIFIC_CARDS.matcher(rng.of);
-                    if (m.matches()) {
-                        int top = Integer.parseInt(m.group(1));
-                        String suit = m.group(2);
-                        Symbol sym = SymbolParser.parseSymbol(suit);
-                        if (sym == null) {
-                            return null;
-                        }
-                        return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
-                    }
-                }
-            }
-        }
-        {
-            Inference i = InferenceParser.makeTPtsRange(str.trim());
-            if (i != null) {
-                return i;
-            }
-        }
-        {
+        case "prefer": {
             Matcher m = InferenceParser.PATT_PREF.matcher(str.trim());
             if (m.matches()) {
                 Symbol sym1 = SymbolParser.parseSymbol(m.group(1).trim());
@@ -202,6 +156,46 @@ public final class InferenceParser {
                     }
                 }
             }
+            break;
+        }
+        default: {
+            {
+                RangeOf rng = InferenceParser.parseRange(str.trim());
+                if (rng != null) {
+                    if (rng.of.equalsIgnoreCase("hcp")) {
+                        return new HCPRange(PointRange.between(rng.min, rng.max));
+                    }
+                    if (rng.of.equalsIgnoreCase("tpts")) {
+                        return new TotalPointsRange(PointRange.between(rng.min, rng.max));
+                    }
+                    {
+                        Symbol sym = SymbolParser.parseSymbol(rng.of);
+                        if (sym != null) {
+                            return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
+                        }
+                    }
+                    {
+                        Matcher m = InferenceParser.PATT_SPECIFIC_CARDS.matcher(rng.of);
+                        if (m.matches()) {
+                            int top = Integer.parseInt(m.group(1));
+                            String suit = m.group(2);
+                            Symbol sym = SymbolParser.parseSymbol(suit);
+                            if (sym == null) {
+                                return null;
+                            }
+                            return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
+                        }
+                    }
+                }
+            }
+            {
+                Inference i = InferenceParser.makeTPtsRange(str.trim());
+                if (i != null) {
+                    return i;
+                }
+            }
+            break;
+        }
         }
         throw new IllegalArgumentException("unknown inference: '" + str + "'");
     }
@@ -244,16 +238,16 @@ public final class InferenceParser {
         } else {
             dir = 0;
         }
-    
+
         if (!m.containsKey(str)) {
             return null;
         }
-    
+
         Integer pts = m.get(str);
         if (dir > 0) {
             return PointRange.between(pts, null);
         }
-    
+
         Integer maxPts = null;
         for (var e : m.entrySet()) {
             int nextMax = e.getValue() - 1;
@@ -261,15 +255,15 @@ public final class InferenceParser {
                 maxPts = nextMax;
             }
         }
-    
+
         if (dir < 0) {
             pts = null;
         }
-    
+
         if (maxPts == null) {
             return PointRange.between(pts, null);
         }
-    
+
         return PointRange.between(pts, maxPts);
     }
 
@@ -282,7 +276,7 @@ public final class InferenceParser {
         if (m.matches()) {
             return new RangeOf(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)), m.group(3).trim());
         }
-    
+
         m = InferenceParser.PATT_MAX.matcher(str);
         if (m.matches()) {
             return new RangeOf(null, Integer.parseInt(m.group(1)), m.group(2).trim());
