@@ -55,6 +55,7 @@ public final class GeneralityParser {
         }
         case "i":
         case "partner":
+            Position position = Position.getPosition(tag);
             if (remainder.startsWith("bid")) {
                 String[] rem = SplitUtil.split(remainder.substring(3), "promising", 2);
                 SuitLengthRange range;
@@ -70,12 +71,11 @@ public final class GeneralityParser {
                 }
                 Symbol symbol = SymbolParser.parseSymbol(rem[0]);
                 if (symbol != null) {
-                    return new BidSuitGenerality(symbol, Position.getPosition(tag), range);
+                    return new BidSuitGenerality(symbol, position, range);
                 }
                 break;
             }
             if (remainder.startsWith("made_bid")) {
-                int position = tag.equals("i") ? 4 : 2;
                 return new MadeBid(position, remainder.substring(8).trim());
             }
             break;

@@ -17,6 +17,17 @@ public enum Position {
         return name;
     }
     
+    public Position getOpposite() {
+        switch(this) {
+        case ME: return PARTNER;
+        case PARTNER: return ME;
+        case LHO: return RHO;
+        case RHO: return LHO;
+        default:
+            throw new IllegalStateException();
+        }
+    }
+    
     public static Position getPosition(String name) {
         switch(name.toUpperCase()) {
         case "I":

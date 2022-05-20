@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import bbidder.Generality;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.SuitTable;
 import bbidder.TaggedAuction;
 import bbidder.utils.MyStream;
@@ -11,9 +12,9 @@ import bbidder.utils.MyStream;
 public final class MadeBid extends Generality {
     public static final String NAME = "made_bid";
     private final String tag;
-    private final int position;
+    private final Position position;
 
-    public MadeBid(int position, String tag) {
+    public MadeBid(Position position, String tag) {
         super();
         this.position = position;
         this.tag = tag;
@@ -27,7 +28,16 @@ public final class MadeBid extends Generality {
     @Override
     public boolean test(Players players, TaggedAuction bidList) {
         var bids = bidList.getBids();
-        for (int i = bids.size() - position; i >= 0; i -= 4) {
+        int start;
+        switch(position) {
+        case ME: start = bids.size() - 4; break;
+        case LHO: start = bids.size() - 3; break;
+        case PARTNER: start = bids.size() - 2; break;
+        case RHO: start = bids.size() - 1; break;
+        default:
+            throw new IllegalStateException();
+        }
+        for (int i = start; i >= 0; i -= 4) {
             if (bids.get(i).tags.contains(tag)) {
                 return true;
             }
@@ -52,24 +62,9 @@ public final class MadeBid extends Generality {
         return Objects.equals(tag, other.tag) && Objects.equals(position, other.position);
     }
 
-    public String getPosName() {
-        switch (position) {
-        case 4:
-            return "i";
-        case 1:
-            return "rho";
-        case 2:
-            return "partner";
-        case 3:
-            return "lho";
-        default:
-            throw new IllegalStateException();
-        }
-    }
-
     @Override
     public String toString() {
-        return getPosName() + " " + NAME + " " + tag;
+        return position + " " + NAME + " " + tag;
     }
 
 }
