@@ -3,6 +3,7 @@ package bbidder.suitsets;
 import java.util.OptionalInt;
 
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.SuitSet;
 import bbidder.SuitTable;
 import bbidder.utils.MyStream;
@@ -14,7 +15,7 @@ public final class TheirSuits extends SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        OptionalInt lhoSuits = players.lho.infSummary.getBidSuits();
+        OptionalInt lhoSuits = players.getPlayer(Position.LHO).infSummary.getBidSuits();
         OptionalInt rhoSuits = players.rho.infSummary.getBidSuits();
         if (!lhoSuits.isPresent() || !rhoSuits.isPresent()) {
             return 0;

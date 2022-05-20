@@ -30,7 +30,7 @@ public final class UnbidSuitGenerality extends Generality {
         int suit = symbol.getResolvedStrain();
         OptionalInt meSuits = players.getPlayer(Position.ME).infSummary.getBidSuits();
         OptionalInt partnerSuits = players.getPlayer(Position.PARTNER).infSummary.getBidSuits();
-        OptionalInt lhoSuits = players.lho.infSummary.getBidSuits();
+        OptionalInt lhoSuits = players.getPlayer(Position.LHO).infSummary.getBidSuits();
         OptionalInt rhoSuits = players.rho.infSummary.getBidSuits();
         if (!meSuits.isPresent() || !partnerSuits.isPresent() || !lhoSuits.isPresent() || !rhoSuits.isPresent()) {
             return false;

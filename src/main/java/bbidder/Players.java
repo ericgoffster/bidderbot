@@ -3,7 +3,7 @@ package bbidder;
 import java.util.OptionalInt;
 
 public final class Players {
-    public final Player lho;
+    private final Player lho;
     private final Player partner;
     public final Player rho;
     private final Player me;
