@@ -31,6 +31,7 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		        1N 2♣
 		        2♠ 4♥;
 		
+		[[Invite slam in ${M}]]
 		3OM => slaminv+, 4M;
 		    test AJx Axxx Axx Axx:
 		        1N 2♣
@@ -39,26 +40,31 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		        1N 2♣
 		        2♠ 3♥;
 		
+		[[Invite game with 4 ${OM}]]
 		2OM => inv, 4♠, 7- fit H;
 		    test AJxx Axx xxx xxx:
 		        1N 2♣
 		        2♥ 2♠;
 		
+		[[Invite game in NT]]
 		2N => inv, 7- fit M;
 		    test AJx Axx xxxx xxx:
 		        1N 2♣
 		        2♥ 2N;
 		
+		[[Bid game in NT]]
 		3N => gf, 7- fit M;
 		    test AJxx AQx xxx xxx:
 		        1N 2♣
 		        2♥ 3N;
 		
+		[[Bid a new 5 card minor]]
 		3m => gf+, 5+m, 7- fit M;
 		    test AJx AQx AQxxx xx:
 		        1N 2♣
 		        2♥ 3♦;
 		
+		[[Quantitative invite]]
 		4N => slaminv, 7- fit M;
 		    test AJxx AQx AQx xxx:
 		        1N 2♣
