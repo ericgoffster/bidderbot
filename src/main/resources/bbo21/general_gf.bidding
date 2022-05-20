@@ -5,12 +5,65 @@
 # H = ♥
 # S = ♠
 
-[[If already in a game force, just keep supporting]]
-[gf+, 8+ fit_established M] NJM:<4N => always;
+[[Establish major fit]]
+[gf+, 7- fit_established M, i_bid_suit M] NJM:<4N => 8+ fit m;
+ 
+[[Establish major fit]]
+[gf+, 7- fit_established M, partner_bid_suit M] NJM:<4N => 8+ fit M;
+    test Axx Qxxx xxx xxx:
+        2C 2D
+        2N 3♣
+        3♥ 4H;
+    test Qxxx Axx xxx xxx:
+        2C 2D
+        2N 3♣
+        3♠ 4S;
+    test Axx Axxx xxx xxx:
+        2N 3♣
+        3♥ 4H;
+    test Axxx Axx xxx xxx:
+        2N 3♣
+        3♠ 4S;
+
+[[Establish minor fit]]
+[gf+, 7- fit_established m, i_bid_suit m] NJm:<3N => 8+ fit m;
+
+[[Establish minor fit]]
+[gf+, 7- fit_established m, partner_bid_suit m] NJm:<3N => 8+ fit m;
+
+[[Rebid second suit]]
+[gf+, i_am_two_suited x y] NJy:<3N => rebiddable_2nd x y;
+    test AKxxx xx Axxxx x:
+        1S 2C
+        2D 2N
+        3D;
+
+[[Rebid suit]]
+[gf+, i_bid_suit y] NJy:<3N => rebiddable y;
+    test AKxxxx xxx Axx x:
+        1S 2C
+        2S 2N
+        3S;
+
+[[Secondary support]]
+[gf+, partner_bid_suit y, 6- fit_established y] NJy:<3N => max y, 7 fit y;
+    test AQxxx Axx xx Axx:
+        1S 2H
+        2S 3C
+        3H;
+
+[[Shrug NT]]
+[gf+] NJN:<4C => partial_stoppers unstopped;
+    test xx Axxx Axx Axxx:
+        1S 2C
+        2S 2N;
     test Ax Axxx AKxxx Ax:
         1D 1S
         2H 3H
-        4H;
+        3N;
+
+[[Just keep supporting]]
+[gf+, 8+ fit_established M] NJM:<4N => always;
     test AQxx AJxx Ax xxx:
         1N 4♦ 
         4♥;
@@ -34,57 +87,11 @@
     test AQxxx x Axx Axxx:
         1S 3N
         4S;
-  
-[[If already in a game force, establish fit]]
-[gf+, i_bid_suit M] NJM:<4N => 8+ fit m;
- 
-[[If already in a game force, establish fit]]
-[gf+, partner_bid_suit M] NJM:<4N => 8+ fit M;
-    test Axx Qxxx xxx xxx:
-        2C 2D
-        2N 3♣
-        3♥ 4H;
-    test Qxxx Axx xxx xxx:
-        2C 2D
-        2N 3♣
-        3♠ 4S;
-    test Axx Axxx xxx xxx:
-        2N 3♣
-        3♥ 4H;
-    test Axxx Axx xxx xxx:
-        2N 3♣
-        3♠ 4S;
 
+[[Just keep supporting]]
 [gf+, 8+ fit_established m] NJm:<3N => always;
-[gf+, i_bid_suit m] NJm:<3N => 8+ fit m;
-[gf+, partner_bid_suit m] NJm:<3N => 8+ fit m;
 
-
-[[rebid second suit]]
-[gf+, i_am_two_suited x y] NJy:<3N => rebiddable_2nd x y;
-    test AKxxx xx Axxxx x:
-        1S 2C
-        2D 2N
-        3D;
-
-[[Rebid suit]]
-[gf+, i_bid_suit y] NJy:<3N => rebiddable y;
-    test AKxxxx xxx Axx x:
-        1S 2C
-        2S 2N
-        3S;
-
-[gf+] NJN:<4C => partial_stoppers unstopped;
-    test xx Axxx Axx Axxx:
-        1S 2C
-        2S 2N;
-
-[gf+, partner_bid_suit y, 6- fit_established y] NJy:<3N => max y, 7 fit y;
-    test AQxxx xx Axx Axx:
-        1S 2D
-        2S 3C
-        3D;
-
+[[Ran out of bids]]
 [gf+, we_are_three_suited, unbid_suit x] NJx:<3N => always;
     test Kx xxx Ax AQxxxx:
         1C 1S
