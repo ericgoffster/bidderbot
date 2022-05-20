@@ -141,13 +141,19 @@
         1♣ 1♦
         1♥ 1♠;
 
-        
+[[No bid matches, pass any fit]]
 [] ?y P => fit y;
     test xxx xxxxxx xxx x:
         1N 2D
         2♥ P;
-[] ?x NJy => fit y;
+
+[[No bid matches, bid cheapest known fit]]
+[fit_established y] ?x NJy => always;
     test AKx Axxx Axx Qxx:
         1N 2D
         2N 3D
         3H;
+
+[[No bid matches, bid a fit]]
+[] ?x NJy => fit y;
+
