@@ -8,12 +8,12 @@
 #
 # Pass NT 
 #
-[] 3N P => gf-;
+[] 3N P => gf;
     test Axx Kxx Kxx Qxxx:
         1D 2N
         3N P;
 
-[] 2N P => inv-;
+[] 2N P => inv;
     test xxx Kxxx Kxx xxx:
         1C 1H
         2N P;

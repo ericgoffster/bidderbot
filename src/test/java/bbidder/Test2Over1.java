@@ -17,8 +17,12 @@ public class Test2Over1 {
     public static BiddingSystem bs;
 
     public void showSummary(String label, InfSummary summary) {
+        ShapeStats[] stats = summary.shape.getStats();
         System.err.println(label);
-        System.err.println("   " + summary.shape);
+        System.err.println("   Spades: " + stats[3]);
+        System.err.println("   Hearts: " + stats[2]);
+        System.err.println("   Diamonds: " + stats[1]);
+        System.err.println("   Clubs: " + stats[0]);
         System.err.println("   total points: " + summary.tpts);
         System.err.println("   stoppers: " + summary.stoppers);
         System.err.println("   partial: " + summary.partialStoppers);
