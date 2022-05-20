@@ -63,7 +63,7 @@ public final class GeneralityParser {
                     return null;
                 }
             } else {
-                range = SuitLengthRange.atLeast(3);
+                range = SuitLengthRange.atLeast(0);
             }
             Symbol symbol = SymbolParser.parseSymbol(rem[0]);
             if (symbol != null) {
@@ -82,7 +82,7 @@ public final class GeneralityParser {
                     return null;
                 }
             } else {
-                range = SuitLengthRange.atLeast(3);
+                range = SuitLengthRange.atLeast(0);
             }
             Symbol symbol = SymbolParser.parseSymbol(rem[0]);
             if (symbol != null) {
