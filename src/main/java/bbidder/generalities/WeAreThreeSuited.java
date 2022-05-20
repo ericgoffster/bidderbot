@@ -2,10 +2,10 @@ package bbidder.generalities;
 
 import java.util.OptionalInt;
 
-import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
+import bbidder.TaggedAuction;
 import bbidder.utils.BitUtil;
 import bbidder.utils.MyStream;
 
@@ -23,7 +23,7 @@ public final class WeAreThreeSuited extends Generality {
     }
 
     @Override
-    public boolean test(Players players, Auction bidList) {
+    public boolean test(Players players, TaggedAuction bidList) {
         OptionalInt mySuits = players.me.infSummary.getBidSuits();
         OptionalInt pSuits = players.partner.infSummary.getBidSuits();
         if (mySuits.isEmpty() || pSuits.isEmpty()) {

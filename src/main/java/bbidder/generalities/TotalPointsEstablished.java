@@ -3,11 +3,11 @@ package bbidder.generalities;
 import java.util.Objects;
 import java.util.OptionalInt;
 
-import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.PointRange;
 import bbidder.SuitTable;
+import bbidder.TaggedAuction;
 import bbidder.utils.MyStream;
 
 public final class TotalPointsEstablished extends Generality {
@@ -24,7 +24,7 @@ public final class TotalPointsEstablished extends Generality {
     }
 
     @Override
-    public boolean test(Players players, Auction bidList) {
+    public boolean test(Players players, TaggedAuction bidList) {
         OptionalInt ourCombinedMinLength = players.ourCombinedMinTpts();
         if (!ourCombinedMinLength.isPresent()) {
             return false;

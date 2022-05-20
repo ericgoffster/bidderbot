@@ -175,19 +175,19 @@ public final class BidPattern {
      * At this point, the bid pattern's suit has already been
      * resolved, so we just need to determine the level.
      * 
-     * @param auction
+     * @param taggedAuction
      *            The current list of bids.
-     * @param hint
+     * @param bid
      *            The bid I am trying to match.
      * @return The bid associated with the given pattern. Null, if not valid.
      */
-    public Optional<Bid> resolveToBid(Auction auction, Bid hint) {
+    public Optional<Bid> resolveToBid(TaggedAuction taggedAuction, TaggedBid bid) {
         if (simpleBid != null) {
             return Optional.of(simpleBid);
         }
         int strain = symbol.getResolvedStrain();
         if (jumpLevel != null) {
-            Contract contract = auction.getContract();
+            Contract contract = taggedAuction.getContract();
             Bid b = contract.getBid(jumpLevel, strain);
             if (level != null && b.level != level.intValue()) {
                 return Optional.empty();
@@ -198,11 +198,11 @@ public final class BidPattern {
             return Optional.of(b);
         }
         if (level == null) {
-            if (hint == null) {
+            if (bid == null) {
                 throw new IllegalArgumentException("anonymous level not allowed");
             }
-            Contract contract = auction.getContract();
-            Bid b = Bid.valueOf(hint.level, strain);
+            Contract contract = taggedAuction.getContract();
+            Bid b = Bid.valueOf(bid.bid.level, strain);
             if (level != null && b.level != level.intValue()) {
                 return Optional.empty();
             }

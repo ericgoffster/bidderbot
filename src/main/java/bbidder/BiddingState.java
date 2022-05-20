@@ -15,10 +15,10 @@ import bbidder.utils.DebugUtils;
 public final class BiddingState {
     public final BiddingSystem we;
     public final BiddingSystem they;
-    public final Auction bidding;
+    public final TaggedAuction bidding;
     public final Players players;
 
-    private BiddingState(BiddingSystem we, BiddingSystem they, Auction bidding, Players players) {
+    private BiddingState(BiddingSystem we, BiddingSystem they, TaggedAuction bidding, Players players) {
         super();
         this.we = we;
         this.they = they;
@@ -47,7 +47,7 @@ public final class BiddingState {
     public BiddingState(BiddingSystem we, BiddingSystem they) {
         this.we = we;
         this.they = they;
-        this.bidding = Auction.create(List.of());
+        this.bidding = TaggedAuction.create(List.of());
         this.players = new Players();
     }
 
@@ -69,14 +69,14 @@ public final class BiddingState {
      * @return A new Bidding State with the given bid made.
      */
     public BiddingState withBid(Bid bid) {
-        IBoundInference inference = we.getInference(bidding, players, bid).inf;
-        IBoundInference newInf = AndBoundInf.create(inference, players.me.inf);
+        TaggedBoundInference inference = we.getInference(bidding, players, bid);
+        IBoundInference newInf = AndBoundInf.create(inference.inf, players.me.inf);
         InfSummary newSummary = newInf.getSummary();
         InfSummary oldSummary = players.me.infSummary;
         if (!oldSummary.isEmpty() && newSummary.isEmpty()) {
             DebugUtils.breakpointNoBid(bidding, bid, players);
         }
-        return new BiddingState(we, they, bidding.withBidAdded(bid), players.withNewMe(new Player(newInf, newSummary))).rotate(1);
+        return new BiddingState(we, they, bidding.withBidAdded(new TaggedBid(bid, inference.tags)), players.withNewMe(new Player(newInf, newSummary))).rotate(1);
     }
 
     /**

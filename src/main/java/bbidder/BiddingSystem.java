@@ -57,21 +57,21 @@ public final class BiddingSystem {
     }
 
     /**
-     * @param auction
+     * @param bidding
      *            The list of bids
      * @param players
      *            The players
      * @return A list of all possible bids given the list of bids.
      */
-    public List<PossibleBid> getPossibleBids(Auction auction, Players players) {
-        DebugUtils.breakpointGetPossibleBid(auction, players);
+    public List<PossibleBid> getPossibleBids(TaggedAuction bidding, Players players) {
+        DebugUtils.breakpointGetPossibleBid(bidding, players);
         List<PossibleBid> l = new ArrayList<>();
         Set<Bid> matched = new HashSet<>();
         inferences.forEach(rsbi -> {
             List<PossibleBid> tmp = new ArrayList<>();
             rsbi.inferences.forEach(i -> {
-                i.bids.getMatch(auction, players, matched).ifPresent(match -> {
-                    DebugUtils.breakpointGetPossibleBid(auction, players, match, i);
+                i.bids.getMatch(bidding, players, matched).ifPresent(match -> {
+                    DebugUtils.breakpointGetPossibleBid(bidding, players, match, i);
                     tmp.add(new PossibleBid(i, match));
                     matched.add(match.bid);
                 });
@@ -91,7 +91,7 @@ public final class BiddingSystem {
             l.addAll(tmp);
         });
         if (l.isEmpty()) {
-            DebugUtils.breakpointGetPossibleBid(auction, players, l);
+            DebugUtils.breakpointGetPossibleBid(bidding, players, l);
         }
         return l;
     }
@@ -99,7 +99,7 @@ public final class BiddingSystem {
     /**
      * Retrieve the bid for a hand starting from the list of bids and likely hands for everyone.
      * 
-     * @param auction
+     * @param bidding
      *            The auction
      * @param players
      *            Likely hands fro everyone
@@ -107,8 +107,8 @@ public final class BiddingSystem {
      *            The hand to evaluate
      * @return The right bid
      */
-    public BidSource getBid(Auction auction, Players players, Hand hand) {
-        List<PossibleBid> possible = getPossibleBids(auction, players);
+    public BidSource getBid(TaggedAuction bidding, Players players, Hand hand) {
+        List<PossibleBid> possible = getPossibleBids(bidding, players);
         return possible.stream()
                 .filter(i -> i.inf.inferences.bind(players).test(hand))
                 .findFirst()
@@ -127,7 +127,7 @@ public final class BiddingSystem {
      *            The last bid
      * @return The inference The inference from the bid.
      */
-    public TaggedBoundInference getInference(Auction auction, Players players, Bid lastBid) {
+    public TaggedBoundInference getInference(TaggedAuction auction, Players players, Bid lastBid) {
         IBoundInference positive = ConstBoundInference.F;
         IBoundInference negative = ConstBoundInference.F;
         List<PossibleBid> possible = getPossibleBids(auction, players);

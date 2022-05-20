@@ -2,10 +2,10 @@ package bbidder.generalities;
 
 import java.util.Objects;
 
-import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
+import bbidder.TaggedAuction;
 import bbidder.utils.MyStream;
 
 public final class ConstGenerality extends Generality {
@@ -24,7 +24,7 @@ public final class ConstGenerality extends Generality {
     }
 
     @Override
-    public boolean test(Players players, Auction bidList) {
+    public boolean test(Players players, TaggedAuction bidList) {
         return true;
     }
 

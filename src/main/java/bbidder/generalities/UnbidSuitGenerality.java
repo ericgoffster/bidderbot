@@ -3,11 +3,11 @@ package bbidder.generalities;
 import java.util.Objects;
 import java.util.OptionalInt;
 
-import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.Symbol;
+import bbidder.TaggedAuction;
 import bbidder.utils.MyStream;
 
 public final class UnbidSuitGenerality extends Generality {
@@ -25,7 +25,7 @@ public final class UnbidSuitGenerality extends Generality {
     }
 
     @Override
-    public boolean test(Players players, Auction bidList) {
+    public boolean test(Players players, TaggedAuction bidList) {
         int suit = symbol.getResolvedStrain();
         OptionalInt meSuits = players.me.infSummary.getBidSuits();
         OptionalInt partnerSuits = players.partner.infSummary.getBidSuits();

@@ -5,12 +5,12 @@ import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.Set;
 
-import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
+import bbidder.TaggedAuction;
 import bbidder.utils.MyStream;
 
 public final class BestFitEstablished extends Generality {
@@ -30,7 +30,7 @@ public final class BestFitEstablished extends Generality {
     }
 
     @Override
-    public boolean test(Players players, Auction bidList) {
+    public boolean test(Players players, TaggedAuction bidList) {
         return getBestSuits(players).contains(symbol.getResolvedStrain());
     }
 

@@ -128,7 +128,7 @@ public final class BidPatternList {
      * Given a bid pattern list where the suits have already been bound,
      * return the last bid of the pattern in the context of an auction.
      * 
-     * @param auction
+     * @param bidding
      *            The auction to match.
      * @param players
      *            the players
@@ -136,8 +136,8 @@ public final class BidPatternList {
      *            the set of matched bids
      * @return The last bid. null if there was no match.
      */
-    public Optional<TaggedBid> getMatch(Auction auction, Players players, Set<Bid> matched) {
-        List<Bid> theBids = auction.getBids();
+    public Optional<TaggedBid> getMatch(TaggedAuction bidding, Players players, Set<Bid> matched) {
+        List<TaggedBid> theBids = bidding.getBids();
         int wildSize = theBids.size() - bids.size() + 2;
         int wildPos = positionOfWild();
         if (wildPos < 0 && theBids.size() != bids.size() - 1) {
@@ -149,22 +149,22 @@ public final class BidPatternList {
         int i = 0;
         for (BidPattern pattern : bids.subList(0, bids.size() - 1)) {
             if (pattern.generality != null) {
-                if (!pattern.generality.test(players, auction)) {
+                if (!pattern.generality.test(players, bidding)) {
                     return Optional.empty();
                 }
                 i += wildSize;
             } else {
-                Bid bid = theBids.get(i);
-                Optional<Bid> expected = pattern.resolveToBid(auction.firstN(i), bid);
-                if (bid != expected.orElse(null)) {
+                TaggedBid bid = theBids.get(i);
+                Optional<Bid> expected = pattern.resolveToBid(bidding.firstN(i), bid);
+                if (bid.bid != expected.orElse(null)) {
                     return Optional.empty();
                 }
                 i++;
             }
         }
         BidPattern lastBid = bids.get(bids.size() - 1);
-        return lastBid.resolveToBid(auction, null).flatMap(nextBid -> {
-            if (!auction.isLegalBid(nextBid)) {
+        return lastBid.resolveToBid(bidding, null).flatMap(nextBid -> {
+            if (!bidding.isLegalBid(nextBid)) {
                 return Optional.empty();
             }
             if (matched.contains(nextBid) && lastBid.isNonConventional) {

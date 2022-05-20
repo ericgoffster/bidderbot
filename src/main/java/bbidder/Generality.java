@@ -12,7 +12,7 @@ import bbidder.utils.MyStream;
  * @author goffster
  *
  */
-public abstract class Generality implements BiPredicate<Players, Auction> {
+public abstract class Generality implements BiPredicate<Players, TaggedAuction> {
     public abstract MyStream<Context> resolveSuits(SuitTable suitTable);
 
     public final class Context {
