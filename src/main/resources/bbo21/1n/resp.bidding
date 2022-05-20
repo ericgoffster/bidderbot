@@ -43,13 +43,10 @@ common [] 1N:"nt_opener" {
 	    test xxx Axxxx Qxx xx:
 	        1N 2♦;
 	
-	[[Bid 3D with a singleton diamond and 444 in the others]]
-	3♦:"splinter" => gf+, 1-♦, 4+♣, 4♥, 4♠;
+	[[Bid 3${x} with a singleton ${x} and 444 in the others]]
+	3x:"splinter":>3C => gf+, 1-x, 4+w, 4+y, 4+z;
 	    test Axxx Axxx x Axxx:
 	        1N 3♦;
-	
-	[[Bid 3${M} with a singleton ${M} and 444 in the others]]
-	3M:"splinter" => gf+, 1-M, 4+♣, 4+♦, 4OM;
 	    test Axxx x Axxx Axxx:
 	        1N 3♥;
 	    test x Axxx Axxx Axxx:
