@@ -1,0 +1,102 @@
+# General bids
+
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
+[[Pass any playable fit]]
+[fit_established y] ?y P => always;
+
+[[Pass any playable fit]]
+[i_bid_suit y] ?y P => fit y;
+    test xxx xxxxxx xxx x:
+        1N 2D
+        2♥ P;
+
+[[Pass any playable fit]]
+[partner_bid_suit y] ?y P => fit y;
+
+[[Return to best known fit]]
+[bestfit8_established y] ?x NJy => always;
+    test AKx Axxx Axx Qxx:
+        1N 2D
+        2N 3D
+        3H;
+    test AQX KJxx xx AJxx:
+        1N 3♣
+        3♦;
+
+[[Return to best known fit]]
+[bestfit8_established y] ?N NJy => always;
+    test AQX KJxx AJxx xx:
+        1N 2N
+        3♣;
+
+[[Pass NT]]
+[] ?N P => always;
+    test xxx xxxx xxx xxx:
+        1N P;
+    test xxx xxxx xxx xxx:
+        2N P;
+    test Qxx Kx xxxxx Qxx:
+        1♣ 1♦
+        1N P;
+
+[[Pass partners rebiddable suit]]
+[partner_bid_suit y at_least 6] ?y P => always;
+    test xxx x xxxxx xxxx:
+        2H P;
+    test xxx Qxxx Axxxx x:
+        1C 1D
+        3C P;
+    test xxx Qxxx Axxxx x:
+        1C 1D
+        2C P;
+
+[[Pass preference]]
+[partner_is_two_suited x y] ?x P => prefer x to y;
+    test AQxxx x xxxx xxx:
+        1H 1S
+        2C P;             
+    test xxx AQxxx xx xxx:
+        1D 1H
+        1S P;             
+
+[[Bid 1N with minimum values]]
+1x 1y
+1z 1N => min;
+    test Qxx Kx xxxxx Qxx:
+        1♣ 1♦
+        1♥ 1N;
+
+[[Show preference]]
+[partner_is_two_suited x y] ?y NJx => prefer x to y;
+    test AQxxx xx xxxx xx:
+        1H 1S
+        2C 2H;
+        
+[[Return to best known pseudo fit]]
+[bestfit_established y] ?x NJy => always;
+    test AQxx xx AJx Axxx:
+        1N 2♦
+        2♥;
+    test AQx xxx AJx Axxx:
+        1N 2♥
+        2♠;
+    test AQJx Qx AKxx AKx:
+        2C 2D
+        2N 3♦
+        3♥;
+    test Qx AQJx AKxx AKx:
+        2C 2D
+        2N 3♥
+        3♠;
+    test xx AQJx AKxx AKx:
+        2N 3♥
+        3♠;
+    test AQJx xx AKxx AKx:
+        2N 3♦
+        3♥;
+        
+# You are doomed

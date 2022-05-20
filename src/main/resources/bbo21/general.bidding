@@ -118,28 +118,6 @@
         1C 1H
         2C 2D;
 
-[[Pass preference at 2 level with minimum values]]
-[partner_is_two_suited x y] NJx:<2N P => min, prefer x to y;
-    test AQxxx x xxxx xxx:
-        1H 1S
-        2C P;             
-    test xxx AQxxx xx xxx:
-        1D 1H
-        1S P;             
-
-[[Bid 1N with minimum values]]
-1x 1y
-1z 1N => min;
-    test Qxx Kx xxxxx Qxx:
-        1♣ 1♦
-        1♥ 1N;
-
-[[Show preference at 2 level]]
-[partner_is_two_suited x y] 2x => min, prefer x to y;
-    test AQxxx xx xxxx xx:
-        1H 1S
-        2C 2H;
-
 [[Bid 4th suit if in a bind with game forcing values]]
 [we_are_three_suited, unbid_suit x] NJx:<3N => gf+;
     test AKxxxx x xxx AKx:
@@ -152,80 +130,3 @@
     test xxx x AKxxxx AKx:
         1♣ 1♦
         1♥ 1♠;
-
-[[Pass partners rebiddable suit with nothing more to say]]
-[partner_bid_suit y at_least 6] 3y P => inv;
-    test xxx Qxxx Axxxx x:
-        1C 1D
-        3C P;
-
-[[Pass partners rebiddable suit with nothing more to say]]
-[partner_bid_suit y at_least 6] 2y P => min;
-    test xxx Qxxx Axxxx x:
-        1C 1D
-        2C P;
-
-[[Pass 1N with minimum values]]
-[] 1N P => min;
-    test Qxx Kx xxxxx Qxx:
-        1♣ 1♦
-        1N P;
-        
-[[No bid matches, pass any fit]]
-[fit_established y] ?y P => always;
-[i_bid_suit y] ?y P => fit y;
-    test xxx xxxxxx xxx x:
-        1N 2D
-        2♥ P;
-[partner_bid_suit y] ?y P => fit y;
-
-[[No bid matches, Return to best known fit]]
-[bestfit8_established y] ?x NJy => always;
-    test AKx Axxx Axx Qxx:
-        1N 2D
-        2N 3D
-        3H;
-    test AQX KJxx xx AJxx:
-        1N 3♣
-        3♦;
-
-[[No bid matches, Return to best known fit]]
-[bestfit8_established y] ?N NJy => always;
-    test AQX KJxx AJxx xx:
-        1N 2N
-        3♣;
-
-[[No bid matches, No fit, pass NT]]
-[] ?N P => always;
-    test xxx xxxx xxx xxx:
-        1N P;
-    test xxx xxxx xxx xxx:
-        2N P;
-
-[[Pass partners rebiddable suit with nothing more to say]]
-[partner_bid_suit y at_least 6] ?y P => always;
-    test xxx x xxxxx xxxx:
-        2H P;
-        
-[[No bid matches, Return to best known pseudo fit]]
-[bestfit_established y] ?x NJy => always;
-    test AQxx xx AJx Axxx:
-        1N 2♦
-        2♥;
-    test AQx xxx AJx Axxx:
-        1N 2♥
-        2♠;
-    test AQJx Qx AKxx AKx:
-        2C 2D
-        2N 3♦
-        3♥;
-    test Qx AQJx AKxx AKx:
-        2C 2D
-        2N 3♥
-        3♠;
-    test xx AQJx AKxx AKx:
-        2N 3♥
-        3♠;
-    test AQJx xx AKxx AKx:
-        2N 3♦
-        3♥;
