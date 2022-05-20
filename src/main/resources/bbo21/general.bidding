@@ -5,6 +5,7 @@
 # H = ♥
 # S = ♠
 
+# bidding NT
 [[Bid 3N with gf values]]
 [] 3N => gf, partial_stoppers unstopped;
     test Axx AQxx Qxx Qxx:
@@ -26,6 +27,76 @@
         1♣ 1♦
         1♥ 2N;
 
+# passing NT
+[[Pass 3N with gf values]]
+[] 3N P => gf;
+    test Axx Kxx Kxx Qxxx:
+        1D 2N
+        3N P;
+
+[[Pass 2N with inv values]]
+[] 2N P => inv;
+    test xxx Kxxx Kxx xxx:
+        1C 1H
+        2N P;
+
+# Bid fit
+[[Bid to 3 level with established minor suit fit and invitational values]]
+[fit_established m] 3m => inv;
+
+[[Self support minor at 3 level with invitational values]]
+[i_bid_suit m] 3m => inv, fit m;
+
+[[Support minor at 3 level with invitational values]]
+[partner_bid_suit m] 3m => inv, fit m;
+    test x Kxxx xx AQxxxx:
+        1C 1H
+        1N 3C;
+    test Axx Kxxx x Kxxxx:
+        1♣ 1♥
+        1♠ 3♣;
+        
+[[Bid to 2 level with established minor suit fit and minimum values]]
+[fit_established m] 2m => min;
+
+[[Self Support minor at 2 level with minimum values]]
+[i_bid_suit m] 2m => min, fit m;
+
+[[Support minor at 2 level with minimum values]]
+[partner_bid_suit m] 2m => min, fit m;
+    test Ax xxxx xx Axxxx:
+        1C 1H
+        1N 2C;
+    test Qxx Kxxx x Qxxxx:
+        1♣ 1♥
+        1♠ 2♣;
+
+# Pass fit
+[[Pass established fit at 3 level with invitational values]]
+[fit_established m] 3m P => inv;
+    test xxx Qxx Axxxx xx:
+        1C 1D
+        3D P;
+
+[[Pass minor at 3 level with self support and invitational values]]
+[i_bid_suit m] 3m P => inv, fit m;
+
+[[Pass minor at 3 level with support and invitational values]]
+[partner_bid_suit m] 3m P => inv, fit m;
+
+[[Pass established fit at 2 level with minimum values]]
+[fit_established m] 2m P => min;
+    test xxx Qxx Axxxx xx:
+        1C 1D
+        2D P;
+        
+[[Pass minor at 2 level with self support and minimum values]]
+[i_bid_suit m] 2m P => min, fit m;
+
+[[Pass minor at 2 level with support and minimum values]]
+[partner_bid_suit m] 2m P => min, fit m;
+
+# Rebid suit
 [[Rebid minor at 3 level 3N with invitational values]]
 [i_bid_suit m] 3m => inv, rebiddable m;
     test Kxx xxx AQxxxx x:
@@ -41,38 +112,11 @@
         1♣ 1♦
         2♣;
 
-[fit_established m] 3m => inv;
-[[Support minor at 3 level with invitational values and a fit]]
-[i_bid_suit m] 3m => inv, fit m;
-[partner_bid_suit m] 3m => inv, fit m;
-    test x Kxxx xx AQxxxx:
-        1C 1H
-        1N 3C;
-    test Axx Kxxx x Kxxxx:
-        1♣ 1♥
-        1♠ 3♣;
-
 [[Bid a new suit below 3N with game forcing values]]
 [i_bid_suit y, unbid_suit x] NJx:<3N:nonconventional => gf+, 4+ x;
     test xx AQxxx Qxxx Ax:
         1C 1H
         2C 2D;
-
-[fit_established m] 2m => min;
-[[Support minor at 2 level with minimum values and a fit]]
-[i_bid_suit m] 2m => min, fit m;
-[partner_bid_suit m] 2m => min, fit m;
-    test Ax xxxx xx Axxxx:
-        1C 1H
-        1N 2C;
-    test Qxx Kxxx x Qxxxx:
-        1♣ 1♥
-        1♠ 2♣;
-
-[fit_established m] 3m P => inv;
-    test xxx Qxx Axxxx xx:
-        1C 1D
-        3D P;
 
 [[Pass preference at 2 level with minimum values]]
 [partner_is_two_suited x y] NJx:<2N P => min, prefer x to y;
@@ -109,18 +153,6 @@
         1♣ 1♦
         1♥ 1♠;
 
-[[Pass 3N with gf values]]
-[] 3N P => gf;
-    test Axx Kxx Kxx Qxxx:
-        1D 2N
-        3N P;
-
-[[Pass 2N with inv values]]
-[] 2N P => inv;
-    test xxx Kxxx Kxx xxx:
-        1C 1H
-        2N P;
-
 [[Pass partners rebiddable suit with nothing more to say]]
 [partner_bid_suit y at_least 6] 3y P => inv;
     test xxx Qxxx Axxxx x:
@@ -133,18 +165,6 @@
         1C 1D
         2C P;
 
-[[Pass minor at 3 level with invitational values]]
-[i_bid_suit m] 3m P => inv, fit m;
-[partner_bid_suit m] 3m P => inv, fit m;
-
-[fit_established m] 2m P => min;
-    test xxx Qxx Axxxx xx:
-        1C 1D
-        2D P;
-[[Pass minor at 2 level with minimum values]]
-[i_bid_suit m] 2m P => min, fit m;
-[partner_bid_suit m] 2m P => min, fit m;
-    
 [[Pass 1N with minimum values]]
 [] 1N P => min;
     test Qxx Kx xxxxx Qxx:
