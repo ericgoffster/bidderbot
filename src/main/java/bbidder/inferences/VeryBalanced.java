@@ -17,6 +17,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class VeryBalanced extends Inference {
+    public static final String NAME = "superbalanced";
     public static final VeryBalanced VERY_BALANCED = new VeryBalanced();
 
     private VeryBalanced() {
@@ -34,7 +35,7 @@ public final class VeryBalanced extends Inference {
 
     @Override
     public String toString() {
-        return "superbalanced";
+        return NAME;
     }
 
     @Override

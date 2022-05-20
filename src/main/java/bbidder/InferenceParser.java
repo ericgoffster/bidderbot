@@ -56,9 +56,6 @@ public final class InferenceParser {
                 return AndInference.create(parseInference(str1), parseInference(str2));
             }
         }
-        if (str.trim().equals("")) {
-            return TrueInference.T;
-        }
         String tag;
         String remainder;
         {
@@ -71,41 +68,46 @@ public final class InferenceParser {
             remainder = s.substring(p).trim();
         }
         switch (tag) {
-        case "balanced":
+        case "":
+            if (remainder.equals("")) {
+                return TrueInference.T;
+            }
+            break;
+        case Balanced.NAME:
             if (remainder.equals("")) {
                 return Balanced.BALANCED;
             }
             break;
-        case "superbalanced":
+        case VeryBalanced.NAME:
             if (remainder.equals("")) {
                 return VeryBalanced.VERY_BALANCED;
             }
             break;
-        case "unbalanced":
+        case UnBalanced.NAME:
             if (remainder.equals("")) {
                 return UnBalanced.UNBALANCED;
             }
             break;
-        case "always":
+        case Always.NAME:
             if (remainder.equals("")) {
                 return Always.ALWAYS;
             }
             break;
-        case "fit": {
+        case FitInSuit.NAME: {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {
                 return new FitInSuit(sym);
             }
             break;
         }
-        case "rebiddable": {
+        case Rebiddable.NAME: {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {
                 return new Rebiddable(sym);
             }
             break;
         }
-        case "longest_or_equal": {
+        case LongestOrEqual.NAME: {
             String[] parts = SplitUtil.split(remainder, "\\s*among\\s*");
             if (parts.length == 2) {
                 Symbol sym = SymbolParser.parseSymbol(parts[0]);
@@ -120,7 +122,7 @@ public final class InferenceParser {
             }
             break;
         }
-        case "rebiddable_2nd": {
+        case RebiddableSecondSuit.NAME: {
             String[] symbols = SplitUtil.split(remainder, "\\s+", 2);
             if (symbols.length == 2) {
                 Symbol longer = SymbolParser.parseSymbol(symbols[0]);
@@ -131,11 +133,11 @@ public final class InferenceParser {
             }
             break;
         }
-        case "stoppers":
+        case StoppersInSuits.FULL:
             return new StoppersInSuits(SuitSetParser.lookupSuitSet(remainder), false);
-        case "partial_stoppers":
+        case StoppersInSuits.PARTIAL:
             return new StoppersInSuits(SuitSetParser.lookupSuitSet(remainder), true);
-        case "prefer": {
+        case Preference.NAME: {
             String[] parts = SplitUtil.split(remainder, "\\s*to\\s*");
             if (parts.length == 2) {
                 Symbol sym1 = SymbolParser.parseSymbol(parts[0]);
@@ -150,7 +152,7 @@ public final class InferenceParser {
         }
         default: {
             {
-                RangeOf rng = InferenceParser.parseRange(str.trim());
+                RangeOf rng = parseRange(str.trim());
                 if (rng != null) {
                     if (rng.of.equalsIgnoreCase("hcp")) {
                         return new HCPRange(PointRange.between(rng.min, rng.max));
@@ -165,7 +167,7 @@ public final class InferenceParser {
                         }
                     }
                     {
-                        Matcher m = InferenceParser.PATT_SPECIFIC_CARDS.matcher(rng.of);
+                        Matcher m = PATT_SPECIFIC_CARDS.matcher(rng.of);
                         if (m.matches()) {
                             int top = Integer.parseInt(m.group(1));
                             String suit = m.group(2);
@@ -179,7 +181,7 @@ public final class InferenceParser {
                 }
             }
             {
-                Inference i = InferenceParser.makeTPtsRange(str.trim());
+                Inference i = makeTPtsRange(str.trim());
                 if (i != null) {
                     return i;
                 }
@@ -210,7 +212,7 @@ public final class InferenceParser {
             int higher = h.getAsInt();
             return new CombinedTotalPointsRange(PointRange.between(lower, higher));
         }
-        PointRange createRange = InferenceParser.createTPtsRange(str, InferenceParser.POINT_RANGES);
+        PointRange createRange = createTPtsRange(str, POINT_RANGES);
         if (createRange == null) {
             return null;
         }
@@ -262,20 +264,20 @@ public final class InferenceParser {
             return null;
         }
         Matcher m;
-        m = InferenceParser.PATT_MIN_TO_MAX.matcher(str);
+        m = PATT_MIN_TO_MAX.matcher(str);
         if (m.matches()) {
             return new RangeOf(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)), m.group(3).trim());
         }
 
-        m = InferenceParser.PATT_MAX.matcher(str);
+        m = PATT_MAX.matcher(str);
         if (m.matches()) {
             return new RangeOf(null, Integer.parseInt(m.group(1)), m.group(2).trim());
         }
-        m = InferenceParser.PATT_MIN.matcher(str);
+        m = PATT_MIN.matcher(str);
         if (m.matches()) {
             return new RangeOf(Integer.parseInt(m.group(1)), null, m.group(2).trim());
         }
-        m = InferenceParser.PATT_EXACT.matcher(str);
+        m = PATT_EXACT.matcher(str);
         if (m.matches()) {
             return new RangeOf(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(1)), m.group(2).trim());
         }

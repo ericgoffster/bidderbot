@@ -21,6 +21,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class FitInSuit extends Inference {
+    public static final String NAME = "fit";
     private final Symbol symbol;
 
     public FitInSuit(Symbol suit) {
@@ -41,7 +42,7 @@ public final class FitInSuit extends Inference {
 
     @Override
     public String toString() {
-        return "fit " + symbol;
+        return NAME + " " + symbol;
     }
 
     @Override

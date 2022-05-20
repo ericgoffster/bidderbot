@@ -16,6 +16,7 @@ import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 public final class Rebiddable extends Inference {
+    public static final String NAME = "rebiddable";
     private final Symbol symbol;
 
     public Rebiddable(Symbol suit) {
@@ -46,7 +47,7 @@ public final class Rebiddable extends Inference {
 
     @Override
     public String toString() {
-        return "rebiddable " + symbol;
+        return NAME + " " + symbol;
     }
 
     @Override

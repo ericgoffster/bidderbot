@@ -11,8 +11,9 @@ import bbidder.utils.BitUtil;
 
 public final class WeAreThreeSuited extends Generality {
     public static final String NAME = "we_are_three_suited";
+    public static final WeAreThreeSuited WE_R_3_SUITED = new WeAreThreeSuited();
 
-    public WeAreThreeSuited() {
+    private WeAreThreeSuited() {
         super();
     }
 

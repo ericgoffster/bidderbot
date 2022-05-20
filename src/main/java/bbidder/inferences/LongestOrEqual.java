@@ -19,6 +19,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class LongestOrEqual extends Inference {
+    public static final String NAME = "longest_or_equal";
     private final Symbol suit;
     private final SuitSet among;
 
@@ -42,7 +43,7 @@ public final class LongestOrEqual extends Inference {
 
     @Override
     public String toString() {
-        return "longest_or_equal " + suit + (among == null ? "" : " among " + among);
+        return NAME + " " + suit + (among == null ? "" : " among " + among);
     }
 
     @Override

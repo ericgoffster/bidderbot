@@ -15,6 +15,7 @@ import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 public final class Preference extends Inference {
+    public static final String NAME = "prefer";
     private final Symbol longer;
     private final Symbol shorter;
 
@@ -39,7 +40,7 @@ public final class Preference extends Inference {
 
     @Override
     public String toString() {
-        return "prefer " + longer + " to " + shorter;
+        return NAME + " " + longer + " to " + shorter;
     }
 
     @Override

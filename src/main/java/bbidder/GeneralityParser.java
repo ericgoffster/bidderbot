@@ -77,7 +77,7 @@ public final class GeneralityParser {
         }
         case WeAreThreeSuited.NAME: {
             if (remainder.equals("")) {
-                return new WeAreThreeSuited();
+                return WeAreThreeSuited.WE_R_3_SUITED;
             }
             break;
         }

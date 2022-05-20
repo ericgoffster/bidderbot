@@ -20,6 +20,8 @@ import bbidder.utils.BitUtil;
  *
  */
 public final class StoppersInSuits extends Inference {
+    public static final String FULL = "stoppers";
+    public static final String PARTIAL = "partial_stoppers";
     private final SuitSet suits;
     private final boolean partial;
 
@@ -46,7 +48,7 @@ public final class StoppersInSuits extends Inference {
 
     @Override
     public String toString() {
-        return (partial ? "partial_stoppers " : "stoppers ") + suits;
+        return (partial ? PARTIAL : FULL) + " " + suits;
     }
 
     @Override

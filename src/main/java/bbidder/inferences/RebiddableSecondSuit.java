@@ -16,6 +16,7 @@ import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 public final class RebiddableSecondSuit extends Inference {
+    public static final String NAME = "rebiddable_2nd";
     private final Symbol longer;
     private final Symbol shorter;
 
@@ -52,7 +53,7 @@ public final class RebiddableSecondSuit extends Inference {
 
     @Override
     public String toString() {
-        return "rebiddable_2nd " + longer + " " + shorter;
+        return NAME + " " + longer + " " + shorter;
     }
 
     @Override
