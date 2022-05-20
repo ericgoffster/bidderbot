@@ -112,14 +112,14 @@ public final class BidPatternParser implements Parser<BidPattern> {
                     if (rng != null) {
                         inp.advanceWhite();
                         if (inp.readKeyword(FitEstablished.NAME.toUpperCase())) {
-                            String sy = inp.readToken(ch -> true);
+                            String sy = inp.readToken(ch -> ch != ':');
                             Symbol sym = SymbolParser.parseSymbol(sy);
                             if (sym != null) {
                                 p = p.addGenerality(new FitEstablished(sym, SuitLengthRange.between(rng.min, rng.max)));
                                 break;
                             }
                         } else if (inp.readKeyword(BestFitEstablished.NAME.toUpperCase())) {
-                            String sy = inp.readToken(ch -> true);
+                            String sy = inp.readToken(ch -> ch != ':');
                             Symbol sym = SymbolParser.parseSymbol(sy);
                             if (sym != null) {
                                 p = p.addGenerality(new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max)));
@@ -133,6 +133,8 @@ public final class BidPatternParser implements Parser<BidPattern> {
                     PointRange createRange = CombinedPointsRangeParser.parseCombinedTPtsRange(rest.trim());
                     if (createRange != null) {
                         p = p.addGenerality(new TotalPointsEstablished(createRange));
+                    } else {
+                        throw new IllegalArgumentException();
                     }
                     break;
                 }
