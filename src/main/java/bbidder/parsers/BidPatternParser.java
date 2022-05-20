@@ -1,8 +1,6 @@
 package bbidder.parsers;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 import bbidder.Bid;
 import bbidder.BidPattern;
@@ -52,9 +50,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
                 if (inp.ch == '"') {
                     inp.advance();
                 }
-                Set<String> tags = new HashSet<>(p.tags);
-                tags.add(tag.toString());
-                p = p.withTags(tags);
+                p = p.withTags(p.tags.addTag(tag.toString()));
             } else {
                 throw new IllegalArgumentException("bad modifier");
             }

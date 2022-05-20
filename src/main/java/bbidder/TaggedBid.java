@@ -1,13 +1,12 @@
 package bbidder;
 
 import java.util.Objects;
-import java.util.Set;
 
 public final class TaggedBid {
     public final Bid bid;
-    public final Set<String> tags;
+    public final TagSet tags;
 
-    public TaggedBid(Bid bid, Set<String> tags) {
+    public TaggedBid(Bid bid, TagSet tags) {
         super();
         this.bid = bid;
         this.tags = tags;

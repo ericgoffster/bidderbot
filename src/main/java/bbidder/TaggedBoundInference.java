@@ -1,13 +1,12 @@
 package bbidder;
 
 import java.util.Objects;
-import java.util.Set;
 
 public final class TaggedBoundInference {
     public final IBoundInference inf;
-    public final Set<String> tags;
+    public final TagSet tags;
 
-    public TaggedBoundInference(IBoundInference inf, Set<String> tags) {
+    public TaggedBoundInference(IBoundInference inf, TagSet tags) {
         super();
         this.inf = inf;
         this.tags = tags;

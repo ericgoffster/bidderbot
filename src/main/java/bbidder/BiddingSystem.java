@@ -8,10 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.ConstBoundInference;
@@ -118,7 +116,7 @@ public final class BiddingSystem {
                 .filter(i -> i.inf.inferences.bind(players).test(hand))
                 .findFirst()
                 .map(i -> new BidSource(i, possible))
-                .orElse(new BidSource(new PossibleBid(null, new TaggedBid(Bid.P, Set.of("nobid"))), possible));
+                .orElse(new BidSource(new PossibleBid(null, new TaggedBid(Bid.P, TagSet.EMPTY.addTag("nobid"))), possible));
     }
 
     /**
@@ -136,15 +134,15 @@ public final class BiddingSystem {
         IBoundInference positive = ConstBoundInference.F;
         IBoundInference negative = ConstBoundInference.F;
         List<PossibleBid> possible = getPossibleBids(auction, players);
-        Set<String> tags = null;
+        TagSet tags = null;
         for (var i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.bid.equals(lastBid)) {
                 positive = OrBoundInf.create(positive, AndBoundInf.create(inf, negative.negate()));
                 if (tags == null) {
-                    tags = new HashSet<>(i.bid.tags);
+                    tags = i.bid.tags;
                 } else {
-                    tags.retainAll(i.bid.tags);
+                    tags = tags.and(i.bid.tags);
                 }
             }
             negative = OrBoundInf.create(negative, inf);
@@ -155,7 +153,7 @@ public final class BiddingSystem {
         }
 
         if (tags == null) {
-            tags = Set.of();
+            tags = TagSet.EMPTY;
         }
 
         // Pass means... Nothing else works, this will get smarter.
