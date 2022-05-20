@@ -79,6 +79,12 @@
         1S 2C
         2S 2N;
 
+[gf+, partner_bid_suit y, 6- fit_established y] NJy:<3N => max y, 7 fit y;
+    test AQxxx xx Axx Axx:
+        1S 2D
+        2S 3C
+        3D;
+
 [gf+, we_are_three_suited, unbid_suit x] NJx:<3N => always;
     test Kx xxx Ax AQxxxx:
         1C 1S
