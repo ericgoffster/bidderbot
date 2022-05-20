@@ -101,7 +101,7 @@ public final class BidPattern {
 
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
-            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL,
+            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, null, null, null, TagSet.EMPTY, false, Seats.ALL,
                     false, null, null);
         }
         return new BidPattern(false, null, null, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
