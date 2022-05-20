@@ -12,6 +12,7 @@ import bbidder.inferences.CombinedTotalPointsRange;
 import bbidder.inferences.FitInSuit;
 import bbidder.inferences.HCPRange;
 import bbidder.inferences.LongestOrEqual;
+import bbidder.inferences.MaxHCPRange;
 import bbidder.inferences.MaxSuitRange;
 import bbidder.inferences.Preference;
 import bbidder.inferences.Rebiddable;
@@ -151,9 +152,13 @@ public final class InferenceParser {
                 RangeOf rng = RangeParser.parseRange(str.trim());
                 if (rng != null) {
                     if (rng.maxPromised) {
-                        Symbol sym = SymbolParser.parseSymbol(rng.of);
-                        if (sym != null) {
-                            return new MaxSuitRange(sym);
+                        if (rng.of.equalsIgnoreCase(HCPRange.HCP)) {
+                            return MaxHCPRange.MAX_HCP_RANGE;
+                        } else {
+                            Symbol sym = SymbolParser.parseSymbol(rng.of);
+                            if (sym != null) {
+                                return new MaxSuitRange(sym);
+                            }
                         }
                     } else if (rng.of.equalsIgnoreCase(HCPRange.HCP)) {
                         return new HCPRange(PointRange.between(rng.min, rng.max));

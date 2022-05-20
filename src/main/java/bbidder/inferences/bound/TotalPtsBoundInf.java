@@ -1,6 +1,7 @@
 package bbidder.inferences.bound;
 
 import java.util.Objects;
+import java.util.OptionalInt;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
@@ -18,7 +19,11 @@ public final class TotalPtsBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return InfSummary.ALL.withTotalPoints(r);
+        OptionalInt max = r.highest();
+        if (!max.isPresent()) {
+            return InfSummary.NONE;
+        }
+        return InfSummary.ALL.withTotalPoints(r).withHcp(PointRange.atMost(max.getAsInt()));
     }
 
     @Override

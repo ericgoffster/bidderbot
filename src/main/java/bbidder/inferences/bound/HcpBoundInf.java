@@ -48,8 +48,7 @@ public final class HcpBoundInf implements IBoundInference {
         if (!lowest.isPresent()) {
             return InfSummary.NONE;
         }
-        PointRange atLeast = PointRange.atLeast(lowest.getAsInt());
-        return InfSummary.ALL.withTotalPoints(atLeast).withHcp(atLeast);
+        return InfSummary.ALL.withTotalPoints(PointRange.atLeast(lowest.getAsInt())).withHcp(r);
     }
 
     private HcpBoundInf(PointRange r) {
