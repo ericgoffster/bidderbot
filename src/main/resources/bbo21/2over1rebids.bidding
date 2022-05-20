@@ -5,31 +5,31 @@
 # H = ♥
 # S = ♠
 
-1x NJy:>2C
+1x:seats12 NJy:>1N
 2z:<2x => 4+z;
     test AQxxx Axxx xx Kx:
         1S 2D
         2H;
 
-1x NJy:>2C
+1x:seats12 NJy:>1N
 NJz:>2x => 16+ tpts, 4+z;
     test Axxx AQxxx Ax Kx:
         1H 2D
         2S;
 
-1x NJy:>2C
+1x:seats12 NJy:>1N
 NJz:>2N => 16+ tpts, 4+z;
     test Ax AQxxx Ax Kxxx:
         1H 2D
         3C;
 
-1x NJy:>2C
+1x:seats12 NJy:>1N
 NJy => 4+y;
     test Ax AQxxx Axxx Kx:
         1H 2D
         3D;
 
-1x NJy:>2C
+1x:seats12 NJy:>1N
 2x => always;
     test Axx AQxxx xxx Kx:
         1H 2D
