@@ -9,9 +9,11 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.function.Consumer;
 
 import bbidder.BidInference;
+import bbidder.BidPattern;
 import bbidder.BidPatternList;
 import bbidder.BiddingSystem;
 import bbidder.BiddingTest;
@@ -79,6 +81,7 @@ public final class BiddingSystemParser {
             Consumer<BiddingTest> tests, BidPatternList prefix) {
         int lineno = 0;
         BidInference last = null;
+        Stack<BidPatternList> commons = new Stack<>();
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             StringBuilder sb = new StringBuilder();
             for (;;) {
@@ -93,13 +96,33 @@ public final class BiddingSystemParser {
                 }
                 sb.append(" " + ln);
                 ln = sb.toString().trim();
-                if (ln.endsWith(";")) {
+                String here = where + ":" + lineno;
+                if (ln.endsWith("{")) {
+                    ln = ln.substring(0, ln.length() - 1);
+                    String[] comm = SplitUtil.split(ln, "\\s+", 2);
+                    if (comm.length == 2 && comm[0].equalsIgnoreCase("common")) {
+                        commons.push(prefix);
+                        for(BidPattern pattern: BidPatternList.valueOf(comm[1]).getBids()) {
+                            prefix = prefix.withBidAdded(pattern);
+                        }
+                    } else {
+                        reportErrors.accept(new ParseException(here, new IllegalArgumentException("unrecognized block")));
+                    }
+                    sb.setLength(0);
+                } else if (ln.endsWith("}")) {
+                    ln = ln.substring(0, ln.length() - 1).trim();
+                    if (ln.equals("")) {
+                        prefix = commons.pop();
+                    } else {
+                        reportErrors.accept(new ParseException(here, new IllegalArgumentException("unrecognized end block")));
+                    }
+                    sb.setLength(0);
+                } else if (ln.endsWith(";")) {
                     ln = ln.substring(0, ln.length() - 1);
                     String[] comm = SplitUtil.split(ln, "\\s+", 2);
                     if (comm.length == 2 && comm[0].equalsIgnoreCase("include")) {
                         load(where, resolveUrlSpec(where, comm[1]), reportErrors, inferences, tests, prefix);
                     } else {
-                        String here = where + ":" + lineno;
                         if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
                             try {
                                 tests.accept(BiddingTest.valueOf(last, false, here, comm[1]));
