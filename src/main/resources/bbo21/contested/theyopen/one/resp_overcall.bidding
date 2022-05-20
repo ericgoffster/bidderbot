@@ -2,8 +2,11 @@ common (1w) 1x {
     2w:"cuebid" => 11+ tpts, 3+x, 10+ hcp;
 	    test xx AQxx AJxx xxx:
 	        (1C) 1H 2C;
-    3x => 6-8 tpts, 4+x;
-	    test xx AQxx xxxx xxx:
+    3w:"cuebid" => 7-9 tpts, 4+x;
+	    test xx AQxx Qxxx xxx:
+	        (1C) 1H 3C;
+    3x => 0-9 tpts, 4+x;
+	    test xx Axxx xxxx xxx:
 	        (1C) 1H 3H;
     2x => 6-10 tpts, 3+x;
 	    test xx AQx xxxxx xxx:
