@@ -6,7 +6,7 @@
 # S = ♠
 
 common 1x 1M 1N {
-	2y:"cb_stayman":<2z => slaminv, 5+ M;
+	2m:"cb_stayman":<2z => slaminv, 5+ M;
 	    test Axx AQJxx Ax Axx:
 	        1C 1H
 	        1N 2D;
@@ -14,7 +14,7 @@ common 1x 1M 1N {
 	        1H 1S
 	        1N 2C;
 	
-	2y:"cb_stayman":<2z => 12+ tpts, 5 M;
+	2m:"cb_stayman":<2z => 12+ tpts, 5 M;
 	    test Axx AQJxx xx xxx:
 	        1C 1H
 	        1N 2D;
@@ -22,7 +22,7 @@ common 1x 1M 1N {
 	        1H 1S
 	        1N 2C;
 	
-	3z:"cb_stayman":>3x:<4H => min, 6+ z;
+	3m:"cb_stayman":<4H => min, 6+ m;
 	    test x xxxx AQxxxx xx:
 	        1C 1H
 	        1N 3D;
