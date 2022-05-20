@@ -33,7 +33,7 @@
 
 # Bid playable fits
 [[Return to best known fit]]
-[bestfit8_established y] NJy => always;
+[fit_established y] NJy => always;
     test AQX KJxx AJxx xx:
         1N 2N
         3♣;
