@@ -118,14 +118,11 @@ public final class BidPattern {
     /**
      * @param suitTable
      *            The symbols
-     * @return A list of contexts representing the symbol bound to actual values
+     * @return A stream of contexts with all symbols in the pattern bound to symbols.
      */
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
         if (generality != null) {
             return generality.resolveSuits(suitTable).map(e -> createWild(e.getGenerality()).new Context(e.suitTable));
-        }
-        if (simpleBid != null) {
-            return MyStream.of(new Context(suitTable));
         }
         return MyStream.of(new Context(suitTable)).flatMap(e -> {
             BidPattern bidPattern = e.getBidPattern();
@@ -143,6 +140,9 @@ public final class BidPattern {
             return MyStream.of(e);
         }).flatMap(e -> {
             BidPattern bidPattern = e.getBidPattern();
+            if (bidPattern.symbol == null) {
+                return MyStream.of(bidPattern.new Context(e.suitTable));
+            }
             return bidPattern.symbol.resolveSuits(suitTable)
                     .flatMap(e2 -> MyStream.of(bidPattern.withSymbol(e2.getSymbol()))
                             .flatMap(bidPattern2 -> MyStream.of(bidPattern2.new Context(e2.suitTable))));
