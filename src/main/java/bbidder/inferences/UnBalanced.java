@@ -18,7 +18,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
  */
 public final class UnBalanced extends Inference {
     
-    private static final UnBalanced UNBALANCED = new UnBalanced();
+    public static final UnBalanced UNBALANCED = new UnBalanced();
 
     private UnBalanced() {
     }
@@ -31,17 +31,6 @@ public final class UnBalanced extends Inference {
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {
         return Stream.of(new Context(suitTable));
-    }
-
-    public static UnBalanced valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (str.toLowerCase().equals("unbalanced")) {
-            return UNBALANCED;
-        }
-        return null;
     }
 
     @Override

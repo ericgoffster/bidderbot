@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
+import bbidder.InferenceParser;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitSetParser;
@@ -20,10 +21,10 @@ public class LongestOrEqualTest {
     @Test
     public void testValueOf() {
         Symbol sym = new ConstSymbol(3);
-        assertEquals(new LongestOrEqual(sym, ALL), LongestOrEqual.valueOf("longest_or_equal s among all"));
-        assertEquals(new LongestOrEqual(sym, ALL), LongestOrEqual.valueOf("   longest_or_equal    s    among    all    "));
-        assertEquals(new LongestOrEqual(sym, null), LongestOrEqual.valueOf("longest_or_equal s"));
-        assertEquals(new LongestOrEqual(sym, null), LongestOrEqual.valueOf("    longest_or_equal  s    "));
+        assertEquals(new LongestOrEqual(sym, ALL), InferenceParser.parseLongestOrEq("longest_or_equal s among all"));
+        assertEquals(new LongestOrEqual(sym, ALL), InferenceParser.parseLongestOrEq("   longest_or_equal    s    among    all    "));
+        assertEquals(new LongestOrEqual(sym, null), InferenceParser.parseLongestOrEq("longest_or_equal s"));
+        assertEquals(new LongestOrEqual(sym, null), InferenceParser.parseLongestOrEq("    longest_or_equal  s    "));
     }
 
     @Test

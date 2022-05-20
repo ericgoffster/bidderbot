@@ -12,7 +12,6 @@ import bbidder.PointRange;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.TotalPtsBoundInf;
-import bbidder.utils.SplitUtil;
 
 /**
  * Represents the inference of the total points in a suit.
@@ -22,7 +21,7 @@ import bbidder.utils.SplitUtil;
  */
 public final class CombinedTotalPointsRange extends Inference {
     private static final Map<String, Integer> STD = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35, "grand", 37);
-    private final PointRange rng;
+    public final PointRange rng;
 
     public CombinedTotalPointsRange(Integer min, Integer max) {
         super();
@@ -47,40 +46,6 @@ public final class CombinedTotalPointsRange extends Inference {
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {
         return Stream.of(new Context(suitTable));
-    }
-
-    public static CombinedTotalPointsRange makeRange(String str) {
-        String[] parts = SplitUtil.split(str, "-", 2);
-        if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
-            CombinedTotalPointsRange rlow = makeRange(parts[0]);
-            CombinedTotalPointsRange rhigh = makeRange(parts[1]);
-            if (rlow == null || rhigh == null) {
-                return null;
-            }
-            OptionalInt l = rlow.rng.lowest();
-            OptionalInt h = rhigh.rng.highest();
-            if (!l.isPresent()) {
-                return new CombinedTotalPointsRange(PointRange.NONE);
-            }
-            if (!h.isPresent()) {
-                return new CombinedTotalPointsRange(PointRange.NONE);
-            }
-            int lower = l.getAsInt();
-            int higher = h.getAsInt();
-            return new CombinedTotalPointsRange(PointRange.between(lower, higher));
-        }
-        PointRange createRange = createRange(str);
-        if (createRange == null) {
-            return null;
-        }
-        return new CombinedTotalPointsRange(createRange);
-    }
-
-    public static CombinedTotalPointsRange valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        return makeRange(str.trim());
     }
 
     @Override
@@ -145,7 +110,7 @@ public final class CombinedTotalPointsRange extends Inference {
         return PointRange.between(pts, maxPts);
     }
 
-    private static PointRange createRange(String str) {
+    public static PointRange createRange(String str) {
         return createRange(str, STD);
     }
 }

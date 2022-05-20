@@ -8,12 +8,10 @@ import bbidder.Inference;
 import bbidder.Players;
 import bbidder.StopperSet;
 import bbidder.SuitSet;
-import bbidder.SuitSetParser;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.PartialStoppersBoundInf;
 import bbidder.inferences.bound.StoppersBoundInf;
 import bbidder.utils.BitUtil;
-import bbidder.utils.SplitUtil;
 
 /**
  * Represents the inference of the stoppers in a suit set.
@@ -29,17 +27,6 @@ public final class StoppersInSuits extends Inference {
         super();
         this.suits = suits;
         this.partial = partial;
-    }
-
-    public static Inference valueOf(String str) {
-        String[] parts = SplitUtil.split(str, "\\s+", 2);
-        if (parts.length == 2 && parts[0].equalsIgnoreCase("stoppers")) {
-            return new StoppersInSuits(SuitSetParser.lookupSuitSet(parts[1]), false);
-        }
-        if (parts.length == 2 && parts[0].equalsIgnoreCase("partial_stoppers")) {
-            return new StoppersInSuits(SuitSetParser.lookupSuitSet(parts[1]), true);
-        }
-        return null;
     }
 
     @Override

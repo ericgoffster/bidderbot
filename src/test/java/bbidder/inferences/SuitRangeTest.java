@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
+import bbidder.InferenceParser;
 import bbidder.Players;
 import bbidder.Symbol;
 import bbidder.symbols.ConstSymbol;
@@ -15,7 +16,7 @@ public class SuitRangeTest {
     @Test
     public void testValueOf() {
         Symbol S = new ConstSymbol(3);
-        assertEquals(new SuitRange(S, 10, null), SuitRange.valueOf("10+ s"));
+        assertEquals(new SuitRange(S, 10, null), InferenceParser.parseSuitRange("10+ s"));
     }
 
     @Test

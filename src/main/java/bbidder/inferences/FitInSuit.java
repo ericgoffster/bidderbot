@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -13,7 +12,6 @@ import bbidder.ShapeSet;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -26,7 +24,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
 public final class FitInSuit extends Inference {
     private final Symbol symbol;
 
-    private static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
     public FitInSuit(Symbol suit) {
         super();
@@ -42,21 +40,6 @@ public final class FitInSuit extends Inference {
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable).map(e -> new FitInSuit(e.getSymbol()).new Context(e.suitTable));
-    }
-
-    public static Inference valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        Matcher m = PATT_FIT.matcher(str);
-        if (m.matches()) {
-            Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-            if (sym == null) {
-                return null;
-            }
-            return new FitInSuit(sym);
-        }
-        return null;
     }
 
     @Override

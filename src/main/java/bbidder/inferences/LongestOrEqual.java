@@ -8,9 +8,7 @@ import bbidder.Inference;
 import bbidder.Players;
 import bbidder.ShapeSet;
 import bbidder.SuitSet;
-import bbidder.SuitSetParser;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -40,30 +38,6 @@ public final class LongestOrEqual extends Inference {
     public Stream<Context> resolveSuits(SuitTable suitTable) {
         return suit.resolveSuits(suitTable)
                 .flatMap(e1 -> among.resolveSuits(e1.suitTable).map(e2 -> new LongestOrEqual(e1.getSymbol(), e2.getSuitSet()).new Context(e2.suitTable)));
-    }
-
-    public static LongestOrEqual valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (!str.toLowerCase().startsWith("longest_or_equal")) {
-            return null;
-        }
-        str = str.substring(16).trim();
-        int pos = str.indexOf("among");
-        if (pos >= 0) {
-            Symbol sym = SymbolParser.parseSymbol(str.substring(0, pos).trim());
-            if (sym == null) {
-                return null;
-            }
-            return new LongestOrEqual(sym, SuitSetParser.lookupSuitSet(str.substring(pos + 5).trim()));
-        }
-        Symbol sym = SymbolParser.parseSymbol(str);
-        if (sym == null) {
-            return null;
-        }
-        return new LongestOrEqual(sym, null);
     }
 
     @Override

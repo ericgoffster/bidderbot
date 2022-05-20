@@ -31,17 +31,6 @@ public final class Balanced extends Inference {
         return Stream.of(new Context(suitTable));
     }
 
-    public static Balanced valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (str.toLowerCase().equals("balanced")) {
-            return BALANCED;
-        }
-        return null;
-    }
-
     @Override
     public String toString() {
         return "balanced";

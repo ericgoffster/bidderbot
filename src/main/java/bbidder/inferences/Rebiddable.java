@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -14,14 +13,13 @@ import bbidder.ShapeSet;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 public final class Rebiddable extends Inference {
     private final Symbol symbol;
 
-    private static Pattern PATT_FIT = Pattern.compile("\\s*rebiddable\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    public static Pattern PATT_FIT = Pattern.compile("\\s*rebiddable\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
     public Rebiddable(Symbol suit) {
         super();
@@ -47,21 +45,6 @@ public final class Rebiddable extends Inference {
         int myMinLen = minLenInSuit.getAsInt();
         SuitLengthRange r = SuitLengthRange.atLeast(Math.max(myMinLen + 1, 6));
         return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(suit, r)));
-    }
-
-    public static Inference valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        Matcher m = PATT_FIT.matcher(str);
-        if (m.matches()) {
-            Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-            if (sym == null) {
-                return null;
-            }
-            return new Rebiddable(sym);
-        }
-        return null;
     }
 
     @Override

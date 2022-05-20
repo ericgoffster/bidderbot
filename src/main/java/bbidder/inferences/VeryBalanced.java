@@ -17,7 +17,7 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class VeryBalanced extends Inference {
-    private static final VeryBalanced VERY_BALANCED = new VeryBalanced();
+    public static final VeryBalanced VERY_BALANCED = new VeryBalanced();
 
     private VeryBalanced() {
     }
@@ -30,17 +30,6 @@ public final class VeryBalanced extends Inference {
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {
         return Stream.of(new Context(suitTable));
-    }
-
-    public static VeryBalanced valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (str.toLowerCase().equals("superbalanced")) {
-            return VERY_BALANCED;
-        }
-        return null;
     }
 
     @Override

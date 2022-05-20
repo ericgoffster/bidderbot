@@ -1,7 +1,6 @@
 package bbidder.inferences;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -12,7 +11,6 @@ import bbidder.NOfTop;
 import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
 
 /**
@@ -23,7 +21,7 @@ public final class SpecificCards extends Inference {
     private final CardsRange rng;
     private final int top;
 
-    private static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
+    public static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
     public SpecificCards(Symbol symbol, CardsRange rng, int top) {
         super();
@@ -45,26 +43,6 @@ public final class SpecificCards extends Inference {
 
     private static IBoundInference createBound(NOfTop spec) {
         return SpecificCardsBoundInf.create(spec);
-    }
-
-    public static Inference valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        RangeOf rng = RangeOf.valueOf(str);
-        if (rng != null) {
-            Matcher m = PATT.matcher(rng.of);
-            if (m.matches()) {
-                int top = Integer.parseInt(m.group(1));
-                String suit = m.group(2);
-                Symbol sym = SymbolParser.parseSymbol(suit);
-                if (sym == null) {
-                    return null;
-                }
-                return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
-            }
-        }
-        return null;
     }
 
     @Override

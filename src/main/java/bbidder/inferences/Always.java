@@ -28,17 +28,6 @@ public final class Always extends Inference {
         return Stream.of(new Context(suitTable));
     }
 
-    public static Always valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (str.toLowerCase().equals("always")) {
-            return new Always();
-        }
-        return null;
-    }
-
     @Override
     public String toString() {
         return "always";

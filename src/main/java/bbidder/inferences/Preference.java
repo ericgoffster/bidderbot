@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -13,7 +12,6 @@ import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -21,7 +19,7 @@ public final class Preference extends Inference {
     private final Symbol longer;
     private final Symbol shorter;
 
-    private static Pattern PATT_FIT = Pattern.compile("\\s*prefer\\s*(.*)\\s*to\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    public static Pattern PATT_FIT = Pattern.compile("\\s*prefer\\s*(.*)\\s*to\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
     public Preference(Symbol longer, Symbol shorter) {
         super();
@@ -40,25 +38,6 @@ public final class Preference extends Inference {
     public Stream<Context> resolveSuits(SuitTable suitTable) {
         return longer.resolveSuits(suitTable)
                 .flatMap(e1 -> shorter.resolveSuits(e1.suitTable).map(e2 -> new Preference(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));
-    }
-
-    public static Inference valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        Matcher m = PATT_FIT.matcher(str);
-        if (m.matches()) {
-            Symbol sym1 = SymbolParser.parseSymbol(m.group(1).trim());
-            if (sym1 == null) {
-                return null;
-            }
-            Symbol sym2 = SymbolParser.parseSymbol(m.group(2).trim());
-            if (sym2 == null) {
-                return null;
-            }
-            return new Preference(sym1, sym2);
-        }
-        return null;
     }
 
     @Override

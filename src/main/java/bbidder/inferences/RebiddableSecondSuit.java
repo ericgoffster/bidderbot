@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -14,7 +13,6 @@ import bbidder.ShapeSet;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -22,7 +20,7 @@ public final class RebiddableSecondSuit extends Inference {
     private final Symbol longer;
     private final Symbol shorter;
 
-    private static Pattern PATT_FIT = Pattern.compile("\\s*rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
+    public static Pattern PATT_FIT = Pattern.compile("\\s*rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
     public RebiddableSecondSuit(Symbol longer, Symbol shorter) {
         super();
@@ -53,22 +51,6 @@ public final class RebiddableSecondSuit extends Inference {
         SuitLengthRange r = SuitLengthRange.atLeast(Math.max(myMinLen + 1, 5));
         return ShapeBoundInf.create(
                 ShapeSet.create(shape -> shape.isSuitInRange(shorter, r) && shape.isLongerOrEqual(longer, (short)(1 << shorter))));
-    }
-
-    public static Inference valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        Matcher m = PATT_FIT.matcher(str);
-        if (m.matches()) {
-            Symbol longer = SymbolParser.parseSymbol(m.group(1).trim());
-            Symbol shorter = SymbolParser.parseSymbol(m.group(2).trim());
-            if (longer == null || shorter == null) {
-                return null;
-            }
-            return new RebiddableSecondSuit(longer, shorter);
-        }
-        return null;
     }
 
     @Override

@@ -7,17 +7,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
+import bbidder.InferenceParser;
 import bbidder.Players;
 
 public class CombinedTotalPointsRangeTest {
     @Test
     public void testValueOf() {
-        assertEquals(new CombinedTotalPointsRange(18, 21), CombinedTotalPointsRange.valueOf("min"));
-        assertEquals(new CombinedTotalPointsRange(22, 24), CombinedTotalPointsRange.valueOf("inv"));
-        assertEquals(new CombinedTotalPointsRange(25, 30), CombinedTotalPointsRange.valueOf("gf"));
-        assertEquals(new CombinedTotalPointsRange(31, 32), CombinedTotalPointsRange.valueOf("slaminv"));
-        assertEquals(new CombinedTotalPointsRange(33, 34), CombinedTotalPointsRange.valueOf("slam"));
-        assertEquals(new CombinedTotalPointsRange(37, null), CombinedTotalPointsRange.valueOf("grand"));
+        assertEquals(new CombinedTotalPointsRange(18, 21), InferenceParser.parseCombinedTPts("min"));
+        assertEquals(new CombinedTotalPointsRange(22, 24), InferenceParser.parseCombinedTPts("inv"));
+        assertEquals(new CombinedTotalPointsRange(25, 30), InferenceParser.parseCombinedTPts("gf"));
+        assertEquals(new CombinedTotalPointsRange(31, 32), InferenceParser.parseCombinedTPts("slaminv"));
+        assertEquals(new CombinedTotalPointsRange(33, 34), InferenceParser.parseCombinedTPts("slam"));
+        assertEquals(new CombinedTotalPointsRange(37, null), InferenceParser.parseCombinedTPts("grand"));
     }
 
     @Test

@@ -10,7 +10,6 @@ import bbidder.ShapeSet;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -53,22 +52,6 @@ public final class SuitRange extends Inference {
 
     private static IBoundInference createBound(int s, SuitLengthRange r) {
         return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
-    }
-
-    public static Inference valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        RangeOf rng = RangeOf.valueOf(str);
-        if (rng == null) {
-            return null;
-        }
-        Symbol sym = SymbolParser.parseSymbol(rng.of);
-        if (sym != null) {
-            return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
-        } else {
-            return null;
-        }
     }
 
     @Override

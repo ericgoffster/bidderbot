@@ -8,12 +8,13 @@ import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
+import bbidder.InferenceParser;
 import bbidder.Players;
 
 public class BalancedTest {
     @Test
     public void testValueOf() {
-        assertEquals(Balanced.BALANCED, Balanced.valueOf("balanced"));
+        assertEquals(Balanced.BALANCED, InferenceParser.parseBalanced("balanced"));
     }
 
     @Test

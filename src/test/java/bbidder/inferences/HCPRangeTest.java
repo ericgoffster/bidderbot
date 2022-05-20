@@ -7,18 +7,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
+import bbidder.InferenceParser;
 import bbidder.Players;
 
 public class HCPRangeTest {
     @Test
     public void testValueOf() {
-        assertEquals(new HCPRange(10, null), HCPRange.valueOf("10+ hcp"));
-        assertEquals(new HCPRange(10, null), HCPRange.valueOf("  10+  Hcp    "));
-        assertEquals(new HCPRange(null, 10), HCPRange.valueOf("10- hcp"));
-        assertEquals(new HCPRange(null, 10), HCPRange.valueOf("  10-  Hcp    "));
-        assertEquals(new HCPRange(8, 10), HCPRange.valueOf("8-10 hcp"));
-        assertEquals(new HCPRange(8, 10), HCPRange.valueOf("  8-10    Hcp    "));
-        assertEquals(new HCPRange(8, 8), HCPRange.valueOf("  8    Hcp    "));
+        assertEquals(new HCPRange(10, null), InferenceParser.parseHCPRange("10+ hcp"));
+        assertEquals(new HCPRange(10, null), InferenceParser.parseHCPRange("  10+  Hcp    "));
+        assertEquals(new HCPRange(null, 10), InferenceParser.parseHCPRange("10- hcp"));
+        assertEquals(new HCPRange(null, 10), InferenceParser.parseHCPRange("  10-  Hcp    "));
+        assertEquals(new HCPRange(8, 10), InferenceParser.parseHCPRange("8-10 hcp"));
+        assertEquals(new HCPRange(8, 10), InferenceParser.parseHCPRange("  8-10    Hcp    "));
+        assertEquals(new HCPRange(8, 8), InferenceParser.parseHCPRange("  8    Hcp    "));
     }
 
     @Test

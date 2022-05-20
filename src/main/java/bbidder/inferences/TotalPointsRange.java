@@ -39,18 +39,6 @@ public final class TotalPointsRange extends Inference {
         return Stream.of(new Context(suitTable));
     }
 
-    public static Inference valueOf(String str) {
-        RangeOf rng = RangeOf.valueOf(str);
-        if (rng == null) {
-            return null;
-        }
-        if (rng.of.equalsIgnoreCase("tpts")) {
-            return new TotalPointsRange(PointRange.between(rng.min, rng.max));
-        } else {
-            return null;
-        }
-    }
-
     @Override
     public String toString() {
         return rng + " tpts";
