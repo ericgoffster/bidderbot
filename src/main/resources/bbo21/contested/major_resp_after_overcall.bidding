@@ -21,7 +21,7 @@ common 1M (1z) {
 	        1♥ (1S) 2♣;
 
     X:"negative" => 7+ hcp, 4+ m, 4+ om;	
-	    test Axx xx Axxx Jxxx :
+	    test xxx xx Axxx AJxx :
 	        1♥ (1S) X;
     
 	1N => 6-10 hcp, stoppers z, partial_stoppers unbid, 7- fit M ;

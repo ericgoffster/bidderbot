@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.jupiter.api.Test;
 
 import bbidder.parsers.BiddingSystemParser;
+import bbidder.parsers.CombinedPointsRangeParser;
 
 public class Test2Over1 {
     public static BiddingSystem bs;
@@ -61,6 +62,8 @@ public class Test2Over1 {
                         System.err.println("Bidding: " + result.bids);
                         System.err.println(
                                 "You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
+                        int combined = test.hand.getTotalPoints(partnerSummary) + partnerSummary.minTotalPts().orElse(0);
+                        System.err.println("You have " + CombinedPointsRangeParser.getCombinedLabel(combined) + " combined tpts");
                         result.state.players.getPlayer(Position.ME).infSummary.showSummary("My summary");
                         partnerSummary.showSummary("Partner summary");
                         System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);

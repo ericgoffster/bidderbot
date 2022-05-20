@@ -1,0 +1,51 @@
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
+common 1m (1z) {
+	3m => 7- tpts, 5+ m;
+	    test xxx Kxxx x Qxxxx:
+	        1C (1S) 3C;
+	
+	X:"negative" => 7+ hcp, 4 M, 4 OM;	
+	    test Axxx AJxx xxx xx :
+	        1C (1D) X;
+	
+	NJy:down => inv+, 5+ y, longest_or_equal y among unbid;
+	    test Kxxxx xx Axx AQx :
+	        1C (1H) 1S;
+	    test xxx xx AKxxx AQx :
+	        1C (1H) 2D;
+
+	1y => gf+, 4 y, longest_or_equal y among unbid;
+	    test Kxxx Ax xxx AQxx:
+	        1♦ (1H) 1♠;
+	
+	1y:down => min, 5+ y, longest_or_equal y among >z & unbid;
+	    test Kxxxx Kxxxx xx x:
+	        1C (1D) 1♠;
+	
+	1y => min-inv, 4 y, longest_or_equal y among >z & unbid;
+	    test Kxx Axxx xx xxxx:
+	        1C (1D) 1♥;
+	    test Kxx Axxx xx Axxx:
+	        1C (1D) 1♥ ;
+
+	X:"negative" => 7+ hcp, 4+ M;	
+	    test Axx AJxx xxxx xx :
+	        1C (1S) X;
+	
+	1N => 6-10 hcp, stoppers z, partial_stoppers unbid ;
+	    test Qxxx Qx Axxx Jxx :
+	        1C (1S) 1N;
+	2N => 11-12 hcp, stoppers z, partial_stoppers unbid ;
+	    test Axxx Qx Axxx Jxx :
+	        1C (1S) 2N;
+	3N => 13-15 hcp, stoppers z, partial_stoppers unbid ;
+	    test Axxx Qx AQxx Jxx :
+	        1C (1S) 3N;
+	2m => 6-10 tpts, 4+ m;
+	    test xxx Kxx KQx xxxx:
+	        1C (1S) 2C;
+}

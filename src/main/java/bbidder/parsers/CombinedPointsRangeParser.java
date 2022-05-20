@@ -1,6 +1,7 @@
 package bbidder.parsers;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.OptionalInt;
 
 import bbidder.PointRange;
@@ -9,6 +10,17 @@ import bbidder.utils.SplitUtil;
 public class CombinedPointsRangeParser {
     public static final Map<String, Integer> POINT_RANGES = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35, "grand",
             37);
+    
+    public static String getCombinedLabel(int pts) {
+        Entry<String, Integer> maxPts = null;
+        for (var e : POINT_RANGES.entrySet()) {
+            int nextMax = e.getValue();
+            if (nextMax < pts && (maxPts == null || nextMax > maxPts.getValue())) {
+                maxPts = e;
+            }
+        }
+        return maxPts == null ? null : maxPts.getKey();
+    }
 
     public static PointRange createCombinedTPtsRange(String str, Map<String, Integer> m) {
         final int dir;
