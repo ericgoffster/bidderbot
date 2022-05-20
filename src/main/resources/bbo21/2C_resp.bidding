@@ -1,0 +1,19 @@
+# Responses to a major suit opening
+
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
+2♣ NJx => 5+ x, 2 of top 3 in x;
+    test AQxxx xxx xxx xx:
+        2♣ 2S;
+
+2♣ 2N => 8+ tpts, partial_stoppers unbid;
+    test Qx Kxxx Kxxx Jxx:
+        2♣ 2N;
+  
+2♣ 2D => always;
+    test xx Kxxx xxxx xxx:
+        2♣ 2D;
+        

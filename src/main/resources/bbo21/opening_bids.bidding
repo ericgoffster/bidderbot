@@ -58,6 +58,7 @@ P 1M:down => 5+ M, 8+ tpts, longest_or_equal M among majors;
     test xx x KQJxxxxxx x:
         5♦;
 
+include 2C_resp.bidding;
 include major_resp.bidding;
 include minor_resp.bidding;
 include 1over1rebids.bidding;
