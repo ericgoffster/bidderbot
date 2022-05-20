@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-2N 3♣
+2N:"2nt_opener" 3♣
 3M => 4+M;
     test Axx AQxx KJx AQx:
         2N 3♣
@@ -17,7 +17,7 @@
         2N 3♣
         3♠;
 
-2N 3♣
+2N:"2nt_opener" 3♣
 3♦ => always;
     test Axx AQx KJxx AQx:
         2N 3♣
@@ -29,7 +29,7 @@
         2N 3♣
         3♦;
 
-2N 3♣
+2N:"2nt_opener" 3♣
 3♦ 4M => gf, 6M;
     test AJxxxx Jxxx x xx:
         2N 3♣
@@ -38,7 +38,7 @@
         2N 3♣
         3♦ 4♥;
 
-2N 3♣
+2N:"2nt_opener" 3♣
 3♦ 3M => gf+, 4M, 5+OM;
     test AJxxx Axxx xx xx:
         2N 3♣
@@ -47,7 +47,7 @@
         2N 3♣
         3♦ 3♠;
 
-2N 3♣
+2N:"2nt_opener" 3♣
 3♦ 4m => slaminv+, 5+m;
     test Axx Ax Axxxx xxx:
         2N 3♣
@@ -56,13 +56,13 @@
         2N 3♣
         3D 4♣;
 
-2N 3♣
+2N:"2nt_opener" 3♣
 3♦ 4N => slaminv;
     test Axx Ax Axxx xxxx:
         2N 3♣
         3D 4N;
 
-2N 3♣
+2N:"2nt_opener" 3♣
 3M NJOM => slaminv+, 4+M;
     test Axx Axxx Axx xxx:
         2N 3♣
@@ -71,7 +71,7 @@
         2N 3♣
         3♠ 4♥;
 
-2N 3♣
+2N:"2nt_opener" 3♣
 3M 4m => slaminv+, 5+m, 7- fit M;
     test Axxx Ax Axxxx xx:
         2N 3♣
@@ -80,7 +80,7 @@
         2N 3♣
         3♥ 4♣;
 
-2N 3♣
+2N:"2nt_opener" 3♣
 3M 4N => slaminv, 7- fit M;
     test Axxx Ax Axxx xxx:
         2N 3♣

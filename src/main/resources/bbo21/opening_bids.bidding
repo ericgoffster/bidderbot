@@ -9,7 +9,7 @@
     test AKQxx AKQ AK xxx:
         2♣;
 
-2N => balanced, 20-21 tpts, 20-21 hcp;
+2N:"2nt_opener" => balanced, 20-21 tpts, 20-21 hcp;
     test AKQx AQxx AQ xxx:
         2N;
 

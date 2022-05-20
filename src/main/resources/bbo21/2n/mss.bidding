@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-2N 3♠
+2N:"2nt_opener" 3♠
 4m => 4+m, 2x;
     test Ax Axxx AJx AKxx:
         2N 3♠
@@ -14,7 +14,7 @@
         2N 3♠
         4♦;
 
-2N 3♠
+2N:"2nt_opener" 3♠
 3N => always;
     test AQx AJx AJx Axxx:
         2N 3♠
@@ -23,7 +23,7 @@
         2N 3♠
         3N;
 
-2N 3♠
+2N:"2nt_opener" 3♠
 4m 4M => gf+, 1-M;
     test x Axx Axxxx Axxx:
         2N 3♠
@@ -38,7 +38,7 @@
         2N 3♠
         4♦ 4♥;
 
-2N 3♠
+2N:"2nt_opener" 3♠
 3N 4M => gf+, 1-M;
     test x Axx Axxxx Axxx:
         2N 3♠
