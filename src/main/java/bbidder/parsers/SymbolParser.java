@@ -11,7 +11,6 @@ import bbidder.symbols.GreaterThanSymbol;
 import bbidder.symbols.LessThanSymbol;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.MinorSymbol;
-import bbidder.symbols.NonConventional;
 import bbidder.symbols.OtherMajorSymbol;
 import bbidder.symbols.OtherMinorSymbol;
 import bbidder.symbols.SeatSymbol;
@@ -59,9 +58,6 @@ public final class SymbolParser {
             } 
             if (tag.equalsIgnoreCase(DownSymbol.NAME)) {
                 return new DownSymbol(symbol);
-            }
-            if (tag.equalsIgnoreCase(NonConventional.NAME)) {
-                return new NonConventional(symbol);
             }
             {
                 Matcher m = SEATS.matcher(tag);
