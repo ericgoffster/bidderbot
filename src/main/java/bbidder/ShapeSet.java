@@ -157,10 +157,10 @@ public final class ShapeSet implements Iterable<Shape> {
             tot += s.probability;
         }
         return new ShapeStats[] {
-            new ShapeStats(new Range(bits[0], 13), Optional.of(sum[0] / tot)),
-            new ShapeStats(new Range(bits[1], 13), Optional.of(sum[1] / tot)),
-            new ShapeStats(new Range(bits[2], 13), Optional.of(sum[2] / tot)),
-            new ShapeStats(new Range(bits[3], 13), Optional.of(sum[3] / tot))};
+            new ShapeStats(new SuitLengthRange(bits[0]), Optional.of(sum[0] / tot)),
+            new ShapeStats(new SuitLengthRange(bits[1]), Optional.of(sum[1] / tot)),
+            new ShapeStats(new SuitLengthRange(bits[2]), Optional.of(sum[2] / tot)),
+            new ShapeStats(new SuitLengthRange(bits[3]), Optional.of(sum[3] / tot))};
     }
 
     @Override

@@ -8,18 +8,18 @@ import java.util.Optional;
  *
  */
 public class ShapeStats {
-    public static final ShapeStats EMPTY = new ShapeStats(Range.none(13), Optional.empty());
+    public static final ShapeStats EMPTY = new ShapeStats(SuitLengthRange.NONE, Optional.empty());
     /**
      * The range of possible lengths.
      */
-    public final Range lengths;
+    public final SuitLengthRange lengths;
     
     /**
      * The average length.   Empty for "null" sets.
      */
     public final Optional<Double> averageLength;
 
-    public ShapeStats(Range range, Optional<Double> avg) {
+    public ShapeStats(SuitLengthRange range, Optional<Double> avg) {
         super();
         this.lengths = range;
         this.averageLength = avg;

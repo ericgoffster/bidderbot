@@ -14,7 +14,7 @@ import bbidder.utils.BitUtil;
  * @author goffster
  *
  */
-public final class Range {
+public class Range {
     public final long bits;
     public final int max;
 
