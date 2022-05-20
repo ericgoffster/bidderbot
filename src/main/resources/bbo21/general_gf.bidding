@@ -31,6 +31,9 @@
         2C 2D
         2N 4♥
         4♠;
+    test AQxxx x Axx Axxx:
+        1S 3N
+        4S;
   
 [[If already in a game force, establish fit]]
 [gf+, i_bid_suit M] NJM:<4N => 8+ fit m;
