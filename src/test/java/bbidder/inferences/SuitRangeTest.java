@@ -16,7 +16,7 @@ public class SuitRangeTest {
     @Test
     public void testValueOf() {
         Symbol S = new ConstSymbol(3);
-        assertEquals(new SuitRange(S, 10, null), InferenceParser.parseSuitRange("10+ s"));
+        assertEquals(new SuitRange(S, 10, null), InferenceParser.parseInference("10+ s"));
     }
 
     @Test

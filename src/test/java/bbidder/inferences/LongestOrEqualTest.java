@@ -21,10 +21,10 @@ public class LongestOrEqualTest {
     @Test
     public void testValueOf() {
         Symbol sym = new ConstSymbol(3);
-        assertEquals(new LongestOrEqual(sym, ALL), InferenceParser.parseLongestOrEq("longest_or_equal s among all"));
-        assertEquals(new LongestOrEqual(sym, ALL), InferenceParser.parseLongestOrEq("   longest_or_equal    s    among    all    "));
-        assertEquals(new LongestOrEqual(sym, null), InferenceParser.parseLongestOrEq("longest_or_equal s"));
-        assertEquals(new LongestOrEqual(sym, null), InferenceParser.parseLongestOrEq("    longest_or_equal  s    "));
+        assertEquals(new LongestOrEqual(sym, ALL), InferenceParser.parseInference("longest_or_equal s among all"));
+        assertEquals(new LongestOrEqual(sym, ALL), InferenceParser.parseInference("   longest_or_equal    s    among    all    "));
+        assertEquals(new LongestOrEqual(sym, null), InferenceParser.parseInference("longest_or_equal s"));
+        assertEquals(new LongestOrEqual(sym, null), InferenceParser.parseInference("    longest_or_equal  s    "));
     }
 
     @Test

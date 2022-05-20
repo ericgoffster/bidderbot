@@ -14,7 +14,7 @@ import bbidder.Players;
 public class BalancedTest {
     @Test
     public void testValueOf() {
-        assertEquals(Balanced.BALANCED, InferenceParser.parseBalanced("balanced"));
+        assertEquals(Balanced.BALANCED, InferenceParser.parseInference("balanced"));
     }
 
     @Test
