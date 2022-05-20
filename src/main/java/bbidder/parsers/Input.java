@@ -2,25 +2,30 @@ package bbidder.parsers;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.PushbackReader;
 import java.io.Reader;
+import java.util.Stack;
 import java.util.function.Predicate;
 
 public final class Input implements Closeable {
-    public final PushbackReader rd;
+    public final Reader rd;
+    public final Stack<Integer> unread = new Stack<>();
     public int ch;
 
     public Input(Reader rd) throws IOException {
         super();
-        this.rd = new PushbackReader(rd);
+        this.rd = rd;
         this.ch = this.rd.read();
     }
 
     public void unread(int ch) throws IOException {
-        if (this.ch >= 0) {
-            rd.unread(this.ch);
-        }
+        unread.push(this.ch);
         this.ch = ch;
+    }
+    
+    public void unread(String str)  throws IOException {
+        for(int i = str.length() - 1; i >= 0; i--) {
+            unread(str.charAt(i));
+        }
     }
 
     public String readAny(Predicate<Character> pred) throws IOException {
@@ -54,7 +59,11 @@ public final class Input implements Closeable {
     }
 
     public void advance() throws IOException {
-        ch = rd.read();
+        if (unread.size() > 0) {
+            ch = unread.pop();
+        } else {
+            ch = rd.read();
+        }
     }
 
     public void advanceWhite() throws IOException {

@@ -115,15 +115,16 @@ public final class GeneralityParser {
                         if (sym != null) {
                             return new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
                         }
+                    } else {
+                        throw new IllegalArgumentException();
                     }
                 }
-            } catch (IOException e) {
-            }
-            {
-                PointRange createRange = CombinedPointsRangeParser.parseCombinedTPtsRange(str.trim());
+                String rest = inp.readAny(ch->true);
+                PointRange createRange = CombinedPointsRangeParser.parseCombinedTPtsRange(rest.trim());
                 if (createRange != null) {
                     return new TotalPointsEstablished(createRange);
                 }
+            } catch (IOException e) {
             }
             break;
         }

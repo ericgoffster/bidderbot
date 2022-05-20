@@ -4,13 +4,17 @@ import java.io.IOException;
 
 import bbidder.Bid;
 import bbidder.BidPattern;
+import bbidder.PointRange;
 import bbidder.Position;
 import bbidder.RangeOf;
 import bbidder.Seats;
 import bbidder.SuitLengthRange;
 import bbidder.Symbol;
+import bbidder.generalities.BestFitEstablished;
 import bbidder.generalities.BidSuitGenerality;
+import bbidder.generalities.FitEstablished;
 import bbidder.generalities.MadeBid;
+import bbidder.generalities.TotalPointsEstablished;
 import bbidder.generalities.UnbidSuitGenerality;
 import bbidder.generalities.WeAreThreeSuited;
 
@@ -103,7 +107,34 @@ public final class BidPatternParser implements Parser<BidPattern> {
                     break;
                 }
                 default:
-                    throw new IllegalArgumentException("Invalid bid pattern");
+                    inp.unread(tag);
+                    RangeOf rng = new RangeParser().parse(inp);
+                    if (rng != null) {
+                        inp.advanceWhite();
+                        if (inp.readKeyword(FitEstablished.NAME.toUpperCase())) {
+                            String sy = inp.readToken(ch -> true);
+                            Symbol sym = SymbolParser.parseSymbol(sy);
+                            if (sym != null) {
+                                p = p.addGenerality(new FitEstablished(sym, SuitLengthRange.between(rng.min, rng.max)));
+                                break;
+                            }
+                        } else if (inp.readKeyword(BestFitEstablished.NAME.toUpperCase())) {
+                            String sy = inp.readToken(ch -> true);
+                            Symbol sym = SymbolParser.parseSymbol(sy);
+                            if (sym != null) {
+                                p = p.addGenerality(new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max)));
+                                break;
+                            }
+                        } else {
+                            throw new IllegalArgumentException();
+                        }
+                    }
+                    String rest = inp.readToken(ch -> ch != ':');
+                    PointRange createRange = CombinedPointsRangeParser.parseCombinedTPtsRange(rest.trim());
+                    if (createRange != null) {
+                        p = p.addGenerality(new TotalPointsEstablished(createRange));
+                    }
+                    break;
                 }
             }
         }
