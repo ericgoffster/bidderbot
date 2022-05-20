@@ -64,18 +64,20 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		        1N 2♣
 		        2♥ 3♦;
 		
-		[[Quantitative invite]]
+		[[Quantitative]]
 		4N => slaminv, 7- fit M;
 		    test AJxx AQx AQx xxx:
 		        1N 2♣
 		        2♥ 4N;	
 	}
 
-	2♦ => always;
+	[[Bid 2D with no 4 card major]]
+	2♦ => 3- M;
 	    test Axx AQx KJxx Qxx:
 	        1N 2♣
 	        2♦;
 	continuations {
+	    [[Bid 2${M} with invitational and 5+]]
 		2M => inv, 5+M;
 		    test AJxx Qxxxx xx xx:
 		        1N 2♣
@@ -84,11 +86,13 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		        1N 2♣
 		        2♦ 2♠;
 		
+	    [[Invite game in NT]]
 		2N => inv;
 		    test AJxx Kxxx xxx xx:
 		        1N 2♣
 		        2♦ 2N;
 		
+	    [[Bid 3${M} with 4{$M} and 4{$OM} (smolen)]]
 		3M => gf+, 4M, 5+OM;
 		    test AJxxx AQxx xx xx:
 		        1N 2♣
@@ -97,16 +101,19 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		        1N 2♣
 		        2♦ 3♠;
 		
+	    [[Bid game in NT]]
 		3N => gf;
 		    test AJxx AQxx xxx xx:
 		        1N 2♣
 		        2♦ 3N;
 		
+	    [[Bid a 5 card minor and game force]]
 		3m => gf+, 5+m;
 		    test AJxx AQ AQxxx xx:
 		        1N 2♣
 		        2♦ 3♦;
 		
+	    [[Quantitative]]
 		4N => slaminv;
 		    test AJxx AJxx AQx xx:
 		        1N 2♣
