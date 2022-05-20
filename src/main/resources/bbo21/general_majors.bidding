@@ -192,10 +192,14 @@
 [[Pass a playable major suit invitation]]
 [i_bid_suit M] 3M P => inv, fit M;
 
-[[Pass a playable major suit invitation]]
+[[Pass a playable major suit minimum]]
 [fit_established M] 2M P => min;
     test xxx Axxx Kx xxxx:
         1C 1H
         2H P;
+        
+[[Pass a playable major suit minimum]]
 [partner_bid_suit M] 2M P => min, fit M;
+
+[[Pass a playable major suit minimum]]
 [i_bid_suit M] 2M P => min, fit M;
