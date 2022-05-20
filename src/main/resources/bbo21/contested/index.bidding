@@ -1,3 +1,3 @@
 include simple_overcalls.bidding;
-include minor_resp_over_x.bidding;
+include resp_over_x.bidding;
 include resp_to1.bidding;

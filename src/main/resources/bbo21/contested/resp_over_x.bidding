@@ -5,7 +5,17 @@
 # H = ♥
 # S = ♠
 
-common 1m (X:"takeout") {
+common 1M (X:"takeout") {
+	3M => min-, 4+ M;
+	    test KQx Qxxx xx xxxx:
+	        1H (X) 3H;
+	
+	2M => min, 3+ M;
+	    test KQx Qxx xx xxxxx:
+	        1H (X) 2H;
+}
+
+common 1x (X:"takeout") {
 	1y:down => gf+, 5+ y, longest_or_equal y among unbid;
 	    test AQxxx Axxx x Kxx:
 	        1♦ (X) 1♠;
@@ -16,7 +26,7 @@ common 1m (X:"takeout") {
 	    test AQxx Axxx xx Kxx:
 	        1♦ (X) 1♥;
 	
-	1y:down => min-inv, 5+ y, longest_or_equal y among >m & unbid;
+	1y:down => min-inv, 5+ y, longest_or_equal y among >x & unbid;
 	    test Kxxxx Axxxx xx x:
 	        1♦ (X) 1♠;
 	    test Kxxxx Axxxx Qx x:
@@ -26,7 +36,7 @@ common 1m (X:"takeout") {
 	    test Kxxxx Axxx xx Ax:
 	        1♦ (X) 1♠;
 	
-	1M => min-inv, 4 M, longest_or_equal M among >m & unbid;
+	1M => min-inv, 4 M, longest_or_equal M among >x & unbid;
 	    test Kxxx Axxx xx xxx:
 	        1♦ (X) 1♥;
 	    test Kxxx Axxx xx Axx:
@@ -36,10 +46,12 @@ common 1m (X:"takeout") {
 	    test Kxx Kx Axxx Kxxx:
 	        1♦ (X) XX;
 	
-	1N => min, balanced;
-	    test Kxx Kx Qxxx xxxx:
+	1N => min, balanced, partial_stoppers ~x;
+	    test Kxx Kx Qxxx Jxxx:
 	        1♦ (X) 1N;
-	
+}
+
+common 1m (X:"takeout") {
 	3m => min-, 5+ m;
 	    test KQx x Qxxxx xxxx:
 	        1♦ (X) 3♦;
@@ -47,6 +59,6 @@ common 1m (X:"takeout") {
 	2m => min, 4+ m;
 	    test KQx x Qxxx xxxxx:
 	        1♦ (X) 2♦;
-	        
-	P => always;
 }
+
+1m (X:"takeout") P => always;
