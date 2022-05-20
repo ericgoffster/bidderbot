@@ -26,7 +26,7 @@ NJx => max hcp, 4+M, 2-x;
 
 [[With max and no doubleton, bid 2N]] 
 1N 2M-1
-2N => 17 hcp, 4+M;
+2N => max hcp, 4+M;
     test AQx Axxx Axx Kxx:
         1N 2♦
         2N;
