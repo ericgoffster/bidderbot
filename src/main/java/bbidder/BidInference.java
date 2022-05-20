@@ -36,13 +36,11 @@ public final class BidInference {
     /**
      * @param where
      *            Where is it located.
-     * @param reg
-     *            The inference registry
      * @param str
      *            The string to parse.
      * @return A BidInference parsed from the string
      */
-    public static BidInference valueOf(String where, InferenceRegistry reg, String str) {
+    public static BidInference valueOf(String where, String str) {
         if (str == null) {
             return null;
         }
@@ -50,7 +48,7 @@ public final class BidInference {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        return new BidInference(where, BidPatternList.valueOf(parts[0]), reg.parseInference(parts[1]));
+        return new BidInference(where, BidPatternList.valueOf(parts[0]), InferenceParser.parseInference(parts[1]));
     }
 
     /**

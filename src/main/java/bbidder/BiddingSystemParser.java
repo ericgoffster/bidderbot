@@ -34,8 +34,7 @@ public final class BiddingSystemParser {
     public static BiddingSystem load(String urlSpec, Consumer<ParseException> reportErrors) {
         List<BidInference> inferences = new ArrayList<>();
         List<BiddingTest> tests = new ArrayList<>();
-        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
-        BiddingSystemParser.load("", urlSpec, reportErrors, inferences::add, tests::add, reg);
+        BiddingSystemParser.load("", urlSpec, reportErrors, inferences::add, tests::add);
         return new BiddingSystem(inferences, tests);
     }
 
@@ -50,9 +49,9 @@ public final class BiddingSystemParser {
      *            The consumer of parse errors
      */
     private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, Consumer<BidInference> inferences,
-            Consumer<BiddingTest> tests, InferenceRegistry reg) {
+            Consumer<BiddingTest> tests) {
         try (InputStream is = new URL(null, urlSpec, new ClassPathUrlHandler(BiddingSystem.class.getClassLoader())).openStream()) {
-            load(urlSpec, is, reportErrors, inferences, tests, reg);
+            load(urlSpec, is, reportErrors, inferences, tests);
         } catch (MalformedURLException e) {
             reportErrors.accept(new ParseException(where, e));
         } catch (IOException e) {
@@ -71,7 +70,7 @@ public final class BiddingSystemParser {
      *            The consumer of parse errors
      */
     private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, Consumer<BidInference> inferences,
-            Consumer<BiddingTest> tests, InferenceRegistry reg) {
+            Consumer<BiddingTest> tests) {
         int lineno = 0;
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             StringBuilder sb = new StringBuilder();
@@ -91,7 +90,7 @@ public final class BiddingSystemParser {
                     ln = ln.substring(0, ln.length() - 1);
                     String[] comm = SplitUtil.split(ln, "\\s+", 2);
                     if (comm.length == 2 && comm[0].equalsIgnoreCase("include")) {
-                        load(where, resolveUrlSpec(where, comm[1]), reportErrors, inferences, tests, reg);
+                        load(where, resolveUrlSpec(where, comm[1]), reportErrors, inferences, tests);
                     } else {
                         String here = where + ":" + lineno;
                         if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
@@ -108,7 +107,7 @@ public final class BiddingSystemParser {
                             }
                         } else if (!ln.equals("")) {
                             try {
-                                BidInference.valueOf(here, reg, ln).resolveSuits().forEach(inferences);
+                                BidInference.valueOf(here, ln).resolveSuits().forEach(inferences);
                             } catch (Exception e) {
                                 reportErrors.accept(new ParseException(here, e));
                             }
