@@ -46,6 +46,9 @@
 
 [[Self support minor at 3 level with invitational values]]
 [i_bid_suit m] 3m => inv, fit m;
+    test AJx xx Axxxxx xx:
+         1C 1D
+         1N 3D;
 
 [[Support minor at 3 level with invitational values]]
 [partner_bid_suit m] 3m => inv, fit m;
