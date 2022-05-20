@@ -29,15 +29,17 @@ common [] 2N:"nt_opener" 3M-1 {
 	        2C 2D
 	        2N 3♦
 	        3♠;
-	
-	NJx 4M-1 => always;
-	    test xx Axxxx xxx xxx:
-	        2N 3♦
-	        4C 4D;
-	    test xx Axxxx xxx xxx:
-	        2C 2D
-	        2N 3♦
-	        4C 4D;
+	        
+	continuations {	
+		4M-1 => always;
+		    test xx Axxxx xxx xxx:
+		        2N 3♦
+		        4C 4D;
+		    test xx Axxxx xxx xxx:
+		        2C 2D
+		        2N 3♦
+		        4C 4D;
+	}
 	
 	3N => max hcp, 4+M;
 	    test AKx AJxx Axx AJx:
@@ -47,13 +49,14 @@ common [] 2N:"nt_opener" 3M-1 {
 	        2C 2D
 	        2N 3♦
 	        3N;
-	
-	3N 4M-1 => always;
-	    test xx Axxxx xxx xxx:
-	        2N 3♦
-	        3N 4D;
-	    test xx Axxxx xxx xxx:
-	        2C 2D
-	        2N 3♦
-	        3N 4D;
+    continuations {		
+		4M-1 => always;
+		    test xx Axxxx xxx xxx:
+		        2N 3♦
+		        3N 4D;
+		    test xx Axxxx xxx xxx:
+		        2C 2D
+		        2N 3♦
+		        3N 4D;
+	}
 }

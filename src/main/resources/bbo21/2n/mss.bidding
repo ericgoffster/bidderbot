@@ -22,37 +22,37 @@ common [] 2N:"nt_opener" 3♠ {
 	        2C 2D
 	        2N 3♠
 	        4♦;
-	        
-	4m 4M => gf+, 1-M;
-	    test x Axx Axxxx Axxx:
-	        2N 3♠
-	        4♣ 4♠;
-	    test x Axx Axxx Axxxx:
-	        2N 3♠
-	        4♦ 4♠;
-	    test Axx x Axxxx Axxx:
-	        2N 3♠
-	        4♣ 4♥;
-	    test Axx x Axxx Axxxx:
-	        2N 3♠
-	        4♦ 4♥;
-	    test x Axx AQxxx Axxx:
-	        2C 2D
-	        2N 3♠
-	        4♣ 4♠;
-	    test x Axx AQxx Axxxx:
-	        2C 2D
-	        2N 3♠
-	        4♦ 4♠;
-	    test Axx x AQxxx Axxx:
-	        2C 2D
-	        2N 3♠
-	        4♣ 4♥;
-	    test Axx x AQxx Axxxx:
-	        2C 2D
-	        2N 3♠
-	        4♦ 4♥;
-	
+	continuations {		        
+		4M => gf+, 1-M;
+		    test x Axx Axxxx Axxx:
+		        2N 3♠
+		        4♣ 4♠;
+		    test x Axx Axxx Axxxx:
+		        2N 3♠
+		        4♦ 4♠;
+		    test Axx x Axxxx Axxx:
+		        2N 3♠
+		        4♣ 4♥;
+		    test Axx x Axxx Axxxx:
+		        2N 3♠
+		        4♦ 4♥;
+		    test x Axx AQxxx Axxx:
+		        2C 2D
+		        2N 3♠
+		        4♣ 4♠;
+		    test x Axx AQxx Axxxx:
+		        2C 2D
+		        2N 3♠
+		        4♦ 4♠;
+		    test Axx x AQxxx Axxx:
+		        2C 2D
+		        2N 3♠
+		        4♣ 4♥;
+		    test Axx x AQxx Axxxx:
+		        2C 2D
+		        2N 3♠
+		        4♦ 4♥;
+	}
 	3N => always;
 	    test AQx AJx AJx Axxx:
 	        2N 3♠
@@ -68,20 +68,21 @@ common [] 2N:"nt_opener" 3♠ {
 	        2C 2D
 	        2N 3♠
 	        3N;
-	
-	3N 4M => gf+, 1-M;
-	    test x Axx Axxxx Axxx:
-	        2N 3♠
-	        3N 4♠;
-	    test Axx x Axxxx Axxx:
-	        2N 3♠
-	        3N 4♥;
-	    test x Axx AQxxx Axxx:
-	        2C 2D
-	        2N 3♠
-	        3N 4♠;
-	    test Axx x AQxxx Axxx:
-	        2C 2D
-	        2N 3♠
-	        3N 4♥;
+	continuations {		        	
+		4M => gf+, 1-M;
+		    test x Axx Axxxx Axxx:
+		        2N 3♠
+		        3N 4♠;
+		    test Axx x Axxxx Axxx:
+		        2N 3♠
+		        3N 4♥;
+		    test x Axx AQxxx Axxx:
+		        2C 2D
+		        2N 3♠
+		        3N 4♠;
+		    test Axx x AQxxx Axxx:
+		        2C 2D
+		        2N 3♠
+		        3N 4♥;
+    }
 }
