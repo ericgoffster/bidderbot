@@ -39,7 +39,7 @@ public final class LongestOrEqual extends Inference {
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {
         return suit.resolveSuits(suitTable)
-                .flatMap(e1 -> among.resolveSuits(e1.suitTable).map(e2 -> new LongestOrEqual(e1.getSymbol(), e2.suitSet).new Context(e2.suitTable)));
+                .flatMap(e1 -> among.resolveSuits(e1.suitTable).map(e2 -> new LongestOrEqual(e1.getSymbol(), e2.getSuitSet()).new Context(e2.suitTable)));
     }
 
     public static LongestOrEqual valueOf(String str) {

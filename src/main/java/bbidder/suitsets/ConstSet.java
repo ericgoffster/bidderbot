@@ -5,10 +5,9 @@ import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
-import bbidder.SuitSetContext;
 import bbidder.SuitTable;
 
-public final class ConstSet implements SuitSet {
+public final class ConstSet extends SuitSet {
     private final String ssuits;
     private final short suits;
 
@@ -45,7 +44,7 @@ public final class ConstSet implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable) {
-        return Stream.of(new SuitSetContext(this, suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return Stream.of(new Context(suitTable));
     }
 }

@@ -5,10 +5,9 @@ import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
-import bbidder.SuitSetContext;
 import bbidder.SuitTable;
 
-public final class And implements SuitSet {
+public final class And extends SuitSet {
     private final SuitSet s1;
     private final SuitSet s2;
 
@@ -46,9 +45,9 @@ public final class And implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable) {
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
         return s1.resolveSuits(suitTable)
-                .flatMap(e1 -> s2.resolveSuits(e1.suitTable).map(e2 -> new SuitSetContext(new And(e1.suitSet, e2.suitSet), e2.suitTable)));
+                .flatMap(e1 -> s2.resolveSuits(e1.suitTable).map(e2 -> new And(e1.getSuitSet(), e2.getSuitSet()).new Context(e2.suitTable)));
     }
 
 }

@@ -54,7 +54,7 @@ public final class StoppersInSuits extends Inference {
 
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {
-        return suits.resolveSuits(suitTable).map(e -> new StoppersInSuits(e.suitSet, partial).new Context(e.suitTable));
+        return suits.resolveSuits(suitTable).map(e -> new StoppersInSuits(e.getSuitSet(), partial).new Context(e.suitTable));
     }
 
     @Override

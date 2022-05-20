@@ -5,11 +5,10 @@ import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
-import bbidder.SuitSetContext;
-import bbidder.Symbol;
 import bbidder.SuitTable;
+import bbidder.Symbol;
 
-public final class Gt implements SuitSet {
+public final class Gt extends SuitSet {
     private final Symbol symbol;
 
     public Gt(Symbol symbol) {
@@ -46,7 +45,7 @@ public final class Gt implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable) {
-        return symbol.resolveSuits(suitTable).map(e -> new SuitSetContext(new Gt(e.getSymbol()), suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new Gt(e.getSymbol()).new Context(suitTable));
     }
 }

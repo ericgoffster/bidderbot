@@ -5,11 +5,10 @@ import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
-import bbidder.SuitSetContext;
-import bbidder.Symbol;
 import bbidder.SuitTable;
+import bbidder.Symbol;
 
-public final class LookupSet implements SuitSet {
+public final class LookupSet extends SuitSet {
     private final Symbol symbol;
 
     public LookupSet(Symbol strain) {
@@ -45,7 +44,7 @@ public final class LookupSet implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable) {
-        return symbol.resolveSuits(suitTable).map(e -> new SuitSetContext(new LookupSet(e.getSymbol()), e.suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return symbol.resolveSuits(suitTable).map(e -> new LookupSet(e.getSymbol()).new Context(e.suitTable));
     }
 }

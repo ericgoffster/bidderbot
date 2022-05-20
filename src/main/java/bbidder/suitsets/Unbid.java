@@ -5,10 +5,9 @@ import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
-import bbidder.SuitSetContext;
 import bbidder.SuitTable;
 
-public final class Unbid implements SuitSet {
+public final class Unbid extends SuitSet {
     public Unbid() {
         super();
     }
@@ -43,8 +42,8 @@ public final class Unbid implements SuitSet {
     }
 
     @Override
-    public Stream<SuitSetContext> resolveSuits(SuitTable suitTable) {
-        return Stream.of(new SuitSetContext(this, suitTable));
+    public Stream<Context> resolveSuits(SuitTable suitTable) {
+        return Stream.of(new Context(suitTable));
     }
 
     @Override
