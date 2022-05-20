@@ -15,6 +15,7 @@ import bbidder.inferences.bound.ConstBoundInference;
  *
  */
 public final class TrueInference extends Inference {
+    public static final String NAME = "true";
     public static final TrueInference T = new TrueInference();
 
     private TrueInference() {
@@ -32,7 +33,7 @@ public final class TrueInference extends Inference {
 
     @Override
     public String toString() {
-        return "true";
+        return NAME;
     }
 
     @Override

@@ -17,6 +17,7 @@ import bbidder.inferences.bound.HcpBoundInf;
  *
  */
 public final class HCPRange extends Inference {
+    public static final String HCP = "hcp";
     private final PointRange rng;
 
     public HCPRange(Integer min, Integer max) {
@@ -41,7 +42,7 @@ public final class HCPRange extends Inference {
 
     @Override
     public String toString() {
-        return rng + " hcp";
+        return rng + " " + HCP;
     }
 
     @Override

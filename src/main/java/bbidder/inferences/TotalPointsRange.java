@@ -17,6 +17,7 @@ import bbidder.inferences.bound.TotalPtsBoundInf;
  *
  */
 public final class TotalPointsRange extends Inference {
+    public static final String TPTS = "tpts";
     private final PointRange rng;
 
     public TotalPointsRange(Integer min, Integer max) {
@@ -41,7 +42,7 @@ public final class TotalPointsRange extends Inference {
 
     @Override
     public String toString() {
-        return rng + " tpts";
+        return rng + " " + TPTS;
     }
 
     @Override

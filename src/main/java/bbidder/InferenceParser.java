@@ -69,6 +69,7 @@ public final class InferenceParser {
         }
         switch (tag) {
         case "":
+        case TrueInference.NAME:
             if (remainder.equals("")) {
                 return TrueInference.T;
             }
@@ -154,10 +155,10 @@ public final class InferenceParser {
             {
                 RangeOf rng = parseRange(str.trim());
                 if (rng != null) {
-                    if (rng.of.equalsIgnoreCase("hcp")) {
+                    if (rng.of.equalsIgnoreCase(HCPRange.HCP)) {
                         return new HCPRange(PointRange.between(rng.min, rng.max));
                     }
-                    if (rng.of.equalsIgnoreCase("tpts")) {
+                    if (rng.of.equalsIgnoreCase(TotalPointsRange.TPTS)) {
                         return new TotalPointsRange(PointRange.between(rng.min, rng.max));
                     }
                     {
@@ -181,7 +182,7 @@ public final class InferenceParser {
                 }
             }
             {
-                Inference i = makeTPtsRange(str.trim());
+                Inference i = makeCombinedTPtsRange(str.trim());
                 if (i != null) {
                     return i;
                 }
@@ -192,11 +193,11 @@ public final class InferenceParser {
         throw new IllegalArgumentException("unknown inference: '" + str + "'");
     }
 
-    private static CombinedTotalPointsRange makeTPtsRange(String str) {
+    private static CombinedTotalPointsRange makeCombinedTPtsRange(String str) {
         String[] parts = SplitUtil.split(str, "-", 2);
         if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
-            CombinedTotalPointsRange rlow = makeTPtsRange(parts[0]);
-            CombinedTotalPointsRange rhigh = makeTPtsRange(parts[1]);
+            CombinedTotalPointsRange rlow = makeCombinedTPtsRange(parts[0]);
+            CombinedTotalPointsRange rhigh = makeCombinedTPtsRange(parts[1]);
             if (rlow == null || rhigh == null) {
                 return null;
             }
@@ -212,14 +213,14 @@ public final class InferenceParser {
             int higher = h.getAsInt();
             return new CombinedTotalPointsRange(PointRange.between(lower, higher));
         }
-        PointRange createRange = createTPtsRange(str, POINT_RANGES);
+        PointRange createRange = createCombinedTPtsRange(str, POINT_RANGES);
         if (createRange == null) {
             return null;
         }
         return new CombinedTotalPointsRange(createRange);
     }
 
-    private static PointRange createTPtsRange(String str, Map<String, Integer> m) {
+    private static PointRange createCombinedTPtsRange(String str, Map<String, Integer> m) {
         final int dir;
         if (str.endsWith("+")) {
             str = str.substring(0, str.length() - 1);
