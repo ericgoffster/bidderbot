@@ -1,6 +1,5 @@
 package bbidder.symbols;
 
-import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.SuitTable;
 import bbidder.Symbol;
@@ -66,10 +65,5 @@ public final class MinorSymbol extends Symbol {
         default:
             throw new IllegalArgumentException("invalid minor");
         }
-    }
-
-    @Override
-    public boolean compatibleWith(Bid bid) {
-        return true;
     }
 }

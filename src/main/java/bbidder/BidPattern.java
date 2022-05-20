@@ -156,7 +156,7 @@ public final class BidPattern {
                 return Optional.empty();
             }
             return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, tags,
-                    false, seats, downTheLine, null, null));
+                    false, seats, downTheLine, greaterThan, lessThan));
         }
         if (jumpLevel != null) {
             if (contract != null) {
@@ -166,10 +166,10 @@ public final class BidPattern {
                     return Optional.empty();
                 }
                 return Optional
-                        .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, tags, false, seats, downTheLine, null, null));
+                        .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, tags, false, seats, downTheLine, greaterThan, lessThan));
             }
         }
-        return Optional.of(new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, false, seats, downTheLine, null, null));
+        return Optional.of(new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, false, seats, downTheLine, greaterThan, lessThan));
     }
 
     private boolean isBidCompatible(Contract contract, Symbol symbol, Bid b) {
@@ -179,8 +179,17 @@ public final class BidPattern {
         if (contract != null && (seats & (1 << contract.numPasses)) == 0) {
             return false;
         }
-        if (!symbol.compatibleWith(b)) {
-            return false;
+        if (lessThan != null) {
+            Bid comparisonBid = Bid.valueOf(lessThan.level, lessThan.symbol.getResolvedStrain());
+            if (b.compareTo(comparisonBid) >= 0) {
+                return false;
+            }
+        }
+        if (greaterThan != null) {
+            Bid comparisonBid = Bid.valueOf(greaterThan.level, greaterThan.symbol.getResolvedStrain());
+            if (b.compareTo(comparisonBid) <= 0) {
+                return false;
+            }
         }
         return true;
     }

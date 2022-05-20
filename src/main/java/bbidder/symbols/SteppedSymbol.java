@@ -2,7 +2,6 @@ package bbidder.symbols;
 
 import java.util.Objects;
 
-import bbidder.Bid;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.utils.MyStream;
@@ -51,10 +50,5 @@ public final class SteppedSymbol extends Symbol {
     @Override
     public int getResolvedStrain() {
         return transform(symbol.getResolvedStrain());
-    }
-
-    @Override
-    public boolean compatibleWith(Bid bid) {
-        return true;
     }
 }

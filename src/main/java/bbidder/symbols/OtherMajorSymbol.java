@@ -1,6 +1,5 @@
 package bbidder.symbols;
 
-import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.SuitTable;
 import bbidder.Symbol;
@@ -52,10 +51,5 @@ public final class OtherMajorSymbol extends Symbol {
         }
         return BitUtil.stream((short) (Constants.MAJORS & ~suitTable.getSuits()))
                 .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
-    }
-
-    @Override
-    public boolean compatibleWith(Bid bid) {
-        return true;
     }
 }

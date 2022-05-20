@@ -2,7 +2,6 @@ package bbidder.symbols;
 
 import java.util.Objects;
 
-import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.SuitTable;
 import bbidder.Symbol;
@@ -52,10 +51,5 @@ public final class VarSymbol extends Symbol {
         }
         return BitUtil.stream((short) (Constants.ALL_SUITS & ~suitTable.getSuits()))
                 .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(varName, s)));
-    }
-
-    @Override
-    public boolean compatibleWith(Bid bid) {
-        return true;
     }
 }

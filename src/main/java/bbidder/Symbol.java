@@ -15,13 +15,6 @@ public abstract class Symbol {
     public abstract int getResolvedStrain();
 
     /**
-     * @param bid
-     *            The bid to test
-     * @return true if the given bid is compatible with the symbol
-     */
-    public abstract boolean compatibleWith(Bid bid);
-
-    /**
      * Resolves the symbol into a stream of resolved symbols in the context of a suit table.
      * For example:
      * If my symbol was "M", and the suitTable already had M=SPADE,

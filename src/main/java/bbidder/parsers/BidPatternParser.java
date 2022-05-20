@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
 import bbidder.Bid;
 import bbidder.BidPattern;
 import bbidder.Symbol;
-import bbidder.symbols.GreaterThanSymbol;
-import bbidder.symbols.LessThanSymbol;
 
 /**
  * Parses a Bid Pattern.
@@ -33,7 +31,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
                 if (other == null) {
                     throw new IllegalArgumentException("Invalid less than");
                 }
-                p = p.withSymbol(new LessThanSymbol(p.symbol, other.level, other.symbol));
+                p = p.withLessThan(other);
                 continue;
             }
             if (inp.readKeyword(">")) {
@@ -41,7 +39,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
                 if (other == null) {
                     throw new IllegalArgumentException("Invalid greater than");
                 }
-                p = p.withSymbol(new GreaterThanSymbol(p.symbol, other.level, other.symbol));
+                p = p.withGreaterThan(other);
                 continue;
             }
             if (inp.readKeyword("DOWN")) {

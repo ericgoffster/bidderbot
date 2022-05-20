@@ -2,7 +2,6 @@ package bbidder.symbols;
 
 import java.util.Objects;
 
-import bbidder.Bid;
 import bbidder.Strain;
 import bbidder.SuitTable;
 import bbidder.Symbol;
@@ -46,10 +45,5 @@ public final class ConstSymbol extends Symbol {
     @Override
     public int getResolvedStrain() {
         return strain;
-    }
-
-    @Override
-    public boolean compatibleWith(Bid bid) {
-        return bid.strain == strain;
     }
 }
