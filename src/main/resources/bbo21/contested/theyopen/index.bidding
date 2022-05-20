@@ -1,6 +1,6 @@
-include simple_overcalls.bidding;
-include preempt_overcalls.bidding;
-include wk2_overcalls.bidding;
+include they_open_1.bidding;
+include they_open_3.bidding;
+include they_open_2.bidding;
 include resp_to1.bidding;
 include resp_to2.bidding;
 include resp_to3.bidding;
