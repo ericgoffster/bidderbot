@@ -62,6 +62,7 @@ include 2C_resp.bidding;
 include major_resp.bidding;
 include minor_resp.bidding;
 include 1over1rebids.bidding;
+include 2over1rebids.bidding;
 include 1n/resp.bidding;
 include 2n/resp.bidding;
 include 2c_2n/resp.bidding;
