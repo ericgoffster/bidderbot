@@ -32,7 +32,7 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		        2♠ 4♥;
 		
 		[[Invite slam in ${M}]]
-		3OM => slaminv+, 4M;
+		3OM:"artificial" => slaminv+, 4M;
 		    test AJx Axxx Axx Axx:
 		        1N 2♣
 		        2♥ 3♠;
@@ -41,7 +41,7 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		        2♠ 3♥;
 		
 		[[Invite game with 4 ${OM}]]
-		2OM => inv, 4♠, 7- fit H;
+		2OM => inv, 4OM, 7- fit M;
 		    test AJxx Axx xxx xxx:
 		        1N 2♣
 		        2♥ 2♠;
@@ -86,7 +86,7 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		        1N 2♣
 		        2♦ 2N;
 		
-	    [[Bid 3${M} with 4{$M} and 4{$OM} (smolen)]]
+	    [[Bid 3${M} with 4{$M} and 5{$OM} (smolen)]]
 		3M => gf+, 4M, 5+OM;
 		    test AJxxx AQxx xx xx:
 		        1N 2♣

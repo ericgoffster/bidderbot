@@ -7,6 +7,7 @@
 
 common [] 2N:"nt_opener" 3M-1:"xfer" {
 
+	[[With max and a doubleton, bid the doubleton]]
 	NJx:"maxfit" => max hcp, 4+M, 2-x;
 	    test AKxx AKxx xx AKx:
 	        2N 3♦
@@ -44,6 +45,7 @@ common [] 2N:"nt_opener" 3M-1:"xfer" {
 	    }
 	}
 	
+	[[With max and no doubleton, bid 3N]] 
 	3N:"maxfit" => max hcp, 4+M;
 	    test AKx AJxx Axx AJx:
 	        2N 3♦
@@ -65,6 +67,8 @@ common [] 2N:"nt_opener" 3M-1:"xfer" {
 	        4M => always;
 	    }
 	}
+	
+	[[Accept the transfer]] 
     3M => always;
 	    test AQJx Qx AKxx AKx:
 	        2C 2D

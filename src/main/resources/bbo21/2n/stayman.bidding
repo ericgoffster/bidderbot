@@ -6,7 +6,7 @@
 # S = ♠
 
 common [] 2N:"nt_opener" 3♣:"stayman" {
-
+    [[Bid 4 card major]]
 	3M => 4+M;
 	    test Axx AQxx KJx AQx:
 	        2N 3♣
@@ -30,7 +30,7 @@ common [] 2N:"nt_opener" 3♣:"stayman" {
 	        2N 3♣
 	        3♠;
 	continuations {	
-		NJOM => slaminv+, 4+M;
+		NJOM:"artificial" => slaminv+, 4+M;
 		    test Axx Axxx Axx xxx:
 		        2N 3♣
 		        3♥ 3♠;
@@ -61,22 +61,6 @@ common [] 2N:"nt_opener" 3♣:"stayman" {
 		        2C 2D
 		        2N 3♣
 		        3♥ 4♣;
-		        
-		4N => slaminv, 7- fit M;
-		    test Axxx Ax Axxx xxx:
-		        2N 3♣
-		        3♥ 4N;
-		    test Ax Axxx Axxx xxx:
-		        2N 3♣
-		        3♠ 4N;
-		    test Axxx Ax Jxxx xxx:
-		        2C 2D
-		        2N 3♣
-		        3♥ 4N;
-		    test Ax Axxx Jxxx xxx:
-		        2C 2D
-		        2N 3♣
-		        3♠ 4N;
 	}
 	3♦ => always;
 	    test Axx AQx KJxx AQx:

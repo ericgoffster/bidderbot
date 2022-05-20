@@ -30,6 +30,20 @@ common [partner made_bid nt_opener, 7- bestfit x] {
 		test AQxxx Axx AQx xx:
 		    1N 2♥
 		    2♠ 4N;
+		test Axxx Ax Axxx xxx:
+		    2N 3♣
+		    3♥ 4N;
+		test Ax Axxx Axxx xxx:
+		    2N 3♣
+		    3♠ 4N;
+		test Axxx Ax Jxxx xxx:
+		    2C 2D
+		    2N 3♣
+		    3♥ 4N;
+		test Ax Axxx Jxxx xxx:
+		    2C 2D
+		    2N 3♣
+		    3♠ 4N;
 	
 	[[Quantitative grand slam invite]]
 	5N => grandinv;
@@ -48,6 +62,11 @@ common [partner made_bid nt_opener, 7- bestfit x] {
 	6N => slam;
 	    test Axx Axx AKxx Kxx:
 	        1N 6N;
+	    test Axx Axx Qxxx Kxx:
+	        2N 6N;
+	    test Axx Axx xxxx Kxx:
+	        2C 2D
+	        2N 6N;
 	
 	[[Bid grand slam if you got it]]
 	7N => grand;

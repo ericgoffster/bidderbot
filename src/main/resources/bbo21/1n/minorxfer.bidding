@@ -8,12 +8,12 @@
 common [] 1N:"nt_opener" ?m-1:"xfer":>2S:<3D {
 	[[Accept transfer]]
     3m => always;
-    test AQX KJxx AJxx xx:
-        1N 2N
-        3♣;
-    test AQX KJxx xx AJxx:
-        1N 3♣
-        3♦;
+	    test AQX KJxx AJxx xx:
+	        1N 2N
+	        3♣;
+	    test AQX KJxx xx AJxx:
+	        1N 3♣
+	        3♦;
     continuations {
 		[[Bid singleton with game forcing values (or better)]]
 		3x:"splinter" => gf+, 1-x;

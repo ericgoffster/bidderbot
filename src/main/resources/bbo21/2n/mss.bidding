@@ -7,6 +7,7 @@
 
 common [] 2N:"nt_opener" 3♠:"mss" {
 
+    [[Bid a 4 card minor]]
 	4m => 4+m, 2x;
 	    test Ax Axxx AJx AKxx:
 	        2N 3♠
@@ -22,7 +23,8 @@ common [] 2N:"nt_opener" 3♠:"mss" {
 	        2C 2D
 	        2N 3♠
 	        4♦;
-	continuations {		        
+	continuations {
+	    [[Bid singleton major]]
 		4M:"splinter" => gf+, 1-M;
 		    test x Axx Axxxx Axxx:
 		        2N 3♠
@@ -53,6 +55,7 @@ common [] 2N:"nt_opener" 3♠:"mss" {
 		        2N 3♠
 		        4♦ 4♥;
 	}
+    [[Bid 3N with no minor]]
 	3N => always;
 	    test AQx AJx AJx Axxx:
 	        2N 3♠
@@ -68,7 +71,8 @@ common [] 2N:"nt_opener" 3♠:"mss" {
 	        2C 2D
 	        2N 3♠
 	        3N;
-	continuations {		        	
+	continuations {
+		[[Bid singleton major]]
 		4M:"splinter" => gf+, 1-M;
 		    test x Axx Axxxx Axxx:
 		        2N 3♠

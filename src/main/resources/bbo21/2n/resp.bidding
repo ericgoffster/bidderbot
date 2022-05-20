@@ -7,6 +7,7 @@
 
 common [] 2N:"nt_opener" {
 
+    [[stayman with a 4 card major]]
 	3♣:"stayman" => gf+, 4M;
 	    test AJxxx Axxx xx xx:
 	        2N 3♣;
@@ -19,6 +20,7 @@ common [] 2N:"nt_opener" {
 	        2C 2D
 	        2N 3♣;
 	
+    [[transfer with slam interest]]
 	3M-1:"xfer" => slaminv, 6+M;
 	    test Axxxxx x Axx Jxx:
 	        2N 3♥;
@@ -31,6 +33,7 @@ common [] 2N:"nt_opener" {
 	        2C 2D
 	        2N 3♦;
 	
+    [[texas with game interest of more]]
 	4M-1:"xfer" => 6+M, gf+;
 	    test Axxxxx x xxx Jxx:
 	        2N 4♥;
@@ -43,6 +46,7 @@ common [] 2N:"nt_opener" {
 	        2C 2D
 	        2N 4♦;
 	continuations {
+       [[accept the transfer]]
 	    4M => always;
 	    test AQxx AJxx Ax AJx:
 	        2N 4♦
@@ -60,6 +64,7 @@ common [] 2N:"nt_opener" {
 	        4♠;
 	}
 	
+	[[simple transfer]]
 	3M-1:"xfer" => 5+M;
 	    test Axxxx xx Axx Jxx:
 	        2N 3♥;
@@ -72,6 +77,7 @@ common [] 2N:"nt_opener" {
 	        2C 2D
 	        2N 3♦;
 	
+	[[bid game]]
 	3N => gf;
 	    test Axx xx Axxxx Jxx:
 	        2N 3N;
@@ -84,6 +90,7 @@ common [] 2N:"nt_opener" {
 	        2C 2D
 	        2N 3N;
 	
+	[[Minor suit stayman with both minors]]
 	3♠:"mss" => gf+, 4+C, 4+D;
 	    test Axx x Axxxx Axxx:
 	        2N 3♠;
