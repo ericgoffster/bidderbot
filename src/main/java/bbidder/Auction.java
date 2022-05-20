@@ -76,27 +76,19 @@ public final class Auction {
      * @return the current contract. (returning a contract of "P" if no suit bids have been made)
      */
     public Contract getContract() {
-        boolean redoubled = false;
-        boolean doubled = false;
-        int numPasses = 0;
+        int start = 0;
         for (int i = bids.size() - 1; i >= 0; i--) {
             Bid bid = bids.get(i);
             if (bid.isSuitBid()) {
-                return new Contract(bid, doubled, redoubled, numPasses);
-            }
-            if (bid == Bid.X) {
-                doubled = true;
-            }
-            if (bid == Bid.XX) {
-                redoubled = true;
-            }
-            if (bid == Bid.P) {
-                if (!doubled && !redoubled) {
-                    numPasses++;
-                }
+                start = i;
+                break;
             }
         }
-        return new Contract(Bid.P, false, false, numPasses);
+        Contract contract = Contract.FIRST;
+        for(int j = start; j < bids.size(); j++) {
+            contract = contract.addBid(bids.get(j));
+        }
+        return contract;
     }
 
     /**
