@@ -30,7 +30,7 @@ public final class Rebiddable extends Inference {
     @Override
     public IBoundInference bind(Players players) {
         int strain = symbol.getResolvedStrain();
-        return createrBound(strain, players.me.infSummary, players.partner.infSummary);
+        return createrBound(strain, players.me.infSummary);
     }
 
     @Override
@@ -38,7 +38,7 @@ public final class Rebiddable extends Inference {
         return symbol.resolveSuits(suitTable).map(e -> new Rebiddable(e.getSymbol()).new Context(e.suitTable));
     }
 
-    private IBoundInference createrBound(int s, InfSummary meSummary, InfSummary partnerSummary) {
+    private IBoundInference createrBound(int s, InfSummary meSummary) {
         return meSummary.minLenInSuit(s).map(n -> {
             Range r = Range.atLeast(Math.max(n + 1, 6), 13);
             return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
