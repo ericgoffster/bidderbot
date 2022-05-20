@@ -72,8 +72,14 @@
 # Bid minor at right level
 #    
 [] 3m => inv, fit m;
+    test x Kxxx xx AQxxxx:
+        1C 1H
+        1N 3C;
 
 [] 2m => min, fit m;
+    test Ax xxxx xx Axxxx:
+        1C 1H
+        1N 2C;
 
 #
 # Pass preference
