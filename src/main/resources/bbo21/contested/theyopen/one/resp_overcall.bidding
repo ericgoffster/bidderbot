@@ -11,7 +11,7 @@ common (1w) 1x {
     2x => 6-10 tpts, 3+x;
 	    test xx AQx xxxxx xxx:
 	        (1C) 1H 2H;
-	1y => 10+ tpts, 8+ hcp, 5+y;
+	1y:down => 10+ tpts, 8+ hcp, 5+y;
 	    test AKxxx xx Qxx xxx:
 	        (1C) 1H 1S;
 	NJy:>1N => 10+ tpts, 8+ hcp, 6+y;
@@ -29,7 +29,7 @@ common (1w) NJx:>1N {
     NJx => 8-10 tpts, 3+x;
 	    test xx AQx Kxxxx xxx:
 	        (1S) 2H 3H;
-	NJy:>1N => 10+ tpts, 8+ hcp, 6+y;
+	NJy:>1N:down => 10+ tpts, 8+ hcp, 6+y;
 	    test xx AQJxxx Qxx xx:
 	        (1S) 2C 2H;
 	2N => 10-13 hcp, stoppers w;
