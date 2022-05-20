@@ -119,10 +119,23 @@ public final class BitUtil {
      * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
     public static Optional<Integer> leastBit(long pattern) {
-        if (pattern == 0) {
-            return Optional.empty();
+        int p0 = (int) (pattern & 0xffff);
+        if (p0 != 0) {
+            return Optional.of(lowest[p0]);
         }
-        return Optional.of(Long.numberOfTrailingZeros(pattern));
+        int p1 = (int) ((pattern >>> 16) & 0xffff);
+        if (p1 != 0) {
+            return Optional.of(lowest[p1] + 16);
+        }
+        int p2 = (int) ((pattern >>> 32) & 0xffff);
+        if (p2 != 0) {
+            return Optional.of(lowest[p2] + 32);
+        }
+        int p3 = (int) ((pattern >>> 48) & 0xffff);
+        if (p3 != 0) {
+            return Optional.of(lowest[p3] + 48);
+        }
+        return Optional.empty();
     }
     
     public static IntStream stream(long pattern) {
