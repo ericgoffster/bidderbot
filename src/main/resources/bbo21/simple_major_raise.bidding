@@ -6,7 +6,7 @@
 # S = ♠
 
 common 1H 2H {
-	2♠:"splinter" => inv, 1- x;
+	2♠:"splinter_somewhere" => inv, 1- x;
 	    test Axx AKxxx Kxxx x:
 	        1♥ 2♥
 	        2♠;
@@ -23,7 +23,7 @@ common 1H 2H {
 }
 
 common 1S 2S {
-	2N:"splinter" => inv, 1- x;
+	2N:"splinter_somewhere" => inv, 1- x;
 	    test AKxxx Axx Kxxx x:
 	        1♠ 2♠
 	        2N;
