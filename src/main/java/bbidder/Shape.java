@@ -623,7 +623,7 @@ public enum Shape {
         return rng.contains(numInSuit(suit));
     }
 
-    public boolean isLongerOrEqual(int suit, int among) {
+    public boolean isLongerOrEqual(int suit, short among) {
         int len = numInSuit(suit);
         return !BitUtil.stream(among).filter(s -> numInSuit(s) > len).findFirst().isPresent();
     }

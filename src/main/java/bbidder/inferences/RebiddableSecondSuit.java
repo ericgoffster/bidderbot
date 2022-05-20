@@ -47,7 +47,7 @@ public final class RebiddableSecondSuit extends Inference {
         return meSummary.minLenInSuit(shorter).map(myMinLen -> {
             Range r = Range.atLeast(Math.max(myMinLen + 1, 5), 13);
             return ShapeBoundInf.create(
-                    ShapeSet.create(shape -> shape.isSuitInRange(shorter, r) && shape.isLongerOrEqual(longer, 1 << shorter)));
+                    ShapeSet.create(shape -> shape.isSuitInRange(shorter, r) && shape.isLongerOrEqual(longer, (short)(1 << shorter))));
         }).orElse(ConstBoundInference.F);
     }
 

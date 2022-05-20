@@ -43,25 +43,7 @@ public final class BitUtil {
      *            The bit pattern
      * @return Number of bits set in the pattern.
      */
-    public static int size(int pattern) {
-        return size(toLong(pattern));
-    }
-
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return Number of bits set in the pattern.
-     */
     public static int size(short pattern) {
-        return size(toLong(pattern));
-    }
-
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return Number of bits set in the pattern.
-     */
-    public static int size(byte pattern) {
         return size(toLong(pattern));
     }
 
@@ -85,25 +67,7 @@ public final class BitUtil {
      *            The bit pattern
      * @return The index of the highest bit set in the pattern.
      */
-    public static Optional<Integer> highestBit(byte pattern) {
-        return highestBit(toLong(pattern));
-    }
-
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return The index of the highest bit set in the pattern.
-     */
     public static Optional<Integer> highestBit(short pattern) {
-        return highestBit(toLong(pattern));
-    }
-
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return The index of the highest bit set in the pattern.
-     */
-    public static Optional<Integer> highestBit(int pattern) {
         return highestBit(toLong(pattern));
     }
 
@@ -135,25 +99,8 @@ public final class BitUtil {
         return StreamSupport.stream(new PatternIterator(pattern), false).mapToInt(i -> i.intValue());
     }
 
-    public static IntStream stream(int pattern) {
-        return stream(toLong(pattern));
-    }
-
     public static IntStream stream(short pattern) {
         return stream(toLong(pattern));
-    }
-
-    public static IntStream stream(byte pattern) {
-        return stream(toLong(pattern));
-    }
-    
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return The long version of the pattern.
-     */
-    private static long toLong(int pattern) {
-        return pattern & 0xffffffffL;
     }
 
     /**
@@ -163,15 +110,6 @@ public final class BitUtil {
      */
     private static long toLong(short pattern) {
         return pattern & 0xffffL;
-    }
-
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return The long version of the pattern.
-     */
-    private static long toLong(byte pattern) {
-        return pattern & 0xffL;
     }
 
     private static final class PatternIterator implements Spliterator<Integer> {

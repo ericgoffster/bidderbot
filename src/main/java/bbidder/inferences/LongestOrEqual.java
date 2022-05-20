@@ -31,7 +31,7 @@ public final class LongestOrEqual extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        int iamong = among == null ? 0xf : among.evaluate(players);
+        short iamong = among == null ? 0xf : among.evaluate(players);
         int strain = suit.getResolvedStrain();
         return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isLongerOrEqual(strain, iamong)));
     }

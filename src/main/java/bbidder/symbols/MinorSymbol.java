@@ -51,7 +51,7 @@ public final class MinorSymbol extends Symbol {
         if (om != null) {
             return Stream.of(new ConstSymbol(otherMinor(om)).new Context(suitTable));
         }
-        return BitUtil.stream(Constants.MINORS & ~suitTable.getSuits())
+        return BitUtil.stream((short)(Constants.MINORS & ~suitTable.getSuits()))
                 .mapToObj(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
     }
 
