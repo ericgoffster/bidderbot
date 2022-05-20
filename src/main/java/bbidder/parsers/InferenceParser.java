@@ -1,6 +1,5 @@
 package bbidder.parsers;
 
-import java.util.OptionalInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -199,40 +198,14 @@ public final class InferenceParser {
                 }
             }
             {
-                Inference i = makeCombinedTPtsRange(str.trim());
-                if (i != null) {
-                    return i;
+                PointRange createRange = CombinedPointsRangeParser.parseCombinedTPtsRange(str.trim());
+                if (createRange != null) {
+                    return new CombinedTotalPointsRange(createRange);
                 }
             }
             break;
         }
         }
         throw new IllegalArgumentException("unknown inference: '" + str + "'");
-    }
-    private static CombinedTotalPointsRange makeCombinedTPtsRange(String str) {
-        String[] parts = SplitUtil.split(str, "-", 2);
-        if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
-            CombinedTotalPointsRange rlow = makeCombinedTPtsRange(parts[0]);
-            CombinedTotalPointsRange rhigh = makeCombinedTPtsRange(parts[1]);
-            if (rlow == null || rhigh == null) {
-                return null;
-            }
-            OptionalInt l = rlow.rng.lowest();
-            OptionalInt h = rhigh.rng.highest();
-            if (!l.isPresent()) {
-                return new CombinedTotalPointsRange(PointRange.NONE);
-            }
-            if (!h.isPresent()) {
-                return new CombinedTotalPointsRange(PointRange.NONE);
-            }
-            int lower = l.getAsInt();
-            int higher = h.getAsInt();
-            return new CombinedTotalPointsRange(PointRange.between(lower, higher));
-        }
-        PointRange createRange = CombinedPointsRangeParser.createCombinedTPtsRange(str, CombinedPointsRangeParser.POINT_RANGES);
-        if (createRange == null) {
-            return null;
-        }
-        return new CombinedTotalPointsRange(createRange);
     }
 }

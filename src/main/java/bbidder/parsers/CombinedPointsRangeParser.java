@@ -1,8 +1,10 @@
 package bbidder.parsers;
 
 import java.util.Map;
+import java.util.OptionalInt;
 
 import bbidder.PointRange;
+import bbidder.utils.SplitUtil;
 
 public class CombinedPointsRangeParser {
     public static final Map<String, Integer> POINT_RANGES = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35, "grand",
@@ -47,5 +49,27 @@ public class CombinedPointsRangeParser {
 
         return PointRange.between(pts, maxPts);
     }
-
+    
+    public static PointRange parseCombinedTPtsRange(String str) {
+        String[] parts = SplitUtil.split(str, "-", 2);
+        if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
+            PointRange rlow = parseCombinedTPtsRange(parts[0]);
+            PointRange rhigh = parseCombinedTPtsRange(parts[1]);
+            if (rlow == null || rhigh == null) {
+                return null;
+            }
+            OptionalInt l = rlow.lowest();
+            OptionalInt h = rhigh.highest();
+            if (!l.isPresent()) {
+                return PointRange.NONE;
+            }
+            if (!h.isPresent()) {
+                return PointRange.NONE;
+            }
+            int lower = l.getAsInt();
+            int higher = h.getAsInt();
+            return PointRange.between(lower, higher);
+        }
+        return CombinedPointsRangeParser.createCombinedTPtsRange(str, CombinedPointsRangeParser.POINT_RANGES);
+    }
 }
