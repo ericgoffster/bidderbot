@@ -81,9 +81,23 @@ public final class InferenceParser {
                 if (rng.of.equalsIgnoreCase("tpts")) {
                     return new TotalPointsRange(PointRange.between(rng.min, rng.max));
                 }
-                Symbol sym = SymbolParser.parseSymbol(rng.of);
-                if (sym != null) {
-                    return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
+                {
+                    Symbol sym = SymbolParser.parseSymbol(rng.of);
+                    if (sym != null) {
+                        return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
+                    }
+                }
+                {
+                    Matcher m = InferenceParser.PATT_SPECIFIC_CARDS.matcher(rng.of);
+                    if (m.matches()) {
+                        int top = Integer.parseInt(m.group(1));
+                        String suit = m.group(2);
+                        Symbol sym = SymbolParser.parseSymbol(suit);
+                        if (sym == null) {
+                            return null;
+                        }
+                        return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
+                    }
                 }
             }
         }
@@ -123,12 +137,6 @@ public final class InferenceParser {
         }
         {
             Inference i = InferenceParser.parseCombinedTPts(str);
-            if (i != null) {
-                return i;
-            }
-        }
-        {
-            Inference i = InferenceParser.parseSpecificCards(str);
             if (i != null) {
                 return i;
             }
@@ -213,26 +221,6 @@ public final class InferenceParser {
             return null;
         }
         return new CombinedTotalPointsRange(createRange);
-    }
-
-    private static Inference parseSpecificCards(String str) {
-        if (str == null) {
-            return null;
-        }
-        RangeOf rng = InferenceParser.parseRange(str);
-        if (rng != null) {
-            Matcher m = InferenceParser.PATT_SPECIFIC_CARDS.matcher(rng.of);
-            if (m.matches()) {
-                int top = Integer.parseInt(m.group(1));
-                String suit = m.group(2);
-                Symbol sym = SymbolParser.parseSymbol(suit);
-                if (sym == null) {
-                    return null;
-                }
-                return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
-            }
-        }
-        return null;
     }
 
     private static PointRange createTPtsRange(String str) {
