@@ -6,6 +6,7 @@ import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.PointRange;
+import bbidder.Position;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.TotalPtsBoundInf;
@@ -21,12 +22,13 @@ public final class MaxTpts extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        OptionalInt max = players.me.infSummary.tpts.highest();
+        Position position = Position.ME;
+        OptionalInt max = players.getPlayer(position).infSummary.tpts.highest();
         if (!max.isPresent()) {
             return ConstBoundInference.F;
         }
         PointRange rng = PointRange.exactly(max.getAsInt());
-        return TotalPtsBoundInf.create(players.partner.infSummary, rng);
+        return TotalPtsBoundInf.create(players.getPlayer(position.getOpposite()).infSummary, rng);
     }
 
     @Override

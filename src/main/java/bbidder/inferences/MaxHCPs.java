@@ -6,6 +6,7 @@ import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.PointRange;
+import bbidder.Position;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.HcpBoundInf;
@@ -21,7 +22,8 @@ public final class MaxHCPs extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        OptionalInt max = players.me.infSummary.hcp.highest();
+        Position position = Position.ME;
+        OptionalInt max = players.getPlayer(position).infSummary.hcp.highest();
         if (!max.isPresent()) {
             return ConstBoundInference.F;
         }

@@ -7,6 +7,7 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.ShapeSet;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
@@ -27,7 +28,8 @@ public final class Rebiddable extends Inference {
     @Override
     public IBoundInference bind(Players players) {
         int strain = symbol.getResolvedStrain();
-        return createrBound(strain, players.me.infSummary);
+        Position position = Position.ME;
+        return createrBound(strain, players.getPlayer(position).infSummary);
     }
 
     @Override

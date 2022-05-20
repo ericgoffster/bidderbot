@@ -6,6 +6,7 @@ import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.PointRange;
+import bbidder.Position;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.TotalPtsBoundInf;
 import bbidder.utils.MyStream;
@@ -32,7 +33,8 @@ public final class TotalPointsRange extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        return TotalPtsBoundInf.create(players.partner.infSummary, rng);
+        Position position = Position.ME;
+        return TotalPtsBoundInf.create(players.getPlayer(position.getOpposite()).infSummary, rng);
     }
 
     @Override

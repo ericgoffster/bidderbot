@@ -6,6 +6,7 @@ import java.util.OptionalInt;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.SuitTable;
@@ -73,11 +74,12 @@ public final class Preference extends Inference {
     }
 
     private static IBoundInference createrBound(int longer, int shorter, Players players) {
-        OptionalInt minLenInLonger = players.partner.infSummary.minLenInSuit(longer);
+        Position position = Position.ME;
+        OptionalInt minLenInLonger = players.getPlayer(position.getOpposite()).infSummary.minLenInSuit(longer);
         if (!minLenInLonger.isPresent()) {
             return ConstBoundInference.F;
         }
-        OptionalInt minLenInShorter = players.partner.infSummary.minLenInSuit(shorter);
+        OptionalInt minLenInShorter = players.getPlayer(position.getOpposite()).infSummary.minLenInSuit(shorter);
         if (!minLenInShorter.isPresent()) {
             return ConstBoundInference.F;
         }

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import bbidder.Generality;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
@@ -35,14 +36,15 @@ public final class BestFitEstablished extends Generality {
     }
 
     private Set<Integer> getBestSuits(Players players) {
+        Position position = Position.ME;
         Set<Integer> bestSuits = new HashSet<>();
         int bestLen = 0;
         for (int t = 0; t < 4; t++) {
-            OptionalInt minLenInSuitPartner = players.partner.infSummary.minLenInSuit(t);
+            OptionalInt minLenInSuitPartner = players.getPlayer(position.getOpposite()).infSummary.minLenInSuit(t);
             if (!minLenInSuitPartner.isPresent()) {
                 return Set.of();
             }
-            OptionalInt minLenInSuitMe = players.me.infSummary.minLenInSuit(t);
+            OptionalInt minLenInSuitMe = players.getPlayer(position).infSummary.minLenInSuit(t);
             if (!minLenInSuitPartner.isPresent()) {
                 return Set.of();
             }

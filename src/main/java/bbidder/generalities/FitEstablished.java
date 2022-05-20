@@ -30,8 +30,9 @@ public final class FitEstablished extends Generality {
 
     @Override
     public boolean test(Players players, TaggedAuction bidList) {
+        Position position = Position.ME;
         int s = symbol.getResolvedStrain();
-        OptionalInt ourCombinedMinLength = players.combinedMinLength(Position.ME, s);
+        OptionalInt ourCombinedMinLength = players.combinedMinLength(position, s);
         if (!ourCombinedMinLength.isPresent()) {
             return false;
         }

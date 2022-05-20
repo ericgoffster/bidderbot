@@ -6,6 +6,7 @@ import java.util.OptionalInt;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.ShapeSet;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
@@ -65,7 +66,8 @@ public final class FitInSuit extends Inference {
     }
 
     private IBoundInference createrBound(int s, Players players) {
-        OptionalInt minLenInSuitPartner = players.partner.infSummary.minLenInSuit(s);
+        Position position = Position.ME;
+        OptionalInt minLenInSuitPartner = players.getPlayer(position.getOpposite()).infSummary.minLenInSuit(s);
         if (!minLenInSuitPartner.isPresent()) {
             return ConstBoundInference.F;
         }

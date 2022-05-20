@@ -26,7 +26,8 @@ public final class TotalPointsEstablished extends Generality {
 
     @Override
     public boolean test(Players players, TaggedAuction bidList) {
-        OptionalInt ourCombinedMinLength = players.combinedMinTpts(Position.ME);
+        Position position = Position.ME;
+        OptionalInt ourCombinedMinLength = players.combinedMinTpts(position);
         if (!ourCombinedMinLength.isPresent()) {
             return false;
         }

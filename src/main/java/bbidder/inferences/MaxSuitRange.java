@@ -6,6 +6,7 @@ import java.util.OptionalInt;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.ShapeSet;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
@@ -30,7 +31,8 @@ public final class MaxSuitRange extends Inference {
         } catch (Exception e) {
             throw e;
         }
-        OptionalInt max = players.me.infSummary.getSuit(strain).highest();
+        Position position = Position.ME;
+        OptionalInt max = players.getPlayer(position).infSummary.getSuit(strain).highest();
         if (!max.isPresent()) {
             return ConstBoundInference.F;
         }

@@ -7,6 +7,7 @@ import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.PointRange;
+import bbidder.Position;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.TotalPtsBoundInf;
@@ -33,12 +34,13 @@ public final class CombinedTotalPointsRange extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        OptionalInt minTotalPts = players.partner.infSummary.minTotalPts();
+        Position position = Position.ME;
+        OptionalInt minTotalPts = players.getPlayer(position.getOpposite()).infSummary.minTotalPts();
         if (!minTotalPts.isPresent()) {
             return ConstBoundInference.F;
         }
         int tpts = minTotalPts.getAsInt();
-        return TotalPtsBoundInf.create(players.partner.infSummary, new PointRange(rng.bits >> tpts));
+        return TotalPtsBoundInf.create(players.getPlayer(position.getOpposite()).infSummary, new PointRange(rng.bits >> tpts));
     }
 
     @Override

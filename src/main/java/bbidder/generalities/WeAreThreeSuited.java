@@ -4,6 +4,7 @@ import java.util.OptionalInt;
 
 import bbidder.Generality;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.SuitTable;
 import bbidder.TaggedAuction;
 import bbidder.utils.BitUtil;
@@ -24,8 +25,9 @@ public final class WeAreThreeSuited extends Generality {
 
     @Override
     public boolean test(Players players, TaggedAuction bidList) {
-        OptionalInt mySuits = players.me.infSummary.getBidSuits();
-        OptionalInt pSuits = players.partner.infSummary.getBidSuits();
+        Position position = Position.ME;
+        OptionalInt mySuits = players.getPlayer(position).infSummary.getBidSuits();
+        OptionalInt pSuits = players.getPlayer(position.getOpposite()).infSummary.getBidSuits();
         if (mySuits.isEmpty() || pSuits.isEmpty()) {
             return false;
         }

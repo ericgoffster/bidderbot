@@ -7,6 +7,7 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.ShapeSet;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
@@ -28,9 +29,10 @@ public final class RebiddableSecondSuit extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
+        Position position = Position.ME;
         int strainLonger = longer.getResolvedStrain();
         int strainShorter = shorter.getResolvedStrain();
-        return createrBound(strainLonger, strainShorter, players.me.infSummary);
+        return createrBound(strainLonger, strainShorter, players.getPlayer(position).infSummary);
     }
 
     @Override
