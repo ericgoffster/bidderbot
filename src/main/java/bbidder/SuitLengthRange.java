@@ -4,13 +4,18 @@ import java.util.Optional;
 
 import bbidder.utils.BitUtil;
 
-public class SuitLengthRange extends Range {
+public final class SuitLengthRange extends Range {
     public static final int MAX = 13;
     public static final SuitLengthRange NONE = new SuitLengthRange(0);
-    public static final SuitLengthRange ALL = new SuitLengthRange(bitMask(MAX));
+    public static final SuitLengthRange ALL = new SuitLengthRange(BitUtil.bitMask(MAX));
+    
+    @Override
+    public int max() {
+        return MAX;
+    }
     
     public SuitLengthRange(long bits) {
-        super(bits, MAX);
+        super(bits);
     }
 
     public Optional<Integer> highest() {
@@ -35,7 +40,7 @@ public class SuitLengthRange extends Range {
         if (n < 0 || n > MAX) {
             throw new IllegalArgumentException();
         }
-        return new SuitLengthRange(~bitMask(n - 1) & bitMask(MAX));
+        return new SuitLengthRange(~BitUtil.bitMask(n - 1) & BitUtil.bitMask(MAX));
     }
 
     public static SuitLengthRange atMost(Integer n) {
@@ -45,11 +50,11 @@ public class SuitLengthRange extends Range {
         if (n < 0 || n > MAX) {
             throw new IllegalArgumentException();
         }
-        return new SuitLengthRange(bitMask(n));
+        return new SuitLengthRange(BitUtil.bitMask(n));
     }
 
     public SuitLengthRange add(int pos) {
-        if (pos < 0 || pos > max) {
+        if (pos < 0 || pos > MAX) {
             throw new IllegalArgumentException();
         }
         return new SuitLengthRange(bits | (1L << pos));
@@ -60,7 +65,7 @@ public class SuitLengthRange extends Range {
     }
 
     public SuitLengthRange not() {
-        return new SuitLengthRange((~bits) & bitMask(MAX));
+        return new SuitLengthRange((~bits) & BitUtil.bitMask(MAX));
     }
 
     public SuitLengthRange and(SuitLengthRange other) {

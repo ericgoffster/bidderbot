@@ -5,14 +5,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import bbidder.CardsRange;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.NOfTop;
 import bbidder.Players;
-import bbidder.Range;
+import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SuitTable;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
 
 /**
@@ -20,12 +20,12 @@ import bbidder.inferences.bound.SpecificCardsBoundInf;
  */
 public final class SpecificCards extends Inference {
     private final Symbol symbol;
-    private final Range rng;
+    private final CardsRange rng;
     private final int top;
 
     private static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
-    public SpecificCards(Symbol symbol, Range rng, int top) {
+    public SpecificCards(Symbol symbol, CardsRange rng, int top) {
         super();
         this.symbol = symbol;
         this.rng = rng;
@@ -61,7 +61,7 @@ public final class SpecificCards extends Inference {
                 if (sym == null) {
                     return null;
                 }
-                return new SpecificCards(sym, Range.between(rng.min, rng.max, top), top);
+                return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
             }
         }
         return null;

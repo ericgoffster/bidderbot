@@ -14,21 +14,16 @@ import bbidder.utils.BitUtil;
  * @author goffster
  *
  */
-public class Range {
+public abstract class Range {
     public final long bits;
-    public final int max;
+    public abstract int max();
 
-    public static long bitMask(int max) {
-        return (1L << (max + 1)) - 1;
-    }
-
-    public Range(long bits, int max) {
+    public Range(long bits) {
         super();
-        if ((bits & ~bitMask(max)) != 0) {
+        if ((bits & ~BitUtil.bitMask(max())) != 0) {
             throw new IllegalArgumentException();
         }
         this.bits = bits;
-        this.max = max;
     }
 
     public boolean isEmpty() {
@@ -43,76 +38,12 @@ public class Range {
         return BitUtil.leastBit(bits);
     }
 
-    public static Range all(int max) {
-        return new Range(bitMask(max), max);
-    }
-
-    public static Range none(int max) {
-        return new Range(0, max);
-    }
-
-    public static Range exactly(int n, int max) {
-        if (n < 0 || n > max) {
-            throw new IllegalArgumentException();
-        }
-        return new Range(1 << n, max);
-    }
-
-    public static Range atLeast(Integer n, int max) {
-        if (n == null) {
-            return all(max);
-        }
-        if (n < 0 || n > max) {
-            throw new IllegalArgumentException();
-        }
-        return new Range(~bitMask(n - 1) & bitMask(max), max);
-    }
-
-    public static Range atMost(Integer n, int max) {
-        if (n == null) {
-            return all(max);
-        }
-        if (n < 0 || n > max) {
-            throw new IllegalArgumentException();
-        }
-        return new Range(bitMask(n), max);
-    }
-
-    public Range add(int pos) {
-        if (pos < 0 || pos > max) {
-            throw new IllegalArgumentException();
-        }
-        return new Range(bits | (1L << pos), max);
-    }
-
-    public static Range between(Integer lhs, Integer rhs, int max) {
-        return atLeast(lhs, max).and(atMost(rhs, max));
-    }
-
     public boolean unBounded() {
-        return bits == bitMask(max);
-    }
-
-    public Range not() {
-        return new Range((~bits) & bitMask(max), max);
-    }
-
-    public Range and(Range other) {
-        if (max != other.max) {
-            throw new IllegalArgumentException();
-        }
-        return new Range(bits & other.bits, max);
-    }
-
-    public Range or(Range other) {
-        if (max != other.max) {
-            throw new IllegalArgumentException();
-        }
-        return new Range(bits | other.bits, max);
+        return bits == BitUtil.bitMask(max());
     }
 
     public boolean contains(int pos) {
-        if (pos < 0 || pos > max) {
+        if (pos < 0 || pos > max()) {
             throw new IllegalArgumentException();
         }
         return (bits & (1L << pos)) != 0L;
@@ -120,7 +51,7 @@ public class Range {
 
     @Override
     public int hashCode() {
-        return Objects.hash(bits, max);
+        return Objects.hash(bits);
     }
 
     @Override
@@ -132,7 +63,7 @@ public class Range {
         if (getClass() != obj.getClass())
             return false;
         Range other = (Range) obj;
-        return bits == other.bits && max == other.max;
+        return bits == other.bits;
     }
     
     private class State {
@@ -159,7 +90,7 @@ public class Range {
             } else {
                 if (lhs.intValue() == 0) {
                     return rhs + "-";
-                } else if (rhs.intValue() == max) {
+                } else if (rhs.intValue() == max()) {
                     return lhs + "+";
                 } else {
                     return lhs + "-" + rhs;

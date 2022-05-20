@@ -162,4 +162,8 @@ public final class BitUtil {
     public static IntStream stream(short pattern) {
         return pattern == 0 ? IntStream.empty() : Arrays.stream(set[pattern & 0xffff]);
     }
+
+    public static long bitMask(int max) {
+        return (1L << (max + 1)) - 1;
+    }
 }

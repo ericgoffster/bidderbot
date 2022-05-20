@@ -4,13 +4,18 @@ import java.util.Optional;
 
 import bbidder.utils.BitUtil;
 
-public class PointRange extends Range {
+public final class PointRange extends Range {
     public static final int MAX = 40;
     public static final PointRange NONE = new PointRange(0);
-    public static final PointRange ALL = new PointRange(bitMask(MAX));
+    public static final PointRange ALL = new PointRange(BitUtil.bitMask(MAX));
+    
+    @Override
+    public int max() {
+        return MAX;
+    }
     
     public PointRange(long bits) {
-        super(bits, MAX);
+        super(bits);
     }
 
     public Optional<Integer> highest() {
@@ -35,7 +40,7 @@ public class PointRange extends Range {
         if (n < 0 || n > MAX) {
             throw new IllegalArgumentException();
         }
-        return new PointRange(~bitMask(n - 1) & bitMask(MAX));
+        return new PointRange(~BitUtil.bitMask(n - 1) & BitUtil.bitMask(MAX));
     }
 
     public static PointRange atMost(Integer n) {
@@ -45,11 +50,11 @@ public class PointRange extends Range {
         if (n < 0 || n > MAX) {
             throw new IllegalArgumentException();
         }
-        return new PointRange(bitMask(n));
+        return new PointRange(BitUtil.bitMask(n));
     }
 
     public PointRange add(int pos) {
-        if (pos < 0 || pos > max) {
+        if (pos < 0 || pos > MAX) {
             throw new IllegalArgumentException();
         }
         return new PointRange(bits | (1L << pos));
@@ -60,7 +65,7 @@ public class PointRange extends Range {
     }
 
     public PointRange not() {
-        return new PointRange((~bits) & bitMask(MAX));
+        return new PointRange((~bits) & BitUtil.bitMask(MAX));
     }
 
     public PointRange and(PointRange other) {
