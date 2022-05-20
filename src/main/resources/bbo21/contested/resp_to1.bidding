@@ -1,3 +1,5 @@
+# Responses after a partners takeout double
+
 common (1w) X:"takeout" {
     DJM:down => 6+ M, min;
 	    test xx Axxxxx x Jxxx:
