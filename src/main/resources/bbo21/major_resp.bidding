@@ -61,7 +61,7 @@ common 1M {
 	    test Qxx Kxx Axx AJxx:
 	        1♥ 3N;
 	
-	1N => inv, 3 M;
+	1N:"nt_forcing" => inv, 3 M;
 	    test Kx KJx xxx Axxxx :
 	        1♥ 1N;
 	
@@ -79,7 +79,7 @@ common 1M {
 	        1♥ 1♠;
 	
 	# Catch all
-	1N => min+;
+	1N:"nt_forcing" => min+;
 	    test xxx xx AKxx Qxxx :
 	        1♥ 1N;
 }

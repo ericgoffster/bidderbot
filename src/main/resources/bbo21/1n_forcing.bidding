@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common 1M 1N {
+common 1M 1N:"nt_forcing" {
 
 	2OM:>2M => inv+, 4+OM;
 	    test AQxxx AQxxxx x x:
