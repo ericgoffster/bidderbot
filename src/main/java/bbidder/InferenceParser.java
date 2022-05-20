@@ -33,10 +33,6 @@ import bbidder.utils.SplitUtil;
 public final class InferenceParser {
     private static final Map<String, Integer> POINT_RANGES = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35,
             "grand", 37);
-    private static Pattern PATT_PREF = Pattern.compile("prefer\\s*(.*)\\s*to\\s*(.*)", Pattern.CASE_INSENSITIVE);
-    private static Pattern PATT_LONGEQ_AMONG = Pattern.compile("longest_or_equal\\s*(.*)among\\s*(.*)", Pattern.CASE_INSENSITIVE);
-    private static Pattern PATT_LONGEQ = Pattern.compile("longest_or_equal\\s*(.*)", Pattern.CASE_INSENSITIVE);
-
     private static Pattern PATT_SPECIFIC_CARDS = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
     private static Pattern PATT_MIN_TO_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
     private static Pattern PATT_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(.*)");
@@ -110,22 +106,16 @@ public final class InferenceParser {
             break;
         }
         case "longest_or_equal": {
-            {
-                Matcher m = InferenceParser.PATT_LONGEQ_AMONG.matcher(str.trim());
-                if (m.matches()) {
-                    Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-                    if (sym != null) {
-                        return new LongestOrEqual(sym, SuitSetParser.lookupSuitSet(m.group(2)));
-                    }
+            String[] parts = SplitUtil.split(remainder, "\\s*among\\s*");
+            if (parts.length == 2) {
+                Symbol sym = SymbolParser.parseSymbol(parts[0]);
+                if (sym != null) {
+                    return new LongestOrEqual(sym, SuitSetParser.lookupSuitSet(parts[1]));
                 }
-            }
-            {
-                Matcher m = InferenceParser.PATT_LONGEQ.matcher(str.trim());
-                if (m.matches()) {
-                    Symbol sym = SymbolParser.parseSymbol(m.group(1));
-                    if (sym != null) {
-                        return new LongestOrEqual(sym, null);
-                    }
+            } else if (parts.length == 1) {
+                Symbol sym = SymbolParser.parseSymbol(parts[0]);
+                if (sym != null) {
+                    return new LongestOrEqual(sym, null);
                 }
             }
             break;
@@ -146,11 +136,11 @@ public final class InferenceParser {
         case "partial_stoppers":
             return new StoppersInSuits(SuitSetParser.lookupSuitSet(remainder), true);
         case "prefer": {
-            Matcher m = InferenceParser.PATT_PREF.matcher(str.trim());
-            if (m.matches()) {
-                Symbol sym1 = SymbolParser.parseSymbol(m.group(1).trim());
+            String[] parts = SplitUtil.split(remainder, "\\s*to\\s*");
+            if (parts.length == 2) {
+                Symbol sym1 = SymbolParser.parseSymbol(parts[0]);
                 if (sym1 != null) {
-                    Symbol sym2 = SymbolParser.parseSymbol(m.group(2).trim());
+                    Symbol sym2 = SymbolParser.parseSymbol(parts[1]);
                     if (sym2 != null) {
                         return new Preference(sym1, sym2);
                     }
