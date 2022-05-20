@@ -1,7 +1,5 @@
 package bbidder;
 
-import java.util.List;
-
 import bbidder.utils.DebugUtils;
 
 public class Analyze {
@@ -30,13 +28,9 @@ public class Analyze {
             DebugUtils.breakpoint();
             state = state.withBid(bid);
         }
-
-        List<PossibleBid> possibleBids = state.getPossibleBids();
-        for(PossibleBid pb: possibleBids) {
-            System.out.println(pb.inf.where);
-            System.out.println(pb.inf);
-        }
         
+        state = state.rotate(-1);
+
         int i = 1;
         while(i < args.length) {
             String arg = args[i++];

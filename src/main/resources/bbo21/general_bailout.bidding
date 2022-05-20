@@ -17,10 +17,6 @@
 
 [[Return to known fit over a suit bid]]
 [fit_established y] ?x NJy => nofit x;
-    test AKx Axxx Axx Qxx:
-        1N 2D
-        2N 3D
-        3H;
     test AQX KJxx xx AJxx:
         1N 3♣
         3♦;
@@ -40,12 +36,6 @@
 
 [[Support suit]]
 [partner_bid_suit y] NJy => fit y;
-    test AQx xxx AJx Axxx:
-        1N 2♦
-        2♥;
-    test AQx xxx AJx Axxx:
-        1N 2♥
-        2♠;
 
 # At this point, no playable fits at all
 

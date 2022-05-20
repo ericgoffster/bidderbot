@@ -124,7 +124,7 @@
         1♣ 1♥
         1♠ 2♠;
 
-[[Pass a playable major suit minimum]]
+[[Pass a playable major suit]]
 [fit_established M] ?M P => always;
     test xxx Axxx Kx xxxx:
         1C 1H
@@ -136,14 +136,33 @@
         1S 2N
         4S P;
 
-[[Pass a playable major suit minimum]]
+[[Pass a playable major suit]]
 [partner_bid_suit M] ?M P => fit M;
 
-[[Pass a playable major suit minimum]]
+[[Pass a playable major suit]]
 [i_bid_suit M] ?M P => fit M;
     test xxx xxxxxx xxx x:
         1N 2D
         2♥ P;
+
+[[Return to established major]]
+[fit_established M] NJM => always;
+    test AKx Axxx Axx Qxx:
+        1N 2D
+        2N 3D
+        3H;
+
+[[Bid self supporting major]]
+[i_bid_suit M] NJM => fit M;
+
+[[Support partner's major]]
+[partner_bid_suit M] NJM => fit M;
+    test AQx xxx AJx Axxx:
+        1N 2♦
+        2♥;
+    test AQx xxx AJx Axxx:
+        1N 2♥
+        2♠;
 
 [[Rebid 2nd suit if possible]]
 [i_am_two_suited x y] NJy => rebiddable_2nd x y;
