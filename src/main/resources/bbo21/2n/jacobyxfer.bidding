@@ -24,15 +24,6 @@ NJx => 21 hcp, 4+M, 2-x;
         3N;
 
 2N 3M-1
-3M => always;
-    test xx AQJx AKxx AKx:
-        2N 3♥
-        3♠;
-    test AQJx xx AKxx AKx:
-        2N 3♦
-        3♥;
-
-2N 3M-1
 NJx 4M-1 => always;
     test xx Axxxx xxx xxx:
         2N 3♦

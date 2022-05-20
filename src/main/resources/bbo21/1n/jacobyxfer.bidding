@@ -34,15 +34,6 @@ NJx => 17 hcp, 4+M, 2-x;
         1N 2♥
         2N;
 
-[[Accept the transfer with no extras]]  
-1N 2M-1 2M => always ;
-    test AQxx xx AJx Axxx:
-        1N 2♦
-        2♥;
-    test AQx xxx AJx Axxx:
-        1N 2♥
-        2♠;
-
 [[Bid 2S with 5-5 in the majors and invitational values]]  
 1N 2♦
 2♥ 2♠ => inv, 5+♠;

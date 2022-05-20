@@ -1,6 +1,7 @@
 package bbidder;
 
 import bbidder.generalities.AndGenerality;
+import bbidder.generalities.BestFitEstablished;
 import bbidder.generalities.FitEstablished;
 import bbidder.generalities.IAmTwoSuitedGenerality;
 import bbidder.generalities.IBidSuitGenerality;
@@ -44,6 +45,13 @@ public final class GeneralityParser {
         case TrueGenerality.NAME: {
             if (remainder.equals("")) {
                 return TrueGenerality.T;
+            }
+            break;
+        }
+        case BestFitEstablished.NAME: {
+            Symbol symbol = SymbolParser.parseSymbol(remainder);
+            if (symbol != null) {
+                return new BestFitEstablished(symbol);
             }
             break;
         }
