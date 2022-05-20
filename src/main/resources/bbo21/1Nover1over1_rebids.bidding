@@ -6,28 +6,28 @@
 # S = ♠
 
 common 1m 1M 1N {
-	2om => slaminv, 5+ M;
+	2om:"cb_stayman" => slaminv, 5+ M;
 	    test Axx AQJxx Ax Axx:
 	        1C 1H
 	        1N 2D;
 	
-	2om => 12+ tpts, 5 M;
+	2om:"cb_stayman" => 12+ tpts, 5 M;
 	    test Axx AQJxx xx xxx:
 	        1C 1H
 	        1N 2D;
 	
-	3om => min, 6+ om;
+	3om:"cb_stayman" => min, 6+ om;
 	    test x xxxx AQxxxx xx:
 	        1C 1H
 	        1N 3D;
 }
 
 common 1H 1S 1N {
-	2C => slaminv, 5+ S;
+	2C:"cb_stayman" => slaminv, 5+ S;
 	    test AQJxx Ax Axx Axx:
 	        1H 1S
 	        1N 2C;
-	2C => 12+ tpts, 5+ M;
+	2C:"cb_stayman" => 12+ tpts, 5+ M;
 	    test AQJxx xx Axx xxx:
 	        1H 1S
 	        1N 2C;

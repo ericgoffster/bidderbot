@@ -6,10 +6,14 @@
 # S = ♠
 
 common
-	1m 1M
-	1N 2om {
+	1x 1M
+	1N 2y:"cb_stayman" {
 	
-	2OM => 13- hcp, 4OM;
+	2z:<2M => 13- hcp, 4+z;
+	    test xx AKxxx KJxx Qx:
+	        1H 1S
+	        1N 2C
+	        2D;
 	    test Ax Axxx Axxx xxx:
 	        1D 1S
 	        1N 2C
@@ -19,45 +23,67 @@ common
 	        1N 2C
 	        2H;
 	
-	
 	2M => 13- hcp, 3M;
 	    test Axx Axx Axxx xxx:
 	        1D 1S
 	        1N 2C
 	        2S;
-	
-	2N => 13- hcp, stoppers unstopped & MAJORS;
+	    test Axx Axxxx Ax xxx:
+	        1H 1S
+	        1N 2C
+	        2S;
+	        
+	2N => 13- hcp, stoppers z;
 	    test Ax Axx Axxxx xxx:
 	        1D 1S
 	        1N 2C
 	        2N;
+	    test xx Axxxx Axx Axx:
+	        1H 1S
+	        1N 2C
+	        2N;
 	        
-	3OM => 4OM;
+	3z => 4+z;
 	    test Ax AQxx Axxx xxx:
 	        1D 1S
 	        1N 2C
 	        3H;
-	
-	
+	    test xx AKxxx AJxx Qx:
+	        1H 1S
+	        1N 2C
+	        3D;
+	        	
 	3M => 3M;
 	    test Axx AQx Axxxx xx:
 	        1D 1S
 	        1N 2C
 	        3S;
+	    test AQx Axxxx Ax xxx:
+	        1H 1S
+	        1N 2C
+	        3S;
 	
-	3N => stoppers unstopped & MAJORS;
+	3N => stoppers z;
 	    test Ax AQx Axxxx xxx:
 	        1D 1S
 	        1N 2C
 	        3N;
+	    test Ax Axxxx Axx Qxx:
+	        1H 1S
+	        1N 2C
+	        3N;
 	
-	3om => 4 om;
+	3y => 4+ y;
 	    test xx xxx AJxx AKxx:
 	        1D 1S
 	        1N 2C
 	        3C;
+	    test Qx AQxxx Jx Axxx:
+	        1H 1S
+	        1N 2C
+	        3C;
 	
-	Njm => always;
+	Njx => always;
 	    test xx xxx AJxxx AKx:
 	        1D 1S
 	        1N 2C
@@ -66,47 +92,6 @@ common
 	        1C 1S
 	        1N 2D
 	        3C;
-}
-
-common 
-	1H 1S
-	1N 2C {
-	
-	2S => 13- hcp, 3S;
-	    test Axx Axxxx Ax xxx:
-	        1H 1S
-	        1N 2C
-	        2S;
-	
-	
-	2N => 13- hcp, stoppers D;
-	    test xx Axxxx Axx Axx:
-	        1H 1S
-	        1N 2C
-	        2N;
-	
-	3S => 3S;
-	    test AQx Axxxx Ax xxx:
-	        1H 1S
-	        1N 2C
-	        3S;
-	
-	
-	3N => stoppers D;
-	    test Ax Axxxx Axx Qxx:
-	        1H 1S
-	        1N 2C
-	        3N;
-	
-	
-	3C => 4 C;
-	    test Qx AQxxx Jx Axxx:
-	        1H 1S
-	        1N 2C
-	        3C;
-	
-	
-	2H => always;
 	    test Ax Axxxx xxx Axx:
 	        1H 1S
 	        1N 2C
