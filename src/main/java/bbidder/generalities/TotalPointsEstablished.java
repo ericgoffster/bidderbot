@@ -11,12 +11,11 @@ import bbidder.SuitTable;
 import bbidder.utils.MyStream;
 
 public final class TotalPointsEstablished extends Generality {
-    public static final String NAME = "tpts_established";
-    private final PointRange combined;
+    public final PointRange rng;
 
     public TotalPointsEstablished(PointRange combined) {
         super();
-        this.combined = combined;
+        this.rng = combined;
     }
 
     @Override
@@ -30,12 +29,12 @@ public final class TotalPointsEstablished extends Generality {
         if (!ourCombinedMinLength.isPresent()) {
             return false;
         }
-        return combined.contains(ourCombinedMinLength.getAsInt());
+        return rng.contains(ourCombinedMinLength.getAsInt());
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(combined);
+        return Objects.hash(rng);
     }
 
     @Override
@@ -47,12 +46,12 @@ public final class TotalPointsEstablished extends Generality {
         if (getClass() != obj.getClass())
             return false;
         TotalPointsEstablished other = (TotalPointsEstablished) obj;
-        return Objects.equals(combined, other.combined);
+        return Objects.equals(rng, other.rng);
     }
 
     @Override
     public String toString() {
-        return combined + " " + NAME;
+        return rng.toString();
     }
 
 }

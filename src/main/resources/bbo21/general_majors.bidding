@@ -10,32 +10,8 @@
     test AQxxx Axxx Ax xx:
         1S 3S
         4S;
-    test Ax Axxx AKxxx Ax:
-        1D 1S
-        2H 3H
-        4H;
     test AKxxxx AKx Ax xx:
         1♠ 2♠
-        4♠;
-    test AQxx AJxx Ax xxx:
-        1N 4♦ 
-        4♥;
-    test AQxx AJxx Ax xxx:
-        1N 4♥
-        4♠;
-    test AQxx AJxx Ax AJx:
-        2N 4♦
-        4♥;
-    test AQxx AJxx Ax AJx:
-        2N 4♥
-        4♠;
-    test AQxx AKxx Ax AJx:
-        2C 2D
-        2N 4♦
-        4♥;
-    test AQxx AKxx Ax AJx:
-        2C 2D
-        2N 4♥
         4♠;
 
 [[Bid game in a self sufficient major]]
@@ -58,20 +34,6 @@
     test AJxx Axxx Axx xx:
         1N 2♣
         2♠ 4♠;
-    test Axx Qxxx xxx xxx:
-        2C 2D
-        2N 3♣
-        3♥ 4H;
-    test Qxxx Axx xxx xxx:
-        2C 2D
-        2N 3♣
-        3♠ 4S;
-    test Axx Axxx xxx xxx:
-        2N 3♣
-        3♥ 4H;
-    test Axxx Axx xxx xxx:
-        2N 3♣
-        3♠ 4S;
 
 [[Invite in an established major suit fit]]
 [8+ fit_established M] 3M => inv;

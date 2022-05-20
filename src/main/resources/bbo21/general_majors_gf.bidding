@@ -1,0 +1,53 @@
+# General bids
+
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
+[[If already in a game force, just keep supporting]]
+[gf+, 8+ fit_established M] NJM:<4N => always;
+    test Ax Axxx AKxxx Ax:
+        1D 1S
+        2H 3H
+        4H;
+    test AQxx AJxx Ax xxx:
+        1N 4♦ 
+        4♥;
+    test AQxx AJxx Ax xxx:
+        1N 4♥
+        4♠;
+    test AQxx AJxx Ax AJx:
+        2N 4♦
+        4♥;
+    test AQxx AJxx Ax AJx:
+        2N 4♥
+        4♠;
+    test AQxx AKxx Ax AJx:
+        2C 2D
+        2N 4♦
+        4♥;
+    test AQxx AKxx Ax AJx:
+        2C 2D
+        2N 4♥
+        4♠;
+ 
+[[If already in a game force, establish fit]]
+[gf+, i_bid_suit M] NJM:<4N => 8+ fit M;
+ 
+[[If already in a game force, establish fit]]
+[gf+, partner_bid_suit M] NJM:<4N => 8+ fit M;
+    test Axx Qxxx xxx xxx:
+        2C 2D
+        2N 3♣
+        3♥ 4H;
+    test Qxxx Axx xxx xxx:
+        2C 2D
+        2N 3♣
+        3♠ 4S;
+    test Axx Axxx xxx xxx:
+        2N 3♣
+        3♥ 4H;
+    test Axxx Axx xxx xxx:
+        2N 3♣
+        3♠ 4S;

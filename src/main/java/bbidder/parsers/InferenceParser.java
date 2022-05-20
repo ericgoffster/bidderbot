@@ -199,7 +199,7 @@ public final class InferenceParser {
                 }
             }
             {
-                Inference i = InferenceParser.makeCombinedTPtsRange(str.trim());
+                Inference i = makeCombinedTPtsRange(str.trim());
                 if (i != null) {
                     return i;
                 }
@@ -209,7 +209,7 @@ public final class InferenceParser {
         }
         throw new IllegalArgumentException("unknown inference: '" + str + "'");
     }
-    public static CombinedTotalPointsRange makeCombinedTPtsRange(String str) {
+    private static CombinedTotalPointsRange makeCombinedTPtsRange(String str) {
         String[] parts = SplitUtil.split(str, "-", 2);
         if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
             CombinedTotalPointsRange rlow = makeCombinedTPtsRange(parts[0]);

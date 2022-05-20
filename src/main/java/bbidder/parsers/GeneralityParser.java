@@ -1,5 +1,7 @@
 package bbidder.parsers;
 
+import java.util.OptionalInt;
+
 import bbidder.Generality;
 import bbidder.PointRange;
 import bbidder.RangeOf;
@@ -138,13 +140,44 @@ public final class GeneralityParser {
                     if (sym != null) {
                         return new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
                     }
-                } else if (rng.of.equals(TotalPointsEstablished.NAME)) {
-                    return new TotalPointsEstablished(PointRange.between(rng.min, rng.max));
+                }
+            }
+            {
+                TotalPointsEstablished i = makeCombinedTPtsRange(str.trim());
+                if (i != null) {
+                    return i;
                 }
             }
             break;
         }
         }
         throw new IllegalArgumentException("unknown generality: '" + str + "'");
+    }
+    
+    private static TotalPointsEstablished makeCombinedTPtsRange(String str) {
+        String[] parts = SplitUtil.split(str, "-", 2);
+        if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
+            TotalPointsEstablished rlow = makeCombinedTPtsRange(parts[0]);
+            TotalPointsEstablished rhigh = makeCombinedTPtsRange(parts[1]);
+            if (rlow == null || rhigh == null) {
+                return null;
+            }
+            OptionalInt l = rlow.rng.lowest();
+            OptionalInt h = rhigh.rng.highest();
+            if (!l.isPresent()) {
+                return new TotalPointsEstablished(PointRange.NONE);
+            }
+            if (!h.isPresent()) {
+                return new TotalPointsEstablished(PointRange.NONE);
+            }
+            int lower = l.getAsInt();
+            int higher = h.getAsInt();
+            return new TotalPointsEstablished(PointRange.between(lower, higher));
+        }
+        PointRange createRange = CombinedPointsRangeParser.createCombinedTPtsRange(str, CombinedPointsRangeParser.POINT_RANGES);
+        if (createRange == null) {
+            return null;
+        }
+        return new TotalPointsEstablished(createRange);
     }
 }
