@@ -46,11 +46,17 @@
     test AKxx Kxxx xx AKx:
         1♣ 1♥
         3♥;
+    test Kxxx Kxxx x Axxx:
+        1♣ 1♥
+        1♠ 3♠;
 
 [] 2M => min, fit M;
     test AQxx Axxx xx Kxx:
         1♣ 1♥
         2♥;
+    test Qxxx Kxxx x Qxxx:
+        1♣ 1♥
+        1♠ 2♠;
 
 #
 # Rebid 2nd suit if possible
@@ -78,6 +84,9 @@
     test AQJxxx xx xx KQx:
         1S 1N
         2S;
+    test xx KQxxxx xx Qxx:
+        1♣ 1♥
+        1♠ 2♥;
 #
 # Jump Rebid major if possible
 # 
@@ -91,6 +100,9 @@
     test AQJxxx xx Ax KQx:
         1S 1N
         3S;
+    test xx KQxxxx xx Axx:
+        1♣ 1♥
+        1♠ 3♥;
 
 #
 # Bid 4 of major
