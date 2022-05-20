@@ -90,18 +90,16 @@ public final class InfSummary {
         if (!minLens.get(0).isPresent() || !minLens.get(1).isPresent() || !minLens.get(2).isPresent() || !minLens.get(3).isPresent()) {
             return 0;
         }
-        int minLen0 = minLens.get(suitArr[0]).get();
-        int minLen1 = minLens.get(suitArr[1]).get();
-        int minLen2 = minLens.get(suitArr[2]).get();
-        if (minLen0 >= 5 || minLen0 >= 4 && minLen1 >= 4) {
+        List<Integer> minL = minLens.stream().map(ml -> ml.get()).collect(Collectors.toList());
+        if (minL.get(suitArr[0]) >= 5 || minL.get(suitArr[0]) >= 4 && minL.get(suitArr[1]) >= 4) {
             short suits = 0;
-            for (int i = 0; i < 4 && minLenInSuit(suitArr[i]).get() >= 4; i++) {
+            for (int i = 0; i < 4 && minL.get(suitArr[i]) >= 4; i++) {
                 suits |= (short) (1 << suitArr[i]);
             }
             return suits;
         }
-        if (minLen0 == 4) {
-            if (minLen1 > minLen2) {
+        if (minL.get(suitArr[0]) == 4) {
+            if (minL.get(suitArr[1]) > minL.get(suitArr[2])) {
                 return (short) ((1 << suitArr[0]) | (1 << suitArr[1]));
             }
             return (short) ((1 << suitArr[0]));
