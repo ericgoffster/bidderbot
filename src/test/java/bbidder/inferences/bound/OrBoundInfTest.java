@@ -8,12 +8,12 @@ import java.util.List;
 
 import org.junit.Test;
 
-import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.PointRange;
 import bbidder.Shape;
 import bbidder.ShapeSet;
+import bbidder.parsers.HandParser;
 
 public class OrBoundInfTest {
     @Test
@@ -26,10 +26,10 @@ public class OrBoundInfTest {
         IBoundInference i3 = OrBoundInf.create(i1, i2);
         assertEquals(i3.getSummary(), InfSummary.ALL);
 
-        assertTrue(i3.test(Hand.valueOf("AKQ xxx xxx xxxx")));
-        assertTrue(i3.test(Hand.valueOf("AKQ Jxx xxx xxxx")));
-        assertTrue(i3.test(Hand.valueOf("AKQ Jxx xxxx xxx")));
-        assertFalse(i3.test(Hand.valueOf("AKJ xxx xxxxx xx")));
+        assertTrue(i3.test(HandParser.valueOf("AKQ xxx xxx xxxx")));
+        assertTrue(i3.test(HandParser.valueOf("AKQ Jxx xxx xxxx")));
+        assertTrue(i3.test(HandParser.valueOf("AKQ Jxx xxxx xxx")));
+        assertFalse(i3.test(HandParser.valueOf("AKJ xxx xxxxx xx")));
 
     }
 

@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.Players;
+import bbidder.parsers.HandParser;
 import bbidder.parsers.InferenceParser;
 
 public class BalancedTest {
@@ -25,10 +25,10 @@ public class BalancedTest {
     @Test
     public void testAffirmative() {
         IBoundInference inf = Balanced.BALANCED.bind(new Players());
-        assertTrue(inf.test(Hand.valueOf("AKQ JT9 876 5432")));
-        assertTrue(inf.test(Hand.valueOf("AKQJT 98 765 432")));
-        assertFalse(inf.test(Hand.valueOf("AKQJT 98 76 5432")));
-        assertFalse(inf.test(Hand.valueOf("AKQJT 9 876 5432")));
-        assertFalse(inf.test(Hand.valueOf("AKQJT - 9876 5432")));
+        assertTrue(inf.test(HandParser.valueOf("AKQ JT9 876 5432")));
+        assertTrue(inf.test(HandParser.valueOf("AKQJT 98 765 432")));
+        assertFalse(inf.test(HandParser.valueOf("AKQJT 98 76 5432")));
+        assertFalse(inf.test(HandParser.valueOf("AKQJT 9 876 5432")));
+        assertFalse(inf.test(HandParser.valueOf("AKQJT - 9876 5432")));
     }
 }

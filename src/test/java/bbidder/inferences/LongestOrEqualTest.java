@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.Hand;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.Symbol;
+import bbidder.parsers.HandParser;
 import bbidder.parsers.InferenceParser;
 import bbidder.parsers.SuitSetParser;
 import bbidder.symbols.ConstSymbol;
@@ -35,9 +35,9 @@ public class LongestOrEqualTest {
 
     @Test
     public void testHigherRanking() {
-        assertTrue(new LongestOrEqual(new ConstSymbol(3), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertTrue(new LongestOrEqual(new ConstSymbol(2), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertFalse(new LongestOrEqual(new ConstSymbol(1), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
-        assertFalse(new LongestOrEqual(new ConstSymbol(0), ALL).bind(new Players()).test(Hand.valueOf("AKQJ AKQJ 765 43")));
+        assertTrue(new LongestOrEqual(new ConstSymbol(3), ALL).bind(new Players()).test(HandParser.valueOf("AKQJ AKQJ 765 43")));
+        assertTrue(new LongestOrEqual(new ConstSymbol(2), ALL).bind(new Players()).test(HandParser.valueOf("AKQJ AKQJ 765 43")));
+        assertFalse(new LongestOrEqual(new ConstSymbol(1), ALL).bind(new Players()).test(HandParser.valueOf("AKQJ AKQJ 765 43")));
+        assertFalse(new LongestOrEqual(new ConstSymbol(0), ALL).bind(new Players()).test(HandParser.valueOf("AKQJ AKQJ 765 43")));
     }
 }

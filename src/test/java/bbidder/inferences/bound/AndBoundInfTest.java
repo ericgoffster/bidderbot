@@ -8,13 +8,13 @@ import java.util.List;
 
 import org.junit.Test;
 
-import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.PointRange;
 import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.StopperSet;
+import bbidder.parsers.HandParser;
 
 public class AndBoundInfTest {
     @Test
@@ -28,9 +28,9 @@ public class AndBoundInfTest {
         InfSummary infSummary = new InfSummary(ShapeSet.create(List.of(Shape._04030303)), PointRange.between(10, 11), PointRange.atMost(11),
                 StopperSet.ALL, StopperSet.ALL);
         assertEquals(i3.getSummary(), infSummary);
-        assertFalse(i3.test(Hand.valueOf("AKQ xxx xxx xxxx")));
-        assertTrue(i3.test(Hand.valueOf("AKQ Jxx xxx xxxx")));
-        assertFalse(i3.test(Hand.valueOf("AKQ Jxx xxxx xxx")));
+        assertFalse(i3.test(HandParser.valueOf("AKQ xxx xxx xxxx")));
+        assertTrue(i3.test(HandParser.valueOf("AKQ Jxx xxx xxxx")));
+        assertFalse(i3.test(HandParser.valueOf("AKQ Jxx xxxx xxx")));
     }
 
     @Test
