@@ -16,6 +16,10 @@ public final class Players {
         return new Players(partner, rho, me, lho);
     }
     
+    public Players flip() {
+        return new Players(rho, me, lho, partner);
+    }
+    
     public Players withNewMe(Player me) {
         return new Players(lho, partner, rho, me);
     }

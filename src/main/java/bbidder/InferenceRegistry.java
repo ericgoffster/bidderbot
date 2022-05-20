@@ -17,7 +17,7 @@ import bbidder.inferences.TrueInference;
  */
 public final class InferenceRegistry {
     final List<Function<String, Inference>> inferences = new ArrayList<>();
-    final List<Function<String, Generality>> generaliities = new ArrayList<>();
+    final List<Function<String, Generality>> generalities = new ArrayList<>();
 
     /**
      * Add a constructor of an inference from a string
@@ -30,7 +30,7 @@ public final class InferenceRegistry {
     }
 
     public void addGenerality(Function<String, Generality> constructor) {
-        generaliities.add(constructor);
+        generalities.add(constructor);
     }
 
     /**
@@ -73,7 +73,7 @@ public final class InferenceRegistry {
         if (str.trim().equals("")) {
             return TrueGenerality.T;
         }
-        for (Function<String, Generality> item : generaliities) {
+        for (Function<String, Generality> item : generalities) {
             Generality inf = item.apply(str);
             if (inf != null) {
                 return inf;

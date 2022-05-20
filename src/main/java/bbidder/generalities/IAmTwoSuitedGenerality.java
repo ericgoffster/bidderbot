@@ -10,11 +10,11 @@ import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.utils.SplitUtil;
 
-public final class TwoSuitedGenerality extends Generality {
+public final class IAmTwoSuitedGenerality extends Generality {
     private final Symbol longer;
     private final Symbol shorter;
 
-    public TwoSuitedGenerality(Symbol longer, Symbol shorter) {
+    public IAmTwoSuitedGenerality(Symbol longer, Symbol shorter) {
         super();
         this.longer = longer;
         this.shorter = shorter;
@@ -24,7 +24,7 @@ public final class TwoSuitedGenerality extends Generality {
     public Stream<Context> resolveSuits(SuitTable suitTable) {
         return longer.resolveSuits(suitTable)
                 .flatMap(e1 -> shorter.resolveSuits(e1.suitTable)
-                        .map(e2 -> new TwoSuitedGenerality(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));
+                        .map(e2 -> new IAmTwoSuitedGenerality(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));
     }
 
     @Override
@@ -34,7 +34,7 @@ public final class TwoSuitedGenerality extends Generality {
         return players.iBidSuit(l) && players.iBidSuit(s);
     }
 
-    public static TwoSuitedGenerality valueOf(String str) {
+    public static IAmTwoSuitedGenerality valueOf(String str) {
         if (str == null) {
             return null;
         }
@@ -43,7 +43,7 @@ public final class TwoSuitedGenerality extends Generality {
             Symbol longer = SymbolParser.parseSymbol(parts[1]);
             Symbol shorter = SymbolParser.parseSymbol(parts[2]);
             if (longer != null && shorter != null) {
-                return new TwoSuitedGenerality(longer, shorter);
+                return new IAmTwoSuitedGenerality(longer, shorter);
             }
         }
         return null;

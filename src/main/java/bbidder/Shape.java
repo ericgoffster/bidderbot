@@ -670,7 +670,7 @@ public enum Shape {
         int len = numInSuit(suit);
         return !BitUtil.stream(among).filter(s -> numInSuit(s) > len).findFirst().isPresent();
     }
-
+    
     /**
      * 
      * @return The probability of this shape

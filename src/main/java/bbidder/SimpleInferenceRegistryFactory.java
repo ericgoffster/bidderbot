@@ -3,10 +3,11 @@ package bbidder;
 import java.util.function.Supplier;
 
 import bbidder.generalities.FitEstablished;
+import bbidder.generalities.IAmTwoSuitedGenerality;
 import bbidder.generalities.IBidSuitGenerality;
 import bbidder.generalities.PartnerBidSuitGenerality;
+import bbidder.generalities.PartnerIsTwoSuitedGenerality;
 import bbidder.generalities.TrueGenerality;
-import bbidder.generalities.TwoSuitedGenerality;
 import bbidder.generalities.UnbidSuitGenerality;
 import bbidder.inferences.Always;
 import bbidder.inferences.Balanced;
@@ -14,6 +15,7 @@ import bbidder.inferences.CombinedTotalPointsRange;
 import bbidder.inferences.FitInSuit;
 import bbidder.inferences.HCPRange;
 import bbidder.inferences.LongestOrEqual;
+import bbidder.inferences.Preference;
 import bbidder.inferences.Rebiddable;
 import bbidder.inferences.RebiddableSecondSuit;
 import bbidder.inferences.SpecificCards;
@@ -42,10 +44,12 @@ public final class SimpleInferenceRegistryFactory implements Supplier<InferenceR
         reg.addInference(SpecificCards::valueOf);
         reg.addInference(StoppersInSuits::valueOf);
         reg.addInference(Always::valueOf);
+        reg.addInference(Preference::valueOf);
 
         reg.addGenerality(TrueGenerality::valueOf);
         reg.addGenerality(FitEstablished::valueOf);
-        reg.addGenerality(TwoSuitedGenerality::valueOf);
+        reg.addGenerality(IAmTwoSuitedGenerality::valueOf);
+        reg.addGenerality(PartnerIsTwoSuitedGenerality::valueOf);
         reg.addGenerality(IBidSuitGenerality::valueOf);
         reg.addGenerality(UnbidSuitGenerality::valueOf);
         reg.addGenerality(PartnerBidSuitGenerality::valueOf);

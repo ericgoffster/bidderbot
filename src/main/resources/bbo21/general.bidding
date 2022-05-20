@@ -77,6 +77,19 @@ anti_test xx AQxxx xxx Kxx:
     test xx AQxxx Qxxx Ax:
         1C 1H
         2C 2D;
+        
+[partner_is_two_suited x y] NJx P => min, prefer x to y;
+    test AQxxx x xxxx xxx:
+        1H 1S
+        2C P;             
+    test xxx AQxxx xx xxx:
+        1D 1H
+        1S P;             
+        
+[partner_is_two_suited x y] 2x => min, prefer x to y;
+    test AQxxx xx xxxx xx:
+        1H 1S
+        2C 2H;     
 
 [] 3N => gf, partial_stoppers unstopped;
     test Axx AQxx Qxx Qxx:
