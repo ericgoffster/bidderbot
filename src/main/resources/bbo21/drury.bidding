@@ -36,7 +36,7 @@ common 1M 2C:"drury" {
 	        P 1S
 	        2C 3S;
 	
-	2D => inv;
+	2D:"drury_invite" => inv;
 	    test xx Axxxx Axx Axx:
 	        P 1H
 	        2C 2D;

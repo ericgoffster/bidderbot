@@ -25,8 +25,13 @@ common 1m 2m {
 	    test AKx QJx xxx Kxxx:
 	        1♣ 2♣
 	        2H;
+
+	NJx => 5+ x;
+	    test x Axxxx x AKxxxx:
+	        1♣ 2♣
+	        2H;
 	
-	Jx => gf,1- x;
+	Jx:"splinter" => gf,1- x;
 	    test x AKxx KQxx Axxx:
 	        1♣ 2♣
 	        3♠;
