@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import bbidder.Hand;
 import bbidder.InfSummary;
-import bbidder.Range;
+import bbidder.PointRange;
 import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.StopperSet;
@@ -25,6 +25,6 @@ public class ShapeBoundInfTest {
 
         InfSummary summary = ShapeBoundInf.create(ShapeSet.create(List.of(Shape._00030307, Shape._01000507))).getSummary();
         assertEquals(summary,
-                new InfSummary(ShapeSet.create(List.of(Shape._00030307, Shape._01000507)), Range.all(40), StopperSet.ALL, StopperSet.ALL));
+                new InfSummary(ShapeSet.create(List.of(Shape._00030307, Shape._01000507)), PointRange.ALL, StopperSet.ALL, StopperSet.ALL));
     }
 }

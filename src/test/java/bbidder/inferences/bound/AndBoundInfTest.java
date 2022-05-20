@@ -11,7 +11,7 @@ import org.junit.Test;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
-import bbidder.Range;
+import bbidder.PointRange;
 import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.StopperSet;
@@ -23,10 +23,10 @@ public class AndBoundInfTest {
         assertEquals(AndBoundInf.create(ConstBoundInference.T, ConstBoundInference.F), ConstBoundInference.F);
         assertEquals(AndBoundInf.create(ConstBoundInference.T, ConstBoundInference.T), ConstBoundInference.T);
         IBoundInference i1 = ShapeBoundInf.create(ShapeSet.create(List.of(Shape._04030303)));
-        IBoundInference i2 = TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40));
+        IBoundInference i2 = TotalPtsBoundInf.create(InfSummary.ALL, PointRange.between(10, 11));
         IBoundInference i3 = AndBoundInf.create(i1, i2);
         assertEquals(i3.getSummary(),
-                new InfSummary(ShapeSet.create(List.of(Shape._04030303)), Range.between(10, 11, 40), StopperSet.ALL, StopperSet.ALL));
+                new InfSummary(ShapeSet.create(List.of(Shape._04030303)), PointRange.between(10, 11), StopperSet.ALL, StopperSet.ALL));
         assertFalse(i3.test(Hand.valueOf("AKQ xxx xxx xxxx")));
         assertTrue(i3.test(Hand.valueOf("AKQ Jxx xxx xxxx")));
         assertFalse(i3.test(Hand.valueOf("AKQ Jxx xxxx xxx")));

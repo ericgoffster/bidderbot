@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
-import bbidder.Range;
+import bbidder.PointRange;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.TotalPtsBoundInf;
 
@@ -17,14 +17,14 @@ import bbidder.inferences.bound.TotalPtsBoundInf;
  *
  */
 public final class TotalPointsRange extends Inference {
-    private final Range rng;
+    private final PointRange rng;
 
     public TotalPointsRange(Integer min, Integer max) {
         super();
-        this.rng = Range.between(min, max, 40);
+        this.rng = PointRange.between(min, max);
     }
 
-    public TotalPointsRange(Range rng) {
+    public TotalPointsRange(PointRange rng) {
         super();
         this.rng = rng;
     }
@@ -45,7 +45,7 @@ public final class TotalPointsRange extends Inference {
             return null;
         }
         if (rng.of.equalsIgnoreCase("tpts")) {
-            return new TotalPointsRange(Range.between(rng.min, rng.max, 40));
+            return new TotalPointsRange(PointRange.between(rng.min, rng.max));
         } else {
             return null;
         }

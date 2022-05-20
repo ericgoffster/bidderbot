@@ -5,6 +5,7 @@ import java.util.Objects;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
+import bbidder.PointRange;
 import bbidder.Range;
 
 public final class HcpBoundInf implements IBoundInference {
@@ -43,7 +44,7 @@ public final class HcpBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return r.lowest().map(lowest -> InfSummary.ALL.withTotalPoints(Range.atLeast(lowest, 40))).orElse(InfSummary.NONE);
+        return r.lowest().map(lowest -> InfSummary.ALL.withTotalPoints(PointRange.atLeast(lowest))).orElse(InfSummary.NONE);
     }
 
     private HcpBoundInf(Range r) {

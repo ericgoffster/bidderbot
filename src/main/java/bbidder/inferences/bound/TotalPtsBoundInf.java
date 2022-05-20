@@ -5,11 +5,11 @@ import java.util.Objects;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
-import bbidder.Range;
+import bbidder.PointRange;
 
 public final class TotalPtsBoundInf implements IBoundInference {
     private final InfSummary partnerSummary;
-    private final Range r;
+    private final PointRange r;
 
     @Override
     public IBoundInference negate() {
@@ -41,7 +41,7 @@ public final class TotalPtsBoundInf implements IBoundInference {
         return null;
     }
 
-    public static IBoundInference create(InfSummary partnerSummary, Range r) {
+    public static IBoundInference create(InfSummary partnerSummary, PointRange r) {
         if (r.unBounded()) {
             return ConstBoundInference.T;
         }
@@ -51,7 +51,7 @@ public final class TotalPtsBoundInf implements IBoundInference {
         return new TotalPtsBoundInf(partnerSummary, r);
     }
 
-    private TotalPtsBoundInf(InfSummary tp, Range r) {
+    private TotalPtsBoundInf(InfSummary tp, PointRange r) {
         this.partnerSummary = tp;
         this.r = r;
     }

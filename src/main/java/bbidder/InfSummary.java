@@ -15,17 +15,17 @@ import java.util.stream.IntStream;
  *
  */
 public final class InfSummary {
-    public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, Range.all(40), StopperSet.ALL, StopperSet.ALL);
-    public static final InfSummary NONE = new InfSummary(ShapeSet.NONE, Range.none(40), StopperSet.NONE, StopperSet.NONE);
+    public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, PointRange.ALL, StopperSet.ALL, StopperSet.ALL);
+    public static final InfSummary NONE = new InfSummary(ShapeSet.NONE, PointRange.NONE, StopperSet.NONE, StopperSet.NONE);
 
     public final ShapeSet shape;
-    public final Range tpts;
+    public final PointRange tpts;
     public final StopperSet stoppers;
     public final StopperSet partialStoppers;
 
     public final AtomicReference<ShapeStats[]> shapeStats;
 
-    public InfSummary(ShapeSet shape, Range tpts, StopperSet stoppers, StopperSet partialStoppers) {
+    public InfSummary(ShapeSet shape, PointRange tpts, StopperSet stoppers, StopperSet partialStoppers) {
         super();
         this.shape = shape;
         this.tpts = tpts;
@@ -46,7 +46,7 @@ public final class InfSummary {
         return new InfSummary(shape, tpts, stoppers, partialStoppers);
     }
 
-    public InfSummary withTotalPoints(Range tpts) {
+    public InfSummary withTotalPoints(PointRange tpts) {
         return new InfSummary(shape, tpts, stoppers, partialStoppers);
     }
 

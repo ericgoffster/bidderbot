@@ -11,7 +11,7 @@ import org.junit.Test;
 import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
-import bbidder.Range;
+import bbidder.PointRange;
 import bbidder.Shape;
 import bbidder.ShapeSet;
 
@@ -22,7 +22,7 @@ public class OrBoundInfTest {
         assertEquals(OrBoundInf.create(ConstBoundInference.T, ConstBoundInference.F), ConstBoundInference.T);
         assertEquals(OrBoundInf.create(ConstBoundInference.T, ConstBoundInference.T), ConstBoundInference.T);
         IBoundInference i1 = ShapeBoundInf.create(ShapeSet.create(List.of(Shape._04030303)));
-        IBoundInference i2 = TotalPtsBoundInf.create(InfSummary.ALL, Range.between(10, 11, 40));
+        IBoundInference i2 = TotalPtsBoundInf.create(InfSummary.ALL, PointRange.between(10, 11));
         IBoundInference i3 = OrBoundInf.create(i1, i2);
         assertEquals(i3.getSummary(), InfSummary.ALL);
 

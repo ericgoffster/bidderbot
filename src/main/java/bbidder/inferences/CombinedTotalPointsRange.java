@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
-import bbidder.Range;
+import bbidder.PointRange;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.TotalPtsBoundInf;
@@ -22,14 +22,14 @@ import bbidder.utils.SplitUtil;
  */
 public final class CombinedTotalPointsRange extends Inference {
     private static final Map<String, Integer> STD = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35, "grand", 37);
-    private final Range rng;
+    private final PointRange rng;
 
     public CombinedTotalPointsRange(Integer min, Integer max) {
         super();
-        this.rng = Range.between(min, max, 40);
+        this.rng = PointRange.between(min, max);
     }
 
-    public CombinedTotalPointsRange(Range rng) {
+    public CombinedTotalPointsRange(PointRange rng) {
         super();
         this.rng = rng;
     }
@@ -37,7 +37,7 @@ public final class CombinedTotalPointsRange extends Inference {
     @Override
     public IBoundInference bind(Players players) {
         return players.partner.infSummary.minTotalPts()
-                .map(tpts -> TotalPtsBoundInf.create(players.partner.infSummary, new Range(rng.bits >> tpts, 40)))
+                .map(tpts -> TotalPtsBoundInf.create(players.partner.infSummary, new PointRange(rng.bits >> tpts)))
                 .orElse(ConstBoundInference.F);
     }
 
@@ -56,10 +56,10 @@ public final class CombinedTotalPointsRange extends Inference {
             }
             Optional<Integer> l = rlow.rng.lowest();
             Optional<Integer> h = rhigh.rng.highest();
-            Range createRange = l.map(lower -> h.map(higher -> Range.between(lower, higher, 40)).orElse(Range.none(40))).orElse(Range.none(40));
+            PointRange createRange = l.map(lower -> h.map(higher -> PointRange.between(lower, higher)).orElse(PointRange.NONE)).orElse(PointRange.NONE);
             return new CombinedTotalPointsRange(createRange);
         }
-        Range createRange = createRange(str);
+        PointRange createRange = createRange(str);
         if (createRange == null) {
             return null;
         }
@@ -95,7 +95,7 @@ public final class CombinedTotalPointsRange extends Inference {
         return Objects.equals(rng, other.rng);
     }
 
-    private static Range createRange(String str, Map<String, Integer> m) {
+    private static PointRange createRange(String str, Map<String, Integer> m) {
         final int dir;
         if (str.endsWith("+")) {
             str = str.substring(0, str.length() - 1);
@@ -113,7 +113,7 @@ public final class CombinedTotalPointsRange extends Inference {
 
         Integer pts = m.get(str);
         if (dir > 0) {
-            return Range.between(pts, null, 40);
+            return PointRange.between(pts, null);
         }
 
         Integer maxPts = null;
@@ -129,13 +129,13 @@ public final class CombinedTotalPointsRange extends Inference {
         }
 
         if (maxPts == null) {
-            return Range.between(pts, null, 40);
+            return PointRange.between(pts, null);
         }
 
-        return Range.between(pts, maxPts, 40);
+        return PointRange.between(pts, maxPts);
     }
 
-    private static Range createRange(String str) {
+    private static PointRange createRange(String str) {
         return createRange(str, STD);
     }
 }
