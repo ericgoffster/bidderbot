@@ -44,7 +44,7 @@ public final class VarSymbol extends Symbol {
     }
 
     @Override
-    public MyStream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<ConstSymbol.Context> resolveSuits(SuitTable suitTable) {
         Integer suit = suitTable.getSuit(varName);
         if (suit != null) {
             return MyStream.of(new ConstSymbol(suit).new Context(suitTable));

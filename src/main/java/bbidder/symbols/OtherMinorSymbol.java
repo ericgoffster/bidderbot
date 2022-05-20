@@ -40,7 +40,7 @@ public final class OtherMinorSymbol extends Symbol {
     }
 
     @Override
-    public MyStream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<ConstSymbol.Context> resolveSuits(SuitTable suitTable) {
         Integer om = suitTable.getSuit(NAME);
         if (om != null) {
             return MyStream.of(new ConstSymbol(om).new Context(suitTable));

@@ -46,4 +46,17 @@ public final class ConstSymbol extends Symbol {
     public int getResolvedStrain() {
         return strain;
     }
+    
+    public final class Context {
+        public final SuitTable suitTable;
+
+        public Context(SuitTable suitTable) {
+            super();
+            this.suitTable = suitTable;
+        }
+
+        public ConstSymbol getSymbol() {
+            return ConstSymbol.this;
+        }
+    }
 }

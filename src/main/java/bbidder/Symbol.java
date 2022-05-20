@@ -1,5 +1,6 @@
 package bbidder;
 
+import bbidder.symbols.ConstSymbol;
 import bbidder.utils.MyStream;
 
 /**
@@ -28,20 +29,7 @@ public abstract class Symbol {
      *            The suit table to lookup
      * @return Stream of context's
      */
-    public abstract MyStream<Context> resolveSuits(SuitTable suitTable);
-
-    public final class Context {
-        public final SuitTable suitTable;
-
-        public Context(SuitTable suitTable) {
-            super();
-            this.suitTable = suitTable;
-        }
-
-        public Symbol getSymbol() {
-            return Symbol.this;
-        }
-    }
+    public abstract MyStream<ConstSymbol.Context> resolveSuits(SuitTable suitTable);
 
     @Override
     public int hashCode() {
