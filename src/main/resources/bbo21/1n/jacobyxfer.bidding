@@ -146,23 +146,5 @@ common [] 1N:"nt_opener" 2M-1:"xfer" {
 		    test AQJxxx Axx Ax xx:
 		        1N 2♥
 		        2♠ 4♠;
-		
-		[[Bid quantitative 4N with only 5${M}]]  
-		4N => slaminv, 5M;
-		    test Axx AQxxx AQx xx:
-		        1N 2♦
-		        2♥ 4N;
-		    test AQxxx Axx AQx xx:
-		        1N 2♥
-		        2♠ 4N;
-		
-		[[Bid "pick a slam" 5N with only 5${M}]]  
-		5N => slam, 5M;
-		    test Axx AQxxx AQx Kx:
-		        1N 2♦
-		        2♥ 5N;
-		    test AQxxx Axx AQx Kx:
-		        1N 2♥
-		        2♠ 5N;
 	}
 }

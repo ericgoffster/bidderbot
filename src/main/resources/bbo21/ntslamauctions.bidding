@@ -24,11 +24,20 @@ common [partner made_bid nt_opener, 7- bestfit x] {
 	    test xx Qxx AJxxx Jxx:
 	        2C 2D
 	        2N 4N;
+		test Axx AQxxx AQx xx:
+		    1N 2♦
+		    2♥ 4N;
+		test AQxxx Axx AQx xx:
+		    1N 2♥
+		    2♠ 4N;
 	
 	[[Quantitative grand slam invite]]
 	5N => grandinv;
 	    test Axx Axx AKxx AQx:
 	        1N 5N;
+		test AQx Axxxx AKx Ax:
+		    1N 2♦
+		    2♥ 5N;
 	    test Axx Axx AQxx Qxx:
 	        2N 5N;
 	    test Qxx xxx AQxx AJx:
