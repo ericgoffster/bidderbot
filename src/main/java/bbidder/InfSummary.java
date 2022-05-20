@@ -123,32 +123,14 @@ public final class InfSummary {
         if (minL.length != 4) {
             return OptionalInt.empty();
         }
-        double[] avgL = IntStream.range(0, 4).mapToDouble(suit -> avgLenInSuit(suit).getAsDouble()).toArray();
-        if (avgL.length != 4) {
-            return OptionalInt.empty();
-        }
         Integer[] suitArr = { 0, 1, 2, 3 };
-        Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgL[s1], avgL[s2]));
-        if (minL[suitArr[0]] >= 5 || minL[suitArr[0]] >= 4 && minL[suitArr[1]] >= 4) {
-            int suits = 0;
-            for (int i = 0; i < 4 && minL[suitArr[i]] >= 4; i++) {
-                suits |= 1 << suitArr[i];
-            }
-            return OptionalInt.of(suits);
+        Arrays.sort(suitArr, (s1, s2) -> -Double.compare(minL[s1], minL[s2]));
+        int min = minL[suitArr[3]];
+        int suits = 0;
+        for (int i = 0; i < 4 && minL[suitArr[i]] > min; i++) {
+            suits |= 1 << suitArr[i];
         }
-        if (minL[suitArr[0]] == 4) {
-            if (minL[suitArr[1]] > minL[suitArr[2]]) {
-                return OptionalInt.of((1 << suitArr[0]) | (1 << suitArr[1]));
-            }
-            return OptionalInt.of(1 << suitArr[0]);
-        }
-        {
-            int suits = 0;
-            for (int i = 0; i < 4 && avgL[suitArr[i]] >= 4; i++) {
-                suits |= 1 << suitArr[i];
-            }
-            return OptionalInt.of(suits);
-        }
+        return OptionalInt.of(suits);
     }
 
     @Override
