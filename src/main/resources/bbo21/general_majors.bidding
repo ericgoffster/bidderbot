@@ -127,7 +127,7 @@
         2♠;
 
 [[Rebid 2nd suit if possible]]
-[i_am_two_suited x y] NJy => rebiddable_2nd x y;
+[i_bid x, i_bid y] NJy => rebiddable_2nd x y;
     test AQxxx x x AQxxxx:
         1C 1H
         1S 2H

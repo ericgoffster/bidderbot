@@ -32,7 +32,7 @@
 [gf+, 7- fit m, partner_bid m] NJm:<3N => 8+ fit m;
 
 [[Rebid second suit]]
-[gf+, i_am_two_suited x y] NJy:<3N => rebiddable_2nd x y;
+[gf+, i_bid x, i_bid y] NJy:<3N => rebiddable_2nd x y;
     test AKxxx xx Axxxx x:
         1S 2C
         2D 2N
