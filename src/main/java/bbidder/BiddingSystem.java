@@ -123,16 +123,14 @@ public final class BiddingSystem {
      *            The auction.
      * @param players
      *            The like hands for everyone so far.
+     * @param lastBid 
+     *            The last bid
      * @return The inference The inference from the bid.
      */
-    public MatchedInference getInference(Auction auction, Players players) {
-        if (auction.getBids().size() == 0) {
-            return new MatchedInference(ConstBoundInference.create(false), Set.of());
-        }
-        Bid lastBid = auction.getLastBid().get();
+    public MatchedInference getInference(Auction auction, Players players, Bid lastBid) {
         IBoundInference positive = ConstBoundInference.F;
         IBoundInference negative = ConstBoundInference.F;
-        List<PossibleBid> possible = getPossibleBids(auction.exceptLast(), players);
+        List<PossibleBid> possible = getPossibleBids(auction, players);
         Set<String> tags = null;
         for (var i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
@@ -148,7 +146,7 @@ public final class BiddingSystem {
         }
 
         if (positive == ConstBoundInference.F && lastBid != Bid.P) {
-            throw new RuntimeException("Unrecognized bidding: " + auction);
+            throw new RuntimeException(lastBid + ": Unrecognized bid for: " + auction);
         }
 
         // Pass means... Nothing else works, this will get smarter.
