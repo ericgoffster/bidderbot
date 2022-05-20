@@ -5,43 +5,30 @@
 # H = ♥
 # S = ♠
 
-common [] 1N:"nt_opener" 2N:"xfer" {
+common [] 1N:"nt_opener" ?m-1:"xfer":>2S:<3D {
 	[[Accept transfer]]
-    3C => always;
+    3m => always;
     test AQX KJxx AJxx xx:
         1N 2N
         3♣;
+    test AQX KJxx xx AJxx:
+        1N 3♣
+        3♦;
     continuations {
 		[[Bid singleton with game forcing values (or better)]]
 		3x:"splinter" => gf+, 1-x;
 		    test AQx x Kxx AQxxxx:
 		        1N 2N
 		        3♣ 3♥;
-		
-		[[Rebid 3N with slam invitational values]]
-		3N => slaminv;
-		    test AQx xx Kx AQxxxx:
-		        1N 2N
-		        3♣ 3N;
-	}
-}
-
-common [] 1N:"nt_opener" 3♣:"xfer" {
-	[[Accept transfer]]
-    3D => always;
-    test AQX KJxx xx AJxx:
-        1N 3♣
-        3♦;
-    continuations {
-	
-		[[Bid singleton with game forcing values (or better)]]
-		3x:"splinter" => gf+, 1-x;
 		    test AQx x AQxxxx Kxx:
 		        1N 3♣
 		        3♦ 3♥;
 		
 		[[Rebid 3N with slam invitational values]]
 		3N => slaminv;
+		    test AQx xx Kx AQxxxx:
+		        1N 2N
+		        3♣ 3N;
 		    test AQx xx AQxxxx Kx:
 		        1N 3♣
 		        3♦ 3N;
