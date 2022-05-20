@@ -20,6 +20,10 @@ public final class Stoppers {
     public Stoppers withStopperIn(int suit) {
         return new Stoppers((byte) (patt | (1 << suit)));
     }
+    
+    public Stoppers or(Stoppers other) {
+        return new Stoppers((byte)(patt | other.patt));
+    }
 
     @Override
     public int hashCode() {
