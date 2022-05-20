@@ -17,7 +17,6 @@ import bbidder.utils.MyStream;
  *
  */
 public final class BidPattern {
-    private static final short ALL_SEATS = (short) 0xf;
     public static final String STR_DOUBLEJUMP = "DJ";
     public static final String STR_JUMP = "J";
     public static final String STR_NONJUMP = "NJ";
@@ -31,13 +30,13 @@ public final class BidPattern {
     public final Generality generality;
     public final TagSet tags;
     public final boolean antiMatch;
-    public final short seats;
+    public final Seats seats;
     public final boolean downTheLine;
     public final BidPattern greaterThan;
     public final BidPattern lessThan;
 
     private BidPattern(boolean isOpposition, Symbol symbol, Integer level, Bid simpleBid, Integer jumpLevel, Generality generality, TagSet tags,
-            boolean antiMatch, short seats, boolean downTheLine, BidPattern greaterThan, BidPattern lessThan) {
+            boolean antiMatch, Seats seats, boolean downTheLine, BidPattern greaterThan, BidPattern lessThan) {
         super();
         this.isOpposition = isOpposition;
         this.symbol = symbol;
@@ -65,17 +64,12 @@ public final class BidPattern {
                 lessThan);
     }
 
-    /**
-     * @param isOpposition
-     *            true, if is an opposition bid
-     * @return A pattern with isOpposition set.
-     */
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
                 lessThan);
     }
 
-    public BidPattern withSeats(short seats) {
+    public BidPattern withSeats(Seats seats) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
                 lessThan);
     }
@@ -113,7 +107,7 @@ public final class BidPattern {
      * @return A pattern where the level is "jump" based.
      */
     public static BidPattern createJump(Symbol symbol, int jumpLevel) {
-        return new BidPattern(false, symbol, null, null, jumpLevel, null, TagSet.EMPTY, false, ALL_SEATS, false, null, null);
+        return new BidPattern(false, symbol, null, null, jumpLevel, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
 
     /**
@@ -123,10 +117,10 @@ public final class BidPattern {
      */
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
-            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, TagSet.EMPTY, false, ALL_SEATS, false,
+            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL, false,
                     null, null);
         }
-        return new BidPattern(false, null, null, simpleBid, null, null, TagSet.EMPTY, false, ALL_SEATS, false, null, null);
+        return new BidPattern(false, null, null, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
 
     /**
@@ -137,7 +131,7 @@ public final class BidPattern {
      * @return A bid that is the level of a suit
      */
     public static BidPattern createBid(Integer level, Symbol symbol) {
-        return new BidPattern(false, symbol, level, null, null, null, TagSet.EMPTY, false, ALL_SEATS, false, null, null);
+        return new BidPattern(false, symbol, level, null, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
 
     /**
@@ -146,7 +140,7 @@ public final class BidPattern {
      * @return A bid that represents a series of bids that fit a generality
      */
     public static BidPattern createWild(Generality generality) {
-        return new BidPattern(false, null, null, null, null, generality, TagSet.EMPTY, false, ALL_SEATS, false, null, null);
+        return new BidPattern(false, null, null, null, null, generality, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
     
     private Optional<BidPattern> withResolvedBid(Contract contract, Symbol symbol, Bid b) {
@@ -182,7 +176,7 @@ public final class BidPattern {
         if (!contract.isLegalBid(b)) {
             return false;
         }
-        if ((seats & (1 << contract.numPasses)) == 0) {
+        if (!seats.hasSeat(contract.numPasses)) {
             return false;
         }
         if (lessThan != null) {
@@ -288,11 +282,10 @@ public final class BidPattern {
         if (generality != null) {
             return "[" + generality + "]";
         }
-        String s = _getString();
         if (isOpposition) {
-            return "(" + s + ")";
+            return "(" + _getString() + ")";
         }
-        return s;
+        return _getString();
     }
 
     @Override
@@ -316,7 +309,7 @@ public final class BidPattern {
                 && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol) && Objects.equals(tags, other.tags);
     }
 
-    private String _getString() {
+    private String _getBidString() {
         if (simpleBid != null && symbol == null) {
             return simpleBid.toString();
         }
@@ -332,20 +325,29 @@ public final class BidPattern {
                 throw new IllegalStateException();
             }
         }
-        String sym = symbol.toString();
-        if (downTheLine) {
-            sym = sym + ":down";
-        }
-        if (seats != 0xf) {
-            sym = sym + ":seats" + seats;
-        }
-        if (!tags.isEmpty()) {
-            sym = sym + ":"+tags;
-        }
         if (level == null) {
-            return "?" + sym;
+            return "?" + symbol;
+        } else {
+            return String.valueOf(level + 1) + symbol;
         }
-        return String.valueOf(level + 1) + sym;
+    }
+    
+    private String _getString() {
+        String str = _getBidString();
+        if (downTheLine) {
+            str = str + ":down";
+        }
+        if (!seats.equals(Seats.ALL)) {
+            str = str + ":" + seats;
+        }
+        str = str + tags;
+        if (lessThan != null) {
+            str = str + ":<" + lessThan;
+        }
+        if (greaterThan != null) {
+            str = str + ":>" + greaterThan;
+        }
+        return str;
     }
 
     public class Context {

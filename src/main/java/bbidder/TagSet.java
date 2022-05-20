@@ -26,7 +26,11 @@ public final class TagSet {
 
     @Override
     public String toString() {
-        return tagSet.toString();
+        StringBuilder sb = new StringBuilder();
+        for(String str: tagSet) {
+            sb.append(":\"" + str + "\"");
+        }
+        return sb.toString();
     }
 
     @Override

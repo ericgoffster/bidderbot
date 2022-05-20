@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bbidder.Bid;
 import bbidder.BidPattern;
+import bbidder.Seats;
 import bbidder.Symbol;
 
 /**
@@ -35,10 +36,10 @@ public final class BidPatternParser implements Parser<BidPattern> {
             } else if (inp.readKeyword("DOWN")) {
                 p = p.withDownTheLine(true);
             } else if (inp.readKeyword("SEATS")) {
-                short seats = 0;
+                Seats seats = Seats.NONE;
                 String seatsC = inp.readToken(ch -> ch != ':');
                 for (int i = 0; i < seatsC.length(); i++) {
-                    seats |= (1 << (seatsC.charAt(i) - '1'));
+                    seats = seats.addSeat(seatsC.charAt(i) - '1');
                 }
                 p = p.withSeats(seats);
             } else if (inp.readKeyword("\"")) {
