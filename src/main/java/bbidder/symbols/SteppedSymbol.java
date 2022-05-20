@@ -40,7 +40,7 @@ public final class SteppedSymbol extends Symbol {
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
-        return symbol.resolveSuits(suitTable).map(e -> new SteppedSymbol(e.getSymbol(), delta).new Context(e.suitTable));
+        return symbol.resolveSuits(suitTable).map(e -> new ConstSymbol(transform(e.getSymbol().getResolvedStrain())).new Context(e.suitTable));
     }
 
     private int transform(Integer s) {
