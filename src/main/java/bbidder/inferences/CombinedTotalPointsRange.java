@@ -36,12 +36,9 @@ public final class CombinedTotalPointsRange extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        Optional<Integer> tpts = players.partner.infSummary.minTotalPts();
-        if (!tpts.isPresent()) {
-            return ConstBoundInference.F;
-        }
-        Range r = new Range(rng.bits >> tpts.get(), 40);
-        return TotalPtsBoundInf.create(players.partner.infSummary, r);
+        return players.partner.infSummary.minTotalPts()
+                .map(tpts -> TotalPtsBoundInf.create(players.partner.infSummary, new Range(rng.bits >> tpts, 40)))
+                .orElse(ConstBoundInference.F);
     }
 
     @Override
@@ -52,16 +49,16 @@ public final class CombinedTotalPointsRange extends Inference {
     public static CombinedTotalPointsRange makeRange(String str) {
         String[] parts = SplitUtil.split(str, "-", 2);
         if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
-            CombinedTotalPointsRange r1 = makeRange(parts[0]);
-            CombinedTotalPointsRange r2 = makeRange(parts[1]);
-            if (r1 == null || r2 == null) {
+            CombinedTotalPointsRange rlow = makeRange(parts[0]);
+            CombinedTotalPointsRange rhigh = makeRange(parts[1]);
+            if (rlow == null || rhigh == null) {
                 return null;
             }
-            Optional<Integer> l = r1.rng.lowest();
-            Optional<Integer> h = r2.rng.highest();
+            Optional<Integer> l = rlow.rng.lowest();
+            Optional<Integer> h = rhigh.rng.highest();
             Range createRange = l.map(lower -> h.map(higher -> Range.between(lower, higher, 40)).orElse(Range.none(40))).orElse(Range.none(40));
             return new CombinedTotalPointsRange(createRange);
-         }
+        }
         Range createRange = createRange(str);
         if (createRange == null) {
             return null;
