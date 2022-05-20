@@ -5,15 +5,23 @@
 # H = ♥
 # S = ♠
 
-2♣ NJx => 5+ x, 2 of top 3 in x;
+2♣ 2M => 5+ M, 2 of top 3 in M;
     test AQxxx xxx xxx xx:
         2♣ 2S;
+2♣ 3m => 5+ m, 2 of top 3 in m;
+    test xx xxx AQxxx xxx:
+        2♣ 3D;
 
 2♣ 2N => 8+ tpts, partial_stoppers unbid;
     test Qx Kxxx Kxxx Jxx:
         2♣ 2N;
-  
+
 2♣ 2D => always;
     test xx Kxxx xxxx xxx:
         2♣ 2D;
-        
+
+2♣ 2D
+2N => balanced, 22-24 tpts, 22-24 hcp;
+    test AKQx AQxx AQ Qxx:
+        2C 2D
+        2N;
