@@ -110,41 +110,6 @@ public final class InferenceParser {
             }
             break;
         }
-        case FitInSuit.NAME: {
-            Symbol sym = SymbolParser.parseSymbol(remainder.trim());
-            if (sym != null) {
-                return new FitInSuit(sym, SuitLengthRange.atLeast(8));
-            }
-            break;
-        }
-        case "fit7": {
-            Symbol sym = SymbolParser.parseSymbol(remainder.trim());
-            if (sym != null) {
-                return new FitInSuit(sym, SuitLengthRange.atLeast(7));
-            }
-            break;
-        }
-        case "fit8": {
-            Symbol sym = SymbolParser.parseSymbol(remainder.trim());
-            if (sym != null) {
-                return new FitInSuit(sym, SuitLengthRange.atLeast(8));
-            }
-            break;
-        }
-        case "fit9": {
-            Symbol sym = SymbolParser.parseSymbol(remainder.trim());
-            if (sym != null) {
-                return new FitInSuit(sym, SuitLengthRange.atLeast(9));
-            }
-            break;
-        }
-        case "fit10": {
-            Symbol sym = SymbolParser.parseSymbol(remainder.trim());
-            if (sym != null) {
-                return new FitInSuit(sym, SuitLengthRange.atLeast(10));
-            }
-            break;
-        }
         case Rebiddable.NAME: {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {
