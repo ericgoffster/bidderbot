@@ -235,9 +235,6 @@ public final class BidPatternList {
             if (numWild > 1) {
                 throw new IllegalArgumentException("Only one generality allowed");
             }
-            if (l.size() > 0 && l.get(l.size() - 1).generality != null) {
-                throw new IllegalArgumentException("bids may not end with a generality");
-            }
             return new BidPatternList(l);
         } catch (IOException e) {
             throw new IllegalArgumentException("invalid bids: '" + str + "'", e);

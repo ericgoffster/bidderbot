@@ -76,25 +76,6 @@ common [] 1N:"nt_opener" {
 	    test Axx xx AKxx AKxx:
 	        1N 2♠;
 	
-	[[Quantitative slam invite]]
-	4N => slaminv;
-	    test Axx Axx AQxx Kxx:
-	        1N 4N;
-	
-	[[Quantitative grand slam invite]]
-	5N => grandinv;
-	    test Axx Axx AKxx AQx:
-	        1N 5N;
-	
-	[[Bid slam if you got it]]
-	6N => slam;
-	    test Axx Axx AKxx Kxx:
-	        1N 6N;
-	
-	[[Bid grand slam if you got it]]
-	7N => grand;
-	    test AQx Axx AKxx AQx:
-	        1N 7N;
 	
 	[[Bid stayman with invitational values]]
 	2♣:"stayman" => inv;

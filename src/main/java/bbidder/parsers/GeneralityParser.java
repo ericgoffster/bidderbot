@@ -10,6 +10,7 @@ import bbidder.generalities.BestFitEstablished;
 import bbidder.generalities.BidSuitGenerality;
 import bbidder.generalities.ConstGenerality;
 import bbidder.generalities.FitEstablished;
+import bbidder.generalities.MadeBid;
 import bbidder.generalities.TotalPointsEstablished;
 import bbidder.generalities.UnbidSuitGenerality;
 import bbidder.generalities.WeAreThreeSuited;
@@ -72,6 +73,10 @@ public final class GeneralityParser {
                     return new BidSuitGenerality(symbol, position, range);
                 }
                 break;
+            }
+            if (remainder.startsWith("made_bid")) {
+                int position = tag.equals("i") ? 4 : 2;
+                return new MadeBid(position, remainder.substring(8).trim());
             }
             break;
         case UnbidSuitGenerality.NAME: {

@@ -90,25 +90,6 @@ common [] 2N:"nt_opener" {
 	    test Qxx x Axxxx Axxx:
 	        2C 2D
 	        2N 3♠;
-	
-	4N => slaminv;
-	    test Axx xx AJxxx Qxx:
-	        2N 4N;
-	    test xx Axx AJxxx Qxx:
-	        2N 4N;
-	    test Qxx xx AJxxx Jxx:
-	        2C 2D
-	        2N 4N;
-	    test xx Qxx AJxxx Jxx:
-	        2C 2D
-	        2N 4N;
-	
-	5N => grandinv;
-	    test Axx Axx AQxx Qxx:
-	        2N 5N;
-	    test Qxx xxx AQxx AJx:
-	        2C 2D
-	        2N 5N;
 }
 include stayman.bidding;
 include jacobyxfer.bidding;
