@@ -20,7 +20,7 @@ common [] 1N:"nt_opener" {
 	        1N 2♦;
 	
 	[[Texas transfer with 6+${M} and game forcing values (or better)]]
-	4M-1 => 6+M, gf+;
+	4M-1:"xfer" => 6+M, gf+;
 	    test AQxxxx Kxx Qx xx:
 	        1N 4♥;
 	    test Kxx AQxxxx Qx xx:

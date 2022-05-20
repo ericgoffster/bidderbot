@@ -64,20 +64,6 @@
 
 [[Just keep supporting]]
 [gf+, 8+ fit M] NJM:<4N => always;
-    test AQxx AJxx Ax AJx:
-        2N 4♦
-        4♥;
-    test AQxx AJxx Ax AJx:
-        2N 4♥
-        4♠;
-    test AQxx AKxx Ax AJx:
-        2C 2D
-        2N 4♦
-        4♥;
-    test AQxx AKxx Ax AJx:
-        2C 2D
-        2N 4♥
-        4♠;
     test AQxxx x Axx Axxx:
         1S 3N
         4S;

@@ -31,7 +31,7 @@ common [] 2N:"nt_opener" {
 	        2C 2D
 	        2N 3♦;
 	
-	4M-1 => 6+M, gf+;
+	4M-1:"xfer" => 6+M, gf+;
 	    test Axxxxx x xxx Jxx:
 	        2N 4♥;
 	    test x Axxxxx xxx Jxx:
@@ -42,6 +42,23 @@ common [] 2N:"nt_opener" {
 	    test x Qxxxxx xxx Jxx:
 	        2C 2D
 	        2N 4♦;
+	continuations {
+	    4M => always;
+	    test AQxx AJxx Ax AJx:
+	        2N 4♦
+	        4♥;
+	    test AQxx AJxx Ax AJx:
+	        2N 4♥
+	        4♠;
+	    test AQxx AKxx Ax AJx:
+	        2C 2D
+	        2N 4♦
+	        4♥;
+	    test AQxx AKxx Ax AJx:
+	        2C 2D
+	        2N 4♥
+	        4♠;
+	}
 	
 	3M-1:"xfer" => 5+M;
 	    test Axxxx xx Axx Jxx:
