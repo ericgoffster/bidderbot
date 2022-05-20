@@ -287,7 +287,7 @@ public final class BidPatternList {
         // evaluate the remaining bids in the context of that bid.
         BidPatternList exceptFirst = exceptFirst();
         BidPattern first = bids.get(0);
-        return first.resolveSuits(previous.getContract(), suitTable)
+        return first.resolveSuits(suitTable)
                 .flatMap(b -> exceptFirst.resolveSuits(previous.withBidAdded(b.getBidPattern()), b.suitTable));
     }
 

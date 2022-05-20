@@ -167,13 +167,11 @@ public final class BidPattern {
     }
 
     /**
-     * @param contract
-     *            Current contract
      * @param suitTable
      *            The symbols
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public MyStream<Context> resolveSuits(Contract contract, SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         if (generality != null) {
             return generality.resolveSuits(suitTable).map(e -> createWild(e.getGenerality()).new Context(e.suitTable));
         }
@@ -183,14 +181,14 @@ public final class BidPattern {
         return MyStream.of(new Context(suitTable)).flatMap(e -> {
             BidPattern bidPattern = e.getBidPattern();
             if (bidPattern.greaterThan != null) {
-                return bidPattern.greaterThan.resolveSuits(contract, e.suitTable)
+                return bidPattern.greaterThan.resolveSuits(e.suitTable)
                         .map(e2 -> bidPattern.withGreaterThan(e2.getBidPattern()).new Context(e2.suitTable));
             }
             return MyStream.of(e);
         }).flatMap(e -> {
             BidPattern bidPattern = e.getBidPattern();
             if (bidPattern.lessThan != null) {
-                return bidPattern.lessThan.resolveSuits(contract, e.suitTable)
+                return bidPattern.lessThan.resolveSuits(e.suitTable)
                         .map(e2 -> bidPattern.withLessThan(e2.getBidPattern()).new Context(e2.suitTable));
             }
             return MyStream.of(e);
