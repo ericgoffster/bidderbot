@@ -7,7 +7,7 @@
 
 common [] 1N:"nt_opener" 2M-1 {
 	[[With max and a doubleton, bid the doubleton]]
-	NJx => max hcp, 4+M, 2-x;
+	NJx:"maxfit" => max hcp, 4+M, 2-x;
 	    test Ax Axxx AJxx Axx:
 	        1N 2♦
 	        2♠;
@@ -35,7 +35,7 @@ common [] 1N:"nt_opener" 2M-1 {
     }
 	        
 	[[With max and no doubleton, bid 2N]] 
-	2N => max hcp, 4+M;
+	2N:"maxfit" => max hcp, 4+M;
 	    test AQx Axxx Axx Kxx:
 	        1N 2♦
 	        2N;
