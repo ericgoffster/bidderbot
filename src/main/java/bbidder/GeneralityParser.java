@@ -70,35 +70,35 @@ public final class GeneralityParser {
         case FitEstablished.NAME: {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new FitEstablished(symbol, 8);
+                return new FitEstablished(symbol, SuitLengthRange.atLeast(8));
             }
             break;
         }
         case "fit7_established": {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new FitEstablished(symbol, 7);
+                return new FitEstablished(symbol, SuitLengthRange.atLeast(7));
             }
             break;
         }
         case "fit8_established": {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new FitEstablished(symbol, 8);
+                return new FitEstablished(symbol, SuitLengthRange.atLeast(8));
             }
             break;
         }
         case "fit9_established": {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new FitEstablished(symbol, 9);
+                return new FitEstablished(symbol, SuitLengthRange.atLeast(9));
             }
             break;
         }
         case "fit10_established": {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new FitEstablished(symbol, 10);
+                return new FitEstablished(symbol, SuitLengthRange.atLeast(10));
             }
             break;
         }
