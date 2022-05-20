@@ -90,12 +90,16 @@ public final class InfSummary {
     }
 
     public short getBidSuits() {
-        Integer[] suitArr = { 0, 1, 2, 3 };
-        List<Optional<Integer>> minLens = IntStream.range(0, 4).mapToObj(suit -> minLenInSuit(suit)).collect(Collectors.toList());
-        if (!minLens.get(0).isPresent() || !minLens.get(1).isPresent() || !minLens.get(2).isPresent() || !minLens.get(3).isPresent()) {
+        List<Optional<Integer>> minLens = IntStream.range(0, 4)
+                .mapToObj(suit -> minLenInSuit(suit))
+                .filter(o -> o.isPresent())
+                .collect(Collectors.toList());
+        if (minLens.size() != 4) {
             return 0;
         }
-        Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgLenInSuit(s1).get(), avgLenInSuit(s2).get()));
+        List<Double> avgL = IntStream.range(0, 4).mapToObj(suit -> avgLenInSuit(suit).get()).collect(Collectors.toList());
+        Integer[] suitArr = { 0, 1, 2, 3 };
+        Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgL.get(s1), avgL.get(s2)));
         List<Integer> minL = minLens.stream().map(ml -> ml.get()).collect(Collectors.toList());
         if (minL.get(suitArr[0]) >= 5 || minL.get(suitArr[0]) >= 4 && minL.get(suitArr[1]) >= 4) {
             short suits = 0;
@@ -112,7 +116,7 @@ public final class InfSummary {
         }
         {
             short suits = 0;
-            for (int i = 0; i < 4 && avgLenInSuit(suitArr[i]).get() >= 4; i++) {
+            for (int i = 0; i < 4 && avgL.get(suitArr[i]) >= 4; i++) {
                 suits |= (short) (1 << suitArr[i]);
             }
             return suits;
