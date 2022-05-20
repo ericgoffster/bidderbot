@@ -8,7 +8,7 @@ import org.junit.Test;
 public class StopperTest {
     @Test
     public void testBalanced() {
-        Stoppers nostoppers = Stoppers.values()[0];
+        Stoppers nostoppers = Stoppers.EMPTY;
         assertFalse(nostoppers.stopperIn(0));
         assertTrue(nostoppers.withStopperIn(0).stopperIn(0));
         assertFalse(nostoppers.withStopperIn(0).stopperIn(1));
