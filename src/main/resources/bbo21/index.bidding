@@ -1,2 +1,3 @@
 include opening_bids.bidding;
+include general_majors.bidding;
 include general.bidding;
