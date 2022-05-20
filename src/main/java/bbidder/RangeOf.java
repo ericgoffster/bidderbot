@@ -6,17 +6,19 @@ public final class RangeOf {
     public final Integer min;
     public final Integer max;
     public final String of;
+    public final boolean maxPromised;
 
-    public RangeOf(Integer min, Integer max, String of) {
+    public RangeOf(Integer min, Integer max, String of, boolean maxPromised) {
         super();
         this.min = min;
         this.max = max;
         this.of = of;
+        this.maxPromised = maxPromised;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(max, min, of);
+        return Objects.hash(max, maxPromised, min, of);
     }
 
     @Override
@@ -28,11 +30,14 @@ public final class RangeOf {
         if (getClass() != obj.getClass())
             return false;
         RangeOf other = (RangeOf) obj;
-        return Objects.equals(max, other.max) && Objects.equals(min, other.min) && Objects.equals(of, other.of);
+        return Objects.equals(max, other.max) && maxPromised == other.maxPromised && Objects.equals(min, other.min) && Objects.equals(of, other.of);
     }
 
     @Override
     public String toString() {
+        if (maxPromised) {
+            return "max " + of;
+        }
         if (min == null) {
             return max + "- " + of;
         }
