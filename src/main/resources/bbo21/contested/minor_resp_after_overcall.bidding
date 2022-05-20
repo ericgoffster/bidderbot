@@ -3,7 +3,7 @@
 # H = ♥
 # S = ♠
 
-common 1m (1z) {
+common 1m (NJz) {
 	3m => 7- tpts, 5+ m;
 	    test xxx Kxxx x Qxxxx:
 	        1C (1S) 3C;
