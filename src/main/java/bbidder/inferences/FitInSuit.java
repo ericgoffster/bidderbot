@@ -23,9 +23,9 @@ import bbidder.utils.MyStream;
 public final class FitInSuit extends Inference {
     public static final String NAME = "fit";
     private final Symbol symbol;
-    public final int combined;
+    public final SuitLengthRange combined;
 
-    public FitInSuit(Symbol suit, int combined) {
+    public FitInSuit(Symbol suit, SuitLengthRange combined) {
         super();
         this.symbol = suit;
         this.combined = combined;
@@ -44,7 +44,7 @@ public final class FitInSuit extends Inference {
 
     @Override
     public String toString() {
-        return NAME + combined + " " + symbol;
+        return NAME + " " + combined + " " + symbol;
     }
 
     @Override
@@ -61,7 +61,7 @@ public final class FitInSuit extends Inference {
         if (getClass() != obj.getClass())
             return false;
         FitInSuit other = (FitInSuit) obj;
-        return combined == other.combined && Objects.equals(symbol, other.symbol);
+        return Objects.equals(combined, other.combined) && Objects.equals(symbol, other.symbol);
     }
 
     private IBoundInference createrBound(int s, Players players) {
@@ -75,16 +75,11 @@ public final class FitInSuit extends Inference {
             return ConstBoundInference.F;
         }
         int myLen = minLenInSuitMe.getAsInt();
-        if (myLen + partnerLen >= combined) {
+        if (combined.contains(myLen + partnerLen)) {
             return ConstBoundInference.T;
         }
 
-        int myMinLen = combined - partnerLen;
-        if (myMinLen <= 0) {
-            return ConstBoundInference.T;
-        } else {
-            SuitLengthRange r = SuitLengthRange.atLeast(myMinLen);
-            return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
-        }
+        SuitLengthRange r = combined.addOffset(-partnerLen);
+        return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
     }
 }

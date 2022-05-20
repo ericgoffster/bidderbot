@@ -106,42 +106,42 @@ public final class InferenceParser {
         case "nofit": {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {
-                return NotInference.create(new FitInSuit(sym, 8));
+                return NotInference.create(new FitInSuit(sym, SuitLengthRange.atLeast(8)));
             }
             break;
         }
         case FitInSuit.NAME: {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {
-                return new FitInSuit(sym, 8);
+                return new FitInSuit(sym, SuitLengthRange.atLeast(8));
             }
             break;
         }
         case "fit7": {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {
-                return new FitInSuit(sym, 7);
+                return new FitInSuit(sym, SuitLengthRange.atLeast(7));
             }
             break;
         }
         case "fit8": {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {
-                return new FitInSuit(sym, 8);
+                return new FitInSuit(sym, SuitLengthRange.atLeast(8));
             }
             break;
         }
         case "fit9": {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {
-                return new FitInSuit(sym, 9);
+                return new FitInSuit(sym, SuitLengthRange.atLeast(9));
             }
             break;
         }
         case "fit10": {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {
-                return new FitInSuit(sym, 10);
+                return new FitInSuit(sym, SuitLengthRange.atLeast(10));
             }
             break;
         }
