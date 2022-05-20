@@ -5,30 +5,29 @@
 # H = ♥
 # S = ♠
 
-1m 1M
-2N 3om
-3OM => 4OM;
-    test Ax Axxx Axxx AQx:
-        1D 1S
-        2N 3C
-        3H;
-    test Axx Axxx AQxx Ax:
-        1D 1S
-        2N 3C
-        3H;
+common
+   1m 1M
+   2N 3om {
 
-1m 1M
-2N 3om
-3M => 3M;
-    test Axx Axx Axxx AQx:
-        1D 1S
-        2N 3C
-        3S;
-
-1m 1M
-2N 3om
-3N => always;
-    test Ax Axx Axxxx AQx:
-        1D 1S
-        2N 3C
-        3N;
+	3OM => 4OM;
+	    test Ax Axxx Axxx AQx:
+	        1D 1S
+	        2N 3C
+	        3H;
+	    test Axx Axxx AQxx Ax:
+	        1D 1S
+	        2N 3C
+	        3H;
+	
+	3M => 3M;
+	    test Axx Axx Axxx AQx:
+	        1D 1S
+	        2N 3C
+	        3S;
+	
+	3N => always;
+	    test Ax Axx Axxxx AQx:
+	        1D 1S
+	        2N 3C
+	        3N;
+}
