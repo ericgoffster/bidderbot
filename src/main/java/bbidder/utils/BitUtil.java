@@ -1,12 +1,8 @@
 package bbidder.utils;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 /**
  * Fast bit utilities.
@@ -19,22 +15,36 @@ public final class BitUtil {
      * set[patt] = array of set bits
      */
     private static final int set[][];
+    private static final int highest[];
+    private static final int lowest[];
 
     static {
         set = new int[65536][];
+        highest = new int[65536];
+        lowest = new int[65536];
         int[] res = new int[16];
         for (int i = 0; i < 65536; i++) {
             int j = i;
             int pos = 0;
             int len = 0;
+            int h = -1;
+            int l = -1;
             while (j != 0) {
                 if (j % 2 != 0) {
                     res[len++] = pos;
+                    if (h < 0 || pos > h) {
+                        h = pos;
+                    }
+                    if (l < 0 || pos < l) {
+                        l = pos;
+                    }
                 }
                 j >>= 1;
                 pos++;
             }
             set[i] = Arrays.copyOf(res, len);
+            highest[i] = h;
+            lowest[i] = l;
         }
     }
 
@@ -44,7 +54,7 @@ public final class BitUtil {
      * @return Number of bits set in the pattern.
      */
     public static int size(short pattern) {
-        return size(toLong(pattern));
+        return set[pattern & 0xffff].length;
     }
 
     /**
@@ -53,13 +63,11 @@ public final class BitUtil {
      * @return Number of bits set in the pattern.
      */
     public static int size(long pattern) {
-        int sz = 0;
-        long patt = pattern;
-        while (patt != 0) {
-            sz += set[(int) (patt & 0xffff)].length;
-            patt >>>= 16;
-        }
-        return sz;
+        return
+                set[(int)(pattern & 0xffff)].length +
+                set[(int)((pattern >>> 16) & 0xffff)].length +
+                set[(int)((pattern >>> 32) & 0xffff)].length +
+                set[(int)((pattern >>> 48) & 0xffff)].length;
     }
 
     /**
@@ -68,7 +76,16 @@ public final class BitUtil {
      * @return The index of the highest bit set in the pattern.
      */
     public static Optional<Integer> highestBit(short pattern) {
-        return highestBit(toLong(pattern));
+        return pattern == 0 ? Optional.empty() : Optional.of(highest[pattern & 0xffff]);
+    }
+
+    /**
+     * @param pattern
+     *            The bit pattern
+     * @return The index of the highest bit set in the pattern.
+     */
+    public static Optional<Integer> leastBit(short pattern) {
+        return pattern == 0 ? Optional.empty() : Optional.of(lowest[pattern & 0xffff]);
     }
 
     /**
@@ -77,10 +94,23 @@ public final class BitUtil {
      * @return The index of the highest bit set in the pattern.
      */
     public static Optional<Integer> highestBit(long pattern) {
-        if (pattern == 0) {
-            return Optional.empty();
+        int p3 = (int) ((pattern >>> 48) & 0xffff);
+        if (p3 != 0) {
+            return Optional.of(highest[p3] + 48);
         }
-        return Optional.of(63 - Long.numberOfLeadingZeros(pattern));
+        int p2 = (int) ((pattern >>> 32) & 0xffff);
+        if (p2 != 0) {
+            return Optional.of(highest[p2] + 32);
+        }
+        int p1 = (int) ((pattern >>> 16) & 0xffff);
+        if (p1 != 0) {
+            return Optional.of(highest[p1] + 16);
+        }
+        int p0 = (int) (pattern & 0xffff);
+        if (p0 != 0) {
+            return Optional.of(highest[p0]);
+        }
+        return Optional.empty();
     }
 
     /**
@@ -96,76 +126,27 @@ public final class BitUtil {
     }
     
     public static IntStream stream(long pattern) {
-        return StreamSupport.stream(new PatternIterator(pattern), false).mapToInt(i -> i.intValue());
+        IntStream stream = IntStream.empty();
+        int p0 = (int) (pattern & 0xffff);
+        if (p0 != 0) {
+            stream = IntStream.concat(stream, Arrays.stream(set[p0]));
+        }
+        int p1 = (int) ((pattern >>> 16) & 0xffff);
+        if (p1 != 0) {
+            stream = IntStream.concat(stream, Arrays.stream(set[p1]).map(i -> i + 16));
+        }
+        int p2 = (int) ((pattern >>> 32) & 0xffff);
+        if (p2 != 0) {
+            stream = IntStream.concat(stream, Arrays.stream(set[p2]).map(i -> i + 32));
+        }
+        int p3 = (int) ((pattern >>> 48) & 0xffff);
+        if (p3 != 0) {
+            stream = IntStream.concat(stream, Arrays.stream(set[p3]).map(i -> i + 48));
+        }
+        return stream;
     }
 
     public static IntStream stream(short pattern) {
-        return stream(toLong(pattern));
+        return pattern == 0 ? IntStream.empty() : Arrays.stream(set[pattern & 0xffff]);
     }
-
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return The long version of the pattern.
-     */
-    private static long toLong(short pattern) {
-        return pattern & 0xffffL;
-    }
-
-    private static final class PatternIterator implements Spliterator<Integer> {
-        int j = 0;
-        long patt;
-        int[] res;
-        int i = 0;
-
-        public PatternIterator(long pattern) {
-            patt = pattern >>> 16;
-            res = set[(int) (pattern & 0xffff)];
-        }
-
-        public boolean hasNext() {
-            if (i < res.length) {
-                return true;
-            }
-            return patt != 0;
-        }
-
-        public Integer next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            while (i >= res.length && patt != 0) {
-                res = set[(int) (patt & 0xffff)];
-                i = 0;
-                j += 16;
-                patt >>>= 16;
-            }
-            return j + res[i++];
-        }
-
-        @Override
-        public boolean tryAdvance(Consumer<? super Integer> action) {
-            if (hasNext()) {
-                action.accept(next());
-                return true;
-            }
-            return false;
-        }
-
-        @Override
-        public Spliterator<Integer> trySplit() {
-            return null;
-        }
-
-        @Override
-        public long estimateSize() {
-            return 0;
-        }
-
-        @Override
-        public int characteristics() {
-            return 0;
-        }
-    }
-
 }
