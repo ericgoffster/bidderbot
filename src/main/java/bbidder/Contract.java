@@ -8,15 +8,14 @@ import java.util.Objects;
  * @author goffster
  */
 public final class Contract {
-    public final int position;
+    public static final Contract FIRST = new Contract(Bid.P, false, false, 0);
     public final Bid winningBid;
     public final boolean doubled;
     public final boolean redoubled;
     public final int numPasses;
 
-    public Contract(int position, Bid winningBid, boolean doubled, boolean redoubled, int numPasses) {
+    public Contract(Bid winningBid, boolean doubled, boolean redoubled, int numPasses) {
         super();
-        this.position = position;
         this.winningBid = winningBid;
         this.doubled = doubled;
         this.redoubled = redoubled;
@@ -25,7 +24,7 @@ public final class Contract {
 
     @Override
     public int hashCode() {
-        return Objects.hash(doubled, position, redoubled, winningBid, numPasses);
+        return Objects.hash(doubled, redoubled, winningBid, numPasses);
     }
 
     @Override
@@ -37,7 +36,7 @@ public final class Contract {
         if (getClass() != obj.getClass())
             return false;
         Contract other = (Contract) obj;
-        return doubled == other.doubled && position == other.position && redoubled == other.redoubled && winningBid == other.winningBid
+        return doubled == other.doubled && redoubled == other.redoubled && winningBid == other.winningBid
                 && numPasses == other.numPasses;
     }
 
@@ -46,7 +45,7 @@ public final class Contract {
         if (winningBid == Bid.P) {
             return "all pass";
         }
-        return winningBid + (redoubled ? "XX" : doubled ? "X" : "") + " by " + position;
+        return winningBid + (redoubled ? "XX" : doubled ? "X" : "");
     }
 
     public boolean isCompleted() {
@@ -71,6 +70,19 @@ public final class Contract {
             jumpLevel--;
         }
         return b;
+    }
+    
+    public Contract addBid(Bid bid) {
+        switch (bid) {
+        case P:
+            return new Contract(winningBid, doubled, redoubled, numPasses + 1);
+        case XX:
+            return new Contract(winningBid, true, true, numPasses + 1);
+        case X:
+            return new Contract(winningBid, true, redoubled, numPasses + 1);
+        default:
+            return new Contract(bid, false, false, 0);
+        }
     }
 
     /**

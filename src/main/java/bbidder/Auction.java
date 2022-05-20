@@ -82,7 +82,7 @@ public final class Auction {
         for (int i = bids.size() - 1; i >= 0; i--) {
             Bid bid = bids.get(i);
             if (bid.isSuitBid()) {
-                return new Contract(i, bid, doubled, redoubled, numPasses);
+                return new Contract(bid, doubled, redoubled, numPasses);
             }
             if (bid == Bid.X) {
                 doubled = true;
@@ -96,7 +96,7 @@ public final class Auction {
                 }
             }
         }
-        return new Contract(0, Bid.P, false, false, numPasses);
+        return new Contract(Bid.P, false, false, numPasses);
     }
 
     /**
