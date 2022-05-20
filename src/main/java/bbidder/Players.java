@@ -7,6 +7,17 @@ public final class Players {
     public final Player partner;
     public final Player rho;
     public final Player me;
+    
+    public Player getPlayer(Position position) {
+        switch(position) {
+        case ME: return me;
+        case PARTNER: return partner;
+        case LHO: return lho;
+        case RHO: return rho;
+        default: throw new IllegalArgumentException();
+        }
+        
+    }
 
     public Players() {
         this(Player.ALL, Player.ALL, Player.ALL, Player.ALL);
@@ -77,9 +88,10 @@ public final class Players {
         int partnerLen = partnerLenLonger.getAsInt();
         return OptionalInt.of(meLen + partnerLen);
     }
-
-    public boolean iBidSuit(int s) {
-        OptionalInt bidSuits = me.infSummary.getBidSuits();
+    
+    public boolean bidSuit(Position position, int s) {
+        Player i = getPlayer(position);
+        OptionalInt bidSuits = i.infSummary.getBidSuits();
         if (bidSuits.isEmpty()) {
             return false;
         }
@@ -87,5 +99,9 @@ public final class Players {
             return false;
         }
         return true;
+    }
+
+    public boolean iBidSuit(int s) {
+        return bidSuit(Position.ME,s);
     }
 }

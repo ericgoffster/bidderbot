@@ -2,6 +2,7 @@ package bbidder.parsers;
 
 import bbidder.Generality;
 import bbidder.PointRange;
+import bbidder.Position;
 import bbidder.RangeOf;
 import bbidder.SuitLengthRange;
 import bbidder.Symbol;
@@ -69,8 +70,7 @@ public final class GeneralityParser {
                 }
                 Symbol symbol = SymbolParser.parseSymbol(rem[0]);
                 if (symbol != null) {
-                    int position = tag.equals("i") ? 0 : 2;
-                    return new BidSuitGenerality(symbol, position, range);
+                    return new BidSuitGenerality(symbol, Position.getPosition(tag), range);
                 }
                 break;
             }
