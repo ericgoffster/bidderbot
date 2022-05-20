@@ -5,7 +5,7 @@ import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.function.Predicate;
 
 /**
@@ -158,10 +158,10 @@ public final class ShapeSet implements Iterable<Shape> {
             tot += probability;
         }
         return new ShapeStats[] {
-            new ShapeStats(new SuitLengthRange(bits[0]), Optional.of(sum[0] / tot)),
-            new ShapeStats(new SuitLengthRange(bits[1]), Optional.of(sum[1] / tot)),
-            new ShapeStats(new SuitLengthRange(bits[2]), Optional.of(sum[2] / tot)),
-            new ShapeStats(new SuitLengthRange(bits[3]), Optional.of(sum[3] / tot))};
+            new ShapeStats(new SuitLengthRange(bits[0]), OptionalDouble.of(sum[0] / tot)),
+            new ShapeStats(new SuitLengthRange(bits[1]), OptionalDouble.of(sum[1] / tot)),
+            new ShapeStats(new SuitLengthRange(bits[2]), OptionalDouble.of(sum[2] / tot)),
+            new ShapeStats(new SuitLengthRange(bits[3]), OptionalDouble.of(sum[3] / tot))};
     }
 
     @Override

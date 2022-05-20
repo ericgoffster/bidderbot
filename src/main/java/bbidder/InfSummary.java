@@ -1,12 +1,11 @@
 package bbidder;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -112,7 +111,7 @@ public final class InfSummary {
      *            The suit
      * @return The average length in a suit, empty if there is an empty set of lengths.
      */
-    public Optional<Double> avgLenInSuit(int suit) {
+    public OptionalDouble avgLenInSuit(int suit) {
         return getShapeStats(suit).averageLength;
     }
 
@@ -129,9 +128,9 @@ public final class InfSummary {
         if (minL.length != 4) {
             return Optional.empty();
         }
-        List<Double> avgL = IntStream.range(0, 4).mapToObj(suit -> avgLenInSuit(suit).get()).collect(Collectors.toList());
+        double[] avgL = IntStream.range(0, 4).mapToDouble(suit -> avgLenInSuit(suit).getAsDouble()).toArray();
         Integer[] suitArr = { 0, 1, 2, 3 };
-        Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgL.get(s1), avgL.get(s2)));
+        Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgL[s1], avgL[s2]));
         if (minL[suitArr[0]] >= 5 || minL[suitArr[0]] >= 4 && minL[suitArr[1]] >= 4) {
             short suits = 0;
             for (int i = 0; i < 4 && minL[suitArr[i]] >= 4; i++) {
@@ -147,7 +146,7 @@ public final class InfSummary {
         }
         {
             short suits = 0;
-            for (int i = 0; i < 4 && avgL.get(suitArr[i]) >= 4; i++) {
+            for (int i = 0; i < 4 && avgL[suitArr[i]] >= 4; i++) {
                 suits |= (short) (1 << suitArr[i]);
             }
             return Optional.of(suits);

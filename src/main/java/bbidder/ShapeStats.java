@@ -1,6 +1,6 @@
 package bbidder;
 
-import java.util.Optional;
+import java.util.OptionalDouble;
 
 /**
  * Represents the statistics of a shape in a particular suit.
@@ -8,7 +8,7 @@ import java.util.Optional;
  *
  */
 public class ShapeStats {
-    public static final ShapeStats EMPTY = new ShapeStats(SuitLengthRange.NONE, Optional.empty());
+    public static final ShapeStats EMPTY = new ShapeStats(SuitLengthRange.NONE, OptionalDouble.empty());
     /**
      * The range of possible lengths.
      */
@@ -17,9 +17,9 @@ public class ShapeStats {
     /**
      * The average length.   Empty for "null" sets.
      */
-    public final Optional<Double> averageLength;
+    public final OptionalDouble averageLength;
 
-    public ShapeStats(SuitLengthRange range, Optional<Double> avg) {
+    public ShapeStats(SuitLengthRange range, OptionalDouble avg) {
         super();
         this.lengths = range;
         this.averageLength = avg;
@@ -30,6 +30,6 @@ public class ShapeStats {
         if (!averageLength.isPresent()) {
             return "undefined";
         }
-        return lengths + " " + " average " + averageLength.get();
+        return lengths + " " + " average " + averageLength.getAsDouble();
     }
 }
