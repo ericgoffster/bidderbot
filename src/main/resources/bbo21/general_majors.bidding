@@ -35,13 +35,22 @@
         1D 1S
         2H 3H
         4H;
+    test AKxx AKxx x AQxx:
+        1♣ 1♥
+        4♥;
 
 [] 3M => inv, fit M;
     test AQxx Axx xxxx xx:
         1C 1S
         2S 3S;
+    test AKxx Kxxx xx AKx:
+        1♣ 1♥
+        3♥;
 
 [] 2M => min, fit M;
+    test AQxx Axxx xx Kxx:
+        1♣ 1♥
+        2♥;
 
 #
 # Rebid 2nd suit if possible

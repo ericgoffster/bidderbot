@@ -6,67 +6,49 @@
 # S = ♠
 
 1x 1y
-2y => min, 4+y;
-    test AQxx Axxx xx Kxx:
-        1♣ 1♥
-        2♥;
-
-1x 1y
-3y => inv, 4+y;
-    test AKxx Kxxx xx AKx:
-        1♣ 1♥
-        3♥;
-
-1x 1M
-4M => gf, 4+M;
-    test AKxx AKxx x AQxx:
-        1♣ 1♥
-        4♥;
-
-1x 1y
-Jz => 4+z, 5+x, gf;
+Jz => 4+z, 5+x, nofit y, gf;
     test AKx AKxx x AQxxx:
         1♣ 1♦
         2♥;
 
 1x 1y
-NJz:<2x => 4+z, 5+x;
+NJz:<2x => 4+z, 5+x, nofit y;
     test xx AKxxx xx AQxx:
         1♥ 1♠
         2♣;
 
 1x 1y
-NJz:>2x => 4+z, 5+x, 18+tpts;
+NJz:>2x => 4+z, 5+x, nofit y, 18+tpts;
     test x AKxx Kxx AQxxx:
         1♣ 1♠
         2♥;
 
 1x 1y
-1z => 4+z;
+1z => 4+z, nofit y;
     test AKxx AKxx x xxxx:
         1♣ 1♦
         1♥;
 
 1x 1y
-3N => 7+ x, 3 of top 3 in x, partial_stoppers unbid;
+3N => 7+ x, 3 of top 3 in x, partial_stoppers unbid, nofit y;
     test x Qxx AKQxxxx Qx:
         1♦ 1♠
         3N ;
 
 1x 1y
-3x => 6+x, 17-20 tpts;
+3x => 6+x, 17-20 tpts, nofit y;
     test AKx Kxx x AKxxxx:
         1♣ 1♦
         3♣;
 
 1x 1y
-2x => 6+x, 16- tpts;
+2x => 6+x, 16- tpts, nofit y;
     test Kxx Kxx x AKxxxx:
         1♣ 1♦
         2♣;
 
 1x 1y
-1N => 12-14 tpts;
+1N => 12-14 tpts, nofit y;
     test Qxx Axx Ax Axxxx:
         1♣ 1♦
         1N;
@@ -75,7 +57,7 @@ NJz:>2x => 4+z, 5+x, 18+tpts;
         1N;
 
 1x 1y
-2N => 18-19 tpts;
+2N => 18-19 tpts, nofit y;
     test AQx Axx Ax Axxxx:
         1♣ 1♦
         2N;
