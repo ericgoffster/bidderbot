@@ -158,6 +158,9 @@ public final class BidPatternList {
             }
         }
         BidPattern pattern = bids.get(bids.size() - 1);
+        if (pattern.generality != null) {
+            throw new IllegalArgumentException("generality not permitted in this context");
+        }
         Contract contract = bidding.getContract();
         TaggedBid newBid = pattern.getResolvedBid(contract, null);
         if (!pattern.isBidCompatible(contract, newBid)) {
