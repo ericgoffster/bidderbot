@@ -1,7 +1,6 @@
 package bbidder.utils;
 
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
@@ -76,8 +75,8 @@ public final class BitUtil {
      *            The bit pattern
      * @return The index of the highest bit set in the pattern.
      */
-    public static Optional<Integer> highestBit(short pattern) {
-        return pattern == 0 ? Optional.empty() : Optional.of(highest[pattern & 0xffff]);
+    public static OptionalInt highestBit(short pattern) {
+        return pattern == 0 ? OptionalInt.empty() : OptionalInt.of(highest[pattern & 0xffff]);
     }
 
     /**
@@ -85,8 +84,8 @@ public final class BitUtil {
      *            The bit pattern
      * @return The index of the highest bit set in the pattern.
      */
-    public static Optional<Integer> leastBit(short pattern) {
-        return pattern == 0 ? Optional.empty() : Optional.of(lowest[pattern & 0xffff]);
+    public static OptionalInt leastBit(short pattern) {
+        return pattern == 0 ? OptionalInt.empty() : OptionalInt.of(lowest[pattern & 0xffff]);
     }
 
     /**

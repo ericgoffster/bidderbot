@@ -13,7 +13,6 @@ import static bbidder.Constants.QUEEN;
 import static bbidder.Constants.TEN;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.OptionalInt;
 
 import bbidder.utils.BitUtil;
@@ -242,8 +241,8 @@ public final class Hand {
     public Stoppers getStoppers() {
         Stoppers stoppers = Stoppers.EMPTY;
         for (int suit = 0; suit < 4; suit++) {
-            Optional<Integer> highest = BitUtil.highestBit(getAllInSuit(suit));
-            if (highest.isPresent() && numInSuit(suit) >= 13 - highest.get()) {
+            OptionalInt highest = BitUtil.highestBit(getAllInSuit(suit));
+            if (highest.isPresent() && numInSuit(suit) >= 13 - highest.getAsInt()) {
                 stoppers = stoppers.withStopperIn(suit);
             }
         }
@@ -253,8 +252,8 @@ public final class Hand {
     public Stoppers getPartialStoppers() {
         Stoppers stoppers = Stoppers.EMPTY;
         for (int suit = 0; suit < 4; suit++) {
-            Optional<Integer> highest = BitUtil.highestBit(getAllInSuit(suit));
-            if (highest.isPresent() && numInSuit(suit) >= 12 - highest.get()) {
+            OptionalInt highest = BitUtil.highestBit(getAllInSuit(suit));
+            if (highest.isPresent() && numInSuit(suit) >= 12 - highest.getAsInt()) {
                 stoppers = stoppers.withStopperIn(suit);
             }
         }
