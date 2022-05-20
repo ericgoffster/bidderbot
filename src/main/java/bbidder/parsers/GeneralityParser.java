@@ -1,5 +1,9 @@
-package bbidder;
+package bbidder.parsers;
 
+import bbidder.Generality;
+import bbidder.RangeOf;
+import bbidder.SuitLengthRange;
+import bbidder.Symbol;
 import bbidder.generalities.AndGenerality;
 import bbidder.generalities.BestFitEstablished;
 import bbidder.generalities.BidSuitGenerality;

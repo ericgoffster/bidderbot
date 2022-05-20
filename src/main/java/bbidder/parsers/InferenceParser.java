@@ -1,9 +1,15 @@
-package bbidder;
+package bbidder.parsers;
 
 import java.util.OptionalInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import bbidder.CardsRange;
+import bbidder.Inference;
+import bbidder.PointRange;
+import bbidder.RangeOf;
+import bbidder.SuitLengthRange;
+import bbidder.Symbol;
 import bbidder.inferences.Always;
 import bbidder.inferences.AndInference;
 import bbidder.inferences.Balanced;

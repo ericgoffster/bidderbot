@@ -8,6 +8,8 @@ import bbidder.inferences.Balanced;
 import bbidder.inferences.HCPRange;
 import bbidder.inferences.LongestOrEqual;
 import bbidder.inferences.SuitRange;
+import bbidder.parsers.InferenceParser;
+import bbidder.parsers.SuitSetParser;
 import bbidder.symbols.ConstSymbol;
 
 public class InferenceRegistryTest {

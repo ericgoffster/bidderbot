@@ -1,7 +1,9 @@
-package bbidder;
+package bbidder.parsers;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import bbidder.RangeOf;
 
 public class RangeParser {
     private static Pattern PATT_MIN_TO_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");

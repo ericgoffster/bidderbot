@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
-import bbidder.InferenceParser;
 import bbidder.Players;
 import bbidder.Symbol;
+import bbidder.parsers.InferenceParser;
 import bbidder.symbols.ConstSymbol;
 
 public class SuitRangeTest {

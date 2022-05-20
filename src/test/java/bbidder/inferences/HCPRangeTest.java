@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
-import bbidder.InferenceParser;
 import bbidder.Players;
+import bbidder.parsers.InferenceParser;
 
 public class HCPRangeTest {
     @Test

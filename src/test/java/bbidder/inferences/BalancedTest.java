@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
 import bbidder.IBoundInference;
-import bbidder.InferenceParser;
 import bbidder.Players;
+import bbidder.parsers.InferenceParser;
 
 public class BalancedTest {
     @Test

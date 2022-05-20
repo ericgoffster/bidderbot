@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.Objects;
 
+import bbidder.parsers.InferenceParser;
 import bbidder.utils.MyStream;
 import bbidder.utils.SplitUtil;
 

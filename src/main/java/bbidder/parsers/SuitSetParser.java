@@ -1,4 +1,4 @@
-package bbidder;
+package bbidder.parsers;
 
 import static bbidder.Constants.ALL_SUITS;
 import static bbidder.Constants.BLACKS;
@@ -12,6 +12,8 @@ import java.io.CharArrayReader;
 import java.io.Closeable;
 import java.io.IOException;
 
+import bbidder.SuitSet;
+import bbidder.Symbol;
 import bbidder.suitsets.And;
 import bbidder.suitsets.ConstSet;
 import bbidder.suitsets.Gt;

@@ -1,6 +1,8 @@
-package bbidder;
+package bbidder.parsers;
 
 import java.util.Map;
+
+import bbidder.PointRange;
 
 public class CombinedPointsRangeParser {
     public static final Map<String, Integer> POINT_RANGES = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35, "grand",

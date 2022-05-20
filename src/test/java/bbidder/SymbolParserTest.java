@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.parsers.SymbolParser;
 import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.DownSymbol;
 import bbidder.symbols.MajorSymbol;

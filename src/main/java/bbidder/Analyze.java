@@ -1,5 +1,7 @@
 package bbidder;
 
+import bbidder.parsers.BiddingSystemParser;
+import bbidder.parsers.InferenceParser;
 import bbidder.utils.DebugUtils;
 
 public class Analyze {

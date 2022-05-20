@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import bbidder.Hand;
-import bbidder.InferenceParser;
 import bbidder.Players;
 import bbidder.SuitSet;
-import bbidder.SuitSetParser;
 import bbidder.Symbol;
+import bbidder.parsers.InferenceParser;
+import bbidder.parsers.SuitSetParser;
 import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.VarSymbol;
 

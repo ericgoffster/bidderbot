@@ -1,4 +1,4 @@
-package bbidder;
+package bbidder.parsers;
 
 import java.io.Closeable;
 import java.io.IOException;

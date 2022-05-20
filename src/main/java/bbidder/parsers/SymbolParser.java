@@ -1,8 +1,10 @@
-package bbidder;
+package bbidder.parsers;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import bbidder.Strain;
+import bbidder.Symbol;
 import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.DownSymbol;
 import bbidder.symbols.GreaterThanSymbol;

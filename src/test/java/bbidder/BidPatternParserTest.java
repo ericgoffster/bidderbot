@@ -7,6 +7,8 @@ import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.parsers.BidPatternParser;
+import bbidder.parsers.Input;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.OtherMajorSymbol;
 

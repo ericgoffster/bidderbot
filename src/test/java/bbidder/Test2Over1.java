@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.jupiter.api.Test;
 
+import bbidder.parsers.BiddingSystemParser;
 import bbidder.utils.DebugUtils;
 
 public class Test2Over1 {

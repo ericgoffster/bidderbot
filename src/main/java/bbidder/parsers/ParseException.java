@@ -1,4 +1,4 @@
-package bbidder;
+package bbidder.parsers;
 
 public final class ParseException extends Exception {
     private static final long serialVersionUID = 1L;

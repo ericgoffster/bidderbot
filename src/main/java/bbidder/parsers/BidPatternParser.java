@@ -1,6 +1,10 @@
-package bbidder;
+package bbidder.parsers;
 
 import java.io.IOException;
+
+import bbidder.Bid;
+import bbidder.BidPattern;
+import bbidder.Symbol;
 
 /**
  * Parses a Bid Pattern.

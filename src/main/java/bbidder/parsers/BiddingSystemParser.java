@@ -1,4 +1,4 @@
-package bbidder;
+package bbidder.parsers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import bbidder.BidInference;
+import bbidder.BiddingSystem;
+import bbidder.BiddingTest;
+import bbidder.ResolvedBidInference;
 import bbidder.utils.ClassPathUrlHandler;
 import bbidder.utils.SplitUtil;
 

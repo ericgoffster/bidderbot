@@ -9,6 +9,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import bbidder.parsers.BidPatternParser;
+import bbidder.parsers.Input;
+import bbidder.parsers.ListParser;
 import bbidder.utils.IteratorStream;
 import bbidder.utils.MyStream;
 
