@@ -10,6 +10,9 @@ import bbidder.Seats;
 import bbidder.SuitLengthRange;
 import bbidder.Symbol;
 import bbidder.generalities.BidSuitGenerality;
+import bbidder.generalities.MadeBid;
+import bbidder.generalities.UnbidSuitGenerality;
+import bbidder.generalities.WeAreThreeSuited;
 
 /**
  * Parses a Bid Pattern.
@@ -79,10 +82,27 @@ public final class BidPatternParser implements Parser<BidPattern> {
                             range = SuitLengthRange.atLeast(0);
                         }
                         p = p.addGenerality(new BidSuitGenerality(symbol, position, range));
+                    } else if (inp.readKeyword("MADE_BID")) {
+                        inp.advanceWhite();
+                        String t = inp.readToken(ch -> !Character.isWhitespace(ch) && ch != ':');
+                        p = p.addGenerality(new MadeBid(position, t));
                     } else {
                         throw new IllegalArgumentException("Invalid bid pattern");
                     }
                     break;
+                case UnbidSuitGenerality.NAME: {
+                    String sym = inp.readToken(ch -> !Character.isWhitespace(ch) && ch != ':');
+                    Symbol symbol = SymbolParser.parseSymbol(sym);
+                    if (symbol == null) {
+                        throw new IllegalArgumentException("Invalid symbol");
+                    }
+                    p = p.addGenerality(new UnbidSuitGenerality(symbol));
+                    break;
+                }
+                case WeAreThreeSuited.NAME: {
+                    p = p.addGenerality(WeAreThreeSuited.WE_R_3_SUITED);
+                    break;
+                }
                 default:
                     throw new IllegalArgumentException("Invalid bid pattern");
                 }

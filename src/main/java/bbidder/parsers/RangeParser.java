@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 import bbidder.RangeOf;
 
 public class RangeParser {
-    private static Pattern PATT_MIN_TO_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
-    private static Pattern PATT_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(.*)");
-    private static Pattern PATT_MIN = Pattern.compile("(\\d+)\\s*\\+\\s*(.*)");
-    private static Pattern PATT_EXACT = Pattern.compile("(\\d+)\\s*(.*)");
-    private static Pattern PATT_MAX2 = Pattern.compile("max\\s*(.*)");
+    private static Pattern PATT_MIN_TO_MAX = Pattern.compile("(\\d+)\\-(\\d+)(.*)");
+    private static Pattern PATT_MAX = Pattern.compile("(\\d+)\\-(.*)");
+    private static Pattern PATT_MIN = Pattern.compile("(\\d+)\\+(.*)");
+    private static Pattern PATT_EXACT = Pattern.compile("(\\d+)(.*)");
+    private static Pattern PATT_MAX2 = Pattern.compile("max(.*)");
 
     public static RangeOf parseRange(String str) {
         if (str == null) {
