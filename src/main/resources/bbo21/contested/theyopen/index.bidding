@@ -1,8 +1,3 @@
-include they_open_1.bidding;
-include they_open_3.bidding;
-include they_open_2.bidding;
-include resp_to1.bidding;
-include resp_to2.bidding;
-include resp_to3.bidding;
-include passout_1.bidding;
-include passout_2.bidding;
+include one/index.bidding;
+include two/index.bidding;
+include three/index.bidding;

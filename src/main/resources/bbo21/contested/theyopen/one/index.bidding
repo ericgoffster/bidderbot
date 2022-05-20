@@ -1,0 +1,3 @@
+include opening.bidding;
+include resp.bidding;
+include passout.bidding;
