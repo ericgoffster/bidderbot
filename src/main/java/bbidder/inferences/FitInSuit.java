@@ -23,7 +23,7 @@ import bbidder.utils.MyStream;
 public final class FitInSuit extends Inference {
     public static final String NAME = "fit";
     private final Symbol symbol;
-    public final SuitLengthRange combined;
+    private final SuitLengthRange combined;
 
     public FitInSuit(Symbol suit, SuitLengthRange combined) {
         super();
