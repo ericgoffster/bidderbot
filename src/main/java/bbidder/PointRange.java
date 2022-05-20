@@ -4,6 +4,11 @@ import java.util.Optional;
 
 import bbidder.utils.BitUtil;
 
+/**
+ * Represents a set of possible points (0 - 40)
+ * @author goffster
+ *
+ */
 public final class PointRange extends Range {
     public static final int MAX = 40;
     public static final PointRange NONE = new PointRange(0);

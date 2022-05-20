@@ -8,7 +8,7 @@ import java.util.Optional;
 import bbidder.utils.BitUtil;
 
 /**
- * Represents a range of integers from 0 up to 64.
+ * Represents a set of integers from 0 up to 64.
  * Handy for points, or number of cards in a suit.
  * 
  * @author goffster
@@ -66,7 +66,7 @@ public abstract class Range {
         return bits == other.bits;
     }
     
-    private class State {
+    private final class State {
         List<String> ranges = new ArrayList<>();
         Integer lhs = null;
         Integer rhs = null;

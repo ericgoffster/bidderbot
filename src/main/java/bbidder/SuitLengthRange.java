@@ -4,6 +4,11 @@ import java.util.Optional;
 
 import bbidder.utils.BitUtil;
 
+/**
+ * Represents a set of suit lengths (0-13)
+ * @author goffster
+ *
+ */
 public final class SuitLengthRange extends Range {
     public static final int MAX = 13;
     public static final SuitLengthRange NONE = new SuitLengthRange(0);

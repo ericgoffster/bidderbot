@@ -4,6 +4,11 @@ import java.util.Optional;
 
 import bbidder.utils.BitUtil;
 
+/**
+ * Represents a set of particular cards.
+ * @author goffster
+ *
+ */
 public final class CardsRange extends Range {
     public static final int MAX = 13;
     public static final CardsRange NONE = new CardsRange(0);
