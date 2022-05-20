@@ -110,6 +110,9 @@
     test xx Axxxxx xx xxx:
         1C 1H
         2N 3H;
+    test AKxxxx AQx Kx xx:
+        1♠ 2♠
+        3♠;
 
 [] 2M => min, fit M;
     test AQxx Axxx xx Kxx:

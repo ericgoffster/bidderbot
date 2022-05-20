@@ -34,9 +34,3 @@ NJx => inv, 3+ x, 1 of top 3 in x;
     test AKxxx AQx Kxx xx:
         1♠ 2♠
         3♦;
-
-1M 2M
-3M => inv;
-    test AKxxxx AQx Kx xx:
-        1♠ 2♠
-        3♠;
