@@ -25,6 +25,15 @@ common [] 1N:"nt_opener" {
 	        1N 4♥;
 	    test Kxx AQxxxx Qx xx:
 	        1N 4♦;
+	continuations {
+	    4M => always;
+	    test AQxx AJxx Ax xxx:
+	        1N 4♦ 
+	        4♥;
+	    test AQxx AJxx Ax xxx:
+	        1N 4♥
+	        4♠;
+	}
 	
 	[[Simple transfer with 5+${M}]]
 	2M-1:"xfer" => 5+M;
