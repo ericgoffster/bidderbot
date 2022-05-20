@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
-import bbidder.Range;
+import bbidder.PointRange;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.HcpBoundInf;
 
@@ -17,14 +17,14 @@ import bbidder.inferences.bound.HcpBoundInf;
  *
  */
 public final class HCPRange extends Inference {
-    private final Range rng;
+    private final PointRange rng;
 
     public HCPRange(Integer min, Integer max) {
         super();
-        this.rng = Range.between(min, max, 40);
+        this.rng = PointRange.between(min, max);
     }
 
-    public HCPRange(Range r) {
+    public HCPRange(PointRange r) {
         super();
         this.rng = r;
     }
@@ -45,7 +45,7 @@ public final class HCPRange extends Inference {
             return null;
         }
         if (rng.of.equalsIgnoreCase("hcp")) {
-            return new HCPRange(Range.between(rng.min, rng.max, 40));
+            return new HCPRange(PointRange.between(rng.min, rng.max));
         } else {
             return null;
         }
