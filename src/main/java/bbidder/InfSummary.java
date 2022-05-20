@@ -121,17 +121,17 @@ public final class InfSummary {
      *         the suits are the empty set.
      */
     public Optional<Short> getBidSuits() {
-        List<OptionalInt> minLens = IntStream.range(0, 4)
+        int[] minL = IntStream.range(0, 4)
                 .mapToObj(suit -> minLenInSuit(suit))
                 .filter(o -> o.isPresent())
-                .collect(Collectors.toList());
-        if (minLens.size() != 4) {
+                .mapToInt(o -> o.getAsInt())
+                .toArray();
+        if (minL.length != 4) {
             return Optional.empty();
         }
         List<Double> avgL = IntStream.range(0, 4).mapToObj(suit -> avgLenInSuit(suit).get()).collect(Collectors.toList());
         Integer[] suitArr = { 0, 1, 2, 3 };
         Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgL.get(s1), avgL.get(s2)));
-        int[] minL = minLens.stream().mapToInt(ml -> ml.getAsInt()).toArray();
         if (minL[suitArr[0]] >= 5 || minL[suitArr[0]] >= 4 && minL[suitArr[1]] >= 4) {
             short suits = 0;
             for (int i = 0; i < 4 && minL[suitArr[i]] >= 4; i++) {
