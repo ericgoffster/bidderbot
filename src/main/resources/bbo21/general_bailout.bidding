@@ -11,9 +11,6 @@
 
 [[Pass any playable fit]]
 [i_bid_suit y] ?y P => fit y;
-    test xxx xxxxxx xxx x:
-        1N 2D
-        2♥ P;
 
 [[Pass any playable fit]]
 [partner_bid_suit y] ?y P => fit y;

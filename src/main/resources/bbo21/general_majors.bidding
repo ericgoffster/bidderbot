@@ -200,13 +200,16 @@
 [i_bid_suit M] 3M P => inv, fit M;
 
 [[Pass a playable major suit minimum]]
-[fit_established M] 2M P => min;
+[fit_established M] ?M P => always;
     test xxx Axxx Kx xxxx:
         1C 1H
         2H P;
         
 [[Pass a playable major suit minimum]]
-[partner_bid_suit M] 2M P => min, fit M;
+[partner_bid_suit M] ?M P => fit M;
 
 [[Pass a playable major suit minimum]]
-[i_bid_suit M] 2M P => min, fit M;
+[i_bid_suit M] ?M P => fit M;
+    test xxx xxxxxx xxx x:
+        1N 2D
+        2♥ P;
