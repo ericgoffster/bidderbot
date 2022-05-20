@@ -19,15 +19,22 @@ common 1M (1z) {
 	NJy:down => inv+, 5+ y, longest_or_equal y among unbid;
 	    test Kxx xx Axx AQxxx :
 	        1♥ (1S) 2♣;
-	
-	1N => 6-10 hcp, stoppers z, partial_stoppers unbid ;
+
+    X:"negative" => 7+ hcp, 4+ m, 4+ om;	
 	    test Axx xx Axxx Jxxx :
+	        1♥ (1S) X;
+    
+	1N => 6-10 hcp, stoppers z, partial_stoppers unbid, 7- fit M ;
+	    test Axxx xx Axxx Jxx :
 	        1♥ (1S) 1N;
-	2N => 11-12 hcp, stoppers z, partial_stoppers unbid ;
-	    test Axx xx AQxx Jxxx :
+	2N => 11-12 hcp, stoppers z, partial_stoppers unbid, 7- fit M ;
+	    test Axxx xx AQxx Jxx :
 	        1♥ (1S) 2N;
+	3N => 13-15 hcp, stoppers z, partial_stoppers unbid, 7- fit M ;
+	    test Axxx Qx AQxx Jxx :
+	        1♥ (1S) 3N;
 	        
-	NJy => inv+, 4 y, longest_or_equal y among unbid;
-	    test AQx xx Axxx Kxxx :
+	NJy => inv+, longest_or_equal y among unbid;
+	    test Axx xxx Axx Kxxx :
 	        1♥ (1S) 2C;
 }
