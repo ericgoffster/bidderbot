@@ -41,6 +41,9 @@
     test Axx Kxxx Qxx Qxx:
         1C 1H
         1N 2N;
+    test AQJxx Ax Axx Kxx:
+        1S 1N
+        2N;
 
 [i_bid_suit m] NJm:<2N => min, rebiddable m;
     test Kxx Kxx x AKxxxx:
