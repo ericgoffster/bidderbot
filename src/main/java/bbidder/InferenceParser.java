@@ -54,26 +54,107 @@ public final class InferenceParser {
         if (str == null) {
             return null;
         }
-        int pos = str.indexOf(",");
-        if (pos >= 0) {
-            String str1 = str.substring(0, pos);
-            String str2 = str.substring(pos + 1);
-            return AndInference.create(parseInference(str1), parseInference(str2));
+        {
+            int pos = str.indexOf(",");
+            if (pos >= 0) {
+                String str1 = str.substring(0, pos);
+                String str2 = str.substring(pos + 1);
+                return AndInference.create(parseInference(str1), parseInference(str2));
+            }
         }
         if (str.trim().equals("")) {
             return TrueInference.T;
         }
-        if (str.trim().equalsIgnoreCase("balanced")) {
-            return Balanced.BALANCED;
+        String tag;
+        String remainder;
+        {
+            String s = str.trim();
+            int p = 0;
+            while(p < s.length() && !Character.isWhitespace(s.charAt(p))) {
+                p++;
+            }
+            tag = s.substring(0, p).toLowerCase();
+            remainder = s.substring(p).trim();
         }
-        if (str.trim().equalsIgnoreCase("superbalanced")) {
-            return VeryBalanced.VERY_BALANCED;
+        switch(tag) {
+        case "balanced":
+            if (remainder.equals("")) {
+                return Balanced.BALANCED;
+            }      
+            break;
+        case "superbalanced":
+            if (remainder.equals("")) {
+                return VeryBalanced.VERY_BALANCED;
+            }      
+            break;
+        case "unbalanced":
+            if (remainder.equals("")) {
+                return UnBalanced.UNBALANCED;
+            }      
+            break;
+        case "always":
+            if (remainder.equals("")) {
+                return Always.ALWAYS;
+            }      
+            break;
+        case "fit": {
+            Matcher m = PATT_FIT.matcher(str.trim());
+            if (m.matches()) {
+                Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
+                if (sym != null) {
+                    return new FitInSuit(sym);
+                }
+            }
+            break;
         }
-        if (str.trim().equalsIgnoreCase("unbalanced")) {
-            return UnBalanced.UNBALANCED;
+        case "rebiddable": {
+            Matcher m = InferenceParser.PATT_REBIDDABLE.matcher(str.trim());
+            if (m.matches()) {
+                Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
+                if (sym != null) {
+                    return new Rebiddable(sym);
+                }
+            }
+            break;
         }
-        if (str.trim().equalsIgnoreCase("always")) {
-            return Always.ALWAYS;
+        case "longest_or_equal": {
+            {
+                Matcher m = InferenceParser.PATT_LONGEQ_AMONG.matcher(str.trim());
+                if (m.matches()) {
+                    Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
+                    if (sym != null) {
+                        return new LongestOrEqual(sym, SuitSetParser.lookupSuitSet(m.group(2)));
+                    }
+                }
+            }
+            {
+                Matcher m = InferenceParser.PATT_LONGEQ.matcher(str.trim());
+                if (m.matches()) {
+                    Symbol sym = SymbolParser.parseSymbol(m.group(1));
+                    if (sym != null) {
+                        return new LongestOrEqual(sym, null);
+                    }
+                }
+            }
+            break;
+        }
+        case "rebiddable_2nd": {
+            Matcher m = InferenceParser.PATT_REBIDDABLE_2nd_SUIT.matcher(str.trim());
+            if (m.matches()) {
+                Symbol longer = SymbolParser.parseSymbol(m.group(1).trim());
+                Symbol shorter = SymbolParser.parseSymbol(m.group(2).trim());
+                if (longer != null && shorter != null) {
+                    return new RebiddableSecondSuit(longer, shorter);
+                }
+            }
+            break;
+        }
+        case "stoppers":
+            return new StoppersInSuits(SuitSetParser.lookupSuitSet(remainder), false);
+        case "partial_stoppers":
+            return new StoppersInSuits(SuitSetParser.lookupSuitSet(remainder), true);
+        default:
+            break;
         }
         {
             RangeOf rng = InferenceParser.parseRange(str.trim());
@@ -105,64 +186,9 @@ public final class InferenceParser {
             }
         }
         {
-            Matcher m = InferenceParser.PATT_LONGEQ_AMONG.matcher(str.trim());
-            if (m.matches()) {
-                Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-                if (sym != null) {
-                    return new LongestOrEqual(sym, SuitSetParser.lookupSuitSet(m.group(2)));
-                }
-            }
-        }
-        {
-            Matcher m = InferenceParser.PATT_LONGEQ.matcher(str.trim());
-            if (m.matches()) {
-                Symbol sym = SymbolParser.parseSymbol(m.group(1));
-                if (sym != null) {
-                    return new LongestOrEqual(sym, null);
-                }
-            }
-        }
-        {
-            Matcher m = PATT_FIT.matcher(str.trim());
-            if (m.matches()) {
-                Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-                if (sym != null) {
-                    return new FitInSuit(sym);
-                }
-            }
-        }
-        {
-            Matcher m = InferenceParser.PATT_REBIDDABLE.matcher(str.trim());
-            if (m.matches()) {
-                Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-                if (sym != null) {
-                    return new Rebiddable(sym);
-                }
-            }
-        }
-        {
-            Matcher m = InferenceParser.PATT_REBIDDABLE_2nd_SUIT.matcher(str.trim());
-            if (m.matches()) {
-                Symbol longer = SymbolParser.parseSymbol(m.group(1).trim());
-                Symbol shorter = SymbolParser.parseSymbol(m.group(2).trim());
-                if (longer != null && shorter != null) {
-                    return new RebiddableSecondSuit(longer, shorter);
-                }
-            }
-        }
-        {
             Inference i = InferenceParser.makeTPtsRange(str.trim());
             if (i != null) {
                 return i;
-            }
-        }
-        {
-            String[] parts = SplitUtil.split(str.trim(), "\\s+", 2);
-            if (parts.length == 2 && parts[0].equalsIgnoreCase("stoppers")) {
-                return new StoppersInSuits(SuitSetParser.lookupSuitSet(parts[1]), false);
-            }
-            if (parts.length == 2 && parts[0].equalsIgnoreCase("partial_stoppers")) {
-                return new StoppersInSuits(SuitSetParser.lookupSuitSet(parts[1]), true);
             }
         }
         {
