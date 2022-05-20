@@ -210,7 +210,9 @@ public final class Hand {
     }
 
     public int pointsInSuit(int suit) {
-        return BitUtil.stream((short) (getAllInSuit(suit) & Hand.aboveRank(TEN))).map(rank -> getHCP(rank)).reduce(0, (a, b) -> a + b, (a, b) -> a + b);
+        return BitUtil.stream((short) (getAllInSuit(suit) & Hand.aboveRank(TEN)))
+                .map(rank -> getHCP(rank))
+                .reduce(0, (a, b) -> a + b, (a, b) -> a + b);
     }
 
     public int numHCP() {

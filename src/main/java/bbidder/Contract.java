@@ -36,8 +36,7 @@ public final class Contract {
         if (getClass() != obj.getClass())
             return false;
         Contract other = (Contract) obj;
-        return doubled == other.doubled && redoubled == other.redoubled && winningBid == other.winningBid
-                && numPasses == other.numPasses;
+        return doubled == other.doubled && redoubled == other.redoubled && winningBid == other.winningBid && numPasses == other.numPasses;
     }
 
     @Override
@@ -71,7 +70,7 @@ public final class Contract {
         }
         return b;
     }
-    
+
     public Contract addBid(Bid bid) {
         switch (bid) {
         case P:

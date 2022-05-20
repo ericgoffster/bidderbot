@@ -50,13 +50,13 @@ public final class BiddingState {
         this.bidding = Auction.create(List.of());
         this.players = new Players();
     }
-    
+
     public BiddingState withNewInference(IBoundInference inference) {
         IBoundInference newInf = AndBoundInf.create(inference, players.me.inf);
         InfSummary newSummary = newInf.getSummary();
         return new BiddingState(we, they, bidding, players.withNewMe(new Player(newInf, newSummary)));
     }
-    
+
     public BiddingState rotate(int n) {
         BiddingSystem newWe = n % 2 == 0 ? we : they;
         BiddingSystem newThey = n % 2 == 0 ? they : we;
@@ -88,7 +88,7 @@ public final class BiddingState {
     public BidSource getBid(Hand hand) {
         return we.getBid(bidding, players, hand);
     }
-    
+
     public List<PossibleBid> getPossibleBids() {
         return we.getPossibleBids(bidding, players);
     }

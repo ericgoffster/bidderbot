@@ -54,7 +54,7 @@ public final class SuitLengthRange extends Range {
         }
         return new SuitLengthRange(BitUtil.bitMask(n));
     }
-    
+
     public SuitLengthRange addOffset(int pos) {
         if (pos < 0) {
             return new SuitLengthRange(bits >>> -pos);

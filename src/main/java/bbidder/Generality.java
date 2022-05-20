@@ -42,5 +42,5 @@ public abstract class Generality implements BiPredicate<Players, Auction> {
         if (getClass() != obj.getClass())
             return false;
         return true;
-    }    
+    }
 }

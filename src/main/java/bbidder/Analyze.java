@@ -30,11 +30,11 @@ public class Analyze {
             DebugUtils.breakpoint();
             state = state.withBid(bid);
         }
-        
+
         state = state.rotate(-1);
 
         int i = 1;
-        while(i < args.length) {
+        while (i < args.length) {
             String arg = args[i++];
             if (arg.equals("--whatif")) {
                 Inference inference = InferenceParser.parseInference(args[i++]);
@@ -42,12 +42,12 @@ public class Analyze {
                 state = state.withNewInference(newInf);
             }
         }
-        
+
         System.out.println(state.players.me.inf);
-        
+
         showSummary("me", state.players.me.infSummary);
         showSummary("partner", state.players.partner.infSummary);
         showSummary("lho", state.players.lho.infSummary);
-        showSummary("rho", state.players.rho.infSummary);       
+        showSummary("rho", state.players.rho.infSummary);
     }
 }

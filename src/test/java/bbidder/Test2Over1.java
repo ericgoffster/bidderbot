@@ -28,7 +28,7 @@ public class Test2Over1 {
         System.err.println("   stoppers: " + summary.stoppers);
         System.err.println("   partial: " + summary.partialStoppers);
     }
-    
+
     public static String getWhere(BidInference i) {
         return i == null ? null : i.where;
     }
@@ -93,7 +93,7 @@ public class Test2Over1 {
                             IBoundInference bi = b.inf.inferences.bind(result.state.players);
                             if (b == result.found.matchedBid) {
                                 System.err.println("       * " + bi);
-    
+
                             } else {
                                 System.err.println("       " + bi);
                             }
@@ -108,7 +108,7 @@ public class Test2Over1 {
                         if (where == null) {
                             System.err.println("but matches no inference at all");
                         } else {
-                            System.err.println("but matches inference at "+ where + " instead");
+                            System.err.println("but matches inference at " + where + " instead");
                         }
                         test.getResult(bs);
                     }

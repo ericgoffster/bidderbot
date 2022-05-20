@@ -50,5 +50,5 @@ public abstract class Inference {
             return false;
         return true;
     }
-    
+
 }

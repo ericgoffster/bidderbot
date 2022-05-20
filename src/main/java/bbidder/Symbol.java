@@ -48,7 +48,7 @@ public abstract class Symbol {
      * @return Stream of context's
      */
     public abstract MyStream<Context> resolveSuits(SuitTable suitTable);
-    
+
     public abstract boolean downTheLine();
 
     public final class Context {
@@ -63,7 +63,7 @@ public abstract class Symbol {
             return Symbol.this;
         }
     }
-    
+
     @Override
     public int hashCode() {
         return 0;
@@ -78,5 +78,5 @@ public abstract class Symbol {
         if (getClass() != obj.getClass())
             return false;
         return true;
-    }    
+    }
 }

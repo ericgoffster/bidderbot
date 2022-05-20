@@ -18,11 +18,11 @@ public final class Players {
 
     public Players rotate(int n) {
         Players p = this;
-        while(n > 0) {
+        while (n > 0) {
             p = new Players(p.partner, p.rho, p.me, p.lho);
             n--;
         }
-        while(n < 0) {
+        while (n < 0) {
             p = new Players(p.me, p.lho, p.partner, p.rho);
             n++;
         }

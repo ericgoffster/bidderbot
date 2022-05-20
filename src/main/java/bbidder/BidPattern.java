@@ -168,7 +168,8 @@ public final class BidPattern {
      * 
      * @param auction
      *            The current list of bids.
-     * @param hint The bid I am trying to match.
+     * @param hint
+     *            The bid I am trying to match.
      * @return The bid associated with the given pattern. Null, if not valid.
      */
     public Optional<Bid> resolveToBid(Auction auction, Bid hint) {

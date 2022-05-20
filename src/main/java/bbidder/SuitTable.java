@@ -75,10 +75,10 @@ public final class SuitTable {
         }
         return patt;
     }
-    
+
     public String fixDescription(String description) {
-        for(var e: suitMap.entrySet()) {
-            description = description.replaceAll("\\$\\{"+e.getKey()+"\\}", Strain.getName(e.getValue()));
+        for (var e : suitMap.entrySet()) {
+            description = description.replaceAll("\\$\\{" + e.getKey() + "\\}", Strain.getName(e.getValue()));
         }
         if (!description.equals("")) {
             return description;

@@ -49,7 +49,7 @@ public final class BiddingSystem {
             for (ResolvedBidInference bi : inferences) {
                 bw.write(bi.unresolved.description + ":\n");
                 bw.write(bi.unresolved.where + ":\n");
-                for(BidInference inf: bi.inferences) {
+                for (BidInference inf : bi.inferences) {
                     bw.write("    " + inf + "\n");
                 }
             }
@@ -78,7 +78,7 @@ public final class BiddingSystem {
             });
             BidPattern p = rsbi.unresolved.bids.getLastBid();
             if (p.symbol != null && p.symbol.downTheLine()) {
-                tmp.sort((a, b) ->  {
+                tmp.sort((a, b) -> {
                     int cmp = Integer.compare(a.bid.level, b.bid.level);
                     if (cmp != 0) {
                         return cmp;

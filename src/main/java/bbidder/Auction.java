@@ -85,7 +85,7 @@ public final class Auction {
             }
         }
         Contract contract = Contract.FIRST;
-        for(int j = start; j < bids.size(); j++) {
+        for (int j = start; j < bids.size(); j++) {
             contract = contract.addBid(bids.get(j));
         }
         return contract;

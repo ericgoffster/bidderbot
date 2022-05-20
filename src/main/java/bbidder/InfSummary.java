@@ -56,11 +56,13 @@ public final class InfSummary {
     }
 
     public InfSummary and(InfSummary other) {
-        return new InfSummary(shape.and(other.shape), tpts.and(other.tpts), hcp.and(other.hcp), stoppers.and(other.stoppers), partialStoppers.and(other.partialStoppers));
+        return new InfSummary(shape.and(other.shape), tpts.and(other.tpts), hcp.and(other.hcp), stoppers.and(other.stoppers),
+                partialStoppers.and(other.partialStoppers));
     }
 
     public InfSummary or(InfSummary other) {
-        return new InfSummary(shape.or(other.shape), tpts.or(other.tpts), hcp.or(other.hcp), stoppers.or(other.stoppers), partialStoppers.or(other.partialStoppers));
+        return new InfSummary(shape.or(other.shape), tpts.or(other.tpts), hcp.or(other.hcp), stoppers.or(other.stoppers),
+                partialStoppers.or(other.partialStoppers));
     }
 
     @Override
