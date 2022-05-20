@@ -20,9 +20,24 @@ common 1M:seats34 {
 	    test xxx Kxx Kx xxxxx:
 	        P 1♥
 	        2♥;
+	NJy:down => 10+ tpts, 5+ y, longest_or_equal y among unbid;
+	    test AQxxx xx Kxx xxx :
+	        P 1♥
+	        1♠;
+	    test xxx xx AQxxx Kxx :
+	        P 1♥
+	        2D;
+	1OM => 4 OM;
+	    test AQxx xx xxx xxxx :
+	        P 1♥
+	        1S;
+	1N => 6+ tpts;
+	    test xxx xx AKxx Qxxx :
+	        P 1♥
+	        1N;
 }
 
-common 1M {
+common 1M:seats12 {
 	2M => min, 8+ fit M;
 	    test xxx Kxx Kx xxxxx:
 	        1♥ 2♥;
