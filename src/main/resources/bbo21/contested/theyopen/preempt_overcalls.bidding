@@ -15,7 +15,7 @@ common (3w) {
 		test AQxx Axx Axx Qxx:
 		        (3H) 3N;
 	
-	X:"takeout" => 12+ tpts, 3+ x, 3+ y, 3+ z;
+	X:"takeout" => 12+ tpts, 3+ x, 3+ y, 3+ z, 2- w;
 		test AQxx xx Axxx Qxx:
 		        (3H) x;
 	
