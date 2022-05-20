@@ -18,13 +18,13 @@
         2N 3H;
 
 1m 1M
-2N:"nt_rebid" 3om => 7+ tpts, 5 M;
+2N:"nt_rebid" 3om:"cb_stayman" => 7+ tpts, 5 M;
     test xxx AQJxx xx xxx:
         1C 1H
         2N 3D;
 
 1m 1M
-2N:"nt_rebid" 3om => slaminv+, 6+ M;
+2N:"nt_rebid" 3om:"cb_stayman" => slaminv+, 6+ M;
     test xx AQJxxx xx Axx:
         1C 1H
         2N 3D;
