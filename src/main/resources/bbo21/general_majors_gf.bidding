@@ -51,3 +51,13 @@
     test Axxx Axx xxx xxx:
         2N 3♣
         3♠ 4S;
+        
+[[Rebid major]]
+[gf+, i_bid_suit M] NJM:<3N => rebiddable M;
+    test AKxxxx xxx Axx x:
+        1S 2C
+        2S 2N
+        3S;
+
+[gf+] NJN:<4C => partial_stoppers unstopped;
+        
