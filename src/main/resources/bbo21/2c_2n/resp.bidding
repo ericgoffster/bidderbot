@@ -73,6 +73,6 @@
 
 include stayman.bidding;
 include jacobyxfer.bidding;
-# include mss.bidding;
+include mss.bidding;
 # include texasxfer.bidding;
         
