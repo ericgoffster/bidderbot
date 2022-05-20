@@ -1,7 +1,6 @@
 package bbidder.symbols;
 
 import java.util.Objects;
-import java.util.Set;
 
 import bbidder.Bid;
 import bbidder.Constants;
@@ -18,16 +17,6 @@ public final class VarSymbol extends Symbol {
         this.varName = varName;
     }
     
-    @Override
-    public Set<String> getTags() {
-        return Set.of();
-    }
-    
-    @Override
-    public boolean downTheLine() {
-        return false;
-    }
-
     @Override
     public String toString() {
         return varName;
@@ -68,10 +57,5 @@ public final class VarSymbol extends Symbol {
     @Override
     public boolean compatibleWith(Bid bid) {
         return true;
-    }
-
-    @Override
-    public short getSeats() {
-        return 0xf;
     }
 }

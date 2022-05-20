@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import bbidder.parsers.SymbolParser;
 import bbidder.symbols.ConstSymbol;
-import bbidder.symbols.DownSymbol;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.MinorSymbol;
 import bbidder.symbols.OtherMajorSymbol;
@@ -26,7 +25,5 @@ public class SymbolParserTest {
         assertEquals(new MinorSymbol(), SymbolParser.parseSymbol("m"));
         assertEquals(new MajorSymbol(), SymbolParser.parseSymbol("M"));
         assertEquals(new SteppedSymbol(new VarSymbol("x"), 1), SymbolParser.parseSymbol("x-1"));
-        assertEquals(new DownSymbol(new VarSymbol("x")), SymbolParser.parseSymbol("x:down"));
-        assertEquals(new DownSymbol(new VarSymbol("x")), SymbolParser.parseSymbol("x:Down"));
     }
 }

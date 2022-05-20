@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import bbidder.symbols.ConstSymbol;
-import bbidder.symbols.DownSymbol;
 import bbidder.symbols.MajorSymbol;
 import bbidder.symbols.MinorSymbol;
 import bbidder.symbols.OtherMajorSymbol;
@@ -49,12 +48,6 @@ public class SymbollTest {
     public void testVar() {
         Symbol sym = new VarSymbol("x");
         assertEquals("x", sym.toString());
-    }
-
-    @Test
-    public void testDown() {
-        Symbol sym = new DownSymbol(new VarSymbol("x"));
-        assertEquals("x:down", sym.toString());
     }
 
     @Test

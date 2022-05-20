@@ -1,7 +1,6 @@
 package bbidder.symbols;
 
 import java.util.Objects;
-import java.util.Set;
 
 import bbidder.Bid;
 import bbidder.SuitTable;
@@ -18,16 +17,6 @@ public final class LessThanSymbol extends Symbol {
         this.symbol = symbol;
         this.level = level;
         this.other = other;
-    }
-
-    @Override
-    public Set<String> getTags() {
-        return symbol.getTags();
-    }
-    
-    @Override
-    public boolean downTheLine() {
-        return symbol.downTheLine();
     }
 
     @Override
@@ -68,10 +57,5 @@ public final class LessThanSymbol extends Symbol {
     public boolean compatibleWith(Bid bid) {
         Bid comparisonBid = Bid.valueOf(level, other.getResolvedStrain());
         return symbol.compatibleWith(bid) && bid.compareTo(comparisonBid) < 0;
-    }
-
-    @Override
-    public short getSeats() {
-        return symbol.getSeats();
     }
 }

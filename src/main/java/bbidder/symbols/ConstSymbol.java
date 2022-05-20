@@ -1,7 +1,6 @@
 package bbidder.symbols;
 
 import java.util.Objects;
-import java.util.Set;
 
 import bbidder.Bid;
 import bbidder.Strain;
@@ -17,16 +16,6 @@ public final class ConstSymbol extends Symbol {
         this.strain = strain;
     }
     
-    @Override
-    public Set<String> getTags() {
-        return Set.of();
-    }
-    
-    @Override
-    public boolean downTheLine() {
-        return false;
-    }
-
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return MyStream.of(new Context(suitTable));
@@ -62,10 +51,5 @@ public final class ConstSymbol extends Symbol {
     @Override
     public boolean compatibleWith(Bid bid) {
         return bid.strain == strain;
-    }
-
-    @Override
-    public short getSeats() {
-        return 0xf;
     }
 }

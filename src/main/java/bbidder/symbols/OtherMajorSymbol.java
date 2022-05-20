@@ -1,7 +1,5 @@
 package bbidder.symbols;
 
-import java.util.Set;
-
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.SuitTable;
@@ -14,16 +12,6 @@ public final class OtherMajorSymbol extends Symbol {
 
     public OtherMajorSymbol() {
         super();
-    }
-
-    @Override
-    public Set<String> getTags() {
-        return Set.of();
-    }
-    
-    @Override
-    public boolean downTheLine() {
-        return false;
     }
 
     @Override
@@ -69,10 +57,5 @@ public final class OtherMajorSymbol extends Symbol {
     @Override
     public boolean compatibleWith(Bid bid) {
         return true;
-    }
-
-    @Override
-    public short getSeats() {
-        return 0xf;
     }
 }

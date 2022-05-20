@@ -1,7 +1,5 @@
 package bbidder;
 
-import java.util.Set;
-
 import bbidder.utils.MyStream;
 
 /**
@@ -14,11 +12,6 @@ public abstract class Symbol {
     /**
      * @return The resolved strain
      */
-    public abstract Set<String> getTags();
-
-    /**
-     * @return The resolved strain
-     */
     public abstract int getResolvedStrain();
 
     /**
@@ -27,12 +20,6 @@ public abstract class Symbol {
      * @return true if the given bid is compatible with the symbol
      */
     public abstract boolean compatibleWith(Bid bid);
-
-    /**
-     * 
-     * @return true if the given bid should only be considered if the bid was not previously defined.
-     */
-    public abstract short getSeats();
 
     /**
      * Resolves the symbol into a stream of resolved symbols in the context of a suit table.
@@ -49,8 +36,6 @@ public abstract class Symbol {
      * @return Stream of context's
      */
     public abstract MyStream<Context> resolveSuits(SuitTable suitTable);
-
-    public abstract boolean downTheLine();
 
     public final class Context {
         public final SuitTable suitTable;

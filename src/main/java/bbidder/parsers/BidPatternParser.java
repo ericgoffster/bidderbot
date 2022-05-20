@@ -1,10 +1,16 @@
 package bbidder.parsers;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import bbidder.Bid;
 import bbidder.BidPattern;
 import bbidder.Symbol;
+import bbidder.symbols.GreaterThanSymbol;
+import bbidder.symbols.LessThanSymbol;
 
 /**
  * Parses a Bid Pattern.
@@ -13,10 +19,58 @@ import bbidder.Symbol;
  *
  */
 public final class BidPatternParser implements Parser<BidPattern> {
+    private static Pattern SEATS = Pattern.compile("seats(\\d+)");
+    
     private String parseSuit(Input inp) throws IOException {
-        return inp.readToken(ch -> ch != ')');
+        return inp.readToken(ch -> ch != ')' && ch != ':');
     }
 
+    public BidPattern parseInterior2(Input inp) throws IOException {
+        BidPattern p = parseInterior(inp);
+        while(inp.readKeyword(":")) {
+            if (inp.readKeyword("<")) {
+                BidPattern other = parseInterior(inp);
+                if (other == null) {
+                    throw new IllegalArgumentException("Invalid less than");
+                }
+                p = p.withSymbol(new LessThanSymbol(p.symbol, other.level, other.symbol));
+                continue;
+            }
+            if (inp.readKeyword(">")) {
+                BidPattern other = parseInterior(inp);
+                if (other == null) {
+                    throw new IllegalArgumentException("Invalid greater than");
+                }
+                p = p.withSymbol(new GreaterThanSymbol(p.symbol, other.level, other.symbol));
+                continue;
+            }
+            if (inp.readKeyword("DOWN")) {
+                p = p.withDownTheLine(true);
+                continue;
+            }
+            String tag = inp.readToken(ch -> ch != ':');
+            if (tag.startsWith("\"") && tag.endsWith("\"")) {
+                Set<String> tags = new HashSet<>(p.tags);
+                tags.add(tag.substring(1, tag.length() - 1));
+                p = p.withTags(tags);
+                continue;
+            }
+            {
+                Matcher m = SEATS.matcher(tag);
+                if (m.matches()) {
+                    short seats = 0;
+                    String seatsC = m.group(1);
+                    for (int i = 0; i < seatsC.length(); i++) {
+                        seats |= (1 << (seatsC.charAt(i) - '1'));
+                    }
+                    p = p.withSeats(seats);
+                    continue;
+                }
+            }
+            throw new IllegalArgumentException("bad modifier");
+        }
+        return p;
+    }
     private BidPattern parseInterior(Input inp) throws IOException {
         inp.advanceWhite();
         boolean anti = false;
@@ -94,7 +148,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
         }
         if (inp.ch == '(') {
             inp.advance();
-            BidPattern patt = parseInterior(inp);
+            BidPattern patt = parseInterior2(inp);
             inp.advanceWhite();
             if (inp.ch != ')') {
                 throw new IllegalArgumentException();
@@ -103,6 +157,6 @@ public final class BidPatternParser implements Parser<BidPattern> {
             return patt.withIsOpposition(true);
         }
 
-        return parseInterior(inp);
+        return parseInterior2(inp);
     }
 }

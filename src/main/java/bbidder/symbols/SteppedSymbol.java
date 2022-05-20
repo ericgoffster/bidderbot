@@ -1,7 +1,6 @@
 package bbidder.symbols;
 
 import java.util.Objects;
-import java.util.Set;
 
 import bbidder.Bid;
 import bbidder.SuitTable;
@@ -16,16 +15,6 @@ public final class SteppedSymbol extends Symbol {
         super();
         this.symbol = sym;
         this.delta = delta;
-    }
-
-    @Override
-    public Set<String> getTags() {
-        return symbol.getTags();
-    }
-    
-    @Override
-    public boolean downTheLine() {
-        return symbol.downTheLine();
     }
 
     @Override
@@ -67,10 +56,5 @@ public final class SteppedSymbol extends Symbol {
     @Override
     public boolean compatibleWith(Bid bid) {
         return true;
-    }
-
-    @Override
-    public short getSeats() {
-        return symbol.getSeats();
     }
 }
