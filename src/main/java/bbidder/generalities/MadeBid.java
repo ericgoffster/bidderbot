@@ -28,21 +28,23 @@ public final class MadeBid extends Generality {
     @Override
     public boolean test(Players players, TaggedAuction bidList) {
         var bids = bidList.getBids();
-        int start;
-        switch(position) {
-        case ME: start = bids.size() - 4; break;
-        case LHO: start = bids.size() - 3; break;
-        case PARTNER: start = bids.size() - 2; break;
-        case RHO: start = bids.size() - 1; break;
-        default:
-            throw new IllegalStateException();
-        }
-        for (int i = start; i >= 0; i -= 4) {
+        for (int i = bids.size() + getStart(); i >= 0; i -= 4) {
             if (bids.get(i).tags.contains(tag)) {
                 return true;
             }
         }
         return false;
+    }
+
+    private int getStart() {
+        switch(position) {
+        case ME: return -4;
+        case LHO: return -3;
+        case PARTNER: return -2;
+        case RHO: return -1;
+        default:
+            throw new IllegalStateException();
+        }
     }
 
     @Override

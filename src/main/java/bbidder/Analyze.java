@@ -35,6 +35,6 @@ public class Analyze {
         state.players.getPlayer(Position.ME).infSummary.showSummary("me");
         state.players.getPlayer(Position.PARTNER).infSummary.showSummary("partner");
         state.players.getPlayer(Position.LHO).infSummary.showSummary("lho");
-        state.players.rho.infSummary.showSummary("rho");
+        state.players.getPlayer(Position.RHO).infSummary.showSummary("rho");
     }
 }

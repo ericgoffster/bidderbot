@@ -5,7 +5,7 @@ import java.util.OptionalInt;
 public final class Players {
     private final Player lho;
     private final Player partner;
-    public final Player rho;
+    private final Player rho;
     private final Player me;
     
     public Player getPlayer(Position position) {

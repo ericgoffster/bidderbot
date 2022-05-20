@@ -27,6 +27,16 @@ public enum Position {
             throw new IllegalStateException();
         }
     }
+
+    public Position getNext(String name) {
+        switch(this) {
+        case ME: return LHO;
+        case LHO: return PARTNER;
+        case PARTNER: return RHO;
+        case RHO: return ME;
+        default: throw new IllegalStateException();
+        }
+    }
     
     public static Position getPosition(String name) {
         switch(name.toUpperCase()) {
