@@ -261,28 +261,24 @@ public final class BidPattern {
             return Optional.of(new TaggedBid(simpleBid, tags));
         }
         int strain = symbol.getResolvedStrain();
-        if (jumpLevel != null) {
-            Bid b = contract.getBid(jumpLevel, strain);
-            if (level != null && b.level != level.intValue()) {
-                return Optional.empty();
+        if (contract != null) {
+            if (jumpLevel != null) {
+                Bid b = contract.getBid(jumpLevel, strain);
+                if (!isBidCompatible(contract, symbol, b)) {
+                    return Optional.empty();
+                }
+                return Optional.of(new TaggedBid(b, tags));
             }
-            if (!isBidCompatible(contract, symbol, b)) {
-                return Optional.empty();
+            if (level == null) {
+                if (bid == null) {
+                    throw new IllegalArgumentException("anonymous level not allowed");
+                }
+                Bid b = Bid.valueOf(bid.bid.level, strain);
+                if (!isBidCompatible(contract, symbol, b)) {
+                    return Optional.empty();
+                }
+                return Optional.of(new TaggedBid(b, tags));
             }
-            return Optional.of(new TaggedBid(b, tags));
-        }
-        if (level == null) {
-            if (bid == null) {
-                throw new IllegalArgumentException("anonymous level not allowed");
-            }
-            Bid b = Bid.valueOf(bid.bid.level, strain);
-            if (level != null && b.level != level.intValue()) {
-                return Optional.empty();
-            }
-            if (!isBidCompatible(contract, symbol, b)) {
-                return Optional.empty();
-            }
-            return Optional.of(new TaggedBid(b, tags));
         }
         return Optional.of(new TaggedBid(Bid.valueOf(level, strain), tags));
     }
@@ -301,7 +297,8 @@ public final class BidPattern {
 
     @Override
     public int hashCode() {
-        return Objects.hash(generality, isOpposition, jumpLevel, level, simpleBid, symbol);
+        return Objects.hash(antiMatch, downTheLine, generality, greaterThan, isOpposition, jumpLevel, lessThan, level, seats, simpleBid, symbol,
+                tags);
     }
 
     @Override
@@ -313,8 +310,10 @@ public final class BidPattern {
         if (getClass() != obj.getClass())
             return false;
         BidPattern other = (BidPattern) obj;
-        return Objects.equals(generality, other.generality) && isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel)
-                && Objects.equals(level, other.level) && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol);
+        return antiMatch == other.antiMatch && downTheLine == other.downTheLine && Objects.equals(generality, other.generality)
+                && Objects.equals(greaterThan, other.greaterThan) && isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel)
+                && Objects.equals(lessThan, other.lessThan) && Objects.equals(level, other.level) && seats == other.seats
+                && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol) && Objects.equals(tags, other.tags);
     }
 
     private String _getString() {
