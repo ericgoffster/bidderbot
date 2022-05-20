@@ -88,7 +88,7 @@ public final class BidPattern {
      *            The strain
      * @return A bid that is the level of a suit
      */
-    public static BidPattern createBid(int level, Symbol symbol) {
+    public static BidPattern createBid(Integer level, Symbol symbol) {
         return new BidPattern(false, symbol, level, null, null, null, symbol.isNonConvential());
     }
 
@@ -168,9 +168,10 @@ public final class BidPattern {
      * 
      * @param auction
      *            The current list of bids.
+     * @param hint The bid I am trying to match.
      * @return The bid associated with the given pattern. Null, if not valid.
      */
-    public Optional<Bid> resolveToBid(Auction auction) {
+    public Optional<Bid> resolveToBid(Auction auction, Bid hint) {
         if (simpleBid != null) {
             return Optional.of(simpleBid);
         }
@@ -185,6 +186,12 @@ public final class BidPattern {
                 return Optional.empty();
             }
             return Optional.of(b);
+        }
+        if (level == null) {
+            if (hint == null) {
+                throw new IllegalArgumentException("anonymous level not allowed");
+            }
+            return Optional.of(Bid.valueOf(hint.level, strain));
         }
         return Optional.of(Bid.valueOf(level, strain));
     }
@@ -235,6 +242,9 @@ public final class BidPattern {
             default:
                 throw new IllegalStateException();
             }
+        }
+        if (level == null) {
+            return "?" + symbol;
         }
         return String.valueOf(level + 1) + symbol;
     }

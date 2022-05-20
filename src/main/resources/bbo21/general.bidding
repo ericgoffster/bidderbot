@@ -67,12 +67,12 @@
 #
 # Pass minor at right level
 # 
-[] 3m P => inv-, fit m;
+[] 3m P => inv, fit m;
     test xxx Qxx Axxxx xx:
         1C 1D
         3D P;
 
-[] 2m P => min-, fit m;
+[] 2m P => min, fit m;
     test xxx Qxx Axxxx xx:
         1C 1D
         2D P;
@@ -140,3 +140,14 @@
     test xxx x AKxxxx AKx:
         1♣ 1♦
         1♥ 1♠;
+
+        
+[] ?y P => fit y;
+    test xxx xxxxxx xxx x:
+        1N 2D
+        2♥ P;
+[] ?x NJy => fit y;
+    test AKx Axxx Axx Qxx:
+        1N 2D
+        2N 3D
+        3H;

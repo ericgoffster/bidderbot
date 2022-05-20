@@ -9,21 +9,21 @@
 # We can pass anytime a major in an established
 # suit at the right level has been bid.
 #
-[] 4M P => gf-, fit M;
+[] 4M P => gf, fit M;
     test AQxxx Axx Axx xx:
         1S 2N
         4S P;
 
-[] 3M P => inv-, fit M;
+[] 3M P => inv, fit M;
     test Axxxx Axx Axx xx:
         1S 3S
         P;
 
-[] 2M P => min-, fit M;
+[] 2M P => min, fit M;
     test xxx Axxx Kx xxxx:
         1C 1H
         2H P;
-
+        
 #
 # We can always bid the established major to the right level
 #
@@ -174,4 +174,4 @@
         2C 4H;
     test AQJxxxx x Ax AQx:
         1S 1N
-        4S;        
+        4S;

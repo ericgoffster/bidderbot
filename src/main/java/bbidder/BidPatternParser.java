@@ -36,6 +36,13 @@ public final class BidPatternParser implements Parser<BidPattern> {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
             return BidPattern.createJump(symbol, 1);
+        }  else if (inp.readKeyword("?")) {
+            String str = parseSuit(inp);
+            Symbol symbol = SymbolParser.parseSymbol(str);
+            if (symbol == null) {
+                throw new IllegalArgumentException("Invalid bid: " + str);
+            }
+            return BidPattern.createBid(null, symbol);
         } else {
             String str = parseSuit(inp);
             if (str.length() == 0) {

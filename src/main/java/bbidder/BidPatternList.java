@@ -152,7 +152,7 @@ public final class BidPatternList {
                 i += wildSize;
             } else {
                 Bid bid = theBids.get(i);
-                Optional<Bid> expected = pattern.resolveToBid(auction.firstN(i));
+                Optional<Bid> expected = pattern.resolveToBid(auction.firstN(i), bid);
                 if (bid != expected.orElse(null)) {
                     return Optional.empty();
                 }
@@ -160,7 +160,7 @@ public final class BidPatternList {
             }
         }
         BidPattern lastBid = bids.get(bids.size() - 1);
-        return lastBid.resolveToBid(auction).flatMap(nextBid -> {
+        return lastBid.resolveToBid(auction, null).flatMap(nextBid -> {
             if (!auction.isLegalBid(nextBid)) {
                 return Optional.empty();
             }
