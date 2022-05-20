@@ -8,8 +8,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import bbidder.ShapeSet.Stat;
-
 /**
  * Represents the summary of inferences.
  * 
@@ -25,7 +23,7 @@ public final class InfSummary {
     public final StopperSet stoppers;
     public final StopperSet partialStoppers;
 
-    public final AtomicReference<Stat[]> stats;
+    public final AtomicReference<ShapeStats[]> shapeStats;
 
     public InfSummary(ShapeSet shape, Range tpts, StopperSet stoppers, StopperSet partialStoppers) {
         super();
@@ -33,7 +31,7 @@ public final class InfSummary {
         this.tpts = tpts;
         this.stoppers = stoppers;
         this.partialStoppers = partialStoppers;
-        this.stats = new AtomicReference<>();
+        this.shapeStats = new AtomicReference<>();
     }
 
     public InfSummary withShapes(ShapeSet shape) {
@@ -78,7 +76,7 @@ public final class InfSummary {
      * @return The range of possible lengths for the suit
      */
     public Range getSuit(int suit) {
-        return getStat(suit).range;
+        return getShapeStats(suit).range;
     }
 
     /**
@@ -86,8 +84,8 @@ public final class InfSummary {
      *            The suit
      * @return The statistics on the given suit.
      */
-    public Stat getStat(int suit) {
-        return stats.updateAndGet(st -> (st != null) ? st : shape.getStats())[suit];
+    public ShapeStats getShapeStats(int suit) {
+        return shapeStats.updateAndGet(st -> (st != null) ? st : shape.getStats())[suit];
     }
 
     /**
@@ -114,9 +112,13 @@ public final class InfSummary {
      * @return The average length in a suit, empty if there is an empty set of lengths.
      */
     public Optional<Double> avgLenInSuit(int suit) {
-        return getStat(suit).avg;
+        return getShapeStats(suit).avg;
     }
 
+    /**
+     * @return A bit pattern of all suits that have been bid.  empty if
+     *         the suits are the empty set.
+     */
     public Optional<Short> getBidSuits() {
         List<Optional<Integer>> minLens = IntStream.range(0, 4)
                 .mapToObj(suit -> minLenInSuit(suit))

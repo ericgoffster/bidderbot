@@ -8,6 +8,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+/**
+ * Represents a set of shapes.
+ * @author goffster
+ *
+ */
 public final class ShapeSet implements Iterable<Shape> {
     public static final ShapeSet ALL = new ShapeSet(Shape.values().length);
     public static final ShapeSet NONE = new ShapeSet(0);
@@ -33,12 +38,20 @@ public final class ShapeSet implements Iterable<Shape> {
         return shapes;
     }
 
+    /**
+     * @param list the collection of shapes.
+     * @return a ShapeSet from a collection of shapes.
+     */
     public static ShapeSet create(Iterable<Shape> list) {
         return createNew(createShapes(list));
     }
 
-    public static ShapeSet create(Predicate<Shape> pred) {
-        BitSet a = createShapes(pred);
+    /**
+     * @param filter the filter of shapes
+     * @return a ShapeSet from a shape predicate.
+     */
+    public static ShapeSet create(Predicate<Shape> filter) {
+        BitSet a = createShapes(filter);
         return createNew(a);
     }
 
@@ -62,41 +75,75 @@ public final class ShapeSet implements Iterable<Shape> {
         return shapes;
     }
 
-    public boolean contains(Shape s) {
-        return shapes.get(s.ordinal());
+    /**
+     * @param shape The shape
+     * @return true if the ShapeSet contains the shape.
+     */
+    public boolean contains(Shape shape) {
+        return shapes.get(shape.ordinal());
     }
 
+    /**
+     * @param other The other shape
+     * @return this shapeset & other shapeset
+     */
     public ShapeSet and(ShapeSet other) {
         BitSet a = (BitSet) shapes.clone();
         a.and(other.shapes);
         return createNew(a);
     }
 
+    /**
+     * @param other The other shape
+     * @return this shapeset | other shapeset
+     */
     public ShapeSet or(ShapeSet other) {
         BitSet a = (BitSet) shapes.clone();
         a.or(other.shapes);
         return createNew(a);
     }
 
+    /**
+     * @return ~(this shapeset)
+     */
     public ShapeSet not() {
         BitSet a = (BitSet) shapes.clone();
         a.xor(ALL.shapes);
         return createNew(a);
     }
 
+    /**
+     * @return true if this ShapeSet has no shapes.
+     */
     public boolean isEmpty() {
         return shapes.isEmpty();
     }
 
+    /**
+     * @return The number of shapes in this set.
+     */
     public int size() {
         return shapes.cardinality();
     }
 
+    /**
+     * @return true If this ShapeSet contains all shape sets.
+     */
     public boolean unBounded() {
         return size() == Shape.values().length;
     }
+    
+    private static final ShapeStats EMPTY_STATS[] = { new ShapeStats(0, Range.none(13), Optional.empty()),
+            new ShapeStats(1, Range.none(13), Optional.empty()), new ShapeStats(2, Range.none(13), Optional.empty()),
+            new ShapeStats(3, Range.none(13), Optional.empty()) };
 
-    public Stat[] getStats() {
+    /**
+     * @return The stats on each suit
+     */
+    public ShapeStats[] getStats() {
+        if (isEmpty()) {
+            return EMPTY_STATS;
+        }
         long[] bits = new long[4];
         double tot = 0;
         double[] sum = new double[4];
@@ -111,19 +158,11 @@ public final class ShapeSet implements Iterable<Shape> {
             sum[3] += s.numInSuit(3) * s.p;
             tot += s.p;
         }
-        if (tot == 0) {
-            Stat[] stats = new Stat[4];
-            stats[0] = new Stat(0, Range.none(13), Optional.empty());
-            stats[1] = new Stat(1, Range.none(13), Optional.empty());
-            stats[2] = new Stat(2, Range.none(13), Optional.empty());
-            stats[3] = new Stat(3, Range.none(13), Optional.empty());
-            return stats;
-        }
-        Stat[] stats = new Stat[4];
-        stats[0] = new Stat(0, new Range(bits[0], 13), Optional.of(sum[0] / tot));
-        stats[1] = new Stat(1, new Range(bits[1], 13), Optional.of(sum[1] / tot));
-        stats[2] = new Stat(2, new Range(bits[2], 13), Optional.of(sum[2] / tot));
-        stats[3] = new Stat(3, new Range(bits[3], 13), Optional.of(sum[3] / tot));
+        ShapeStats[] stats = new ShapeStats[4];
+        stats[0] = new ShapeStats(0, new Range(bits[0], 13), Optional.of(sum[0] / tot));
+        stats[1] = new ShapeStats(1, new Range(bits[1], 13), Optional.of(sum[1] / tot));
+        stats[2] = new ShapeStats(2, new Range(bits[2], 13), Optional.of(sum[2] / tot));
+        stats[3] = new ShapeStats(3, new Range(bits[3], 13), Optional.of(sum[3] / tot));
         return stats;
     }
 
@@ -132,7 +171,7 @@ public final class ShapeSet implements Iterable<Shape> {
         if (isEmpty()) {
             return "none";
         }
-        Stat[] stats = getStats();
+        ShapeStats[] stats = getStats();
         List<String> str = new ArrayList<>();
         for (int s = 0; s < 4; s++) {
             Range rn = stats[s].range;
@@ -168,42 +207,6 @@ public final class ShapeSet implements Iterable<Shape> {
 
     @Override
     public Iterator<Shape> iterator() {
-        return new Iterator<>() {
-            int i = shapes.nextSetBit(0);
-
-            @Override
-            public boolean hasNext() {
-                return i >= 0;
-            }
-
-            @Override
-            public Shape next() {
-                Shape shape = Shape.values()[i];
-                i = shapes.nextSetBit(i + 1);
-                return shape;
-            }
-
-        };
-    }
-
-    public static class Stat {
-        final int suit;
-        final Range range;
-        final Optional<Double> avg;
-
-        public Stat(int suit, Range range, Optional<Double> avg) {
-            super();
-            this.suit = suit;
-            this.range = range;
-            this.avg = avg;
-        }
-
-        @Override
-        public String toString() {
-            if (!avg.isPresent()) {
-                return "undefined " + Strain.getName(suit);
-            }
-            return range + " " + Strain.getName(suit) + " average " + avg;
-        }
+        return shapes.stream().mapToObj(i -> Shape.values()[i]).iterator();
     }
 }

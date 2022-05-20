@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import bbidder.ShapeSet.Stat;
-
 public class ShapeSetTest {
     @Test
     public void testValueOf() {
@@ -17,7 +15,7 @@ public class ShapeSetTest {
         assertTrue(ss.contains(Shape._00030307));
         assertTrue(ss.contains(Shape._01000507));
         assertFalse(ss.contains(Shape._02000209));
-        Stat[] stats = ss.getStats();
+        ShapeStats[] stats = ss.getStats();
         assertEquals(stats[0].range, Range.between(0, 1, 13));
         assertEquals(stats[1].range, Range.none(13).add(0).add(3));
         assertEquals(stats[2].range, Range.none(13).add(3).add(5));
