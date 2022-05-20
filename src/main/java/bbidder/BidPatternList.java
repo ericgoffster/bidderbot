@@ -157,17 +157,16 @@ public final class BidPatternList {
                 if (!pattern.isBidCompatible(subContract, newBid)) {
                     return Optional.empty();
                 }
-                boolean matches = Objects.equals(bid, newBid);
-                if ((!matches) ^ pattern.antiMatch) {
+                if ((!Objects.equals(bid, newBid)) ^ pattern.antiMatch) {
                     return Optional.empty();
                 }
                 i++;
             }
         }
-        BidPattern lastBid = bids.get(bids.size() - 1);
+        BidPattern pattern = bids.get(bids.size() - 1);
         Contract contract = bidding.getContract();
-        TaggedBid newBid = lastBid.getResolvedBid(contract, null);
-        if (!lastBid.isBidCompatible(contract, newBid)) {
+        TaggedBid newBid = pattern.getResolvedBid(contract, null);
+        if (!pattern.isBidCompatible(contract, newBid)) {
             return Optional.empty();
         }
         return Optional.of(newBid);
