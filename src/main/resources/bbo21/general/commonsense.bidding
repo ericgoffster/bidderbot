@@ -60,7 +60,7 @@
          1N 3D;
 
 [[Support minor at 3 level with invitational values]]
-[partner bid m] 3m => inv, 8+ fit m;
+*:partner bid m 3m => inv, 8+ fit m;
     test x Kxxx xx AQxxxx:
         1C 1H
         1N 3C;
@@ -72,7 +72,7 @@
 [8+ fit m] 2m => min;
 
 [[Support minor at 2 level with minimum values]]
-[partner bid m] 2m => min, 8+ fit m;
+*:partner bid m 2m => min, 8+ fit m;
     test Ax xxxx xx Axxxx:
         1C 1H
         1N 2C;
@@ -91,7 +91,7 @@
 *:i bid m 3m P => inv, 8+ fit m;
 
 [[Pass minor at 3 level with support and invitational values]]
-[partner bid m] 3m P => inv, 8+ fit m;
+*:partner bid m 3m P => inv, 8+ fit m;
 
 [[Pass established fit at 2 level with minimum values]]
 [8+ fit m] 2m P => min;
@@ -103,7 +103,7 @@
 *:i bid m 2m P => min, 8+ fit m;
 
 [[Pass minor at 2 level with support and minimum values]]
-[partner bid m] 2m P => min, 8+ fit m;
+*:partner bid m 2m P => min, 8+ fit m;
 
 # Rebid suit
 [[Rebid minor at 3 level 3N with invitational values]]
@@ -122,7 +122,7 @@
         2♣;
 
 [[Bid a possible pseudo fit]]
-[partner bid x, partner bid y] NJy:<2x:>1N NJx => min, prefer x to y;
+*:partner bid x:partner bid y NJy:<2x:>1N NJx => min, prefer x to y;
     test AQxxx xx xxxx xx:
         1H 1S
         2C 2H;
@@ -158,7 +158,7 @@
         1N P;
 
 [[Bid 1N with no support]]
-[partner bid x, partner bid y] 1N => min, partial_stoppers unstopped, stoppers denied;
+*:partner bid x:partner bid y 1N => min, partial_stoppers unstopped, stoppers denied;
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1♥ 1N;

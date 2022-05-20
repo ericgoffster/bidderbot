@@ -114,7 +114,7 @@
 *:i bid M NJM => 8+ fit M;
 
 [[Support partner's major]]
-[partner bid M] NJM => 8+ fit M;
+*:partner bid M NJM => 8+ fit M;
 
 [[Rebid 2nd suit if possible]]
 *:i bid x:i bid y NJy => rebiddable_2nd x y;

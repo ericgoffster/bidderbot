@@ -16,7 +16,7 @@
 *:i bid y ?y P => 8+ fit y;
 
 [[Pass any playable fit]]
-[partner bid y] ?y P => 8+ fit y;
+*:partner bid y ?y P => 8+ fit y;
 
 [[Return to known fit]]
 [8+ fit y] NJy => always;
@@ -25,12 +25,12 @@
 *:i bid y NJy => 8+ fit y;
 
 [[Support suit]]
-[partner bid y] NJy => 8+ fit y;
+*:partner bid y NJy => 8+ fit y;
 
 # At this point, no playable fits at all
 
 [[Pass partners rebiddable suit]]
-[partner bid y promising 6+] ?y P => always;
+*:partner bid y promising 6+ ?y P => always;
     test xxx x xxxxx xxxx:
         2H P;
     test xxx Qxxx Axxxx x:
@@ -47,7 +47,7 @@
 [] ?N P => always;
 
 [[Pass preference]]
-[partner bid x, partner bid y] ?x P => prefer x to y;
+*:partner bid x:partner bid y ?x P => prefer x to y;
     test AQxxx x xxxx xxx:
         1H 1S
         2C P;             
@@ -56,7 +56,7 @@
         1S P;
         
 [[Show preference]]
-[partner bid x, partner bid y] ?y NJx => prefer x to y;
+*:partner bid x:partner bid y ?y NJx => prefer x to y;
 
 [[Pass best known pseudo fit]]
 [7+ bestfit y] NJy P => always;
