@@ -4,25 +4,49 @@ import java.util.Objects;
 
 import bbidder.utils.BitUtil;
 
+/**
+ * A Stoppers represents the set of all suits we have a stopper in.
+ * This could have been treated as an ordinal.
+ * @author goffster
+ *
+ */
 public final class Stoppers {
     public static Stoppers EMPTY = new Stoppers((byte) 0);
     private final short patt;
 
-    public Stoppers(short patt) {
+    /**
+     * Constructs a Stoppers from a bit pattern of suits.
+     * @param patt a bit pattern of suits
+     */
+    private Stoppers(short patt) {
         super();
         this.patt = patt;
     }
 
+    /**
+     * @param suit The suit to test
+     * @return Return true if we have a stopper in the given suit.
+     */
     public boolean stopperIn(int suit) {
         return ((1 << suit) & patt) != 0;
     }
 
+    /**
+     * 
+     * @param suit The suit to add.
+     * @return A new stoppers with a stopper in the given suit.
+     */
     public Stoppers withStopperIn(int suit) {
-        return new Stoppers((byte) (patt | (1 << suit)));
+        return values[patt | (1 << suit)];
     }
     
+    /**
+     * 
+     * @param other The other stoppers to "|" with
+     * @return A new stoppers with stoppers in "this" | stoppers in the "other"
+     */
     public Stoppers or(Stoppers other) {
-        return new Stoppers((byte)(patt | other.patt));
+        return values[patt | other.patt];
     }
 
     @Override
@@ -57,9 +81,8 @@ public final class Stoppers {
     public static Stoppers[] values = new Stoppers[16];
     static {
         for (int i = 0; i < 16; i++) {
-            values[i] = new Stoppers((byte) i);
+            values[i] = new Stoppers((short) i);
         }
-        values[0] = values[0];
     }
 
     public static Stoppers[] values() {
