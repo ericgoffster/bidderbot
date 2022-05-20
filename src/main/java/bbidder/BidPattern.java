@@ -60,6 +60,10 @@ public final class BidPattern {
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch);
     }
+    
+    public BidPattern withAntiMatch(boolean antiMatch) {
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch);
+    }
 
     /**
      * @param symbol

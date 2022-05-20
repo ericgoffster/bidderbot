@@ -146,7 +146,13 @@
         1♣ 1♦
         1♥ 1♠;
 
-[] 1N:"nt_rebid" P => min;
+[] ?N:"nt_opener" P => always;
+    test xxx xxxx xxx xxx:
+        1N P;
+    test xxx xxxx xxx xxx:
+        2N P;
+
+[] ?N:"nt_rebid" P => min;
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1N P;

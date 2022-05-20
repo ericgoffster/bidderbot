@@ -19,34 +19,38 @@ public final class BidPatternParser implements Parser<BidPattern> {
 
     private BidPattern parseInterior(Input inp) throws IOException {
         inp.advanceWhite();
+        boolean anti = false;
+        if (inp.readKeyword("~")) {
+            anti = true;
+        }
         if (inp.readKeyword(BidPattern.STR_NONJUMP)) {
             String str = parseSuit(inp);
             Symbol symbol = SymbolParser.parseSymbol(str);
             if (symbol == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createJump(symbol, 0);
+            return BidPattern.createJump(symbol, 0).withAntiMatch(anti);
         } else if (inp.readKeyword(BidPattern.STR_DOUBLEJUMP)) {
             String str = parseSuit(inp);
             Symbol symbol = SymbolParser.parseSymbol(str);
             if (symbol == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createJump(symbol, 2);
+            return BidPattern.createJump(symbol, 2).withAntiMatch(anti);
         } else if (inp.readKeyword(BidPattern.STR_JUMP)) {
             String str = parseSuit(inp);
             Symbol symbol = SymbolParser.parseSymbol(str);
             if (symbol == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createJump(symbol, 1);
+            return BidPattern.createJump(symbol, 1).withAntiMatch(anti);
         }  else if (inp.readKeyword("?")) {
             String str = parseSuit(inp);
             Symbol symbol = SymbolParser.parseSymbol(str);
             if (symbol == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createBid(null, symbol);
+            return BidPattern.createBid(null, symbol).withAntiMatch(anti);
         } else {
             String str = parseSuit(inp);
             if (str.length() == 0) {
@@ -54,7 +58,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
             }
             Bid simpleBid = Bid.fromStr(str);
             if (simpleBid != null) {
-                return BidPattern.createSimpleBid(simpleBid);
+                return BidPattern.createSimpleBid(simpleBid).withAntiMatch(anti);
             }
             if (str.length() < 1) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
@@ -68,7 +72,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
             if (symbol == null) {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
-            return BidPattern.createBid(level, symbol);
+            return BidPattern.createBid(level, symbol).withAntiMatch(anti);
         }
     }
 

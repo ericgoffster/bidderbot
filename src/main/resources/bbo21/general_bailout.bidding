@@ -5,6 +5,9 @@
 # H = ♥
 # S = ♠
 
+[[Pass 3NT]]
+[] ?N:>2N P => always;
+
 # Pass playable fits
 [[Pass any playable fit]]
 [8+ fit y] ?y P => always;
@@ -15,14 +18,7 @@
 [[Pass any playable fit]]
 [partner bid y] ?y P => 8+ fit y;
 
-[[Return to known fit over a suit bid]]
-[8+ fit y] ?x NJy => 7- fit x;
-
-[[Pass 3NT]]
-[] ?N:>2N P => always;
-
-# Bid playable fits
-[[Return to best known fit]]
+[[Return to known fit]]
 [8+ fit y] NJy => always;
 
 [[Self support suit]]
@@ -49,12 +45,6 @@
 
 [[Pass NT]]
 [] ?N P => always;
-
-[] ?N:"nt_opener" P => always;
-    test xxx xxxx xxx xxx:
-        1N P;
-    test xxx xxxx xxx xxx:
-        2N P;
 
 [[Pass preference]]
 [partner bid x, partner bid y] ?x P => prefer x to y;
