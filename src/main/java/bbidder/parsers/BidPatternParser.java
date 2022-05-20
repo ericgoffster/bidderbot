@@ -28,37 +28,36 @@ public final class BidPatternParser implements Parser<BidPattern> {
                     throw new IllegalArgumentException("Invalid less than");
                 }
                 p = p.withLessThan(other);
-                continue;
-            }
-            if (inp.readKeyword(">")) {
+            } else if (inp.readKeyword(">")) {
                 BidPattern other = parseInterior(inp);
                 if (other == null) {
                     throw new IllegalArgumentException("Invalid greater than");
                 }
                 p = p.withGreaterThan(other);
-                continue;
-            }
-            if (inp.readKeyword("DOWN")) {
+            } else if (inp.readKeyword("DOWN")) {
                 p = p.withDownTheLine(true);
-                continue;
-            }
-            if (inp.readKeyword("SEATS")) {
+            } else if (inp.readKeyword("SEATS")) {
                 short seats = 0;
                 String seatsC = inp.readToken(ch -> ch != ':');
                 for (int i = 0; i < seatsC.length(); i++) {
                     seats |= (1 << (seatsC.charAt(i) - '1'));
                 }
                 p = p.withSeats(seats);
-                continue;
-            }
-            String tag = inp.readToken(ch -> ch != ':');
-            if (tag.startsWith("\"") && tag.endsWith("\"")) {
+            } else if (inp.readKeyword("\"")) {
+                StringBuilder tag = new StringBuilder();
+                while(inp.ch >= 0 && inp.ch != '"') {
+                    tag.append((char)inp.ch);
+                    inp.advance();
+                }
+                if (inp.ch == '"') {
+                    inp.advance();
+                }
                 Set<String> tags = new HashSet<>(p.tags);
-                tags.add(tag.substring(1, tag.length() - 1));
+                tags.add(tag.toString());
                 p = p.withTags(tags);
-                continue;
+            } else {
+                throw new IllegalArgumentException("bad modifier");
             }
-            throw new IllegalArgumentException("bad modifier");
         }
         return p;
     }
