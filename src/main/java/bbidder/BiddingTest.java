@@ -1,5 +1,6 @@
 package bbidder;
 
+import bbidder.parsers.AuctionParser;
 import bbidder.utils.DebugUtils;
 import bbidder.utils.SplitUtil;
 
@@ -92,6 +93,6 @@ public final class BiddingTest {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Expected <hand>:<bids> '" + str + "'");
         }
-        return new BiddingTest(parent, where, Hand.valueOf(parts[0]), Auction.valueOf(parts[1]), anti);
+        return new BiddingTest(parent, where, Hand.valueOf(parts[0]), AuctionParser.valueOf(parts[1]), anti);
     }
 }
