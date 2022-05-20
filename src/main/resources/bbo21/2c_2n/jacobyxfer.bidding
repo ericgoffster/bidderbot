@@ -1,0 +1,54 @@
+# Jacoby Transfers over 2N
+
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
+2C 2D
+2N 3M-1
+3M => 22- tpts;
+    test AQJx Qx AKxx AQx:
+        2C 2D
+        2N 3♥
+        3♠;
+    test Qx AQJx AKxx AQx:
+        2C 2D
+        2N 3♦
+        3♥;
+
+2C 2D
+2N 3M-1
+3N => 4+M, superbalanced;
+    test AKx AJxx AQx AJx:
+        2C 2D
+        2N 3♦
+        3N;
+
+2C 2D
+2N 3M-1
+NJx => 4+M, 2-x;
+    test AKxx AKxx Qx AKx:
+        2C 2D
+        2N 3♦
+        4♦;
+    test AKxx AKxx AKx Qx:
+        2C 2D
+        2N 3♦
+        4♣;
+    test Qx AKxx AKx AKxx:
+        2C 2D
+        2N 3♦
+        3♠;
+
+2C 2D
+2N 3M-1
+3M => always;
+    test Qx AQJx AKxx AKx:
+        2C 2D
+        2N 3♥
+        3♠;
+    test AQJx Qx AKxx AKx:
+        2C 2D
+        2N 3♦
+        3♥;

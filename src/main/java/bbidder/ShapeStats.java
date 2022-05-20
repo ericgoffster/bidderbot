@@ -19,6 +19,6 @@ public class ShapeStats {
         if (!avg.isPresent()) {
             return "undefined " + Strain.getName(suit);
         }
-        return range + " " + Strain.getName(suit) + " average " + avg;
+        return range + " " + Strain.getName(suit) + " average " + avg.get();
     }
 }

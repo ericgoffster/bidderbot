@@ -12,7 +12,7 @@
     test xx xxx AQxxx xxx:
         2♣ 3D;
 
-2♣ 2N => 8+ tpts, partial_stoppers unbid;
+2♣ 2N => 8+ tpts, balanced, partial_stoppers unbid;
     test Qx Kxxx Kxxx Jxx:
         2♣ 2N;
 
