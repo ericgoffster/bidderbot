@@ -46,27 +46,6 @@ public final class GeneralityParser {
             }
             break;
         }
-        case BestFitEstablished.NAME: {
-            Symbol symbol = SymbolParser.parseSymbol(remainder);
-            if (symbol != null) {
-                return new BestFitEstablished(symbol, SuitLengthRange.atLeast(7));
-            }
-            break;
-        }
-        case "bestfit7_established": {
-            Symbol symbol = SymbolParser.parseSymbol(remainder);
-            if (symbol != null) {
-                return new BestFitEstablished(symbol, SuitLengthRange.atLeast(7));
-            }
-            break;
-        }
-        case "bestfit8_established": {
-            Symbol symbol = SymbolParser.parseSymbol(remainder);
-            if (symbol != null) {
-                return new BestFitEstablished(symbol, SuitLengthRange.atLeast(8));
-            }
-            break;
-        }
         case "i_bid_suit": {
             String[] rem = SplitUtil.split(remainder, "promising", 2);
             SuitLengthRange range;
