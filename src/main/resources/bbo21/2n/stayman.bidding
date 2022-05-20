@@ -30,7 +30,7 @@ common [] 2N:"nt_opener" 3♣:"stayman" {
 	        2N 3♣
 	        3♠;
 	continuations {	
-		NJOM:"artificial" => slaminv+, 4+M;
+		NJOM:"art_raise" => slaminv+, 4+M;
 		    test Axx Axxx Axx xxx:
 		        2N 3♣
 		        3♥ 3♠;

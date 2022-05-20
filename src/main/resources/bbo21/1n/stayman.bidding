@@ -32,7 +32,7 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		        2♠ 4♥;
 		
 		[[Invite slam in ${M}]]
-		3OM:"artificial" => slaminv+, 4M;
+		3OM:"art_raise" => slaminv+, 4M;
 		    test AJx Axxx Axx Axx:
 		        1N 2♣
 		        2♥ 3♠;

@@ -55,7 +55,7 @@ common [] 2N:"nt_opener" 3M-1:"xfer" {
 	        2N 3♦
 	        3N;
     continuations {		
-		4M-1 => always;
+		4M-1:"xfer" => always;
 		    test xx Axxxx xxx xxx:
 		        2N 3♦
 		        3N 4D;
