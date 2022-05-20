@@ -1,15 +1,17 @@
 package bbidder.parsers;
 
 import bbidder.Generality;
+import bbidder.PointRange;
 import bbidder.RangeOf;
 import bbidder.SuitLengthRange;
 import bbidder.Symbol;
 import bbidder.generalities.AndGenerality;
 import bbidder.generalities.BestFitEstablished;
 import bbidder.generalities.BidSuitGenerality;
+import bbidder.generalities.ConstGenerality;
 import bbidder.generalities.FitEstablished;
 import bbidder.generalities.IsTwoSuitedGenerality;
-import bbidder.generalities.ConstGenerality;
+import bbidder.generalities.TotalPointsEstablished;
 import bbidder.generalities.UnbidSuitGenerality;
 import bbidder.generalities.WeAreThreeSuited;
 import bbidder.utils.SplitUtil;
@@ -136,6 +138,8 @@ public final class GeneralityParser {
                     if (sym != null) {
                         return new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
                     }
+                } else if (rng.of.equals(TotalPointsEstablished.NAME)) {
+                    return new TotalPointsEstablished(PointRange.between(rng.min, rng.max));
                 }
             }
             break;

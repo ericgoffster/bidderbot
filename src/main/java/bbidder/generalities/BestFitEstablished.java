@@ -79,7 +79,7 @@ public final class BestFitEstablished extends Generality {
 
     @Override
     public String toString() {
-        return combined + " bestfit_established" + " " + symbol;
+        return combined + " " + NAME + " " + symbol;
     }
 
 }

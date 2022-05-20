@@ -50,6 +50,20 @@ public final class Players {
         return "lho=" + lho + ", partner=" + partner + ", rho=" + rho + ", me=" + me;
     }
 
+    public OptionalInt ourCombinedMinTpts() {
+        OptionalInt meLenLonger = me.infSummary.tpts.lowest();
+        if (!meLenLonger.isPresent()) {
+            return OptionalInt.empty();
+        }
+        OptionalInt partnerLenLonger = partner.infSummary.tpts.lowest();
+        if (!partnerLenLonger.isPresent()) {
+            return OptionalInt.empty();
+        }
+        int meLen = meLenLonger.getAsInt();
+        int partnerLen = partnerLenLonger.getAsInt();
+        return OptionalInt.of(meLen + partnerLen);
+    }
+
     public OptionalInt ourCombinedMinLength(int s) {
         OptionalInt meLenLonger = me.infSummary.minLenInSuit(s);
         if (!meLenLonger.isPresent()) {

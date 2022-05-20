@@ -6,31 +6,27 @@ import java.util.OptionalInt;
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
-import bbidder.SuitLengthRange;
+import bbidder.PointRange;
 import bbidder.SuitTable;
-import bbidder.Symbol;
 import bbidder.utils.MyStream;
 
-public final class FitEstablished extends Generality {
-    public static final String NAME = "fit_established";
-    private final Symbol symbol;
-    private final SuitLengthRange combined;
+public final class TotalPointsEstablished extends Generality {
+    public static final String NAME = "tpts_established";
+    private final PointRange combined;
 
-    public FitEstablished(Symbol symbol, SuitLengthRange combined) {
+    public TotalPointsEstablished(PointRange combined) {
         super();
-        this.symbol = symbol;
         this.combined = combined;
     }
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
-        return symbol.resolveSuits(suitTable).map(e -> new FitEstablished(e.getSymbol(), combined).new Context(e.suitTable));
+        return MyStream.of(new Context(suitTable));
     }
 
     @Override
     public boolean test(Players players, Auction bidList) {
-        int s = symbol.getResolvedStrain();
-        OptionalInt ourCombinedMinLength = players.ourCombinedMinLength(s);
+        OptionalInt ourCombinedMinLength = players.ourCombinedMinTpts();
         if (!ourCombinedMinLength.isPresent()) {
             return false;
         }
@@ -39,7 +35,7 @@ public final class FitEstablished extends Generality {
     
     @Override
     public int hashCode() {
-        return Objects.hash(combined, symbol);
+        return Objects.hash(combined);
     }
 
     @Override
@@ -50,13 +46,13 @@ public final class FitEstablished extends Generality {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        FitEstablished other = (FitEstablished) obj;
-        return Objects.equals(combined, other.combined) && Objects.equals(symbol, other.symbol);
+        TotalPointsEstablished other = (TotalPointsEstablished) obj;
+        return Objects.equals(combined, other.combined);
     }
 
     @Override
     public String toString() {
-        return combined + " " + NAME + " " + symbol;
+        return combined + " " + NAME;
     }
 
 }
