@@ -23,7 +23,7 @@ common [] 2N:"nt_opener" 3♠:"mss" {
 	        2N 3♠
 	        4♦;
 	continuations {		        
-		4M => gf+, 1-M;
+		4M:"splinter" => gf+, 1-M;
 		    test x Axx Axxxx Axxx:
 		        2N 3♠
 		        4♣ 4♠;
@@ -69,7 +69,7 @@ common [] 2N:"nt_opener" 3♠:"mss" {
 	        2N 3♠
 	        3N;
 	continuations {		        	
-		4M => gf+, 1-M;
+		4M:"splinter" => gf+, 1-M;
 		    test x Axx Axxxx Axxx:
 		        2N 3♠
 		        3N 4♠;

@@ -115,7 +115,7 @@ common [] 1N:"nt_opener" 2M-1:"xfer" {
 		        2♠ 3N;
 		
 		[[Self supporting splinter into a suit with slam invitational values]]  
-		Jx => slaminv, 6+M, 1-x;
+		Jx:"splinter" => slaminv, 6+M, 1-x;
 		    test x AQxxxx Axx Axx:
 		        1N 2♦
 		        2♥ 3♠;

@@ -18,7 +18,7 @@ common [] 1N:"nt_opener" 2♠:"mss" {
 	
 	continuations {
 		[[Bid singleton major, if you have it]]
-		3M => gf, 1-M;
+		3M:"splinter" => gf, 1-M;
 		    test x Axx Axxxx Axxx:
 		        1N 2♠
 		        3♣ 3♠;
@@ -43,7 +43,7 @@ common [] 1N:"nt_opener" 2♠:"mss" {
 	        2N;
     continuations {
 		[[Bid singleton major over 2N, if you have it and with a 5 card minor]]
-		3M => 1-M, 5+m;
+		3M:"splinter" => 1-M, 5+m;
 		    test x Axx Axxxx Axxx:
 		        1N 2♠
 		        2N 3♠;

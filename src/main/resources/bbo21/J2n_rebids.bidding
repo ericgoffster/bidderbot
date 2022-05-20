@@ -11,7 +11,7 @@ common 1M 2N:"xfer" {
 	        1♠ 2N
 	        4♦;
 	
-	3x => 1- x;
+	3x:"splinter" => 1- x;
 	    test AQxxx x KQxx Axx:
 	        1♠ 2N
 	        3♥;

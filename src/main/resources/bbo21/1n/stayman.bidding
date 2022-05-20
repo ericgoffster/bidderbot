@@ -19,7 +19,7 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 	        1N 2♣
 	        2♠;
 	continuations {
-		4m => gf+, 4+M, 1-m;
+		4m:"splinter" => gf+, 4+M, 1-m;
 		    test AJx AQxx AQxxx x:
 		        1N 2♣
 		        2♥ 4♣;
@@ -27,7 +27,7 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		        1N 2♣
 		        2♠ 4♣;
 	
-		4OM:<4M => gf+, 4+M, 1-OM;
+		4OM:"splinter":<4M => gf+, 4+M, 1-OM;
 		    test AJxx x AQx AQxxx:
 		        1N 2♣
 		        2♠ 4♥;

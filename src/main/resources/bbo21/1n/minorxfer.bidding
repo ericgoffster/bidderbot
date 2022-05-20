@@ -12,7 +12,7 @@ common [] 1N:"nt_opener" 2N:"xfer" {
         3♣;
     continuations {
 		[[Bid singleton with game forcing values (or better)]]
-		3x => gf+, 1-x;
+		3x:"splinter" => gf+, 1-x;
 		    test AQx x Kxx AQxxxx:
 		        1N 2N
 		        3♣ 3♥;
@@ -33,7 +33,7 @@ common [] 1N:"nt_opener" 3♣:"xfer" {
     continuations {
 	
 		[[Bid singleton with game forcing values (or better)]]
-		3x => gf+, 1-x;
+		3x:"splinter" => gf+, 1-x;
 		    test AQx x AQxxxx Kxx:
 		        1N 3♣
 		        3♦ 3♥;
