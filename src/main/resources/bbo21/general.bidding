@@ -67,7 +67,8 @@
 
 [fit_established m] 3m => inv;
 [[Support minor at 3 level with invitational values and a fit]]
-[] 3m => inv, fit m;
+[i_bid_suit m] 3m => inv, fit m;
+[partner_bid_suit m] 3m => inv, fit m;
     test x Kxxx xx AQxxxx:
         1C 1H
         1N 3C;
@@ -83,7 +84,8 @@
 
 [fit_established m] 2m => min;
 [[Support minor at 2 level with minimum values and a fit]]
-[] 2m => min, fit m;
+[i_bid_suit m] 2m => min, fit m;
+[partner_bid_suit m] 2m => min, fit m;
     test Ax xxxx xx Axxxx:
         1C 1H
         1N 2C;
@@ -96,14 +98,16 @@
         1C 1D
         3D P;
 [[Pass minor at 3 level with invitational values]]
-[] 3m P => inv, fit m;
+[i_bid_suit m] 3m P => inv, fit m;
+[partner_bid_suit m] 3m P => inv, fit m;
 
 [fit_established m] 2m P => min;
     test xxx Qxx Axxxx xx:
         1C 1D
         2D P;
 [[Pass minor at 2 level with minimum values]]
-[] 2m P => min, fit m;
+[i_bid_suit m] 2m P => min, fit m;
+[partner_bid_suit m] 2m P => min, fit m;
     
 [[Pass 1N with minimum values]]
 [] 1N P => min;
@@ -148,10 +152,11 @@
 
 [[No bid matches, pass any fit]]
 [fit_established y] ?y P => always;
-[] ?y P => fit y;
+[i_bid_suit y] ?y P => fit y;
     test xxx xxxxxx xxx x:
         1N 2D
         2♥ P;
+[partner_bid_suit y] ?y P => fit y;
 
 [[No bid matches, Return to best known fit]]
 [bestfit8_established y] ?x NJy => always;

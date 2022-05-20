@@ -10,21 +10,24 @@
     test AQxxx Axx Axx xx:
         1S 2N
         4S P;
-[] 4M P => gf, fit M;
+[partner_bid_suit M] 4M P => gf, fit M;
+[i_bid_suit M] 4M P => gf, fit M;
 
 [fit_established M] 3M P => inv;
     test Axxxx Axx Axx xx:
         1S 3S
         P;
 [[Pass invitation without values to go further]]
-[] 3M P => inv, fit M;
+[partner_bid_suit M] 3M P => inv, fit M;
+[i_bid_suit M] 3M P => inv, fit M;
 
 [[Pass min without values to go further]]
 [fit_established M] 2M P => min;
     test xxx Axxx Kx xxxx:
         1C 1H
         2H P;
-[] 2M P => min, fit M;
+[partner_bid_suit M] 2M P => min, fit M;
+[i_bid_suit M] 2M P => min, fit M;
         
 [[Bid game in a major]]
 [fit_established M] 4M => gf;
@@ -58,10 +61,14 @@
         2C 2D
         2N 4♥
         4♠;
-[] 4M => gf, fit M;
+[i_bid_suit M] 4M => gf, fit M;
     test Ax Axxxxx xx AQx:
         1C 1H
         1N 4H;
+    test xx Axxxxx xx AQx:
+        1C 1H
+        2N 4H;
+[partner_bid_suit M] 4M => gf, fit M;
     test AKxx AKxx x AQxx:
         1♣ 1♥
         4♥;
@@ -85,9 +92,6 @@
     test Axxx Axx xxx xxx:
         2N 3♣
         3♠ 4S;
-    test xx Axxxxx xx AQx:
-        1C 1H
-        2N 4H;
 
 [[Bid invitation with the values]]
 [fit_established M] 3M => inv;
@@ -97,37 +101,40 @@
     test AKxxxx AQx Kx xx:
         1♠ 2♠
         3♠;
-[] 3M => inv, fit M;
+[i_bid_suit M] 3M => inv, fit M;
+    test Qx Axxxxx xx Axx:
+        1C 1H
+        1N 3H;
+    test xx Axxxxx xx xxx:
+        1C 1H
+        2N 3H;
+[partner_bid_suit M] 3M => inv, fit M;
     test AKxx Kxxx xx AKx:
         1♣ 1♥
         3♥;
     test Kxxx Kxxx x Axxx:
         1♣ 1♥
         1♠ 3♠;
-    test Qx Axxxxx xx Axx:
-        1C 1H
-        1N 3H;
     test AJxx Kxxx xx xxx:
         1N 2♣
         2♠ 3♠;
     test AJxx Kxxx xx xxx:
         1N 2♣
         2♥ 3♥;
-    test xx Axxxxx xx xxx:
-        1C 1H
-        2N 3H;
 
 [[Bid min with no further values]]
-[] 2M => min, fit M;
+[fit_established M] 2M => min;
+[i_bid_suit M] 2M => min, fit M;
+    test xx Axxxxx xx xxx:
+        1C 1H
+        1N 2H;
+[partner_bid_suit M] 2M => min, fit M;
     test AQxx Axxx xx Kxx:
         1♣ 1♥
         2♥;
     test Qxxx Kxxx x Qxxx:
         1♣ 1♥
         1♠ 2♠;
-    test xx Axxxxx xx xxx:
-        1C 1H
-        1N 2H;
 
 #
 # Rebid 2nd suit if possible
