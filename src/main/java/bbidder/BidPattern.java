@@ -51,9 +51,6 @@ public final class BidPattern {
         this.lessThan = lessThan;
     }
 
-    /**
-     * @return True if this bid pattern is a pass.
-     */
     public boolean isPass() {
         return simpleBid == Bid.P;
     }
@@ -98,22 +95,10 @@ public final class BidPattern {
                 lessThan);
     }
 
-    /**
-     * @param symbol
-     *            The strain
-     * @param jumpLevel
-     *            The number of jumps
-     * @return A pattern where the level is "jump" based.
-     */
     public static BidPattern createJump(Symbol symbol, int jumpLevel) {
         return new BidPattern(false, symbol, null, null, jumpLevel, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
 
-    /**
-     * @param simpleBid
-     *            The simple bid
-     * @return A simple "constant" bid
-     */
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
             return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL, false,
@@ -122,50 +107,14 @@ public final class BidPattern {
         return new BidPattern(false, null, null, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
 
-    /**
-     * @param level
-     *            The level
-     * @param symbol
-     *            The strain
-     * @return A bid that is the level of a suit
-     */
     public static BidPattern createBid(Integer level, Symbol symbol) {
         return new BidPattern(false, symbol, level, null, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
 
-    /**
-     * @param generality
-     *            The generality.
-     * @return A bid that represents a series of bids that fit a generality
-     */
     public static BidPattern createWild(Generality generality) {
         return new BidPattern(false, null, null, null, null, generality, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
     
-    private boolean isBidCompatible(Contract contract, Symbol symbol, Bid b) {
-        if (!contract.isLegalBid(b)) {
-            return false;
-        }
-        if (!seats.hasSeat(contract.numPasses)) {
-            return false;
-        }
-        if (lessThan != null) {
-            TaggedBid tb = lessThan.getResolvedBid(contract, null);
-            Bid comparisonBid = tb.bid;
-            if (b.compareTo(comparisonBid) >= 0) {
-                return false;
-            }
-        }
-        if (greaterThan != null) {
-            TaggedBid tb = greaterThan.getResolvedBid(contract, null);
-            Bid comparisonBid = tb.bid;
-            if (b.compareTo(comparisonBid) <= 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     /**
      * @param suitTable
      *            The symbols
@@ -219,8 +168,28 @@ public final class BidPattern {
         return new TaggedBid(Bid.valueOf(level, strain), tags);
     }
 
-    public boolean isBidCompatible(Contract contract, TaggedBid bid) {
-        return isBidCompatible(contract, symbol, bid.bid);
+    public boolean isBidCompatible(Contract contract, Bid b) {
+        if (!contract.isLegalBid(b)) {
+            return false;
+        }
+        if (!seats.hasSeat(contract.numPasses)) {
+            return false;
+        }
+        if (lessThan != null) {
+            TaggedBid tb = lessThan.getResolvedBid(contract, null);
+            Bid comparisonBid = tb.bid;
+            if (b.compareTo(comparisonBid) >= 0) {
+                return false;
+            }
+        }
+        if (greaterThan != null) {
+            TaggedBid tb = greaterThan.getResolvedBid(contract, null);
+            Bid comparisonBid = tb.bid;
+            if (b.compareTo(comparisonBid) <= 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

@@ -148,7 +148,7 @@ public final class BidPatternList {
                 TaggedBid bid = theBids.get(i);
                 Contract subContract = bidding.firstN(i).getContract();
                 TaggedBid newBid = pattern.getResolvedBid(subContract, bid);
-                if (!pattern.isBidCompatible(subContract, newBid)) {
+                if (!pattern.isBidCompatible(subContract, newBid.bid)) {
                     return Optional.empty();
                 }
                 if ((!Objects.equals(bid, newBid)) ^ pattern.antiMatch) {
@@ -163,7 +163,7 @@ public final class BidPatternList {
         }
         Contract contract = bidding.getContract();
         TaggedBid newBid = pattern.getResolvedBid(contract, null);
-        if (!pattern.isBidCompatible(contract, newBid)) {
+        if (!pattern.isBidCompatible(contract, newBid.bid)) {
             return Optional.empty();
         }
         return Optional.of(newBid);
