@@ -136,7 +136,7 @@ public final class InferenceParser {
             }
         }
         {
-            Inference i = InferenceParser.parseCombinedTPts(str);
+            Inference i = InferenceParser.makeTPtsRange(str.trim());
             if (i != null) {
                 return i;
             }
@@ -187,13 +187,6 @@ public final class InferenceParser {
             return null;
         }
         return new LongestOrEqual(sym, null);
-    }
-
-    private static CombinedTotalPointsRange parseCombinedTPts(String str) {
-        if (str == null) {
-            return null;
-        }
-        return InferenceParser.makeTPtsRange(str.trim());
     }
 
     private static CombinedTotalPointsRange makeTPtsRange(String str) {
