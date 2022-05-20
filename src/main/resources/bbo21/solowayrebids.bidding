@@ -5,28 +5,30 @@
 # H = ♥
 # S = ♠
 
-1x Jz:<2N Jy => 5+y;
-    test xx x AQJxx KQxxx:
-        1♦ 2♠
-        4♣;
-    test xx AQJxx x KQxxx:
-        1♥ 2♠
-        4♣;
-
-1x Jz:<2N NJy => 3+ y, 2+ of top 3 in y;
-    test xx Jxx AQJxx KQx:
-        1♦ 2♠
-        3♣;
-    test KQx Jxx xx AQJxx:
-        1♣ 2♦
-        2♠;
-
-1x Jz:<2N 3z => 3+ z;
-    test Qxx Jx AQJxx Kxx:
-        1♦ 2♠
-        3♠;
-
-1x Jz:<2N 3N => balanced, partial_stoppers unstopped, stoppers denied;
-    test Qx Jxx AQJxx Kxx:
-        1♦ 2♠
-        3N;
+common 1x Jz:<2N {
+	Jy => 5+y;
+	    test xx x AQJxx KQxxx:
+	        1♦ 2♠
+	        4♣;
+	    test xx AQJxx x KQxxx:
+	        1♥ 2♠
+	        4♣;
+	
+	NJy => 3+ y, 2+ of top 3 in y;
+	    test xx Jxx AQJxx KQx:
+	        1♦ 2♠
+	        3♣;
+	    test KQx Jxx xx AQJxx:
+	        1♣ 2♦
+	        2♠;
+	
+	3z => 3+ z;
+	    test Qxx Jx AQJxx Kxx:
+	        1♦ 2♠
+	        3♠;
+	
+	3N => balanced, partial_stoppers unstopped, stoppers denied;
+	    test Qx Jxx AQJxx Kxx:
+	        1♦ 2♠
+	        3N;
+}
