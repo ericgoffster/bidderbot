@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public final class TaggedAuction {
     private final List<TaggedBid> bids;
@@ -81,26 +80,6 @@ public final class TaggedAuction {
             contract = contract.addBid(bids.get(j).bid);
         }
         return contract;
-    }
-
-    /**
-     * @return The last bid in the sequence. empty if the list of bids is empty.
-     */
-    public Optional<TaggedBid> getLastBid() {
-        if (bids.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(bids.get(bids.size() - 1));
-    }
-
-    /**
-     * @return An auction of all bids except the last bid. No-op if already empty.
-     */
-    public TaggedAuction exceptLast() {
-        if (bids.isEmpty()) {
-            return this;
-        }
-        return new TaggedAuction(bids.subList(0, bids.size() - 1));
     }
 
     /**

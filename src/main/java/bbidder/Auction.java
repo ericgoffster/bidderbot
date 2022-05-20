@@ -112,18 +112,6 @@ public final class Auction {
     }
 
     /**
-     * @param n
-     *            The number of bids to return
-     * @return An auction of just the first "n" bids,
-     */
-    public Auction firstN(int n) {
-        if (bids.size() < n) {
-            return this;
-        }
-        return new Auction(bids.subList(0, n));
-    }
-
-    /**
      * @param str
      *            The string to parse
      * @return A bid list parsed from the string
