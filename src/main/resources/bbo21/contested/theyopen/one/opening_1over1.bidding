@@ -1,0 +1,39 @@
+# Simple overcalls
+
+common (1w) P (1z) {
+	2N:"unusual" => 5+ x, 5+ y, 8-10 hcp ;
+		test x xx AKxxx Qxxxx:
+		        (1H) P (1S) 2N;
+
+	2N:"unusual" => 5+ x, 5+ y, 18+ tpts;
+		test x xx AKQxx AQxxx:
+		        (1H) P (1S) 2N;
+	
+	2x:>2z => 4-9 hcp, 6 x, 2+ of top 3 in x;
+		test xxx KQJxxx xxx x:
+		        (1C) P (1D) 2H;
+	
+	3x => 10- hcp, 3+ tpts, 7 x, 2+ of top 3 in x;
+		test xxx KQJxxxx xx x:
+		        (1C) P (1S) 3H;
+	
+	NJy:>1N:down => 5+ y, 10+ hcp, 11+ tpts, 2+ of top 3 in y;
+		test Axx AQxxxx xx xx:
+		        (1C) P (1S) 2H;
+	
+	1y:down => 5+ y, 7+ hcp, 8+ tpts;
+		test AQxxx Axx xxx xx:
+		        (1C) P (1H) 1S;
+	
+	1N:"nt_opener" => stoppers w, stoppers z, 15-17 hcp;
+		test AQxx Axx Axx Qxx:
+		        (1H) P (1S) 1N;
+	        
+	X:"takeout_1" => 12+ tpts, 4+ x, 4+ y;
+		test Axx xx Axxx KQxx:
+		        (1H) P (1S) x;
+	
+	X:"takeout_1" => 18+ tpts;
+		test AQ AQxx Axxxx Ax:
+		        (1H) P (1S) x;
+}

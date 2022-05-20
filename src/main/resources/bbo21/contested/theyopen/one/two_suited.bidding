@@ -1,0 +1,41 @@
+# Simple overcalls
+
+(1M) 2M:"michaels" => 5+ OM, 5+ m, 8-10 hcp ;
+	test AQxxx xx Kxxxx x:
+	        (1H) 2H;
+	        
+(1M) 2M:"michaels" => 5+ OM, 5+ m, 18+ tpts ;
+	test AQxxx xx AKQxx x:
+	        (1H) 2H;
+
+(1m) 2m:"michaels" => 5+ M, 5+ OM, 8-10 hcp ;
+	test AQxxx Kxxxx xx x:
+	        (1D) 2D;
+	        
+(1m) 2m:"michaels" => 5+ M, 5+ OM, 18+ tpts ;
+	test AQxxx AKQxx xx x:
+	        (1D) 2D;
+
+(1x) 2x:"michaels":i bid y NJy:<3N NJx => 18+ tpts ;
+	test AQxxx AKQxx xx x:
+		 (1D) 2D 2H 3D;
+
+(1m) 2N:"unusual" => 5+ om, 5+H, 8-10 hcp ;
+	test xx AQxxx Kxxxx x:
+	        (1C) 2N;
+	        
+(1m) 2N:"unusual" => 5+ om, 5+H, 18+ tpts ;
+	test xx AQxxx AKQxx x:
+	        (1C) 2N;
+	        
+(1M) 2N:"unusual" => 5+ C, 5+ D, 8-10 hcp ;
+	test xx x AQxxx Kxxxx :
+	        (1S) 2N;
+	        
+(1M) 2N:"unusual" => 5+ C, 5+ D, 18+ tpts ;
+	test xx x AQxxx AKQxx :
+	        (1S) 2N;
+
+(1x) 2N:"unusual":i bid y NJy:<3N NJx => 18+ tpts ;
+	test xx AQxxx AKQxx x:
+	        (1C) 2N 3D 4C ;
