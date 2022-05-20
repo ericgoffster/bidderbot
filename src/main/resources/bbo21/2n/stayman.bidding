@@ -72,7 +72,7 @@
         3♠ 4♥;
 
 2N 3♣
-3M 4m => slaminv+, 5+m, nofit M;
+3M 4m => slaminv+, 5+m, 7- fit M;
     test Axxx Ax Axxxx xx:
         2N 3♣
         3♥ 4♦;
@@ -81,7 +81,7 @@
         3♥ 4♣;
 
 2N 3♣
-3M 4N => slaminv, nofit M;
+3M 4N => slaminv, 7- fit M;
     test Axxx Ax Axxx xxx:
         2N 3♣
         3♥ 4N;

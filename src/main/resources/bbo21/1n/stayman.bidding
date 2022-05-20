@@ -43,31 +43,31 @@
         2♠ 3♥;
 
 1N 2♣
-2♥ 2♠ => inv, 4♠, nofit H;
+2♥ 2♠ => inv, 4♠, 7- fit H;
     test AJxx Axx xxx xxx:
         1N 2♣
         2♥ 2♠;
 
 1N 2♣
-2M 2N => inv, nofit M;
+2M 2N => inv, 7- fit M;
     test AJx Axx xxxx xxx:
         1N 2♣
         2♥ 2N;
 
 1N 2♣
-2M 3N => gf, nofit M;
+2M 3N => gf, 7- fit M;
     test AJxx AQx xxx xxx:
         1N 2♣
         2♥ 3N;
 
 1N 2♣
-2M 3m => gf+, 5+m, nofit M;
+2M 3m => gf+, 5+m, 7- fit M;
     test AJx AQx AQxxx xx:
         1N 2♣
         2♥ 3♦;
 
 1N 2♣
-2M 4N => slaminv, nofit M;
+2M 4N => slaminv, 7- fit M;
     test AJxx AQx AQx xxx:
         1N 2♣
         2♥ 4N;

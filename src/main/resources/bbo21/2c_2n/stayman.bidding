@@ -95,7 +95,7 @@
 
 2C 2D
 2N 3♣
-3M 4m => slaminv+, 5+m, nofit M;
+3M 4m => slaminv+, 5+m, 7- fit M;
     test Axxx Ax Qxxxx xx:
         2C 2D
         2N 3♣
@@ -107,7 +107,7 @@
 
 2C 2D
 2N 3♣
-3M 4N => slaminv, nofit M;
+3M 4N => slaminv, 7- fit M;
     test Axxx Ax Qxxx xxx:
         2C 2D
         2N 3♣

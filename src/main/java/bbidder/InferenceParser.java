@@ -102,13 +102,6 @@ public final class InferenceParser {
                 return Always.ALWAYS;
             }
             break;
-        case "nofit": {
-            Symbol sym = SymbolParser.parseSymbol(remainder.trim());
-            if (sym != null) {
-                return new FitInSuit(sym, SuitLengthRange.atMost(7));
-            }
-            break;
-        }
         case Rebiddable.NAME: {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {

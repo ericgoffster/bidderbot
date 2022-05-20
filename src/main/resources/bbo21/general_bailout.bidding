@@ -16,7 +16,7 @@
 [partner_bid_suit y] ?y P => 8+ fit y;
 
 [[Return to known fit over a suit bid]]
-[fit_established y] ?x NJy => nofit x;
+[fit_established y] ?x NJy => 7- fit x;
     test AQX KJxx xx AJxx:
         1N 3♣
         3♦;
@@ -79,7 +79,7 @@
 [bestfit_established y] NJy P => always;
         
 [[Return to best known pseudo fit]]
-[bestfit_established y] ?x NJy => nofit x;
+[bestfit_established y] ?x NJy => 7- fit x;
     test AQxx xx AJx Axxx:
         1N 2♦
         2♥;
