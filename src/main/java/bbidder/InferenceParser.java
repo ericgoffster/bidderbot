@@ -12,6 +12,7 @@ import bbidder.inferences.CombinedTotalPointsRange;
 import bbidder.inferences.FitInSuit;
 import bbidder.inferences.HCPRange;
 import bbidder.inferences.LongestOrEqual;
+import bbidder.inferences.MaxSuitRange;
 import bbidder.inferences.NotInference;
 import bbidder.inferences.Preference;
 import bbidder.inferences.Rebiddable;
@@ -198,28 +199,33 @@ public final class InferenceParser {
             {
                 RangeOf rng = parseRange(str.trim());
                 if (rng != null) {
-                    if (rng.of.equalsIgnoreCase(HCPRange.HCP)) {
-                        return new HCPRange(PointRange.between(rng.min, rng.max));
-                    }
-                    if (rng.of.equalsIgnoreCase(TotalPointsRange.TPTS)) {
-                        return new TotalPointsRange(PointRange.between(rng.min, rng.max));
-                    }
-                    {
+                    if (rng.maxPromised) {
                         Symbol sym = SymbolParser.parseSymbol(rng.of);
                         if (sym != null) {
-                            return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
+                            return new MaxSuitRange(sym);
                         }
-                    }
-                    {
-                        Matcher m = PATT_SPECIFIC_CARDS.matcher(rng.of);
-                        if (m.matches()) {
-                            int top = Integer.parseInt(m.group(1));
-                            String suit = m.group(2);
-                            Symbol sym = SymbolParser.parseSymbol(suit);
-                            if (sym == null) {
-                                return null;
+                    } else if (rng.of.equalsIgnoreCase(HCPRange.HCP)) {
+                        return new HCPRange(PointRange.between(rng.min, rng.max));
+                    } else if (rng.of.equalsIgnoreCase(TotalPointsRange.TPTS)) {
+                        return new TotalPointsRange(PointRange.between(rng.min, rng.max));
+                    } else {
+                        {
+                            Symbol sym = SymbolParser.parseSymbol(rng.of);
+                            if (sym != null) {
+                                return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
                             }
-                            return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
+                        }
+                        {
+                            Matcher m = PATT_SPECIFIC_CARDS.matcher(rng.of);
+                            if (m.matches()) {
+                                int top = Integer.parseInt(m.group(1));
+                                String suit = m.group(2);
+                                Symbol sym = SymbolParser.parseSymbol(suit);
+                                if (sym == null) {
+                                    return null;
+                                }
+                                return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
+                            }
                         }
                     }
                 }
