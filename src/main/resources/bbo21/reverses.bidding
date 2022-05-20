@@ -10,42 +10,42 @@ common
     NJz:"reverse" {
     
 	# Jump rebid first suit with gf hand and a powerful suit
-	3y:"rev_resp" => 6+ y, 9+ tpts;
+	3y => 6+ y, 9+ tpts;
 	    test KQJxxx xx Axx xx:
 	        1♣ 1♠ 2♥ 3♠;
 	    test AQTxxx xx Axx xx:
 	        1♣ 1♠ 2♥ 3♠;
 	
 	# Rebid first suit with minimum hand and 5+ in that suit
-	2y:"rev_resp" => 5+ y, 7+ tpts;
+	2y => 5+ y, 7+ tpts;
 	    test KQJxx Qx xxxx xx:
 	        1♣ 1♠
 	        2♥ 2♠;
 	
 	# gf simple raise of first suit.
-	NJx:"rev_resp" => 8+ fit x, gf;
+	NJx => 8+ fit x, gf;
 	    test KQxx x xxxx Axxx:
 	        1♣ 1♠ 2♥ 3♣;
 	
 	# slam inv with jump raise of first suit
-	Jx:"rev_resp" => 8+ fit x, slaminv+;
+	Jx => 8+ fit x, slaminv+;
 	    test KQxx x Kxxx AKxx:
 	        1♣ 1♠ 2♥ 4♣;
 	
 	# simple raise of second suit with gf+
-	NJz:"rev_resp" => 8+ fit z, gf+;
+	NJz => 8+ fit z, gf+;
 	    test xxx KQxx Axxx xx:
 	        1C 1H
 	        2D 3D;
 	
 	# 4sf with generic game force
-	NJw:"rev_resp" => gf;
+	NJw => gf;
 	    test AQxx xxx xxxx Ax:
 	        1♣ 1♠
 	        2♥ 3♦;
 	
 	# 2N artficial weak
-	2N:"rev_resp" => always;
+	2N:"leb_rev" => always;
 	    test KQxx xx xxxx xxx:
 	        1♣ 1♠
 	        2♥ 2N;
