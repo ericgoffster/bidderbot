@@ -5,31 +5,7 @@
 # H = ♥
 # S = ♠
 
-[[Pass a playable major suit game]]
-[fit_established M] 4M P => gf;
-    test AQxxx Axx Axx xx:
-        1S 2N
-        4S P;
-[partner_bid_suit M] 4M P => gf, fit M;
-[i_bid_suit M] 4M P => gf, fit M;
-
-[fit_established M] 3M P => inv;
-    test Axxxx Axx Axx xx:
-        1S 3S
-        P;
-[[Pass invitation without values to go further]]
-[partner_bid_suit M] 3M P => inv, fit M;
-[i_bid_suit M] 3M P => inv, fit M;
-
-[[Pass min without values to go further]]
-[fit_established M] 2M P => min;
-    test xxx Axxx Kx xxxx:
-        1C 1H
-        2H P;
-[partner_bid_suit M] 2M P => min, fit M;
-[i_bid_suit M] 2M P => min, fit M;
-        
-[[Bid game in a major]]
+[[Bid game in an established major suit fit]]
 [fit_established M] 4M => gf;
     test AQxxx Axxx Ax xx:
         1S 3S
@@ -61,6 +37,8 @@
         2C 2D
         2N 4♥
         4♠;
+
+[[Bid game in a self sufficient major]]
 [i_bid_suit M] 4M => gf, fit M;
     test Ax Axxxxx xx AQx:
         1C 1H
@@ -68,6 +46,8 @@
     test xx Axxxxx xx AQx:
         1C 1H
         2N 4H;
+
+[[Bid game in partners major]]
 [partner_bid_suit M] 4M => gf, fit M;
     test AKxx AKxx x AQxx:
         1♣ 1♥
@@ -93,7 +73,7 @@
         2N 3♣
         3♠ 4S;
 
-[[Bid invitation with the values]]
+[[Invite in an established major suit fit]]
 [fit_established M] 3M => inv;
     test AQxx Axx xxxx xx:
         1C 1S
@@ -101,6 +81,8 @@
     test AKxxxx AQx Kx xx:
         1♠ 2♠
         3♠;
+
+[[Invite in a self sufficient major]]
 [i_bid_suit M] 3M => inv, fit M;
     test Qx Axxxxx xx Axx:
         1C 1H
@@ -108,6 +90,8 @@
     test xx Axxxxx xx xxx:
         1C 1H
         2N 3H;
+
+[[Invite in partners major]]
 [partner_bid_suit M] 3M => inv, fit M;
     test AKxx Kxxx xx AKx:
         1♣ 1♥
@@ -122,12 +106,16 @@
         1N 2♣
         2♥ 3♥;
 
-[[Bid min with no further values]]
+[[Bid established major suit fit at 2 level with min values]]
 [fit_established M] 2M => min;
+
+[[Bid self supporting major at 2 level with min values]]
 [i_bid_suit M] 2M => min, fit M;
     test xx Axxxxx xx xxx:
         1C 1H
         1N 2H;
+
+[[Support partner's major at 2 level with min values]]
 [partner_bid_suit M] 2M => min, fit M;
     test AQxx Axxx xx Kxx:
         1♣ 1♥
@@ -136,9 +124,7 @@
         1♣ 1♥
         1♠ 2♠;
 
-#
-# Rebid 2nd suit if possible
-#
+[[Rebid 2nd suit if possible]]
 [i_am_two_suited x y] NJy => rebiddable_2nd x y;
     test AQxxx x x AQxxxx:
         1C 1H
@@ -149,10 +135,8 @@
         2C 2H
         3C;
 
-#
-# Rebid major if possible
-# 
-[i_bid_suit M] NJM:<2N => min, rebiddable M;
+[[Rebid major at 2 level and minimum values]]
+[i_bid_suit M] 2M => min, rebiddable M;
     test Kxx AKxxxx Kxx x:
         1H 1S
         2H;
@@ -162,10 +146,9 @@
     test xx KQxxxx xx Qxx:
         1♣ 1♥
         1♠ 2♥;
-#
-# Jump Rebid major if possible
-# 
-[i_bid_suit M] JM:<3N => inv, rebiddable M;
+
+[[Rebid major at 3 level and invitational values]]
+[i_bid_suit M] 3M => inv, rebiddable M;
     test xx AQxxxx xx Kxx:
         1C 1H
         2C 3H;
@@ -176,9 +159,7 @@
         1♣ 1♥
         1♠ 3♥;
 
-#
-# Bid 4 of major
-#
+[[Rebid self sufficient major at 4 level and gf values]]
 [i_bid_suit M] 4M => gf, rebiddable M, 7+ M;
     test Ax AQxxxxx xx Kx:
         1C 1H
@@ -186,3 +167,35 @@
     test AQJxxxx x Ax AQx:
         1S 1N
         4S;
+
+[[Pass a playable major suit game]]
+[fit_established M] 4M P => gf;
+    test AQxxx Axx Axx xx:
+        1S 2N
+        4S P;
+        
+[[Pass a playable major suit game]]
+[partner_bid_suit M] 4M P => gf, fit M;
+
+[[Pass a playable major suit game]]
+[i_bid_suit M] 4M P => gf, fit M;
+
+[[Pass a playable major suit invitation]]
+[fit_established M] 3M P => inv;
+    test Axxxx Axx Axx xx:
+        1S 3S
+        P;
+
+[[Pass a playable major suit invitation]]
+[partner_bid_suit M] 3M P => inv, fit M;
+
+[[Pass a playable major suit invitation]]
+[i_bid_suit M] 3M P => inv, fit M;
+
+[[Pass a playable major suit invitation]]
+[fit_established M] 2M P => min;
+    test xxx Axxx Kx xxxx:
+        1C 1H
+        2H P;
+[partner_bid_suit M] 2M P => min, fit M;
+[i_bid_suit M] 2M P => min, fit M;
