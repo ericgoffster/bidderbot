@@ -3,10 +3,10 @@ package bbidder;
 import java.util.Objects;
 import java.util.Set;
 
-public final class MatchedInference {
+public final class TaggedBoundInference {
     public final IBoundInference inf;
     public final Set<String> tags;
-    public MatchedInference(IBoundInference inf, Set<String> tags) {
+    public TaggedBoundInference(IBoundInference inf, Set<String> tags) {
         super();
         this.inf = inf;
         this.tags = tags;
@@ -23,7 +23,7 @@ public final class MatchedInference {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        MatchedInference other = (MatchedInference) obj;
+        TaggedBoundInference other = (TaggedBoundInference) obj;
         return Objects.equals(inf, other.inf) && Objects.equals(tags, other.tags);
     }
     @Override

@@ -1,22 +1,23 @@
 package bbidder;
 
 import java.util.Objects;
+import java.util.Set;
 
-public final class MatchedBid {
+public final class TaggedBid {
     public final Bid bid;
-    public final BidPattern pattern;
-    public MatchedBid(Bid bid, BidPattern pattern) {
+    public final Set<String> tags;
+    public TaggedBid(Bid bid, Set<String> tags) {
         super();
         this.bid = bid;
-        this.pattern = pattern;
+        this.tags = tags;
     }
     @Override
     public String toString() {
-        return "MatchedBid [bid=" + bid + ", pattern=" + pattern + "]";
+        return bid + ":" + tags;
     }
     @Override
     public int hashCode() {
-        return Objects.hash(bid, pattern);
+        return Objects.hash(bid, tags);
     }
     @Override
     public boolean equals(Object obj) {
@@ -26,7 +27,7 @@ public final class MatchedBid {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        MatchedBid other = (MatchedBid) obj;
-        return bid == other.bid && Objects.equals(pattern, other.pattern);
+        TaggedBid other = (TaggedBid) obj;
+        return bid == other.bid && Objects.equals(tags, other.tags);
     }
 }

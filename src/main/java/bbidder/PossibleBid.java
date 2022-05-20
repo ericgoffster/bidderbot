@@ -17,9 +17,9 @@ public final class PossibleBid {
     /**
      * The bid itself
      */
-    public final MatchedBid bid;
+    public final TaggedBid bid;
 
-    public PossibleBid(BidInference inf, MatchedBid bid) {
+    public PossibleBid(BidInference inf, TaggedBid bid) {
         super();
         this.inf = inf;
         this.bid = bid;

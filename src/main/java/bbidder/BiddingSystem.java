@@ -113,7 +113,7 @@ public final class BiddingSystem {
                 .filter(i -> i.inf.inferences.bind(players).test(hand))
                 .findFirst()
                 .map(i -> new BidSource(i, possible))
-                .orElse(new BidSource(new PossibleBid(null, new MatchedBid(Bid.P, BidPattern.PASS)), possible));
+                .orElse(new BidSource(new PossibleBid(null, new TaggedBid(Bid.P, Set.of("nobid"))), possible));
     }
 
     /**
@@ -127,7 +127,7 @@ public final class BiddingSystem {
      *            The last bid
      * @return The inference The inference from the bid.
      */
-    public MatchedInference getInference(Auction auction, Players players, Bid lastBid) {
+    public TaggedBoundInference getInference(Auction auction, Players players, Bid lastBid) {
         IBoundInference positive = ConstBoundInference.F;
         IBoundInference negative = ConstBoundInference.F;
         List<PossibleBid> possible = getPossibleBids(auction, players);
@@ -137,9 +137,9 @@ public final class BiddingSystem {
             if (i.bid.bid.equals(lastBid)) {
                 positive = OrBoundInf.create(positive, AndBoundInf.create(inf, negative.negate()));
                 if (tags == null) {
-                    tags = new HashSet<>(i.bid.pattern.getTags());
+                    tags = new HashSet<>(i.bid.tags);
                 } else {
-                    tags.retainAll(i.bid.pattern.getTags());
+                    tags.retainAll(i.bid.tags);
                 }
             }
             negative = OrBoundInf.create(negative, inf);
@@ -151,8 +151,8 @@ public final class BiddingSystem {
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
-            return new MatchedInference(OrBoundInf.create(positive, negative.negate()), tags);
+            return new TaggedBoundInference(OrBoundInf.create(positive, negative.negate()), tags);
         }
-        return new MatchedInference(positive, tags);
+        return new TaggedBoundInference(positive, tags);
     }
 }
