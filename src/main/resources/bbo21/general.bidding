@@ -38,8 +38,8 @@
         1♣ 1♦
         1♥ 3N;
 
-[[Jump rebid minor below 3N with invitational values]]
-[i_bid_suit m] Jm:<3N => inv, rebiddable m;
+[[Bid minor at 3 level 3N with invitational values]]
+[i_bid_suit m] 3m => inv, rebiddable m;
     test Kxx xxx AQxxxx x:
         1C 1D
         2C 3D;
@@ -60,7 +60,7 @@
         1♥ 2N;
 
 [[Rebid minor at 2 level with minimum values]]
-[i_bid_suit m] NJm:<2N => min, rebiddable m;
+[i_bid_suit m] 2m => min, rebiddable m;
     test Kxx Kxx x AKxxxx:
         1♣ 1♦
         2♣;
