@@ -51,25 +51,25 @@
 3♦ 4m => slaminv+, 5+m;
     test Axx Ax Axxxx xxx:
         2N 3♣
-        3♥ 4♦;
+        3D 4♦;
     test Axx Ax xxx Axxxx:
         2N 3♣
-        3♥ 4♣;
+        3D 4♣;
 
 2N 3♣
 3♦ 4N => slaminv;
     test Axx Ax Axxx xxxx:
         2N 3♣
-        3♥ 4N;
+        3D 4N;
 
 2N 3♣
 3M 4M => gf, 4+M;
-    test Axx Axxx Axx xxx:
+    test Axx Axxx xxx xxx:
         2N 3♣
-        3♥ 3♠;
-    test Axxx Axx Axx xxx:
+        3♥ 4H;
+    test Axxx Axx xxx xxx:
         2N 3♣
-        3♠ 4♥;
+        3♠ 4S;
 
 2N 3♣
 3M NJOM => slaminv+, 4+M;

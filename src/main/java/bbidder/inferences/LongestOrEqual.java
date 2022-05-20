@@ -10,6 +10,7 @@ import bbidder.ShapeSet;
 import bbidder.SuitSet;
 import bbidder.Symbol;
 import bbidder.SuitTable;
+import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -32,6 +33,9 @@ public final class LongestOrEqual extends Inference {
     public IBoundInference bind(Players players) {
         short iamong = among == null ? 0xf : among.evaluate(players);
         int strain = suit.getResolvedStrain();
+        if ((iamong & (1 << strain)) == 0) {
+            return ConstBoundInference.F;
+        }
         return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isLongerOrEqual(strain, iamong)));
     }
 

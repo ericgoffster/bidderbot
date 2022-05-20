@@ -67,11 +67,11 @@
     test Axx Ax Qxxxx xxx:
         2C 2D
         2N 3♣
-        3♥ 4♦;
+        3D 4♦;
     test Axx Ax xxx Qxxxx:
         2C 2D
         2N 3♣
-        3♥ 4♣;
+        3D 4♣;
 
 2C 2D
 2N 3♣
@@ -79,19 +79,19 @@
     test Axx Ax Qxxx xxxx:
         2C 2D
         2N 3♣
-        3♥ 4N;
+        3D 4N;
 
 2C 2D
 2N 3♣
 3M 4M => gf, 4+M;
-    test Axx Qxxx Axx xxx:
+    test Axx Qxxx xxx xxx:
         2C 2D
         2N 3♣
-        3♥ 3♠;
-    test Axxx Axx Axx xxx:
+        3♥ 4H;
+    test Qxxx Axx xxx xxx:
         2C 2D
         2N 3♣
-        3♠ 4♥;
+        3♠ 4S;
 
 2C 2D
 2N 3♣

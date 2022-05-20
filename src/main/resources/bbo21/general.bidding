@@ -56,14 +56,8 @@
 # Bid minor at right level
 #    
 [] 3m => inv, fit m;
-    test Ax xx AQxx AQxxx:
-        1C 1D
-        3D;
 
 [] 2m => min, fit m;
-    test xx xx AQxx AQxxx:
-        1C 1D
-        2D;
 
 #
 # Rebid minor
@@ -99,6 +93,7 @@
 # Three suited.   bid 4-th suit
 #      
 [we_are_three_suited, unbid_suit x] NJx:<3N => gf+;
-    test AQxxx AK xx xxxx:
-        1H 1S
-        2C 2D;
+    test Kx xxx Ax AQxxxx:
+        1C 1S
+        2C 2D
+        2H;

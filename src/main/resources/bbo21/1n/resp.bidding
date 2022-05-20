@@ -58,8 +58,8 @@
         1N 2♠;
 
 1N 4N => slaminv;
-    test Axx Axx Axxx Kxx:
-        1N 3N;
+    test Axx Axx AQxx Kxx:
+        1N 4N;
 
 1N 5N => grandinv;
     test Axx Axx AKxx AQx:
@@ -74,7 +74,7 @@
         1N 7N;
 
 1N 2♣ => inv+;
-    test Axxx AJx xxxx xx:
+    test Axx AJx xxxx xxx:
         1N 2♣;
 
 1N 3♣ => 6+♦;

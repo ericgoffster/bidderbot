@@ -25,18 +25,12 @@
 
 1m 2m
 NJx => balanced,stoppers x;
-    test AKx QJx Kxx xxxx:
+    test AKx QJx xxx Kxxx:
         1♣ 2♣
-        2N;
+        2H;
 
 1m 2m
 Jx => gf,1- x;
-    test x AKxx KQxx Axxx:
-        1♣ 2♣
-        3♠;
-
-1m 2m
-4m => gf;
     test x AKxx KQxx Axxx:
         1♣ 2♣
         3♠;

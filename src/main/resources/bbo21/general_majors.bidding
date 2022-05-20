@@ -31,22 +31,17 @@
     test AQxxx Axxx Ax xx:
         1S 3S
         4S;
-    test AQxx Axxx x AKxx:
-        1C 1H
+    test Ax Axxx AKxxx Ax:
+        1D 1S
+        2H 3H
         4H;
 
 [] 3M => inv, fit M;
     test AQxx Axx xxxx xx:
         1C 1S
         2S 3S;
-    test AQxx Axxx xx AQx:
-        1C 1H
-        3H;
 
 [] 2M => min, fit M;
-    test Axxx Axxx xx Axx:
-        1C 1H
-        2H;
 
 #
 # Rebid 2nd suit if possible
@@ -65,9 +60,6 @@
 # Rebid major if possible
 # 
 [i_bid_suit M] NJM:<2N => min, rebiddable M;
-    test xx AQxxxx xx xxx:
-        1C 1H
-        1N 2H;
 
 #
 # Jump Rebid major if possible
