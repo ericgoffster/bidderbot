@@ -65,4 +65,19 @@ common [] 2N:"nt_opener" 3M-1 {
 	        4M => always;
 	    }
 	}
+    3M => always;
+	    test AQJx Qx AKxx AKx:
+	        2C 2D
+	        2N 3♦
+	        3♥;
+	    test Qx AQJx AKxx AKx:
+	        2C 2D
+	        2N 3♥
+	        3♠;
+	    test xx AQJx AKxx AKx:
+	        2N 3♥
+	        3♠;
+	    test AQJx xx AKxx AKx:
+	        2N 3♦
+	        3♥;
 }

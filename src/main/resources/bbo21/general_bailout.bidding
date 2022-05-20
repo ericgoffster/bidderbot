@@ -76,18 +76,4 @@
         
 [[Return to best known pseudo fit]]
 [7+ bestfit y] ?x NJy => 7- fit x;
-    test AQJx Qx AKxx AKx:
-        2C 2D
-        2N 3♦
-        3♥;
-    test Qx AQJx AKxx AKx:
-        2C 2D
-        2N 3♥
-        3♠;
-    test xx AQJx AKxx AKx:
-        2N 3♥
-        3♠;
-    test AQJx xx AKxx AKx:
-        2N 3♦
-        3♥;
 # Help
