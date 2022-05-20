@@ -5,32 +5,30 @@
 # H = ♥
 # S = ♠
 
-1H 1N
-2S => inv+, 4+S;
-    test AQxxx AQxxxx x x:
-        1H 1N
-        2S;
+common 1M 1N {
 
-1M 1N
-Jx => gf, 4+x;
-    test AQxxx Ax Ax KQxx:
-        1S 1N
-        3C;
-
-1S 1N
-2H => inv-, 4+ H;
-    test AQxxx Axxx xx Kx:
-        1S 1N
-        2H;
-
-1M 1N
-2m => inv-, 4+ m;
-    test AQxxx xx Axxx Kx:
-        1S 1N
-        2D;
-
-1M 1N
-2m => min, 5 M, 3- m, longest_or_equal m among minors;
-    test AQxxx xx Axx Kxx:
-        1S 1N
-        2C;
+	2OM:>2M => inv+, 4+OM;
+	    test AQxxx AQxxxx x x:
+	        1H 1N
+	        2S;
+	
+	Jx => gf, 4+x;
+	    test AQxxx Ax Ax KQxx:
+	        1S 1N
+	        3C;
+	
+	2OM:<2M => inv-, 4+ OM;
+	    test AQxxx Axxx xx Kx:
+	        1S 1N
+	        2H;
+	
+	2m => inv-, 4+ m;
+	    test AQxxx xx Axxx Kx:
+	        1S 1N
+	        2D;
+	
+	2m => min, 5 M, 3- m, longest_or_equal m among minors;
+	    test AQxxx xx Axx Kxx:
+	        1S 1N
+	        2C;
+}
