@@ -32,7 +32,7 @@ public final class BiddingSystemParser {
      * @return The bidding system
      */
     public static BiddingSystem load(String urlSpec, Consumer<ParseException> reportErrors) {
-        List<BidInference> inferences = new ArrayList<>();
+        List<ResolvedBidInference> inferences = new ArrayList<>();
         List<BiddingTest> tests = new ArrayList<>();
         BiddingSystemParser.load("", urlSpec, reportErrors, inferences::add, tests::add);
         return new BiddingSystem(inferences, tests);
@@ -48,7 +48,7 @@ public final class BiddingSystemParser {
      * @param reportErrors
      *            The consumer of parse errors
      */
-    private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, Consumer<BidInference> inferences,
+    private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, Consumer<ResolvedBidInference> inferences,
             Consumer<BiddingTest> tests) {
         try (InputStream is = new URL(null, urlSpec, new ClassPathUrlHandler(BiddingSystem.class.getClassLoader())).openStream()) {
             load(urlSpec, is, reportErrors, inferences, tests);
@@ -69,10 +69,10 @@ public final class BiddingSystemParser {
      * @param reportErrors
      *            The consumer of parse errors
      */
-    private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, Consumer<BidInference> inferences,
+    private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, Consumer<ResolvedBidInference> inferences,
             Consumer<BiddingTest> tests) {
         int lineno = 0;
-        BidInference[] last = { null };
+        BidInference last = null;
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             StringBuilder sb = new StringBuilder();
             for (;;) {
@@ -96,22 +96,23 @@ public final class BiddingSystemParser {
                         String here = where + ":" + lineno;
                         if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
                             try {
-                                tests.accept(BiddingTest.valueOf(last[0], false, here, comm[1]));
+                                tests.accept(BiddingTest.valueOf(last, false, here, comm[1]));
                             } catch (Exception e) {
                                 reportErrors.accept(new ParseException(here, e));
                             }
                         } else if (comm.length == 2 && comm[0].equalsIgnoreCase("anti_test")) {
                             try {
-                                tests.accept(BiddingTest.valueOf(last[0], true, here, comm[1]));
+                                tests.accept(BiddingTest.valueOf(last, true, here, comm[1]));
                             } catch (Exception e) {
                                 reportErrors.accept(new ParseException(here, e));
                             }
                         } else if (!ln.equals("")) {
                             try {
-                                BidInference.valueOf(here, ln).resolveSuits().forEach(i -> {
-                                    inferences.accept(i);
-                                    last[0] = i;
-                                });
+                                BidInference unresolved = BidInference.valueOf(here, ln);
+                                List<BidInference> resolved = new ArrayList<>();
+                                unresolved.resolveSuits().forEach(resolved::add);
+                                last = unresolved;
+                                inferences.accept(new ResolvedBidInference(unresolved, resolved));
                             } catch (Exception e) {
                                 reportErrors.accept(new ParseException(here, e));
                             }

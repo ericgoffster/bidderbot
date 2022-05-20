@@ -20,10 +20,10 @@ import bbidder.utils.DebugUtils;
  * Represents a compiled bidding system.
  */
 public final class BiddingSystem {
-    private final List<BidInference> inferences;
+    private final List<ResolvedBidInference> inferences;
     private final List<BiddingTest> tests;
 
-    public BiddingSystem(List<BidInference> inferences, List<BiddingTest> tests) {
+    public BiddingSystem(List<ResolvedBidInference> inferences, List<BiddingTest> tests) {
         super();
         this.inferences = inferences;
         this.tests = tests;
@@ -47,10 +47,10 @@ public final class BiddingSystem {
     public void dump(OutputStream os) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
             String last = null;
-            for (BidInference bi : inferences) {
-                if (last == null || !last.equals(bi.where)) {
-                    bw.write(bi.where + ":\n");
-                    last = bi.where;
+            for (ResolvedBidInference bi : inferences) {
+                if (last == null || !last.equals(bi.unresolved.where)) {
+                    bw.write(bi.unresolved.where + ":\n");
+                    last = bi.unresolved.where;
                 }
                 bw.write("    " + bi + "\n");
             }
@@ -68,11 +68,13 @@ public final class BiddingSystem {
         DebugUtils.breakpointGetPossibleBid(auction, players);
         List<PossibleBid> l = new ArrayList<>();
         Set<Bid> matched = new HashSet<>();
-        inferences.forEach(i -> {
-            i.bids.getMatch(auction, players, matched).ifPresent(match -> {
-                DebugUtils.breakpointGetPossibleBid(auction, players, match, i);
-                l.add(new PossibleBid(i, match));
-                matched.add(match);
+        inferences.forEach(rsbi -> {
+            rsbi.inferences.forEach(i -> {
+                i.bids.getMatch(auction, players, matched).ifPresent(match -> {
+                    DebugUtils.breakpointGetPossibleBid(auction, players, match, i);
+                    l.add(new PossibleBid(i, match));
+                    matched.add(match);
+                });
             });
         });
         if (l.isEmpty()) {
