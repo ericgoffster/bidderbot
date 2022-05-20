@@ -1,5 +1,7 @@
 package bbidder;
 
+import java.util.List;
+
 import bbidder.utils.DebugUtils;
 
 public class Analyze {
@@ -21,14 +23,35 @@ public class Analyze {
         });
         Auction auction = Auction.valueOf(args[0]);
 
+        System.out.println(auction);
+
         BiddingState state = new BiddingState(bs);
         for (Bid bid : auction.getBids()) {
             DebugUtils.breakpoint();
             state = state.withBid(bid);
         }
-        showSummary("me", state.players.rho.infSummary);
-        showSummary("partner", state.players.lho.infSummary);
-        showSummary("lho", state.players.me.infSummary);
-        showSummary("rho", state.players.partner.infSummary);       
+
+        List<PossibleBid> possibleBids = state.getPossibleBids();
+        for(PossibleBid pb: possibleBids) {
+            System.out.println(pb.inf.where);
+            System.out.println(pb.inf);
+        }
+        
+        int i = 1;
+        while(i < args.length) {
+            String arg = args[i++];
+            if (arg.equals("--whatif")) {
+                Inference inference = InferenceParser.parseInference(args[i++]);
+                IBoundInference newInf = inference.bind(state.players);
+                state = state.withNewInference(newInf);
+            }
+        }
+        
+        System.out.println(state.players.me.inf);
+        
+        showSummary("me", state.players.me.infSummary);
+        showSummary("partner", state.players.partner.infSummary);
+        showSummary("lho", state.players.lho.infSummary);
+        showSummary("rho", state.players.rho.infSummary);       
     }
 }

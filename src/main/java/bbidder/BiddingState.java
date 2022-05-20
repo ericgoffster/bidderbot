@@ -50,6 +50,18 @@ public final class BiddingState {
         this.bidding = Auction.create(List.of());
         this.players = new Players();
     }
+    
+    public BiddingState withNewInference(IBoundInference inference) {
+        IBoundInference newInf = AndBoundInf.create(inference, players.me.inf);
+        InfSummary newSummary = newInf.getSummary();
+        return new BiddingState(we, they, bidding, players.withNewMe(new Player(newInf, newSummary)));
+    }
+    
+    public BiddingState rotate(int n) {
+        BiddingSystem newWe = n % 2 == 0 ? we : they;
+        BiddingSystem newThey = n % 2 == 0 ? they : we;
+        return new BiddingState(newWe, newThey, bidding, players.rotate(n));
+    }
 
     /**
      * @param bid
@@ -65,8 +77,7 @@ public final class BiddingState {
         if (!oldSummary.isEmpty() && newSummary.isEmpty()) {
             DebugUtils.breakpointNoBid(bidding, bid, players);
         }
-        Player newMe = new Player(newInf, newSummary);
-        return new BiddingState(they, we, newBidList, players.withNewMe(newMe).rotate());
+        return new BiddingState(we, they, newBidList, players.withNewMe(new Player(newInf, newSummary))).rotate(1);
     }
 
     /**
@@ -76,5 +87,9 @@ public final class BiddingState {
      */
     public BidSource getBid(Hand hand) {
         return we.getBid(bidding, players, hand);
+    }
+    
+    public List<PossibleBid> getPossibleBids() {
+        return we.getPossibleBids(bidding, players);
     }
 }
