@@ -151,13 +151,9 @@ public final class BidPatternList {
                 i++;
             }
         }
-        Contract contract = auction.getContract();
         BidPattern lastBid = bids.get(bids.size() - 1);
         return lastBid.resolveToBid(auction).flatMap(nextBid -> {
             if (!auction.isLegalBid(nextBid)) {
-                return Optional.empty();
-            }
-            if ((lastBid.seats & (1 << contract.numPasses)) == 0) {
                 return Optional.empty();
             }
             if (matched.contains(nextBid) && lastBid.isNonConventional) {
