@@ -8,9 +8,7 @@ import bbidder.utils.MyStream;
 /**
  * Represents an immutable matchable bid pattern.
  * 
- * Like 1S or 2x or (2M)
- * 
- * Bid patterns typically last only long enough to be compiled into the notes as actual bids.
+ * Like 1S or 2x or (2M) or [partner bid_suit M]
  * 
  * @author goffster
  *
@@ -160,17 +158,16 @@ public final class BidPattern {
             return new TaggedBid(simpleBid, tags);
         }
         int strain = symbol.getResolvedStrain();
+        if (level != null) {
+            return new TaggedBid(Bid.valueOf(level, strain), tags);
+        }
         if (jumpLevel != null) {
             return new TaggedBid(contract.getJumpBid(jumpLevel, strain), tags);
         }
-        if (level == null) {
-            if (bid == null) {
-                throw new IllegalArgumentException("anonymous level not allowed");
-            }
-            Bid b = Bid.valueOf(bid.bid.level, strain);
-            return new TaggedBid(b, tags);
+        if (bid == null) {
+            throw new IllegalArgumentException("anonymous level not allowed");
         }
-        return new TaggedBid(Bid.valueOf(level, strain), tags);
+        return new TaggedBid(Bid.valueOf(bid.bid.level, strain), tags);
     }
 
     /**
