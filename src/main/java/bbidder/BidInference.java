@@ -12,6 +12,7 @@ import bbidder.utils.SplitUtil;
  *
  */
 public final class BidInference {
+    public final String description;
     public final String where;
     public final BidPatternList bids;
     public final Inference inferences;
@@ -19,6 +20,8 @@ public final class BidInference {
     /**
      * Constructs a bid inference
      * 
+     * @param description
+     *            Bid description
      * @param where
      *            Where it was defined
      * @param bids
@@ -26,8 +29,9 @@ public final class BidInference {
      * @param inferences
      *            The inferences you can make from the bids.
      */
-    public BidInference(String where, BidPatternList bids, Inference inferences) {
+    public BidInference(String description, String where, BidPatternList bids, Inference inferences) {
         super();
+        this.description = description;
         this.where = where;
         this.bids = bids;
         this.inferences = inferences;
@@ -44,11 +48,24 @@ public final class BidInference {
         if (str == null) {
             return null;
         }
+        String description;
+        int pos = str.indexOf("[[");
+        if (pos >= 0) {
+            int pos2 = str.indexOf("]]", pos);
+            if (pos >= 0 && pos2 >= 0) {
+                description = str.substring(pos + 2, pos2);
+                str = str.substring(0, pos) + str.substring(pos2 + 2);
+            } else {
+                description = "";
+            }
+        } else {
+            description = "";
+        }
         String[] parts = SplitUtil.split(str, "=>", 2);
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        return new BidInference(where, BidPatternList.valueOf(parts[0]), InferenceParser.parseInference(parts[1]));
+        return new BidInference(description, where, BidPatternList.valueOf(parts[0]), InferenceParser.parseInference(parts[1]));
     }
 
     /**
@@ -56,7 +73,8 @@ public final class BidInference {
      */
     public MyStream<BidInference> resolveSuits() {
         return bids.resolveSuits(SuitTable.EMPTY)
-                .flatMap(e1 -> inferences.resolveSuits(e1.suitTable).map(e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
+                .flatMap(
+                        e1 -> inferences.resolveSuits(e1.suitTable).map(e2 -> new BidInference(description, where, e1.getBids(), e2.getInference())));
     }
 
     @Override
