@@ -17,7 +17,7 @@ common 2C {
 	    test Qx Kxxx Kxxx Jxx:
 	        2♣ 2N;
 	
-	2D => always;
+	2D:"waiting" => always;
 	    test xx Kxxx xxxx xxx:
 	        2♣ 2D;
 	continuations {
