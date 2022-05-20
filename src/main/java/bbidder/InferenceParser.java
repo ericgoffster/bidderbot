@@ -60,38 +60,32 @@ public final class InferenceParser {
         if (str.trim().equals("")) {
             return TrueInference.T;
         }
-        {
-            Inference i = InferenceParser.parseBalanced(str);
-            if (i != null) {
-                return i;
-            }
+        if (str.trim().equalsIgnoreCase("balanced")) {
+            return Balanced.BALANCED;
+        }
+        if (str.trim().equalsIgnoreCase("superbalanced")) {
+            return VeryBalanced.VERY_BALANCED;
+        }
+        if (str.trim().equalsIgnoreCase("unbalanced")) {
+            return UnBalanced.UNBALANCED;
         }
         {
-            Inference i = InferenceParser.parseVeryBalanced(str);
-            if (i != null) {
-                return i;
-            }
-        }
-        {
-            Inference i = InferenceParser.parseUnbalanced(str);
-            if (i != null) {
-                return i;
-            }
-        }
-        {
-            Inference i = InferenceParser.parseHCPRange(str);
-            if (i != null) {
-                return i;
+            RangeOf rng = InferenceParser.parseRange(str);
+            if (rng != null) {
+                if (rng.of.equalsIgnoreCase("hcp")) {
+                    return new HCPRange(PointRange.between(rng.min, rng.max));
+                }
+                if (rng.of.equalsIgnoreCase("tpts")) {
+                    return new TotalPointsRange(PointRange.between(rng.min, rng.max));
+                }
+                Symbol sym = SymbolParser.parseSymbol(rng.of);
+                if (sym != null) {
+                    return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
+                }
             }
         }
         {
             Inference i = InferenceParser.parseLongestOrEq(str);
-            if (i != null) {
-                return i;
-            }
-        }
-        {
-            Inference i = InferenceParser.parseSuitRange(str);
             if (i != null) {
                 return i;
             }
@@ -110,12 +104,6 @@ public final class InferenceParser {
         }
         {
             Inference i = InferenceParser.parseRebiddable2ndSuit(str);
-            if (i != null) {
-                return i;
-            }
-        }
-        {
-            Inference i = InferenceParser.parseTPtsRange(str);
             if (i != null) {
                 return i;
             }
@@ -153,51 +141,6 @@ public final class InferenceParser {
         throw new IllegalArgumentException("unknown inference: '" + str + "'");
     }
 
-    private static Balanced parseBalanced(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (str.toLowerCase().equals("balanced")) {
-            return Balanced.BALANCED;
-        }
-        return null;
-    }
-
-    private static VeryBalanced parseVeryBalanced(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (str.toLowerCase().equals("superbalanced")) {
-            return VeryBalanced.VERY_BALANCED;
-        }
-        return null;
-    }
-
-    private static UnBalanced parseUnbalanced(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (str.toLowerCase().equals("unbalanced")) {
-            return UnBalanced.UNBALANCED;
-        }
-        return null;
-    }
-
-    private static Inference parseHCPRange(String str) {
-        RangeOf rng = InferenceParser.parseRange(str);
-        if (rng == null) {
-            return null;
-        }
-        if (rng.of.equalsIgnoreCase("hcp")) {
-            return new HCPRange(PointRange.between(rng.min, rng.max));
-        } else {
-            return null;
-        }
-    }
-
     private static LongestOrEqual parseLongestOrEq(String str) {
         if (str == null) {
             return null;
@@ -220,22 +163,6 @@ public final class InferenceParser {
             return null;
         }
         return new LongestOrEqual(sym, null);
-    }
-
-    private static Inference parseSuitRange(String str) {
-        if (str == null) {
-            return null;
-        }
-        RangeOf rng = InferenceParser.parseRange(str);
-        if (rng == null) {
-            return null;
-        }
-        Symbol sym = SymbolParser.parseSymbol(rng.of);
-        if (sym != null) {
-            return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
-        } else {
-            return null;
-        }
     }
 
     private static Inference parseFitInSuit(String str) {
@@ -282,18 +209,6 @@ public final class InferenceParser {
             return new RebiddableSecondSuit(longer, shorter);
         }
         return null;
-    }
-
-    private static Inference parseTPtsRange(String str) {
-        RangeOf rng = InferenceParser.parseRange(str);
-        if (rng == null) {
-            return null;
-        }
-        if (rng.of.equalsIgnoreCase("tpts")) {
-            return new TotalPointsRange(PointRange.between(rng.min, rng.max));
-        } else {
-            return null;
-        }
     }
 
     private static CombinedTotalPointsRange parseCombinedTPts(String str) {
