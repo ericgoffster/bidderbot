@@ -71,6 +71,11 @@ public final class BidPattern {
                 lessThan, isWild);
     }
 
+    public BidPattern withGenerality(Generality generality) {
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan, isWild);
+    }
+
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
                 lessThan, isWild);
@@ -122,8 +127,8 @@ public final class BidPattern {
         return new BidPattern(false, symbol, level, null, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null, false);
     }
 
-    public static BidPattern createWild(Generality generality) {
-        return new BidPattern(false, null, null, null, null, generality, TagSet.EMPTY, false, Seats.ALL, false, null, null, true);
+    public static BidPattern createWild() {
+        return new BidPattern(false, null, null, null, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null, true);
     }
 
     /**
@@ -135,7 +140,7 @@ public final class BidPattern {
         return MyStream.of(new Context(suitTable)).flatMap(e -> {
             BidPattern bidPattern = e.getBidPattern();
             if (bidPattern.generality != null) {
-                return bidPattern.generality.resolveSuits(suitTable).map(e2 -> createWild(e2.getGenerality()).new Context(e2.suitTable));
+                return bidPattern.generality.resolveSuits(suitTable).map(e2 -> bidPattern.withGenerality(e2.getGenerality()).new Context(e2.suitTable));
             }
             return MyStream.of(e);
         }).flatMap(e -> {
