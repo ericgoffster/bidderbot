@@ -23,8 +23,11 @@ common [] 1N:"nt_opener" 2♣ {
 	    test Axx AQx KJxx Qxx:
 	        1N 2♣
 	        2♦;
+}
 	
-	2M 4m => gf+, 4+M, 1-m;
+common [] 1N:"nt_opener" 2♣ 2M {
+	
+	4m => gf+, 4+M, 1-m;
 	    test AJx AQxx AQxxx x:
 	        1N 2♣
 	        2♥ 4♣;
@@ -32,12 +35,12 @@ common [] 1N:"nt_opener" 2♣ {
 	        1N 2♣
 	        2♠ 4♣;
 	
-	2♠ 4♥ => gf+, 4+♠, 1-♥;
+	4OM:<4M => gf+, 4+M, 1-OM;
 	    test AJxx x AQx AQxxx:
 	        1N 2♣
 	        2♠ 4♥;
 	
-	2M 3OM => slaminv+, 4M;
+	3OM => slaminv+, 4M;
 	    test AJx Axxx Axx Axx:
 	        1N 2♣
 	        2♥ 3♠;
@@ -45,32 +48,32 @@ common [] 1N:"nt_opener" 2♣ {
 	        1N 2♣
 	        2♠ 3♥;
 	
-	2♥ 2♠ => inv, 4♠, 7- fit H;
+	2OM => inv, 4♠, 7- fit H;
 	    test AJxx Axx xxx xxx:
 	        1N 2♣
 	        2♥ 2♠;
 	
-	2M 2N => inv, 7- fit M;
+	2N => inv, 7- fit M;
 	    test AJx Axx xxxx xxx:
 	        1N 2♣
 	        2♥ 2N;
 	
-	2M 3N => gf, 7- fit M;
+	3N => gf, 7- fit M;
 	    test AJxx AQx xxx xxx:
 	        1N 2♣
 	        2♥ 3N;
 	
-	2M 3m => gf+, 5+m, 7- fit M;
+	3m => gf+, 5+m, 7- fit M;
 	    test AJx AQx AQxxx xx:
 	        1N 2♣
 	        2♥ 3♦;
 	
-	2M 4N => slaminv, 7- fit M;
+	4N => slaminv, 7- fit M;
 	    test AJxx AQx AQx xxx:
 	        1N 2♣
 	        2♥ 4N;
 }
-	
+
 common [] 1N:"nt_opener" 2♣ 2♦ {	
 	
 	2M => inv, 5+M;

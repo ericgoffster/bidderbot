@@ -52,65 +52,11 @@ common [] 2N:"nt_opener" 3♣ {
 	        2C 2D
 	        2N 3♣
 	        3♦;
+}
+
+common [] 2N:"nt_opener" 3♣ 3M {
 	
-	3♦ 4M => gf, 6M;
-	    test AJxxxx Jxxx x xx:
-	        2N 3♣
-	        3♦ 4♠;
-	    test Jxxx AJxxxx x xx:
-	        2N 3♣
-	        3♦ 4♥;
-	    test QJxxxx Jxxx x xx:
-	        2C 2D
-	        2N 3♣
-	        3♦ 4♠;
-	    test Jxxx QJxxxx x xx:
-	        2C 2D
-	        2N 3♣
-	        3♦ 4♥;
-	
-	3♦ 3M => gf+, 4M, 5+OM;
-	    test AJxxx Axxx xx xx:
-	        2N 3♣
-	        3♦ 3♥;
-	    test AJxx Axxxx xx xx:
-	        2N 3♣
-	        3♦ 3♠;
-	    test AJxxx Qxxx xx xx:
-	        2C 2D
-	        2N 3♣
-	        3♦ 3♥;
-	    test AJxx Qxxxx xx xx:
-	        2C 2D
-	        2N 3♣
-	        3♦ 3♠;
-	
-	3♦ 4m => slaminv+, 5+m;
-	    test Axx Ax Axxxx xxx:
-	        2N 3♣
-	        3D 4♦;
-	    test Axx Ax xxx Axxxx:
-	        2N 3♣
-	        3D 4♣;
-	    test Axx Ax Qxxxx xxx:
-	        2C 2D
-	        2N 3♣
-	        3D 4♦;
-	    test Axx Ax xxx Qxxxx:
-	        2C 2D
-	        2N 3♣
-	        3D 4♣;
-	
-	3♦ 4N => slaminv;
-	    test Axx Ax Axxx xxxx:
-	        2N 3♣
-	        3D 4N;
-	    test Axx Ax Qxxx xxxx:
-	        2C 2D
-	        2N 3♣
-	        3D 4N;
-	
-	3M NJOM => slaminv+, 4+M;
+	NJOM => slaminv+, 4+M;
 	    test Axx Axxx Axx xxx:
 	        2N 3♣
 	        3♥ 3♠;
@@ -126,7 +72,7 @@ common [] 2N:"nt_opener" 3♣ {
 	        2N 3♣
 	        3♠ 4♥;
 	
-	3M 4m => slaminv+, 5+m, 7- fit M;
+	4m => slaminv+, 5+m, 7- fit M;
 	    test Axxx Ax Axxxx xx:
 	        2N 3♣
 	        3♥ 4♦;
@@ -142,7 +88,7 @@ common [] 2N:"nt_opener" 3♣ {
 	        2N 3♣
 	        3♥ 4♣;
 	        
-	3M 4N => slaminv, 7- fit M;
+	4N => slaminv, 7- fit M;
 	    test Axxx Ax Axxx xxx:
 	        2N 3♣
 	        3♥ 4N;
@@ -158,4 +104,62 @@ common [] 2N:"nt_opener" 3♣ {
 	        2N 3♣
 	        3♠ 4N;
 }
-        
+
+common [] 2N:"nt_opener" 3♣ 3D {
+	4M => gf, 6M;
+	    test AJxxxx Jxxx x xx:
+	        2N 3♣
+	        3♦ 4♠;
+	    test Jxxx AJxxxx x xx:
+	        2N 3♣
+	        3♦ 4♥;
+	    test QJxxxx Jxxx x xx:
+	        2C 2D
+	        2N 3♣
+	        3♦ 4♠;
+	    test Jxxx QJxxxx x xx:
+	        2C 2D
+	        2N 3♣
+	        3♦ 4♥;
+	
+	3M => gf+, 4M, 5+OM;
+	    test AJxxx Axxx xx xx:
+	        2N 3♣
+	        3♦ 3♥;
+	    test AJxx Axxxx xx xx:
+	        2N 3♣
+	        3♦ 3♠;
+	    test AJxxx Qxxx xx xx:
+	        2C 2D
+	        2N 3♣
+	        3♦ 3♥;
+	    test AJxx Qxxxx xx xx:
+	        2C 2D
+	        2N 3♣
+	        3♦ 3♠;
+	
+	4m => slaminv+, 5+m;
+	    test Axx Ax Axxxx xxx:
+	        2N 3♣
+	        3D 4♦;
+	    test Axx Ax xxx Axxxx:
+	        2N 3♣
+	        3D 4♣;
+	    test Axx Ax Qxxxx xxx:
+	        2C 2D
+	        2N 3♣
+	        3D 4♦;
+	    test Axx Ax xxx Qxxxx:
+	        2C 2D
+	        2N 3♣
+	        3D 4♣;
+	
+	4N => slaminv;
+	    test Axx Ax Axxx xxxx:
+	        2N 3♣
+	        3D 4N;
+	    test Axx Ax Qxxx xxxx:
+	        2C 2D
+	        2N 3♣
+	        3D 4N;
+}

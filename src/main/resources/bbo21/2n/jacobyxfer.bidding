@@ -30,15 +30,6 @@ common [] 2N:"nt_opener" 3M-1 {
 	        2N 3♦
 	        3♠;
 	
-	3N => max hcp, 4+M;
-	    test AKx AJxx Axx AJx:
-	        2N 3♦
-	        3N;
-	    test AKx AJxx AQx AQx:
-	        2C 2D
-	        2N 3♦
-	        3N;
-	
 	NJx 4M-1 => always;
 	    test xx Axxxx xxx xxx:
 	        2N 3♦
@@ -47,6 +38,15 @@ common [] 2N:"nt_opener" 3M-1 {
 	        2C 2D
 	        2N 3♦
 	        4C 4D;
+	
+	3N => max hcp, 4+M;
+	    test AKx AJxx Axx AJx:
+	        2N 3♦
+	        3N;
+	    test AKx AJxx AQx AQx:
+	        2C 2D
+	        2N 3♦
+	        3N;
 	
 	3N 4M-1 => always;
 	    test xx Axxxx xxx xxx:
