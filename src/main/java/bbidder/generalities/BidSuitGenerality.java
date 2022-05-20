@@ -14,25 +14,25 @@ import bbidder.utils.MyStream;
 public final class BidSuitGenerality extends Generality {
     public static final String NAME = "bid_suit";
     private final Symbol symbol;
-    private final int pos;
+    private final int position;
     private final SuitLengthRange range;
 
-    public BidSuitGenerality(Symbol symbol, int pos, SuitLengthRange range) {
+    public BidSuitGenerality(Symbol symbol, int position, SuitLengthRange range) {
         super();
         this.symbol = symbol;
-        this.pos = pos;
+        this.position = position;
         this.range = range;
     }
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
-        return symbol.resolveSuits(suitTable).map(e -> new BidSuitGenerality(e.getSymbol(), pos, range).new Context(e.suitTable));
+        return symbol.resolveSuits(suitTable).map(e -> new BidSuitGenerality(e.getSymbol(), position, range).new Context(e.suitTable));
     }
 
     @Override
     public boolean test(Players players, Auction bidList) {
         int suit = symbol.getResolvedStrain();
-        Players rotate = players.rotate(pos);
+        Players rotate = players.rotate(position);
         OptionalInt minLenInSuit = rotate.me.infSummary.minLenInSuit(suit);
         if (!minLenInSuit.isPresent()) {
             return false;
@@ -41,7 +41,7 @@ public final class BidSuitGenerality extends Generality {
     }
     
     public String getPosName() {
-        switch(pos) {
+        switch(position) {
         case 0: return "i";
         case 1: return "rho";
         case 2: return "partner";
@@ -53,7 +53,7 @@ public final class BidSuitGenerality extends Generality {
 
     @Override
     public int hashCode() {
-        return Objects.hash(pos, range, symbol);
+        return Objects.hash(position, range, symbol);
     }
 
     @Override
@@ -65,7 +65,7 @@ public final class BidSuitGenerality extends Generality {
         if (getClass() != obj.getClass())
             return false;
         BidSuitGenerality other = (BidSuitGenerality) obj;
-        return pos == other.pos && Objects.equals(range, other.range) && Objects.equals(symbol, other.symbol);
+        return position == other.position && Objects.equals(range, other.range) && Objects.equals(symbol, other.symbol);
     }
 
     @Override

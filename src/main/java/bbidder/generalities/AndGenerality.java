@@ -19,10 +19,10 @@ public final class AndGenerality extends Generality {
     }
 
     public static Generality create(Generality g1, Generality g2) {
-        if (g1.equals(TrueGenerality.T)) {
+        if (g1.equals(ConstGenerality.T)) {
             return g2;
         }
-        if (g2.equals(TrueGenerality.T)) {
+        if (g2.equals(ConstGenerality.T)) {
             return g1;
         }
         return new AndGenerality(g1, g2);

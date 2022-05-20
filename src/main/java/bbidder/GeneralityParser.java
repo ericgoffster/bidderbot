@@ -5,7 +5,7 @@ import bbidder.generalities.BestFitEstablished;
 import bbidder.generalities.BidSuitGenerality;
 import bbidder.generalities.FitEstablished;
 import bbidder.generalities.IsTwoSuitedGenerality;
-import bbidder.generalities.TrueGenerality;
+import bbidder.generalities.ConstGenerality;
 import bbidder.generalities.UnbidSuitGenerality;
 import bbidder.generalities.WeAreThreeSuited;
 import bbidder.utils.SplitUtil;
@@ -40,9 +40,9 @@ public final class GeneralityParser {
         }
         switch (tag) {
         case "":
-        case TrueGenerality.NAME: {
+        case ConstGenerality.NAME: {
             if (remainder.equals("")) {
-                return TrueGenerality.T;
+                return ConstGenerality.T;
             }
             break;
         }
@@ -122,13 +122,13 @@ public final class GeneralityParser {
         default: {
             RangeOf rng = RangeParser.parseRange(str.trim());
             if (rng != null) {
-                if (rng.of.startsWith("fit_established")) {
-                    Symbol sym = SymbolParser.parseSymbol(rng.of.substring(15).trim());
+                if (rng.of.startsWith(FitEstablished.NAME)) {
+                    Symbol sym = SymbolParser.parseSymbol(rng.of.substring(FitEstablished.NAME.length()).trim());
                     if (sym != null) {
                         return new FitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
                     }
-                } else if (rng.of.startsWith("bestfit_established")) {
-                    Symbol sym = SymbolParser.parseSymbol(rng.of.substring(19).trim());
+                } else if (rng.of.startsWith(BestFitEstablished.NAME)) {
+                    Symbol sym = SymbolParser.parseSymbol(rng.of.substring(BestFitEstablished.NAME.length()).trim());
                     if (sym != null) {
                         return new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
                     }
