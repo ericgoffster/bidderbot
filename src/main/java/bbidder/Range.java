@@ -168,7 +168,7 @@ public final class Range {
     @Override
     public String toString() {
         State state = new State();
-        BitUtil.stream(bits).forEach(i -> state.add(i));
+        BitUtil.stream(bits).forEach(state::add);
         return state.toString();
     }
 

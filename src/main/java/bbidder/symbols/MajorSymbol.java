@@ -55,7 +55,7 @@ public final class MajorSymbol extends Symbol {
                 .mapToObj(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
     }
 
-    private static Integer otherMajor(Integer strain) {
+    static Integer otherMajor(Integer strain) {
         if (strain == null) {
             return null;
         }

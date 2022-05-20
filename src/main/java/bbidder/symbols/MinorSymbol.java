@@ -55,7 +55,7 @@ public final class MinorSymbol extends Symbol {
                 .mapToObj(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
     }
 
-    private static Integer otherMinor(Integer strain) {
+    public static Integer otherMinor(Integer strain) {
         if (strain == null) {
             return null;
         }

@@ -49,24 +49,10 @@ public final class OtherMinorSymbol extends Symbol {
         }
         Integer m = suitTable.getSuit(MinorSymbol.NAME);
         if (m != null) {
-            return Stream.of(new ConstSymbol(otherMinor(m)).new Context(suitTable));
+            return Stream.of(new ConstSymbol(MinorSymbol.otherMinor(m)).new Context(suitTable));
         }
         return BitUtil.stream(Constants.MINORS & ~suitTable.getSuits())
                 .mapToObj(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
-    }
-
-    private static Integer otherMinor(Integer strain) {
-        if (strain == null) {
-            return null;
-        }
-        switch (strain.intValue()) {
-        case Constants.CLUB:
-            return Constants.DIAMOND;
-        case Constants.DIAMOND:
-            return Constants.CLUB;
-        default:
-            throw new IllegalArgumentException("invalid minor");
-        }
     }
 
     @Override
