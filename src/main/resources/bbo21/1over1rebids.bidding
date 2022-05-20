@@ -5,50 +5,45 @@
 # H = ♥
 # S = ♠
 
-1x 1y
-Jz => 4+z, 5+x, 7- fit y, gf;
-    test AKx AKxx x AQxxx:
-        1♣ 1♦
-        2♥;
-
-1x 1y
-NJz:<2x:>1N => 4+z, 5+x, 7- fit y;
-    test xx AKxxx xx AQxx:
-        1♥ 1♠
-        2♣;
-
-1x 1y
-NJz:>2x => 4+z, 5+x, 7- fit y, 18+tpts;
-    test x AKxx Kxx AQxxx:
-        1♣ 1♠
-        2♥;
-
-1x 1y
-1z => 4+z, 7- fit y;
-    test AKxx AKxx x xxxx:
-        1♣ 1♦
-        1♥;
-
-1x 1y
-3N => 7+ x, 3 of top 3 in x, partial_stoppers unstopped, stoppers denied, 7- fit y;
-    test x Qxx AKQxxxx Qx:
-        1♦ 1♠
-        3N ;
-
-1x 1y
-1N => semibalanced, 12-14 tpts, 7- fit y;
-    test Qxx Axx Ax Axxxx:
-        1♣ 1♦
-        1N;
-    test Qx Axxx Ax Axxxx:
-        1♣ 1♠
-        1N;
-
-1x 1y
-2N => balanced, 18-19 tpts, 7- fit y;
-    test AQx Axx Ax Axxxx:
-        1♣ 1♦
-        2N;
+common 1x 1y {
+	Jz => 4+z, 5+x, 7- fit y, gf;
+	    test AKx AKxx x AQxxx:
+	        1♣ 1♦
+	        2♥;
+	
+	NJz:<2x:>1N => 4+z, 5+x, 7- fit y;
+	    test xx AKxxx xx AQxx:
+	        1♥ 1♠
+	        2♣;
+	
+	NJz:>2x => 4+z, 5+x, 7- fit y, 18+tpts;
+	    test x AKxx Kxx AQxxx:
+	        1♣ 1♠
+	        2♥;
+	
+	1z => 4+z, 7- fit y;
+	    test AKxx AKxx x xxxx:
+	        1♣ 1♦
+	        1♥;
+	
+	3N => 7+ x, 3 of top 3 in x, partial_stoppers unstopped, stoppers denied, 7- fit y;
+	    test x Qxx AKQxxxx Qx:
+	        1♦ 1♠
+	        3N ;
+	
+	1N => semibalanced, 12-14 tpts, 7- fit y;
+	    test Qxx Axx Ax Axxxx:
+	        1♣ 1♦
+	        1N;
+	    test Qx Axxx Ax Axxxx:
+	        1♣ 1♠
+	        1N;
+	
+	2N => balanced, 18-19 tpts, 7- fit y;
+	    test AQx Axx Ax Axxxx:
+	        1♣ 1♦
+	        2N;
+}
 
 include 1over1resprebids.bidding;
 include reverses.bidding;
