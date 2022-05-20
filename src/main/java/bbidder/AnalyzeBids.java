@@ -20,7 +20,7 @@ public class AnalyzeBids {
         BiddingSystem bs = BiddingSystemParser.load("classpath:bbo21/index.bidding", ex -> {
             throw new RuntimeException(ex);
         });
-        Auction auction = Auction.valueOf(args[0]);
+        Auction auction = Auction.valueOf("1S 1N 2C (P)");
 
         System.out.println(auction);
 

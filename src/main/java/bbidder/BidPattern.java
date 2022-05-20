@@ -143,35 +143,6 @@ public final class BidPattern {
         return new BidPattern(false, null, null, null, null, generality, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
     
-    private Optional<BidPattern> withResolvedBid(Contract contract, Symbol symbol, Bid b) {
-        if (!isBidCompatible(contract, symbol, b)) {
-            return Optional.empty();
-        }
-        return Optional.of(new BidPattern(isOpposition, symbol, b.level, b, null, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan));
-    }
-
-    /**
-     * @param contract
-     *            Current contract
-     * @param symbol
-     *            The new symbol
-     * @return A bid with the suit bound to a specific strain. empty if none found.
-     */
-    private Optional<BidPattern> withSymbol(Contract contract, Symbol symbol) {
-        if (contract != null) {
-            if (level != null) {
-                Bid b = Bid.valueOf(level, symbol.getResolvedStrain());
-                return withResolvedBid(contract, symbol, b);
-            }
-            if (jumpLevel != null) {
-                Bid b = contract.getBid(jumpLevel, symbol.getResolvedStrain());
-                return withResolvedBid(contract, symbol, b);
-            }
-        }
-        return Optional.of(withSymbol(symbol));
-    }
-
     private boolean isBidCompatible(Contract contract, Symbol symbol, Bid b) {
         if (!contract.isLegalBid(b)) {
             return false;
@@ -180,24 +151,16 @@ public final class BidPattern {
             return false;
         }
         if (lessThan != null) {
-            Optional<TaggedBid> tb = lessThan.resolveToBid(contract, null);
-            if (tb.isPresent()) {
-                Bid comparisonBid = tb.get().bid;
-                if (b.compareTo(comparisonBid) >= 0) {
-                    return false;
-                }
-            } else {
+            TaggedBid tb = lessThan.getResolvedBid(contract, null);
+            Bid comparisonBid = tb.bid;
+            if (b.compareTo(comparisonBid) >= 0) {
                 return false;
             }
         }
         if (greaterThan != null) {
-            Optional<TaggedBid> tb = greaterThan.resolveToBid(contract, null);
-            if (tb.isPresent()) {
-                Bid comparisonBid = tb.get().bid;
-                if (b.compareTo(comparisonBid) <= 0) {
-                    return false;
-                }
-            } else {
+            TaggedBid tb = greaterThan.getResolvedBid(contract, null);
+            Bid comparisonBid = tb.bid;
+            if (b.compareTo(comparisonBid) <= 0) {
                 return false;
             }
         }
@@ -235,9 +198,30 @@ public final class BidPattern {
         }).flatMap(e -> {
             BidPattern bidPattern = e.getBidPattern();
             return bidPattern.symbol.resolveSuits(suitTable)
-                    .flatMap(e2 -> MyStream.ofOptional(bidPattern.withSymbol(contract, e2.getSymbol()))
+                    .flatMap(e2 -> MyStream.of(bidPattern.withSymbol(e2.getSymbol()))
                             .flatMap(bidPattern2 -> MyStream.of(bidPattern2.new Context(e2.suitTable))));
         });
+    }
+    
+    private TaggedBid getResolvedBid(Contract contract, TaggedBid bid) {
+        if (simpleBid != null) {
+            return new TaggedBid(simpleBid, tags);
+        }
+        int strain = symbol.getResolvedStrain();
+        if (contract != null) {
+            if (jumpLevel != null) {
+                Bid b = contract.getBid(jumpLevel, strain);
+                return new TaggedBid(b, tags);
+            }
+            if (level == null) {
+                if (bid == null) {
+                    throw new IllegalArgumentException("anonymous level not allowed");
+                }
+                Bid b = Bid.valueOf(bid.bid.level, strain);
+                return new TaggedBid(b, tags);
+            }
+        }
+        return new TaggedBid(Bid.valueOf(level, strain), tags);
     }
 
     /**
@@ -251,30 +235,11 @@ public final class BidPattern {
      * @return The bid associated with the given pattern. Null, if not valid.
      */
     public Optional<TaggedBid> resolveToBid(Contract contract, TaggedBid bid) {
-        if (simpleBid != null) {
-            return Optional.of(new TaggedBid(simpleBid, tags));
+        TaggedBid newBid = getResolvedBid(contract, bid);
+        if (!isBidCompatible(contract, symbol, newBid.bid)) {
+            return Optional.empty();
         }
-        int strain = symbol.getResolvedStrain();
-        if (contract != null) {
-            if (jumpLevel != null) {
-                Bid b = contract.getBid(jumpLevel, strain);
-                if (!isBidCompatible(contract, symbol, b)) {
-                    return Optional.empty();
-                }
-                return Optional.of(new TaggedBid(b, tags));
-            }
-            if (level == null) {
-                if (bid == null) {
-                    throw new IllegalArgumentException("anonymous level not allowed");
-                }
-                Bid b = Bid.valueOf(bid.bid.level, strain);
-                if (!isBidCompatible(contract, symbol, b)) {
-                    return Optional.empty();
-                }
-                return Optional.of(new TaggedBid(b, tags));
-            }
-        }
-        return Optional.of(new TaggedBid(Bid.valueOf(level, strain), tags));
+        return Optional.of(newBid);
     }
 
     @Override
