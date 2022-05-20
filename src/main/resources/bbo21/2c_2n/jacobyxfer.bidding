@@ -7,14 +7,6 @@
 
 2C 2D
 2N 3M-1
-3N => 24 hcp, 4+M, superbalanced;
-    test AKx AJxx AQx AQx:
-        2C 2D
-        2N 3♦
-        3N;
-
-2C 2D
-2N 3M-1
 NJx => 24 hcp, 4+M, 2-x;
     test AKxx AKxx Kx AKx:
         2C 2D
@@ -28,6 +20,14 @@ NJx => 24 hcp, 4+M, 2-x;
         2C 2D
         2N 3♦
         3♠;
+
+2C 2D
+2N 3M-1
+3N => 24 hcp, 4+M;
+    test AKx AJxx AQx AQx:
+        2C 2D
+        2N 3♦
+        3N;
 
 2C 2D
 2N 3M-1
