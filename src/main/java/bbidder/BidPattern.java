@@ -202,10 +202,24 @@ public final class BidPattern {
 
     @Override
     public String toString() {
-        if (isOpposition) {
-            return "(" + _getString() + ")";
+        String str = _getBidString();
+        if (downTheLine) {
+            str = str + ":down";
         }
-        return _getString();
+        if (!seats.equals(Seats.ALL)) {
+            str = str + ":" + seats;
+        }
+        str = str + tags;
+        if (lessThan != null) {
+            str = str + ":<" + lessThan;
+        }
+        if (greaterThan != null) {
+            str = str + ":>" + greaterThan;
+        }
+        if (isOpposition) {
+            str = "(" + str + ")";
+        }
+        return str;
     }
 
     @Override
@@ -253,24 +267,6 @@ public final class BidPattern {
         } else {
             return String.valueOf(level + 1) + symbol;
         }
-    }
-
-    private String _getString() {
-        String str = _getBidString();
-        if (downTheLine) {
-            str = str + ":down";
-        }
-        if (!seats.equals(Seats.ALL)) {
-            str = str + ":" + seats;
-        }
-        str = str + tags;
-        if (lessThan != null) {
-            str = str + ":<" + lessThan;
-        }
-        if (greaterThan != null) {
-            str = str + ":>" + greaterThan;
-        }
-        return str;
     }
 
     public class Context {
