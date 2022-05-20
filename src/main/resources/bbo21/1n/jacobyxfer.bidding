@@ -7,7 +7,7 @@
 
 [[With max and a doubleton, bid the doubleton]]
 1N 2M-1
-NJx => 17 hcp, 4+M, 2-x;
+NJx => max hcp, 4+M, 2-x;
     test Ax Axxx AJxx Axx:
         1N 2♦
         2♠;
