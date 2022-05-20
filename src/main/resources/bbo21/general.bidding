@@ -17,6 +17,15 @@
         1C 1H
         2N P;
 
+[partner_bid_suit y at_least 6] 3y P => inv;
+    test xxx Qxxx Axxxx x:
+        1C 1D
+        3C P;
+[partner_bid_suit y at_least 6] 2y P => min;
+    test xxx Qxxx Axxxx x:
+        1C 1D
+        2C P;
+
 [[Bid 3N with gf values]]
 [] 3N => gf, partial_stoppers unstopped;
     test Axx AQxx Qxx Qxx:
@@ -158,6 +167,10 @@
         1N P;
     test xxx xxxx xxx xxx:
         2N P;
+
+[partner_bid_suit y at_least 6] ?y P => always;
+    test xxx x xxxxx xxxx:
+        2H P;
         
 [[No bid matches, Return to best known pseudo fit]]
 [bestfit_established y] ?x NJy => always;

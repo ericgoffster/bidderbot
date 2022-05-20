@@ -103,16 +103,20 @@ public final class GeneralityParser {
             break;
         }
         case "i_bid_suit": {
-            Symbol symbol = SymbolParser.parseSymbol(remainder);
+            String[] rem = SplitUtil.split(remainder, "at_least", 2);
+            int min = rem.length > 1 ? Integer.parseInt(rem[1]) : 3;
+            Symbol symbol = SymbolParser.parseSymbol(rem[0]);
             if (symbol != null) {
-                return new BidSuitGenerality(symbol, 0);
+                return new BidSuitGenerality(symbol, 0, min);
             }
             break;
         }
         case "partner_bid_suit": {
-            Symbol symbol = SymbolParser.parseSymbol(remainder);
+            String[] rem = SplitUtil.split(remainder, "at_least", 2);
+            int min = rem.length > 1 ? Integer.parseInt(rem[1]) : 3;
+            Symbol symbol = SymbolParser.parseSymbol(rem[0]);
             if (symbol != null) {
-                return new BidSuitGenerality(symbol, 2);
+                return new BidSuitGenerality(symbol, 2, min);
             }
             break;
         }

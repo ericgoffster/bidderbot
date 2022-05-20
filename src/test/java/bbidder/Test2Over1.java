@@ -104,7 +104,11 @@ public class Test2Over1 {
                     } else if (!Objects.equals(where, where2)) {
                         hadError.set(true);
                         System.err.println("Test at " + result.where + " does not match inference at " + where2);
-                        System.err.println("but matches inference at "+ where + " instead");
+                        if (where == null) {
+                            System.err.println("but matches no inference at all");
+                        } else {
+                            System.err.println("but matches inference at "+ where + " instead");
+                        }
                         test.getResult(bs);
                     }
                 } else if (result.found.matchedBid.bid.equals(result.expected)) {
