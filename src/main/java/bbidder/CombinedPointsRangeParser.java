@@ -1,10 +1,6 @@
 package bbidder;
 
 import java.util.Map;
-import java.util.OptionalInt;
-
-import bbidder.inferences.CombinedTotalPointsRange;
-import bbidder.utils.SplitUtil;
 
 public class CombinedPointsRangeParser {
     public static final Map<String, Integer> POINT_RANGES = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35, "grand",
@@ -48,33 +44,6 @@ public class CombinedPointsRangeParser {
         }
 
         return PointRange.between(pts, maxPts);
-    }
-
-    public static CombinedTotalPointsRange makeCombinedTPtsRange(String str) {
-        String[] parts = SplitUtil.split(str, "-", 2);
-        if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
-            CombinedTotalPointsRange rlow = makeCombinedTPtsRange(parts[0]);
-            CombinedTotalPointsRange rhigh = makeCombinedTPtsRange(parts[1]);
-            if (rlow == null || rhigh == null) {
-                return null;
-            }
-            OptionalInt l = rlow.rng.lowest();
-            OptionalInt h = rhigh.rng.highest();
-            if (!l.isPresent()) {
-                return new CombinedTotalPointsRange(PointRange.NONE);
-            }
-            if (!h.isPresent()) {
-                return new CombinedTotalPointsRange(PointRange.NONE);
-            }
-            int lower = l.getAsInt();
-            int higher = h.getAsInt();
-            return new CombinedTotalPointsRange(PointRange.between(lower, higher));
-        }
-        PointRange createRange = createCombinedTPtsRange(str, CombinedPointsRangeParser.POINT_RANGES);
-        if (createRange == null) {
-            return null;
-        }
-        return new CombinedTotalPointsRange(createRange);
     }
 
 }

@@ -1,11 +1,13 @@
 package bbidder;
 
+import java.util.OptionalInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bbidder.inferences.Always;
 import bbidder.inferences.AndInference;
 import bbidder.inferences.Balanced;
+import bbidder.inferences.CombinedTotalPointsRange;
 import bbidder.inferences.FitInSuit;
 import bbidder.inferences.HCPRange;
 import bbidder.inferences.LongestOrEqual;
@@ -191,7 +193,7 @@ public final class InferenceParser {
                 }
             }
             {
-                Inference i = CombinedPointsRangeParser.makeCombinedTPtsRange(str.trim());
+                Inference i = InferenceParser.makeCombinedTPtsRange(str.trim());
                 if (i != null) {
                     return i;
                 }
@@ -200,5 +202,31 @@ public final class InferenceParser {
         }
         }
         throw new IllegalArgumentException("unknown inference: '" + str + "'");
+    }
+    public static CombinedTotalPointsRange makeCombinedTPtsRange(String str) {
+        String[] parts = SplitUtil.split(str, "-", 2);
+        if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 1) {
+            CombinedTotalPointsRange rlow = makeCombinedTPtsRange(parts[0]);
+            CombinedTotalPointsRange rhigh = makeCombinedTPtsRange(parts[1]);
+            if (rlow == null || rhigh == null) {
+                return null;
+            }
+            OptionalInt l = rlow.rng.lowest();
+            OptionalInt h = rhigh.rng.highest();
+            if (!l.isPresent()) {
+                return new CombinedTotalPointsRange(PointRange.NONE);
+            }
+            if (!h.isPresent()) {
+                return new CombinedTotalPointsRange(PointRange.NONE);
+            }
+            int lower = l.getAsInt();
+            int higher = h.getAsInt();
+            return new CombinedTotalPointsRange(PointRange.between(lower, higher));
+        }
+        PointRange createRange = CombinedPointsRangeParser.createCombinedTPtsRange(str, CombinedPointsRangeParser.POINT_RANGES);
+        if (createRange == null) {
+            return null;
+        }
+        return new CombinedTotalPointsRange(createRange);
     }
 }
