@@ -36,12 +36,6 @@ public final class InferenceParser {
     private static final Map<String, Integer> POINT_RANGES = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35,
             "grand", 37);
     private static Pattern PATT_SPECIFIC_CARDS = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
-    private static Pattern PATT_MIN_TO_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
-    private static Pattern PATT_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(.*)");
-    private static Pattern PATT_MIN = Pattern.compile("(\\d+)\\s*\\+\\s*(.*)");
-    private static Pattern PATT_EXACT = Pattern.compile("(\\d+)\\s*(.*)");
-    private static Pattern PATT_MAX2 = Pattern.compile("max\\s*(.*)");
-
     /**
      * @param str
      *            The string to parse.
@@ -154,7 +148,7 @@ public final class InferenceParser {
         }
         default: {
             {
-                RangeOf rng = parseRange(str.trim());
+                RangeOf rng = RangeParser.parseRange(str.trim());
                 if (rng != null) {
                     if (rng.maxPromised) {
                         Symbol sym = SymbolParser.parseSymbol(rng.of);
@@ -269,34 +263,5 @@ public final class InferenceParser {
         }
 
         return PointRange.between(pts, maxPts);
-    }
-
-    private static RangeOf parseRange(String str) {
-        if (str == null) {
-            return null;
-        }
-        Matcher m;
-        m = PATT_MIN_TO_MAX.matcher(str);
-        if (m.matches()) {
-            return new RangeOf(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)), m.group(3).trim(), false);
-        }
-
-        m = PATT_MAX2.matcher(str);
-        if (m.matches()) {
-            return new RangeOf(null, null, m.group(1).trim(), true);
-        }
-        m = PATT_MAX.matcher(str);
-        if (m.matches()) {
-            return new RangeOf(null, Integer.parseInt(m.group(1)), m.group(2).trim(), false);
-        }
-        m = PATT_MIN.matcher(str);
-        if (m.matches()) {
-            return new RangeOf(Integer.parseInt(m.group(1)), null, m.group(2).trim(), false);
-        }
-        m = PATT_EXACT.matcher(str);
-        if (m.matches()) {
-            return new RangeOf(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(1)), m.group(2).trim(), false);
-        }
-        return null;
     }
 }

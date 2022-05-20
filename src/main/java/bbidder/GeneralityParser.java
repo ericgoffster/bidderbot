@@ -155,8 +155,18 @@ public final class GeneralityParser {
             }
             break;
         }
-        default:
+        default: {
+            RangeOf rng = RangeParser.parseRange(str.trim());
+            if (rng != null) {
+                 if (rng.of.startsWith("fit_established")) {
+                    Symbol sym = SymbolParser.parseSymbol(rng.of.substring(3).trim());
+                    if (sym != null) {
+                        return new FitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
+                    }
+                }
+            }
             break;
+        }
         }
         throw new IllegalArgumentException("unknown generality: '" + str + "'");
     }
