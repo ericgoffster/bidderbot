@@ -1,0 +1,37 @@
+common [partner made_bid nt_opener] {
+
+	[[Quantitative slam invite]]
+	4N => slaminv;
+	    test Axx Axx AQxx Kxx:
+	        1N 4N;
+	    test Axx xx AJxxx Qxx:
+	        2N 4N;
+	    test xx Axx AJxxx Qxx:
+	        2N 4N;
+	    test Qxx xx AJxxx Jxx:
+	        2C 2D
+	        2N 4N;
+	    test xx Qxx AJxxx Jxx:
+	        2C 2D
+	        2N 4N;
+	
+	[[Quantitative grand slam invite]]
+	5N => grandinv;
+	    test Axx Axx AKxx AQx:
+	        1N 5N;
+	    test Axx Axx AQxx Qxx:
+	        2N 5N;
+	    test Qxx xxx AQxx AJx:
+	        2C 2D
+	        2N 5N;
+	
+	[[Bid slam if you got it]]
+	6N => slam;
+	    test Axx Axx AKxx Kxx:
+	        1N 6N;
+	
+	[[Bid grand slam if you got it]]
+	7N => grand;
+	    test AQx Axx AKxx AQx:
+	        1N 7N;
+}
