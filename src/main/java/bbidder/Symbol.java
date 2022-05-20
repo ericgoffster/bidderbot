@@ -48,6 +48,8 @@ public abstract class Symbol {
      * @return Stream of context's
      */
     public abstract MyStream<Context> resolveSuits(SuitTable suitTable);
+    
+    public abstract boolean downTheLine();
 
     public final class Context {
         public final SuitTable suitTable;

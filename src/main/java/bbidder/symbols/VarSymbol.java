@@ -18,6 +18,11 @@ public final class VarSymbol extends Symbol {
     }
 
     @Override
+    public boolean downTheLine() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return varName;
     }

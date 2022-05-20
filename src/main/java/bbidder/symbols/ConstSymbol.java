@@ -15,6 +15,11 @@ public final class ConstSymbol extends Symbol {
         super();
         this.strain = strain;
     }
+    
+    @Override
+    public boolean downTheLine() {
+        return false;
+    }
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {

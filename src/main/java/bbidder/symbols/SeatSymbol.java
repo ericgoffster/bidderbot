@@ -19,6 +19,11 @@ public final class SeatSymbol extends Symbol {
     }
 
     @Override
+    public boolean downTheLine() {
+        return symbol.downTheLine();
+    }
+
+    @Override
     public String toString() {
         return symbol + ":" + NAME + seats;
     }

@@ -17,6 +17,12 @@ public final class NonConventional extends Symbol {
     }
 
     @Override
+    public boolean downTheLine() {
+        return false;
+    }
+
+
+    @Override
     public String toString() {
         return symbol + ":" + NAME;
     }

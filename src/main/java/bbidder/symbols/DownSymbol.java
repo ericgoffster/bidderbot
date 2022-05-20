@@ -21,6 +21,11 @@ public final class DownSymbol extends Symbol {
     }
 
     @Override
+    public boolean downTheLine() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return symbol + ":" + NAME;
     }

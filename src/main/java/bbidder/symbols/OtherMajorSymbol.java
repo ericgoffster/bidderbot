@@ -15,6 +15,11 @@ public final class OtherMajorSymbol extends Symbol {
     }
 
     @Override
+    public boolean downTheLine() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return NAME;
     }

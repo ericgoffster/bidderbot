@@ -18,6 +18,11 @@ public final class SteppedSymbol extends Symbol {
     }
 
     @Override
+    public boolean downTheLine() {
+        return symbol.downTheLine();
+    }
+
+    @Override
     public String toString() {
         return symbol + "-" + delta;
     }

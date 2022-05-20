@@ -20,6 +20,11 @@ public final class GreaterThanSymbol extends Symbol {
     }
 
     @Override
+    public boolean downTheLine() {
+        return symbol.downTheLine();
+    }
+
+    @Override
     public String toString() {
         return symbol + ":>" + (level + 1) + other;
     }

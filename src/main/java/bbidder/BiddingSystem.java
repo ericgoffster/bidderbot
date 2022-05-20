@@ -69,13 +69,21 @@ public final class BiddingSystem {
         List<PossibleBid> l = new ArrayList<>();
         Set<Bid> matched = new HashSet<>();
         inferences.forEach(rsbi -> {
+            List<PossibleBid> tmp = new ArrayList<>();
             rsbi.inferences.forEach(i -> {
                 i.bids.getMatch(auction, players, matched).ifPresent(match -> {
                     DebugUtils.breakpointGetPossibleBid(auction, players, match, i);
-                    l.add(new PossibleBid(i, match));
+                    tmp.add(new PossibleBid(i, match));
                     matched.add(match);
                 });
             });
+            BidPattern p = rsbi.unresolved.bids.getLastBid();
+            if (p.symbol != null && p.symbol.downTheLine()) {
+                tmp.sort((a, b) -> -a.bid.compareTo(b.bid));
+            } else {
+                tmp.sort((a, b) -> a.bid.compareTo(b.bid));
+            }
+            l.addAll(tmp);
         });
         if (l.isEmpty()) {
             DebugUtils.breakpointGetPossibleBid(auction, players, l);
