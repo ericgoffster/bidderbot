@@ -64,7 +64,7 @@
         1N P;
 
 [[Pass preference]]
-[partner_is_two_suited x y] ?x P => prefer x to y;
+[partner_bid x, partner_bid y] ?x P => prefer x to y;
     test AQxxx x xxxx xxx:
         1H 1S
         2C P;             
@@ -73,7 +73,7 @@
         1S P;
         
 [[Show preference]]
-[partner_is_two_suited x y] ?y NJx => prefer x to y;
+[partner_bid x, partner_bid y] ?y NJx => prefer x to y;
 
 [[Pass best known pseudo fit]]
 [7+ bestfit y] NJy P => always;
