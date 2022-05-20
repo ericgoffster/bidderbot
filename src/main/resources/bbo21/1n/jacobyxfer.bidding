@@ -30,6 +30,7 @@ common [] 1N:"nt_opener" 2M-1:"xfer" {
 		        1N 2♦
 		        2♠ 3D;
 		continuations {
+		    [[Accept re-transfer]]
 		    3M => always;
 		}
     }
@@ -49,6 +50,7 @@ common [] 1N:"nt_opener" 2M-1:"xfer" {
 		        1N 2♦
 		        2N 3D;
 		continuations {
+		    [[Accept re-transfer]]
 		    3M => always;
 		    test AKx Axxx Axx Qxx:
 		        1N 2D
@@ -57,6 +59,7 @@ common [] 1N:"nt_opener" 2M-1:"xfer" {
 		}
     }
     
+    [[Accept re-transfer]]  
     2M => always;
 	    test AQx xxx AJx Axxx:
 	        1N 2♦

@@ -26,6 +26,7 @@ common [] 1N:"nt_opener" {
 	    test Kxx AQxxxx Qx xx:
 	        1N 4♦;
 	continuations {
+	    [[Accept transfer]]
 	    4M => always;
 	    test AQxx AJxx Ax xxx:
 	        1N 4♦ 
