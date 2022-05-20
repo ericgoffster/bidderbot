@@ -38,7 +38,7 @@ public final class FitEstablished extends Generality {
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol);
+        return Objects.hash(combined, symbol);
     }
 
     @Override
@@ -50,7 +50,7 @@ public final class FitEstablished extends Generality {
         if (getClass() != obj.getClass())
             return false;
         FitEstablished other = (FitEstablished) obj;
-        return Objects.equals(symbol, other.symbol);
+        return combined == other.combined && Objects.equals(symbol, other.symbol);
     }
 
     @Override

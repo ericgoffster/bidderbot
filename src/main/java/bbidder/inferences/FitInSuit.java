@@ -49,7 +49,7 @@ public final class FitInSuit extends Inference {
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol);
+        return Objects.hash(combined, symbol);
     }
 
     @Override
@@ -61,7 +61,7 @@ public final class FitInSuit extends Inference {
         if (getClass() != obj.getClass())
             return false;
         FitInSuit other = (FitInSuit) obj;
-        return Objects.equals(symbol, other.symbol);
+        return combined == other.combined && Objects.equals(symbol, other.symbol);
     }
 
     private IBoundInference createrBound(int s, Players players) {
