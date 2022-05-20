@@ -66,7 +66,7 @@ public final class BiddingState {
             DebugUtils.breakpointNoBid(bidding, bid, players);
         }
         Player newMe = new Player(newInf, newSummary);
-        return new BiddingState(they, we, newBidList, new Players(players.partner, players.rho, newMe, players.lho));
+        return new BiddingState(they, we, newBidList, players.withNewMe(newMe).rotate());
     }
 
     /**

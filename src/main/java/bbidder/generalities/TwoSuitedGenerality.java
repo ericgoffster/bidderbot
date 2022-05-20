@@ -31,7 +31,7 @@ public final class TwoSuitedGenerality extends Generality {
     public boolean test(Players players, Auction bidList) {
         int l = longer.getResolvedStrain();
         int s = shorter.getResolvedStrain();
-        return players.isBidSuit(players.me, players.partner, l) && players.isBidSuit(players.me, players.partner, s);
+        return players.iBidSuit(l) && players.iBidSuit(s);
     }
 
     public static TwoSuitedGenerality valueOf(String str) {

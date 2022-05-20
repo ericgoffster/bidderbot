@@ -28,8 +28,8 @@ public final class FitEstablished extends Generality {
     public boolean test(Players players, Auction bidList) {
         int s = symbol.getResolvedStrain();
         return players.partner.infSummary.minLenInSuit(s)
-                .map(partnerLen -> players.me.infSummary.minLenInSuit(s).map(meLen -> meLen + partnerLen >= 8).orElse(false))
-                .orElse(false);
+                .filter(partnerLen -> players.me.infSummary.minLenInSuit(s).filter(meLen -> meLen + partnerLen >= 8).isPresent())
+                .isPresent();
      }
 
     public static FitEstablished valueOf(String str) {

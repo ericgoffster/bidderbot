@@ -11,6 +11,14 @@ public final class Players {
     public Players() {
         this(Player.ALL, Player.ALL, Player.ALL, Player.ALL);
     }
+    
+    public Players rotate() {
+        return new Players(partner, rho, me, lho);
+    }
+    
+    public Players withNewMe(Player me) {
+        return new Players(lho, partner, rho, me);
+    }
 
     public Players(Player lho, Player parter, Player rho, Player me) {
         super();
@@ -25,13 +33,14 @@ public final class Players {
         return "lho=" + lho + ", partner=" + partner + ", rho=" + rho + ", me=" + me;
     }
     
-    public boolean isBidSuit(Player me, Player partner, int s) {
+    public Optional<Integer> ourCombinedMinLength(int s) {
         Optional<Integer> meLenLonger = me.infSummary.minLenInSuit(s);
         Optional<Integer> partnerLenLonger = partner.infSummary.minLenInSuit(s);
-        if (!meLenLonger.isPresent() || !partnerLenLonger.isPresent()) {
-            return false;
-        }
-        if (meLenLonger.get() + partnerLenLonger.get() >= 8) {
+        return meLenLonger.flatMap(meLen -> partnerLenLonger.map(partnerLen -> meLen + partnerLen));
+    }
+    
+    public boolean iBidSuit(int s) {
+        if (ourCombinedMinLength(s).filter(ourLen -> ourLen >= 8).isPresent()) {
             return false;
         }
         if ((me.infSummary.getBidSuits() & (1 << s)) == 0) {

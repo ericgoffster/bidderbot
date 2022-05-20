@@ -26,7 +26,7 @@ public final class IBidSuitGenerality extends Generality {
     @Override
     public boolean test(Players players, Auction bidList) {
         int suit = symbol.getResolvedStrain();
-        return players.isBidSuit(players.me, players.partner, suit);
+        return players.iBidSuit(suit);
     }
 
     public static IBidSuitGenerality valueOf(String str) {
