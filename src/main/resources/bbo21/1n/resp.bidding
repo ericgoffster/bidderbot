@@ -13,7 +13,7 @@ common [] 1N:"nt_opener" {
 	        1N 2♣;
 	
 	[[Simple transfer with 6+${M} and slam invitational values]]
-	2M-1 => slaminv, 6+M;
+	2M-1:"xfer" => slaminv, 6+M;
 	    test AQxxxx x AKx Jxx:
 	        1N 2♥;
 	    test x AQxxxx AKx Jxx:
@@ -27,7 +27,7 @@ common [] 1N:"nt_opener" {
 	        1N 4♦;
 	
 	[[Simple transfer with 5+${M}]]
-	2M-1 => 5+M;
+	2M-1:"xfer" => 5+M;
 	    test Axxxx xxx Qxx xx:
 	        1N 2♥;
 	    test xxx Axxxx Qxx xx:
