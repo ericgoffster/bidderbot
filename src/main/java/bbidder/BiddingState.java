@@ -57,6 +57,10 @@ public final class BiddingState {
         return new BiddingState(we, they, bidding, players.withNewMe(new Player(newInf, newSummary)));
     }
 
+    /**
+     * @param n Number of times to rotate
+     * @return The bidding state routed "n" times.
+     */
     public BiddingState rotate(int n) {
         BiddingSystem newWe = n % 2 == 0 ? we : they;
         BiddingSystem newThey = n % 2 == 0 ? they : we;

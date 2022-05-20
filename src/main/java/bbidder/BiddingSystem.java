@@ -100,7 +100,7 @@ public final class BiddingSystem {
     }
 
     /**
-     * Retrieve the bid for a hand starting from the list of bids and likely hands for everyone.
+     * Retrieve the bid for a hand starting from the list of bids and a summary from everyone.
      * 
      * @param bidding
      *            The auction
@@ -128,7 +128,7 @@ public final class BiddingSystem {
      *            The like hands for everyone so far.
      * @param lastBid
      *            The last bid
-     * @return The inference The inference from the bid.
+     * @return The inference from the bid.
      */
     public TaggedBoundInference getInference(TaggedAuction auction, Players players, Bid lastBid) {
         IBoundInference positive = ConstBoundInference.F;

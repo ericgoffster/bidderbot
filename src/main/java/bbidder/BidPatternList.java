@@ -171,7 +171,7 @@ public final class BidPatternList {
     }
 
     /**
-     * Given an unopposed bidding sequencs, will insert
+     * Given an unopposed bidding sequence, will insert
      * passes where the opposing bidding is missing.
      * 
      * @return The new bid pattern list with passes inserted in the middle.
