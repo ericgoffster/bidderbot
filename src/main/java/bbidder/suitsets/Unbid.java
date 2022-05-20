@@ -1,5 +1,6 @@
 package bbidder.suitsets;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import bbidder.Players;
@@ -14,8 +15,14 @@ public final class Unbid implements SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        short allBid = (short) (players.lho.infSummary.getBidSuits() | players.rho.infSummary.getBidSuits() | players.partner.infSummary.getBidSuits()
-                | players.me.infSummary.getBidSuits());
+        Optional<Short> lhoSuits = players.lho.infSummary.getBidSuits();
+        Optional<Short> rhoSuits = players.rho.infSummary.getBidSuits();
+        Optional<Short> partnerSuits = players.partner.infSummary.getBidSuits();
+        Optional<Short> meSuits = players.me.infSummary.getBidSuits();
+        if (!lhoSuits.isPresent() || !rhoSuits.isPresent() || !partnerSuits.isPresent() || !meSuits.isPresent()) {
+            return 0;
+        }
+        short allBid = (short) (lhoSuits.get() | rhoSuits.get() | partnerSuits.get() | meSuits.get());
         return (short) (0xf ^ allBid);
     }
 

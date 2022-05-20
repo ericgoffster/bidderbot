@@ -43,7 +43,11 @@ public final class Players {
         if (ourCombinedMinLength(s).filter(ourLen -> ourLen >= 8).isPresent()) {
             return false;
         }
-        if ((me.infSummary.getBidSuits() & (1 << s)) == 0) {
+        Optional<Short> bidSuits = me.infSummary.getBidSuits();
+        if (bidSuits.isEmpty()) {
+            return false;
+        }
+        if ((bidSuits.get() & (1 << s)) == 0) {
             return false;
         }
         return true;

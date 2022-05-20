@@ -5,9 +5,9 @@ import java.util.stream.Stream;
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
+import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SuitTable;
 import bbidder.utils.SplitUtil;
 
 public final class UnbidSuitGenerality extends Generality {
@@ -26,9 +26,16 @@ public final class UnbidSuitGenerality extends Generality {
     @Override
     public boolean test(Players players, Auction bidList) {
         int suit = symbol.getResolvedStrain();
-        int bidSuits = players.me.infSummary.getBidSuits() | players.partner.infSummary.getBidSuits() | players.lho.infSummary.getBidSuits()
-                | players.rho.infSummary.getBidSuits();
-        if ((bidSuits & (1 << suit)) != 0) {
+        if (players.me.infSummary.getBidSuits().filter(s -> (s & (1 << suit)) != 0).isPresent()) {
+            return false;
+        }
+        if (players.partner.infSummary.getBidSuits().filter(s -> (s & (1 << suit)) != 0).isPresent()) {
+            return false;
+        }
+        if (players.lho.infSummary.getBidSuits().filter(s -> (s & (1 << suit)) != 0).isPresent()) {
+            return false;
+        }
+        if (players.rho.infSummary.getBidSuits().filter(s -> (s & (1 << suit)) != 0).isPresent()) {
             return false;
         }
         return true;

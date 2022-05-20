@@ -117,13 +117,13 @@ public final class InfSummary {
         return getStat(suit).avg;
     }
 
-    public short getBidSuits() {
+    public Optional<Short> getBidSuits() {
         List<Optional<Integer>> minLens = IntStream.range(0, 4)
                 .mapToObj(suit -> minLenInSuit(suit))
                 .filter(o -> o.isPresent())
                 .collect(Collectors.toList());
         if (minLens.size() != 4) {
-            return 0;
+            return Optional.empty();
         }
         List<Double> avgL = IntStream.range(0, 4).mapToObj(suit -> avgLenInSuit(suit).get()).collect(Collectors.toList());
         Integer[] suitArr = { 0, 1, 2, 3 };
@@ -134,20 +134,20 @@ public final class InfSummary {
             for (int i = 0; i < 4 && minL.get(suitArr[i]) >= 4; i++) {
                 suits |= (short) (1 << suitArr[i]);
             }
-            return suits;
+            return Optional.of(suits);
         }
         if (minL.get(suitArr[0]) == 4) {
             if (minL.get(suitArr[1]) > minL.get(suitArr[2])) {
-                return (short) ((1 << suitArr[0]) | (1 << suitArr[1]));
+                return Optional.of((short) ((1 << suitArr[0]) | (1 << suitArr[1])));
             }
-            return (short) ((1 << suitArr[0]));
+            return Optional.of((short) ((1 << suitArr[0])));
         }
         {
             short suits = 0;
             for (int i = 0; i < 4 && avgL.get(suitArr[i]) >= 4; i++) {
                 suits |= (short) (1 << suitArr[i]);
             }
-            return suits;
+            return Optional.of(suits);
         }
     }
 
