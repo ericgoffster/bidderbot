@@ -75,7 +75,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
             if (inp.ch == ']') {
                 inp.advance();
             }
-            return BidPattern.createWild(InferenceRegistry.parseGenerality(sb.toString()));
+            return BidPattern.createWild(GeneralityParser.parseGenerality(sb.toString()));
         }
         if (inp.ch == '(') {
             inp.advance();
