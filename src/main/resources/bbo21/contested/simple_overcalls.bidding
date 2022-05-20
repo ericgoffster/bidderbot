@@ -14,14 +14,14 @@ test Axx AQxxxx xx xx:
 test AQxxx Axx xxx xx:
         (1C) 1S;
 
-(1x) 1N => stoppers x, 15-17 hcp;
+(1x) 1N:"nt_opener" => stoppers x, 15-17 hcp;
 test AQxx Axx Axx Qxx:
         (1H) 1N;
 
-(1w) X => 12+ tpts, 3+ x, 3+ y, 3+ z;
+(1w) X:"takeout" => 12+ tpts, 3+ x, 3+ y, 3+ z;
 test AQxx xx Axxx Qxx:
         (1H) x;
 
-(1w) X => 18+ tpts;
+(1w) X:"takeout" => 18+ tpts;
 test AQ AQxx Axxxx Ax:
         (1H) x;

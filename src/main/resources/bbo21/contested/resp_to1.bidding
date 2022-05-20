@@ -1,0 +1,32 @@
+common (1w) X:"takeout" {
+    DJM:down => 6+ M, min;
+	    test xx Axxxxx x Jxxx:
+	        (1C) X  3H;
+    NJM:down => 4+ M, min-;
+	    test xx Axxx xxxx xxx:
+	        (1C) X  1H;        
+    JM:down => 4+ M, inv;
+	    test xx AQxx Axx Jxxx:
+	        (1C) X  2H;
+	1N => balanced, stoppers w, min;
+	    test xxx AQxx xxx xxx:
+	        (1H) X  1N;
+	2N => balanced, stoppers w, inv;
+	    test xxx AQxx AJx xxx:
+	        (1H) X  2N;
+	3N => balanced, stoppers w, gf;
+	    test xxx AQxx AJx Axx:
+	        (1H) X  3N;
+    DJx:down => 6+ x, min;
+	    test xx x Axxxxx Jxxx:
+	        (1C) X  3D;
+    NJx:down => 4+ x, min-;
+	    test xx xxx Axxx xxxx:
+	        (1C) X  1D;
+	Jx:down => 4+ x, inv;
+	    test xx AJx AQxxx xxx:
+	        (1C) X  2D;	        
+    2w => gf+;
+	    test xx AQxx AQxx xxx:
+	        (1C) X  2C;
+}

@@ -10,6 +10,9 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 	[[Bid 4 card major]]
 	2M => 4+M;
 	    test Axx AQxx KJxx Qx:
+	        (1S) 1N 2♣
+	             2♥;
+	    test Axx AQxx KJxx Qx:
 	        1N 2♣
 	        2♥;
 	    test Axxx AQxx KJx Qx:
