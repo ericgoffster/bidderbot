@@ -5,28 +5,25 @@
 # H = ♥
 # S = ♠
 
-#
-# We can pass anytime a major in an established
-# suit at the right level has been bid.
-#
+[[Pass a playable major suit game]]
 [] 4M P => gf, fit M;
     test AQxxx Axx Axx xx:
         1S 2N
         4S P;
 
+[[Pass invitation without values to go further]]
 [] 3M P => inv, fit M;
     test Axxxx Axx Axx xx:
         1S 3S
         P;
 
+[[Pass min without values to go further]]
 [] 2M P => min, fit M;
     test xxx Axxx Kx xxxx:
         1C 1H
         2H P;
         
-#
-# We can always bid the established major to the right level
-#
+[[Bid game in a major]]
 [] 4M => gf, fit M;
     test AQxxx Axxx Ax xx:
         1S 3S
@@ -88,6 +85,7 @@
         1C 1H
         2N 4H;
 
+[[Bid invitation with the values]]
 [] 3M => inv, fit M;
     test AQxx Axx xxxx xx:
         1C 1S
@@ -114,6 +112,7 @@
         1♠ 2♠
         3♠;
 
+[[Bid min with no further values]]
 [] 2M => min, fit M;
     test AQxx Axxx xx Kxx:
         1♣ 1♥
