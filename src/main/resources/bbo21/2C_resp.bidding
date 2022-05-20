@@ -25,3 +25,9 @@
     test AKQx AQxx AQ Qxx:
         2C 2D
         2N;
+2C 2D
+NJx => 5+ x;
+    test AKQxx AQxx A Axx:
+        2C 2D
+        2S;
+        
