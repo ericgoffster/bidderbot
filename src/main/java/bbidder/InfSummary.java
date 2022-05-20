@@ -14,59 +14,65 @@ import java.util.stream.IntStream;
  *
  */
 public final class InfSummary {
-    public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, PointRange.ALL, StopperSet.ALL, StopperSet.ALL);
-    public static final InfSummary NONE = new InfSummary(ShapeSet.NONE, PointRange.NONE, StopperSet.NONE, StopperSet.NONE);
+    public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, PointRange.ALL, PointRange.ALL, StopperSet.ALL, StopperSet.ALL);
+    public static final InfSummary NONE = new InfSummary(ShapeSet.NONE, PointRange.NONE, PointRange.NONE, StopperSet.NONE, StopperSet.NONE);
 
     public final ShapeSet shape;
     public final PointRange tpts;
+    public final PointRange hcp;
     public final StopperSet stoppers;
     public final StopperSet partialStoppers;
 
     public final AtomicReference<ShapeStats[]> shapeStats;
 
-    public InfSummary(ShapeSet shape, PointRange tpts, StopperSet stoppers, StopperSet partialStoppers) {
+    public InfSummary(ShapeSet shape, PointRange tpts, PointRange hcp, StopperSet stoppers, StopperSet partialStoppers) {
         super();
         this.shape = shape;
         this.tpts = tpts;
+        this.hcp = hcp;
         this.stoppers = stoppers;
         this.partialStoppers = partialStoppers;
         this.shapeStats = new AtomicReference<>();
     }
 
     public InfSummary withShapes(ShapeSet shape) {
-        return new InfSummary(shape, tpts, stoppers, partialStoppers);
+        return new InfSummary(shape, tpts, hcp, stoppers, partialStoppers);
     }
 
     public InfSummary withStoppers(StopperSet stoppers) {
-        return new InfSummary(shape, tpts, stoppers, partialStoppers);
+        return new InfSummary(shape, tpts, hcp, stoppers, partialStoppers);
     }
 
     public InfSummary withPartialStoppers(StopperSet partialStoppers) {
-        return new InfSummary(shape, tpts, stoppers, partialStoppers);
+        return new InfSummary(shape, tpts, hcp, stoppers, partialStoppers);
     }
 
     public InfSummary withTotalPoints(PointRange tpts) {
-        return new InfSummary(shape, tpts, stoppers, partialStoppers);
+        return new InfSummary(shape, tpts, hcp, stoppers, partialStoppers);
+    }
+
+    public InfSummary withHcp(PointRange hcp) {
+        return new InfSummary(shape, tpts, hcp, stoppers, partialStoppers);
     }
 
     public InfSummary and(InfSummary other) {
-        return new InfSummary(shape.and(other.shape), tpts.and(other.tpts), stoppers.and(other.stoppers), partialStoppers.and(other.partialStoppers));
+        return new InfSummary(shape.and(other.shape), tpts.and(other.tpts), hcp.and(other.hcp), stoppers.and(other.stoppers), partialStoppers.and(other.partialStoppers));
     }
 
     public InfSummary or(InfSummary other) {
-        return new InfSummary(shape.or(other.shape), tpts.or(other.tpts), stoppers.or(other.stoppers), partialStoppers.or(other.partialStoppers));
+        return new InfSummary(shape.or(other.shape), tpts.or(other.tpts), hcp.or(other.hcp), stoppers.or(other.stoppers), partialStoppers.or(other.partialStoppers));
     }
 
     @Override
     public String toString() {
-        return shape + "," + tpts + " tpts" + ",stoppers:" + stoppers + ",partial stoppers:" + partialStoppers;
+        return shape + "," + tpts + " tpts" + hcp + " hcp" + ",stoppers:" + stoppers + ",partial stoppers:" + partialStoppers;
     }
 
     /**
      * @return true if this summary represents the empty set of possible hands.
      */
     public boolean isEmpty() {
-        return shape.isEmpty() || tpts.isEmpty() || stoppers.isEmpty() || partialStoppers.isEmpty();
+        return shape.isEmpty() || tpts.isEmpty() || hcp.isEmpty() || stoppers.isEmpty() || partialStoppers.isEmpty();
     }
 
     /**
@@ -141,7 +147,7 @@ public final class InfSummary {
 
     @Override
     public int hashCode() {
-        return Objects.hash(partialStoppers, shape, stoppers, tpts);
+        return Objects.hash(partialStoppers, shape, stoppers, tpts, hcp);
     }
 
     @Override
@@ -154,6 +160,6 @@ public final class InfSummary {
             return false;
         InfSummary other = (InfSummary) obj;
         return Objects.equals(partialStoppers, other.partialStoppers) && Objects.equals(shape, other.shape)
-                && Objects.equals(stoppers, other.stoppers) && Objects.equals(tpts, other.tpts);
+                && Objects.equals(stoppers, other.stoppers) && Objects.equals(tpts, other.tpts) && Objects.equals(hcp, other.hcp);
     }
 }

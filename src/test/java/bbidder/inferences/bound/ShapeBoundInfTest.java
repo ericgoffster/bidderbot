@@ -25,6 +25,6 @@ public class ShapeBoundInfTest {
 
         InfSummary summary = ShapeBoundInf.create(ShapeSet.create(List.of(Shape._00030307, Shape._01000507))).getSummary();
         assertEquals(summary,
-                new InfSummary(ShapeSet.create(List.of(Shape._00030307, Shape._01000507)), PointRange.ALL, StopperSet.ALL, StopperSet.ALL));
+                new InfSummary(ShapeSet.create(List.of(Shape._00030307, Shape._01000507)), PointRange.ALL, PointRange.ALL, StopperSet.ALL, StopperSet.ALL));
     }
 }

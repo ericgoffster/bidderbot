@@ -21,6 +21,6 @@ public class TotalPtsBoundInfTest {
         assertFalse(TotalPtsBoundInf.create(InfSummary.ALL, PointRange.between(10, 11)).test(Hand.valueOf("AKxx Qxx xxx xxx")));
         assertTrue(TotalPtsBoundInf.create(InfSummary.ALL, PointRange.between(10, 11)).test(Hand.valueOf("AKxx KJx xxx xxx")));
         InfSummary summary = TotalPtsBoundInf.create(InfSummary.ALL, PointRange.between(10, 11)).getSummary();
-        assertEquals(summary, new InfSummary(ShapeSet.ALL, PointRange.between(10, 11), StopperSet.ALL, StopperSet.ALL));
+        assertEquals(summary, new InfSummary(ShapeSet.ALL, PointRange.between(10, 11), PointRange.ALL, StopperSet.ALL, StopperSet.ALL));
     }
 }

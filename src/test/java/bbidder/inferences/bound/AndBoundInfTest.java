@@ -26,7 +26,7 @@ public class AndBoundInfTest {
         IBoundInference i2 = TotalPtsBoundInf.create(InfSummary.ALL, PointRange.between(10, 11));
         IBoundInference i3 = AndBoundInf.create(i1, i2);
         assertEquals(i3.getSummary(),
-                new InfSummary(ShapeSet.create(List.of(Shape._04030303)), PointRange.between(10, 11), StopperSet.ALL, StopperSet.ALL));
+                new InfSummary(ShapeSet.create(List.of(Shape._04030303)), PointRange.between(10, 11), PointRange.ALL, StopperSet.ALL, StopperSet.ALL));
         assertFalse(i3.test(Hand.valueOf("AKQ xxx xxx xxxx")));
         assertTrue(i3.test(Hand.valueOf("AKQ Jxx xxx xxxx")));
         assertFalse(i3.test(Hand.valueOf("AKQ Jxx xxxx xxx")));
