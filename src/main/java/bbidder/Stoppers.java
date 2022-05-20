@@ -1,7 +1,5 @@
 package bbidder;
 
-import java.util.Objects;
-
 import bbidder.utils.BitUtil;
 
 /**
@@ -11,7 +9,7 @@ import bbidder.utils.BitUtil;
  *
  */
 public final class Stoppers {
-    public static Stoppers EMPTY = new Stoppers((byte) 0);
+    public static Stoppers EMPTY = new Stoppers((short) 0);
     private final short patt;
 
     /**
@@ -51,19 +49,12 @@ public final class Stoppers {
 
     @Override
     public int hashCode() {
-        return Objects.hash(patt);
+        return patt;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Stoppers other = (Stoppers) obj;
-        return patt == other.patt;
+        return this == obj;
     }
 
     @Override
