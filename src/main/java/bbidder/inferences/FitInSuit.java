@@ -8,8 +8,8 @@ import java.util.stream.Stream;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
-import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
@@ -86,7 +86,7 @@ public final class FitInSuit extends Inference {
             if (myMinLen <= 0) {
                 return ConstBoundInference.T;
             } else {
-                Range r = Range.atLeast(myMinLen, 13);
+                SuitLengthRange r = SuitLengthRange.atLeast(myMinLen);
                 return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
             }
         }).orElse(ConstBoundInference.F);

@@ -9,8 +9,8 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
 import bbidder.Players;
-import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
@@ -40,7 +40,7 @@ public final class Rebiddable extends Inference {
 
     private IBoundInference createrBound(int suit, InfSummary meSummary) {
         return meSummary.minLenInSuit(suit).map(myMinLen -> {
-            Range r = Range.atLeast(Math.max(myMinLen + 1, 6), 13);
+            SuitLengthRange r = SuitLengthRange.atLeast(Math.max(myMinLen + 1, 6));
             return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(suit, r)));
         }).orElse(ConstBoundInference.F);
     }

@@ -9,8 +9,8 @@ import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.Inference;
 import bbidder.Players;
-import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
@@ -45,7 +45,7 @@ public final class RebiddableSecondSuit extends Inference {
 
     private static IBoundInference createrBound(int longer, int shorter, InfSummary meSummary) {
         return meSummary.minLenInSuit(shorter).map(myMinLen -> {
-            Range r = Range.atLeast(Math.max(myMinLen + 1, 5), 13);
+            SuitLengthRange r = SuitLengthRange.atLeast(Math.max(myMinLen + 1, 5));
             return ShapeBoundInf.create(
                     ShapeSet.create(shape -> shape.isSuitInRange(shorter, r) && shape.isLongerOrEqual(longer, (short)(1 << shorter))));
         }).orElse(ConstBoundInference.F);

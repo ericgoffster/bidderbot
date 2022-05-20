@@ -35,8 +35,8 @@ public class ShapeTest {
 
     @Test
     public void testSuitInRange() {
-        assertTrue(Shape._04040302.isSuitInRange(0, Range.between(3, 5, 13)));
-        assertFalse(Shape._04040302.isSuitInRange(0, Range.between(5, 6, 13)));
+        assertTrue(Shape._04040302.isSuitInRange(0, SuitLengthRange.between(3, 5)));
+        assertFalse(Shape._04040302.isSuitInRange(0, SuitLengthRange.between(5, 6)));
     }
 
     @Test

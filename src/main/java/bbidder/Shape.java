@@ -619,7 +619,7 @@ public enum Shape {
         return true;
     }
 
-    public boolean isSuitInRange(int suit, Range rng) {
+    public boolean isSuitInRange(int suit, SuitLengthRange rng) {
         return rng.contains(numInSuit(suit));
     }
 
