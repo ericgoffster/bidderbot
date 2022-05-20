@@ -1,10 +1,12 @@
 package bbidder.generalities;
 
+import java.util.Objects;
 import java.util.OptionalInt;
 
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
+import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.utils.MyStream;
@@ -13,18 +15,18 @@ public final class BidSuitGenerality extends Generality {
     public static final String NAME = "bid_suit";
     private final Symbol symbol;
     private final int pos;
-    private final int minLength;
+    private final SuitLengthRange range;
 
-    public BidSuitGenerality(Symbol symbol, int pos, int minLength) {
+    public BidSuitGenerality(Symbol symbol, int pos, SuitLengthRange range) {
         super();
         this.symbol = symbol;
         this.pos = pos;
-        this.minLength = minLength;
+        this.range = range;
     }
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
-        return symbol.resolveSuits(suitTable).map(e -> new BidSuitGenerality(e.getSymbol(), pos, minLength).new Context(e.suitTable));
+        return symbol.resolveSuits(suitTable).map(e -> new BidSuitGenerality(e.getSymbol(), pos, range).new Context(e.suitTable));
     }
 
     @Override
@@ -35,7 +37,7 @@ public final class BidSuitGenerality extends Generality {
         if (!minLenInSuit.isPresent()) {
             return false;
         }
-        return rotate.iBidSuit(suit) && minLenInSuit.getAsInt() >= minLength;
+        return rotate.iBidSuit(suit) && range.contains(minLenInSuit.getAsInt());
     }
     
     public String getPosName() {
@@ -50,8 +52,25 @@ public final class BidSuitGenerality extends Generality {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(pos, range, symbol);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BidSuitGenerality other = (BidSuitGenerality) obj;
+        return pos == other.pos && Objects.equals(range, other.range) && Objects.equals(symbol, other.symbol);
+    }
+
+    @Override
     public String toString() {
-        return getPosName()+ "_" + NAME + " " + symbol + " at_least " + minLength;
+        return getPosName()+ "_" + NAME + " " + symbol + " promising " + range;
     }
 
 }

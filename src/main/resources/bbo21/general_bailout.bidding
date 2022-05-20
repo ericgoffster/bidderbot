@@ -40,7 +40,7 @@
 # At this point, no playable fits at all
 
 [[Pass partners rebiddable suit]]
-[partner_bid_suit y at_least 6] ?y P => always;
+[partner_bid_suit y promising 6+] ?y P => always;
     test xxx x xxxxx xxxx:
         2H P;
     test xxx Qxxx Axxxx x:
