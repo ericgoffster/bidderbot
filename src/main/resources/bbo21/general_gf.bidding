@@ -72,3 +72,9 @@
         3S;
 
 [gf+] NJN:<4C => partial_stoppers unstopped;
+
+[gf+, we_are_three_suited, unbid_suit x] NJx:<3N => always;
+    test Kx xxx Ax AQxxxx:
+        1C 1S
+        2C 2D
+        2H;

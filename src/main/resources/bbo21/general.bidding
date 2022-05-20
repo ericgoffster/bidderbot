@@ -132,10 +132,7 @@
     test AKxxxx x xxx AKx:
         1♦ 1♠
         2♣ 2♥;
-    test Kx xxx Ax AQxxxx:
-        1C 1S
-        2C 2D
-        2H;
+
     test xxx x AKxxxx AKx:
         1♣ 1♦
         1♥ 1♠;
