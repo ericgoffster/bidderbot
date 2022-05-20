@@ -47,7 +47,11 @@ public final class OtherMajorSymbol extends Symbol {
         }
         Integer M = suitTable.getSuit(MajorSymbol.NAME);
         if (M != null) {
-            return MyStream.of(new ConstSymbol(MajorSymbol.otherMajor(M)).new Context(suitTable));
+            OM = MajorSymbol.otherMajor(M);
+            if ((suitTable.getSuits() & (1 << OM)) != 0) {
+                return MyStream.empty();
+            }
+            return MyStream.of(new ConstSymbol(OM).new Context(suitTable.withSuitAdded(NAME, OM)));
         }
         return BitUtil.stream((short) (Constants.MAJORS & ~suitTable.getSuits()))
                 .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));

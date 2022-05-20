@@ -3,7 +3,7 @@
 # H = ♥
 # S = ♠
 
-common 1M (1z) {
+common 1M (NJz) {
 	3M => 7- tpts, 4+ M;
 	    test xxx Kxxx x Qxxxx:
 	        1♥ (1S) 3♥;
@@ -12,7 +12,7 @@ common 1M (1z) {
 	    test xxx Kxx Kx xxxxx:
 	        1♥ (1S) 2♥;
 	
-	3z:"splinter" => gf+, 1- z, 4+ M;
+	Jz:<4M:"splinter" => gf+, 1- z, 4+ M;
 	    test x Kxxx Axx Axxxx:
 	        1♥ (1S) 3♠;
 	
@@ -20,9 +20,12 @@ common 1M (1z) {
 	    test Kxx xx Axx AQxxx :
 	        1♥ (1S) 2♣;
 
-    X:"negative" => 7+ hcp, 4+ m, 4+ om;	
+    X:"negative" => 7+ hcp, 4+ x, 4+ y;	
 	    test xxx xx Axxx AJxx :
 	        1♥ (1S) X;
+    X:"negative" => 7+ hcp, 4+ OM;	
+	    test Axxx xx Axx xxxx :
+	        1♥ (2C) X;
     
 	1N => 6-10 hcp, stoppers z, partial_stoppers unbid, 7- fit M ;
 	    test Axxx xx Axxx Jxx :
