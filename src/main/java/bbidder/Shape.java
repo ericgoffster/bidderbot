@@ -617,7 +617,20 @@ public enum Shape {
     }
 
     /**
-     * @return true if the shape is balance
+     * @return true if the shape is semi balanced
+     */
+    public boolean isSemiBalanced() {
+        for (int suit = 0; suit < 4; suit++) {
+            int len = numInSuit(suit);
+            if (len < 2 || len > 5) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return true if the shape is balanced
      */
     public boolean isBalanced() {
         int ndoub = 0;

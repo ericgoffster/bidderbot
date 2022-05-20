@@ -36,6 +36,13 @@ public final class Rebiddable extends Inference {
     }
 
     private IBoundInference createrBound(int suit, InfSummary meSummary) {
+        OptionalInt bidSuits = meSummary.getBidSuits();
+        if (!bidSuits.isPresent()) {
+            return ConstBoundInference.F;
+        }
+        if ((bidSuits.getAsInt() & (1 << suit)) == 0) {
+            return ConstBoundInference.F;
+        }
         OptionalInt minLenInSuit = meSummary.minLenInSuit(suit);
         if (!minLenInSuit.isPresent()) {
             return ConstBoundInference.F;

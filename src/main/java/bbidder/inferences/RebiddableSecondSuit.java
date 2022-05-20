@@ -41,6 +41,16 @@ public final class RebiddableSecondSuit extends Inference {
     }
 
     private static IBoundInference createrBound(int longer, int shorter, InfSummary meSummary) {
+        OptionalInt bidSuits = meSummary.getBidSuits();
+        if (!bidSuits.isPresent()) {
+            return ConstBoundInference.F;
+        }
+        if ((bidSuits.getAsInt() & (1 << longer)) == 0) {
+            return ConstBoundInference.F;
+        }
+        if ((bidSuits.getAsInt() & (1 << shorter)) == 0) {
+            return ConstBoundInference.F;
+        }
         OptionalInt minLenInSuit = meSummary.minLenInSuit(shorter);
         if (!minLenInSuit.isPresent()) {
             return ConstBoundInference.F;

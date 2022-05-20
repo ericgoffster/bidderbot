@@ -48,7 +48,7 @@ NJz:>2x => 4+z, 5+x, nofit y, 18+tpts;
         2♣;
 
 1x 1y
-1N => 12-14 tpts, nofit y;
+1N => semibalanced, 12-14 tpts, nofit y;
     test Qxx Axx Ax Axxxx:
         1♣ 1♦
         1N;
@@ -57,7 +57,7 @@ NJz:>2x => 4+z, 5+x, nofit y, 18+tpts;
         1N;
 
 1x 1y
-2N => 18-19 tpts, nofit y;
+2N => balanced, 18-19 tpts, nofit y;
     test AQx Axx Ax Axxxx:
         1♣ 1♦
         2N;

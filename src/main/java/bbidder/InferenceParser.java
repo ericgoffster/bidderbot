@@ -16,6 +16,7 @@ import bbidder.inferences.NotInference;
 import bbidder.inferences.Preference;
 import bbidder.inferences.Rebiddable;
 import bbidder.inferences.RebiddableSecondSuit;
+import bbidder.inferences.SemiBalanced;
 import bbidder.inferences.SpecificCards;
 import bbidder.inferences.StoppersInSuits;
 import bbidder.inferences.SuitRange;
@@ -78,6 +79,11 @@ public final class InferenceParser {
         case Balanced.NAME:
             if (remainder.equals("")) {
                 return Balanced.BALANCED;
+            }
+            break;
+        case SemiBalanced.NAME:
+            if (remainder.equals("")) {
+                return SemiBalanced.SEMI_BALANCED;
             }
             break;
         case VeryBalanced.NAME:

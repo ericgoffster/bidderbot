@@ -6,19 +6,6 @@
 # S = ♠
 
 #
-# Bid NT if possible to the right level
-#
-[] 3N => gf, partial_stoppers unstopped;
-    test Axx AQxx Qxx Qxx:
-        1C 1H
-        1N 3N;
-
-[] 2N => inv, partial_stoppers unstopped;
-    test Axx Kxxx Qxx Qxx:
-        1C 1H
-        1N 2N;
-
-#
 # Pass NT 
 #
 [] 3N P => gf-;
@@ -30,6 +17,19 @@
     test xxx Kxxx Kxx xxx:
         1C 1H
         2N P;
+
+#
+# Bid NT if possible to the right level
+#
+[] 3N => gf, partial_stoppers unstopped;
+    test Axx AQxx Qxx Qxx:
+        1C 1H
+        1N 3N;
+
+[] 2N => inv, partial_stoppers unstopped;
+    test Axx Kxxx Qxx Qxx:
+        1C 1H
+        1N 2N;
 
 #
 # Bid a new suit
