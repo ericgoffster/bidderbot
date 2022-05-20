@@ -5,6 +5,7 @@
 # H = ♥
 # S = ♠
 
+# Pass playable fits
 [[Pass any playable fit]]
 [fit_established y] ?y P => always;
 
@@ -17,7 +18,7 @@
 [[Pass any playable fit]]
 [partner_bid_suit y] ?y P => fit y;
 
-[[Return to known fit]]
+[[Return to known fit over a suit bid]]
 [fit_established y] ?x NJy => nofit x;
     test AKx Axxx Axx Qxx:
         1N 2D
@@ -30,42 +31,26 @@
 [[Pass 3NT]]
 [] ?N:>2N P => always;
 
-[[Return to best known fit over notrump]]
-[bestfit8_established y] ?N:<3N NJy => always;
+# Bid playable fits
+[[Return to best known fit]]
+[bestfit8_established y] NJy => always;
     test AQX KJxx AJxx xx:
         1N 2N
         3♣;
 
 [[Self support suit]]
-[i_bid_suit y] ?N:<3N NJy => fit y;
+[i_bid_suit y] NJy => fit y;
 
 [[Support suit]]
-[partner_bid_suit y] ?N:<3N NJy => fit y;
-
-[[Pass NT]]
-[] ?N P => always;
-    test xxx xxxx xxx xxx:
-        1N P;
-    test xxx xxxx xxx xxx:
-        2N P;
-    test Qxx Kx xxxxx Qxx:
-        1♣ 1♦
-        1N P;
-
-[[Return to established suit]]
-[fit_established y] ?x NJy => nofit x;
-
-[[Self support suit]]
-[i_bid_suit y] ?x NJy => nofit x,fit y;
-
-[[Support suit]]
-[partner_bid_suit y] ?x NJy => nofit x,fit y;
+[partner_bid_suit y] NJy => fit y;
     test AQx xxx AJx Axxx:
         1N 2♦
         2♥;
     test AQx xxx AJx Axxx:
         1N 2♥
         2♠;
+
+# At this point, no playable fits at all
 
 [[Pass partners rebiddable suit]]
 [partner_bid_suit y at_least 6] ?y P => always;
@@ -79,10 +64,17 @@
         2C P;
 
 [[Rebid own suit]]
-[i_bid_suit x] ?y NJx => nofit y, rebiddable m;
+[i_bid_suit x] NJx => rebiddable m;
 
-[[Rebid own suit below 3N]]
-[i_bid_suit x] ?N:<3N NJx => rebiddable m;
+[[Pass NT]]
+[] ?N P => always;
+    test xxx xxxx xxx xxx:
+        1N P;
+    test xxx xxxx xxx xxx:
+        2N P;
+    test Qxx Kx xxxxx Qxx:
+        1♣ 1♦
+        1N P;
 
 [[Pass preference]]
 [partner_is_two_suited x y] ?x P => prefer x to y;
