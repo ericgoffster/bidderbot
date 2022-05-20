@@ -70,97 +70,96 @@ common [] 1N:"nt_opener" 2M-1 {
 	    test AQ xxxx AJx Axxx:
 	        1N 2♥
 	        2♠;
-}
-
-common [] 1N:"nt_opener" 2M-1 2M {
-	
-    [[Bid 2S with 5-5 in the majors and invitational values]]  
-	2OM => inv, 5+OM;
-	    test AJxxx Jxxxx xx x:
-	        1N 2♦
-	        2♥ 2♠;
-	
-	[[Bid 3${M} with 6${M} and invitational values]]  
-	3M => inv, 6+M;
-	    test Axx Kxxxxx xx xx:
-	        1N 2♦
-	        2♥ 3♥;
-	    test Kxxxxx Axx xx xx:
-	        1N 2♥
-	        2♠ 3♠;
-	
-	[[Bid 2N with 5${M} and invitational values]]  
-	2N => inv, 5M;
-	    test Axx Kxxxx xx Jxx:
-	        1N 2♦
-	        2♥ 2N;
-	    test Axxxx Kxx xx Jxx:
-	        1N 2♥
-	        2♠ 2N;
-	
-	[[Bid a new minor suit with 4 or more and game forcing values (or better)]]  
-	3m => gf+, 4+m;
-	    test Axx Axxxx x Axxx:
-	        1N 2♦
-	        2♥ 3♣;
-	    test Axxxx Axx x Axxx:
-	        1N 2♥
-	        2♠ 3♣;
-	
-	[[Bid 3N with only 5${M}]]  
-	3N => gf, 5M;
-	    test AJx AQxxx xxx xx:
-	        1N 2♦
-	        2♥ 3N;
-	    test AQxxx AJx xxx xx:
-	        1N 2♥
-	        2♠ 3N;
-	
-	[[Self supporting splinter into a suit with slam invitational values]]  
-	Jx => slaminv, 6+M, 1-x;
-	    test x AQxxxx Axx Axx:
-	        1N 2♦
-	        2♥ 3♠;
-	    test AQxxxx x Axx Axx:
-	        1N 2♥
-	        2♠ 4♥;
-	    test Axx AQxxxx Axx x:
-	        1N 2♦
-	        2♥ 4♣;
-	    test AQxxxx Axx Axx x:
-	        1N 2♥
-	        2♠ 4♣;
-	    test Axx AQxxxx x Axx:
-	        1N 2♦
-	        2♥ 4♦;
-	    test AQxxxx Axx x Axx:
-	        1N 2♥
-	        2♠ 4♦;
-	
-	[[Bid 4${M} with 6${M} and a slam invitation]]  
-	4M => slaminv, 6+M;
-	    test Axx AQJxxx Ax xx:
-	        1N 2♦
-	        2♥ 4♥;
-	    test AQJxxx Axx Ax xx:
-	        1N 2♥
-	        2♠ 4♠;
-	
-	[[Bid quantitative 4N with only 5${M}]]  
-	4N => slaminv, 5M;
-	    test Axx AQxxx AQx xx:
-	        1N 2♦
-	        2♥ 4N;
-	    test AQxxx Axx AQx xx:
-	        1N 2♥
-	        2♠ 4N;
-	
-	[[Bid "pick a slam" 5N with only 5${M}]]  
-	5N => slam, 5M;
-	    test Axx AQxxx AQx Kx:
-	        1N 2♦
-	        2♥ 5N;
-	    test AQxxx Axx AQx Kx:
-	        1N 2♥
-	        2♠ 5N;
+	continuations {
+		
+	    [[Bid 2S with 5-5 in the majors and invitational values]]  
+		2OM => inv, 5+OM;
+		    test AJxxx Jxxxx xx x:
+		        1N 2♦
+		        2♥ 2♠;
+		
+		[[Bid 3${M} with 6${M} and invitational values]]  
+		3M => inv, 6+M;
+		    test Axx Kxxxxx xx xx:
+		        1N 2♦
+		        2♥ 3♥;
+		    test Kxxxxx Axx xx xx:
+		        1N 2♥
+		        2♠ 3♠;
+		
+		[[Bid 2N with 5${M} and invitational values]]  
+		2N => inv, 5M;
+		    test Axx Kxxxx xx Jxx:
+		        1N 2♦
+		        2♥ 2N;
+		    test Axxxx Kxx xx Jxx:
+		        1N 2♥
+		        2♠ 2N;
+		
+		[[Bid a new minor suit with 4 or more and game forcing values (or better)]]  
+		3m => gf+, 4+m;
+		    test Axx Axxxx x Axxx:
+		        1N 2♦
+		        2♥ 3♣;
+		    test Axxxx Axx x Axxx:
+		        1N 2♥
+		        2♠ 3♣;
+		
+		[[Bid 3N with only 5${M}]]  
+		3N => gf, 5M;
+		    test AJx AQxxx xxx xx:
+		        1N 2♦
+		        2♥ 3N;
+		    test AQxxx AJx xxx xx:
+		        1N 2♥
+		        2♠ 3N;
+		
+		[[Self supporting splinter into a suit with slam invitational values]]  
+		Jx => slaminv, 6+M, 1-x;
+		    test x AQxxxx Axx Axx:
+		        1N 2♦
+		        2♥ 3♠;
+		    test AQxxxx x Axx Axx:
+		        1N 2♥
+		        2♠ 4♥;
+		    test Axx AQxxxx Axx x:
+		        1N 2♦
+		        2♥ 4♣;
+		    test AQxxxx Axx Axx x:
+		        1N 2♥
+		        2♠ 4♣;
+		    test Axx AQxxxx x Axx:
+		        1N 2♦
+		        2♥ 4♦;
+		    test AQxxxx Axx x Axx:
+		        1N 2♥
+		        2♠ 4♦;
+		
+		[[Bid 4${M} with 6${M} and a slam invitation]]  
+		4M => slaminv, 6+M;
+		    test Axx AQJxxx Ax xx:
+		        1N 2♦
+		        2♥ 4♥;
+		    test AQJxxx Axx Ax xx:
+		        1N 2♥
+		        2♠ 4♠;
+		
+		[[Bid quantitative 4N with only 5${M}]]  
+		4N => slaminv, 5M;
+		    test Axx AQxxx AQx xx:
+		        1N 2♦
+		        2♥ 4N;
+		    test AQxxx Axx AQx xx:
+		        1N 2♥
+		        2♠ 4N;
+		
+		[[Bid "pick a slam" 5N with only 5${M}]]  
+		5N => slam, 5M;
+		    test Axx AQxxx AQx Kx:
+		        1N 2♦
+		        2♥ 5N;
+		    test AQxxx Axx AQx Kx:
+		        1N 2♥
+		        2♠ 5N;
+	}
 }
