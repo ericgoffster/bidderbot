@@ -1,15 +1,14 @@
 package bbidder.generalities;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
+import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SuitTable;
 import bbidder.utils.SplitUtil;
 
 public final class FitEstablished extends Generality {
@@ -28,13 +27,10 @@ public final class FitEstablished extends Generality {
     @Override
     public boolean test(Players players, Auction bidList) {
         int s = symbol.getResolvedStrain();
-        Optional<Integer> meLen = players.partner.infSummary.minLenInSuit(s);
-        Optional<Integer> partnerLen = players.me.infSummary.minLenInSuit(s);
-        if (!meLen.isPresent() || !partnerLen.isPresent()) {
-            return false;
-        }
-        return meLen.get() + partnerLen.get() >= 8;
-    }
+        return players.partner.infSummary.minLenInSuit(s)
+                .map(partnerLen -> players.me.infSummary.minLenInSuit(s).map(meLen -> meLen + partnerLen >= 8).orElse(false))
+                .orElse(false);
+     }
 
     public static FitEstablished valueOf(String str) {
         if (str == null) {
