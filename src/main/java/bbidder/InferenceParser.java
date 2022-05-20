@@ -32,15 +32,15 @@ import bbidder.utils.SplitUtil;
  */
 public final class InferenceParser {
     private static final Map<String, Integer> POINT_RANGES = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35, "grand", 37);
-    private static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
-    private static Pattern PATT_PREF = Pattern.compile("\\s*prefer\\s*(.*)\\s*to\\s*(.*)", Pattern.CASE_INSENSITIVE);
-    private static Pattern PATT_REBIDDABLE = Pattern.compile("\\s*rebiddable\\s*(.*)", Pattern.CASE_INSENSITIVE);
-    private static Pattern PATT_REBIDDABLE_2nd_SUIT = Pattern.compile("\\s*rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PATT_FIT = Pattern.compile("fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PATT_PREF = Pattern.compile("prefer\\s*(.*)\\s*to\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PATT_REBIDDABLE = Pattern.compile("rebiddable\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PATT_REBIDDABLE_2nd_SUIT = Pattern.compile("rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
     private static Pattern PATT_SPECIFIC_CARDS = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
-    private static Pattern PATT_MIN_TO_MAX = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
-    private static Pattern PATT_MAX = Pattern.compile("\\s*(\\d+)\\s*\\-\\s*(.*)");
-    private static Pattern PATT_MIN = Pattern.compile("\\s*(\\d+)\\s*\\+\\s*(.*)");
-    private static Pattern PATT_EXACT = Pattern.compile("\\s*(\\d+)\\s*(.*)");
+    private static Pattern PATT_MIN_TO_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
+    private static Pattern PATT_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(.*)");
+    private static Pattern PATT_MIN = Pattern.compile("(\\d+)\\s*\\+\\s*(.*)");
+    private static Pattern PATT_EXACT = Pattern.compile("(\\d+)\\s*(.*)");
     
     /**
      * @param str
@@ -73,7 +73,7 @@ public final class InferenceParser {
             return Always.ALWAYS;
         }
         {
-            RangeOf rng = InferenceParser.parseRange(str);
+            RangeOf rng = InferenceParser.parseRange(str.trim());
             if (rng != null) {
                 if (rng.of.equalsIgnoreCase("hcp")) {
                     return new HCPRange(PointRange.between(rng.min, rng.max));
@@ -102,7 +102,7 @@ public final class InferenceParser {
             }
         }
         {
-            Inference i = InferenceParser.parseLongestOrEq(str);
+            Inference i = InferenceParser.parseLongestOrEq(str.trim());
             if (i != null) {
                 return i;
             }
@@ -117,7 +117,7 @@ public final class InferenceParser {
             }
         }
         {
-            Matcher m = InferenceParser.PATT_REBIDDABLE.matcher(str);
+            Matcher m = InferenceParser.PATT_REBIDDABLE.matcher(str.trim());
             if (m.matches()) {
                 Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
                 if (sym != null) {
@@ -126,7 +126,7 @@ public final class InferenceParser {
             }
         }
         {
-            Matcher m = InferenceParser.PATT_REBIDDABLE_2nd_SUIT.matcher(str);
+            Matcher m = InferenceParser.PATT_REBIDDABLE_2nd_SUIT.matcher(str.trim());
             if (m.matches()) {
                 Symbol longer = SymbolParser.parseSymbol(m.group(1).trim());
                 Symbol shorter = SymbolParser.parseSymbol(m.group(2).trim());
@@ -142,7 +142,7 @@ public final class InferenceParser {
             }
         }
         {
-            String[] parts = SplitUtil.split(str, "\\s+", 2);
+            String[] parts = SplitUtil.split(str.trim(), "\\s+", 2);
             if (parts.length == 2 && parts[0].equalsIgnoreCase("stoppers")) {
                 return new StoppersInSuits(SuitSetParser.lookupSuitSet(parts[1]), false);
             }
@@ -151,7 +151,7 @@ public final class InferenceParser {
             }
         }
         {
-            Matcher m = InferenceParser.PATT_PREF.matcher(str);
+            Matcher m = InferenceParser.PATT_PREF.matcher(str.trim());
             if (m.matches()) {
                 Symbol sym1 = SymbolParser.parseSymbol(m.group(1).trim());
                 if (sym1 != null) {
@@ -209,15 +209,11 @@ public final class InferenceParser {
             int higher = h.getAsInt();
             return new CombinedTotalPointsRange(PointRange.between(lower, higher));
         }
-        PointRange createRange = InferenceParser.createTPtsRange(str);
+        PointRange createRange = InferenceParser.createTPtsRange(str, InferenceParser.POINT_RANGES);
         if (createRange == null) {
             return null;
         }
         return new CombinedTotalPointsRange(createRange);
-    }
-
-    private static PointRange createTPtsRange(String str) {
-        return InferenceParser.createTPtsRange(str, InferenceParser.POINT_RANGES);
     }
 
     private static PointRange createTPtsRange(String str, Map<String, Integer> m) {
