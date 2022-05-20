@@ -1,12 +1,15 @@
 # Responses after a partners takeout double
 
 common (2w) * X:"takeout_2" {
-    3w:down => gf, 4+M, 4+y;
+    3w:down => gf, 4+x, 4+y;
         test AQxx xx Axxx Kxx:
 	        (2H) X 3H;
-    4M:down => gf, 4+M;
+	Jx:<3N => gf, 4+x;
         test AQxxx xx Axx Kxx:
-	        (2H) X  4S;
+	        (2H) X 3S;	
+    4M:down => gf, 4+M;
+        test xx AQxxx Axx Kxx:
+	        (2S) X  4H;
     3N => gf, stoppers w;
         test Axx AQx xxxx Kxx:
 	        (2H) X 3N;
