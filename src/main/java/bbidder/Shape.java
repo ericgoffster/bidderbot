@@ -2,6 +2,12 @@ package bbidder;
 
 import bbidder.utils.BitUtil;
 
+/**
+ * Represents a particular suit shape.
+ * 
+ * @author goffster
+ *
+ */
 public enum Shape {
     _03070003(3, 7, 0, 3, 0.000221730),
     _00020605(0, 2, 6, 5, 0.000270860),
@@ -564,22 +570,25 @@ public enum Shape {
     _03050302(3, 5, 3, 2, 0.0129367),
     _01060006(1, 6, 0, 6, 5.97800e-05);
 
-    final int[] num = new int[4];
+    final int[] num;
     final double probability;
 
+    /**
+     * 
+     * @param suit
+     *            The suit
+     * @return The number of cards in the given suit.
+     */
     public int numInSuit(int suit) {
         return num[suit];
     }
 
     private Shape(int c, int d, int h, int s, double probability) {
-        this.num[0] = c;
-        this.num[1] = d;
-        this.num[2] = h;
-        this.num[3] = s;
+        num = new int[] { c, d, h, s };
         this.probability = probability;
     }
 
-    static final Shape[][][] numToShape = new Shape[14][14][14];
+    private static final Shape[][][] numToShape = new Shape[14][14][14];
 
     static {
         for (Shape s : Shape.values()) {
@@ -587,14 +596,29 @@ public enum Shape {
         }
     }
 
+    /**
+     * 
+     * @param num
+     *            The array of suit lengths
+     * @return The shape corresponding to the numbers;
+     */
     public static Shape getShape(int... num) {
-        Shape shape = numToShape[num[0]][num[1]][num[2]];
-        if (shape == null) {
-            throw new IllegalArgumentException();
+        if (num.length != 4) {
+            throw new IllegalArgumentException("Less than 4 suits specified");
         }
-        return shape;
+        int n = num[0] + num[1] + num[2] + num[3];
+        if (n != 13) {
+            throw new IllegalArgumentException("Not enough cards");
+        }
+        if (num[0] < 0 || num[1] < 0 || num[2] < 0 || num[3] < 0) {
+            throw new IllegalArgumentException("Negative number in a suit");
+        }
+        return numToShape[num[0]][num[1]][num[2]];
     }
 
+    /**
+     * @return true if the shape is balance
+     */
     public boolean isBalanced() {
         int ndoub = 0;
         for (int suit = 0; suit < 4; suit++) {
@@ -609,6 +633,9 @@ public enum Shape {
         return ndoub <= 1;
     }
 
+    /**
+     * @return true if the shape is 4333
+     */
     public boolean isSuperBalanced() {
         for (int suit = 0; suit < 4; suit++) {
             int len = numInSuit(suit);
@@ -619,10 +646,26 @@ public enum Shape {
         return true;
     }
 
+    /**
+     * 
+     * @param suit
+     *            The suit
+     * @param rng
+     *            The range
+     * @return True if number of cards in the given suit matches the range.
+     */
     public boolean isSuitInRange(int suit, SuitLengthRange rng) {
         return rng.contains(numInSuit(suit));
     }
 
+    /**
+     * 
+     * @param suit
+     *            The suit
+     * @param among
+     *            Bit pattern of suits
+     * @return true if the given suit is longer or equal among all other suits in the bit pattern
+     */
     public boolean isLongerOrEqual(int suit, short among) {
         int len = numInSuit(suit);
         return !BitUtil.stream(among).filter(s -> numInSuit(s) > len).findFirst().isPresent();
