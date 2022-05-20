@@ -43,13 +43,6 @@ public final class ConstGenerality extends Generality {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ConstGenerality other = (ConstGenerality) obj;
-        return value == other.value;
+        return this == obj;
     }
 }
