@@ -16,7 +16,7 @@
 	test AQxxx AKQxx xx x:
 	        (1D) 2D;
 
-(1x) 2x:"michaels" [i bid y] NJy:<3N NJx => 18+ tpts ;
+(1x) 2x:"michaels":i bid y NJy:<3N NJx => 18+ tpts ;
 	test AQxxx AKQxx xx x:
 		 (1D) 2D 2H 3D;
 
@@ -36,7 +36,7 @@
 	test xx x AQxxx AKQxx :
 	        (1S) 2N;
 
-(1x) 2N:"unusual" [i bid y] NJy:<3N NJx => 18+ tpts ;
+(1x) 2N:"unusual":i bid y NJy:<3N NJx => 18+ tpts ;
 	test xx AQxxx AKQxx x:
 	        (1C) 2N 3D 4C ;
 

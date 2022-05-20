@@ -3,6 +3,7 @@ package bbidder;
 import java.util.Comparator;
 import java.util.Objects;
 
+import bbidder.generalities.AndGenerality;
 import bbidder.symbols.ConstSymbol;
 import bbidder.utils.MyStream;
 
@@ -74,6 +75,14 @@ public final class BidPattern {
     public BidPattern withGenerality(Generality generality) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
                 lessThan, isWild);
+    }
+
+    public BidPattern addGenerality(Generality generality) {
+        if (this.generality == null) {
+            return withGenerality(generality);
+        } else {
+            return withGenerality(AndGenerality.create(this.generality, generality));
+        }
     }
 
     public BidPattern withIsOpposition(boolean isOpposition) {

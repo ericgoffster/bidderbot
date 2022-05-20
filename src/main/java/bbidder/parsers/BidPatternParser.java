@@ -4,8 +4,12 @@ import java.io.IOException;
 
 import bbidder.Bid;
 import bbidder.BidPattern;
+import bbidder.Position;
+import bbidder.RangeOf;
 import bbidder.Seats;
+import bbidder.SuitLengthRange;
 import bbidder.Symbol;
+import bbidder.generalities.BidSuitGenerality;
 
 /**
  * Parses a Bid Pattern.
@@ -53,7 +57,35 @@ public final class BidPatternParser implements Parser<BidPattern> {
                 }
                 p = p.withTags(p.tags.addTag(tag.toString()));
             } else {
-                throw new IllegalArgumentException("bad modifier");
+                String tag = inp.readToken(ch -> Character.isJavaIdentifierPart(ch));
+                switch(tag) {
+                case "i":
+                case "partner":
+                    Position position = Position.getPosition(tag);
+                    inp.advanceWhite();
+                    if (inp.readKeyword("BID")) {
+                        String sym = inp.readToken(ch -> !Character.isWhitespace(ch) && ch != ':');
+                        Symbol symbol = SymbolParser.parseSymbol(sym);
+                        if (symbol == null) {
+                            throw new IllegalArgumentException("Invalid symbol");
+                        }
+                        SuitLengthRange range;
+                        inp.advanceWhite();
+                        if (inp.readKeyword("PROMISING")) {
+                            String rngs = inp.readToken(ch -> !Character.isWhitespace(ch) && ch != ':');
+                            RangeOf rng = RangeParser.parseRange(rngs);
+                            range = SuitLengthRange.between(rng.min, rng.max);
+                        } else {
+                            range = SuitLengthRange.atLeast(0);
+                        }
+                        p = p.addGenerality(new BidSuitGenerality(symbol, position, range));
+                    } else {
+                        throw new IllegalArgumentException("Invalid bid pattern");
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid bid pattern");
+                }
             }
         }
         return p;
