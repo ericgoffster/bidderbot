@@ -79,7 +79,13 @@ public final class BiddingSystem {
             });
             BidPattern p = rsbi.unresolved.bids.getLastBid();
             if (p.symbol != null && p.symbol.downTheLine()) {
-                tmp.sort((a, b) -> -a.bid.compareTo(b.bid));
+                tmp.sort((a, b) ->  {
+                    int cmp = Integer.compare(a.bid.level, b.bid.level);
+                    if (cmp != 0) {
+                        return cmp;
+                    }
+                    return -Integer.compare(a.bid.strain, b.bid.strain);
+                });
             } else {
                 tmp.sort((a, b) -> a.bid.compareTo(b.bid));
             }
