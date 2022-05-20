@@ -1,4 +1,6 @@
+include two_suited.bidding;
 include opening.bidding;
+include opening_1over1.bidding;
 include resp_overcall.bidding;
 include resp_takeout.bidding;
 include passout.bidding;

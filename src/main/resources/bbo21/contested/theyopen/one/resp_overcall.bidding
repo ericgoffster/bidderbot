@@ -21,3 +21,18 @@ common (1w) 1x {
 	    test xx AQxx xxxx KJx:
 	        (1C) 1S 1N;
 }
+
+common (1w) NJx:>1N {
+    NJw:"cuebid" => 11+ tpts, 3+x, 10+ hcp;
+	    test xx AQxx AJxx xxx:
+	        (1S) 2H 2S;
+    NJx => 8-10 tpts, 3+x;
+	    test xx AQx Kxxxx xxx:
+	        (1S) 2H 3H;
+	NJy:>1N => 10+ tpts, 8+ hcp, 6+y;
+	    test xx AQJxxx Qxx xx:
+	        (1S) 2C 2H;
+	2N => 10-13 hcp, stoppers w;
+	    test AQxx xx xxxx KJx:
+	        (1S) 2H 2N;
+}

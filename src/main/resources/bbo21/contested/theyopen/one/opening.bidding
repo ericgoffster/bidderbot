@@ -1,46 +1,5 @@
 # Simple overcalls
 
-(1M) 2M:"michaels" => 5+ OM, 5+ m, 8-10 hcp ;
-	test AQxxx xx Kxxxx x:
-	        (1H) 2H;
-	        
-(1M) 2M:"michaels" => 5+ OM, 5+ m, 18+ tpts ;
-	test AQxxx xx AKQxx x:
-	        (1H) 2H;
-
-(1m) 2m:"michaels" => 5+ M, 5+ OM, 8-10 hcp ;
-	test AQxxx Kxxxx xx x:
-	        (1D) 2D;
-	        
-(1m) 2m:"michaels" => 5+ M, 5+ OM, 18+ tpts ;
-	test AQxxx AKQxx xx x:
-	        (1D) 2D;
-
-(1x) 2x:"michaels":i bid y NJy:<3N NJx => 18+ tpts ;
-	test AQxxx AKQxx xx x:
-		 (1D) 2D 2H 3D;
-
-(1m) 2N:"unusual" => 5+ om, 5+H, 8-10 hcp ;
-	test xx AQxxx Kxxxx x:
-	        (1C) 2N;
-	        
-(1m) 2N:"unusual" => 5+ om, 5+H, 18+ tpts ;
-	test xx AQxxx AKQxx x:
-	        (1C) 2N;
-	        
-(1M) 2N:"unusual" => 5+ C, 5+ D, 8-10 hcp ;
-	test xx x AQxxx Kxxxx :
-	        (1S) 2N;
-	        
-(1M) 2N:"unusual" => 5+ C, 5+ D, 18+ tpts ;
-	test xx x AQxxx AKQxx :
-	        (1S) 2N;
-
-(1x) 2N:"unusual":i bid y NJy:<3N NJx => 18+ tpts ;
-	test xx AQxxx AKQxx x:
-	        (1C) 2N 3D 4C ;
-
-
 common (1w) {
 	2x:>2w => 4-9 hcp, 6 x, 2+ of top 3 in x;
 		test xxx KQJxxx xxx x:
@@ -69,42 +28,4 @@ common (1w) {
 	X:"takeout_1" => 18+ tpts;
 		test AQ AQxx Axxxx Ax:
 		        (1H) x;
-}
-
-common (1w) P (1z) {
-	2N:"unusual" => 5+ x, 5+ y, 8-10 hcp ;
-		test x xx AKxxx Qxxxx:
-		        (1H) P (1S) 2N;
-
-	2N:"unusual" => 5+ x, 5+ y, 18+ tpts;
-		test x xx AKQxx AQxxx:
-		        (1H) P (1S) 2N;
-	
-	2x:>2z => 4-9 hcp, 6 x, 2+ of top 3 in x;
-		test xxx KQJxxx xxx x:
-		        (1C) P (1D) 2H;
-	
-	3x => 10- hcp, 3+ tpts, 7 x, 2+ of top 3 in x;
-		test xxx KQJxxxx xx x:
-		        (1C) P (1S) 3H;
-	
-	NJy:>1N:down => 5+ y, 10+ hcp, 11+ tpts, 2+ of top 3 in y;
-		test Axx AQxxxx xx xx:
-		        (1C) P (1S) 2H;
-	
-	1y:down => 5+ y, 7+ hcp, 8+ tpts;
-		test AQxxx Axx xxx xx:
-		        (1C) P (1H) 1S;
-	
-	1N:"nt_opener" => stoppers w, stoppers z, 15-17 hcp;
-		test AQxx Axx Axx Qxx:
-		        (1H) P (1S) 1N;
-	        
-	X:"takeout_1" => 12+ tpts, 4+ x, 4+ y;
-		test Axx xx Axxx KQxx:
-		        (1H) P (1S) x;
-	
-	X:"takeout_1" => 18+ tpts;
-		test AQ AQxx Axxxx Ax:
-		        (1H) P (1S) x;
 }
