@@ -45,7 +45,7 @@ public final class PointRange extends Range {
         if (n < 0 || n > MAX) {
             throw new IllegalArgumentException();
         }
-        return new PointRange(~BitUtil.bitMask(n - 1) & BitUtil.bitMask(MAX));
+        return new PointRange(BitUtil.bitMask(MAX) ^ BitUtil.bitMask(n - 1));
     }
 
     public static PointRange atMost(Integer n) {

@@ -9,8 +9,15 @@ import java.util.Objects;
  *
  */
 public final class PossibleBid {
-    final BidInference inf;
-    final Bid bid;
+    /**
+     * The inference for the bid.
+     */
+    public final BidInference inf;
+    
+    /**
+     * The bid itself
+     */
+    public final Bid bid;
 
     public PossibleBid(BidInference inf, Bid bid) {
         super();

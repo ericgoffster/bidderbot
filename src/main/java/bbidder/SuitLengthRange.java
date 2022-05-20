@@ -45,7 +45,7 @@ public final class SuitLengthRange extends Range {
         if (n < 0 || n > MAX) {
             throw new IllegalArgumentException();
         }
-        return new SuitLengthRange(~BitUtil.bitMask(n - 1) & BitUtil.bitMask(MAX));
+        return new SuitLengthRange(BitUtil.bitMask(MAX) ^ BitUtil.bitMask(n - 1));
     }
 
     public static SuitLengthRange atMost(Integer n) {

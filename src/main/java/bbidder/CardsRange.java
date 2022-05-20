@@ -45,7 +45,7 @@ public final class CardsRange extends Range {
         if (n < 0 || n > MAX) {
             throw new IllegalArgumentException();
         }
-        return new CardsRange(~BitUtil.bitMask(n - 1) & BitUtil.bitMask(MAX));
+        return new CardsRange(BitUtil.bitMask(MAX) ^ BitUtil.bitMask(n - 1));
     }
 
     public static CardsRange atMost(Integer n) {
