@@ -6,12 +6,12 @@ import java.util.stream.Stream;
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
-import bbidder.Range;
+import bbidder.PointRange;
 import bbidder.Shape;
 import bbidder.ShapeSet;
+import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SuitTable;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.HcpBoundInf;
 import bbidder.inferences.bound.ShapeBoundInf;
@@ -36,7 +36,7 @@ public final class OpeningPreempt extends Inference {
     @Override
     public IBoundInference bind(Players players) {
         int strain = symbol.getResolvedStrain();
-        return AndBoundInf.create(HcpBoundInf.create(Range.between(5, 10, 40)),
+        return AndBoundInf.create(HcpBoundInf.create(PointRange.between(5, 10)),
                 ShapeBoundInf.create(ShapeSet.create(shape -> isPremptive(strain, level, shape))));
     }
 

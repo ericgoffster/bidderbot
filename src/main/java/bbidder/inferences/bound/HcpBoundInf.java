@@ -6,17 +6,16 @@ import bbidder.Hand;
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
 import bbidder.PointRange;
-import bbidder.Range;
 
 public final class HcpBoundInf implements IBoundInference {
-    private final Range r;
+    private final PointRange r;
 
     @Override
     public IBoundInference negate() {
         return create(r.not());
     }
 
-    public static IBoundInference create(Range r) {
+    public static IBoundInference create(PointRange r) {
         if (r.isEmpty()) {
             return ConstBoundInference.F;
         }
@@ -47,7 +46,7 @@ public final class HcpBoundInf implements IBoundInference {
         return r.lowest().map(lowest -> InfSummary.ALL.withTotalPoints(PointRange.atLeast(lowest))).orElse(InfSummary.NONE);
     }
 
-    private HcpBoundInf(Range r) {
+    private HcpBoundInf(PointRange r) {
         this.r = r;
     }
 
