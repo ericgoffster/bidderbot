@@ -173,3 +173,12 @@
     test AQJx xx AKxx AKx:
         2N 3♦
         3♥;
+    test AQX KJxx xx AJxx:
+        1N 3♣
+        3♦;
+
+[[No bid matches, bid cheapest known fit]]
+[bestfit_established y] ?N NJy => always;
+    test AQX KJxx AJxx xx:
+        1N 2N
+        3♣;

@@ -5,20 +5,6 @@
 # H = ♥
 # S = ♠
 
-[[Always accept the transfer]]
-1N 2N
-3♣ => always;
-    test AQX KJxx AJxx xx:
-        1N 2N
-        3♣;
-
-[[Always accept the transfer]]
-1N 3C
-3♦ => always;
-    test AQX KJxx xx AJxx:
-        1N 3♣
-        3♦;
-
 [[Bid singleton with game forcing values (or better)]]
 1N 2N
 3♣ 3x => gf+, 1-x;
