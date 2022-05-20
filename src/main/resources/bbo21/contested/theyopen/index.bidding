@@ -4,4 +4,5 @@ include wk2_overcalls.bidding;
 include resp_to1.bidding;
 include resp_to2.bidding;
 include resp_to3.bidding;
-include passout_position.bidding;
+include passout_1.bidding;
+include passout_2.bidding;
