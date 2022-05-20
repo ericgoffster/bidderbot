@@ -5,6 +5,7 @@ import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public final class ShapeSet implements Iterable<Shape> {
@@ -110,11 +111,19 @@ public final class ShapeSet implements Iterable<Shape> {
             sum[3] += s.numInSuit(3) * s.p;
             tot += s.p;
         }
+        if (tot == 0) {
+            Stat[] stats = new Stat[4];
+            stats[0] = new Stat(0, Range.none(13), Optional.empty());
+            stats[1] = new Stat(1, Range.none(13), Optional.empty());
+            stats[2] = new Stat(2, Range.none(13), Optional.empty());
+            stats[3] = new Stat(3, Range.none(13), Optional.empty());
+            return stats;
+        }
         Stat[] stats = new Stat[4];
-        stats[0] = new Stat(0, new Range(bits[0], 13), sum[0] / tot);
-        stats[1] = new Stat(1, new Range(bits[1], 13), sum[1] / tot);
-        stats[2] = new Stat(2, new Range(bits[2], 13), sum[2] / tot);
-        stats[3] = new Stat(3, new Range(bits[3], 13), sum[3] / tot);
+        stats[0] = new Stat(0, new Range(bits[0], 13), Optional.of(sum[0] / tot));
+        stats[1] = new Stat(1, new Range(bits[1], 13), Optional.of(sum[1] / tot));
+        stats[2] = new Stat(2, new Range(bits[2], 13), Optional.of(sum[2] / tot));
+        stats[3] = new Stat(3, new Range(bits[3], 13), Optional.of(sum[3] / tot));
         return stats;
     }
 
@@ -180,9 +189,9 @@ public final class ShapeSet implements Iterable<Shape> {
     public static class Stat {
         final int suit;
         final Range range;
-        final double avg;
+        final Optional<Double> avg;
 
-        public Stat(int suit, Range range, double avg) {
+        public Stat(int suit, Range range, Optional<Double> avg) {
             super();
             this.suit = suit;
             this.range = range;
@@ -191,6 +200,9 @@ public final class ShapeSet implements Iterable<Shape> {
 
         @Override
         public String toString() {
+            if (!avg.isPresent()) {
+                return "undefined " + Strain.getName(suit);
+            }
             return range + " " + Strain.getName(suit) + " average " + avg;
         }
     }

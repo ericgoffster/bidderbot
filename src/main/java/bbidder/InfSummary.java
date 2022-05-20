@@ -10,6 +10,12 @@ import java.util.stream.IntStream;
 
 import bbidder.ShapeSet.Stat;
 
+/**
+ * Represents the summary of inferences.
+ * 
+ * @author goffster
+ *
+ */
 public final class InfSummary {
     public static final InfSummary ALL = new InfSummary(ShapeSet.ALL, Range.all(40), StopperSet.ALL, StopperSet.ALL);
     public static final InfSummary NONE = new InfSummary(ShapeSet.NONE, Range.none(40), StopperSet.NONE, StopperSet.NONE);
@@ -79,17 +85,17 @@ public final class InfSummary {
         return getSuit(suit).lowest();
     }
 
-    public double avgLenInSuit(int suit) {
+    public Optional<Double> avgLenInSuit(int suit) {
         return getStat(suit).avg;
     }
 
     public short getBidSuits() {
         Integer[] suitArr = { 0, 1, 2, 3 };
-        Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgLenInSuit(s1), avgLenInSuit(s2)));
         List<Optional<Integer>> minLens = IntStream.range(0, 4).mapToObj(suit -> minLenInSuit(suit)).collect(Collectors.toList());
         if (!minLens.get(0).isPresent() || !minLens.get(1).isPresent() || !minLens.get(2).isPresent() || !minLens.get(3).isPresent()) {
             return 0;
         }
+        Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgLenInSuit(s1).get(), avgLenInSuit(s2).get()));
         List<Integer> minL = minLens.stream().map(ml -> ml.get()).collect(Collectors.toList());
         if (minL.get(suitArr[0]) >= 5 || minL.get(suitArr[0]) >= 4 && minL.get(suitArr[1]) >= 4) {
             short suits = 0;
@@ -106,7 +112,7 @@ public final class InfSummary {
         }
         {
             short suits = 0;
-            for (int i = 0; i < 4 && avgLenInSuit(suitArr[i]) >= 4; i++) {
+            for (int i = 0; i < 4 && avgLenInSuit(suitArr[i]).get() >= 4; i++) {
                 suits |= (short) (1 << suitArr[i]);
             }
             return suits;
