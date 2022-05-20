@@ -2,6 +2,16 @@ common [partner made_bid nt_opener, 7- bestfit x] {
 
 	[[Quantitative slam invite]]
 	4N => slaminv;
+	    test Axx AQxx Axx Kxx:
+	        1N 2C
+	        2D 4N;
+		test Axx Ax Axxx xxxx:
+		    2N 3♣
+		    3D 4N;
+		test Axx Ax Jxxx xxxx:
+		    2C 2D
+		    2N 3♣
+		    3D 4N;
 	    test Axx Axx AQxx Kxx:
 	        1N 4N;
 	    test Axx xx AJxxx Qxx:

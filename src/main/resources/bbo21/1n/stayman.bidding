@@ -63,12 +63,6 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		    test AJx AQx AQxxx xx:
 		        1N 2♣
 		        2♥ 3♦;
-		
-		[[Quantitative]]
-		4N => slaminv, 7- fit M;
-		    test AJxx AQx AQx xxx:
-		        1N 2♣
-		        2♥ 4N;	
 	}
 
 	[[Bid 2D with no 4 card major]]
@@ -112,11 +106,5 @@ common [] 1N:"nt_opener" 2♣:"stayman" {
 		    test AJxx AQ AQxxx xx:
 		        1N 2♣
 		        2♦ 3♦;
-		
-	    [[Quantitative]]
-		4N => slaminv;
-		    test AJxx AJxx AQx xx:
-		        1N 2♣
-		        2♦ 4N;
 	}
 }

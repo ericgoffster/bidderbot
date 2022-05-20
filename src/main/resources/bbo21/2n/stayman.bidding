@@ -148,14 +148,5 @@ common [] 2N:"nt_opener" 3♣:"stayman" {
 		        2C 2D
 		        2N 3♣
 		        3D 4♣;
-		
-		4N => slaminv;
-		    test Axx Ax Axxx xxxx:
-		        2N 3♣
-		        3D 4N;
-		    test Axx Ax Jxxx xxxx:
-		        2C 2D
-		        2N 3♣
-		        3D 4N;
 	}
 }
