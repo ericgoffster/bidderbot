@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.Objects;
 
+import bbidder.parsers.BidPatternListParser;
 import bbidder.parsers.InferenceParser;
 import bbidder.utils.MyStream;
 import bbidder.utils.SplitUtil;
@@ -68,7 +69,7 @@ public final class BidInference {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        for (BidPattern pattern : BidPatternList.valueOf(parts[0]).getBids()) {
+        for (BidPattern pattern : BidPatternListParser.parse(parts[0]).getBids()) {
             prefix = prefix.withBidAdded(pattern);
         }
         return new BidInference(description, where, prefix, InferenceParser.parseInference(parts[1]));

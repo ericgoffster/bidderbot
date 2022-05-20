@@ -1,23 +1,16 @@
 package bbidder;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import bbidder.parsers.BidPatternParser;
-import bbidder.parsers.Input;
-import bbidder.parsers.ListParser;
 import bbidder.utils.IteratorStream;
 import bbidder.utils.MyStream;
 
 /**
  * Represents the bid patterns as read in from the notes.
- * This structure lasts only long enough to call resolveFirstSymbol() which is what is actually used
- * in the compiled version of the notes.
  * 
  * @author goffster
  *
@@ -29,6 +22,10 @@ public final class BidPatternList {
     private BidPatternList(List<BidPattern> bids) {
         super();
         this.bids = bids;
+    }
+    
+    public static BidPatternList create(List<BidPattern> bids) {
+        return new BidPatternList(new ArrayList<>(bids));
     }
 
     /**
@@ -105,30 +102,30 @@ public final class BidPatternList {
     }
 
     /**
-     * Resolve the first symbol.
+     * Resolve the suit symbols for all of the bids in the list.
      * Allow for first, second, third or fourth chair openings
      * 
      * @param suits
      *            suits
      * 
-     * @return The list of resolved bidding pattern contexts
+     * @return The stream of resolved bidding pattern contexts
      */
     public MyStream<Context> resolveSuits(SuitTable suits) {
         return new IteratorStream<>(withOpposingBidding().addInitialPasses()).flatMap(bpl -> bpl.resolveSuits(BidPatternList.EMPTY, suits));
     }
 
     /**
-     * Given a bid pattern list where the suits have already been bound,
-     * return the last bid of the pattern in the context of an auction.
+     * Returns a match for the last bid in sequence
+     * for the given auction.
      * 
-     * @param bidding
+     * @param auction
      *            The auction to match.
      * @param players
      *            the players
-     * @return The last bid. null if there was no match.
+     * @return The last bid.
      */
-    public Optional<TaggedBid> getMatch(TaggedAuction bidding, Players players) {
-        List<TaggedBid> theBids = bidding.getBids();
+    public Optional<TaggedBid> getMatch(TaggedAuction auction, Players players) {
+        List<TaggedBid> theBids = auction.getBids();
         int wildSize = theBids.size() - bids.size() + 2;
         int wildPos = positionOfWild();
         if (wildPos < 0 && theBids.size() != bids.size() - 1) {
@@ -140,13 +137,13 @@ public final class BidPatternList {
         int i = 0;
         for (BidPattern pattern : bids.subList(0, bids.size() - 1)) {
             if (pattern.generality != null) {
-                if (!pattern.generality.test(players, bidding)) {
+                if (!pattern.generality.test(players, auction)) {
                     return Optional.empty();
                 }
                 i += wildSize;
             } else {
                 TaggedBid bid = theBids.get(i);
-                Contract subContract = bidding.firstN(i).getContract();
+                Contract subContract = auction.firstN(i).getContract();
                 TaggedBid newBid = pattern.resolveLevel(subContract, bid);
                 if ((!Objects.equals(bid, newBid)) ^ pattern.antiMatch) {
                     return Optional.empty();
@@ -155,7 +152,7 @@ public final class BidPatternList {
             }
             if (i > 0) {
                 TaggedBid bid = theBids.get(i - 1);
-                Contract subContract = bidding.firstN(i - 1).getContract();
+                Contract subContract = auction.firstN(i - 1).getContract();
                 if (!pattern.isBidCompatible(subContract, bid.bid)) {
                     return Optional.empty();
                 }
@@ -165,7 +162,7 @@ public final class BidPatternList {
         if (pattern.generality != null) {
             throw new IllegalArgumentException("generality not permitted in this context");
         }
-        Contract contract = bidding.getContract();
+        Contract contract = auction.getContract();
         TaggedBid newBid = pattern.resolveLevel(contract, null);
         if (!pattern.isBidCompatible(contract, newBid.bid)) {
             return Optional.empty();
@@ -174,7 +171,7 @@ public final class BidPatternList {
     }
 
     /**
-     * Given unopposed bidding sequences, will insert
+     * Given an unopposed bidding sequencs, will insert
      * passes where the opposing bidding is missing.
      * 
      * @return The new bid pattern list with passes inserted in the middle.
@@ -212,37 +209,6 @@ public final class BidPatternList {
             }
         }
         return new BidPatternList(newBids);
-    }
-
-    /**
-     * @param str
-     *            The String to parse
-     * @return A parsed BidPatternList
-     */
-    public static BidPatternList valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        ListParser<BidPattern> parser = new ListParser<BidPattern>(new BidPatternParser(), "");
-        try (Input inp = new Input(new StringReader(str))) {
-            List<BidPattern> l = parser.parse(inp);
-            inp.advanceWhite();
-            if (inp.ch != -1) {
-                throw new IllegalArgumentException("invalid bids: '" + str + "'");
-            }
-            int numWild = 0;
-            for (BidPattern patt : l) {
-                if (patt.generality != null) {
-                    numWild++;
-                }
-            }
-            if (numWild > 1) {
-                throw new IllegalArgumentException("Only one generality allowed");
-            }
-            return new BidPatternList(l);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("invalid bids: '" + str + "'", e);
-        }
     }
 
     @Override
