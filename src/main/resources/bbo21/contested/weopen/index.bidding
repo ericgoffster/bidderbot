@@ -1,0 +1,3 @@
+include resp_over_x.bidding;
+include minor_resp_after_overcall.bidding;
+include major_resp_after_overcall.bidding;
