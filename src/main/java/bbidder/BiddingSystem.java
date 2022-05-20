@@ -47,6 +47,7 @@ public final class BiddingSystem {
     public void dump(OutputStream os) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
             for (ResolvedBidInference bi : inferences) {
+                bw.write(bi.unresolved.description + ":\n");
                 bw.write(bi.unresolved.where + ":\n");
                 for(BidInference inf: bi.inferences) {
                     bw.write("    " + inf + "\n");

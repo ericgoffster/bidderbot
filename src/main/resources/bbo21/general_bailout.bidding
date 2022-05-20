@@ -27,11 +27,20 @@
         1N 3♣
         3♦;
 
-[[Return to best known fit]]
-[bestfit8_established y] ?N NJy => always;
+[[Pass 3NT]]
+[] ?N:>2N P => always;
+
+[[Return to best known fit over notrump]]
+[bestfit8_established y] ?N:<3N NJy => always;
     test AQX KJxx AJxx xx:
         1N 2N
         3♣;
+
+[[Self support suit]]
+[i_bid_suit y] ?N:<3N NJy => fit y;
+
+[[Support suit]]
+[partner_bid_suit y] ?N:<3N NJy => fit y;
 
 [[Pass NT]]
 [] ?N P => always;
@@ -42,6 +51,21 @@
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1N P;
+
+[[Return to established suit]]
+[fit_established y] ?x NJy => nofit x;
+
+[[Self support suit]]
+[i_bid_suit y] ?x NJy => nofit x,fit y;
+
+[[Support suit]]
+[partner_bid_suit y] ?x NJy => nofit x,fit y;
+    test AQx xxx AJx Axxx:
+        1N 2♦
+        2♥;
+    test AQx xxx AJx Axxx:
+        1N 2♥
+        2♠;
 
 [[Pass partners rebiddable suit]]
 [partner_bid_suit y at_least 6] ?y P => always;
@@ -80,7 +104,7 @@
     test AQxx xx AJx Axxx:
         1N 2♦
         2♥;
-    test AQx xxx AJx Axxx:
+    test AQ xxxx AJx Axxx:
         1N 2♥
         2♠;
     test AQJx Qx AKxx AKx:

@@ -191,7 +191,15 @@ public final class BidPattern {
             if (hint == null) {
                 throw new IllegalArgumentException("anonymous level not allowed");
             }
-            return Optional.of(Bid.valueOf(hint.level, strain));
+            Contract contract = auction.getContract();
+            Bid b = Bid.valueOf(hint.level, strain);
+            if (level != null && b.level != level.intValue()) {
+                return Optional.empty();
+            }
+            if (!isBidCompatible(contract, symbol, b)) {
+                return Optional.empty();
+            }
+            return Optional.of(b);
         }
         return Optional.of(Bid.valueOf(level, strain));
     }
