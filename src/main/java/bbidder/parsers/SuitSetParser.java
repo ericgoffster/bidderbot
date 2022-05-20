@@ -16,6 +16,7 @@ import bbidder.SuitSet;
 import bbidder.Symbol;
 import bbidder.suitsets.And;
 import bbidder.suitsets.ConstSet;
+import bbidder.suitsets.DeniedStoppers;
 import bbidder.suitsets.Gt;
 import bbidder.suitsets.LookupSet;
 import bbidder.suitsets.Not;
@@ -86,6 +87,8 @@ public final class SuitSetParser {
                     advance();
                 }
                 switch (sb.toString().toUpperCase()) {
+                case "DENIED":
+                    return new DeniedStoppers();
                 case "OURS":
                     return new OurSuits();
                 case "THEIRS":

@@ -26,7 +26,7 @@
         1♦ 2♠
         3♠;
 
-1x Jz:<2N 3N => balanced, partial_stoppers unstopped;
+1x Jz:<2N 3N => balanced, partial_stoppers unstopped, stoppers denied;
     test Qx Jxx AQJxx Kxx:
         1♦ 2♠
         3N;

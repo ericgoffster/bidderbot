@@ -53,7 +53,7 @@
         3H;
 
 [[Shrug NT]]
-[gf+] NJN:<4C => partial_stoppers unstopped;
+[gf+] NJN:<4C => partial_stoppers unstopped, stoppers denied;
     test xx Axxx Axx Axxx:
         1S 2C
         2S 2N;

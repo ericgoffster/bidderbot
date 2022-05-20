@@ -12,13 +12,13 @@
         4♥;
 
 1m 2m
-2N => 12-14 tpts, balanced, partial_stoppers unstopped;
+2N => 12-14 tpts, balanced, partial_stoppers unstopped, stoppers denied;
     test AKx QJx Kxx xxxx:
         1♣ 2♣
         2N;
 
 1m 2m
-3N => 18-19 tpts, balanced, partial_stoppers unstopped;
+3N => 18-19 tpts, balanced, partial_stoppers unstopped, stoppers denied;
     test AKx QJx Kxx AJxx:
         1♣ 2♣
         3N;

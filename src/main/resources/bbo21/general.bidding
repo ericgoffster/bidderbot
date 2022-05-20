@@ -7,16 +7,19 @@
 
 # bidding NT
 [[Bid 3N with gf values]]
-[] 3N => gf, partial_stoppers unstopped;
+[] 3N => gf, partial_stoppers unstopped, stoppers denied;
     test Axx AQxx Qxx Qxx:
         1C 1H
         1N 3N;
     test AKx Ax xxxxx Kxx:
         1♣ 1♦
         1♥ 3N;
+    anti_test xxx Ax AKxxx Kxx:
+        1♣ 1♦
+        1♥ 3N;
 
 [[Bid 2N with invitational values]]
-[] 2N:nonconventional => inv, partial_stoppers unstopped;
+[] 2N:nonconventional => inv, partial_stoppers unstopped, stoppers denied;
     test Axx Kxxx Qxx Qxx:
         1C 1H
         1N 2N;
@@ -29,13 +32,13 @@
 
 # passing NT
 [[Pass 3N with gf values]]
-[] 3N P => gf;
+[] 3N P => gf, stoppers denied;
     test Axx Kxx Kxx Qxxx:
         1D 2N
         3N P;
 
 [[Pass 2N with inv values]]
-[] 2N P => inv;
+[] 2N P => inv, stoppers denied;
     test xxx Kxxx Kxx xxx:
         1C 1H
         2N P;
@@ -138,7 +141,7 @@
         1♥ 1♠;
 
 [[Bid 1N with no support]]
-[partner bid x, partner bid y] 1N => min, partial_stoppers unstopped;
+[partner bid x, partner bid y] 1N => min, partial_stoppers unstopped, stoppers denied;
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1♥ 1N;
