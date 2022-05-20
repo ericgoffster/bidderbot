@@ -69,6 +69,14 @@ public final class BidPattern {
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
     }
+
+    public BidPattern withGreaterThan(BidPattern greaterThan) {
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
+    }
+    
+    public BidPattern withLessThan(BidPattern lessThan) {
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
+    }
     
     public BidPattern withAntiMatch(boolean antiMatch) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
@@ -176,7 +184,23 @@ public final class BidPattern {
             return MyStream.of(new Context(suitTable));
         }
         return symbol.resolveSuits(suitTable)
-                .flatMap(e -> MyStream.ofOptional(withSymbol(contract, e.getSymbol())).map(newSym -> newSym.new Context(e.suitTable)));
+                .flatMap(e -> MyStream.ofOptional(withSymbol(contract, e.getSymbol()))
+                        .flatMap(bidPattern -> MyStream.of(bidPattern.new Context(e.suitTable))))
+                .flatMap(e -> {
+                    BidPattern bidPattern = e.getBidPattern();
+                    if (bidPattern.greaterThan != null) {
+                        return bidPattern.greaterThan.resolveSuits(contract, e.suitTable)
+                                .map(e2 -> bidPattern.withGreaterThan(e2.getBidPattern()).new Context(e2.suitTable));
+                    }
+                    return MyStream.of(e);
+                }).flatMap(e -> {
+                    BidPattern bidPattern = e.getBidPattern();
+                    if (bidPattern.lessThan != null) {
+                        return bidPattern.lessThan.resolveSuits(contract, e.suitTable)
+                                .map(e2 -> bidPattern.withLessThan(e2.getBidPattern()).new Context(e2.suitTable));
+                    }
+                    return MyStream.of(e);
+                });
     }
     
     /**
