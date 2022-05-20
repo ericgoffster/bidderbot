@@ -14,6 +14,7 @@ import static bbidder.Constants.STR_SPADE;
 /**
  * Methods for dealing with strains.
  * A strain can be a suit or NOTRUMP
+ * 
  * @author goffster
  *
  */
@@ -51,7 +52,8 @@ public final class Strain {
     }
 
     /**
-     * @param strain The strain.
+     * @param strain
+     *            The strain.
      * @return The name associated with the strain.
      */
     public static String getName(Integer strain) {
@@ -62,7 +64,8 @@ public final class Strain {
     }
 
     /**
-     * @param str The string
+     * @param str
+     *            The string
      * @return the suit if a string, null if NOTRUMP
      */
     public static Integer getSuit(String str) {

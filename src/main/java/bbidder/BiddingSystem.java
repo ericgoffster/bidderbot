@@ -73,7 +73,7 @@ public final class BiddingSystem {
                 DebugUtils.breakpointGetPossibleBid(auction, players, match, i);
                 l.add(new PossibleBid(i, match));
                 matched.add(match);
-            });            
+            });
         });
         if (l.isEmpty()) {
             DebugUtils.breakpointGetPossibleBid(auction, players, l);
@@ -118,12 +118,12 @@ public final class BiddingSystem {
         IBoundInference positive = ConstBoundInference.F;
         IBoundInference negative = ConstBoundInference.F;
         List<PossibleBid> possible = getPossibleBids(auction.exceptLast(), players);
-        for(var i: possible) {
+        for (var i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
             if (i.bid.equals(lastBid)) {
                 positive = OrBoundInf.create(positive, AndBoundInf.create(inf, negative.negate()));
             }
-            negative = OrBoundInf.create(negative, inf) ;           
+            negative = OrBoundInf.create(negative, inf);
         }
 
         if (positive == ConstBoundInference.F && lastBid != Bid.P) {

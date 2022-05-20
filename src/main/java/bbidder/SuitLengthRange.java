@@ -4,6 +4,7 @@ import bbidder.utils.BitUtil;
 
 /**
  * Represents a set of suit lengths (0-13)
+ * 
  * @author goffster
  *
  */
@@ -11,12 +12,12 @@ public final class SuitLengthRange extends Range {
     public static final int MAX = 13;
     public static final SuitLengthRange NONE = new SuitLengthRange(0);
     public static final SuitLengthRange ALL = new SuitLengthRange(BitUtil.bitMask(MAX));
-    
+
     @Override
     public int max() {
         return MAX;
     }
-    
+
     public SuitLengthRange(long bits) {
         super(bits);
     }

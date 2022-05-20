@@ -18,7 +18,8 @@ import bbidder.inferences.bound.ShapeBoundInf;
  */
 public final class Balanced extends Inference {
     public static final String NAME = "balanced";
-    public static final Balanced BALANCED = new Balanced(); 
+    public static final Balanced BALANCED = new Balanced();
+
     private Balanced() {
     }
 

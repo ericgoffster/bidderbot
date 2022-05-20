@@ -18,6 +18,7 @@ import bbidder.symbols.VarSymbol;
 
 /**
  * Parses a Symbol
+ * 
  * @author goffster
  *
  */
@@ -59,9 +60,9 @@ public final class SymbolParser {
             {
                 Matcher m = SEATS.matcher(tag);
                 if (m.matches()) {
-                    short seats = 0 ;
+                    short seats = 0;
                     String seatsC = m.group(1);
-                    for(int i = 0; i < seatsC.length(); i++) {
+                    for (int i = 0; i < seatsC.length(); i++) {
                         seats |= (1 << (seatsC.charAt(i) - '1'));
                     }
                     return new SeatSymbol(symbol, seats);

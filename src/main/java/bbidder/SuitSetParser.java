@@ -22,6 +22,7 @@ import bbidder.suitsets.Unstopped;
 
 /**
  * Parses SuitSet's
+ * 
  * @author goffster
  *
  */

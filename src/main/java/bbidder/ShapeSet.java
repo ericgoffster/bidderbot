@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 
 /**
  * Represents a set of shapes.
+ * 
  * @author goffster
  *
  */
@@ -39,7 +40,8 @@ public final class ShapeSet implements Iterable<Shape> {
     }
 
     /**
-     * @param list the collection of shapes.
+     * @param list
+     *            the collection of shapes.
      * @return a ShapeSet from a collection of shapes.
      */
     public static ShapeSet create(Iterable<Shape> list) {
@@ -47,7 +49,8 @@ public final class ShapeSet implements Iterable<Shape> {
     }
 
     /**
-     * @param filter the filter of shapes
+     * @param filter
+     *            the filter of shapes
      * @return a ShapeSet from a shape predicate.
      */
     public static ShapeSet create(Predicate<Shape> filter) {
@@ -76,7 +79,8 @@ public final class ShapeSet implements Iterable<Shape> {
     }
 
     /**
-     * @param shape The shape
+     * @param shape
+     *            The shape
      * @return true if the ShapeSet contains the shape.
      */
     public boolean contains(Shape shape) {
@@ -84,7 +88,8 @@ public final class ShapeSet implements Iterable<Shape> {
     }
 
     /**
-     * @param other The other shape
+     * @param other
+     *            The other shape
      * @return this shapeset & other shapeset
      */
     public ShapeSet and(ShapeSet other) {
@@ -94,7 +99,8 @@ public final class ShapeSet implements Iterable<Shape> {
     }
 
     /**
-     * @param other The other shape
+     * @param other
+     *            The other shape
      * @return this shapeset | other shapeset
      */
     public ShapeSet or(ShapeSet other) {
@@ -132,8 +138,8 @@ public final class ShapeSet implements Iterable<Shape> {
     public boolean unBounded() {
         return size() == Shape.values().length;
     }
-    
-    private static final ShapeStats EMPTY_STATS[] = { ShapeStats.EMPTY, ShapeStats.EMPTY, ShapeStats.EMPTY, ShapeStats.EMPTY};
+
+    private static final ShapeStats EMPTY_STATS[] = { ShapeStats.EMPTY, ShapeStats.EMPTY, ShapeStats.EMPTY, ShapeStats.EMPTY };
 
     /**
      * @return The stats on each suit
@@ -157,11 +163,10 @@ public final class ShapeSet implements Iterable<Shape> {
             sum[3] += s.numInSuit(3) * probability;
             tot += probability;
         }
-        return new ShapeStats[] {
-            new ShapeStats(new SuitLengthRange(bits[0]), OptionalDouble.of(sum[0] / tot)),
-            new ShapeStats(new SuitLengthRange(bits[1]), OptionalDouble.of(sum[1] / tot)),
-            new ShapeStats(new SuitLengthRange(bits[2]), OptionalDouble.of(sum[2] / tot)),
-            new ShapeStats(new SuitLengthRange(bits[3]), OptionalDouble.of(sum[3] / tot))};
+        return new ShapeStats[] { new ShapeStats(new SuitLengthRange(bits[0]), OptionalDouble.of(sum[0] / tot)),
+                new ShapeStats(new SuitLengthRange(bits[1]), OptionalDouble.of(sum[1] / tot)),
+                new ShapeStats(new SuitLengthRange(bits[2]), OptionalDouble.of(sum[2] / tot)),
+                new ShapeStats(new SuitLengthRange(bits[3]), OptionalDouble.of(sum[3] / tot)) };
     }
 
     @Override

@@ -54,7 +54,7 @@ public final class SeatSymbol extends Symbol {
     public boolean compatibleWith(Bid bid) {
         return symbol.compatibleWith(bid);
     }
-    
+
     @Override
     public short getSeats() {
         return seats;

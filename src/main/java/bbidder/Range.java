@@ -16,6 +16,7 @@ import bbidder.utils.BitUtil;
  */
 public abstract class Range {
     public final long bits;
+
     public abstract int max();
 
     public Range(long bits) {
@@ -65,12 +66,12 @@ public abstract class Range {
         Range other = (Range) obj;
         return bits == other.bits;
     }
-    
+
     private final class State {
         List<String> ranges = new ArrayList<>();
         Integer lhs = null;
         Integer rhs = null;
-        
+
         public void add(int i) {
             if (rhs == null || lhs == null) {
                 lhs = i;
@@ -82,7 +83,7 @@ public abstract class Range {
                 lhs = i;
                 rhs = i;
             }
-        }      
+        }
 
         private String getRangeItem() {
             if (lhs.intValue() == rhs.intValue()) {
@@ -97,7 +98,7 @@ public abstract class Range {
                 }
             }
         }
-        
+
         @Override
         public String toString() {
             if (lhs != null && rhs != null) {
@@ -109,7 +110,7 @@ public abstract class Range {
             return "[" + String.join(",", ranges) + "]";
         }
     }
-    
+
     @Override
     public String toString() {
         State state = new State();

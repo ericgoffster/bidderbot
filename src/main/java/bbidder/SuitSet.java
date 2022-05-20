@@ -24,7 +24,7 @@ public abstract class SuitSet {
      * @return A Stream of suitset,symbol table pairs.
      */
     public abstract Stream<Context> resolveSuits(SuitTable suitTable);
-    
+
     public final class Context {
         public final SuitTable suitTable;
 

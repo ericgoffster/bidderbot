@@ -35,7 +35,8 @@ public final class Preference extends Inference {
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {
         return longer.resolveSuits(suitTable)
-                .flatMap(e1 -> shorter.resolveSuits(e1.suitTable).map(e2 -> new Preference(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));
+                .flatMap(
+                        e1 -> shorter.resolveSuits(e1.suitTable).map(e2 -> new Preference(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));
     }
 
     @Override
@@ -59,7 +60,7 @@ public final class Preference extends Inference {
         Preference other = (Preference) obj;
         return Objects.equals(longer, other.longer) && Objects.equals(shorter, other.shorter);
     }
-    
+
     public static boolean isBetterFit(Shape shape, int longer, int shorter, int partnerLenLonger, int partnerLenShorter) {
         int diff = partnerLenLonger + shape.numInSuit(longer) - (partnerLenShorter + shape.numInSuit(shorter));
         if (diff > 0) {

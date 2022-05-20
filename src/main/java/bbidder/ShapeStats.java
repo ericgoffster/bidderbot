@@ -4,6 +4,7 @@ import java.util.OptionalDouble;
 
 /**
  * Represents the statistics of a shape in a particular suit.
+ * 
  * @author goffster
  *
  */
@@ -13,9 +14,9 @@ public class ShapeStats {
      * The range of possible lengths.
      */
     public final SuitLengthRange lengths;
-    
+
     /**
-     * The average length.   Empty for "null" sets.
+     * The average length. Empty for "null" sets.
      */
     public final OptionalDouble averageLength;
 

@@ -11,15 +11,15 @@ public final class Players {
     public Players() {
         this(Player.ALL, Player.ALL, Player.ALL, Player.ALL);
     }
-    
+
     public Players rotate() {
         return new Players(partner, rho, me, lho);
     }
-    
+
     public Players flip() {
         return new Players(rho, me, lho, partner);
     }
-    
+
     public Players withNewMe(Player me) {
         return new Players(lho, partner, rho, me);
     }
@@ -36,7 +36,7 @@ public final class Players {
     public String toString() {
         return "lho=" + lho + ", partner=" + partner + ", rho=" + rho + ", me=" + me;
     }
-    
+
     public OptionalInt ourCombinedMinLength(int s) {
         OptionalInt meLenLonger = me.infSummary.minLenInSuit(s);
         if (!meLenLonger.isPresent()) {
@@ -50,7 +50,7 @@ public final class Players {
         int partnerLen = partnerLenLonger.getAsInt();
         return OptionalInt.of(meLen + partnerLen);
     }
-    
+
     public boolean iBidSuit(int s) {
         OptionalInt ourCombinedMinLength = ourCombinedMinLength(s);
         if (!ourCombinedMinLength.isPresent()) {

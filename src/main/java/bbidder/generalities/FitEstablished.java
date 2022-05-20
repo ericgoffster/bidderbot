@@ -32,7 +32,7 @@ public final class FitEstablished extends Generality {
             return false;
         }
         return ourCombinedMinLength.getAsInt() >= 8;
-     }
+    }
 
     @Override
     public int hashCode() {

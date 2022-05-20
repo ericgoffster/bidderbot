@@ -5,6 +5,7 @@ import bbidder.utils.BitUtil;
 /**
  * A Stoppers represents the set of all suits we have a stopper in.
  * This could have been treated as an ordinal.
+ * 
  * @author goffster
  *
  */
@@ -14,7 +15,9 @@ public final class Stoppers {
 
     /**
      * Constructs a Stoppers from a bit pattern of suits.
-     * @param patt a bit pattern of suits
+     * 
+     * @param patt
+     *            a bit pattern of suits
      */
     private Stoppers(short patt) {
         super();
@@ -22,7 +25,8 @@ public final class Stoppers {
     }
 
     /**
-     * @param suit The suit to test
+     * @param suit
+     *            The suit to test
      * @return Return true if we have a stopper in the given suit.
      */
     public boolean stopperIn(int suit) {
@@ -31,16 +35,18 @@ public final class Stoppers {
 
     /**
      * 
-     * @param suit The suit to add.
+     * @param suit
+     *            The suit to add.
      * @return A new stoppers with a stopper in the given suit.
      */
     public Stoppers withStopperIn(int suit) {
         return values[patt | (1 << suit)];
     }
-    
+
     /**
      * 
-     * @param other The other stoppers to "|" with
+     * @param other
+     *            The other stoppers to "|" with
      * @return A new stoppers with stoppers in "this" | stoppers in the "other"
      */
     public Stoppers or(Stoppers other) {

@@ -17,6 +17,7 @@ import bbidder.inferences.bound.ConstBoundInference;
 public final class Always extends Inference {
     public static final String NAME = "always";
     public final static Always ALWAYS = new Always();
+
     private Always() {
     }
 

@@ -50,7 +50,7 @@ public final class VarSymbol extends Symbol {
         if (suit != null) {
             return Stream.of(new ConstSymbol(suit).new Context(suitTable));
         }
-        return BitUtil.stream((short)(Constants.ALL_SUITS & ~suitTable.getSuits()))
+        return BitUtil.stream((short) (Constants.ALL_SUITS & ~suitTable.getSuits()))
                 .mapToObj(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(varName, s)));
     }
 

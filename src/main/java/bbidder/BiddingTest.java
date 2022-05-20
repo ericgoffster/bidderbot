@@ -10,6 +10,7 @@ import bbidder.utils.SplitUtil;
  *
  */
 public final class BiddingTest {
+    public final BidInference parent;
     public final Hand hand;
     public final Auction auction;
     public final String where;
@@ -17,6 +18,9 @@ public final class BiddingTest {
 
     /**
      * Constructs a new test
+     * 
+     * @param parent
+     *            Parent inference
      * 
      * @param where
      *            where it was defined
@@ -27,11 +31,12 @@ public final class BiddingTest {
      * @param anti
      *            True if this is an anti test
      */
-    public BiddingTest(String where, Hand hand, Auction auction, boolean anti) {
+    public BiddingTest(BidInference parent, String where, Hand hand, Auction auction, boolean anti) {
         super();
         if (hand.size() != 13) {
             throw new IllegalArgumentException("Hand does not have 13 cards: '" + hand + '"');
         }
+        this.parent = parent;
         this.where = where;
         this.hand = hand;
         this.auction = auction;
@@ -70,6 +75,9 @@ public final class BiddingTest {
     /**
      * Parses a test.
      * 
+     * @param parent
+     *            Parent inference
+     * 
      * @param anti
      *            True if this is an anti test
      * @param where
@@ -79,11 +87,11 @@ public final class BiddingTest {
      * @return
      *         The bidding test
      */
-    public static BiddingTest valueOf(boolean anti, String where, String str) {
+    public static BiddingTest valueOf(BidInference parent, boolean anti, String where, String str) {
         String[] parts = SplitUtil.split(str, ":", 2);
         if (parts.length != 2) {
             throw new IllegalArgumentException("Expected <hand>:<bids> '" + str + "'");
         }
-        return new BiddingTest(where, Hand.valueOf(parts[0]), Auction.valueOf(parts[1]), anti);
+        return new BiddingTest(parent, where, Hand.valueOf(parts[0]), Auction.valueOf(parts[1]), anti);
     }
 }

@@ -15,7 +15,8 @@ public class InferenceRegistryTest {
     public void testValueOf() {
         assertEquals(Balanced.BALANCED, InferenceParser.parseInference("balanced"));
         assertEquals(new HCPRange(10, null), InferenceParser.parseInference("10+ hcp"));
-        assertEquals(new LongestOrEqual(new ConstSymbol(3), SuitSetParser.lookupSuitSet("all")), InferenceParser.parseInference("longest_or_equal s among all"));
+        assertEquals(new LongestOrEqual(new ConstSymbol(3), SuitSetParser.lookupSuitSet("all")),
+                InferenceParser.parseInference("longest_or_equal s among all"));
         assertEquals(new SuitRange(new ConstSymbol(3), 10, null), InferenceParser.parseInference("10+ s"));
     }
 }

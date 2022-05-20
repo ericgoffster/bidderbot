@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  * A map of strings to suits.
+ * 
  * @author goffster
  *
  */
@@ -30,11 +31,11 @@ public final class SuitTable {
         newSuits.put(name, suit);
         return new SuitTable(newSuits);
     }
-    
+
     @Override
     public String toString() {
-        return "{" + String.join(",",
-                suitMap.entrySet().stream().map(e -> e.getKey() + "=" + Strain.getName(e.getValue())).collect(Collectors.toList()))
+        return "{"
+                + String.join(",", suitMap.entrySet().stream().map(e -> e.getKey() + "=" + Strain.getName(e.getValue())).collect(Collectors.toList()))
                 + "}";
     }
 
@@ -56,8 +57,9 @@ public final class SuitTable {
     }
 
     /**
-     * @param name The name to lookup.
-     * @return The suit associated with the name.  Null if not found.
+     * @param name
+     *            The name to lookup.
+     * @return The suit associated with the name. Null if not found.
      */
     public Integer getSuit(String name) {
         return suitMap.get(name);

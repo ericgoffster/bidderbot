@@ -63,11 +63,8 @@ public final class BitUtil {
      * @return Number of bits set in the pattern.
      */
     public static int size(long pattern) {
-        return
-                set[(int)(pattern & 0xffff)].length +
-                set[(int)((pattern >>> 16) & 0xffff)].length +
-                set[(int)((pattern >>> 32) & 0xffff)].length +
-                set[(int)((pattern >>> 48) & 0xffff)].length;
+        return set[(int) (pattern & 0xffff)].length + set[(int) ((pattern >>> 16) & 0xffff)].length + set[(int) ((pattern >>> 32) & 0xffff)].length
+                + set[(int) ((pattern >>> 48) & 0xffff)].length;
     }
 
     /**
@@ -137,7 +134,7 @@ public final class BitUtil {
         }
         return OptionalInt.empty();
     }
-    
+
     public static IntStream stream(long pattern) {
         IntStream stream = IntStream.empty();
         int p0 = (int) (pattern & 0xffff);

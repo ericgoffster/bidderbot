@@ -13,7 +13,7 @@ public final class PossibleBid {
      * The inference for the bid.
      */
     public final BidInference inf;
-    
+
     /**
      * The bid itself
      */

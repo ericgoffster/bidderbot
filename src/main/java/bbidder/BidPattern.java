@@ -106,7 +106,7 @@ public final class BidPattern {
      *            Current contract
      * @param symbol
      *            The new symbol
-     * @return A bid with the suit bound to a specific strain.  empty if none found.
+     * @return A bid with the suit bound to a specific strain. empty if none found.
      */
     private Optional<BidPattern> withSymbol(Contract contract, Symbol symbol) {
         if (level != null) {
@@ -124,8 +124,8 @@ public final class BidPattern {
                 if (!isBidCompatible(contract, symbol, b)) {
                     return Optional.empty();
                 }
-                return Optional.of(
-                        new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional));
+                return Optional
+                        .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional));
             }
         }
         return Optional.of(new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional));
@@ -135,7 +135,7 @@ public final class BidPattern {
         if (contract != null && !contract.isLegalBid(b)) {
             return false;
         }
-        if (contract != null &&  (symbol.getSeats() & (1 << contract.numPasses)) == 0) {
+        if (contract != null && (symbol.getSeats() & (1 << contract.numPasses)) == 0) {
             return false;
         }
         if (!symbol.compatibleWith(b)) {
@@ -158,7 +158,8 @@ public final class BidPattern {
         if (simpleBid != null) {
             return Stream.of(new Context(suitTable));
         }
-        return symbol.resolveSuits(suitTable).flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.suitTable)));
+        return symbol.resolveSuits(suitTable)
+                .flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.suitTable)));
     }
 
     /**
@@ -215,8 +216,8 @@ public final class BidPattern {
             return false;
         BidPattern other = (BidPattern) obj;
         return Objects.equals(generality, other.generality) && isNonConventional == other.isNonConventional && isOpposition == other.isOpposition
-                && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
-                && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol);
+                && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level) && simpleBid == other.simpleBid
+                && Objects.equals(symbol, other.symbol);
     }
 
     private String _getString() {

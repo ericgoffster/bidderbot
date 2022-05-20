@@ -115,15 +115,11 @@ public final class InfSummary {
     }
 
     /**
-     * @return A bit pattern of all suits that have been bid.  empty if
+     * @return A bit pattern of all suits that have been bid. empty if
      *         the suits are the empty set.
      */
     public OptionalInt getBidSuits() {
-        int[] minL = IntStream.range(0, 4)
-                .mapToObj(suit -> minLenInSuit(suit))
-                .filter(o -> o.isPresent())
-                .mapToInt(o -> o.getAsInt())
-                .toArray();
+        int[] minL = IntStream.range(0, 4).mapToObj(suit -> minLenInSuit(suit)).filter(o -> o.isPresent()).mapToInt(o -> o.getAsInt()).toArray();
         if (minL.length != 4) {
             return OptionalInt.empty();
         }

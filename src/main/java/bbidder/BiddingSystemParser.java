@@ -72,6 +72,7 @@ public final class BiddingSystemParser {
     private static void load(String where, InputStream is, Consumer<ParseException> reportErrors, Consumer<BidInference> inferences,
             Consumer<BiddingTest> tests) {
         int lineno = 0;
+        BidInference[] last = { null };
         try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             StringBuilder sb = new StringBuilder();
             for (;;) {
@@ -95,19 +96,22 @@ public final class BiddingSystemParser {
                         String here = where + ":" + lineno;
                         if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
                             try {
-                                tests.accept(BiddingTest.valueOf(false, here, comm[1]));
+                                tests.accept(BiddingTest.valueOf(last[0], false, here, comm[1]));
                             } catch (Exception e) {
                                 reportErrors.accept(new ParseException(here, e));
                             }
                         } else if (comm.length == 2 && comm[0].equalsIgnoreCase("anti_test")) {
                             try {
-                                tests.accept(BiddingTest.valueOf(true, here, comm[1]));
+                                tests.accept(BiddingTest.valueOf(last[0], true, here, comm[1]));
                             } catch (Exception e) {
                                 reportErrors.accept(new ParseException(here, e));
                             }
                         } else if (!ln.equals("")) {
                             try {
-                                BidInference.valueOf(here, ln).resolveSuits().forEach(inferences);
+                                BidInference.valueOf(here, ln).resolveSuits().forEach(i -> {
+                                    inferences.accept(i);
+                                    last[0] = i;
+                                });
                             } catch (Exception e) {
                                 reportErrors.accept(new ParseException(here, e));
                             }
