@@ -2,6 +2,7 @@ package bbidder.suitsets;
 
 import java.util.OptionalInt;
 
+import bbidder.InfSummary;
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitTable;
@@ -14,16 +15,18 @@ public final class DeniedStoppers extends SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        OptionalInt partnerSuits = players.partner.infSummary.getBidSuits();
-        OptionalInt meSuits = players.me.infSummary.getBidSuits();
+        InfSummary partner = players.partner.infSummary;
+        InfSummary me = players.me.infSummary;
+        OptionalInt partnerSuits = partner.getBidSuits();
+        OptionalInt meSuits = me.getBidSuits();
         if (!partnerSuits.isPresent() || !meSuits.isPresent()) {
             return 0;
         }
         int bidSuits = partnerSuits.getAsInt() | meSuits.getAsInt();
         int unstopped = 0;
         for (int i = 0; i < 4; i++) {
-            if (players.partner.infSummary.stoppers.noStopperIn(i) && players.partner.infSummary.partialStoppers.noStopperIn(i)
-                    && !players.me.infSummary.partialStoppers.stopperIn(i) && !players.me.infSummary.stoppers.stopperIn(i)
+            if (partner.stoppers.noStopperIn(i) && partner.partialStoppers.noStopperIn(i)
+                    && !me.partialStoppers.stopperIn(i) && !me.stoppers.stopperIn(i)
                     && ((1 << i) & bidSuits) == 0) {
                 unstopped |= 1 << i;
             }
