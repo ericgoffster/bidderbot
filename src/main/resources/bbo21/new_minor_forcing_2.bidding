@@ -6,10 +6,10 @@
 # S = ♠
 
 common
-   1m 1M
-   2N:"nt_rebid" 3om:"cb_stayman" {
+	1x 1M
+	2N:"nt_rebid" 3y:"cb_stayman":<3z {
 
-	3OM => 4OM;
+	3z => 4z;
 	    test Ax Axxx Axxx AQx:
 	        1D 1S
 	        2N 3C
