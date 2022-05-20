@@ -1,4 +1,4 @@
-common [partner made_bid nt_opener, 7- bestfit x] {
+common *:partner made_bid nt_opener:7- bestfit x {
 
 	[[Quantitative slam invite]]
 	4N => slaminv;

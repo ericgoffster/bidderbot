@@ -6,7 +6,7 @@
 # S = ♠
 
 [[Bid game in an established major suit fit]]
-[8+ fit M] 4M => gf;
+*:8+ fit M 4M => gf;
     test AQxxx Axxx Ax xx:
         1S 3S
         4S;
@@ -36,7 +36,7 @@
         2♠ 4♠;
 
 [[Invite in an established major suit fit]]
-[8+ fit M] 3M => inv;
+*:8+ fit M 3M => inv;
     test AQxx Axx xxxx xx:
         1C 1S
         2S 3S;
@@ -69,7 +69,7 @@
         2♥ 3♥;
 
 [[Bid established major suit fit at 2 level with min values]]
-[8+ fit M] 2M => min;
+*:8+ fit M 2M => min;
 
 [[Bid self supporting major at 2 level with min values]]
 *:i bid M 2M => min, 8+ fit M;
@@ -87,7 +87,7 @@
         1♠ 2♠;
 
 [[Pass a playable major suit]]
-[8+ fit M] ?M P => always;
+*:8+ fit M ?M P => always;
     test xxx Axxx Kx xxxx:
         1C 1H
         2H P;
@@ -108,7 +108,7 @@
         2♥ P;
 
 [[Return to established major]]
-[8+ fit M] NJM => always;
+*:8+ fit M NJM => always;
 
 [[Bid self supporting major]]
 *:i bid M NJM => 8+ fit M;
@@ -161,10 +161,10 @@
         4S;
       
 [[Partial support for partner]]
-[partner bid M, 6- fit M] 2M => min, max M, 7 fit M;
+*:partner bid M:6- fit M 2M => min, max M, 7 fit M;
 
 [[Partial support for partner]]
-[partner bid M, 6- fit M] 3M => inv, max M, 7 fit M;
+*:partner bid M:6- fit M 3M => inv, max M, 7 fit M;
     test Kxx Axx x Axxxxx:
          1C 1H
          2C 2N
