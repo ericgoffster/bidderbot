@@ -10,7 +10,6 @@ import bbidder.generalities.BestFitEstablished;
 import bbidder.generalities.BidSuitGenerality;
 import bbidder.generalities.ConstGenerality;
 import bbidder.generalities.FitEstablished;
-import bbidder.generalities.IsTwoSuitedGenerality;
 import bbidder.generalities.TotalPointsEstablished;
 import bbidder.generalities.UnbidSuitGenerality;
 import bbidder.generalities.WeAreThreeSuited;
@@ -100,28 +99,6 @@ public final class GeneralityParser {
         case WeAreThreeSuited.NAME: {
             if (remainder.equals("")) {
                 return WeAreThreeSuited.WE_R_3_SUITED;
-            }
-            break;
-        }
-        case "i_am_two_suited": {
-            String[] symbols = SplitUtil.split(remainder, "\\s+", 2);
-            if (symbols.length == 2) {
-                Symbol longer = SymbolParser.parseSymbol(symbols[0]);
-                Symbol shorter = SymbolParser.parseSymbol(symbols[1]);
-                if (longer != null && shorter != null) {
-                    return new IsTwoSuitedGenerality(longer, shorter, 0);
-                }
-            }
-            break;
-        }
-        case "partner_is_two_suited": {
-            String[] symbols = SplitUtil.split(remainder, "\\s+", 2);
-            if (symbols.length == 2) {
-                Symbol longer = SymbolParser.parseSymbol(symbols[0]);
-                Symbol shorter = SymbolParser.parseSymbol(symbols[1]);
-                if (longer != null && shorter != null) {
-                    return new IsTwoSuitedGenerality(longer, shorter, 2);
-                }
             }
             break;
         }
