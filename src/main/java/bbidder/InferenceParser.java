@@ -152,21 +152,18 @@ public final class InferenceParser {
             {
                 RangeOf rng = RangeParser.parseRange(str.trim());
                 if (rng != null) {
-                    if (rng.maxPromised) {
-                        if (rng.of.equalsIgnoreCase(MaxHCPs.HCP)) {
+                    if (rng.of.equalsIgnoreCase(HCPRange.HCP)) {
+                        if (rng.maxPromised) {
                             return MaxHCPs.MAX_HCP_RANGE;
-                        } else if (rng.of.equalsIgnoreCase(MaxTpts.TPTS)) {
+                        } else {
+                            return new HCPRange(PointRange.between(rng.min, rng.max));
+                        }
+                    } else if (rng.of.equalsIgnoreCase(TotalPointsRange.TPTS)) {
+                        if (rng.maxPromised) {
                             return MaxTpts.MAX_TPTS_RANGE;
                         } else {
-                            Symbol sym = SymbolParser.parseSymbol(rng.of);
-                            if (sym != null) {
-                                return new MaxSuitRange(sym);
-                            }
+                            return new TotalPointsRange(PointRange.between(rng.min, rng.max));
                         }
-                    } else if (rng.of.equalsIgnoreCase(HCPRange.HCP)) {
-                        return new HCPRange(PointRange.between(rng.min, rng.max));
-                    } else if (rng.of.equalsIgnoreCase(TotalPointsRange.TPTS)) {
-                        return new TotalPointsRange(PointRange.between(rng.min, rng.max));
                     } else if (rng.of.startsWith("fit")) {
                         Symbol sym = SymbolParser.parseSymbol(rng.of.substring(3).trim());
                         if (sym != null) {
@@ -176,7 +173,11 @@ public final class InferenceParser {
                         {
                             Symbol sym = SymbolParser.parseSymbol(rng.of);
                             if (sym != null) {
-                                return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
+                                if (rng.maxPromised) {
+                                    return new MaxSuitRange(sym);
+                                } else {
+                                    return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
+                                }
                             }
                         }
                         {
