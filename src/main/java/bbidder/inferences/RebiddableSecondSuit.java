@@ -1,7 +1,6 @@
 package bbidder.inferences;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -12,9 +11,9 @@ import bbidder.Inference;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SuitTable;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -45,13 +44,11 @@ public final class RebiddableSecondSuit extends Inference {
     }
 
     private static IBoundInference createrBound(int strainLonger, int strainShorter, InfSummary meSummary, InfSummary partnerSummary) {
-        Optional<Integer> n = meSummary.minLenInSuit(strainShorter);
-        if (!n.isPresent()) {
-            return ConstBoundInference.F;
-        }
-        Range r = Range.atLeast(Math.max(n.get() + 1, 5), 13);
-        return ShapeBoundInf
-                .create(ShapeSet.create(shape -> shape.isSuitInRange(strainShorter, r) && shape.isLongerOrEqual(strainLonger, 1 << strainShorter)));
+        return meSummary.minLenInSuit(strainShorter).map(n -> {
+            Range r = Range.atLeast(Math.max(n + 1, 5), 13);
+            return ShapeBoundInf.create(
+                    ShapeSet.create(shape -> shape.isSuitInRange(strainShorter, r) && shape.isLongerOrEqual(strainLonger, 1 << strainShorter)));
+        }).orElse(ConstBoundInference.F);
     }
 
     public static Inference valueOf(String str) {
