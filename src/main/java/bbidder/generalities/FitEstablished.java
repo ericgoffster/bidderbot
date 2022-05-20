@@ -27,8 +27,8 @@ public final class FitEstablished extends Generality {
     @Override
     public boolean test(Players players, Auction bidList) {
         int s = symbol.getResolvedStrain();
-        return players.partner.infSummary.minLenInSuit(s)
-                .filter(partnerLen -> players.me.infSummary.minLenInSuit(s).filter(meLen -> meLen + partnerLen >= 8).isPresent())
+        return players.ourCombinedMinLength(s)
+                .filter(len -> len >= 8)
                 .isPresent();
      }
 

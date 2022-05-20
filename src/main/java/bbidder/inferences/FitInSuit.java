@@ -1,20 +1,18 @@
 package bbidder.inferences;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
-import bbidder.InfSummary;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SuitTable;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
@@ -37,7 +35,7 @@ public final class FitInSuit extends Inference {
     @Override
     public IBoundInference bind(Players players) {
         int strain = symbol.getResolvedStrain();
-        return createrBound(strain, players.partner.infSummary);
+        return createrBound(strain, players);
     }
 
     @Override
@@ -82,16 +80,15 @@ public final class FitInSuit extends Inference {
         return Objects.equals(symbol, other.symbol);
     }
 
-    private IBoundInference createrBound(int s, InfSummary partnerSummary) {
-        Optional<Integer> partnerLen = partnerSummary.minLenInSuit(s);
-        if (!partnerLen.isPresent()) {
-            return ConstBoundInference.F;
-        }
-        int n = 8 - partnerLen.get();
-        if (n <= 0) {
-            return ConstBoundInference.T;
-        }
-        Range r = Range.atLeast(n, 13);
-        return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
+    private IBoundInference createrBound(int s, Players players) {
+        return players.partner.infSummary.minLenInSuit(s).map(partnerLen -> {
+            int myMinLen = 8 - partnerLen;
+            if (myMinLen <= 0) {
+                return ConstBoundInference.T;
+            } else {
+                Range r = Range.atLeast(myMinLen, 13);
+                return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
+            }
+        }).orElse(ConstBoundInference.F);
     }
 }
