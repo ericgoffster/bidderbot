@@ -35,6 +35,21 @@
     test xx AQxxx Qxxx Ax:
         1C 1H
         2C 2D;
+        
+[fit_established m] 3m P => inv-;
+    test xxx Qxx Axxxx xx:
+        1C 1D
+        3D P;
+
+[fit_established M] 2m P => min-;
+    test xxx Qxx Axxxx xx:
+        1C 1D
+        2D P;
+        
+[fit_established m] 3m => inv;
+    test xxx Axx AKxxx xx:
+        1C 1D
+        2D 3D;
 
 [partner_bid_suit m] 3m => inv, fit m;
     test Ax xx AQxx AQxxx:
