@@ -6,28 +6,28 @@
 # S = ♠
 
 [[Bid singleton with game forcing values (or better)]]
-1N:"1nt_opener" 2N
+[] 1N:"1nt_opener" 2N
 3♣ 3x => gf+, 1-x;
     test AQx x Kxx AQxxxx:
         1N 2N
         3♣ 3♥;
 
 [[Bid singleton with game forcing values (or better)]]
-1N:"1nt_opener" 3♣
+[] 1N:"1nt_opener" 3♣
 3♦ 3x => gf+, 1-x;
     test AQx x AQxxxx Kxx:
         1N 3♣
         3♦ 3♥;
 
 [[Rebid 3N with slam invitational values]]
-1N:"1nt_opener" 2N
+[] 1N:"1nt_opener" 2N
 3♣ 3N => slaminv;
     test AQx xx Kx AQxxxx:
         1N 2N
         3♣ 3N;
 
 [[Rebid 3N with slam invitational values]]
-1N:"1nt_opener" 3♣
+[] 1N:"1nt_opener" 3♣
 3♦ 3N => slaminv;
     test AQx xx AQxxxx Kx:
         1N 3♣

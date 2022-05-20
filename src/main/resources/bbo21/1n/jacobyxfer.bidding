@@ -6,7 +6,7 @@
 # S = ♠
 
 [[With max and a doubleton, bid the doubleton]]
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 NJx => max hcp, 4+M, 2-x;
     test Ax Axxx AJxx Axx:
         1N 2♦
@@ -25,7 +25,7 @@ NJx => max hcp, 4+M, 2-x;
         3♦;
 
 [[With max and no doubleton, bid 2N]] 
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 2N => max hcp, 4+M;
     test AQx Axxx Axx Kxx:
         1N 2♦
@@ -35,14 +35,14 @@ NJx => max hcp, 4+M, 2-x;
         2N;
 
 [[Bid 2S with 5-5 in the majors and invitational values]]  
-1N:"1nt_opener" 2♦
+[] 1N:"1nt_opener" 2♦
 2♥ 2♠ => inv, 5+♠;
     test AJxxx Jxxxx xx x:
         1N 2♦
         2♥ 2♠;
 
 [[Bid 3${M} with 6${M} and invitational values]]  
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 2M 3M => inv, 6+M;
     test Axx Kxxxxx xx xx:
         1N 2♦
@@ -52,7 +52,7 @@ NJx => max hcp, 4+M, 2-x;
         2♠ 3♠;
 
 [[Bid 2N with 5${M} and invitational values]]  
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 2M 2N => inv, 5M;
     test Axx Kxxxx xx Jxx:
         1N 2♦
@@ -62,7 +62,7 @@ NJx => max hcp, 4+M, 2-x;
         2♠ 2N;
 
 [[Bid a new minor suit with 4 or more and game forcing values (or better)]]  
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 2M 3m => gf+, 4+m;
     test Axx Axxxx x Axxx:
         1N 2♦
@@ -72,7 +72,7 @@ NJx => max hcp, 4+M, 2-x;
         2♠ 3♣;
 
 [[Bid 3N with only 5${M}]]  
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 2M 3N => gf, 5M;
     test AJx AQxxx xxx xx:
         1N 2♦
@@ -82,7 +82,7 @@ NJx => max hcp, 4+M, 2-x;
         2♠ 3N;
 
 [[Self supporting splinter into a suit with slam invitational values]]  
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 2M Jx => slaminv, 6+M, 1-x;
     test x AQxxxx Axx Axx:
         1N 2♦
@@ -104,7 +104,7 @@ NJx => max hcp, 4+M, 2-x;
         2♠ 4♦;
 
 [[Bid 4${M} with 6${M} and a slam invitation]]  
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 2M 4M => slaminv, 6+M;
     test Axx AQJxxx Ax xx:
         1N 2♦
@@ -114,7 +114,7 @@ NJx => max hcp, 4+M, 2-x;
         2♠ 4♠;
 
 [[Bid quantitative 4N with only 5${M}]]  
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 2M 4N => slaminv, 5M;
     test Axx AQxxx AQx xx:
         1N 2♦
@@ -124,7 +124,7 @@ NJx => max hcp, 4+M, 2-x;
         2♠ 4N;
 
 [[Bid "pick a slam" 5N with only 5${M}]]  
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 2M 5N => slam, 5M;
     test Axx AQxxx AQx Kx:
         1N 2♦
@@ -134,7 +134,7 @@ NJx => max hcp, 4+M, 2-x;
         2♠ 5N;
 
 [[Re-transfer over super accept]]
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 NJx 3M-1 => always;
     test xx Axxxx xxx xxx:
         1N 2♦
@@ -142,7 +142,7 @@ NJx 3M-1 => always;
         
 
 [[Re-transfer over super accept]]
-1N:"1nt_opener" 2M-1
+[] 1N:"1nt_opener" 2M-1
 2N 3M-1 => always;
     test xx Axxxx xxx xxx:
         1N 2♦
