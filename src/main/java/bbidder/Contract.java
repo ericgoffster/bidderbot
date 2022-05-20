@@ -72,19 +72,6 @@ public final class Contract {
         return b;
     }
     
-    public Contract addBid(Bid bid) {
-        switch (bid) {
-        case P:
-            return new Contract(winningBid, doubled, redoubled, numPasses + 1);
-        case XX:
-            return new Contract(winningBid, true, true, numPasses + 1);
-        case X:
-            return new Contract(winningBid, true, redoubled, numPasses + 1);
-        default:
-            return new Contract(bid, false, false, 0);
-        }
-    }
-
     /**
      * 
      * @param bid
