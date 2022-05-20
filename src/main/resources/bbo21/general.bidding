@@ -26,30 +26,6 @@
         1♣ 1♦
         1♥ 2N;
 
-[[Pass 3N with gf values]]
-[] 3N P => gf;
-    test Axx Kxx Kxx Qxxx:
-        1D 2N
-        3N P;
-
-[[Pass 2N with inv values]]
-[] 2N P => inv;
-    test xxx Kxxx Kxx xxx:
-        1C 1H
-        2N P;
-
-[[Pass partners rebiddable suit with nothing more to say]]
-[partner_bid_suit y at_least 6] 3y P => inv;
-    test xxx Qxxx Axxxx x:
-        1C 1D
-        3C P;
-
-[[Pass partners rebiddable suit with nothing more to say]]
-[partner_bid_suit y at_least 6] 2y P => min;
-    test xxx Qxxx Axxxx x:
-        1C 1D
-        2C P;
-
 [[Rebid minor at 3 level 3N with invitational values]]
 [i_bid_suit m] 3m => inv, rebiddable m;
     test Kxx xxx AQxxxx x:
@@ -97,24 +73,7 @@
     test xxx Qxx Axxxx xx:
         1C 1D
         3D P;
-[[Pass minor at 3 level with invitational values]]
-[i_bid_suit m] 3m P => inv, fit m;
-[partner_bid_suit m] 3m P => inv, fit m;
 
-[fit_established m] 2m P => min;
-    test xxx Qxx Axxxx xx:
-        1C 1D
-        2D P;
-[[Pass minor at 2 level with minimum values]]
-[i_bid_suit m] 2m P => min, fit m;
-[partner_bid_suit m] 2m P => min, fit m;
-    
-[[Pass 1N with minimum values]]
-[] 1N P => min;
-    test Qxx Kx xxxxx Qxx:
-        1♣ 1♦
-        1N P;
-        
 [[Pass preference at 2 level with minimum values]]
 [partner_is_two_suited x y] NJx:<2N P => min, prefer x to y;
     test AQxxx x xxxx xxx:
@@ -150,6 +109,48 @@
         1♣ 1♦
         1♥ 1♠;
 
+[[Pass 3N with gf values]]
+[] 3N P => gf;
+    test Axx Kxx Kxx Qxxx:
+        1D 2N
+        3N P;
+
+[[Pass 2N with inv values]]
+[] 2N P => inv;
+    test xxx Kxxx Kxx xxx:
+        1C 1H
+        2N P;
+
+[[Pass partners rebiddable suit with nothing more to say]]
+[partner_bid_suit y at_least 6] 3y P => inv;
+    test xxx Qxxx Axxxx x:
+        1C 1D
+        3C P;
+
+[[Pass partners rebiddable suit with nothing more to say]]
+[partner_bid_suit y at_least 6] 2y P => min;
+    test xxx Qxxx Axxxx x:
+        1C 1D
+        2C P;
+
+[[Pass minor at 3 level with invitational values]]
+[i_bid_suit m] 3m P => inv, fit m;
+[partner_bid_suit m] 3m P => inv, fit m;
+
+[fit_established m] 2m P => min;
+    test xxx Qxx Axxxx xx:
+        1C 1D
+        2D P;
+[[Pass minor at 2 level with minimum values]]
+[i_bid_suit m] 2m P => min, fit m;
+[partner_bid_suit m] 2m P => min, fit m;
+    
+[[Pass 1N with minimum values]]
+[] 1N P => min;
+    test Qxx Kx xxxxx Qxx:
+        1♣ 1♦
+        1N P;
+        
 [[No bid matches, pass any fit]]
 [fit_established y] ?y P => always;
 [i_bid_suit y] ?y P => fit y;
