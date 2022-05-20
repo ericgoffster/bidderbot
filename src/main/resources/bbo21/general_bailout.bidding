@@ -90,9 +90,12 @@
     test AQxxx xx xxxx xx:
         1H 1S
         2C 2H;
+
+[[Pass best known pseudo fit]]
+[bestfit_established y] NJy P => always;
         
 [[Return to best known pseudo fit]]
-[bestfit_established y] ?x NJy => always;
+[bestfit_established y] ?x NJy => nofit x;
     test AQxx xx AJx Axxx:
         1N 2♦
         2♥;
@@ -113,5 +116,4 @@
     test AQJx xx AKxx AKx:
         2N 3♦
         3♥;
-        
-# You are doomed
+# Help

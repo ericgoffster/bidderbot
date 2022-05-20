@@ -31,7 +31,8 @@ public final class IsTwoSuitedGenerality extends Generality {
     public boolean test(Players players, Auction bidList) {
         int s1 = symbol1.getResolvedStrain();
         int s2 = symbol2.getResolvedStrain();
-        return players.rotate(pos).iBidSuit(s1) && players.rotate(pos).iBidSuit(s2);
+        Players pl = players.rotate(pos);
+        return pl.iBidSuit(s1) && pl.iBidSuit(s2);
     }
     
     public String getPosName() {

@@ -65,13 +65,6 @@ public final class Players {
     }
 
     public boolean iBidSuit(int s) {
-        OptionalInt ourCombinedMinLength = ourCombinedMinLength(s);
-        if (!ourCombinedMinLength.isPresent()) {
-            return false;
-        }
-        if (ourCombinedMinLength.getAsInt() >= 8) {
-            return false;
-        }
         OptionalInt bidSuits = me.infSummary.getBidSuits();
         if (bidSuits.isEmpty()) {
             return false;
