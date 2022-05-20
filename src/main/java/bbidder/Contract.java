@@ -62,7 +62,7 @@ public final class Contract {
         }
     }
 
-    public Bid getBid(int jumpLevel, int strain) {
+    public Bid getJumpBid(int jumpLevel, int strain) {
         Bid b = nextLevel(strain);
         while (jumpLevel > 0) {
             b = b.raise();

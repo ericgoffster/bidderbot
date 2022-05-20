@@ -150,14 +150,18 @@ public final class BidPattern {
         });
     }
 
-    TaggedBid getResolvedBid(Contract contract, TaggedBid bid) {
+    /**
+     * @param contract The current contract
+     * @param bid The current bid (used to resolve anonymous levels)
+     * @return The level resolved bid pattern.
+     */
+    public TaggedBid resolveLevel(Contract contract, TaggedBid bid) {
         if (simpleBid != null) {
             return new TaggedBid(simpleBid, tags);
         }
         int strain = symbol.getResolvedStrain();
         if (jumpLevel != null) {
-            Bid b = contract.getBid(jumpLevel, strain);
-            return new TaggedBid(b, tags);
+            return new TaggedBid(contract.getJumpBid(jumpLevel, strain), tags);
         }
         if (level == null) {
             if (bid == null) {
@@ -169,24 +173,27 @@ public final class BidPattern {
         return new TaggedBid(Bid.valueOf(level, strain), tags);
     }
 
-    public boolean isBidCompatible(Contract contract, Bid b) {
-        if (!contract.isLegalBid(b)) {
+    /**
+     * @param contract The current contract
+     * @param bid The bid to test
+     * @return true, if the bid was compatible with this pattern
+     */
+    public boolean isBidCompatible(Contract contract, Bid bid) {
+        if (!contract.isLegalBid(bid)) {
             return false;
         }
         if (!seats.hasSeat(contract.numPasses)) {
             return false;
         }
         if (lessThan != null) {
-            TaggedBid tb = lessThan.getResolvedBid(contract, null);
-            Bid comparisonBid = tb.bid;
-            if (b.compareTo(comparisonBid) >= 0) {
+            Bid lt = lessThan.resolveLevel(contract, null).bid;
+            if (bid.compareTo(lt) >= 0) {
                 return false;
             }
         }
         if (greaterThan != null) {
-            TaggedBid tb = greaterThan.getResolvedBid(contract, null);
-            Bid comparisonBid = tb.bid;
-            if (b.compareTo(comparisonBid) <= 0) {
+            Bid gt = greaterThan.resolveLevel(contract, null).bid;
+            if (bid.compareTo(gt) <= 0) {
                 return false;
             }
         }
@@ -195,9 +202,6 @@ public final class BidPattern {
 
     @Override
     public String toString() {
-        if (generality != null) {
-            return "[" + generality + "]";
-        }
         if (isOpposition) {
             return "(" + _getString() + ")";
         }
@@ -226,7 +230,10 @@ public final class BidPattern {
     }
 
     private String _getBidString() {
-        if (simpleBid != null && symbol == null) {
+        if (generality != null) {
+            return "[" + generality + "]";
+        }
+        if (simpleBid != null) {
             return simpleBid.toString();
         }
         if (jumpLevel != null) {
