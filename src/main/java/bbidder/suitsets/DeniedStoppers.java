@@ -16,8 +16,9 @@ public final class DeniedStoppers extends SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        InfSummary partner = players.getPlayer(Position.PARTNER).infSummary;
-        InfSummary me = players.getPlayer(Position.ME).infSummary;
+        Position position = Position.ME;
+        InfSummary partner = players.getPlayer(position.getOpposite()).infSummary;
+        InfSummary me = players.getPlayer(position).infSummary;
         OptionalInt partnerSuits = partner.getBidSuits();
         OptionalInt meSuits = me.getBidSuits();
         if (!partnerSuits.isPresent() || !meSuits.isPresent()) {

@@ -15,8 +15,9 @@ public final class OurSuits extends SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        OptionalInt partnerSuits = players.getPlayer(Position.PARTNER).infSummary.getBidSuits();
-        OptionalInt meSuits = players.getPlayer(Position.ME).infSummary.getBidSuits();
+        Position position = Position.ME;
+        OptionalInt partnerSuits = players.getPlayer(position.getOpposite()).infSummary.getBidSuits();
+        OptionalInt meSuits = players.getPlayer(position).infSummary.getBidSuits();
         if (!partnerSuits.isPresent() || !meSuits.isPresent()) {
             return 0;
         }
