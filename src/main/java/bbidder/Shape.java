@@ -570,8 +570,8 @@ public enum Shape {
     _03050302(3, 5, 3, 2, 0.0129367),
     _01060006(1, 6, 0, 6, 5.97800e-05);
 
-    final int[] num;
-    final double probability;
+    private final int[] num;
+    private final double probability;
 
     /**
      * 
@@ -669,5 +669,13 @@ public enum Shape {
     public boolean isLongerOrEqual(int suit, short among) {
         int len = numInSuit(suit);
         return !BitUtil.stream(among).filter(s -> numInSuit(s) > len).findFirst().isPresent();
+    }
+
+    /**
+     * 
+     * @return The probability of this shape
+     */
+    public double getProbability() {
+        return probability;
     }
 }

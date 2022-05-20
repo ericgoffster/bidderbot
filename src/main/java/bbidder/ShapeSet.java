@@ -150,11 +150,12 @@ public final class ShapeSet implements Iterable<Shape> {
             bits[1] |= (1L << s.numInSuit(1));
             bits[2] |= (1L << s.numInSuit(2));
             bits[3] |= (1L << s.numInSuit(3));
-            sum[0] += s.numInSuit(0) * s.probability;
-            sum[1] += s.numInSuit(1) * s.probability;
-            sum[2] += s.numInSuit(2) * s.probability;
-            sum[3] += s.numInSuit(3) * s.probability;
-            tot += s.probability;
+            double probability = s.getProbability();
+            sum[0] += s.numInSuit(0) * probability;
+            sum[1] += s.numInSuit(1) * probability;
+            sum[2] += s.numInSuit(2) * probability;
+            sum[3] += s.numInSuit(3) * probability;
+            tot += probability;
         }
         return new ShapeStats[] {
             new ShapeStats(new SuitLengthRange(bits[0]), Optional.of(sum[0] / tot)),
