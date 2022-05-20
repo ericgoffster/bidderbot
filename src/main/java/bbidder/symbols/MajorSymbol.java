@@ -78,4 +78,9 @@ public final class MajorSymbol extends Symbol {
     public boolean isNonConvential() {
         return false;
     }
+
+    @Override
+    public short getSeats() {
+        return 0xf;
+    }
 }

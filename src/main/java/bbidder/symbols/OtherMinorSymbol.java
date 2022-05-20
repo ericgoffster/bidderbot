@@ -64,4 +64,9 @@ public final class OtherMinorSymbol extends Symbol {
     public boolean isNonConvential() {
         return false;
     }
+
+    @Override
+    public short getSeats() {
+        return 0xf;
+    }
 }

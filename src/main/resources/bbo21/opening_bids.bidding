@@ -17,7 +17,7 @@
     test AQxx KQxx AQ xxx:
         1N;
 
-P 1M:down => 5+ M, 8+ tpts, longest_or_equal M among majors;
+1M:down:seats23 => 5+ M, 8+ tpts, longest_or_equal M among majors;
     test KQJxx xxx Axx xx:
         P 1♠;
 

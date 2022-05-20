@@ -12,6 +12,7 @@ import bbidder.symbols.MinorSymbol;
 import bbidder.symbols.NonConventional;
 import bbidder.symbols.OtherMajorSymbol;
 import bbidder.symbols.OtherMinorSymbol;
+import bbidder.symbols.SeatSymbol;
 import bbidder.symbols.SteppedSymbol;
 import bbidder.symbols.VarSymbol;
 
@@ -24,6 +25,7 @@ public final class SymbolParser {
     private static Pattern SUIT_PATTERN = Pattern.compile("(.*)\\-(\\d+)");
     private static Pattern LESS_THAN = Pattern.compile("<(\\d+)(.+)");
     private static Pattern GREATER_THAN = Pattern.compile(">(\\d+)(.+)");
+    private static Pattern SEATS = Pattern.compile("seats(\\d+)");
 
     /**
      * @param str
@@ -55,9 +57,23 @@ public final class SymbolParser {
                 return new NonConventional(symbol);
             }
             {
+                Matcher m = SEATS.matcher(tag);
+                if (m.matches()) {
+                    short seats = 0 ;
+                    String seatsC = m.group(1);
+                    for(int i = 0; i < seatsC.length(); i++) {
+                        seats |= (1 << (seatsC.charAt(i) - '1'));
+                    }
+                    return new SeatSymbol(symbol, seats);
+                }
+            }
+            {
                 Matcher m = LESS_THAN.matcher(tag);
                 if (m.matches()) {
                     Symbol other = parseSymbol(m.group(2));
+                    if (other == null) {
+                        return null;
+                    }
                     return new LessThanSymbol(symbol, Integer.parseInt(m.group(1)) - 1, other);
                 }
             }
@@ -65,6 +81,9 @@ public final class SymbolParser {
                 Matcher m = GREATER_THAN.matcher(tag);
                 if (m.matches()) {
                     Symbol other = parseSymbol(m.group(2));
+                    if (other == null) {
+                        return null;
+                    }
                     return new GreaterThanSymbol(symbol, Integer.parseInt(m.group(1)) - 1, other);
                 }
             }

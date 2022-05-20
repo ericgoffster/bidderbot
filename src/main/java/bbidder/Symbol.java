@@ -25,6 +25,12 @@ public abstract class Symbol {
      * @return true if the given bid should only be considered if the bid was not previously defined.
      */
     public abstract boolean isNonConvential();
+    
+    /**
+     * 
+     * @return true if the given bid should only be considered if the bid was not previously defined.
+     */
+    public abstract short getSeats();
 
     /**
      * Resolves the symbol into a stream of resolved symbols in the context of a suit table.

@@ -57,4 +57,9 @@ public final class NonConventional extends Symbol {
     public boolean isNonConvential() {
         return true;
     }
+
+    @Override
+    public short getSeats() {
+        return 0xf;
+    }
 }

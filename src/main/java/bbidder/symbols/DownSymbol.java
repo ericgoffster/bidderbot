@@ -56,6 +56,11 @@ public final class DownSymbol extends Symbol {
     public boolean isNonConvential() {
         return symbol.isNonConvential();
     }
+    
+    @Override
+    public short getSeats() {
+        return symbol.getSeats();
+    }
 
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {

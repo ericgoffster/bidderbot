@@ -29,9 +29,10 @@ public final class BidPattern {
     public final Integer jumpLevel;
     public final Generality generality;
     public final boolean isNonConventional;
+    public final short seats;
 
     private BidPattern(boolean isOpposition, Symbol symbol, Integer level, Bid simpleBid, Integer jumpLevel, Generality generality,
-            boolean isNonConventional) {
+            boolean isNonConventional, short seats) {
         super();
         this.isOpposition = isOpposition;
         this.symbol = symbol;
@@ -40,6 +41,7 @@ public final class BidPattern {
         this.jumpLevel = jumpLevel;
         this.generality = generality;
         this.isNonConventional = isNonConventional;
+        this.seats = seats;
     }
 
     /**
@@ -55,7 +57,7 @@ public final class BidPattern {
      * @return A pattern with isOpposition set.
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional, seats);
     }
 
     /**
@@ -66,7 +68,7 @@ public final class BidPattern {
      * @return A pattern where the level is "jump" based.
      */
     public static BidPattern createJump(Symbol symbol, int jumpLevel) {
-        return new BidPattern(false, symbol, null, null, jumpLevel, null, symbol.isNonConvential());
+        return new BidPattern(false, symbol, null, null, jumpLevel, null, symbol.isNonConvential(),  symbol.getSeats());
     }
 
     /**
@@ -76,9 +78,9 @@ public final class BidPattern {
      */
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
-            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, false);
+            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, false, (short)0xf);
         }
-        return new BidPattern(false, null, null, simpleBid, null, null, false);
+        return new BidPattern(false, null, null, simpleBid, null, null, false, (short)0xf);
     }
 
     /**
@@ -89,7 +91,7 @@ public final class BidPattern {
      * @return A bid that is the level of a suit
      */
     public static BidPattern createBid(int level, Symbol symbol) {
-        return new BidPattern(false, symbol, level, null, null, null, symbol.isNonConvential());
+        return new BidPattern(false, symbol, level, null, null, null, symbol.isNonConvential(), symbol.getSeats());
     }
 
     /**
@@ -98,7 +100,7 @@ public final class BidPattern {
      * @return A bid that represents a series of bids that fit a generality
      */
     public static BidPattern createWild(Generality generality) {
-        return new BidPattern(false, null, null, null, null, generality, false);
+        return new BidPattern(false, null, null, null, null, generality, false, (short)0xf);
     }
 
     /**
@@ -116,7 +118,7 @@ public final class BidPattern {
                 return Optional.empty();
             }
             if (symbol.compatibleWith(b)) {
-                return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional));
+                return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional, seats));
             } else {
                 return Optional.empty();
             }
@@ -127,13 +129,13 @@ public final class BidPattern {
                 Bid b = contract.getBid(jumpLevel, resolved);
                 if (symbol.compatibleWith(b) && contract.isLegalBid(b)) {
                     return Optional
-                            .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional));
+                            .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional, seats));
                 } else {
                     return Optional.empty();
                 }
             }
         }
-        return Optional.of(new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional));
+        return Optional.of(new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional, seats));
     }
 
     /**
@@ -193,7 +195,7 @@ public final class BidPattern {
 
     @Override
     public int hashCode() {
-        return Objects.hash(isOpposition, jumpLevel, level, simpleBid, symbol, generality);
+        return Objects.hash(generality, isNonConventional, isOpposition, jumpLevel, level, seats, simpleBid, symbol);
     }
 
     @Override
@@ -205,8 +207,9 @@ public final class BidPattern {
         if (getClass() != obj.getClass())
             return false;
         BidPattern other = (BidPattern) obj;
-        return isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level)
-                && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol) && Objects.equals(generality, other.generality);
+        return Objects.equals(generality, other.generality) && isNonConventional == other.isNonConventional && isOpposition == other.isOpposition
+                && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level) && seats == other.seats
+                && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol);
     }
 
     private String _getString() {

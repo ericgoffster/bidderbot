@@ -63,4 +63,9 @@ public final class GreaterThanSymbol extends Symbol {
     public boolean isNonConvential() {
         return symbol.isNonConvential();
     }
+
+    @Override
+    public short getSeats() {
+        return symbol.getSeats();
+    }
 }

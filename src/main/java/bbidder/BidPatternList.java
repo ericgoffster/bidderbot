@@ -151,11 +151,16 @@ public final class BidPatternList {
                 i++;
             }
         }
-        return bids.get(bids.size() - 1).resolveToBid(auction).flatMap(nextBid -> {
+        Contract contract = auction.getContract();
+        BidPattern lastBid = bids.get(bids.size() - 1);
+        return lastBid.resolveToBid(auction).flatMap(nextBid -> {
             if (!auction.isLegalBid(nextBid)) {
                 return Optional.empty();
             }
-            if (matched.contains(nextBid) && bids.get(bids.size() - 1).isNonConventional) {
+            if ((lastBid.seats & (1 << contract.numPasses)) == 0) {
+                return Optional.empty();
+            }
+            if (matched.contains(nextBid) && lastBid.isNonConventional) {
                 return Optional.empty();
             }
             return Optional.of(nextBid);
