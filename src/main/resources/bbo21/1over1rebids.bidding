@@ -25,7 +25,12 @@ common 1x 1y {
 	    test AKxx AKxx x xxxx:
 	        1♣ 1♦
 	        1♥;
-	
+	continuations {
+	    Jw:<2N => 4+ w, gf+;
+	    test AKxx x xxxxx AKx:
+	        1♣ 1♦
+	        1♥ 2♠;
+	}	
 	3N => 7+ x, 3 of top 3 in x, partial_stoppers unstopped, stoppers denied, 7- fit y;
 	    test x Qxx AKQxxxx Qx:
 	        1♦ 1♠
@@ -45,7 +50,6 @@ common 1x 1y {
 	        2N;
 }
 
-include 1over1resprebids.bidding;
 include reverses.bidding;
 include 1Nover1over1_rebids.bidding;
 include 2Nover1over1_rebids.bidding;
