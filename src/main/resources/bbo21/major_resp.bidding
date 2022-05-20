@@ -5,67 +5,84 @@
 # H = ♥
 # S = ♠
 
-1M:seats34 2♣ => 11+ tpts, 8+ fit M;
-    test xxx KJx Kx Axxxx:
-        P 1♥
-        2♣;
+common 1M:seats34 {
+	JOM:<3M => 11-12 tpts, 9+ fit M, 5+OM;
+		test KQJ98 K963 xx xx:
+	        P 1♥
+	        2S;
+	
+	2♣ => 11+ tpts, 8+ fit M;
+	    test xxx KJx Kx Axxxx:
+	        P 1♥
+	        2♣;
+	
+	2M => 6-10 tpts, 8+ fit M;
+	    test xxx Kxx Kx xxxxx:
+	        P 1♥
+	        2♥;
+}
 
-1M:seats34 2M => 6-10 tpts, 8+ fit M;
-    test xxx Kxx Kx xxxxx:
-        P 1♥
-        2♥;
-
-1M 2M => min, 8+ fit M;
-    test xxx Kxx Kx xxxxx:
-        1♥ 2♥;
-
-1M DJy => gf+, 1- y, 4+ M;
-    test x Kxxx Axx Axxxx:
-        1♥ 3♠;
-    test Kxxx x Axx Axxxx:
-        1♠ 4♥;
-
-1H 2S => 5+ S, 4+H, 15-18 tpts;
-    test KQJ98 Q963 A4 A6:
-        1♥ 2♠;
-
-1M 2N => gf+, 4+ M;
-    test AQx Axxx Kx xxxx:
-        1♥ 2N;
-
-1M 3M => inv, 4+ M;
-    test xxx Kxxx Kx KQxx:
-        1♥ 3♥;
-
-1M 3m => inv, 6+ m;
-    test Qxx x xxx AQJxxx:
-        1♥ 3♣;
-
-1M 3N => superbalanced, 3M, gf, 14-15 hcp, partial_stoppers unstopped, stoppers denied;
-    test Qxx Kxx Axx AJxx:
-        1♥ 3N;
-
-1M 1N => inv, 3 M;
-    test Kx KJx xxx Axxxx :
-        1♥ 1N;
-
-1M NJy:down => gf+, 5+ y, longest_or_equal y among unbid;
-    test AQxxx xx Axx Kxx :
-        1♥ 1♠;
-    test Kxx xx Axx AQxxx :
-        1♥ 2♣;
-1M NJy => gf+, 4 y, longest_or_equal y among unbid;
-    test AQx xx Axxx Kxxx :
-        1♥ 2C;
-
-1♥ 1♠:down => min+, 4+ ♠;
-    test Kxxx xx Axx Qxxx :
-        1♥ 1♠;
-
-# Catch all
-1M 1N => min+;
-    test xxx xx AKxx Qxxx :
-        1♥ 1N;
+common 1M {
+	2M => min, 8+ fit M;
+	    test xxx Kxx Kx xxxxx:
+	        1♥ 2♥;
+	
+	DJy => gf+, 1- y, 4+ M;
+	    test x Kxxx Axx Axxxx:
+	        1♥ 3♠;
+	    test Kxxx x Axx Axxxx:
+	        1♠ 4♥;
+	
+	JOM:<3M => 6+ OM, 15-18 tpts;
+	    test AKJxxx Qx Ax Kxx:
+	        1H 2S;
+	
+	JOM:<3M => 4+ OM, 18-19 tpts, balanced;
+	    test KQxx Kx AKJx Kxx:
+	        1H 2S;
+	
+	JOM:<3M => 5+ OM, 4+M, 15-18 tpts;
+	    test KQJ98 Q963 A4 A6:
+	        1♥ 2♠;
+	
+	2N => gf+, 4+ M;
+	    test AQx Axxx Kx xxxx:
+	        1♥ 2N;
+	
+	3M => inv, 4+ M;
+	    test xxx Kxxx Kx KQxx:
+	        1♥ 3♥;
+	
+	3m => inv, 6+ m;
+	    test Qxx x xxx AQJxxx:
+	        1♥ 3♣;
+	
+	3N => superbalanced, 3M, gf, 14-15 hcp, partial_stoppers unstopped, stoppers denied;
+	    test Qxx Kxx Axx AJxx:
+	        1♥ 3N;
+	
+	1N => inv, 3 M;
+	    test Kx KJx xxx Axxxx :
+	        1♥ 1N;
+	
+	NJy:down => gf+, 5+ y, longest_or_equal y among unbid;
+	    test AQxxx xx Axx Kxx :
+	        1♥ 1♠;
+	    test Kxx xx Axx AQxxx :
+	        1♥ 2♣;
+	NJy => gf+, 4 y, longest_or_equal y among unbid;
+	    test AQx xx Axxx Kxxx :
+	        1♥ 2C;
+	
+	1OM:down => min+, 4+ OM;
+	    test Kxxx xx Axx Qxxx :
+	        1♥ 1♠;
+	
+	# Catch all
+	1N => min+;
+	    test xxx xx AKxx Qxxx :
+	        1♥ 1N;
+}
 
 include simple_major_raise.bidding;
 include j2n_rebids.bidding;
