@@ -30,7 +30,7 @@ common [] 1N:"nt_opener" 2M-1 {
 		        1N 2♦
 		        2♠ 3D;
 		continuations {
-		     3M => always;
+		    3M => always;
 		    test xx Axxxx xxx xxx:
 		        1N 2♦
 		        2♠ 3D
