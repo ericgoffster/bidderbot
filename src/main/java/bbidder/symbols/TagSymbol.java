@@ -67,11 +67,6 @@ public final class TagSymbol extends Symbol {
     }
 
     @Override
-    public boolean isNonConvential() {
-        return symbol.isNonConvential();
-    }
-
-    @Override
     public short getSeats() {
         return symbol.getSeats();
     }

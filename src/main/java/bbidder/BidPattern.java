@@ -69,7 +69,7 @@ public final class BidPattern {
      * @return A pattern where the level is "jump" based.
      */
     public static BidPattern createJump(Symbol symbol, int jumpLevel) {
-        return new BidPattern(false, symbol, null, null, jumpLevel, null, symbol.isNonConvential(), symbol.getTags());
+        return new BidPattern(false, symbol, null, null, jumpLevel, null, false, symbol.getTags());
     }
 
     /**
@@ -92,7 +92,7 @@ public final class BidPattern {
      * @return A bid that is the level of a suit
      */
     public static BidPattern createBid(Integer level, Symbol symbol) {
-        return new BidPattern(false, symbol, level, null, null, null, symbol.isNonConvential(), symbol.getTags());
+        return new BidPattern(false, symbol, level, null, null, null, false, symbol.getTags());
     }
 
     /**

@@ -70,9 +70,4 @@ public final class SeatSymbol extends Symbol {
     public short getSeats() {
         return seats;
     }
-
-    @Override
-    public boolean isNonConvential() {
-        return false;
-    }
 }
