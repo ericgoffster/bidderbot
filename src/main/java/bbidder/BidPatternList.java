@@ -170,9 +170,6 @@ public final class BidPatternList {
             if (!bidding.isLegalBid(nextBid.bid)) {
                 return Optional.empty();
             }
-            if (matched.contains(nextBid.bid) && lastBid.isNonConventional) {
-                return Optional.empty();
-            }
             return Optional.of(nextBid);
         });
     }
