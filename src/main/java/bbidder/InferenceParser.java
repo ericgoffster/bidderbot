@@ -208,6 +208,11 @@ public final class InferenceParser {
                         return new HCPRange(PointRange.between(rng.min, rng.max));
                     } else if (rng.of.equalsIgnoreCase(TotalPointsRange.TPTS)) {
                         return new TotalPointsRange(PointRange.between(rng.min, rng.max));
+                    } else if (rng.of.startsWith("fit")) {
+                        Symbol sym = SymbolParser.parseSymbol(rng.of.substring(3).trim());
+                        if (sym != null) {
+                            return new FitInSuit(sym, SuitLengthRange.between(rng.min, rng.max));
+                        }
                     } else {
                         {
                             Symbol sym = SymbolParser.parseSymbol(rng.of);
