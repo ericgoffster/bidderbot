@@ -7,8 +7,6 @@ import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
-import bbidder.utils.SplitUtil;
 
 public final class IAmTwoSuitedGenerality extends Generality {
     private final Symbol longer;
@@ -32,21 +30,6 @@ public final class IAmTwoSuitedGenerality extends Generality {
         int l = longer.getResolvedStrain();
         int s = shorter.getResolvedStrain();
         return players.iBidSuit(l) && players.iBidSuit(s);
-    }
-
-    public static IAmTwoSuitedGenerality valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        String[] parts = SplitUtil.split(str, "\\s+", 3);
-        if (parts.length == 3 && parts[0].equalsIgnoreCase("i_am_two_suited")) {
-            Symbol longer = SymbolParser.parseSymbol(parts[1]);
-            Symbol shorter = SymbolParser.parseSymbol(parts[2]);
-            if (longer != null && shorter != null) {
-                return new IAmTwoSuitedGenerality(longer, shorter);
-            }
-        }
-        return null;
     }
 
     @Override

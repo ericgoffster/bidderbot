@@ -9,8 +9,6 @@ import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
-import bbidder.utils.SplitUtil;
 
 public final class FitEstablished extends Generality {
     private final Symbol symbol;
@@ -34,20 +32,6 @@ public final class FitEstablished extends Generality {
         }
         return ourCombinedMinLength.getAsInt() >= 8;
      }
-
-    public static FitEstablished valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        String[] parts = SplitUtil.split(str, "\\s+", 2);
-        if (parts.length == 2 && parts[0].equalsIgnoreCase("fit_established")) {
-            Symbol symbol = SymbolParser.parseSymbol(parts[1]);
-            if (symbol != null) {
-                return new FitEstablished(symbol);
-            }
-        }
-        return null;
-    }
 
     @Override
     public int hashCode() {

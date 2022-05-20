@@ -8,8 +8,6 @@ import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
-import bbidder.utils.SplitUtil;
 
 public final class UnbidSuitGenerality extends Generality {
     private final Symbol symbol;
@@ -39,20 +37,6 @@ public final class UnbidSuitGenerality extends Generality {
             return false;
         }
         return true;
-    }
-
-    public static UnbidSuitGenerality valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        String[] parts = SplitUtil.split(str, "\\s+", 2);
-        if (parts.length == 2 && parts[0].equalsIgnoreCase("unbid_suit")) {
-            Symbol symbol = SymbolParser.parseSymbol(parts[1]);
-            if (symbol != null) {
-                return new UnbidSuitGenerality(symbol);
-            }
-        }
-        return null;
     }
 
     @Override

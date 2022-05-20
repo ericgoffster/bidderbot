@@ -9,13 +9,6 @@ import java.io.IOException;
  *
  */
 public final class BidPatternParser implements Parser<BidPattern> {
-    public final InferenceRegistry reg;
-
-    public BidPatternParser(InferenceRegistry reg) {
-        super();
-        this.reg = reg;
-    }
-
     private String parseSuit(Input inp) throws IOException {
         return inp.readToken(ch -> ch != ')');
     }
@@ -82,7 +75,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
             if (inp.ch == ']') {
                 inp.advance();
             }
-            return BidPattern.createWild(reg.parseGenerality(sb.toString()));
+            return BidPattern.createWild(InferenceRegistry.parseGenerality(sb.toString()));
         }
         if (inp.ch == '(') {
             inp.advance();

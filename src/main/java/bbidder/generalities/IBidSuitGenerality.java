@@ -7,8 +7,6 @@ import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.SymbolParser;
-import bbidder.utils.SplitUtil;
 
 public final class IBidSuitGenerality extends Generality {
     private final Symbol symbol;
@@ -27,20 +25,6 @@ public final class IBidSuitGenerality extends Generality {
     public boolean test(Players players, Auction bidList) {
         int suit = symbol.getResolvedStrain();
         return players.iBidSuit(suit);
-    }
-
-    public static IBidSuitGenerality valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        String[] parts = SplitUtil.split(str, "\\s+", 2);
-        if (parts.length == 2 && parts[0].equalsIgnoreCase("i_bid_suit")) {
-            Symbol symbol = SymbolParser.parseSymbol(parts[1]);
-            if (symbol != null) {
-                return new IBidSuitGenerality(symbol);
-            }
-        }
-        return null;
     }
 
     @Override

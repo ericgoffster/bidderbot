@@ -12,8 +12,7 @@ import bbidder.symbols.OtherMajorSymbol;
 
 public class BidPatternParserTest {
     public static BidPattern parse(String str) throws IOException {
-        InferenceRegistry reg = new SimpleInferenceRegistryFactory().get();
-        BidPatternParser parser = new BidPatternParser(reg);
+        BidPatternParser parser = new BidPatternParser();
         BidPattern patt;
         try (Input inp = new Input(new StringReader(str))) {
             patt = parser.parse(inp);

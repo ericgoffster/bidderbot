@@ -50,7 +50,7 @@ public final class BidInference {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        return new BidInference(where, BidPatternList.valueOf(reg, parts[0]), reg.parseInference(parts[1]));
+        return new BidInference(where, BidPatternList.valueOf(parts[0]), reg.parseInference(parts[1]));
     }
 
     /**

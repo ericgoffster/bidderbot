@@ -205,17 +205,15 @@ public final class BidPatternList {
     }
 
     /**
-     * @param reg
-     *            The inference registry
      * @param str
      *            The String to parse
      * @return A parsed BidPatternList
      */
-    public static BidPatternList valueOf(InferenceRegistry reg, String str) {
+    public static BidPatternList valueOf(String str) {
         if (str == null) {
             return null;
         }
-        ListParser<BidPattern> parser = new ListParser<BidPattern>(new BidPatternParser(reg), "");
+        ListParser<BidPattern> parser = new ListParser<BidPattern>(new BidPatternParser(), "");
         try (Input inp = new Input(new StringReader(str))) {
             List<BidPattern> l = parser.parse(inp);
             inp.advanceWhite();

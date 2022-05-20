@@ -30,16 +30,6 @@ public final class WeAreThreeSuited extends Generality {
         return BitUtil.size(suits) == 3;
     }
 
-    public static WeAreThreeSuited valueOf(String str) {
-        if (str == null) {
-            return null;
-        }
-        if (str.trim().equalsIgnoreCase("we_are_three_suited")) {
-            return new WeAreThreeSuited();
-        }
-        return null;
-    }
-
     @Override
     public String toString() {
         return "we_are_three_suited";
