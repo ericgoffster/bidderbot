@@ -71,7 +71,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
                     Position position = Position.getPosition(tag);
                     inp.advanceWhite();
                     if (inp.readKeyword("BID")) {
-                        String sym = inp.readToken(ch -> !Character.isWhitespace(ch) && ch != ':');
+                        String sym = parseSuit(inp);
                         Symbol symbol = SymbolParser.parseSymbol(sym);
                         if (symbol == null) {
                             throw new IllegalArgumentException("Invalid symbol");
@@ -94,7 +94,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
                     }
                     break;
                 case UnbidSuitGenerality.NAME: {
-                    String sym = inp.readToken(ch -> !Character.isWhitespace(ch) && ch != ':');
+                    String sym = parseSuit(inp);
                     Symbol symbol = SymbolParser.parseSymbol(sym);
                     if (symbol == null) {
                         throw new IllegalArgumentException("Invalid symbol");
@@ -112,14 +112,14 @@ public final class BidPatternParser implements Parser<BidPattern> {
                     if (rng != null) {
                         inp.advanceWhite();
                         if (inp.readKeyword(FitEstablished.NAME.toUpperCase())) {
-                            String sy = inp.readToken(ch -> ch != ':');
+                            String sy = parseSuit(inp);
                             Symbol sym = SymbolParser.parseSymbol(sy);
                             if (sym != null) {
                                 p = p.addGenerality(new FitEstablished(sym, SuitLengthRange.between(rng.min, rng.max)));
                                 break;
                             }
                         } else if (inp.readKeyword(BestFitEstablished.NAME.toUpperCase())) {
-                            String sy = inp.readToken(ch -> ch != ':');
+                            String sy = parseSuit(inp);
                             Symbol sym = SymbolParser.parseSymbol(sy);
                             if (sym != null) {
                                 p = p.addGenerality(new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max)));
