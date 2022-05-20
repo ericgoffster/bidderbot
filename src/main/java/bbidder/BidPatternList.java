@@ -56,6 +56,12 @@ public final class BidPatternList {
      * @return A new BidPatternList with the given bid added to the end
      */
     public BidPatternList withBidAdded(BidPattern patt) {
+        if (patt.simpleBid != null) {
+            Contract contract = getContract();
+            if (contract != null && !contract.isLegalBid(patt.simpleBid)) {
+                throw new IllegalArgumentException("Invalid bid " + patt);
+            }
+        }
         List<BidPattern> nbids = new ArrayList<>(bids);
         nbids.add(patt);
         return new BidPatternList(nbids);
