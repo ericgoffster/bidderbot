@@ -12,7 +12,7 @@ import bbidder.Symbol;
 import bbidder.utils.MyStream;
 
 public final class BidSuitGenerality extends Generality {
-    public static final String NAME = "bid_suit";
+    public static final String NAME = "bid";
     private final Symbol symbol;
     private final int position;
     private final SuitLengthRange range;

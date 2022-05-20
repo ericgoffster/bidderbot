@@ -6,10 +6,10 @@
 # S = ♠
 
 [[Establish major fit]]
-[gf+, 7- fit M, i_bid_suit M] NJM:<4N => 8+ fit m;
+[gf+, 7- fit M, i_bid M] NJM:<4N => 8+ fit m;
  
 [[Establish major fit]]
-[gf+, 7- fit M, partner_bid_suit M] NJM:<4N => 8+ fit M;
+[gf+, 7- fit M, partner_bid M] NJM:<4N => 8+ fit M;
     test Axx Qxxx xxx xxx:
         2C 2D
         2N 3♣
@@ -26,10 +26,10 @@
         3♠ 4S;
 
 [[Establish minor fit]]
-[gf+, 7- fit m, i_bid_suit m] NJm:<3N => 8+ fit m;
+[gf+, 7- fit m, i_bid m] NJm:<3N => 8+ fit m;
 
 [[Establish minor fit]]
-[gf+, 7- fit m, partner_bid_suit m] NJm:<3N => 8+ fit m;
+[gf+, 7- fit m, partner_bid m] NJm:<3N => 8+ fit m;
 
 [[Rebid second suit]]
 [gf+, i_am_two_suited x y] NJy:<3N => rebiddable_2nd x y;
@@ -39,14 +39,14 @@
         3D;
 
 [[Rebid suit]]
-[gf+, i_bid_suit y] NJy:<3N => rebiddable y;
+[gf+, i_bid y] NJy:<3N => rebiddable y;
     test AKxxxx xxx Axx x:
         1S 2C
         2S 2N
         3S;
 
 [[Secondary support]]
-[gf+, partner_bid_suit y, 6- fit y] NJy:<3N => max y, 7 fit y;
+[gf+, partner_bid y, 6- fit y] NJy:<3N => max y, 7 fit y;
     test AQxxx Axx xx Axx:
         1S 2H
         2S 3C

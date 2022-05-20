@@ -45,13 +45,13 @@
 [8+ fit m] 3m => inv;
 
 [[Self support minor at 3 level with invitational values]]
-[i_bid_suit m] 3m => inv, 8+ fit m;
+[i_bid m] 3m => inv, 8+ fit m;
     test AJx xx Axxxxx xx:
          1C 1D
          1N 3D;
 
 [[Support minor at 3 level with invitational values]]
-[partner_bid_suit m] 3m => inv, 8+ fit m;
+[partner_bid m] 3m => inv, 8+ fit m;
     test x Kxxx xx AQxxxx:
         1C 1H
         1N 3C;
@@ -63,7 +63,7 @@
 [8+ fit m] 2m => min;
 
 [[Support minor at 2 level with minimum values]]
-[partner_bid_suit m] 2m => min, 8+ fit m;
+[partner_bid m] 2m => min, 8+ fit m;
     test Ax xxxx xx Axxxx:
         1C 1H
         1N 2C;
@@ -79,10 +79,10 @@
         3D P;
 
 [[Pass minor at 3 level with self support and invitational values]]
-[i_bid_suit m] 3m P => inv, 8+ fit m;
+[i_bid m] 3m P => inv, 8+ fit m;
 
 [[Pass minor at 3 level with support and invitational values]]
-[partner_bid_suit m] 3m P => inv, 8+ fit m;
+[partner_bid m] 3m P => inv, 8+ fit m;
 
 [[Pass established fit at 2 level with minimum values]]
 [8+ fit m] 2m P => min;
@@ -91,14 +91,14 @@
         2D P;
         
 [[Pass minor at 2 level with self support and minimum values]]
-[i_bid_suit m] 2m P => min, 8+ fit m;
+[i_bid m] 2m P => min, 8+ fit m;
 
 [[Pass minor at 2 level with support and minimum values]]
-[partner_bid_suit m] 2m P => min, 8+ fit m;
+[partner_bid m] 2m P => min, 8+ fit m;
 
 # Rebid suit
 [[Rebid minor at 3 level 3N with invitational values]]
-[i_bid_suit m] 3m => inv, rebiddable m;
+[i_bid m] 3m => inv, rebiddable m;
     test Kxx xxx AQxxxx x:
         1C 1D
         2C 3D;
@@ -107,7 +107,7 @@
         3♣;
 
 [[Rebid minor at 2 level with minimum values]]
-[i_bid_suit m] 2m => min, rebiddable m;
+[i_bid m] 2m => min, rebiddable m;
     test Kxx Kxx x AKxxxx:
         1♣ 1♦
         2♣;
@@ -122,7 +122,7 @@
         2C 2S;
 
 [[Bid a new suit below 3N with game forcing values]]
-[i_bid_suit y, unbid_suit x] NJx:<3N:nonconventional => gf+, 4+ x;
+[i_bid y, unbid_suit x] NJx:<3N:nonconventional => gf+, 4+ x;
     test xx AQxxx Qxxx Ax:
         1C 1H
         2C 2D;

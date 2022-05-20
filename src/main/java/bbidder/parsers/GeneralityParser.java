@@ -52,7 +52,7 @@ public final class GeneralityParser {
             }
             break;
         }
-        case "i_bid_suit": {
+        case "i_bid": {
             String[] rem = SplitUtil.split(remainder, "promising", 2);
             SuitLengthRange range;
             if (rem.length == 2) {
@@ -71,7 +71,7 @@ public final class GeneralityParser {
             }
             break;
         }
-        case "partner_bid_suit": {
+        case "partner_bid": {
             String[] rem = SplitUtil.split(remainder, "promising", 2);
             SuitLengthRange range;
             if (rem.length == 2) {

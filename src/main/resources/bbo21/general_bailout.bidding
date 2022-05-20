@@ -10,10 +10,10 @@
 [8+ fit y] ?y P => always;
 
 [[Pass any playable fit]]
-[i_bid_suit y] ?y P => 8+ fit y;
+[i_bid y] ?y P => 8+ fit y;
 
 [[Pass any playable fit]]
-[partner_bid_suit y] ?y P => 8+ fit y;
+[partner_bid y] ?y P => 8+ fit y;
 
 [[Return to known fit over a suit bid]]
 [8+ fit y] ?x NJy => 7- fit x;
@@ -32,15 +32,15 @@
         3♣;
 
 [[Self support suit]]
-[i_bid_suit y] NJy => 8+ fit y;
+[i_bid y] NJy => 8+ fit y;
 
 [[Support suit]]
-[partner_bid_suit y] NJy => 8+ fit y;
+[partner_bid y] NJy => 8+ fit y;
 
 # At this point, no playable fits at all
 
 [[Pass partners rebiddable suit]]
-[partner_bid_suit y promising 6+] ?y P => always;
+[partner_bid y promising 6+] ?y P => always;
     test xxx x xxxxx xxxx:
         2H P;
     test xxx Qxxx Axxxx x:
@@ -51,7 +51,7 @@
         2C P;
 
 [[Rebid own suit]]
-[i_bid_suit x] NJx => rebiddable m;
+[i_bid x] NJx => rebiddable m;
 
 [[Pass NT]]
 [] ?N P => always;
