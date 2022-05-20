@@ -5,12 +5,6 @@
 # H = ♥
 # S = ♠
 
-1M 2M
-4M => gf;
-    test AKxxxx AKx Ax xx:
-        1♠ 2♠
-        4♠;
-
 1♠ 2♠
 2N => inv, 1- x;
     test AKxxx Axx Kxxx x:

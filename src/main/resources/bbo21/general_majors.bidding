@@ -41,6 +41,9 @@
     test Ax Axxxxx xx AQx:
         1C 1H
         1N 4H;
+    test AKxxxx AKx Ax xx:
+        1♠ 2♠
+        4♠;
 
 [] 3M => inv, fit M;
     test AQxx Axx xxxx xx:
