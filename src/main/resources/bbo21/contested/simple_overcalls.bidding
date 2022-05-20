@@ -1,3 +1,19 @@
+(1x) NJy:>1N:down => 5+ y, 10+ hcp, 11+ tpts, 2+ of top 3 in y;
+test Axx AQxxxx xx xx:
+        (1S) 2H;
+
 (1x) 1y:down => 5+ y, 7+ hcp, 8+ tpts;
 test AQxxx Axx xxx xx:
         (1C) 1S;
+
+(1x) 1N => stoppers x, 15-17 hcp;
+test AQxx Axx Axx Qxx:
+        (1H) 1N;
+
+(1w) X => 12+ tpts, 3+ x, 3+ y, 3+ z;
+test AQxx xx Axxx Qxx:
+        (1H) x;
+
+(1w) X => 18+ tpts;
+test AQ AQxx Axxxx Ax:
+        (1H) x;
