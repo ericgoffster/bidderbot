@@ -255,6 +255,9 @@ public final class BidPattern {
     @Override
     public String toString() {
         String str = _getBidString();
+        if (generality != null) {
+            str = str + ":" + generality;
+        }
         if (downTheLine) {
             str = str + ":down";
         }
@@ -298,8 +301,8 @@ public final class BidPattern {
     }
 
     private String _getBidString() {
-        if (generality != null) {
-            return "[" + generality + "]";
+        if (isWild) {
+            return "*";
         }
         if (simpleBid != null) {
             return simpleBid.toString();
