@@ -8,9 +8,10 @@ import bbidder.Inference;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.ShapeSet;
+import bbidder.SuitLengthRange;
+import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SuitTable;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 /**
@@ -21,15 +22,15 @@ import bbidder.inferences.bound.ShapeBoundInf;
  */
 public final class SuitRange extends Inference {
     private final Symbol symbol;
-    private final Range rng;
+    private final SuitLengthRange rng;
 
     public SuitRange(Symbol symbol, Integer min, Integer max) {
         super();
         this.symbol = symbol;
-        this.rng = Range.between(min, max, 13);
+        this.rng = SuitLengthRange.between(min, max);
     }
 
-    public SuitRange(Symbol symbol, Range r) {
+    public SuitRange(Symbol symbol, SuitLengthRange r) {
         super();
         this.symbol = symbol;
         this.rng = r;
@@ -65,7 +66,7 @@ public final class SuitRange extends Inference {
         }
         Symbol sym = SymbolParser.parseSymbol(rng.of);
         if (sym != null) {
-            return new SuitRange(sym, Range.between(rng.min, rng.max, 13));
+            return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
         } else {
             return null;
         }
