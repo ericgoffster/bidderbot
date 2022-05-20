@@ -1,14 +1,10 @@
 package bbidder.symbols;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 import bbidder.Bid;
 import bbidder.SuitTable;
 import bbidder.Symbol;
-import bbidder.utils.IteratorStream;
 import bbidder.utils.MyStream;
 
 public final class DownSymbol extends Symbol {
@@ -69,9 +65,6 @@ public final class DownSymbol extends Symbol {
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
-        List<Context> l = new ArrayList<>();
-        symbol.resolveSuits(suitTable).forEach(l::add);
-        Collections.reverse(l);
-        return new IteratorStream<Symbol.Context>(l.iterator());
+        return symbol.resolveSuits(suitTable);
     }
 }
