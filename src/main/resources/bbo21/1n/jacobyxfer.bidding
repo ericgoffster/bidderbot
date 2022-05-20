@@ -29,6 +29,13 @@ common [] 1N:"nt_opener" 2M-1 {
 		    test xx Axxxx xxx xxx:
 		        1N 2♦
 		        2♠ 3D;
+		continuations {
+		     3M => always;
+		    test xx Axxxx xxx xxx:
+		        1N 2♦
+		        2♠ 3D
+		        3H;
+		}
     }
 	        
 	[[With max and no doubleton, bid 2N]] 
@@ -45,6 +52,13 @@ common [] 1N:"nt_opener" 2M-1 {
 		    test xx Axxxx xxx xxx:
 		        1N 2♦
 		        2N 3D;
+		continuations {
+		    3M => always;
+		    test AKx Axxx Axx Qxx:
+		        1N 2D
+		        2N 3D
+		        3H;
+		}
     }
 }
 

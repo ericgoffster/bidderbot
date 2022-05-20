@@ -109,10 +109,6 @@
 
 [[Return to established major]]
 [8+ fit M] NJM => always;
-    test AKx Axxx Axx Qxx:
-        1N 2D
-        2N 3D
-        3H;
 
 [[Bid self supporting major]]
 [i bid M] NJM => 8+ fit M;
