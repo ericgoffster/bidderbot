@@ -181,9 +181,9 @@ public final class BidPattern {
      *            The bid I am trying to match.
      * @return The bid associated with the given pattern. Null, if not valid.
      */
-    public Optional<Bid> resolveToBid(TaggedAuction taggedAuction, TaggedBid bid) {
+    public Optional<TaggedBid> resolveToBid(TaggedAuction taggedAuction, TaggedBid bid) {
         if (simpleBid != null) {
-            return Optional.of(simpleBid);
+            return Optional.of(new TaggedBid(simpleBid, getTags()));
         }
         int strain = symbol.getResolvedStrain();
         if (jumpLevel != null) {
@@ -195,7 +195,7 @@ public final class BidPattern {
             if (!isBidCompatible(contract, symbol, b)) {
                 return Optional.empty();
             }
-            return Optional.of(b);
+            return Optional.of(new TaggedBid(b, getTags()));
         }
         if (level == null) {
             if (bid == null) {
@@ -209,9 +209,9 @@ public final class BidPattern {
             if (!isBidCompatible(contract, symbol, b)) {
                 return Optional.empty();
             }
-            return Optional.of(b);
+            return Optional.of(new TaggedBid(b, getTags()));
         }
-        return Optional.of(Bid.valueOf(level, strain));
+        return Optional.of(new TaggedBid(Bid.valueOf(level, strain), getTags()));
     }
 
     @Override
