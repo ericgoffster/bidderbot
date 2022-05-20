@@ -18,13 +18,13 @@
         2N 3H;
 
 1x 1M
-2N:"nt_rebid" 3y:"nmf":<3z => 7+ tpts, 5 M;
+2N:"nt_rebid" 3m:"nmf":<3z => 7+ tpts, 5 M;
     test xxx AQJxx xx xxx:
         1C 1H
         2N 3D;
 
 1x 1M
-2N:"nt_rebid" 3y:"nmf":<3z => slaminv+, 6+ M;
+2N:"nt_rebid" 3m:"nmf":<3z => slaminv+, 6+ M;
     test xx AQJxxx xx Axx:
         1C 1H
         2N 3D;
