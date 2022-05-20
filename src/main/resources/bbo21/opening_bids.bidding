@@ -42,19 +42,19 @@
         1♣;
 
 # Preempts
-2x => opening_preempt 2 x;
+2x => 6 x, 6-10 hcp, 2+ of top 3 in x, 3+ of top 5 in x;
     test KQJxxx xxx x xxx:
         2♠;
 
-3x => opening_preempt 3 x;
+3x => 7 x, 5-9 hcp, 1+ of top 3 in x;
     test KQJxxxx xx x xxx:
         3♠;
 
-4x => opening_preempt 4 x;
+4x => 8 x, 5-9 hcp, 1+ of top 3 in x;
     test KQJxxxxx xx x xx:
         4♠;
 
-5x => opening_preempt 5 x;
+5x => 9 x, 5-9 hcp, 1+ of top 3 in x;
     test xx x KQJxxxxxx x:
         5♦;
 

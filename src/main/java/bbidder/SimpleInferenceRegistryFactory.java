@@ -14,7 +14,6 @@ import bbidder.inferences.CombinedTotalPointsRange;
 import bbidder.inferences.FitInSuit;
 import bbidder.inferences.HCPRange;
 import bbidder.inferences.LongestOrEqual;
-import bbidder.inferences.OpeningPreempt;
 import bbidder.inferences.Rebiddable;
 import bbidder.inferences.RebiddableSecondSuit;
 import bbidder.inferences.SpecificCards;
@@ -33,7 +32,6 @@ public final class SimpleInferenceRegistryFactory implements Supplier<InferenceR
         reg.addInference(VeryBalanced::valueOf);
         reg.addInference(UnBalanced::valueOf);
         reg.addInference(HCPRange::valueOf);
-        reg.addInference(OpeningPreempt::valueOf);
         reg.addInference(LongestOrEqual::valueOf);
         reg.addInference(SuitRange::valueOf);
         reg.addInference(FitInSuit::valueOf);
