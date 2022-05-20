@@ -20,12 +20,12 @@ public class HandParser {
     public static class ParsedHand {
         public Hand current = new Hand();
         Hand avail;
-    
+
         public ParsedHand(Hand avail) {
             super();
             this.avail = avail;
         }
-    
+
         public void parseSuit(String suitStr, int suitIndex) {
             if (suitStr.equals("-")) {
                 return;
@@ -47,7 +47,7 @@ public class HandParser {
                 numX--;
             }
         }
-    
+
         public void parseHand(String str) {
             String[] suit_parts = SplitUtil.split(str, "\\s+", 4);
             if (suit_parts.length != 4) {
@@ -60,7 +60,7 @@ public class HandParser {
         }
     }
 
-    public static Hand valueOf(String str, Hand avail) {
+    public static Hand parseHand(String str, Hand avail) {
         if (str == null) {
             return null;
         }
@@ -69,8 +69,8 @@ public class HandParser {
         return parsed.current;
     }
 
-    public static Hand valueOf(String str) {
-        return valueOf(str, Hand.allCards());
+    public static Hand parseHand(String str) {
+        return parseHand(str, Hand.allCards());
     }
 
     public static int getRank(char cRank, short avail) {

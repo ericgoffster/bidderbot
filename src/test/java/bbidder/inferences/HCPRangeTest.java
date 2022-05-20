@@ -36,10 +36,10 @@ public class HCPRangeTest {
 
     @Test
     public void testAffirmative() {
-        assertTrue(new HCPRange(10, 10).bind(new Players()).test(HandParser.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new HCPRange(10, null).bind(new Players()).test(HandParser.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new HCPRange(11, null).bind(new Players()).test(HandParser.valueOf("AKQ JT9 876 5432")));
-        assertTrue(new HCPRange(null, 10).bind(new Players()).test(HandParser.valueOf("AKQ JT9 876 5432")));
-        assertFalse(new HCPRange(null, 9).bind(new Players()).test(HandParser.valueOf("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange(10, 10).bind(new Players()).test(HandParser.parseHand("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange(10, null).bind(new Players()).test(HandParser.parseHand("AKQ JT9 876 5432")));
+        assertFalse(new HCPRange(11, null).bind(new Players()).test(HandParser.parseHand("AKQ JT9 876 5432")));
+        assertTrue(new HCPRange(null, 10).bind(new Players()).test(HandParser.parseHand("AKQ JT9 876 5432")));
+        assertFalse(new HCPRange(null, 9).bind(new Players()).test(HandParser.parseHand("AKQ JT9 876 5432")));
     }
 }

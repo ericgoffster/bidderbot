@@ -11,6 +11,7 @@ import bbidder.utils.MyStream;
 
 public final class BidSuits extends SuitSet {
     private final Position position;
+
     public BidSuits(Position position) {
         super();
         this.position = position;
@@ -51,7 +52,7 @@ public final class BidSuits extends SuitSet {
 
     @Override
     public String toString() {
-        switch(position) {
+        switch (position) {
         case ME:
         case PARTNER:
             return "ours";

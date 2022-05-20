@@ -132,19 +132,19 @@ public final class BiddingSystemParser {
                     } else {
                         if (comm.length == 2 && comm[0].equalsIgnoreCase("test")) {
                             try {
-                                tests.accept(BiddingTest.valueOf(last, false, here, comm[1]));
+                                tests.accept(BiddingTestParser.parseBiddingTest(last, false, here, comm[1]));
                             } catch (Exception e) {
                                 reportErrors.accept(new ParseException(here, e));
                             }
                         } else if (comm.length == 2 && comm[0].equalsIgnoreCase("anti_test")) {
                             try {
-                                tests.accept(BiddingTest.valueOf(last, true, here, comm[1]));
+                                tests.accept(BiddingTestParser.parseBiddingTest(last, true, here, comm[1]));
                             } catch (Exception e) {
                                 reportErrors.accept(new ParseException(here, e));
                             }
                         } else if (!ln.equals("")) {
                             try {
-                                BidInference unresolved = BidInference.valueOf(here, ln, prefix);
+                                BidInference unresolved = BidInferenceParser.parseBidInference(here, ln, prefix);
                                 List<BidInference> resolved = new ArrayList<>();
                                 unresolved.resolveSuits().forEach(resolved::add);
                                 last = unresolved;

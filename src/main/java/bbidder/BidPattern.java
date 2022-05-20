@@ -190,7 +190,7 @@ public final class BidPattern {
         if (simpleBid != null) {
             return new TaggedBid(simpleBid, tags);
         }
-        return new TaggedBid(Bid.valueOf(level, symbol.getResolvedStrain()), tags);
+        return new TaggedBid(Bid.createBid(level, symbol.getResolvedStrain()), tags);
     }
 
     /**
@@ -221,7 +221,7 @@ public final class BidPattern {
         }
         return true;
     }
-    
+
     public Comparator<Bid> getBidPriority() {
         if (downTheLine) {
             return (a, b) -> {

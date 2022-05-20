@@ -53,12 +53,12 @@ public final class Contract {
 
     public Bid nextLevel(int strain) {
         if (winningBid == Bid.P) {
-            return Bid.valueOf(0, strain);
+            return Bid.createBid(0, strain);
         }
         if (strain > winningBid.strain) {
-            return Bid.valueOf(winningBid.level, strain);
+            return Bid.createBid(winningBid.level, strain);
         } else {
-            return Bid.valueOf(winningBid.level + 1, strain);
+            return Bid.createBid(winningBid.level + 1, strain);
         }
     }
 

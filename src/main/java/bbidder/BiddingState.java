@@ -57,7 +57,8 @@ public final class BiddingState {
     }
 
     /**
-     * @param n Number of times to rotate
+     * @param n
+     *            Number of times to rotate
      * @return The bidding state routed "n" times.
      */
     public BiddingState rotate(int n) {

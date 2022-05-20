@@ -37,11 +37,15 @@ public final class MadeBid extends Generality {
     }
 
     private int getStart() {
-        switch(position) {
-        case ME: return -4;
-        case LHO: return -3;
-        case PARTNER: return -2;
-        case RHO: return -1;
+        switch (position) {
+        case ME:
+            return -4;
+        case LHO:
+            return -3;
+        case PARTNER:
+            return -2;
+        case RHO:
+            return -1;
         default:
             throw new IllegalStateException();
         }

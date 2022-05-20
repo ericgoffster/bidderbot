@@ -26,8 +26,8 @@ public final class Unstopped extends SuitSet {
         }
         int stopped = partnerSuits.getAsInt() | meSuits.getAsInt();
         for (int i = 0; i < 4; i++) {
-            if (me.stoppers.stopperIn(i) || partner.stoppers.stopperIn(i)
-                    || me.partialStoppers.stopperIn(i) || partner.partialStoppers.stopperIn(i)) {
+            if (me.stoppers.stopperIn(i) || partner.stoppers.stopperIn(i) || me.partialStoppers.stopperIn(i)
+                    || partner.partialStoppers.stopperIn(i)) {
                 stopped |= 1 << i;
             }
         }

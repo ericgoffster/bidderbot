@@ -16,7 +16,7 @@ public class AuctionParser {
      * @throws IllegalArgumentException
      *             If the auction is not valid or bids cant be parsed.
      */
-    public static Auction valueOf(String str) {
+    public static Auction parseAuction(String str) {
         if (str == null) {
             return null;
         }

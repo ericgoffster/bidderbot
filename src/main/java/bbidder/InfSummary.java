@@ -164,7 +164,7 @@ public final class InfSummary {
         return Objects.equals(partialStoppers, other.partialStoppers) && Objects.equals(shape, other.shape)
                 && Objects.equals(stoppers, other.stoppers) && Objects.equals(tpts, other.tpts) && Objects.equals(hcp, other.hcp);
     }
-    
+
     public void showSummary(String label) {
         ShapeStats[] stats = shape.getStats();
         System.err.println(label);

@@ -1,9 +1,5 @@
 package bbidder;
 
-import bbidder.parsers.AuctionParser;
-import bbidder.parsers.HandParser;
-import bbidder.utils.SplitUtil;
-
 /**
  * Represents the test of a bid.
  * 
@@ -70,28 +66,5 @@ public final class BiddingTest {
     @Override
     public String toString() {
         return hand + ":" + auction;
-    }
-
-    /**
-     * Parses a test.
-     * 
-     * @param parent
-     *            Parent inference
-     * 
-     * @param anti
-     *            True if this is an anti test
-     * @param where
-     *            Where the test was defined
-     * @param str
-     *            The string to parse
-     * @return
-     *         The bidding test
-     */
-    public static BiddingTest valueOf(BidInference parent, boolean anti, String where, String str) {
-        String[] parts = SplitUtil.split(str, ":", 2);
-        if (parts.length != 2) {
-            throw new IllegalArgumentException("Expected <hand>:<bids> '" + str + "'");
-        }
-        return new BiddingTest(parent, where, HandParser.valueOf(parts[0]), AuctionParser.valueOf(parts[1]), anti);
     }
 }

@@ -27,9 +27,8 @@ public final class DeniedStoppers extends SuitSet {
         int bidSuits = partnerSuits.getAsInt() | meSuits.getAsInt();
         int unstopped = 0;
         for (int i = 0; i < 4; i++) {
-            if (partner.stoppers.noStopperIn(i) && partner.partialStoppers.noStopperIn(i)
-                    && !me.partialStoppers.stopperIn(i) && !me.stoppers.stopperIn(i)
-                    && ((1 << i) & bidSuits) == 0) {
+            if (partner.stoppers.noStopperIn(i) && partner.partialStoppers.noStopperIn(i) && !me.partialStoppers.stopperIn(i)
+                    && !me.stoppers.stopperIn(i) && ((1 << i) & bidSuits) == 0) {
                 unstopped |= 1 << i;
             }
         }

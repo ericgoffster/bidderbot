@@ -26,10 +26,10 @@ public class OrBoundInfTest {
         IBoundInference i3 = OrBoundInf.create(i1, i2);
         assertEquals(i3.getSummary(), InfSummary.ALL);
 
-        assertTrue(i3.test(HandParser.valueOf("AKQ xxx xxx xxxx")));
-        assertTrue(i3.test(HandParser.valueOf("AKQ Jxx xxx xxxx")));
-        assertTrue(i3.test(HandParser.valueOf("AKQ Jxx xxxx xxx")));
-        assertFalse(i3.test(HandParser.valueOf("AKJ xxx xxxxx xx")));
+        assertTrue(i3.test(HandParser.parseHand("AKQ xxx xxx xxxx")));
+        assertTrue(i3.test(HandParser.parseHand("AKQ Jxx xxx xxxx")));
+        assertTrue(i3.test(HandParser.parseHand("AKQ Jxx xxxx xxx")));
+        assertFalse(i3.test(HandParser.parseHand("AKJ xxx xxxxx xx")));
 
     }
 

@@ -28,9 +28,9 @@ public class AndBoundInfTest {
         InfSummary infSummary = new InfSummary(ShapeSet.create(List.of(Shape._04030303)), PointRange.between(10, 11), PointRange.atMost(11),
                 StopperSet.ALL, StopperSet.ALL);
         assertEquals(i3.getSummary(), infSummary);
-        assertFalse(i3.test(HandParser.valueOf("AKQ xxx xxx xxxx")));
-        assertTrue(i3.test(HandParser.valueOf("AKQ Jxx xxx xxxx")));
-        assertFalse(i3.test(HandParser.valueOf("AKQ Jxx xxxx xxx")));
+        assertFalse(i3.test(HandParser.parseHand("AKQ xxx xxx xxxx")));
+        assertTrue(i3.test(HandParser.parseHand("AKQ Jxx xxx xxxx")));
+        assertFalse(i3.test(HandParser.parseHand("AKQ Jxx xxxx xxx")));
     }
 
     @Test

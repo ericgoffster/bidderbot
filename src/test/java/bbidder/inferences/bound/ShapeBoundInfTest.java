@@ -20,8 +20,8 @@ public class ShapeBoundInfTest {
     public void test() {
         assertEquals(ShapeBoundInf.create(ShapeSet.ALL), ConstBoundInference.T);
         assertEquals(ShapeBoundInf.create(ShapeSet.NONE), ConstBoundInference.F);
-        assertTrue(ShapeBoundInf.create(ShapeSet.create(List.of(Shape._00030307, Shape._01000507))).test(HandParser.valueOf("xxxxxxx xxxxx - x")));
-        assertFalse(ShapeBoundInf.create(ShapeSet.create(List.of(Shape._00030307, Shape._01000507))).test(HandParser.valueOf("xxxxxxx xxxx x x")));
+        assertTrue(ShapeBoundInf.create(ShapeSet.create(List.of(Shape._00030307, Shape._01000507))).test(HandParser.parseHand("xxxxxxx xxxxx - x")));
+        assertFalse(ShapeBoundInf.create(ShapeSet.create(List.of(Shape._00030307, Shape._01000507))).test(HandParser.parseHand("xxxxxxx xxxx x x")));
 
         InfSummary summary = ShapeBoundInf.create(ShapeSet.create(List.of(Shape._00030307, Shape._01000507))).getSummary();
         assertEquals(summary, new InfSummary(ShapeSet.create(List.of(Shape._00030307, Shape._01000507)), PointRange.ALL, PointRange.ALL,

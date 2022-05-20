@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import bbidder.inferences.AndInference;
 import bbidder.inferences.Balanced;
 import bbidder.inferences.HCPRange;
+import bbidder.parsers.BidInferenceParser;
 
 public class BidInferenceTest {
     @Test
@@ -14,7 +15,7 @@ public class BidInferenceTest {
         assertEquals(
                 new BidInference("", "System", BidPatternList.EMPTY.withBidAdded(BidPattern.createSimpleBid(Bid._1N)),
                         AndInference.create(new HCPRange(15, 17), Balanced.BALANCED)),
-                BidInference.valueOf(null, "1N => 15-17 hcp, balanced", BidPatternList.EMPTY));
+                BidInferenceParser.parseBidInference(null, "1N => 15-17 hcp, balanced", BidPatternList.EMPTY));
     }
 
     @Test

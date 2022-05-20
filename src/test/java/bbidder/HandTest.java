@@ -11,7 +11,7 @@ import bbidder.parsers.HandParser;
 public class HandTest {
     @Test
     public void testBasic() {
-        Hand hand = HandParser.valueOf("AKQJ    T98   765   432");
+        Hand hand = HandParser.parseHand("AKQJ    T98   765   432");
         assertEquals("AKQJ T98 765 432", hand.toString());
         assertEquals(hand.getShape(), Shape._03030304);
         assertTrue(hand.getAllInSuit(0) == 0x7);
@@ -22,32 +22,32 @@ public class HandTest {
 
     @Test
     public void testEmpty() {
-        Hand hand = HandParser.valueOf("    AKQJ  -  765    432");
+        Hand hand = HandParser.parseHand("    AKQJ  -  765    432");
         assertEquals("AKQJ - 765 432", hand.toString());
     }
 
     @Test
     public void getHCP() {
-        Hand hand = HandParser.valueOf("    AKQJ  -  765    432");
+        Hand hand = HandParser.parseHand("    AKQJ  -  765    432");
         assertEquals(10, hand.numHCP());
     }
 
     @Test
     public void testTotalPts() {
-        Hand hand = HandParser.valueOf("    AKQJ  -  T7658    9432");
+        Hand hand = HandParser.parseHand("    AKQJ  -  T7658    9432");
         assertEquals(13, hand.totalPoints(0));
         assertEquals(10, hand.totalPoints(2));
     }
 
     @Test
     public void testGetShape() {
-        Hand hand = HandParser.valueOf("    AKQJ  -  T7658    9432");
+        Hand hand = HandParser.parseHand("    AKQJ  -  T7658    9432");
         assertEquals(hand.getShape(), Shape._04050004);
     }
 
     @Test
     public void testFit() {
-        Hand hand = HandParser.valueOf("    AKQJ  xxx  xx    9432");
+        Hand hand = HandParser.parseHand("    AKQJ  xxx  xx    9432");
         assertFalse(hand.haveFit(InfSummary.ALL, 0));
         assertTrue(hand.haveFit(InfSummary.ALL.withShapes(ShapeSet.create(shape -> shape.numInSuit(0) >= 4)), 0));
         assertFalse(hand.haveFit(InfSummary.ALL.withShapes(ShapeSet.create(shape -> shape.numInSuit(0) >= 4)), 1));
@@ -56,8 +56,10 @@ public class HandTest {
 
     @Test
     public void testStoppers() {
-        assertEquals(HandParser.valueOf("A Kxxxx Qx xxxxx").getStoppers(), Stoppers.EMPTY.withStopperIn(3).withStopperIn(2));
-        assertEquals(HandParser.valueOf("A Kxxxx Qx xxxxx").getPartialStoppers(), Stoppers.EMPTY.withStopperIn(1).withStopperIn(3).withStopperIn(2));
-        assertEquals(HandParser.valueOf("A Kxxxx Qx xxxxx").getPartialStoppers(), Stoppers.EMPTY.withStopperIn(1).withStopperIn(3).withStopperIn(2));
+        assertEquals(HandParser.parseHand("A Kxxxx Qx xxxxx").getStoppers(), Stoppers.EMPTY.withStopperIn(3).withStopperIn(2));
+        assertEquals(HandParser.parseHand("A Kxxxx Qx xxxxx").getPartialStoppers(),
+                Stoppers.EMPTY.withStopperIn(1).withStopperIn(3).withStopperIn(2));
+        assertEquals(HandParser.parseHand("A Kxxxx Qx xxxxx").getPartialStoppers(),
+                Stoppers.EMPTY.withStopperIn(1).withStopperIn(3).withStopperIn(2));
     }
 }

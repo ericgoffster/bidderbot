@@ -5,41 +5,50 @@ public enum Position {
     RHO("rho"),
     PARTNER("partner"),
     LHO("lho");
-    
+
     final String name;
 
     private Position(String name) {
         this.name = name;
     }
-    
+
     @Override
     public String toString() {
         return name;
     }
-    
+
     public Position getOpposite() {
-        switch(this) {
-        case ME: return PARTNER;
-        case PARTNER: return ME;
-        case LHO: return RHO;
-        case RHO: return LHO;
+        switch (this) {
+        case ME:
+            return PARTNER;
+        case PARTNER:
+            return ME;
+        case LHO:
+            return RHO;
+        case RHO:
+            return LHO;
         default:
             throw new IllegalStateException();
         }
     }
 
     public Position getNext(String name) {
-        switch(this) {
-        case ME: return LHO;
-        case LHO: return PARTNER;
-        case PARTNER: return RHO;
-        case RHO: return ME;
-        default: throw new IllegalStateException();
+        switch (this) {
+        case ME:
+            return LHO;
+        case LHO:
+            return PARTNER;
+        case PARTNER:
+            return RHO;
+        case RHO:
+            return ME;
+        default:
+            throw new IllegalStateException();
         }
     }
-    
+
     public static Position getPosition(String name) {
-        switch(name.toUpperCase()) {
+        switch (name.toUpperCase()) {
         case "I":
         case "ME":
             return ME;

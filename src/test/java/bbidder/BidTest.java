@@ -18,11 +18,11 @@ public class BidTest {
 
     @Test
     public void testValueOf() {
-        assertEquals(Bid._1C, Bid.valueOf(0, Constants.CLUB));
-        assertEquals(Bid._2D, Bid.valueOf(1, Constants.DIAMOND));
-        assertEquals(Bid._3H, Bid.valueOf(2, Constants.HEART));
-        assertEquals(Bid._4S, Bid.valueOf(3, Constants.SPADE));
-        assertEquals(Bid._5N, Bid.valueOf(4, Constants.NOTRUMP));
+        assertEquals(Bid._1C, Bid.createBid(0, Constants.CLUB));
+        assertEquals(Bid._2D, Bid.createBid(1, Constants.DIAMOND));
+        assertEquals(Bid._3H, Bid.createBid(2, Constants.HEART));
+        assertEquals(Bid._4S, Bid.createBid(3, Constants.SPADE));
+        assertEquals(Bid._5N, Bid.createBid(4, Constants.NOTRUMP));
     }
 
     @Test

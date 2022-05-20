@@ -78,7 +78,7 @@ public enum Bid {
      * @return The next level up.
      */
     public Bid raise() {
-        return valueOf(level + 1, strain);
+        return createBid(level + 1, strain);
     }
 
     /**
@@ -108,7 +108,7 @@ public enum Bid {
         if (strain == null) {
             return null;
         }
-        return valueOf(Integer.parseInt(str.substring(0, 1)) - 1, strain.intValue());
+        return createBid(Integer.parseInt(str.substring(0, 1)) - 1, strain.intValue());
     }
 
     /**
@@ -120,7 +120,7 @@ public enum Bid {
      *            The strain
      * @return a Bid
      */
-    public static Bid valueOf(int level, int strain) {
+    public static Bid createBid(int level, int strain) {
         if (level < 0 || level > 6) {
             throw new IllegalArgumentException("invalid level " + level);
         }
