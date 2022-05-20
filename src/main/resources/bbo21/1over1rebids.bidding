@@ -39,7 +39,7 @@ common 1x 1y {
 	        1♣ 1♠
 	        1N;
 	
-	2N => balanced, 18-19 tpts, 7- fit y;
+	2N:"nt_rebid" => balanced, 18-19 tpts, 7- fit y;
 	    test AQx Axx Ax Axxxx:
 	        1♣ 1♦
 	        2N;

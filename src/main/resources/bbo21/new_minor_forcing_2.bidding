@@ -7,7 +7,7 @@
 
 common
    1m 1M
-   2N 3om {
+   2N:"nt_rebid" 3om {
 
 	3OM => 4OM;
 	    test Ax Axxx Axxx AQx:

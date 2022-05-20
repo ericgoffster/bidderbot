@@ -39,6 +39,12 @@
 
 [[Pass 2N with inv values]]
 [] 2N P => inv, stoppers denied;
+[[Pass 2N with inv values]]
+[] 2N:"nt_opener" P => inv, stoppers denied;
+    test xxx xxxx xxx xxx:
+        2C 2D
+        2N P;
+[] 2N:"nt_rebid" P => inv, stoppers denied;
     test xxx Kxxx Kxx xxx:
         1C 1H
         2N P;

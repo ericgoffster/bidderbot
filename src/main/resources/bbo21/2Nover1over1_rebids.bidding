@@ -6,31 +6,31 @@
 # S = ♠
 
 1m 1S
-2N 4H => gf, 6+ H;
+2N:"nt_rebid" 4H => gf, 6+ H;
     test Axxxxx Jxxxxx - x:
         1C 1S
         2N 4H;
 
 1m 1S
-2N 3H => gf+, 5+ H;
+2N:"nt_rebid" 3H => gf+, 5+ H;
     test Axxxx AJxxx xx x:
         1C 1S
         2N 3H;
 
 1m 1M
-2N 3om => 7+ tpts, 5 M;
+2N:"nt_rebid" 3om => 7+ tpts, 5 M;
     test xxx AQJxx xx xxx:
         1C 1H
         2N 3D;
 
 1m 1M
-2N 3om => slaminv+, 6+ M;
+2N:"nt_rebid" 3om => slaminv+, 6+ M;
     test xx AQJxxx xx Axx:
         1C 1H
         2N 3D;
 
 1m 1H
-2N 3S => gf, 4 S;
+2N:"nt_rebid" 3S => gf, 4 S;
     test Axxx AJxx xx xxx:
         1C 1H
         2N 3S;

@@ -64,9 +64,6 @@
         1N P;
     test xxx xxxx xxx xxx:
         2N P;
-    test xxx xxxx xxx xxx:
-        2C 2D
-        2N P;
 
 [[Pass preference]]
 [partner bid x, partner bid y] ?x P => prefer x to y;
