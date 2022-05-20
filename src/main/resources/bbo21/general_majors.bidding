@@ -75,6 +75,9 @@
     test xx Axxxxx xx xxx:
         1C 1H
         1N 2H;
+    test AQJxxx xx xx KQx:
+        1S 1N
+        2S;
 #
 # Jump Rebid major if possible
 # 
@@ -85,9 +88,9 @@
     test Qx Axxxxx xx Axx:
         1C 1H
         1N 3H;
-anti_test xx AQxxx xxx Kxx:
-        1C 1H
-        2C 3H;
+    test AQJxxx xx Ax KQx:
+        1S 1N
+        3S;
 
 #
 # Bid 4 of major
@@ -99,4 +102,6 @@ anti_test xx AQxxx xxx Kxx:
     test Ax Axxxxx xx AQx:
         1C 1H
         1N 4H;
-        
+    test AQJxxxx x Ax AQx:
+        1S 1N
+        4S;        

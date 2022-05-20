@@ -12,24 +12,6 @@
         2S;
 
 1M 1N
-4M => gf, 6+ M;
-    test AQJxxxx x Ax AQx:
-        1S 1N
-        4S;
-
-1M 1N
-3M => inv, 6+ M;
-    test AQJxxx xx Ax KQx:
-        1S 1N
-        3S;
-
-1M 1N
-2M => 6+ M;
-    test AQJxxx xx xx KQx:
-        1S 1N
-        2S;
-
-1M 1N
 2N => inv, balanced;
     test AQJxx Ax Axx Kxx:
         1S 1N
@@ -42,13 +24,19 @@ Jx => gf, 4+x;
         3C;
 
 1S 1N
-2H => 4+ H;
+2H => inv-, 4+ H;
     test AQxxx Axxx xx Kx:
         1S 1N
         2H;
 
 1M 1N
-2m => longest_or_equal m among minors;
+2m => inv-, 4+ m;
     test AQxxx xx Axxx Kx:
         1S 1N
         2D;
+
+1M 1N
+2m => inv-, 5 M, 3- m, longest_or_equal m among minors;
+    test AQxxx xx Axx Kxx:
+        1S 1N
+        2C;
