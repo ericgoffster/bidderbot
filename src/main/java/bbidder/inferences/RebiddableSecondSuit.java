@@ -43,11 +43,11 @@ public final class RebiddableSecondSuit extends Inference {
                         .map(e2 -> new RebiddableSecondSuit(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));
     }
 
-    private static IBoundInference createrBound(int strainLonger, int strainShorter, InfSummary meSummary) {
-        return meSummary.minLenInSuit(strainShorter).map(n -> {
-            Range r = Range.atLeast(Math.max(n + 1, 5), 13);
+    private static IBoundInference createrBound(int longer, int shorter, InfSummary meSummary) {
+        return meSummary.minLenInSuit(shorter).map(myMinLen -> {
+            Range r = Range.atLeast(Math.max(myMinLen + 1, 5), 13);
             return ShapeBoundInf.create(
-                    ShapeSet.create(shape -> shape.isSuitInRange(strainShorter, r) && shape.isLongerOrEqual(strainLonger, 1 << strainShorter)));
+                    ShapeSet.create(shape -> shape.isSuitInRange(shorter, r) && shape.isLongerOrEqual(longer, 1 << shorter)));
         }).orElse(ConstBoundInference.F);
     }
 

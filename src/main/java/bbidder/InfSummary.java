@@ -1,9 +1,12 @@
 package bbidder;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import bbidder.ShapeSet.Stat;
 
@@ -83,33 +86,30 @@ public final class InfSummary {
     public short getBidSuits() {
         Integer[] suitArr = { 0, 1, 2, 3 };
         Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgLenInSuit(s1), avgLenInSuit(s2)));
-        Optional<Integer> minLenFirst = minLenInSuit(suitArr[0]);
-        Optional<Integer> minLenSecond = minLenInSuit(suitArr[1]);
-        Optional<Integer> minLenThird = minLenInSuit(suitArr[2]);
-        if (!minLenFirst.isPresent() || !minLenSecond.isPresent() || !minLenThird.isPresent()) {
+        List<Optional<Integer>> minLens = IntStream.range(0, 4).mapToObj(suit -> minLenInSuit(suit)).collect(Collectors.toList());
+        if (!minLens.get(0).isPresent() || !minLens.get(1).isPresent() || !minLens.get(2).isPresent() || !minLens.get(3).isPresent()) {
             return 0;
         }
-        if (minLenFirst.get() >= 5 || minLenFirst.get() >= 4 && minLenSecond.get() >= 4) {
-            int i = 0;
+        int minLen0 = minLens.get(suitArr[0]).get();
+        int minLen1 = minLens.get(suitArr[1]).get();
+        int minLen2 = minLens.get(suitArr[2]).get();
+        if (minLen0 >= 5 || minLen0 >= 4 && minLen1 >= 4) {
             short suits = 0;
-            while (i < 4 && minLenInSuit(i).get() >= 4) {
-                suits |= (short) (1 << i);
-                i++;
+            for (int i = 0; i < 4 && minLenInSuit(suitArr[i]).get() >= 4; i++) {
+                suits |= (short) (1 << suitArr[i]);
             }
             return suits;
         }
-        if (minLenFirst.get() == 4) {
-            if (minLenSecond.get() > minLenThird.get()) {
+        if (minLen0 == 4) {
+            if (minLen1 > minLen2) {
                 return (short) ((1 << suitArr[0]) | (1 << suitArr[1]));
             }
             return (short) ((1 << suitArr[0]));
         }
         {
-            int i = 0;
             short suits = 0;
-            while (i < 4 && avgLenInSuit(i) >= 4) {
-                suits |= (short) (1 << i);
-                i++;
+            for (int i = 0; i < 4 && avgLenInSuit(suitArr[i]) >= 4; i++) {
+                suits |= (short) (1 << suitArr[i]);
             }
             return suits;
         }

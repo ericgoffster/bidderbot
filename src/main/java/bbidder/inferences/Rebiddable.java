@@ -38,10 +38,10 @@ public final class Rebiddable extends Inference {
         return symbol.resolveSuits(suitTable).map(e -> new Rebiddable(e.getSymbol()).new Context(e.suitTable));
     }
 
-    private IBoundInference createrBound(int s, InfSummary meSummary) {
-        return meSummary.minLenInSuit(s).map(n -> {
-            Range r = Range.atLeast(Math.max(n + 1, 6), 13);
-            return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
+    private IBoundInference createrBound(int suit, InfSummary meSummary) {
+        return meSummary.minLenInSuit(suit).map(myMinLen -> {
+            Range r = Range.atLeast(Math.max(myMinLen + 1, 6), 13);
+            return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(suit, r)));
         }).orElse(ConstBoundInference.F);
     }
 

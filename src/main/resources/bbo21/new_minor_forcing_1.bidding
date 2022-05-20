@@ -98,7 +98,7 @@
 1m 1M
 1N 2om
 3om => 4 om;
-    test xx Axx Axxx Axxx:
+    test xx xxx AJxx AKxx:
         1D 1S
         1N 2C
         3C;
@@ -115,11 +115,11 @@ NJm => 4 C;
 1m 1M
 1N 2om
 Njm => always;
-    test xx Axx Axxxx Axx:
+    test xx xxx AJxxx AKx:
         1D 1S
         1N 2C
         2D;
-    test xx Axx Axx Axxxx:
+    test xx xxx AJx AKxxx:
         1C 1S
         1N 2D
         3C;
