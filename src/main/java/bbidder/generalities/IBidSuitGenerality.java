@@ -26,11 +26,7 @@ public final class IBidSuitGenerality extends Generality {
     @Override
     public boolean test(Players players, Auction bidList) {
         int suit = symbol.getResolvedStrain();
-        return players.me.infSummary.minLenInSuit(suit)
-                .map(meLen -> players.partner.infSummary.minLenInSuit(suit)
-                        .map(partnerLen -> meLen + partnerLen < 8 && (players.me.infSummary.getBidSuits() & (1 << suit)) != 0)
-                        .orElse(false))
-                .orElse(false);
+        return players.isBidSuit(players.me, players.partner, suit);
     }
 
     public static IBidSuitGenerality valueOf(String str) {

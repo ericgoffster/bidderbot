@@ -1,5 +1,7 @@
 package bbidder;
 
+import java.util.Optional;
+
 public final class Players {
     public final Player lho;
     public final Player partner;
@@ -22,5 +24,19 @@ public final class Players {
     public String toString() {
         return "lho=" + lho + ", partner=" + partner + ", rho=" + rho + ", me=" + me;
     }
-
+    
+    public boolean isBidSuit(Player me, Player partner, int s) {
+        Optional<Integer> meLenLonger = me.infSummary.minLenInSuit(s);
+        Optional<Integer> partnerLenLonger = partner.infSummary.minLenInSuit(s);
+        if (!meLenLonger.isPresent() || !partnerLenLonger.isPresent()) {
+            return false;
+        }
+        if (meLenLonger.get() + partnerLenLonger.get() >= 8) {
+            return false;
+        }
+        if ((me.infSummary.getBidSuits() & (1 << s)) == 0) {
+            return false;
+        }
+        return true;
+    }
 }

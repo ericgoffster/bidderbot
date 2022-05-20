@@ -1,14 +1,13 @@
 package bbidder.generalities;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
+import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
-import bbidder.SuitTable;
 import bbidder.utils.SplitUtil;
 
 public final class TwoSuitedGenerality extends Generality {
@@ -32,29 +31,7 @@ public final class TwoSuitedGenerality extends Generality {
     public boolean test(Players players, Auction bidList) {
         int l = longer.getResolvedStrain();
         int s = shorter.getResolvedStrain();
-        Optional<Integer> meLenLonger = players.me.infSummary.minLenInSuit(s);
-        Optional<Integer> partnerLenLonger = players.partner.infSummary.minLenInSuit(s);
-        if (!meLenLonger.isPresent() || !partnerLenLonger.isPresent()) {
-            return false;
-        }
-        if (meLenLonger.get() + partnerLenLonger.get() >= 8) {
-            return false;
-        }
-        Optional<Integer> meLenShorter = players.me.infSummary.minLenInSuit(l);
-        Optional<Integer> partnerLenShorter = players.partner.infSummary.minLenInSuit(l);
-        if (!meLenShorter.isPresent() || !partnerLenShorter.isPresent()) {
-            return false;
-        }
-        if (meLenShorter.get() + partnerLenShorter.get() >= 8) {
-            return false;
-        }
-        if ((players.me.infSummary.getBidSuits() & (1 << l)) == 0) {
-            return false;
-        }
-        if ((players.me.infSummary.getBidSuits() & (1 << s)) == 0) {
-            return false;
-        }
-        return true;
+        return players.isBidSuit(players.me, players.partner, l) && players.isBidSuit(players.me, players.partner, s);
     }
 
     public static TwoSuitedGenerality valueOf(String str) {
