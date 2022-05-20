@@ -8,25 +8,25 @@ import bbidder.Players;
 import bbidder.PointRange;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.ConstBoundInference;
-import bbidder.inferences.bound.HcpBoundInf;
+import bbidder.inferences.bound.TotalPtsBoundInf;
 import bbidder.utils.MyStream;
 
-public final class MaxHCPRange extends Inference {
-    public static final String HCP = "hcp";
-    public static MaxHCPRange MAX_HCP_RANGE = new MaxHCPRange();
+public final class MaxTpts extends Inference {
+    public static final String TPTS = "tpts";
+    public static MaxTpts MAX_TPTS_RANGE = new MaxTpts();
 
-    private MaxHCPRange() {
+    private MaxTpts() {
         super();
     }
 
     @Override
     public IBoundInference bind(Players players) {
-        OptionalInt max = players.me.infSummary.hcp.highest();
+        OptionalInt max = players.me.infSummary.tpts.highest();
         if (!max.isPresent()) {
             return ConstBoundInference.F;
         }
         PointRange rng = PointRange.exactly(max.getAsInt());
-        return HcpBoundInf.create(rng);
+        return TotalPtsBoundInf.create(players.partner.infSummary, rng);
     }
 
     @Override
@@ -36,7 +36,7 @@ public final class MaxHCPRange extends Inference {
 
     @Override
     public String toString() {
-        return "max " + HCP;
+        return "max " + TPTS;
     }
 
     @Override
