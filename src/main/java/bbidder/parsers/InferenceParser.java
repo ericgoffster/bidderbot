@@ -1,5 +1,7 @@
 package bbidder.parsers;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -152,51 +154,57 @@ public final class InferenceParser {
             break;
         }
         default: {
-            {
-                RangeOf rng = RangeParser.parseRange(str.trim());
+            try (Input inp = new Input(new StringReader(str.trim()))) {
+                RangeOf rng = new RangeParser().parse(inp);
                 if (rng != null) {
-                    if (rng.of.equalsIgnoreCase(HCPRange.HCP)) {
+                    inp.advanceWhite();
+                    if (inp.readKeyword(HCPRange.HCP.toUpperCase())) {
                         if (rng.maxPromised) {
                             return MaxHCPs.MAX_HCP_RANGE;
                         } else {
                             return new HCPRange(PointRange.between(rng.min, rng.max));
                         }
-                    } else if (rng.of.equalsIgnoreCase(TotalPointsRange.TPTS)) {
+                    }
+                    if (inp.readKeyword(TotalPointsRange.TPTS.toUpperCase())) {
                         if (rng.maxPromised) {
                             return MaxTpts.MAX_TPTS_RANGE;
                         } else {
                             return new TotalPointsRange(PointRange.between(rng.min, rng.max));
                         }
-                    } else if (rng.of.startsWith("fit")) {
-                        Symbol sym = SymbolParser.parseSymbol(rng.of.substring(3).trim());
+                    }
+                    if (inp.readKeyword("FIT")) {
+                        String sy = inp.readToken(ch -> true);
+                        Symbol sym = SymbolParser.parseSymbol(sy);
                         if (sym != null) {
                             return new FitInSuit(sym, SuitLengthRange.between(rng.min, rng.max));
                         }
-                    } else {
-                        {
-                            Symbol sym = SymbolParser.parseSymbol(rng.of);
-                            if (sym != null) {
-                                if (rng.maxPromised) {
-                                    return new MaxSuitRange(sym);
-                                } else {
-                                    return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
-                                }
-                            }
-                        }
-                        {
-                            Matcher m = PATT_SPECIFIC_CARDS.matcher(rng.of);
-                            if (m.matches()) {
-                                int top = Integer.parseInt(m.group(1));
-                                String suit = m.group(2);
-                                Symbol sym = SymbolParser.parseSymbol(suit);
-                                if (sym == null) {
-                                    return null;
-                                }
-                                return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
+                    }
+                    String of = inp.readAny(ch -> true);
+                    {
+                        Symbol sym = SymbolParser.parseSymbol(of);
+                        if (sym != null) {
+                            if (rng.maxPromised) {
+                                return new MaxSuitRange(sym);
+                            } else {
+                                return new SuitRange(sym, SuitLengthRange.between(rng.min, rng.max));
                             }
                         }
                     }
+                    {
+                        Matcher m = PATT_SPECIFIC_CARDS.matcher(of);
+                        if (m.matches()) {
+                            int top = Integer.parseInt(m.group(1));
+                            String suit = m.group(2);
+                            Symbol sym = SymbolParser.parseSymbol(suit);
+                            if (sym == null) {
+                                return null;
+                            }
+                            return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
+                        }
+                    }
                 }
+            } catch (IOException e) {
+
             }
             {
                 PointRange createRange = CombinedPointsRangeParser.parseCombinedTPtsRange(str.trim());

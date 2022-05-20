@@ -1,5 +1,8 @@
 package bbidder.parsers;
 
+import java.io.IOException;
+import java.io.StringReader;
+
 import bbidder.Generality;
 import bbidder.PointRange;
 import bbidder.Position;
@@ -60,10 +63,13 @@ public final class GeneralityParser {
                 String[] rem = SplitUtil.split(remainder.substring(3), "promising", 2);
                 SuitLengthRange range;
                 if (rem.length == 2) {
-                    RangeOf rng = RangeParser.parseRange(rem[1]);
-                    if (rng != null && rng.of.equals("")) {
+                    try(Input inp = new Input(new StringReader(rem[1]))) {
+                        RangeOf rng = new RangeParser().parse(inp);
+                        if (rng == null) {
+                            throw new IllegalArgumentException();
+                        }
                         range = SuitLengthRange.between(rng.min, rng.max);
-                    } else {
+                    } catch (IOException e) {
                         return null;
                     }
                 } else {
@@ -93,19 +99,25 @@ public final class GeneralityParser {
             break;
         }
         default: {
-            RangeOf rng = RangeParser.parseRange(str.trim());
-            if (rng != null) {
-                if (rng.of.startsWith(FitEstablished.NAME)) {
-                    Symbol sym = SymbolParser.parseSymbol(rng.of.substring(FitEstablished.NAME.length()).trim());
-                    if (sym != null) {
-                        return new FitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
-                    }
-                } else if (rng.of.startsWith(BestFitEstablished.NAME)) {
-                    Symbol sym = SymbolParser.parseSymbol(rng.of.substring(BestFitEstablished.NAME.length()).trim());
-                    if (sym != null) {
-                        return new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
+            try (Input inp = new Input(new StringReader(str.trim()))) {
+                RangeOf rng = new RangeParser().parse(inp);
+                if (rng != null) {
+                    inp.advanceWhite();
+                    if (inp.readKeyword(FitEstablished.NAME.toUpperCase())) {
+                        String sy = inp.readToken(ch -> true);
+                        Symbol sym = SymbolParser.parseSymbol(sy);
+                        if (sym != null) {
+                            return new FitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
+                        }
+                    } else if (inp.readKeyword(BestFitEstablished.NAME.toUpperCase())) {
+                        String sy = inp.readToken(ch -> true);
+                        Symbol sym = SymbolParser.parseSymbol(sy);
+                        if (sym != null) {
+                            return new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
+                        }
                     }
                 }
+            } catch (IOException e) {
             }
             {
                 PointRange createRange = CombinedPointsRangeParser.parseCombinedTPtsRange(str.trim());

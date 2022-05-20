@@ -17,18 +17,24 @@ public final class Input implements Closeable {
     }
 
     public void unread(int ch) throws IOException {
-        rd.unread(this.ch);
+        if (this.ch >= 0) {
+            rd.unread(this.ch);
+        }
         this.ch = ch;
     }
 
-    public String readToken(Predicate<Character> pred) throws IOException {
-        advanceWhite();
+    public String readAny(Predicate<Character> pred) throws IOException {
         StringBuilder sb = new StringBuilder();
-        while (ch >= 0 && !Character.isWhitespace(ch) && pred.test((char) ch)) {
+        while (ch >= 0 && pred.test((char) ch)) {
             sb.append((char) ch);
             advance();
         }
         return sb.toString();
+    }
+
+    public String readToken(Predicate<Character> pred) throws IOException {
+        advanceWhite();
+        return readAny(ch -> !Character.isWhitespace(ch) && pred.test((char) ch));
     }
 
     public boolean readKeyword(String key) throws IOException {

@@ -5,20 +5,18 @@ import java.util.Objects;
 public final class RangeOf {
     public final Integer min;
     public final Integer max;
-    public final String of;
     public final boolean maxPromised;
 
-    public RangeOf(Integer min, Integer max, String of, boolean maxPromised) {
+    public RangeOf(Integer min, Integer max, boolean maxPromised) {
         super();
         this.min = min;
         this.max = max;
-        this.of = of;
         this.maxPromised = maxPromised;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(max, maxPromised, min, of);
+        return Objects.hash(max, maxPromised, min);
     }
 
     @Override
@@ -30,23 +28,23 @@ public final class RangeOf {
         if (getClass() != obj.getClass())
             return false;
         RangeOf other = (RangeOf) obj;
-        return Objects.equals(max, other.max) && maxPromised == other.maxPromised && Objects.equals(min, other.min) && Objects.equals(of, other.of);
+        return Objects.equals(max, other.max) && maxPromised == other.maxPromised && Objects.equals(min, other.min);
     }
 
     @Override
     public String toString() {
         if (maxPromised) {
-            return "max " + of;
+            return "max";
         }
         if (min == null) {
-            return max + "- " + of;
+            return max + "-";
         }
         if (max == null) {
-            return min + "+ " + of;
+            return min + "+";
         }
         if (max.intValue() == min.intValue()) {
-            return min + " " + of;
+            return min + "";
         }
-        return min + "-" + max + " " + of;
+        return min + "-" + max;
     }
 }

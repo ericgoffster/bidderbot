@@ -75,8 +75,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
                         SuitLengthRange range;
                         inp.advanceWhite();
                         if (inp.readKeyword("PROMISING")) {
-                            String rngs = inp.readToken(ch -> !Character.isWhitespace(ch) && ch != ':');
-                            RangeOf rng = RangeParser.parseRange(rngs);
+                            RangeOf rng = new RangeParser().parse(inp);
                             range = SuitLengthRange.between(rng.min, rng.max);
                         } else {
                             range = SuitLengthRange.atLeast(0);

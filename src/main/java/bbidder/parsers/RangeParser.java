@@ -1,43 +1,35 @@
 package bbidder.parsers;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.IOException;
 
 import bbidder.RangeOf;
 
-public class RangeParser {
-    private static Pattern PATT_MIN_TO_MAX = Pattern.compile("(\\d+)\\-(\\d+)(.*)");
-    private static Pattern PATT_MAX = Pattern.compile("(\\d+)\\-(.*)");
-    private static Pattern PATT_MIN = Pattern.compile("(\\d+)\\+(.*)");
-    private static Pattern PATT_EXACT = Pattern.compile("(\\d+)(.*)");
-    private static Pattern PATT_MAX2 = Pattern.compile("max(.*)");
-
-    public static RangeOf parseRange(String str) {
-        if (str == null) {
+public class RangeParser implements Parser<RangeOf> {
+    @Override
+    public RangeOf parse(Input inp) throws IOException {
+        if (inp.readKeyword("MAX")) {
+            return new RangeOf(null, null, true);
+        }
+        inp.advanceWhite();
+        if (!Character.isDigit(inp.ch)) {
             return null;
         }
-        Matcher m;
-        m = PATT_MIN_TO_MAX.matcher(str);
-        if (m.matches()) {
-            return new RangeOf(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)), m.group(3).trim(), false);
+        String n1 = inp.readToken(ch -> Character.isDigit(ch));
+        if (inp.readKeyword("-")) {
+            inp.advanceWhite();
+            if (Character.isDigit(inp.ch)) {
+                String n2 = inp.readToken(ch -> Character.isDigit(ch));
+                return new RangeOf(Integer.parseInt(n1), Integer.parseInt(n2), false);
+            }
+            return new RangeOf(null, Integer.parseInt(n1), false);
         }
-
-        m = PATT_MAX2.matcher(str);
-        if (m.matches()) {
-            return new RangeOf(null, null, m.group(1).trim(), true);
+        if (inp.readKeyword("+")) {
+            return new RangeOf(Integer.parseInt(n1), null, false);
         }
-        m = PATT_MAX.matcher(str);
-        if (m.matches()) {
-            return new RangeOf(null, Integer.parseInt(m.group(1)), m.group(2).trim(), false);
+        try {
+            return new RangeOf(Integer.parseInt(n1), Integer.parseInt(n1), false);
+        } catch (NumberFormatException e) {
+            throw e;
         }
-        m = PATT_MIN.matcher(str);
-        if (m.matches()) {
-            return new RangeOf(Integer.parseInt(m.group(1)), null, m.group(2).trim(), false);
-        }
-        m = PATT_EXACT.matcher(str);
-        if (m.matches()) {
-            return new RangeOf(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(1)), m.group(2).trim(), false);
-        }
-        return null;
     }
 }
