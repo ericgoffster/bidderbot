@@ -65,26 +65,54 @@ public final class InfSummary {
         return shape + "," + tpts + " tpts" + ",stoppers:" + stoppers + ",partial stoppers:" + partialStoppers;
     }
 
+    /**
+     * @return true if this summary represents the empty set of possible hands.
+     */
     public boolean isEmpty() {
         return shape.isEmpty() || tpts.isEmpty() || stoppers.isEmpty() || partialStoppers.isEmpty();
     }
 
+    /**
+     * @param suit
+     *            The suit
+     * @return The range of possible lengths for the suit
+     */
     public Range getSuit(int suit) {
         return getStat(suit).range;
     }
 
+    /**
+     * @param suit
+     *            The suit
+     * @return The statistics on the given suit.
+     */
     public Stat getStat(int suit) {
         return stats.updateAndGet(st -> (st != null) ? st : shape.getStats())[suit];
     }
 
+    /**
+     * @return The minimum total points, empty if there is an empty set of points.
+     */
     public Optional<Integer> minTotalPts() {
         return tpts.lowest();
     }
 
+    /**
+     * 
+     * @param suit
+     *            The suit
+     * @return The minimum length in a suit, empty if there is an empty set of lengths.
+     */
     public Optional<Integer> minLenInSuit(int suit) {
         return getSuit(suit).lowest();
     }
 
+    /**
+     * 
+     * @param suit
+     *            The suit
+     * @return The average length in a suit, empty if there is an empty set of lengths.
+     */
     public Optional<Double> avgLenInSuit(int suit) {
         return getStat(suit).avg;
     }
