@@ -7,7 +7,7 @@
 
 common
 	1x 1M
-	1N 2m:"nmf":<2z {
+	1N:"nt_rebid" 2m:"nmf":<2z {
 	
 	2z:<2M => 13- hcp, 4+z;
 	    test xx AKxxx KJxx Qx:

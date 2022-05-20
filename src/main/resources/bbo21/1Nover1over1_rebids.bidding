@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common 1x 1M 1N {
+common 1x 1M 1N:"nt_rebid" {
 	2m:"nmf":<2z => slaminv, 5+ M;
 	    test Axx AQJxx Ax Axx:
 	        1C 1H

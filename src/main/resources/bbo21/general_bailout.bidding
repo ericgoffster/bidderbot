@@ -49,10 +49,7 @@
 
 [[Pass NT]]
 [] ?N P => always;
-    test Qxx Kx xxxxx Qxx:
-        1♣ 1♦
-        1N P;
-        
+
 [] ?N:"nt_opener" P => always;
     test xxx xxxx xxx xxx:
         1N P;

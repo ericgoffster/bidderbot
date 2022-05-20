@@ -31,7 +31,7 @@ common 1x 1y {
 	        1♦ 1♠
 	        3N ;
 	
-	1N => semibalanced, 12-14 tpts, 7- fit y;
+	1N:"nt_rebid" => semibalanced, 12-14 tpts, 7- fit y;
 	    test Qxx Axx Ax Axxxx:
 	        1♣ 1♦
 	        1N;

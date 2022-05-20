@@ -146,6 +146,11 @@
         1♣ 1♦
         1♥ 1♠;
 
+[] 1N:"nt_rebid" P => min;
+    test Qxx Kx xxxxx Qxx:
+        1♣ 1♦
+        1N P;
+
 [[Bid 1N with no support]]
 [partner bid x, partner bid y] 1N => min, partial_stoppers unstopped, stoppers denied;
     test Qxx Kx xxxxx Qxx:
