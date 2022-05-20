@@ -45,7 +45,7 @@ common 1M {
 	    test KQJ98 Q963 A4 A6:
 	        1♥ 2♠;
 	
-	2N => gf+, 4+ M;
+	2N:"xfer" => gf+, 4+ M;
 	    test AQx Axxx Kx xxxx:
 	        1♥ 2N;
 	

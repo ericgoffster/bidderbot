@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common 1M 2N {
+common 1M 2N:"xfer" {
 	4x => 5+ x, 2 of top 3 in x;
 	    test AQxxx x KQxxx Ax:
 	        1♠ 2N

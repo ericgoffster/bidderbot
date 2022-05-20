@@ -5,32 +5,43 @@
 # H = ♥
 # S = ♠
 
-common [] 1N:"nt_opener" 2N 3C {
-
-	[[Bid singleton with game forcing values (or better)]]
-	3x => gf+, 1-x;
-	    test AQx x Kxx AQxxxx:
-	        1N 2N
-	        3♣ 3♥;
-	
-	[[Rebid 3N with slam invitational values]]
-	3N => slaminv;
-	    test AQx xx Kx AQxxxx:
-	        1N 2N
-	        3♣ 3N;
+common [] 1N:"nt_opener" 2N:"xfer" {
+    3C => always;
+    test AQX KJxx AJxx xx:
+        1N 2N
+        3♣;
+    continuations {
+		[[Bid singleton with game forcing values (or better)]]
+		3x => gf+, 1-x;
+		    test AQx x Kxx AQxxxx:
+		        1N 2N
+		        3♣ 3♥;
+		
+		[[Rebid 3N with slam invitational values]]
+		3N => slaminv;
+		    test AQx xx Kx AQxxxx:
+		        1N 2N
+		        3♣ 3N;
+	}
 }
 
-common [] 1N:"nt_opener" 3♣ 3D {
-
-	[[Bid singleton with game forcing values (or better)]]
-	3x => gf+, 1-x;
-	    test AQx x AQxxxx Kxx:
-	        1N 3♣
-	        3♦ 3♥;
+common [] 1N:"nt_opener" 3♣:"xfer" {
+    3D => always;
+    test AQX KJxx xx AJxx:
+        1N 3♣
+        3♦;
+    continuations {
 	
-	[[Rebid 3N with slam invitational values]]
-	3N => slaminv;
-	    test AQx xx AQxxxx Kx:
-	        1N 3♣
-	        3♦ 3N;
+		[[Bid singleton with game forcing values (or better)]]
+		3x => gf+, 1-x;
+		    test AQx x AQxxxx Kxx:
+		        1N 3♣
+		        3♦ 3♥;
+		
+		[[Rebid 3N with slam invitational values]]
+		3N => slaminv;
+		    test AQx xx AQxxxx Kx:
+		        1N 3♣
+		        3♦ 3N;
+	}
 }

@@ -17,9 +17,6 @@
 
 [[Return to known fit over a suit bid]]
 [8+ fit y] ?x NJy => 7- fit x;
-    test AQX KJxx xx AJxx:
-        1N 3♣
-        3♦;
 
 [[Pass 3NT]]
 [] ?N:>2N P => always;
@@ -27,9 +24,6 @@
 # Bid playable fits
 [[Return to best known fit]]
 [8+ fit y] NJy => always;
-    test AQX KJxx AJxx xx:
-        1N 2N
-        3♣;
 
 [[Self support suit]]
 [i bid y] NJy => 8+ fit y;

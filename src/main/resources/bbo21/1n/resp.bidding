@@ -95,12 +95,12 @@ common [] 1N:"nt_opener" {
 	        1N 2♣;
 	
 	[[Transfers to diamonds with 6]]
-	3♣ => 6+♦;
+	3♣:"xfer" => 6+♦;
 	    test x xxx QJxxxx xxx:
 	        1N 3♣;
 	
 	[[Transfers to clubs with 6]]
-	2N => 6+♣;
+	2N:"xfer" => 6+♣;
 	    test x xxx xxx QJxxxx:
 	        1N 2N;
 }
