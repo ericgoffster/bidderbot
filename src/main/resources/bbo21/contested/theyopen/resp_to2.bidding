@@ -12,16 +12,27 @@ common (2w) X:"takeout" {
 	        (2H) X 3N;
     2y:down => 7- tpts, 4+ y;
         test Axxx xxx xxx xxx:
-	        (2H) X  2S;
+	        (2H) X 2S;
     NJy:>2N:down => 8-11 tpts, 4+y;
         test xx Axxx Axxx xxx:
-	        (2S) X  3H;    
+	        (2S) X 3H;    
     2N:"wk2leb" => always;
         test xxx Axxx xxx xxx:
-	        (2S) X  2N;
+	        (2S) X 2N;
 	continuations {
 	    3C => always;
 	        test Axxx xx AQx Axxx:
-	            (2H) X 2N 3C;
+	            (2H) X 2N
+	                 3C;
+	    continuations {
+	        3x => 4+ x;
+		        test xxx Axxx xxx xxx:
+			        (2S) X  2N
+			             3C 3H;
+	        P => 4+ C;
+		        test xxx xxx xxx Axxx:
+			        (2S) X  2N
+			             3C P;
+	    }
 	}
 }
