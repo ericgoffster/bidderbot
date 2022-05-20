@@ -54,13 +54,13 @@
         1D 1H
         2C 2H
         3C;
-
-[i_bid_suit x] NJx:<2N => min, rebiddable x;
+        
+[i_bid_suit M] NJM:<2N => min, rebiddable M;
     test xx AQxxxx xx xxx:
         1C 1H
         1N 2H;
 
-[i_bid_suit x] Jx:<3N => inv, rebiddable x;
+[i_bid_suit M] JM:<3N => inv, rebiddable M;
     test xx AQxxxx xx Kxx:
         1C 1H
         2C 3H;
@@ -77,6 +77,24 @@ anti_test xx AQxxx xxx Kxx:
     test xx AQxxx Qxxx Ax:
         1C 1H
         2C 2D;
+
+[partner_bid_suit m] 3m => inv, fit m;
+    test Ax xx AQxx AQxxx:
+        1C 1D
+        3D;
+
+[partner_bid_suit M] 2m => min, fit m;
+    test xx xx AQxx AQxxx:
+        1C 1D
+        2D;
+        
+[i_bid_suit m] Jm:<3N => inv, rebiddable m;
+    test Kxx xxx AQxxxx x:
+        1C 1D
+        2C 3D;
+    anti_test Kxx xxxx AQxxx x:
+        1C 1D
+        2C 3D;
         
 [partner_is_two_suited x y] NJx:<2N P => min, prefer x to y;
     test AQxxx x xxxx xxx:
@@ -89,9 +107,14 @@ anti_test xx AQxxx xxx Kxx:
 [partner_is_two_suited x y] 2x => min, prefer x to y;
     test AQxxx xx xxxx xx:
         1H 1S
-        2C 2H;     
-
+        2C 2H;
+        
 [] 3N => gf, partial_stoppers unstopped;
     test Axx AQxx Qxx Qxx:
         1C 1H
         1N 3N;
+
+[we_are_three_suited, unbid_suit x] NJx:<3N => gf+;
+    test AQxxx AK xx xxxx:
+        1H 1S
+        2C 2D;

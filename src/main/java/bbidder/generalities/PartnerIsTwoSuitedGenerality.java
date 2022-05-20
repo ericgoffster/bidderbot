@@ -11,29 +11,27 @@ import bbidder.SymbolParser;
 import bbidder.utils.SplitUtil;
 
 public final class PartnerIsTwoSuitedGenerality extends Generality {
-    private final Symbol longer;
-    private final Symbol shorter;
+    private final Symbol symbol1;
+    private final Symbol symbol2;
 
-    public PartnerIsTwoSuitedGenerality(Symbol longer, Symbol shorter) {
+    public PartnerIsTwoSuitedGenerality(Symbol symbol1, Symbol symbol2) {
         super();
-        this.longer = longer;
-        this.shorter = shorter;
+        this.symbol1 = symbol1;
+        this.symbol2 = symbol2;
     }
 
     @Override
     public Stream<Context> resolveSuits(SuitTable suitTable) {
-        return longer.resolveSuits(suitTable)
-                .flatMap(e1 -> shorter.resolveSuits(e1.suitTable)
+        return symbol1.resolveSuits(suitTable)
+                .flatMap(e1 -> symbol2.resolveSuits(e1.suitTable)
                         .map(e2 -> new PartnerIsTwoSuitedGenerality(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));
     }
 
     @Override
     public boolean test(Players players, Auction bidList) {
-        int l = longer.getResolvedStrain();
-        int s = shorter.getResolvedStrain();
-        boolean iBidSuit = players.flip().iBidSuit(l);
-        boolean iBidSuit2 = players.flip().iBidSuit(s);
-        return iBidSuit && iBidSuit2;
+        int s1 = symbol1.getResolvedStrain();
+        int s2 = symbol2.getResolvedStrain();
+        return players.flip().iBidSuit(s1) && players.flip().iBidSuit(s2);
     }
 
     public static PartnerIsTwoSuitedGenerality valueOf(String str) {
@@ -42,10 +40,10 @@ public final class PartnerIsTwoSuitedGenerality extends Generality {
         }
         String[] parts = SplitUtil.split(str, "\\s+", 3);
         if (parts.length == 3 && parts[0].equalsIgnoreCase("partner_is_two_suited")) {
-            Symbol longer = SymbolParser.parseSymbol(parts[1]);
-            Symbol shorter = SymbolParser.parseSymbol(parts[2]);
-            if (longer != null && shorter != null) {
-                return new PartnerIsTwoSuitedGenerality(longer, shorter);
+            Symbol sym1 = SymbolParser.parseSymbol(parts[1]);
+            Symbol sym2 = SymbolParser.parseSymbol(parts[2]);
+            if (sym1 != null && sym2 != null) {
+                return new PartnerIsTwoSuitedGenerality(sym1, sym2);
             }
         }
         return null;
@@ -53,7 +51,7 @@ public final class PartnerIsTwoSuitedGenerality extends Generality {
 
     @Override
     public String toString() {
-        return "partner_is_two_suited " + longer + " " + shorter;
+        return "partner_is_two_suited " + symbol1 + " " + symbol2;
     }
 
 }
