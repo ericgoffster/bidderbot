@@ -33,7 +33,7 @@ public final class TagSymbol extends Symbol {
 
     @Override
     public String toString() {
-        return symbol + ":\"" + tag + ":\"";
+        return symbol + ":\"" + tag + "\"";
     }
 
     @Override
@@ -78,6 +78,6 @@ public final class TagSymbol extends Symbol {
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
-        return symbol.resolveSuits(suitTable);
+        return symbol.resolveSuits(suitTable).map(e -> new TagSymbol(tag, e.getSymbol()).new Context(e.suitTable));
     }
 }

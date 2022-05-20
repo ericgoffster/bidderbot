@@ -1,6 +1,5 @@
 package bbidder;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -31,9 +30,10 @@ public final class BidPattern {
     public final Integer jumpLevel;
     public final Generality generality;
     public final boolean isNonConventional;
+    public final Set<String> tags;
 
     private BidPattern(boolean isOpposition, Symbol symbol, Integer level, Bid simpleBid, Integer jumpLevel, Generality generality,
-            boolean isNonConventional) {
+            boolean isNonConventional, Set<String> tags) {
         super();
         this.isOpposition = isOpposition;
         this.symbol = symbol;
@@ -42,6 +42,7 @@ public final class BidPattern {
         this.jumpLevel = jumpLevel;
         this.generality = generality;
         this.isNonConventional = isNonConventional;
+        this.tags = tags;
     }
 
     /**
@@ -57,7 +58,7 @@ public final class BidPattern {
      * @return A pattern with isOpposition set.
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional, tags);
     }
 
     /**
@@ -68,7 +69,7 @@ public final class BidPattern {
      * @return A pattern where the level is "jump" based.
      */
     public static BidPattern createJump(Symbol symbol, int jumpLevel) {
-        return new BidPattern(false, symbol, null, null, jumpLevel, null, symbol.isNonConvential());
+        return new BidPattern(false, symbol, null, null, jumpLevel, null, symbol.isNonConvential(), symbol.getTags());
     }
 
     /**
@@ -78,9 +79,9 @@ public final class BidPattern {
      */
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
-            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, false);
+            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, false, Set.of());
         }
-        return new BidPattern(false, null, null, simpleBid, null, null, false);
+        return new BidPattern(false, null, null, simpleBid, null, null, false, Set.of());
     }
 
     /**
@@ -91,7 +92,7 @@ public final class BidPattern {
      * @return A bid that is the level of a suit
      */
     public static BidPattern createBid(Integer level, Symbol symbol) {
-        return new BidPattern(false, symbol, level, null, null, null, symbol.isNonConvential());
+        return new BidPattern(false, symbol, level, null, null, null, symbol.isNonConvential(), symbol.getTags());
     }
 
     /**
@@ -100,7 +101,7 @@ public final class BidPattern {
      * @return A bid that represents a series of bids that fit a generality
      */
     public static BidPattern createWild(Generality generality) {
-        return new BidPattern(false, null, null, null, null, generality, false);
+        return new BidPattern(false, null, null, null, null, generality, false, Set.of());
     }
 
     /**
@@ -117,7 +118,7 @@ public final class BidPattern {
             if (!isBidCompatible(contract, symbol, b)) {
                 return Optional.empty();
             }
-            return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional));
+            return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional, symbol.getTags()));
         }
         if (jumpLevel != null) {
             if (contract != null) {
@@ -127,10 +128,10 @@ public final class BidPattern {
                     return Optional.empty();
                 }
                 return Optional
-                        .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional));
+                        .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, isNonConventional, symbol.getTags()));
             }
         }
-        return Optional.of(new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional));
+        return Optional.of(new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, isNonConventional, symbol.getTags()));
     }
 
     private boolean isBidCompatible(Contract contract, Symbol symbol, Bid b) {
@@ -164,13 +165,6 @@ public final class BidPattern {
                 .flatMap(e -> MyStream.ofOptional(withSymbol(contract, e.getSymbol())).map(newSym -> newSym.new Context(e.suitTable)));
     }
     
-    public Set<String> getTags() {
-        if (symbol == null) {
-            return new HashSet<>();
-        }
-        return symbol.getTags();
-    }
-
     /**
      * At this point, the bid pattern's suit has already been
      * resolved, so we just need to determine the level.
@@ -183,7 +177,7 @@ public final class BidPattern {
      */
     public Optional<TaggedBid> resolveToBid(TaggedAuction taggedAuction, TaggedBid bid) {
         if (simpleBid != null) {
-            return Optional.of(new TaggedBid(simpleBid, getTags()));
+            return Optional.of(new TaggedBid(simpleBid, tags));
         }
         int strain = symbol.getResolvedStrain();
         if (jumpLevel != null) {
@@ -195,7 +189,7 @@ public final class BidPattern {
             if (!isBidCompatible(contract, symbol, b)) {
                 return Optional.empty();
             }
-            return Optional.of(new TaggedBid(b, getTags()));
+            return Optional.of(new TaggedBid(b, tags));
         }
         if (level == null) {
             if (bid == null) {
@@ -209,9 +203,9 @@ public final class BidPattern {
             if (!isBidCompatible(contract, symbol, b)) {
                 return Optional.empty();
             }
-            return Optional.of(new TaggedBid(b, getTags()));
+            return Optional.of(new TaggedBid(b, tags));
         }
-        return Optional.of(new TaggedBid(Bid.valueOf(level, strain), getTags()));
+        return Optional.of(new TaggedBid(Bid.valueOf(level, strain), tags));
     }
 
     @Override

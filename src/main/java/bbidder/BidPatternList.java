@@ -159,10 +159,7 @@ public final class BidPatternList {
                 if (!expected.isPresent()) {
                     return Optional.empty();
                 }
-                if (Objects.equals(bid.bid, expected.get().bid) != Objects.equals(bid, expected.get())) {
-                    System.out.println(bid + " " + expected.get());
-                }
-                if (!Objects.equals(bid.bid, expected.get().bid)) {
+                if (!Objects.equals(bid, expected.get())) {
                     return Optional.empty();
                 }
                 i++;

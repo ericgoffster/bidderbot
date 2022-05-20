@@ -13,7 +13,7 @@
     test AKQx AQxx AQ xxx:
         2N;
 
-1N:"opening_nt" => balanced, 15-17 hcp, 18- tpts;
+1N => balanced, 15-17 hcp, 18- tpts;
     test AQxx KQxx AQ xxx:
         1N;
 

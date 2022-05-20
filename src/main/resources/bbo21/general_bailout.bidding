@@ -57,11 +57,13 @@
 [] ?N P => always;
     test xxx xxxx xxx xxx:
         1N P;
-    test xxx xxxx xxx xxx:
-        2N P;
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1N P;
+        
+[] 2N:"2nt_opener" P => always;
+    test xxx xxxx xxx xxx:
+        2N P;
 
 [[Pass preference]]
 [partner bid x, partner bid y] ?x P => prefer x to y;
