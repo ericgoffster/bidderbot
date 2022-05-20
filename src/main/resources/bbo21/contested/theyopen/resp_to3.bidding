@@ -1,0 +1,16 @@
+# Responses after a partners takeout double
+
+common (3w) X:"takeout" {
+    4w:down => 12+ tpts, 4+M, 4+OM;
+        test AQxx Axxx xx Kxx:
+	        (3D) X 4D;
+    4M:down => 12+ tpts, 4+M;
+        test AQxxx xx Axx Kxx:
+	        (3D) X  4S;
+    3N => 12+ tpts, stoppers w;
+        test Axx AQx xxxx Kxx:
+	        (3H) X 3N;
+    3y:down => 11- tpts, 4+ y;
+        test Axxx xxx xxx xxx:
+	        (3H) X 3S;
+}
