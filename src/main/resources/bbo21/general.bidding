@@ -19,7 +19,7 @@
         1♥ 3N;
 
 [[Bid 2N with invitational values]]
-[] 2N:nonconventional => inv, partial_stoppers unstopped, stoppers denied;
+[] 2N => inv, partial_stoppers unstopped, stoppers denied;
     test Axx Kxxx Qxx Qxx:
         1C 1H
         1N 2N;
