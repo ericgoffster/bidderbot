@@ -19,7 +19,7 @@ public class Analyze {
         BiddingSystem bs = BiddingSystemParser.load("classpath:bbo21/index.bidding", ex -> {
             throw new RuntimeException(ex);
         });
-        Auction auction = Auction.valueOf("1C 1D 3C P");
+        Auction auction = Auction.valueOf(args[0]);
 
         BiddingState state = new BiddingState(bs);
         for (Bid bid : auction.getBids()) {
