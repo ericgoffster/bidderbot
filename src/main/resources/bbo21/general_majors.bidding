@@ -209,10 +209,10 @@
         4S;
       
 [[Partial support for partner]]
-[partner_bid_suit M] 2M => min, max M, 7 fit M;
+[partner_bid_suit M, 6- fit_established M] 2M => min, max M, 7 fit M;
 
 [[Partial support for partner]]
-[partner_bid_suit M] 3M => inv, max M, 7 fit M;
+[partner_bid_suit M, 6- fit_established M] 3M => inv, max M, 7 fit M;
     test Kxx Axx x Axxxxx:
          1C 1H
          2C 2N
