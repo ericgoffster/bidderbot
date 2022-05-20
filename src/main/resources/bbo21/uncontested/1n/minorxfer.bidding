@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common [] 1N:"nt_opener" ?m-1:"xfer":>2S:<3D {
+common * 1N:"nt_opener" ?m-1:"xfer":>2S:<3D {
 	[[Accept transfer]]
     3m => always;
 	    test AQX KJxx AJxx xx:

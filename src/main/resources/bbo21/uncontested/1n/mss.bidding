@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common [] 1N:"nt_opener" 2♠:"mss" {
+common * 1N:"nt_opener" 2♠:"mss" {
 
 	[[Bid a minor]]
 	3m => 4+m, 2x;

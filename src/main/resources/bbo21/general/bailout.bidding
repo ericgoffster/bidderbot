@@ -6,7 +6,7 @@
 # S = ♠
 
 [[Pass 3NT]]
-[] ?N:>2N P => always;
+* ?N:>2N P => always;
 
 # Pass playable fits
 [[Pass any playable fit]]
@@ -44,7 +44,7 @@
 *:i bid x NJx => rebiddable m;
 
 [[Pass NT]]
-[] ?N P => always;
+* ?N P => always;
 
 [[Pass preference]]
 *:partner bid x:partner bid y ?x P => prefer x to y;

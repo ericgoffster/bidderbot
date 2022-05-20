@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common [] 1N:"nt_opener" {
+common * 1N:"nt_opener" {
 	
 	[[Bid stayman with 5-4 in the majors]]
 	2♣:"stayman" => inv+, 5+M, 4OM;

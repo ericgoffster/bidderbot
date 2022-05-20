@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common [] 1N:"nt_opener" 2M-1:"xfer" {
+common * 1N:"nt_opener" 2M-1:"xfer" {
 	[[With max and a doubleton, bid the doubleton]]
 	NJx:"maxfit" => max hcp, 4+M, 2-x;
 	    test Ax Axxx AJxx Axx:

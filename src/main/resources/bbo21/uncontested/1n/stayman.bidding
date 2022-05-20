@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common [] 1N:"nt_opener" 2♣:"stayman" {
+common * 1N:"nt_opener" 2♣:"stayman" {
 
 	[[Bid 4 card major]]
 	2M => 4+M;

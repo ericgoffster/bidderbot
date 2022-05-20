@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common [] 2N:"nt_opener" {
+common * 2N:"nt_opener" {
 
     [[stayman with a 4 card major]]
 	3♣:"stayman" => gf+, 4M;

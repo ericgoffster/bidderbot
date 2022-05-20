@@ -7,7 +7,7 @@
 
 # bidding NT
 [[Bid 3N with gf values]]
-[] 3N => gf, partial_stoppers unstopped, stoppers denied;
+* 3N => gf, partial_stoppers unstopped, stoppers denied;
     test Axx AQxx Qxx Qxx:
         1C 1H
         1N 3N;
@@ -19,7 +19,7 @@
         1♥ 3N;
 
 [[Bid 2N with invitational values]]
-[] 2N => inv, partial_stoppers unstopped, stoppers denied;
+* 2N => inv, partial_stoppers unstopped, stoppers denied;
     test Axx Kxxx Qxx Qxx:
         1C 1H
         1N 2N;
@@ -32,19 +32,19 @@
 
 # passing NT
 [[Pass 3N with gf values]]
-[] 3N P => gf, stoppers denied;
+* 3N P => gf, stoppers denied;
     test Axx Kxx Kxx Qxxx:
         1D 2N
         3N P;
 
 [[Pass 2N with inv values]]
-[] 2N P => inv, stoppers denied;
+* 2N P => inv, stoppers denied;
 [[Pass 2N with inv values]]
-[] 2N:"nt_opener" P => inv, stoppers denied;
+* 2N:"nt_opener" P => inv, stoppers denied;
     test xxx xxxx xxx xxx:
         2C 2D
         2N P;
-[] 2N:"nt_rebid" P => inv, stoppers denied;
+* 2N:"nt_rebid" P => inv, stoppers denied;
     test xxx Kxxx Kxx xxx:
         1C 1H
         2N P;
@@ -146,13 +146,13 @@
         1♣ 1♦
         1♥ 1♠;
 
-[] ?N:"nt_opener" P => always;
+* ?N:"nt_opener" P => always;
     test xxx xxxx xxx xxx:
         1N P;
     test xxx xxxx xxx xxx:
         2N P;
 
-[] ?N:"nt_rebid" P => min;
+* ?N:"nt_rebid" P => min;
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1N P;
