@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import bbidder.parsers.BidPatternParser;
 import bbidder.parsers.Input;
@@ -132,11 +131,9 @@ public final class BidPatternList {
      *            The auction to match.
      * @param players
      *            the players
-     * @param matched
-     *            the set of matched bids
      * @return The last bid. null if there was no match.
      */
-    public Optional<TaggedBid> getMatch(TaggedAuction bidding, Players players, Set<Bid> matched) {
+    public Optional<TaggedBid> getMatch(TaggedAuction bidding, Players players) {
         List<TaggedBid> theBids = bidding.getBids();
         int wildSize = theBids.size() - bids.size() + 2;
         int wildPos = positionOfWild();

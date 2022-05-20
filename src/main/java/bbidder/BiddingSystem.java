@@ -72,7 +72,7 @@ public final class BiddingSystem {
         inferences.forEach(rsbi -> {
             List<PossibleBid> tmp = new ArrayList<>();
             rsbi.inferences.forEach(i -> {
-                i.bids.getMatch(bidding, players, matched.keySet()).ifPresent(match -> {
+                i.bids.getMatch(bidding, players).ifPresent(match -> {
                     DebugUtils.breakpointGetPossibleBid(bidding, players, match, i);
                     TaggedBid tb = matched.get(match.bid);
                     if (tb == null || tb.equals(match)) {
