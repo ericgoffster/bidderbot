@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.InfSummary;
@@ -14,6 +13,7 @@ import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
+import bbidder.utils.MyStream;
 
 public final class Rebiddable extends Inference {
     public static final String NAME = "rebiddable";
@@ -31,7 +31,7 @@ public final class Rebiddable extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable).map(e -> new Rebiddable(e.getSymbol()).new Context(e.suitTable));
     }
 

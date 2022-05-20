@@ -1,11 +1,10 @@
 package bbidder.generalities;
 
-import java.util.stream.Stream;
-
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
+import bbidder.utils.MyStream;
 
 public final class TrueGenerality extends Generality {
     public static final String NAME = "true";
@@ -15,8 +14,8 @@ public final class TrueGenerality extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
-        return Stream.of(new Context(suitTable));
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
+        return MyStream.of(new Context(suitTable));
     }
 
     @Override

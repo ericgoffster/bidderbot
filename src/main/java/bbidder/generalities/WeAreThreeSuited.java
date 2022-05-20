@@ -1,13 +1,13 @@
 package bbidder.generalities;
 
 import java.util.OptionalInt;
-import java.util.stream.Stream;
 
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.utils.BitUtil;
+import bbidder.utils.MyStream;
 
 public final class WeAreThreeSuited extends Generality {
     public static final String NAME = "we_are_three_suited";
@@ -18,8 +18,8 @@ public final class WeAreThreeSuited extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
-        return Stream.of(new WeAreThreeSuited().new Context(suitTable));
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
+        return MyStream.of(new WeAreThreeSuited().new Context(suitTable));
     }
 
     @Override

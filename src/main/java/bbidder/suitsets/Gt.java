@@ -1,12 +1,12 @@
 package bbidder.suitsets;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitTable;
 import bbidder.Symbol;
+import bbidder.utils.MyStream;
 
 public final class Gt extends SuitSet {
     private final Symbol symbol;
@@ -45,7 +45,7 @@ public final class Gt extends SuitSet {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable).map(e -> new Gt(e.getSymbol()).new Context(suitTable));
     }
 }

@@ -1,11 +1,11 @@
 package bbidder.symbols;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.Bid;
-import bbidder.Symbol;
 import bbidder.SuitTable;
+import bbidder.Symbol;
+import bbidder.utils.MyStream;
 
 public final class NonConventional extends Symbol {
     public static final String NAME = "nonconventional";
@@ -39,7 +39,7 @@ public final class NonConventional extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable).map(e -> new NonConventional(e.getSymbol()).new Context(e.suitTable));
     }
 

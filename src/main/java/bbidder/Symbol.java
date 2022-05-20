@@ -1,6 +1,6 @@
 package bbidder;
 
-import java.util.stream.Stream;
+import bbidder.utils.MyStream;
 
 /**
  * Represents a symbol that resolves to a strain.
@@ -47,7 +47,7 @@ public abstract class Symbol {
      *            The suit table to lookup
      * @return Stream of context's
      */
-    public abstract Stream<Context> resolveSuits(SuitTable suitTable);
+    public abstract MyStream<Context> resolveSuits(SuitTable suitTable);
 
     public final class Context {
         public final SuitTable suitTable;

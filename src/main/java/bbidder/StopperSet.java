@@ -191,7 +191,7 @@ public final class StopperSet implements Iterable<Stoppers> {
 
     @Override
     public Iterator<Stoppers> iterator() {
-        return BitUtil.stream(stopperSet).mapToObj(i -> Stoppers.values()[i]).iterator();
+        return BitUtil.stream(stopperSet).map(i -> Stoppers.values()[i]).iterator();
     }
 
     private static short createStoppers(Iterable<Stoppers> list) {

@@ -1,13 +1,13 @@
 package bbidder.generalities;
 
 import java.util.OptionalInt;
-import java.util.stream.Stream;
 
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.Symbol;
+import bbidder.utils.MyStream;
 
 public final class UnbidSuitGenerality extends Generality {
     public static final String NAME = "unbid_suit";
@@ -19,7 +19,7 @@ public final class UnbidSuitGenerality extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable).map(e -> new UnbidSuitGenerality(e.getSymbol()).new Context(e.suitTable));
     }
 

@@ -1,11 +1,11 @@
 package bbidder.symbols;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.Bid;
-import bbidder.Symbol;
 import bbidder.SuitTable;
+import bbidder.Symbol;
+import bbidder.utils.MyStream;
 
 public final class SteppedSymbol extends Symbol {
     private final Symbol symbol;
@@ -40,7 +40,7 @@ public final class SteppedSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable).map(e -> new SteppedSymbol(e.getSymbol(), delta).new Context(e.suitTable));
     }
 

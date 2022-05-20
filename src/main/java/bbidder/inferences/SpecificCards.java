@@ -1,7 +1,6 @@
 package bbidder.inferences;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.CardsRange;
 import bbidder.IBoundInference;
@@ -11,6 +10,7 @@ import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.inferences.bound.SpecificCardsBoundInf;
+import bbidder.utils.MyStream;
 
 /**
  * Represents the inference of a specific cards in a suit.
@@ -34,7 +34,7 @@ public final class SpecificCards extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable).map(e -> new SpecificCards(e.getSymbol(), rng, top).new Context(e.suitTable));
     }
 

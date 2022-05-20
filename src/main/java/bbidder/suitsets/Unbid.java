@@ -1,11 +1,11 @@
 package bbidder.suitsets;
 
 import java.util.OptionalInt;
-import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitTable;
+import bbidder.utils.MyStream;
 
 public final class Unbid extends SuitSet {
     public Unbid() {
@@ -42,8 +42,8 @@ public final class Unbid extends SuitSet {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
-        return Stream.of(new Context(suitTable));
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
+        return MyStream.of(new Context(suitTable));
     }
 
     @Override

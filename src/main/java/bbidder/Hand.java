@@ -102,7 +102,7 @@ public final class Hand {
         case '9':
             return cRank - '2';
         case 'X':
-            return BitUtil.stream(avail).findFirst().getAsInt();
+            return BitUtil.stream(avail).findFirst().get();
         default:
             throw new IllegalArgumentException("Invalid rank: " + cRank);
         }
@@ -132,7 +132,7 @@ public final class Hand {
             return "-";
         }
         return BitUtil.stream(suit)
-                .mapToObj(rank -> toRank(rank))
+                .map(rank -> toRank(rank))
                 .reduce(new StringBuilder(), (s, a) -> s.append(a), (a, b) -> a.append(b))
                 .reverse()
                 .toString();
@@ -210,7 +210,7 @@ public final class Hand {
     }
 
     public int pointsInSuit(int suit) {
-        return BitUtil.stream((short) (getAllInSuit(suit) & Hand.aboveRank(TEN))).map(rank -> getHCP(rank)).sum();
+        return BitUtil.stream((short) (getAllInSuit(suit) & Hand.aboveRank(TEN))).map(rank -> getHCP(rank)).reduce(0, (a, b) -> a + b, (a, b) -> a + b);
     }
 
     public int numHCP() {

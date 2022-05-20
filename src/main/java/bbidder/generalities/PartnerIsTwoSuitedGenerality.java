@@ -1,12 +1,11 @@
 package bbidder.generalities;
 
-import java.util.stream.Stream;
-
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.Symbol;
+import bbidder.utils.MyStream;
 
 public final class PartnerIsTwoSuitedGenerality extends Generality {
     public static final String NAME = "partner_is_two_suited";
@@ -20,7 +19,7 @@ public final class PartnerIsTwoSuitedGenerality extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol1.resolveSuits(suitTable)
                 .flatMap(e1 -> symbol2.resolveSuits(e1.suitTable)
                         .map(e2 -> new PartnerIsTwoSuitedGenerality(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));

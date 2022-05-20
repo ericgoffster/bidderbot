@@ -1,7 +1,6 @@
 package bbidder.inferences;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -12,6 +11,7 @@ import bbidder.SuitTable;
 import bbidder.inferences.bound.PartialStoppersBoundInf;
 import bbidder.inferences.bound.StoppersBoundInf;
 import bbidder.utils.BitUtil;
+import bbidder.utils.MyStream;
 
 /**
  * Represents the inference of the stoppers in a suit set.
@@ -42,7 +42,7 @@ public final class StoppersInSuits extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return suits.resolveSuits(suitTable).map(e -> new StoppersInSuits(e.getSuitSet(), partial).new Context(e.suitTable));
     }
 

@@ -1,12 +1,12 @@
 package bbidder.inferences;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.SuitTable;
+import bbidder.utils.MyStream;
 
 public final class NotInference extends Inference {
     private final Inference i1;
@@ -21,7 +21,7 @@ public final class NotInference extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return i1.resolveSuits(suitTable)
                .map(e1 -> new NotInference(e1.getInference()).new Context(e1.suitTable));
     }

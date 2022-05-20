@@ -2,8 +2,8 @@ package bbidder;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -92,7 +92,8 @@ public class BidPatternListTest {
     @Test
     public void test2() {
         BidPatternList bpl = BidPatternList.valueOf("1C");
-        List<Context> l = bpl.resolveSuits(SuitTable.EMPTY).collect(Collectors.toList());
+        List<Context> l = new ArrayList<>();
+        bpl.resolveSuits(SuitTable.EMPTY).forEach(l::add);
         assertEquals(4, l.size());
     }
 }

@@ -1,11 +1,11 @@
 package bbidder.suitsets;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitTable;
+import bbidder.utils.MyStream;
 
 public final class Not extends SuitSet {
     private final SuitSet ss;
@@ -43,7 +43,7 @@ public final class Not extends SuitSet {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return ss.resolveSuits(suitTable).map(e -> new Not(e.getSuitSet()).new Context(e.suitTable));
     }
 }

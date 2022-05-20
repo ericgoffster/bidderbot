@@ -1,11 +1,11 @@
 package bbidder.symbols;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.Bid;
-import bbidder.Symbol;
 import bbidder.SuitTable;
+import bbidder.Symbol;
+import bbidder.utils.MyStream;
 
 public final class SeatSymbol extends Symbol {
     public static final String NAME = "seat";
@@ -41,7 +41,7 @@ public final class SeatSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable).map(e -> new SeatSymbol(e.getSymbol(), seats).new Context(e.suitTable));
     }
 

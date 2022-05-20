@@ -1,6 +1,6 @@
 package bbidder;
 
-import java.util.stream.Stream;
+import bbidder.utils.MyStream;
 
 /**
  * Represents a dynamic set of suits.
@@ -23,7 +23,7 @@ public abstract class SuitSet {
      *            The suit table
      * @return A Stream of suitset,symbol table pairs.
      */
-    public abstract Stream<Context> resolveSuits(SuitTable suitTable);
+    public abstract MyStream<Context> resolveSuits(SuitTable suitTable);
 
     public final class Context {
         public final SuitTable suitTable;

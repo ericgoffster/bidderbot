@@ -1,7 +1,5 @@
 package bbidder.inferences;
 
-import java.util.stream.Stream;
-
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
@@ -9,6 +7,7 @@ import bbidder.Shape;
 import bbidder.ShapeSet;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.ShapeBoundInf;
+import bbidder.utils.MyStream;
 
 /**
  * Represents the inference of a "balanced" hand
@@ -30,8 +29,8 @@ public final class UnBalanced extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
-        return Stream.of(new Context(suitTable));
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
+        return MyStream.of(new Context(suitTable));
     }
 
     @Override

@@ -2,7 +2,6 @@ package bbidder.utils;
 
 import java.util.Arrays;
 import java.util.OptionalInt;
-import java.util.stream.IntStream;
 
 /**
  * Fast bit utilities.
@@ -135,29 +134,29 @@ public final class BitUtil {
         return OptionalInt.empty();
     }
 
-    public static IntStream stream(long pattern) {
-        IntStream stream = IntStream.empty();
+    public static MyStream<Integer> stream(long pattern) {
+        MyStream<Integer> stream = MyStream.empty();
         int p0 = (int) (pattern & 0xffff);
         if (p0 != 0) {
-            stream = IntStream.concat(stream, Arrays.stream(set[p0]));
+            stream = stream.concat(new MyIntStream(set[p0]));
         }
         int p1 = (int) ((pattern >>> 16) & 0xffff);
         if (p1 != 0) {
-            stream = IntStream.concat(stream, Arrays.stream(set[p1]).map(i -> i + 16));
+            stream = stream.concat(new MyIntStream(set[p1]).map(i -> i + 16));
         }
         int p2 = (int) ((pattern >>> 32) & 0xffff);
         if (p2 != 0) {
-            stream = IntStream.concat(stream, Arrays.stream(set[p2]).map(i -> i + 32));
+            stream = stream.concat(new MyIntStream(set[p2]).map(i -> i + 32));
         }
         int p3 = (int) ((pattern >>> 48) & 0xffff);
         if (p3 != 0) {
-            stream = IntStream.concat(stream, Arrays.stream(set[p3]).map(i -> i + 48));
+            stream = stream.concat(new MyIntStream(set[p3]).map(i -> i + 48));
         }
         return stream;
     }
 
-    public static IntStream stream(short pattern) {
-        return pattern == 0 ? IntStream.empty() : Arrays.stream(set[pattern & 0xffff]);
+    public static MyStream<Integer> stream(short pattern) {
+        return pattern == 0 ? MyStream.empty() : new MyIntStream(set[pattern & 0xffff]);
     }
 
     public static long bitMask(int max) {

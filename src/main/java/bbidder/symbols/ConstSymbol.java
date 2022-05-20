@@ -1,12 +1,12 @@
 package bbidder.symbols;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.Bid;
 import bbidder.Strain;
-import bbidder.Symbol;
 import bbidder.SuitTable;
+import bbidder.Symbol;
+import bbidder.utils.MyStream;
 
 public final class ConstSymbol extends Symbol {
     private final int strain;
@@ -17,8 +17,8 @@ public final class ConstSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
-        return Stream.of(new Context(suitTable));
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
+        return MyStream.of(new Context(suitTable));
     }
 
     @Override

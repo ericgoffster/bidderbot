@@ -66,7 +66,7 @@ public final class Stoppers {
     @Override
     public String toString() {
         return BitUtil.stream(patt)
-                .mapToObj(i -> Strain.getName(i))
+                .map(i -> Strain.getName(i))
                 .reduce(new StringBuilder(), (sb, i) -> sb.append(i), (a, b) -> a.append(b))
                 .toString();
     }

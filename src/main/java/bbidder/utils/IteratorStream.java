@@ -9,6 +9,11 @@ public class IteratorStream<E> implements MyStream<E> {
         super();
         this.stream = stream;
     }
+    
+    public IteratorStream(Iterable<E> stream) {
+        super();
+        this.stream = stream.iterator();
+    }
 
     @Override
     public E next() {

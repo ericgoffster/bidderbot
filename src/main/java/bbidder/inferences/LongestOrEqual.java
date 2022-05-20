@@ -1,17 +1,17 @@
 package bbidder.inferences;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
 import bbidder.Players;
 import bbidder.ShapeSet;
 import bbidder.SuitSet;
-import bbidder.Symbol;
 import bbidder.SuitTable;
+import bbidder.Symbol;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
+import bbidder.utils.MyStream;
 
 /**
  * Represents the inference of a suit than is longest or equal among other suits.
@@ -40,7 +40,7 @@ public final class LongestOrEqual extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return suit.resolveSuits(suitTable)
                 .flatMap(e1 -> among.resolveSuits(e1.suitTable)
                         .map(e2 -> new LongestOrEqual(e1.getSymbol(), e2.getSuitSet()).new Context(e2.suitTable)));

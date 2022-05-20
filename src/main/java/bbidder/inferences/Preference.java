@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -13,6 +12,7 @@ import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
+import bbidder.utils.MyStream;
 
 public final class Preference extends Inference {
     public static final String NAME = "prefer";
@@ -33,7 +33,7 @@ public final class Preference extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return longer.resolveSuits(suitTable)
                 .flatMap(
                         e1 -> shorter.resolveSuits(e1.suitTable).map(e2 -> new Preference(e1.getSymbol(), e2.getSymbol()).new Context(e2.suitTable)));

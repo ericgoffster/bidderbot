@@ -1,11 +1,11 @@
 package bbidder.suitsets;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitTable;
+import bbidder.utils.MyStream;
 
 public final class And extends SuitSet {
     private final SuitSet s1;
@@ -45,7 +45,7 @@ public final class And extends SuitSet {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return s1.resolveSuits(suitTable)
                 .flatMap(e1 -> s2.resolveSuits(e1.suitTable).map(e2 -> new And(e1.getSuitSet(), e2.getSuitSet()).new Context(e2.suitTable)));
     }

@@ -1,11 +1,11 @@
 package bbidder.symbols;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.Bid;
-import bbidder.Symbol;
 import bbidder.SuitTable;
+import bbidder.Symbol;
+import bbidder.utils.MyStream;
 
 public final class LessThanSymbol extends Symbol {
     private final Symbol symbol;
@@ -42,7 +42,7 @@ public final class LessThanSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable)
                 .flatMap(e1 -> other.resolveSuits(e1.suitTable)
                         .map(e2 -> new LessThanSymbol(e1.getSymbol(), level, e2.getSymbol()).new Context(e2.suitTable)));

@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -13,6 +12,7 @@ import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
+import bbidder.utils.MyStream;
 
 /**
  * Represents the inference of a range of lengths of a suit.
@@ -36,7 +36,7 @@ public final class FitInSuit extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable).map(e -> new FitInSuit(e.getSymbol()).new Context(e.suitTable));
     }
 

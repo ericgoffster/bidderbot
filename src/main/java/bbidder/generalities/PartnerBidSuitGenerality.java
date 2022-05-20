@@ -1,12 +1,11 @@
 package bbidder.generalities;
 
-import java.util.stream.Stream;
-
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
 import bbidder.SuitTable;
 import bbidder.Symbol;
+import bbidder.utils.MyStream;
 
 public final class PartnerBidSuitGenerality extends Generality {
     public static final String NAME = "partner_bid_suit";
@@ -18,7 +17,7 @@ public final class PartnerBidSuitGenerality extends Generality {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return symbol.resolveSuits(suitTable).map(e -> new PartnerBidSuitGenerality(e.getSymbol()).new Context(e.suitTable));
     }
 

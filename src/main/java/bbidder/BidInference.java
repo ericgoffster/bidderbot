@@ -1,8 +1,8 @@
 package bbidder;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
+import bbidder.utils.MyStream;
 import bbidder.utils.SplitUtil;
 
 /**
@@ -54,7 +54,7 @@ public final class BidInference {
     /**
      * @return A stream of bid inferences with all suit variables resolved.
      */
-    public Stream<BidInference> resolveSuits() {
+    public MyStream<BidInference> resolveSuits() {
         return bids.resolveSuits(SuitTable.EMPTY)
                 .flatMap(e1 -> inferences.resolveSuits(e1.suitTable).map(e2 -> new BidInference(where, e1.getBids(), e2.getInference())));
     }

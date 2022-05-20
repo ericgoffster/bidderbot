@@ -1,11 +1,11 @@
 package bbidder.suitsets;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.Players;
 import bbidder.SuitSet;
 import bbidder.SuitTable;
+import bbidder.utils.MyStream;
 
 public final class ConstSet extends SuitSet {
     private final String ssuits;
@@ -44,7 +44,7 @@ public final class ConstSet extends SuitSet {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
-        return Stream.of(new Context(suitTable));
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
+        return MyStream.of(new Context(suitTable));
     }
 }

@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
+
+import bbidder.utils.IteratorStream;
+import bbidder.utils.MyStream;
 
 /**
  * Represents the bid patterns as read in from the notes.
@@ -109,8 +111,8 @@ public final class BidPatternList {
      * 
      * @return The list of resolved bidding pattern contexts
      */
-    public Stream<Context> resolveSuits(SuitTable suits) {
-        return withOpposingBidding().addInitialPasses().stream().flatMap(bpl -> bpl.resolveSuits(BidPatternList.EMPTY, suits));
+    public MyStream<Context> resolveSuits(SuitTable suits) {
+        return new IteratorStream<>(withOpposingBidding().addInitialPasses()).flatMap(bpl -> bpl.resolveSuits(BidPatternList.EMPTY, suits));
     }
 
     /**
@@ -273,9 +275,9 @@ public final class BidPatternList {
      *            The previous context.
      * @return The list of resolved bidding pattern contexts
      */
-    private Stream<Context> resolveSuits(BidPatternList previous, SuitTable suitTable) {
+    private MyStream<Context> resolveSuits(BidPatternList previous, SuitTable suitTable) {
         if (bids.isEmpty()) {
-            return Stream.of(previous.new Context(suitTable));
+            return MyStream.of(previous.new Context(suitTable));
         }
         // For each context gotten from the first bid,
         // evaluate the remaining bids in the context of that bid.

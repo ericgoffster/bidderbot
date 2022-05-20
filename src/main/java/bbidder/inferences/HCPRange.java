@@ -1,7 +1,6 @@
 package bbidder.inferences;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
 import bbidder.Inference;
@@ -9,6 +8,7 @@ import bbidder.Players;
 import bbidder.PointRange;
 import bbidder.SuitTable;
 import bbidder.inferences.bound.HcpBoundInf;
+import bbidder.utils.MyStream;
 
 /**
  * Represents the inference for a high card point range.
@@ -36,8 +36,8 @@ public final class HCPRange extends Inference {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
-        return Stream.of(new Context(suitTable));
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
+        return MyStream.of(new Context(suitTable));
     }
 
     @Override

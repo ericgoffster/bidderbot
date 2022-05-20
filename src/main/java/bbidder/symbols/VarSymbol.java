@@ -1,13 +1,13 @@
 package bbidder.symbols;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.utils.BitUtil;
+import bbidder.utils.MyStream;
 
 public final class VarSymbol extends Symbol {
     private final String varName;
@@ -45,13 +45,13 @@ public final class VarSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         Integer suit = suitTable.getSuit(varName);
         if (suit != null) {
-            return Stream.of(new ConstSymbol(suit).new Context(suitTable));
+            return MyStream.of(new ConstSymbol(suit).new Context(suitTable));
         }
         return BitUtil.stream((short) (Constants.ALL_SUITS & ~suitTable.getSuits()))
-                .mapToObj(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(varName, s)));
+                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(varName, s)));
     }
 
     @Override

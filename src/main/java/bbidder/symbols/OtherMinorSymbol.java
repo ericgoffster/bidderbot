@@ -1,12 +1,11 @@
 package bbidder.symbols;
 
-import java.util.stream.Stream;
-
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.utils.BitUtil;
+import bbidder.utils.MyStream;
 
 public final class OtherMinorSymbol extends Symbol {
     public static final String NAME = "om";
@@ -42,17 +41,17 @@ public final class OtherMinorSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         Integer om = suitTable.getSuit(NAME);
         if (om != null) {
-            return Stream.of(new ConstSymbol(om).new Context(suitTable));
+            return MyStream.of(new ConstSymbol(om).new Context(suitTable));
         }
         Integer m = suitTable.getSuit(MinorSymbol.NAME);
         if (m != null) {
-            return Stream.of(new ConstSymbol(MinorSymbol.otherMinor(m)).new Context(suitTable));
+            return MyStream.of(new ConstSymbol(MinorSymbol.otherMinor(m)).new Context(suitTable));
         }
         return BitUtil.stream((short) (Constants.MINORS & ~suitTable.getSuits()))
-                .mapToObj(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
+                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
     }
 
     @Override

@@ -1,12 +1,11 @@
 package bbidder.symbols;
 
-import java.util.stream.Stream;
-
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.utils.BitUtil;
+import bbidder.utils.MyStream;
 
 public final class MajorSymbol extends Symbol {
     public static final String NAME = "M";
@@ -42,17 +41,17 @@ public final class MajorSymbol extends Symbol {
     }
 
     @Override
-    public Stream<Context> resolveSuits(SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(SuitTable suitTable) {
         Integer M = suitTable.getSuit(NAME);
         if (M != null) {
-            return Stream.of(new ConstSymbol(M).new Context(suitTable));
+            return MyStream.of(new ConstSymbol(M).new Context(suitTable));
         }
         Integer OM = suitTable.getSuit(OtherMajorSymbol.NAME);
         if (OM != null) {
-            return Stream.of(new ConstSymbol(otherMajor(OM)).new Context(suitTable));
+            return MyStream.of(new ConstSymbol(otherMajor(OM)).new Context(suitTable));
         }
         return BitUtil.stream((short) (Constants.MAJORS & ~suitTable.getSuits()))
-                .mapToObj(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
+                .map(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
     }
 
     static Integer otherMajor(Integer strain) {

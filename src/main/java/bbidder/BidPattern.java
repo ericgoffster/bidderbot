@@ -2,9 +2,9 @@ package bbidder;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import bbidder.symbols.ConstSymbol;
+import bbidder.utils.MyStream;
 
 /**
  * Represents an immutable matchable bid pattern.
@@ -151,15 +151,15 @@ public final class BidPattern {
      *            The symbols
      * @return A list of contexts representing the symbol bound to actual values
      */
-    public Stream<Context> resolveSuits(Contract contract, SuitTable suitTable) {
+    public MyStream<Context> resolveSuits(Contract contract, SuitTable suitTable) {
         if (generality != null) {
             return generality.resolveSuits(suitTable).map(e -> createWild(e.getGenerality()).new Context(e.suitTable));
         }
         if (simpleBid != null) {
-            return Stream.of(new Context(suitTable));
+            return MyStream.of(new Context(suitTable));
         }
         return symbol.resolveSuits(suitTable)
-                .flatMap(e -> withSymbol(contract, e.getSymbol()).stream().map(newSym -> newSym.new Context(e.suitTable)));
+                .flatMap(e -> MyStream.ofOptional(withSymbol(contract, e.getSymbol())).map(newSym -> newSym.new Context(e.suitTable)));
     }
 
     /**
