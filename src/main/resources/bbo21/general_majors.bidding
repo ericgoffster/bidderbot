@@ -64,6 +64,26 @@
     test Axxx Axx xxx xxx:
         2N 3♣
         3♠ 4S;
+    test AQxx AJxx Ax xxx:
+        1N 4♦ 
+        4♥;
+    test AQxx AJxx Ax xxx:
+        1N 4♥
+        4♠;
+    test AQxx AKxx Ax AJx:
+        2C 2D
+        2N 4♦
+        4♥;
+    test AQxx AKxx Ax AJx:
+        2C 2D
+        2N 4♥
+        4♠;
+    test AQxx AJxx Ax AJx:
+        2N 4♦
+        4♥;
+    test AQxx AJxx Ax AJx:
+        2N 4♥
+        4♠;
 
 [] 3M => inv, fit M;
     test AQxx Axx xxxx xx:
