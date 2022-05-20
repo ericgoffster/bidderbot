@@ -6,22 +6,13 @@
 # S = ♠
 
 2N 3M-1
-3M => 20- tpts;
-    test AQJx Qx AKxx Axx:
-        2N 3♥
-        3♠;
-    test Qx AQJx AKxx Axx:
-        2N 3♦
-        3♥;
-
-2N 3M-1
-3N => 4+M, superbalanced;
+3N => 21 hcp, 4+M, superbalanced;
     test AKx AJxx Axx AJx:
         2N 3♦
         3N;
 
 2N 3M-1
-NJx => 4+M, 2-x;
+NJx => 21 hcp, 4+M, 2-x;
     test AKxx AKxx xx AKx:
         2N 3♦
         4♦;
