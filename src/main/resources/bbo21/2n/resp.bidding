@@ -67,7 +67,7 @@ common [] 2N:"nt_opener" {
 	        2C 2D
 	        2N 3N;
 	
-	3♠ => gf+, 4+C, 4+D;
+	3♠:"mss" => gf+, 4+C, 4+D;
 	    test Axx x Axxxx Axxx:
 	        2N 3♠;
 	    test Qxx x Axxxx Axxx:
