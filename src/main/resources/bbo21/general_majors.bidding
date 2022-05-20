@@ -6,7 +6,7 @@
 # S = ♠
 
 [[Bid game in an established major suit fit]]
-[fit_established M] 4M => gf;
+[8+ fit_established M] 4M => gf;
     test AQxxx Axxx Ax xx:
         1S 3S
         4S;
@@ -74,7 +74,7 @@
         3♠ 4S;
 
 [[Invite in an established major suit fit]]
-[fit_established M] 3M => inv;
+[8+ fit_established M] 3M => inv;
     test AQxx Axx xxxx xx:
         1C 1S
         2S 3S;
@@ -107,7 +107,7 @@
         2♥ 3♥;
 
 [[Bid established major suit fit at 2 level with min values]]
-[fit_established M] 2M => min;
+[8+ fit_established M] 2M => min;
 
 [[Bid self supporting major at 2 level with min values]]
 [i_bid_suit M] 2M => min, 8+ fit M;
@@ -125,7 +125,7 @@
         1♠ 2♠;
 
 [[Pass a playable major suit]]
-[fit_established M] ?M P => always;
+[8+ fit_established M] ?M P => always;
     test xxx Axxx Kx xxxx:
         1C 1H
         2H P;
@@ -146,7 +146,7 @@
         2♥ P;
 
 [[Return to established major]]
-[fit_established M] NJM => always;
+[8+ fit_established M] NJM => always;
     test AKx Axxx Axx Qxx:
         1N 2D
         2N 3D

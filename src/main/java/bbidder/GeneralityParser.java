@@ -67,41 +67,6 @@ public final class GeneralityParser {
             }
             break;
         }
-        case FitEstablished.NAME: {
-            Symbol symbol = SymbolParser.parseSymbol(remainder);
-            if (symbol != null) {
-                return new FitEstablished(symbol, SuitLengthRange.atLeast(8));
-            }
-            break;
-        }
-        case "fit7_established": {
-            Symbol symbol = SymbolParser.parseSymbol(remainder);
-            if (symbol != null) {
-                return new FitEstablished(symbol, SuitLengthRange.atLeast(7));
-            }
-            break;
-        }
-        case "fit8_established": {
-            Symbol symbol = SymbolParser.parseSymbol(remainder);
-            if (symbol != null) {
-                return new FitEstablished(symbol, SuitLengthRange.atLeast(8));
-            }
-            break;
-        }
-        case "fit9_established": {
-            Symbol symbol = SymbolParser.parseSymbol(remainder);
-            if (symbol != null) {
-                return new FitEstablished(symbol, SuitLengthRange.atLeast(9));
-            }
-            break;
-        }
-        case "fit10_established": {
-            Symbol symbol = SymbolParser.parseSymbol(remainder);
-            if (symbol != null) {
-                return new FitEstablished(symbol, SuitLengthRange.atLeast(10));
-            }
-            break;
-        }
         case "i_bid_suit": {
             String[] rem = SplitUtil.split(remainder, "at_least", 2);
             int min = rem.length > 1 ? Integer.parseInt(rem[1]) : 3;
@@ -159,7 +124,7 @@ public final class GeneralityParser {
             RangeOf rng = RangeParser.parseRange(str.trim());
             if (rng != null) {
                  if (rng.of.startsWith("fit_established")) {
-                    Symbol sym = SymbolParser.parseSymbol(rng.of.substring(3).trim());
+                    Symbol sym = SymbolParser.parseSymbol(rng.of.substring(15).trim());
                     if (sym != null) {
                         return new FitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
                     }
