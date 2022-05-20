@@ -9,7 +9,7 @@
 *:gf+:7- fit M:i bid M NJM:<4N => 8+ fit m;
  
 [[Establish major fit]]
-[gf+, 7- fit M, partner bid M] NJM:<4N => 8+ fit M;
+*:gf+:7- fit M:partner bid M NJM:<4N => 8+ fit M;
     test Axx Qxxx xxx xxx:
         2C 2D
         2N 3♣
@@ -26,34 +26,34 @@
         3♠ 4S;
 
 [[Establish minor fit]]
-[gf+, 7- fit m, i bid m] NJm:<3N => 8+ fit m;
+*:gf+:7- fit m:i bid m NJm:<3N => 8+ fit m;
 
 [[Establish minor fit]]
-[gf+, 7- fit m, partner bid m] NJm:<3N => 8+ fit m;
+*:gf+:7- fit m:partner bid m NJm:<3N => 8+ fit m;
 
 [[Rebid second suit]]
-[gf+, i bid x, i bid y] NJy:<3N => rebiddable_2nd x y;
+*:gf+:i bid x:i bid y NJy:<3N => rebiddable_2nd x y;
     test AKxxx xx Axxxx x:
         1S 2C
         2D 2N
         3D;
 
 [[Rebid suit]]
-[gf+, i bid y] NJy:<3N => rebiddable y;
+*:gf+:i bid y NJy:<3N => rebiddable y;
     test AKxxxx xxx Axx x:
         1S 2C
         2S 2N
         3S;
 
 [[Secondary support]]
-[gf+, partner bid y, 6- fit y] NJy:<3N => max y, 7 fit y;
+*:gf+:partner bid y:6- fit y NJy:<3N => max y, 7 fit y;
     test AQxxx Axx xx Axx:
         1S 2H
         2S 3C
         3H;
 
 [[Shrug NT]]
-[gf+] NJN:<4C => partial_stoppers unstopped, stoppers denied;
+*:gf+ NJN:<4C => partial_stoppers unstopped, stoppers denied;
     test xx Axxx Axx Axxx:
         1S 2C
         2S 2N;
@@ -63,16 +63,16 @@
         3N;
 
 [[Just keep supporting]]
-[gf+, 8+ fit M] NJM:<4N => always;
+*:gf+:8+ fit M NJM:<4N => always;
     test AQxxx x Axx Axxx:
         1S 3N
         4S;
 
 [[Just keep supporting]]
-[gf+, 8+ fit m] NJm:<3N => always;
+*:gf+:8+ fit m NJm:<3N => always;
 
 [[Ran out of bids]]
-[gf+, we_are_three_suited, unbid_suit x] NJx:<3N => always;
+*:gf+:we_are_three_suited:unbid_suit x NJx:<3N => always;
     test Kx xxx Ax AQxxxx:
         1C 1S
         2C 2D
