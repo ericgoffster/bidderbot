@@ -17,8 +17,8 @@
 [[Pass any playable fit]]
 [partner_bid_suit y] ?y P => fit y;
 
-[[Return to best known fit]]
-[bestfit8_established y] ?x NJy => always;
+[[Return to known fit]]
+[fit_established y] ?x NJy => nofit x;
     test AKx Axxx Axx Qxx:
         1N 2D
         2N 3D
@@ -54,6 +54,12 @@
         1C 1D
         2C P;
 
+[[Rebid own suit]]
+[i_bid_suit x] ?y NJx => nofit y, rebiddable m;
+
+[[Rebid own suit below 3N]]
+[i_bid_suit x] ?N:<3N NJx => rebiddable m;
+
 [[Pass preference]]
 [partner_is_two_suited x y] ?x P => prefer x to y;
     test AQxxx x xxxx xxx:
@@ -61,8 +67,8 @@
         2C P;             
     test xxx AQxxx xx xxx:
         1D 1H
-        1S P;             
-
+        1S P;
+        
 [[Show preference]]
 [partner_is_two_suited x y] ?y NJx => prefer x to y;
     test AQxxx xx xxxx xx:
