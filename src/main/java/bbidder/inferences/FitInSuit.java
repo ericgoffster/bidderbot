@@ -23,10 +23,12 @@ import bbidder.utils.MyStream;
 public final class FitInSuit extends Inference {
     public static final String NAME = "fit";
     private final Symbol symbol;
+    public final int combined;
 
-    public FitInSuit(Symbol suit) {
+    public FitInSuit(Symbol suit, int combined) {
         super();
         this.symbol = suit;
+        this.combined = combined;
     }
 
     @Override
@@ -37,12 +39,12 @@ public final class FitInSuit extends Inference {
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
-        return symbol.resolveSuits(suitTable).map(e -> new FitInSuit(e.getSymbol()).new Context(e.suitTable));
+        return symbol.resolveSuits(suitTable).map(e -> new FitInSuit(e.getSymbol(), combined).new Context(e.suitTable));
     }
 
     @Override
     public String toString() {
-        return NAME + " " + symbol;
+        return NAME + combined + " " + symbol;
     }
 
     @Override
@@ -80,7 +82,7 @@ public final class FitInSuit extends Inference {
             return ConstBoundInference.F;
         }
 
-        int myMinLen = 8 - partnerLen;
+        int myMinLen = combined - partnerLen;
         if (myMinLen <= 0) {
             return ConstBoundInference.T;
         } else {

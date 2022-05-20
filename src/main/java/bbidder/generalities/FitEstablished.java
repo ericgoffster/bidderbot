@@ -13,15 +13,17 @@ import bbidder.utils.MyStream;
 public final class FitEstablished extends Generality {
     public static final String NAME = "fit_established";
     private final Symbol symbol;
+    private final int combined;
 
-    public FitEstablished(Symbol symbol) {
+    public FitEstablished(Symbol symbol, int combined) {
         super();
         this.symbol = symbol;
+        this.combined = combined;
     }
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
-        return symbol.resolveSuits(suitTable).map(e -> new FitEstablished(e.getSymbol()).new Context(e.suitTable));
+        return symbol.resolveSuits(suitTable).map(e -> new FitEstablished(e.getSymbol(), combined).new Context(e.suitTable));
     }
 
     @Override
@@ -31,7 +33,7 @@ public final class FitEstablished extends Generality {
         if (!ourCombinedMinLength.isPresent()) {
             return false;
         }
-        return ourCombinedMinLength.getAsInt() >= 8;
+        return ourCombinedMinLength.getAsInt() >= combined;
     }
 
     @Override
@@ -53,7 +55,7 @@ public final class FitEstablished extends Generality {
 
     @Override
     public String toString() {
-        return NAME + " " + symbol;
+        return "fit" + combined + "_established" + " " + symbol;
     }
 
 }

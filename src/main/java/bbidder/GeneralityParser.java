@@ -50,7 +50,35 @@ public final class GeneralityParser {
         case FitEstablished.NAME: {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new FitEstablished(symbol);
+                return new FitEstablished(symbol, 8);
+            }
+            break;
+        }
+        case "fit7_established": {
+            Symbol symbol = SymbolParser.parseSymbol(remainder);
+            if (symbol != null) {
+                return new FitEstablished(symbol, 7);
+            }
+            break;
+        }
+        case "fit8_established": {
+            Symbol symbol = SymbolParser.parseSymbol(remainder);
+            if (symbol != null) {
+                return new FitEstablished(symbol, 8);
+            }
+            break;
+        }
+        case "fit9_established": {
+            Symbol symbol = SymbolParser.parseSymbol(remainder);
+            if (symbol != null) {
+                return new FitEstablished(symbol, 9);
+            }
+            break;
+        }
+        case "fit10_established": {
+            Symbol symbol = SymbolParser.parseSymbol(remainder);
+            if (symbol != null) {
+                return new FitEstablished(symbol, 10);
             }
             break;
         }
