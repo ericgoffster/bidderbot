@@ -8,7 +8,7 @@
 common [] 1N:"nt_opener" {
 	
 	[[Bid stayman with 5-4 in the majors]]
-	2♣ => inv+, 5+M, 4OM;
+	2♣:"stayman" => inv+, 5+M, 4OM;
 	    test AJxxx Axxx xx xx:
 	        1N 2♣;
 	
@@ -46,7 +46,7 @@ common [] 1N:"nt_opener" {
 	        1N 3♠;
 	
 	[[Stayman with a 4 card major]]
-	2♣ => inv+, 4M;
+	2♣:"stayman" => inv+, 4M;
 	    test Axx AJxx xxxx xx:
 	        1N 2♣;
 	    test Axxx AJx xxxx xx:
@@ -90,7 +90,7 @@ common [] 1N:"nt_opener" {
 	        1N 7N;
 	
 	[[Bid stayman with invitational values]]
-	2♣ => inv;
+	2♣:"stayman" => inv;
 	    test Axx AJx xxxx xxx:
 	        1N 2♣;
 	
