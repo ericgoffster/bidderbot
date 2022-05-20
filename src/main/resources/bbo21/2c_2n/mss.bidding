@@ -31,7 +31,7 @@
 
 2C 2D
 2N 3♠
-4m 4M => 1-M;
+4m 4M => gf+, 1-M;
     test x Axx AQxxx Axxx:
         2C 2D
         2N 3♠
@@ -51,7 +51,7 @@
 
 2C 2D
 2N 3♠
-3N 4M => 1-M;
+3N 4M => gf+, 1-M;
     test x Axx AQxxx Axxx:
         2C 2D
         2N 3♠
