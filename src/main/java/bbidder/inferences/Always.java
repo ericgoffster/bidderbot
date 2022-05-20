@@ -15,7 +15,8 @@ import bbidder.inferences.bound.ConstBoundInference;
  *
  */
 public final class Always extends Inference {
-    public Always() {
+    public final static Always ALWAYS = new Always();
+    private Always() {
     }
 
     @Override

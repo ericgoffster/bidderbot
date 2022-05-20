@@ -69,6 +69,9 @@ public final class InferenceParser {
         if (str.trim().equalsIgnoreCase("unbalanced")) {
             return UnBalanced.UNBALANCED;
         }
+        if (str.trim().equalsIgnoreCase("always")) {
+            return Always.ALWAYS;
+        }
         {
             RangeOf rng = InferenceParser.parseRange(str);
             if (rng != null) {
@@ -91,21 +94,31 @@ public final class InferenceParser {
             }
         }
         {
-            Inference i = InferenceParser.parseFitInSuit(str);
-            if (i != null) {
-                return i;
+            Matcher m = PATT_FIT.matcher(str.trim());
+            if (m.matches()) {
+                Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
+                if (sym != null) {
+                    return new FitInSuit(sym);
+                }
             }
         }
         {
-            Inference i = InferenceParser.parseRebiddable(str);
-            if (i != null) {
-                return i;
+            Matcher m = InferenceParser.PATT_REBIDDABLE.matcher(str);
+            if (m.matches()) {
+                Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
+                if (sym != null) {
+                    return new Rebiddable(sym);
+                }
             }
         }
         {
-            Inference i = InferenceParser.parseRebiddable2ndSuit(str);
-            if (i != null) {
-                return i;
+            Matcher m = InferenceParser.PATT_REBIDDABLE_2nd_SUIT.matcher(str);
+            if (m.matches()) {
+                Symbol longer = SymbolParser.parseSymbol(m.group(1).trim());
+                Symbol shorter = SymbolParser.parseSymbol(m.group(2).trim());
+                if (longer != null && shorter != null) {
+                    return new RebiddableSecondSuit(longer, shorter);
+                }
             }
         }
         {
@@ -121,21 +134,24 @@ public final class InferenceParser {
             }
         }
         {
-            Inference i = InferenceParser.parseStoppersInSuits(str);
-            if (i != null) {
-                return i;
+            String[] parts = SplitUtil.split(str, "\\s+", 2);
+            if (parts.length == 2 && parts[0].equalsIgnoreCase("stoppers")) {
+                return new StoppersInSuits(SuitSetParser.lookupSuitSet(parts[1]), false);
+            }
+            if (parts.length == 2 && parts[0].equalsIgnoreCase("partial_stoppers")) {
+                return new StoppersInSuits(SuitSetParser.lookupSuitSet(parts[1]), true);
             }
         }
         {
-            Inference i = InferenceParser.parseAlways(str);
-            if (i != null) {
-                return i;
-            }
-        }
-        {
-            Inference i = InferenceParser.parsePreference(str);
-            if (i != null) {
-                return i;
+            Matcher m = InferenceParser.PATT_PREF.matcher(str);
+            if (m.matches()) {
+                Symbol sym1 = SymbolParser.parseSymbol(m.group(1).trim());
+                if (sym1 != null) {
+                    Symbol sym2 = SymbolParser.parseSymbol(m.group(2).trim());
+                    if (sym2 != null) {
+                        return new Preference(sym1, sym2);
+                    }
+                }
             }
         }
         throw new IllegalArgumentException("unknown inference: '" + str + "'");
@@ -163,52 +179,6 @@ public final class InferenceParser {
             return null;
         }
         return new LongestOrEqual(sym, null);
-    }
-
-    private static Inference parseFitInSuit(String str) {
-        if (str == null) {
-            return null;
-        }
-        Matcher m = InferenceParser.PATT_FIT.matcher(str);
-        if (m.matches()) {
-            Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-            if (sym == null) {
-                return null;
-            }
-            return new FitInSuit(sym);
-        }
-        return null;
-    }
-
-    private static Inference parseRebiddable(String str) {
-        if (str == null) {
-            return null;
-        }
-        Matcher m = InferenceParser.PATT_REBIDDABLE.matcher(str);
-        if (m.matches()) {
-            Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
-            if (sym == null) {
-                return null;
-            }
-            return new Rebiddable(sym);
-        }
-        return null;
-    }
-
-    private static Inference parseRebiddable2ndSuit(String str) {
-        if (str == null) {
-            return null;
-        }
-        Matcher m = InferenceParser.PATT_REBIDDABLE_2nd_SUIT.matcher(str);
-        if (m.matches()) {
-            Symbol longer = SymbolParser.parseSymbol(m.group(1).trim());
-            Symbol shorter = SymbolParser.parseSymbol(m.group(2).trim());
-            if (longer == null || shorter == null) {
-                return null;
-            }
-            return new RebiddableSecondSuit(longer, shorter);
-        }
-        return null;
     }
 
     private static CombinedTotalPointsRange parseCombinedTPts(String str) {
@@ -261,47 +231,6 @@ public final class InferenceParser {
                 }
                 return new SpecificCards(sym, CardsRange.between(rng.min, rng.max), top);
             }
-        }
-        return null;
-    }
-
-    private static Inference parseStoppersInSuits(String str) {
-        String[] parts = SplitUtil.split(str, "\\s+", 2);
-        if (parts.length == 2 && parts[0].equalsIgnoreCase("stoppers")) {
-            return new StoppersInSuits(SuitSetParser.lookupSuitSet(parts[1]), false);
-        }
-        if (parts.length == 2 && parts[0].equalsIgnoreCase("partial_stoppers")) {
-            return new StoppersInSuits(SuitSetParser.lookupSuitSet(parts[1]), true);
-        }
-        return null;
-    }
-
-    private static Always parseAlways(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (str.toLowerCase().equals("always")) {
-            return new Always();
-        }
-        return null;
-    }
-
-    private static Inference parsePreference(String str) {
-        if (str == null) {
-            return null;
-        }
-        Matcher m = InferenceParser.PATT_PREF.matcher(str);
-        if (m.matches()) {
-            Symbol sym1 = SymbolParser.parseSymbol(m.group(1).trim());
-            if (sym1 == null) {
-                return null;
-            }
-            Symbol sym2 = SymbolParser.parseSymbol(m.group(2).trim());
-            if (sym2 == null) {
-                return null;
-            }
-            return new Preference(sym1, sym2);
         }
         return null;
     }
