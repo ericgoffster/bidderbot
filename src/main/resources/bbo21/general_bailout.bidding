@@ -10,10 +10,10 @@
 [fit_established y] ?y P => always;
 
 [[Pass any playable fit]]
-[i_bid_suit y] ?y P => fit y;
+[i_bid_suit y] ?y P => 8+ fit y;
 
 [[Pass any playable fit]]
-[partner_bid_suit y] ?y P => fit y;
+[partner_bid_suit y] ?y P => 8+ fit y;
 
 [[Return to known fit over a suit bid]]
 [fit_established y] ?x NJy => nofit x;
@@ -32,10 +32,10 @@
         3♣;
 
 [[Self support suit]]
-[i_bid_suit y] NJy => fit y;
+[i_bid_suit y] NJy => 8+ fit y;
 
 [[Support suit]]
-[partner_bid_suit y] NJy => fit y;
+[partner_bid_suit y] NJy => 8+ fit y;
 
 # At this point, no playable fits at all
 
