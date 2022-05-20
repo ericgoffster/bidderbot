@@ -32,9 +32,10 @@ public final class BidPattern {
     public final boolean downTheLine;
     public final BidPattern greaterThan;
     public final BidPattern lessThan;
+    public final boolean isWild;
 
     private BidPattern(boolean isOpposition, Symbol symbol, Integer level, Bid simpleBid, Integer jumpLevel, Generality generality, TagSet tags,
-            boolean antiMatch, Seats seats, boolean downTheLine, BidPattern greaterThan, BidPattern lessThan) {
+            boolean antiMatch, Seats seats, boolean downTheLine, BidPattern greaterThan, BidPattern lessThan, boolean isWild) {
         super();
         this.isOpposition = isOpposition;
         this.symbol = symbol;
@@ -48,6 +49,7 @@ public final class BidPattern {
         this.downTheLine = downTheLine;
         this.greaterThan = greaterThan;
         this.lessThan = lessThan;
+        this.isWild = isWild;
     }
 
     public boolean isPass() {
@@ -56,72 +58,72 @@ public final class BidPattern {
 
     public BidPattern withSymbol(Symbol symbol) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan);
+                lessThan, isWild);
     }
 
     public BidPattern withLevel(Integer level) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan);
+                lessThan, isWild);
     }
 
     public BidPattern withJumpLevel(Integer jumpLevel) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan);
+                lessThan, isWild);
     }
 
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan);
+                lessThan, isWild);
     }
 
     public BidPattern withSeats(Seats seats) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan);
+                lessThan, isWild);
     }
 
     public BidPattern withDownTheLine(boolean downTheLine) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan);
+                lessThan, isWild);
     }
 
     public BidPattern withTags(TagSet tags) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan);
+                lessThan, isWild);
     }
 
     public BidPattern withGreaterThan(BidPattern greaterThan) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan);
+                lessThan, isWild);
     }
 
     public BidPattern withLessThan(BidPattern lessThan) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan);
+                lessThan, isWild);
     }
 
     public BidPattern withAntiMatch(boolean antiMatch) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
-                lessThan);
+                lessThan, isWild);
     }
 
     public static BidPattern createJump(Symbol symbol, int jumpLevel) {
-        return new BidPattern(false, symbol, null, null, jumpLevel, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
+        return new BidPattern(false, symbol, null, null, jumpLevel, null, TagSet.EMPTY, false, Seats.ALL, false, null, null, false);
     }
 
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
             return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, null, null, null, TagSet.EMPTY, false, Seats.ALL, false,
-                    null, null);
+                    null, null, false);
         }
-        return new BidPattern(false, null, null, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
+        return new BidPattern(false, null, null, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null, false);
     }
 
     public static BidPattern createBid(Integer level, Symbol symbol) {
-        return new BidPattern(false, symbol, level, null, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
+        return new BidPattern(false, symbol, level, null, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null, false);
     }
 
     public static BidPattern createWild(Generality generality) {
-        return new BidPattern(false, null, null, null, null, generality, TagSet.EMPTY, false, Seats.ALL, false, null, null);
+        return new BidPattern(false, null, null, null, null, generality, TagSet.EMPTY, false, Seats.ALL, false, null, null, true);
     }
 
     /**
@@ -258,10 +260,11 @@ public final class BidPattern {
         return str;
     }
 
+    
     @Override
     public int hashCode() {
-        return Objects.hash(antiMatch, downTheLine, generality, greaterThan, isOpposition, jumpLevel, lessThan, level, seats, simpleBid, symbol,
-                tags);
+        return Objects.hash(antiMatch, downTheLine, generality, greaterThan, isOpposition, isWild, jumpLevel, lessThan, level, seats, simpleBid,
+                symbol, tags);
     }
 
     @Override
@@ -274,9 +277,10 @@ public final class BidPattern {
             return false;
         BidPattern other = (BidPattern) obj;
         return antiMatch == other.antiMatch && downTheLine == other.downTheLine && Objects.equals(generality, other.generality)
-                && Objects.equals(greaterThan, other.greaterThan) && isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel)
-                && Objects.equals(lessThan, other.lessThan) && Objects.equals(level, other.level) && seats == other.seats
-                && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol) && Objects.equals(tags, other.tags);
+                && Objects.equals(greaterThan, other.greaterThan) && isOpposition == other.isOpposition && isWild == other.isWild
+                && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(lessThan, other.lessThan) && Objects.equals(level, other.level)
+                && Objects.equals(seats, other.seats) && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol)
+                && Objects.equals(tags, other.tags);
     }
 
     private String _getBidString() {

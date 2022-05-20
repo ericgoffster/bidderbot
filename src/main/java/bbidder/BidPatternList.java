@@ -82,8 +82,8 @@ public final class BidPatternList {
      * @return List of sequences with 0-3 passes added to the beginning
      */
     public List<BidPatternList> addInitialPasses() {
-        // Generalities already take care of initial passes
-        if (bids.get(0).generality != null) {
+        // isWild already take care of initial passes
+        if (bids.get(0).isWild) {
             return List.of(this);
         } else {
             List<BidPatternList> list = new ArrayList<>();
@@ -140,6 +140,8 @@ public final class BidPatternList {
                 if (!pattern.generality.test(players, auction)) {
                     return Optional.empty();
                 }
+            }
+            if (pattern.isWild) {
                 i += wildSize;
             } else {
                 TaggedBid bid = theBids.get(i);
@@ -159,8 +161,8 @@ public final class BidPatternList {
             }
         }
         BidPattern pattern = bids.get(bids.size() - 1);
-        if (pattern.generality != null) {
-            throw new IllegalArgumentException("generality not permitted in this context");
+        if (pattern.isWild) {
+            throw new IllegalArgumentException("wildcards not permitted in this context");
         }
         Contract contract = auction.getContract();
         TaggedBid newBid = pattern.resolveLevel(contract, null).getResolvedBid();
@@ -185,15 +187,15 @@ public final class BidPatternList {
         if (lastBid.isOpposition) {
             throw new IllegalStateException("Last bid must be 'we'");
         }
-        if (lastBid.generality != null) {
+        if (lastBid.isWild) {
             throw new IllegalStateException("Last bid must not ne a wild card");
         }
         boolean isOpp = false;
         int i = bids.size() - 1;
         while (i >= 0) {
-            // If we have a generality, then
+            // If we have a wildcard, then
             // whatever the next bid is fine.
-            if (bids.get(i).generality != null) {
+            if (bids.get(i).isWild) {
                 newBids.add(0, bids.get(i--));
                 if (i >= 0) {
                     isOpp = bids.get(i).isOpposition;
@@ -262,7 +264,7 @@ public final class BidPatternList {
      */
     private int positionOfWild() {
         for (int i = 0; i < bids.size(); i++) {
-            if (bids.get(i).generality != null) {
+            if (bids.get(i).isWild) {
                 return i;
             }
         }

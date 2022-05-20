@@ -27,12 +27,12 @@ public class BidPatternListParser {
             }
             int numWild = 0;
             for (BidPattern patt : l) {
-                if (patt.generality != null) {
+                if (patt.isWild) {
                     numWild++;
                 }
             }
             if (numWild > 1) {
-                throw new IllegalArgumentException("Only one generality allowed");
+                throw new IllegalArgumentException("Only one wildcard allowed");
             }
             return BidPatternList.create(l);
         } catch (IOException e) {
