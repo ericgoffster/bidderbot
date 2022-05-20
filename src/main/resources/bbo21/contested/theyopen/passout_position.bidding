@@ -62,11 +62,11 @@ common (1w) P {
 		test AQxx Axx xxx Qxx:
 		        (1H) P 1N;
 	
-	X:"takeout" => 8+ tpts, 3+ x, 3+ y, 3+ z, 2- w;
+	X:"takeout_1" => 8+ tpts, 3+ x, 3+ y, 3+ z, 2- w;
 		test AQxx xx xxxx Qxx:
 		        (1H) P x;
 	
-	X:"takeout" => 18+ tpts;
+	X:"takeout_1" => 18+ tpts;
 		test AQ AQxx Axxxx Ax:
 		        (1H) P x;
 }

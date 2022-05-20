@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common 1M (X:"takeout") {
+common 1M (X:"takeout_1") {
 	3M => min-, 4+ M;
 	    test KQx Qxxx xx xxxx:
 	        1H (X) 3H;
@@ -15,7 +15,7 @@ common 1M (X:"takeout") {
 	        1H (X) 2H;
 }
 
-common 1x (X:"takeout") {
+common 1x (X:"takeout_1") {
 	1y:down => gf+, 5+ y, longest_or_equal y among unbid;
 	    test AQxxx Axxx x Kxx:
 	        1♦ (X) 1♠;
@@ -51,7 +51,7 @@ common 1x (X:"takeout") {
 	        1♦ (X) 1N;
 }
 
-common 1m (X:"takeout") {
+common 1m (X:"takeout_1") {
 	3m => min-, 5+ m;
 	    test KQx x Qxxxx xxxx:
 	        1♦ (X) 3♦;
@@ -61,4 +61,4 @@ common 1m (X:"takeout") {
 	        1♦ (X) 2♦;
 }
 
-1m (X:"takeout") P => always;
+1m (X:"takeout_1") P => always;

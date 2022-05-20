@@ -62,11 +62,11 @@ common (1w) {
 		test AQxx Axx Axx Qxx:
 		        (1H) 1N;
 	
-	X:"takeout" => 12+ tpts, 3+ x, 3+ y, 3+ z;
+	X:"takeout_1" => 12+ tpts, 3+ x, 3+ y, 3+ z;
 		test AQxx xx Axxx Qxx:
 		        (1H) x;
 	
-	X:"takeout" => 18+ tpts;
+	X:"takeout_1" => 18+ tpts;
 		test AQ AQxx Axxxx Ax:
 		        (1H) x;
 }
@@ -100,11 +100,11 @@ common (1w) P (1z) {
 		test AQxx Axx Axx Qxx:
 		        (1H) P (1S) 1N;
 	        
-	X:"takeout" => 12+ tpts, 4+ x, 4+ y;
+	X:"takeout_1" => 12+ tpts, 4+ x, 4+ y;
 		test Axx xx Axxx KQxx:
 		        (1H) P (1S) x;
 	
-	X:"takeout" => 18+ tpts;
+	X:"takeout_1" => 18+ tpts;
 		test AQ AQxx Axxxx Ax:
 		        (1H) P (1S) x;
 }

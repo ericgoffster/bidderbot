@@ -1,6 +1,6 @@
 # Responses after a partners takeout double
 
-common (2w) X:"takeout" {
+common (2w) X:"takeout_2" {
     3w:down => 12+ tpts, 4+M, 4+y;
         test AQxx xx Axxx Kxx:
 	        (2H) X 3H;

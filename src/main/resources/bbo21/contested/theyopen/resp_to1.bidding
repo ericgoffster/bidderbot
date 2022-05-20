@@ -1,9 +1,12 @@
 # Responses after a partners takeout double
 
-common (1w) X:"takeout" {
+common (1w) * X:"takeout_1" {
     DJM:down => 6+ M, min;
 	    test xx Axxxxx x Jxxx:
 	        (1C) X  3H;
+	    test Ax Axxxxx x Jxxx:
+	        (1C) P X
+	             3H;
     NJM:down => 4+ M, min-;
 	    test xx Axxx xxxx xxx:
 	        (1C) X  1H;        
@@ -33,7 +36,7 @@ common (1w) X:"takeout" {
 	        (1C) X  2C;
 }
 
-common (1w) X:"takeout" (1y) {
+common (1w) X:"takeout_1" (1y) {
     DJM:down => 6+ M, min;
 	    test xx Axxxxx x Jxxx:
 	        (1C) X (1D) 3H;
