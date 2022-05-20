@@ -2,7 +2,6 @@ package bbidder;
 
 import bbidder.parsers.AuctionParser;
 import bbidder.parsers.HandParser;
-import bbidder.utils.DebugUtils;
 import bbidder.utils.SplitUtil;
 
 /**
@@ -59,7 +58,6 @@ public final class BiddingTest {
         Bid expected = auction.getLastBid().get();
         try {
             for (Bid bid : exceptLast.getBids()) {
-                DebugUtils.breakpoint();
                 state = state.withBid(bid);
             }
             BidSource found = state.getBid(hand);

@@ -15,7 +15,6 @@ import java.util.Map;
 import bbidder.inferences.bound.AndBoundInf;
 import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.OrBoundInf;
-import bbidder.utils.DebugUtils;
 
 /**
  * Represents a compiled bidding system.
@@ -65,15 +64,12 @@ public final class BiddingSystem {
      * @return A list of all possible bids given the list of bids.
      */
     public List<PossibleBid> getPossibleBids(TaggedAuction auction, Players players) {
-        DebugUtils.breakpointGetPossibleBid(auction, players);
         List<PossibleBid> l = new ArrayList<>();
         Map<Bid, TaggedBid> matched = new HashMap<>();
         inferences.forEach(rsbi -> {
-            BidPattern p = rsbi.unresolved.bids.getLastBid();
             List<PossibleBid> tmp = new ArrayList<>();
             rsbi.inferences.forEach(i -> {
                 i.bids.getMatch(auction, players).ifPresent(match -> {
-                    DebugUtils.breakpointGetPossibleBid(auction, players, match, i);
                     TaggedBid tb = matched.get(match.bid);
                     if (tb == null || tb.equals(match)) {
                         tmp.add(new PossibleBid(i, match));
@@ -81,13 +77,11 @@ public final class BiddingSystem {
                     }
                 });
             });
-            Comparator<Bid> priority = p.getPriority();
+            BidPattern p = rsbi.unresolved.bids.getLastBid();
+            Comparator<Bid> priority = p.getBidPriority();
             tmp.sort((a, b) -> priority.compare(a.bid.bid, b.bid.bid));
             l.addAll(tmp);
         });
-        if (l.isEmpty()) {
-            DebugUtils.breakpointGetPossibleBid(auction, players, l);
-        }
         return l;
     }
 

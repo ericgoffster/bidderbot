@@ -3,7 +3,6 @@ package bbidder;
 import java.util.List;
 
 import bbidder.inferences.bound.AndBoundInf;
-import bbidder.utils.DebugUtils;
 
 /**
  * Represents the entire state of an entire bidding auction
@@ -76,10 +75,6 @@ public final class BiddingState {
         TaggedBoundInference inference = we.getInference(bidding, players, bid);
         IBoundInference newInf = AndBoundInf.create(inference.inf, players.me.inf);
         InfSummary newSummary = newInf.getSummary();
-        InfSummary oldSummary = players.me.infSummary;
-        if (!oldSummary.isEmpty() && newSummary.isEmpty()) {
-            DebugUtils.breakpointNoBid(bidding, bid, players);
-        }
         return new BiddingState(we, they, bidding.withBidAdded(new TaggedBid(bid, inference.tags)), players.withNewMe(new Player(newInf, newSummary)))
                 .rotate(1);
     }

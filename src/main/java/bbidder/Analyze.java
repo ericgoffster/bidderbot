@@ -3,7 +3,6 @@ package bbidder;
 import bbidder.parsers.AuctionParser;
 import bbidder.parsers.BiddingSystemParser;
 import bbidder.parsers.InferenceParser;
-import bbidder.utils.DebugUtils;
 
 public class Analyze {
     public static void main(String[] args) {
@@ -16,7 +15,6 @@ public class Analyze {
 
         BiddingState state = new BiddingState(bs);
         for (Bid bid : auction.getBids()) {
-            DebugUtils.breakpoint();
             state = state.withBid(bid);
         }
 

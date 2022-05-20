@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.jupiter.api.Test;
 
 import bbidder.parsers.BiddingSystemParser;
-import bbidder.utils.DebugUtils;
 
 public class Test2Over1 {
     public static BiddingSystem bs;
@@ -108,10 +107,7 @@ public class Test2Over1 {
                     result.state.players.me.infSummary.showSummary("My summary");
                     partnerSummary.showSummary("Partner summary");
                     System.err.println("Test at " + result.where + " claims I should *not* have bid " + result.expected + " but I did");
-                    DebugUtils.debugMode = true;
-                    DebugUtils.breakpoint();
                     test.getResult(bs);
-                    DebugUtils.debugMode = false;
                 }
             }
         }

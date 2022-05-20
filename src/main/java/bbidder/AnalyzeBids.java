@@ -2,7 +2,6 @@ package bbidder;
 
 import bbidder.parsers.AuctionParser;
 import bbidder.parsers.BiddingSystemParser;
-import bbidder.utils.DebugUtils;
 
 public class AnalyzeBids {
     public static void main(String[] args) {
@@ -15,7 +14,6 @@ public class AnalyzeBids {
 
         BiddingState state = new BiddingState(bs);
         for (Bid bid : auction.getBids()) {
-            DebugUtils.breakpoint();
             state = state.withBid(bid);
         }
 

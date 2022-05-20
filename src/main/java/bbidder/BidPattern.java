@@ -222,7 +222,7 @@ public final class BidPattern {
         return true;
     }
     
-    public Comparator<Bid> getPriority() {
+    public Comparator<Bid> getBidPriority() {
         if (downTheLine) {
             return (a, b) -> {
                 int cmp = Integer.compare(a.level, b.level);
