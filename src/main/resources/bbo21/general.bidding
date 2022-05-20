@@ -65,6 +65,7 @@
         1♣ 1♦
         2♣;
 
+[fit_established m] 3m => inv;
 [[Support minor at 3 level with invitational values and a fit]]
 [] 3m => inv, fit m;
     test x Kxxx xx AQxxxx:
@@ -79,7 +80,8 @@
     test xx AQxxx Qxxx Ax:
         1C 1H
         2C 2D;
-        
+
+[fit_established m] 2m => min;
 [[Support minor at 2 level with minimum values and a fit]]
 [] 2m => min, fit m;
     test Ax xxxx xx Axxxx:
@@ -89,17 +91,19 @@
         1♣ 1♥
         1♠ 2♣;
 
-[[Pass minor at 3 level with invitational values]]
-[] 3m P => inv, fit m;
+[fit_established m] 3m P => inv;
     test xxx Qxx Axxxx xx:
         1C 1D
         3D P;
+[[Pass minor at 3 level with invitational values]]
+[] 3m P => inv, fit m;
 
-[[Pass minor at 2 level with minimum values]]
-[] 2m P => min, fit m;
+[fit_established m] 2m P => min;
     test xxx Qxx Axxxx xx:
         1C 1D
         2D P;
+[[Pass minor at 2 level with minimum values]]
+[] 2m P => min, fit m;
     
 [[Pass 1N with minimum values]]
 [] 1N P => min;
@@ -143,6 +147,7 @@
         1♥ 1♠;
 
 [[No bid matches, pass any fit]]
+[fit_established y] ?y P => always;
 [] ?y P => fit y;
     test xxx xxxxxx xxx x:
         1N 2D
