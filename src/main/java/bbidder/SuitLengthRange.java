@@ -70,7 +70,7 @@ public final class SuitLengthRange extends Range {
     }
 
     public SuitLengthRange not() {
-        return new SuitLengthRange((~bits) & BitUtil.bitMask(MAX));
+        return new SuitLengthRange(BitUtil.bitMask(MAX) ^ bits);
     }
 
     public SuitLengthRange and(SuitLengthRange other) {

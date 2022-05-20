@@ -70,7 +70,7 @@ public final class PointRange extends Range {
     }
 
     public PointRange not() {
-        return new PointRange((~bits) & BitUtil.bitMask(MAX));
+        return new PointRange(BitUtil.bitMask(MAX) ^ bits);
     }
 
     public PointRange and(PointRange other) {

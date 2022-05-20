@@ -70,7 +70,7 @@ public final class CardsRange extends Range {
     }
 
     public CardsRange not() {
-        return new CardsRange((~bits) & BitUtil.bitMask(MAX));
+        return new CardsRange(BitUtil.bitMask(MAX) ^ bits);
     }
 
     public CardsRange and(CardsRange other) {
