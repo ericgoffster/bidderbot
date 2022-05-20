@@ -51,44 +51,29 @@ public final class GeneralityParser {
             }
             break;
         }
-        case "i_bid": {
-            String[] rem = SplitUtil.split(remainder, "promising", 2);
-            SuitLengthRange range;
-            if (rem.length == 2) {
-                RangeOf rng = RangeParser.parseRange(rem[1]);
-                if (rng != null && rng.of.equals("")) {
-                    range = SuitLengthRange.between(rng.min, rng.max);
+        case "i":
+        case "partner":
+            if (remainder.startsWith("bid")) {
+                String[] rem = SplitUtil.split(remainder.substring(3), "promising", 2);
+                SuitLengthRange range;
+                if (rem.length == 2) {
+                    RangeOf rng = RangeParser.parseRange(rem[1]);
+                    if (rng != null && rng.of.equals("")) {
+                        range = SuitLengthRange.between(rng.min, rng.max);
+                    } else {
+                        return null;
+                    }
                 } else {
-                    return null;
+                    range = SuitLengthRange.atLeast(0);
                 }
-            } else {
-                range = SuitLengthRange.atLeast(0);
-            }
-            Symbol symbol = SymbolParser.parseSymbol(rem[0]);
-            if (symbol != null) {
-                return new BidSuitGenerality(symbol, 0, range);
+                Symbol symbol = SymbolParser.parseSymbol(rem[0]);
+                if (symbol != null) {
+                    int position = tag.equals("i") ? 0 : 2;
+                    return new BidSuitGenerality(symbol, position, range);
+                }
+                break;
             }
             break;
-        }
-        case "partner_bid": {
-            String[] rem = SplitUtil.split(remainder, "promising", 2);
-            SuitLengthRange range;
-            if (rem.length == 2) {
-                RangeOf rng = RangeParser.parseRange(rem[1]);
-                if (rng != null && rng.of.equals("")) {
-                    range = SuitLengthRange.between(rng.min, rng.max);
-                } else {
-                    return null;
-                }
-            } else {
-                range = SuitLengthRange.atLeast(0);
-            }
-            Symbol symbol = SymbolParser.parseSymbol(rem[0]);
-            if (symbol != null) {
-                return new BidSuitGenerality(symbol, 2, range);
-            }
-            break;
-        }
         case UnbidSuitGenerality.NAME: {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {

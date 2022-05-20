@@ -15,7 +15,7 @@
         4♠;
 
 [[Bid game in a self sufficient major]]
-[i_bid M] 4M => gf, 8+ fit M;
+[i bid M] 4M => gf, 8+ fit M;
     test Ax Axxxxx xx AQx:
         1C 1H
         1N 4H;
@@ -24,7 +24,7 @@
         2N 4H;
 
 [[Bid game in partners major]]
-[partner_bid M] 4M => gf, 8+ fit M;
+[partner bid M] 4M => gf, 8+ fit M;
     test AKxx AKxx x AQxx:
         1♣ 1♥
         4♥;
@@ -45,7 +45,7 @@
         3♠;
 
 [[Invite in a self sufficient major]]
-[i_bid M] 3M => inv, 8+ fit M;
+[i bid M] 3M => inv, 8+ fit M;
     test Qx Axxxxx xx Axx:
         1C 1H
         1N 3H;
@@ -54,7 +54,7 @@
         2N 3H;
 
 [[Invite in partners major]]
-[partner_bid M] 3M => inv, 8+ fit M;
+[partner bid M] 3M => inv, 8+ fit M;
     test AKxx Kxxx xx AKx:
         1♣ 1♥
         3♥;
@@ -72,13 +72,13 @@
 [8+ fit M] 2M => min;
 
 [[Bid self supporting major at 2 level with min values]]
-[i_bid M] 2M => min, 8+ fit M;
+[i bid M] 2M => min, 8+ fit M;
     test xx Axxxxx xx xxx:
         1C 1H
         1N 2H;
 
 [[Support partner's major at 2 level with min values]]
-[partner_bid M] 2M => min, 8+ fit M;
+[partner bid M] 2M => min, 8+ fit M;
     test AQxx Axxx xx Kxx:
         1♣ 1♥
         2♥;
@@ -99,10 +99,10 @@
         4S P;
 
 [[Pass a playable major suit]]
-[partner_bid M] ?M P => 8+ fit M;
+[partner bid M] ?M P => 8+ fit M;
 
 [[Pass a playable major suit]]
-[i_bid M] ?M P => 8+ fit M;
+[i bid M] ?M P => 8+ fit M;
     test xxx xxxxxx xxx x:
         1N 2D
         2♥ P;
@@ -115,10 +115,10 @@
         3H;
 
 [[Bid self supporting major]]
-[i_bid M] NJM => 8+ fit M;
+[i bid M] NJM => 8+ fit M;
 
 [[Support partner's major]]
-[partner_bid M] NJM => 8+ fit M;
+[partner bid M] NJM => 8+ fit M;
     test AQx xxx AJx Axxx:
         1N 2♦
         2♥;
@@ -127,7 +127,7 @@
         2♠;
 
 [[Rebid 2nd suit if possible]]
-[i_bid x, i_bid y] NJy => rebiddable_2nd x y;
+[i bid x, i bid y] NJy => rebiddable_2nd x y;
     test AQxxx x x AQxxxx:
         1C 1H
         1S 2H
@@ -138,7 +138,7 @@
         3C;
 
 [[Rebid major at 2 level and minimum values]]
-[i_bid M] 2M => min, rebiddable M;
+[i bid M] 2M => min, rebiddable M;
     test Kxx AKxxxx Kxx x:
         1H 1S
         2H;
@@ -150,7 +150,7 @@
         1♠ 2♥;
 
 [[Rebid major at 3 level and invitational values]]
-[i_bid M] 3M => inv, rebiddable M;
+[i bid M] 3M => inv, rebiddable M;
     test xx AQxxxx xx Kxx:
         1C 1H
         2C 3H;
@@ -162,7 +162,7 @@
         1♠ 3♥;
 
 [[Rebid self sufficient major at 4 level and gf values]]
-[i_bid M] 4M => gf, rebiddable M, 7+ M;
+[i bid M] 4M => gf, rebiddable M, 7+ M;
     test Ax AQxxxxx xx Kx:
         1C 1H
         2C 4H;
@@ -171,10 +171,10 @@
         4S;
       
 [[Partial support for partner]]
-[partner_bid M, 6- fit M] 2M => min, max M, 7 fit M;
+[partner bid M, 6- fit M] 2M => min, max M, 7 fit M;
 
 [[Partial support for partner]]
-[partner_bid M, 6- fit M] 3M => inv, max M, 7 fit M;
+[partner bid M, 6- fit M] 3M => inv, max M, 7 fit M;
     test Kxx Axx x Axxxxx:
          1C 1H
          2C 2N
