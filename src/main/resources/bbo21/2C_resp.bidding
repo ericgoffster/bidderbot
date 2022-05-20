@@ -5,11 +5,11 @@
 # H = ♥
 # S = ♠
 
-2♣ 2M => 5+ M, 2 of top 3 in M;
-    test AQxxx xxx xxx xx:
+2♣ 2M => 5+ M, 8+ tpts, 2 of top 3 in M;
+    test AQxxx Kxx xxx xx:
         2♣ 2S;
-2♣ 3m => 5+ m, 2 of top 3 in m;
-    test xx xxx AQxxx xxx:
+2♣ 3m => 5+ m, 8+ tpts, 2 of top 3 in m;
+    test xx Kxx AQxxx xxx:
         2♣ 3D;
 
 2♣ 2N => 8+ tpts, balanced, partial_stoppers unbid;
