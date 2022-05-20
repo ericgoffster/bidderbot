@@ -69,11 +69,11 @@ common [] 2N:"nt_opener" 3♣:"stayman" {
 		    test Ax Axxx Axxx xxx:
 		        2N 3♣
 		        3♠ 4N;
-		    test Axxx Ax Qxxx xxx:
+		    test Axxx Ax Jxxx xxx:
 		        2C 2D
 		        2N 3♣
 		        3♥ 4N;
-		    test Ax Axxx Qxxx xxx:
+		    test Ax Axxx Jxxx xxx:
 		        2C 2D
 		        2N 3♣
 		        3♠ 4N;
@@ -153,7 +153,7 @@ common [] 2N:"nt_opener" 3♣:"stayman" {
 		    test Axx Ax Axxx xxxx:
 		        2N 3♣
 		        3D 4N;
-		    test Axx Ax Qxxx xxxx:
+		    test Axx Ax Jxxx xxxx:
 		        2C 2D
 		        2N 3♣
 		        3D 4N;

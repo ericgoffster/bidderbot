@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-2♣ => 19+ hcp, 23+ tpts;
+2♣:"2c_opener" => 19+ hcp, 23+ tpts;
     test AKQxx AKQ AK xxx:
         2♣;
 continuations {
