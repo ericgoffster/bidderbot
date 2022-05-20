@@ -7,8 +7,10 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import bbidder.inferences.bound.AndBoundInf;
@@ -66,14 +68,17 @@ public final class BiddingSystem {
     public List<PossibleBid> getPossibleBids(TaggedAuction bidding, Players players) {
         DebugUtils.breakpointGetPossibleBid(bidding, players);
         List<PossibleBid> l = new ArrayList<>();
-        Set<Bid> matched = new HashSet<>();
+        Map<Bid, TaggedBid> matched = new HashMap<>();
         inferences.forEach(rsbi -> {
             List<PossibleBid> tmp = new ArrayList<>();
             rsbi.inferences.forEach(i -> {
-                i.bids.getMatch(bidding, players, matched).ifPresent(match -> {
+                i.bids.getMatch(bidding, players, matched.keySet()).ifPresent(match -> {
                     DebugUtils.breakpointGetPossibleBid(bidding, players, match, i);
-                    tmp.add(new PossibleBid(i, match));
-                    matched.add(match.bid);
+                    TaggedBid tb = matched.get(match.bid);
+                    if (tb == null || tb.equals(match)) {
+                        tmp.add(new PossibleBid(i, match));
+                        matched.put(match.bid, match);
+                    }
                 });
             });
             BidPattern p = rsbi.unresolved.bids.getLastBid();
