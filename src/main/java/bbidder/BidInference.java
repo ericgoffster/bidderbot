@@ -67,14 +67,14 @@ public final class BidInference {
         }
         return new BidInference(description, where, BidPatternList.valueOf(parts[0]), InferenceParser.parseInference(parts[1]));
     }
-
+    
     /**
      * @return A stream of bid inferences with all suit variables resolved.
      */
     public MyStream<BidInference> resolveSuits() {
         return bids.resolveSuits(SuitTable.EMPTY)
                 .flatMap(
-                        e1 -> inferences.resolveSuits(e1.suitTable).map(e2 -> new BidInference(description, where, e1.getBids(), e2.getInference())));
+                        e1 -> inferences.resolveSuits(e1.suitTable).map(e2 -> new BidInference(e2.suitTable.fixDescription(description), where, e1.getBids(), e2.getInference())));
     }
 
     @Override
