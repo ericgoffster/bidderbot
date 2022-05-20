@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-[] 2N:"2nt_opener" 3M-1
+[] 2N:"nt_opener" 3M-1
 NJx => max hcp, 4+M, 2-x;
     test AKxx AKxx xx AKx:
         2N 3♦
@@ -29,7 +29,7 @@ NJx => max hcp, 4+M, 2-x;
         2N 3♦
         3♠;
 
-[] 2N:"2nt_opener" 3M-1
+[] 2N:"nt_opener" 3M-1
 3N => max hcp, 4+M;
     test AKx AJxx Axx AJx:
         2N 3♦
@@ -39,7 +39,7 @@ NJx => max hcp, 4+M, 2-x;
         2N 3♦
         3N;
 
-[] 2N:"2nt_opener" 3M-1
+[] 2N:"nt_opener" 3M-1
 NJx 4M-1 => always;
     test xx Axxxx xxx xxx:
         2N 3♦
@@ -49,7 +49,7 @@ NJx 4M-1 => always;
         2N 3♦
         4C 4D;
 
-[] 2N:"2nt_opener" 3M-1
+[] 2N:"nt_opener" 3M-1
 3N 4M-1 => always;
     test xx Axxxx xxx xxx:
         2N 3♦

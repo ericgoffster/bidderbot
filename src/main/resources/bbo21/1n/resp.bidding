@@ -6,99 +6,99 @@
 # S = ♠
 
 [[Bid stayman with 5-4 in the majors]]
-[] 1N:"1nt_opener" 2♣ => inv+, 5+M, 4OM;
+[] 1N:"nt_opener" 2♣ => inv+, 5+M, 4OM;
     test AJxxx Axxx xx xx:
         1N 2♣;
 
 [[Simple transfer with 6+${M} and slam invitational values]]
-[] 1N:"1nt_opener" 2M-1 => slaminv, 6+M;
+[] 1N:"nt_opener" 2M-1 => slaminv, 6+M;
     test AQxxxx x AKx Jxx:
         1N 2♥;
     test x AQxxxx AKx Jxx:
         1N 2♦;
 
 [[Texas transfer with 6+${M} and game forcing values (or better)]]
-[] 1N:"1nt_opener" 4M-1 => 6+M, gf+;
+[] 1N:"nt_opener" 4M-1 => 6+M, gf+;
     test AQxxxx Kxx Qx xx:
         1N 4♥;
     test Kxx AQxxxx Qx xx:
         1N 4♦;
 
 [[Simple transfer with 5+${M}]]
-[] 1N:"1nt_opener" 2M-1 => 5+M;
+[] 1N:"nt_opener" 2M-1 => 5+M;
     test Axxxx xxx Qxx xx:
         1N 2♥;
     test xxx Axxxx Qxx xx:
         1N 2♦;
 
 [[Bid 3D with a singleton diamond and 444 in the others]]
-[] 1N:"1nt_opener" 3♦ => gf+, 1-♦, 4+♣, 4♥, 4♠;
+[] 1N:"nt_opener" 3♦ => gf+, 1-♦, 4+♣, 4♥, 4♠;
     test Axxx Axxx x Axxx:
         1N 3♦;
 
 [[Bid 3${M} with a singleton ${M} and 444 in the others]]
-[] 1N:"1nt_opener" 3M => gf+, 1-M, 4+♣, 4+♦, 4OM;
+[] 1N:"nt_opener" 3M => gf+, 1-M, 4+♣, 4+♦, 4OM;
     test Axxx x Axxx Axxx:
         1N 3♥;
     test x Axxx Axxx Axxx:
         1N 3♠;
 
 [[Stayman with a 4 card major]]
-[] 1N:"1nt_opener" 2♣ => inv+, 4M;
+[] 1N:"nt_opener" 2♣ => inv+, 4M;
     test Axx AJxx xxxx xx:
         1N 2♣;
     test Axxx AJx xxxx xx:
         1N 2♣;
 
 [[MSS with 9 cards in the minors]]
-[] 1N:"1nt_opener" 2♠ => gf+, 5+m, 4+om;
+[] 1N:"nt_opener" 2♠ => gf+, 5+m, 4+om;
     test Axx x AKxxx AKxx:
         1N 2♠;
     test Axx x AKxx AKxxx:
         1N 2♠;
 
 [[Bid 3N with game forcing values]]
-[] 1N:"1nt_opener" 3N => gf;
+[] 1N:"nt_opener" 3N => gf;
     test Axx Axx Qxxxx Kx:
         1N 3N;
 
 [[MSS with 4-4 in the minors]]
-[] 1N:"1nt_opener" 2♠ => gf+, 4+♣, 4+♦;
+[] 1N:"nt_opener" 2♠ => gf+, 4+♣, 4+♦;
     test Axx xx AKxx AKxx:
         1N 2♠;
 
 [[Quantitative slam invite]]
-[] 1N:"1nt_opener" 4N => slaminv;
+[] 1N:"nt_opener" 4N => slaminv;
     test Axx Axx AQxx Kxx:
         1N 4N;
 
 [[Quantitative grand slam invite]]
-[] 1N:"1nt_opener" 5N => grandinv;
+[] 1N:"nt_opener" 5N => grandinv;
     test Axx Axx AKxx AQx:
         1N 5N;
 
 [[Bid slam if you got it]]
-[] 1N:"1nt_opener" 6N => slam;
+[] 1N:"nt_opener" 6N => slam;
     test Axx Axx AKxx Kxx:
         1N 6N;
 
 [[Bid grand slam if you got it]]
-[] 1N:"1nt_opener" 7N => grand;
+[] 1N:"nt_opener" 7N => grand;
     test AQx Axx AKxx AQx:
         1N 7N;
 
 [[Bid stayman with invitational values]]
-[] 1N:"1nt_opener" 2♣ => inv;
+[] 1N:"nt_opener" 2♣ => inv;
     test Axx AJx xxxx xxx:
         1N 2♣;
 
 [[Transfers to diamonds with 6]]
-[] 1N:"1nt_opener" 3♣ => 6+♦;
+[] 1N:"nt_opener" 3♣ => 6+♦;
     test x xxx QJxxxx xxx:
         1N 3♣;
 
 [[Transfers to clubs with 6]]
-[] 1N:"1nt_opener" 2N => 6+♣;
+[] 1N:"nt_opener" 2N => 6+♣;
     test x xxx xxx QJxxxx:
         1N 2N;
 
