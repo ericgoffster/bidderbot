@@ -129,3 +129,16 @@ NJx => 17 hcp, 4+M, 2-x;
     test AQxxx Axx AQx Kx:
         1N 2♥
         2♠ 5N;
+
+1N 2M-1
+NJx 3M-1 => always;
+    test xx Axxxx xxx xxx:
+        1N 2♦
+        2♠ 3D;
+        
+
+1N 2M-1
+2N 3M-1 => always;
+    test xx Axxxx xxx xxx:
+        1N 2♦
+        2N 3D;

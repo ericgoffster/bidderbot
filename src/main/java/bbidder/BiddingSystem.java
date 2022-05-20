@@ -46,13 +46,11 @@ public final class BiddingSystem {
      */
     public void dump(OutputStream os) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
-            String last = null;
             for (ResolvedBidInference bi : inferences) {
-                if (last == null || !last.equals(bi.unresolved.where)) {
-                    bw.write(bi.unresolved.where + ":\n");
-                    last = bi.unresolved.where;
+                bw.write(bi.unresolved.where + ":\n");
+                for(BidInference inf: bi.inferences) {
+                    bw.write("    " + inf + "\n");
                 }
-                bw.write("    " + bi + "\n");
             }
         }
     }
