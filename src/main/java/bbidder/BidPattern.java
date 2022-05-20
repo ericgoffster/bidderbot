@@ -1,7 +1,9 @@
 package bbidder;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import bbidder.symbols.ConstSymbol;
 import bbidder.utils.MyStream;
@@ -160,6 +162,13 @@ public final class BidPattern {
         }
         return symbol.resolveSuits(suitTable)
                 .flatMap(e -> MyStream.ofOptional(withSymbol(contract, e.getSymbol())).map(newSym -> newSym.new Context(e.suitTable)));
+    }
+    
+    public Set<String> getTags() {
+        if (symbol == null) {
+            return new HashSet<>();
+        }
+        return symbol.getTags();
     }
 
     /**

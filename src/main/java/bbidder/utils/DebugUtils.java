@@ -5,6 +5,7 @@ import java.util.List;
 import bbidder.Auction;
 import bbidder.Bid;
 import bbidder.BidInference;
+import bbidder.MatchedBid;
 import bbidder.Players;
 import bbidder.PossibleBid;
 
@@ -18,7 +19,7 @@ public final class DebugUtils {
         }
     }
 
-    public static void breakpointGetPossibleBid(Auction bids, Players players, Bid match, BidInference i) {
+    public static void breakpointGetPossibleBid(Auction bids, Players players, MatchedBid match, BidInference i) {
         if (debugMode) {
             System.out.println("getPossible bids:");
             System.out.println("   bids:" + bids);

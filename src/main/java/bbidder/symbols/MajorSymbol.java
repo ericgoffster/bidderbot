@@ -1,5 +1,7 @@
 package bbidder.symbols;
 
+import java.util.Set;
+
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.SuitTable;
@@ -19,7 +21,11 @@ public final class MajorSymbol extends Symbol {
         return false;
     }
 
-
+    @Override
+    public Set<String> getTags() {
+        return Set.of();
+    }
+    
     @Override
     public String toString() {
         return NAME;

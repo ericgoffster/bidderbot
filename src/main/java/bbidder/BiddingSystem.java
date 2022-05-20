@@ -73,20 +73,20 @@ public final class BiddingSystem {
                 i.bids.getMatch(auction, players, matched).ifPresent(match -> {
                     DebugUtils.breakpointGetPossibleBid(auction, players, match, i);
                     tmp.add(new PossibleBid(i, match));
-                    matched.add(match);
+                    matched.add(match.bid);
                 });
             });
             BidPattern p = rsbi.unresolved.bids.getLastBid();
             if (p.symbol != null && p.symbol.downTheLine()) {
                 tmp.sort((a, b) -> {
-                    int cmp = Integer.compare(a.bid.level, b.bid.level);
+                    int cmp = Integer.compare(a.bid.bid.level, b.bid.bid.level);
                     if (cmp != 0) {
                         return cmp;
                     }
-                    return -Integer.compare(a.bid.strain, b.bid.strain);
+                    return -Integer.compare(a.bid.bid.strain, b.bid.bid.strain);
                 });
             } else {
-                tmp.sort((a, b) -> a.bid.compareTo(b.bid));
+                tmp.sort((a, b) -> a.bid.bid.compareTo(b.bid.bid));
             }
             l.addAll(tmp);
         });
@@ -113,7 +113,7 @@ public final class BiddingSystem {
                 .filter(i -> i.inf.inferences.bind(players).test(hand))
                 .findFirst()
                 .map(i -> new BidSource(i, possible))
-                .orElse(new BidSource(new PossibleBid(null, Bid.P), possible));
+                .orElse(new BidSource(new PossibleBid(null, new MatchedBid(Bid.P, BidPattern.PASS)), possible));
     }
 
     /**
@@ -125,18 +125,24 @@ public final class BiddingSystem {
      *            The like hands for everyone so far.
      * @return The inference The inference from the bid.
      */
-    public IBoundInference getInference(Auction auction, Players players) {
+    public MatchedInference getInference(Auction auction, Players players) {
         if (auction.getBids().size() == 0) {
-            return ConstBoundInference.create(false);
+            return new MatchedInference(ConstBoundInference.create(false), Set.of());
         }
         Bid lastBid = auction.getLastBid().get();
         IBoundInference positive = ConstBoundInference.F;
         IBoundInference negative = ConstBoundInference.F;
         List<PossibleBid> possible = getPossibleBids(auction.exceptLast(), players);
+        Set<String> tags = null;
         for (var i : possible) {
             IBoundInference inf = i.inf.inferences.bind(players);
-            if (i.bid.equals(lastBid)) {
+            if (i.bid.bid.equals(lastBid)) {
                 positive = OrBoundInf.create(positive, AndBoundInf.create(inf, negative.negate()));
+                if (tags == null) {
+                    tags = new HashSet<>(i.bid.pattern.getTags());
+                } else {
+                    tags.retainAll(i.bid.pattern.getTags());
+                }
             }
             negative = OrBoundInf.create(negative, inf);
         }
@@ -147,8 +153,8 @@ public final class BiddingSystem {
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {
-            return OrBoundInf.create(positive, negative.negate());
+            return new MatchedInference(OrBoundInf.create(positive, negative.negate()), tags);
         }
-        return positive;
+        return new MatchedInference(positive, tags);
     }
 }

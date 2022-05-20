@@ -1,5 +1,7 @@
 package bbidder;
 
+import java.util.Set;
+
 import bbidder.utils.MyStream;
 
 /**
@@ -9,6 +11,11 @@ import bbidder.utils.MyStream;
  *
  */
 public abstract class Symbol {
+    /**
+     * @return The resolved strain
+     */
+    public abstract Set<String> getTags();
+
     /**
      * @return The resolved strain
      */

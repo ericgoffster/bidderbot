@@ -70,7 +70,7 @@ public final class BiddingState {
      */
     public BiddingState withBid(Bid bid) {
         Auction newBidList = bidding.withBidAdded(bid);
-        IBoundInference inference = we.getInference(newBidList, players);
+        IBoundInference inference = we.getInference(newBidList, players).inf;
         IBoundInference newInf = AndBoundInf.create(inference, players.me.inf);
         InfSummary newSummary = newInf.getSummary();
         InfSummary oldSummary = players.me.infSummary;

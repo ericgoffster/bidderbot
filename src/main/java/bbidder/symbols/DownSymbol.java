@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.Objects;
+import java.util.Set;
 
 import bbidder.Bid;
 import bbidder.SuitTable;
@@ -16,6 +17,11 @@ public final class DownSymbol extends Symbol {
         this.symbol = symbol;
     }
 
+    @Override
+    public Set<String> getTags() {
+        return symbol.getTags();
+    }
+    
     @Override
     public boolean downTheLine() {
         return true;

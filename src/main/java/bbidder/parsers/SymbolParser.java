@@ -16,6 +16,7 @@ import bbidder.symbols.OtherMajorSymbol;
 import bbidder.symbols.OtherMinorSymbol;
 import bbidder.symbols.SeatSymbol;
 import bbidder.symbols.SteppedSymbol;
+import bbidder.symbols.TagSymbol;
 import bbidder.symbols.VarSymbol;
 
 /**
@@ -53,6 +54,9 @@ public final class SymbolParser {
                 return null;
             }
             String tag = str.substring(pos + 1);
+            if (tag.startsWith("\"") && tag.endsWith("\"")) {
+                return new TagSymbol(tag.substring(1, tag.length() - 1), symbol);
+            } 
             if (tag.equalsIgnoreCase(DownSymbol.NAME)) {
                 return new DownSymbol(symbol);
             }

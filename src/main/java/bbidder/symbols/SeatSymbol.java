@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.Objects;
+import java.util.Set;
 
 import bbidder.Bid;
 import bbidder.SuitTable;
@@ -18,6 +19,11 @@ public final class SeatSymbol extends Symbol {
         this.seats = seats;
     }
 
+    @Override
+    public Set<String> getTags() {
+        return symbol.getTags();
+    }
+    
     @Override
     public boolean downTheLine() {
         return symbol.downTheLine();

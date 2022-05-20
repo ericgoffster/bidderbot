@@ -136,7 +136,7 @@ public final class BidPatternList {
      *            the set of matched bids
      * @return The last bid. null if there was no match.
      */
-    public Optional<Bid> getMatch(Auction auction, Players players, Set<Bid> matched) {
+    public Optional<MatchedBid> getMatch(Auction auction, Players players, Set<Bid> matched) {
         List<Bid> theBids = auction.getBids();
         int wildSize = theBids.size() - bids.size() + 2;
         int wildPos = positionOfWild();
@@ -170,7 +170,7 @@ public final class BidPatternList {
             if (matched.contains(nextBid) && lastBid.isNonConventional) {
                 return Optional.empty();
             }
-            return Optional.of(nextBid);
+            return Optional.of(new MatchedBid(nextBid, lastBid));
         });
     }
 

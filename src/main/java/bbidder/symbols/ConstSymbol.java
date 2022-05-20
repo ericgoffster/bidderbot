@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.Objects;
+import java.util.Set;
 
 import bbidder.Bid;
 import bbidder.Strain;
@@ -14,6 +15,11 @@ public final class ConstSymbol extends Symbol {
     public ConstSymbol(int strain) {
         super();
         this.strain = strain;
+    }
+    
+    @Override
+    public Set<String> getTags() {
+        return Set.of();
     }
     
     @Override

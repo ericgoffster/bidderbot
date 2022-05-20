@@ -1,5 +1,7 @@
 package bbidder.symbols;
 
+import java.util.Set;
+
 import bbidder.Bid;
 import bbidder.Constants;
 import bbidder.SuitTable;
@@ -14,6 +16,11 @@ public final class OtherMinorSymbol extends Symbol {
         super();
     }
 
+    @Override
+    public Set<String> getTags() {
+        return Set.of();
+    }
+    
     @Override
     public boolean downTheLine() {
         return false;

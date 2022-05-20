@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.Objects;
+import java.util.Set;
 
 import bbidder.Bid;
 import bbidder.SuitTable;
@@ -19,6 +20,11 @@ public final class GreaterThanSymbol extends Symbol {
         this.other = other;
     }
 
+    @Override
+    public Set<String> getTags() {
+        return symbol.getTags();
+    }
+    
     @Override
     public boolean downTheLine() {
         return symbol.downTheLine();

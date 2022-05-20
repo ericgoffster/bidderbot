@@ -1,6 +1,7 @@
 package bbidder.symbols;
 
 import java.util.Objects;
+import java.util.Set;
 
 import bbidder.Bid;
 import bbidder.Constants;
@@ -16,7 +17,12 @@ public final class VarSymbol extends Symbol {
         super();
         this.varName = varName;
     }
-
+    
+    @Override
+    public Set<String> getTags() {
+        return Set.of();
+    }
+    
     @Override
     public boolean downTheLine() {
         return false;

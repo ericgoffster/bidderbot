@@ -17,9 +17,9 @@ public final class PossibleBid {
     /**
      * The bid itself
      */
-    public final Bid bid;
+    public final MatchedBid bid;
 
-    public PossibleBid(BidInference inf, Bid bid) {
+    public PossibleBid(BidInference inf, MatchedBid bid) {
         super();
         this.inf = inf;
         this.bid = bid;
@@ -44,6 +44,6 @@ public final class PossibleBid {
         if (getClass() != obj.getClass())
             return false;
         PossibleBid other = (PossibleBid) obj;
-        return bid == other.bid && Objects.equals(inf, other.inf);
+        return Objects.equals(bid, other.bid) && Objects.equals(inf, other.inf);
     }
 }

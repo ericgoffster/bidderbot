@@ -68,7 +68,7 @@ public class Test2Over1 {
                 String where = getWhere(result.found.matchedBid.inf);
                 String where2 = getWhere(test.parent);
                 if (!test.anti) {
-                    if (!result.found.matchedBid.bid.equals(result.expected)) {
+                    if (!result.found.matchedBid.bid.bid.equals(result.expected)) {
                         hadError.set(true);
                         InfSummary partnerSummary = result.state.players.partner.infSummary;
                         System.err.println("Bidding: " + result.bids);
@@ -112,7 +112,7 @@ public class Test2Over1 {
                         }
                         test.getResult(bs);
                     }
-                } else if (result.found.matchedBid.bid.equals(result.expected)) {
+                } else if (result.found.matchedBid.bid.bid.equals(result.expected)) {
                     hadError.set(true);
                     InfSummary partnerSummary = result.state.players.partner.infSummary;
                     System.err.println(
