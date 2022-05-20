@@ -39,6 +39,9 @@ common [] 2N:"nt_opener" 3M-1 {
 		        2C 2D
 		        2N 3♦
 		        4C 4D;
+	    continuations {
+	        4M => always;
+	    }
 	}
 	
 	3N => max hcp, 4+M;
@@ -58,5 +61,8 @@ common [] 2N:"nt_opener" 3M-1 {
 		        2C 2D
 		        2N 3♦
 		        3N 4D;
+	    continuations {
+	        4M => always;
+	    }
 	}
 }
