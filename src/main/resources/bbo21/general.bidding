@@ -5,6 +5,27 @@
 # H = ♥
 # S = ♠
 
+[[Bid 3N with gf values]]
+[] 3N => gf, partial_stoppers unstopped;
+    test Axx AQxx Qxx Qxx:
+        1C 1H
+        1N 3N;
+    test AKx Ax xxxxx Kxx:
+        1♣ 1♦
+        1♥ 3N;
+
+[[Bid 2N with invitational values]]
+[] 2N:nonconventional => inv, partial_stoppers unstopped;
+    test Axx Kxxx Qxx Qxx:
+        1C 1H
+        1N 2N;
+    test AQJxx Ax Axx Kxx:
+        1S 1N
+        2N;
+    test AQx Kx xxxxx Qxx:
+        1♣ 1♦
+        1♥ 2N;
+
 [[Pass 3N with gf values]]
 [] 3N P => gf;
     test Axx Kxx Kxx Qxxx:
@@ -29,16 +50,7 @@
         1C 1D
         2C P;
 
-[[Bid 3N with gf values]]
-[] 3N => gf, partial_stoppers unstopped;
-    test Axx AQxx Qxx Qxx:
-        1C 1H
-        1N 3N;
-    test AKx Ax xxxxx Kxx:
-        1♣ 1♦
-        1♥ 3N;
-
-[[Bid minor at 3 level 3N with invitational values]]
+[[Rebid minor at 3 level 3N with invitational values]]
 [i_bid_suit m] 3m => inv, rebiddable m;
     test Kxx xxx AQxxxx x:
         1C 1D
@@ -47,29 +59,35 @@
         1♣ 1♦
         3♣;
 
-[[Bid 2N with invitational values]]
-[] 2N:nonconventional => inv, partial_stoppers unstopped;
-    test Axx Kxxx Qxx Qxx:
-        1C 1H
-        1N 2N;
-    test AQJxx Ax Axx Kxx:
-        1S 1N
-        2N;
-    test AQx Kx xxxxx Qxx:
-        1♣ 1♦
-        1♥ 2N;
-
 [[Rebid minor at 2 level with minimum values]]
 [i_bid_suit m] 2m => min, rebiddable m;
     test Kxx Kxx x AKxxxx:
         1♣ 1♦
         2♣;
 
+[[Support minor at 3 level with invitational values and a fit]]
+[] 3m => inv, fit m;
+    test x Kxxx xx AQxxxx:
+        1C 1H
+        1N 3C;
+    test Axx Kxxx x Kxxxx:
+        1♣ 1♥
+        1♠ 3♣;
+
 [[Bid a new suit below 3N with game forcing values]]
 [i_bid_suit y, unbid_suit x] NJx:<3N:nonconventional => gf+, 4+ x;
     test xx AQxxx Qxxx Ax:
         1C 1H
         2C 2D;
+        
+[[Support minor at 2 level with minimum values and a fit]]
+[] 2m => min, fit m;
+    test Ax xxxx xx Axxxx:
+        1C 1H
+        1N 2C;
+    test Qxx Kxxx x Qxxxx:
+        1♣ 1♥
+        1♠ 2♣;
 
 [[Pass minor at 3 level with invitational values]]
 [] 3m P => inv, fit m;
@@ -83,24 +101,6 @@
         1C 1D
         2D P;
     
-[[Bid minor at 3 level with invitational values and a fit]]
-[] 3m => inv, fit m;
-    test x Kxxx xx AQxxxx:
-        1C 1H
-        1N 3C;
-    test Axx Kxxx x Kxxxx:
-        1♣ 1♥
-        1♠ 3♣;
-
-[[Bid minor at 2 level with minimum values and a fit]]
-[] 2m => min, fit m;
-    test Ax xxxx xx Axxxx:
-        1C 1H
-        1N 2C;
-    test Qxx Kxxx x Qxxxx:
-        1♣ 1♥
-        1♠ 2♣;
-
 [[Pass 1N with minimum values]]
 [] 1N P => min;
     test Qxx Kx xxxxx Qxx:
