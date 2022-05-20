@@ -43,7 +43,7 @@ public final class HcpBoundInf implements IBoundInference {
 
     @Override
     public InfSummary getSummary() {
-        return InfSummary.ALL.withTotalPoints(Range.atLeast(r.lowest(), 40));
+        return r.lowest().map(lowest -> InfSummary.ALL.withTotalPoints(Range.atLeast(lowest, 40))).orElse(InfSummary.NONE);
     }
 
     private HcpBoundInf(Range r) {

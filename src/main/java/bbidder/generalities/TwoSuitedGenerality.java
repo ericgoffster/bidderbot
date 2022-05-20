@@ -1,5 +1,6 @@
 package bbidder.generalities;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import bbidder.Auction;
@@ -31,10 +32,20 @@ public final class TwoSuitedGenerality extends Generality {
     public boolean test(Players players, Auction bidList) {
         int l = longer.getResolvedStrain();
         int s = shorter.getResolvedStrain();
-        if (players.me.infSummary.minLenInSuit(s) + players.partner.infSummary.minLenInSuit(s) >= 8) {
+        Optional<Integer> meLenLonger = players.me.infSummary.minLenInSuit(s);
+        Optional<Integer> partnerLenLonger = players.partner.infSummary.minLenInSuit(s);
+        if (!meLenLonger.isPresent() || !partnerLenLonger.isPresent()) {
             return false;
         }
-        if (players.me.infSummary.minLenInSuit(l) + players.partner.infSummary.minLenInSuit(l) >= 8) {
+        if (meLenLonger.get() + partnerLenLonger.get() >= 8) {
+            return false;
+        }
+        Optional<Integer> meLenShorter = players.me.infSummary.minLenInSuit(l);
+        Optional<Integer> partnerLenShorter = players.partner.infSummary.minLenInSuit(l);
+        if (!meLenShorter.isPresent() || !partnerLenShorter.isPresent()) {
+            return false;
+        }
+        if (meLenShorter.get() + partnerLenShorter.get() >= 8) {
             return false;
         }
         if ((players.me.infSummary.getBidSuits() & (1 << l)) == 0) {

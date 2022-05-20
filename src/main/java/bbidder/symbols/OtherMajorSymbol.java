@@ -49,24 +49,10 @@ public final class OtherMajorSymbol extends Symbol {
         }
         Integer M = suitTable.getSuit(MajorSymbol.NAME);
         if (M != null) {
-            return Stream.of(new ConstSymbol(otherMajor(M)).new Context(suitTable));
+            return Stream.of(new ConstSymbol(MajorSymbol.otherMajor(M)).new Context(suitTable));
         }
         return BitUtil.stream(Constants.MAJORS & ~suitTable.getSuits())
                 .mapToObj(s -> new ConstSymbol(s).new Context(suitTable.withSuitAdded(NAME, s)));
-    }
-
-    private static Integer otherMajor(Integer strain) {
-        if (strain == null) {
-            return null;
-        }
-        switch (strain.intValue()) {
-        case Constants.HEART:
-            return Constants.SPADE;
-        case Constants.SPADE:
-            return Constants.HEART;
-        default:
-            throw new IllegalArgumentException("invalid major");
-        }
     }
 
     @Override

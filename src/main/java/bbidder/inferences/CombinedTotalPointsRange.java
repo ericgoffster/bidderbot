@@ -2,6 +2,7 @@ package bbidder.inferences;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
@@ -9,6 +10,7 @@ import bbidder.Inference;
 import bbidder.Players;
 import bbidder.Range;
 import bbidder.SuitTable;
+import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.TotalPtsBoundInf;
 import bbidder.utils.SplitUtil;
 
@@ -34,8 +36,11 @@ public final class CombinedTotalPointsRange extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        int tpts = players.partner.infSummary.minTotalPts();
-        Range r = new Range(rng.bits >> tpts, 40);
+        Optional<Integer> tpts = players.partner.infSummary.minTotalPts();
+        if (!tpts.isPresent()) {
+            return ConstBoundInference.F;
+        }
+        Range r = new Range(rng.bits >> tpts.get(), 40);
         return TotalPtsBoundInf.create(players.partner.infSummary, r);
     }
 
@@ -52,7 +57,7 @@ public final class CombinedTotalPointsRange extends Inference {
             if (r1 == null || r2 == null) {
                 return null;
             }
-            return new CombinedTotalPointsRange(r1.rng.lowest(), r2.rng.highest());
+            return new CombinedTotalPointsRange(r1.rng.lowest().get(), r2.rng.highest().get());
         }
         Range createRange = createRange(str);
         if (createRange == null) {

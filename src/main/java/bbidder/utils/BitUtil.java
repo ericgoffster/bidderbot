@@ -1,8 +1,10 @@
 package bbidder.utils;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
@@ -81,40 +83,40 @@ public final class BitUtil {
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the highest bit set in the pattern. (-1 if all zero)
+     * @return The index of the highest bit set in the pattern.
      */
-    public static int highestBit(byte pattern) {
+    public static Optional<Integer> highestBit(byte pattern) {
         return highestBit(toLong(pattern));
     }
 
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the highest bit set in the pattern. (-1 if all zero)
+     * @return The index of the highest bit set in the pattern.
      */
-    public static int highestBit(short pattern) {
+    public static Optional<Integer> highestBit(short pattern) {
         return highestBit(toLong(pattern));
     }
 
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the highest bit set in the pattern. (-1 if all zero)
+     * @return The index of the highest bit set in the pattern.
      */
-    public static int highestBit(int pattern) {
+    public static Optional<Integer> highestBit(int pattern) {
         return highestBit(toLong(pattern));
     }
 
     /**
      * @param pattern
      *            The bit pattern
-     * @return The index of the highest bit set in the pattern. (-1 if all zero)
+     * @return The index of the highest bit set in the pattern.
      */
-    public static int highestBit(long pattern) {
+    public static Optional<Integer> highestBit(long pattern) {
         if (pattern == 0) {
-            return -1;
+            return Optional.empty();
         }
-        return 63 - Long.numberOfLeadingZeros(pattern);
+        return Optional.of(63 - Long.numberOfLeadingZeros(pattern));
     }
 
     /**
@@ -122,64 +124,29 @@ public final class BitUtil {
      *            The bit pattern
      * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
-    public static int leastBit(long pattern) {
+    public static Optional<Integer> leastBit(long pattern) {
         if (pattern == 0) {
-            return -1;
+            return Optional.empty();
         }
-        return Long.numberOfTrailingZeros(pattern);
-    }
-
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return The index of the lowest bit set in the pattern. (-1 if all zero)
-     */
-    public static Iterable<Integer> iterate(long pattern) {
-        return new PatternIterable(pattern);
+        return Optional.of(Long.numberOfTrailingZeros(pattern));
     }
     
     public static IntStream stream(long pattern) {
-        return StreamSupport.stream(iterate(pattern).spliterator(), false).mapToInt(i -> i.intValue());
+        return StreamSupport.stream(new PatternIterator(pattern), false).mapToInt(i -> i.intValue());
     }
 
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return The index of the lowest bit set in the pattern. (-1 if all zero)
-     */
-    private static Iterable<Integer> iterate(int pattern) {
-        return iterate(toLong(pattern));
-    }
-    
     public static IntStream stream(int pattern) {
-        return StreamSupport.stream(iterate(pattern).spliterator(), false).mapToInt(i -> i.intValue());
+        return stream(toLong(pattern));
     }
 
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return The index of the lowest bit set in the pattern. (-1 if all zero)
-     */
-    private static Iterable<Integer> iterate(short pattern) {
-        return iterate(toLong(pattern));
-    }
-    
     public static IntStream stream(short pattern) {
-        return StreamSupport.stream(iterate(pattern).spliterator(), false).mapToInt(i -> i.intValue());
-    }
-
-    /**
-     * @param pattern
-     *            The bit pattern
-     * @return The index of the lowest bit set in the pattern. (-1 if all zero)
-     */
-    private static Iterable<Integer> iterate(byte pattern) {
-        return iterate(toLong(pattern));
+        return stream(toLong(pattern));
     }
 
     public static IntStream stream(byte pattern) {
-        return StreamSupport.stream(iterate(pattern).spliterator(), false).mapToInt(i -> i.intValue());
+        return stream(toLong(pattern));
     }
+    
     /**
      * @param pattern
      *            The bit pattern
@@ -207,20 +174,7 @@ public final class BitUtil {
         return pattern & 0xffL;
     }
 
-    private static final class PatternIterable implements Iterable<Integer> {
-        private final long pattern;
-
-        private PatternIterable(long pattern) {
-            this.pattern = pattern;
-        }
-
-        @Override
-        public Iterator<Integer> iterator() {
-            return new PatternIterator(pattern);
-        }
-    }
-
-    private static final class PatternIterator implements Iterator<Integer> {
+    private static final class PatternIterator implements Spliterator<Integer> {
         int j = 0;
         long patt;
         int[] res;
@@ -231,7 +185,6 @@ public final class BitUtil {
             res = set[(int) (pattern & 0xffff)];
         }
 
-        @Override
         public boolean hasNext() {
             if (i < res.length) {
                 return true;
@@ -239,7 +192,6 @@ public final class BitUtil {
             return patt != 0;
         }
 
-        @Override
         public Integer next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
@@ -251,6 +203,30 @@ public final class BitUtil {
                 patt >>>= 16;
             }
             return j + res[i++];
+        }
+
+        @Override
+        public boolean tryAdvance(Consumer<? super Integer> action) {
+            if (hasNext()) {
+                action.accept(next());
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Spliterator<Integer> trySplit() {
+            return null;
+        }
+
+        @Override
+        public long estimateSize() {
+            return 0;
+        }
+
+        @Override
+        public int characteristics() {
+            return 0;
         }
     }
 

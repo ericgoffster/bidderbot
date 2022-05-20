@@ -1,6 +1,7 @@
 package bbidder.inferences;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -14,6 +15,7 @@ import bbidder.ShapeSet;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.SuitTable;
+import bbidder.inferences.bound.ConstBoundInference;
 import bbidder.inferences.bound.ShapeBoundInf;
 
 public final class Rebiddable extends Inference {
@@ -38,13 +40,11 @@ public final class Rebiddable extends Inference {
     }
 
     private IBoundInference createrBound(int s, InfSummary meSummary, InfSummary partnerSummary) {
-        int n = meSummary.minLenInSuit(s);
-        Range r;
-        if (n <= 0) {
-            r = Range.atLeast(6, 13);
-        } else {
-            r = Range.atLeast(Math.max(n + 1, 6), 13);
+        Optional<Integer> n = meSummary.minLenInSuit(s);
+        if (!n.isPresent()) {
+            return ConstBoundInference.F;
         }
+        Range r = Range.atLeast(Math.max(n.get() + 1, 6), 13);
         IBoundInference create = ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
         return create;
     }

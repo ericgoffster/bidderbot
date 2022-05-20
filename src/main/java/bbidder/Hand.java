@@ -13,6 +13,7 @@ import static bbidder.Constants.QUEEN;
 import static bbidder.Constants.TEN;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import bbidder.utils.BitUtil;
 import bbidder.utils.SplitUtil;
@@ -221,7 +222,11 @@ public final class Hand {
     }
 
     public boolean haveFit(InfSummary partnerSummary, int suit) {
-        return numInSuit(suit) + partnerSummary.minLenInSuit(suit) >= 8;
+        Optional<Integer> partnerLen = partnerSummary.minLenInSuit(suit);
+        if (!partnerLen.isPresent()) {
+            return false;
+        }
+        return numInSuit(suit) + partnerLen.get() >= 8;
     }
 
     public int getTotalPoints(InfSummary partnerSummary) {
@@ -235,8 +240,8 @@ public final class Hand {
     public Stoppers getStoppers() {
         Stoppers stoppers = Stoppers.EMPTY;
         for (int suit = 0; suit < 4; suit++) {
-            int highest = BitUtil.highestBit(getAllInSuit(suit));
-            if (highest >= 0 && numInSuit(suit) >= 13 - highest) {
+            Optional<Integer> highest = BitUtil.highestBit(getAllInSuit(suit));
+            if (highest.isPresent() && numInSuit(suit) >= 13 - highest.get()) {
                 stoppers = stoppers.withStopperIn(suit);
             }
         }
@@ -246,8 +251,8 @@ public final class Hand {
     public Stoppers getPartialStoppers() {
         Stoppers stoppers = Stoppers.EMPTY;
         for (int suit = 0; suit < 4; suit++) {
-            int highest = BitUtil.highestBit(getAllInSuit(suit));
-            if (highest >= 0 && numInSuit(suit) >= 12 - highest) {
+            Optional<Integer> highest = BitUtil.highestBit(getAllInSuit(suit));
+            if (highest.isPresent() && numInSuit(suit) >= 12 - highest.get()) {
                 stoppers = stoppers.withStopperIn(suit);
             }
         }

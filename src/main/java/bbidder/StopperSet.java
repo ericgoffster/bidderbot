@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import bbidder.utils.BitUtil;
@@ -16,8 +17,8 @@ public final class StopperSet implements Iterable<Stoppers> {
 
     private StopperSet(short stoppers) {
         this.stoppers = stoppers;
-        int highest = BitUtil.highestBit(stoppers);
-        if (highest >= Stoppers.values().length) {
+        Optional<Integer> highest = BitUtil.highestBit(stoppers);
+        if (highest.isPresent() && highest.get() >= Stoppers.values().length) {
             throw new IllegalArgumentException();
         }
     }

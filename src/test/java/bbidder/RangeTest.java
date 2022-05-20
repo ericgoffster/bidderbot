@@ -22,8 +22,8 @@ public class RangeTest {
     @Test
     public void testExtremes() {
         Range r = Range.between(2, 4, 5);
-        assertEquals(r.highest(), 4);
-        assertEquals(r.lowest(), 2);
+        assertEquals(r.highest().get().intValue(), 4);
+        assertEquals(r.lowest().get().intValue(), 2);
 
         assertEquals(Range.atLeast(null, 5), Range.all(5));
         assertThrows(IllegalArgumentException.class, () -> Range.atLeast(-1, 5));

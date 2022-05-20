@@ -1,6 +1,7 @@
 package bbidder.generalities;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import bbidder.Auction;
@@ -27,7 +28,12 @@ public final class FitEstablished extends Generality {
     @Override
     public boolean test(Players players, Auction bidList) {
         int s = symbol.getResolvedStrain();
-        return players.partner.infSummary.minLenInSuit(s) + players.me.infSummary.minLenInSuit(s) >= 8;
+        Optional<Integer> meLen = players.partner.infSummary.minLenInSuit(s);
+        Optional<Integer> partnerLen = players.me.infSummary.minLenInSuit(s);
+        if (!meLen.isPresent() || !partnerLen.isPresent()) {
+            return false;
+        }
+        return meLen.get() + partnerLen.get() >= 8;
     }
 
     public static FitEstablished valueOf(String str) {

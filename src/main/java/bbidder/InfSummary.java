@@ -2,6 +2,7 @@ package bbidder;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import bbidder.ShapeSet.Stat;
@@ -67,11 +68,11 @@ public final class InfSummary {
         return stats.updateAndGet(st -> (st != null) ? st : shape.getStats())[suit];
     }
 
-    public int minTotalPts() {
+    public Optional<Integer> minTotalPts() {
         return tpts.lowest();
     }
 
-    public int minLenInSuit(int suit) {
+    public Optional<Integer> minLenInSuit(int suit) {
         return getSuit(suit).lowest();
     }
 
@@ -82,18 +83,23 @@ public final class InfSummary {
     public short getBidSuits() {
         Integer[] suitArr = { 0, 1, 2, 3 };
         Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgLenInSuit(s1), avgLenInSuit(s2)));
-        int minLenFirst = minLenInSuit(suitArr[0]);
-        if (minLenFirst >= 5 || minLenFirst >= 4 && minLenInSuit(suitArr[1]) >= 4) {
+        Optional<Integer> minLenFirst = minLenInSuit(suitArr[0]);
+        Optional<Integer> minLenSecond = minLenInSuit(suitArr[1]);
+        Optional<Integer> minLenThird = minLenInSuit(suitArr[2]);
+        if (!minLenFirst.isPresent() || !minLenSecond.isPresent() || !minLenThird.isPresent()) {
+            return 0;
+        }
+        if (minLenFirst.get() >= 5 || minLenFirst.get() >= 4 && minLenSecond.get() >= 4) {
             int i = 0;
             short suits = 0;
-            while (i < 4 && minLenInSuit(i) >= 4) {
+            while (i < 4 && minLenInSuit(i).get() >= 4) {
                 suits |= (short) (1 << i);
                 i++;
             }
             return suits;
         }
-        if (minLenFirst == 4) {
-            if (minLenInSuit(suitArr[1]) > minLenInSuit(suitArr[2])) {
+        if (minLenFirst.get() == 4) {
+            if (minLenSecond.get() > minLenThird.get()) {
                 return (short) ((1 << suitArr[0]) | (1 << suitArr[1]));
             }
             return (short) ((1 << suitArr[0]));

@@ -1,5 +1,6 @@
 package bbidder.generalities;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import bbidder.Auction;
@@ -26,7 +27,12 @@ public final class PartnerBidSuitGenerality extends Generality {
     @Override
     public boolean test(Players players, Auction bidList) {
         int suit = symbol.getResolvedStrain();
-        if (players.me.infSummary.minLenInSuit(suit) + players.partner.infSummary.minLenInSuit(suit) >= 8) {
+        Optional<Integer> meLen = players.me.infSummary.minLenInSuit(suit);
+        Optional<Integer> partnerLen = players.partner.infSummary.minLenInSuit(suit);
+        if (!meLen.isPresent() || !partnerLen.isPresent()) {
+            return false;
+        }
+        if (meLen.get() + partnerLen.get() >= 8) {
             return false;
         }
         if ((players.partner.infSummary.getBidSuits() & (1 << suit)) == 0) {

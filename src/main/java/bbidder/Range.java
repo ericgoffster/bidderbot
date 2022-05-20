@@ -3,6 +3,7 @@ package bbidder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import bbidder.utils.BitUtil;
 
@@ -34,13 +35,12 @@ public final class Range {
         return bits == 0;
     }
 
-    public int highest() {
+    public Optional<Integer> highest() {
         return BitUtil.highestBit(bits);
     }
 
-    public int lowest() {
-        int leastBit = BitUtil.leastBit(bits);
-        return leastBit < 0 ? max + 1 : leastBit;
+    public Optional<Integer> lowest() {
+        return BitUtil.leastBit(bits);
     }
 
     public static Range all(int max) {
@@ -135,7 +135,7 @@ public final class Range {
         return bits == other.bits && max == other.max;
     }
     
-    public class State {
+    private class State {
         List<String> ranges = new ArrayList<>();
         Integer lhs = null;
         Integer rhs = null;
@@ -147,16 +147,30 @@ public final class Range {
             } else if (i == rhs + 1) {
                 rhs = i;
             } else {
-                ranges.add(getRangeItem(lhs, rhs));
+                ranges.add(getRangeItem());
                 lhs = i;
                 rhs = i;
+            }
+        }      
+
+        private String getRangeItem() {
+            if (lhs.intValue() == rhs.intValue()) {
+                return String.valueOf(lhs);
+            } else {
+                if (lhs.intValue() == 0) {
+                    return rhs + "-";
+                } else if (rhs.intValue() == max) {
+                    return lhs + "+";
+                } else {
+                    return lhs + "-" + rhs;
+                }
             }
         }
         
         @Override
         public String toString() {
             if (lhs != null && rhs != null) {
-                ranges.add(getRangeItem(lhs, rhs));
+                ranges.add(getRangeItem());
             }
             if (ranges.size() == 1) {
                 return ranges.get(0);
@@ -170,19 +184,5 @@ public final class Range {
         State state = new State();
         BitUtil.stream(bits).forEach(state::add);
         return state.toString();
-    }
-
-    private String getRangeItem(Integer lhs, Integer rhs) {
-        if (lhs.intValue() == rhs.intValue()) {
-            return String.valueOf(lhs);
-        } else {
-            if (lhs.intValue() == 0) {
-                return rhs + "-";
-            } else if (rhs.intValue() == max) {
-                return lhs + "+";
-            } else {
-                return lhs + "-" + rhs;
-            }
-        }
     }
 }

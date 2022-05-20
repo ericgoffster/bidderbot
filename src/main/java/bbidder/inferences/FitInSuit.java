@@ -1,6 +1,7 @@
 package bbidder.inferences;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -82,7 +83,11 @@ public final class FitInSuit extends Inference {
     }
 
     private IBoundInference createrBound(int s, InfSummary partnerSummary) {
-        int n = 8 - partnerSummary.minLenInSuit(s);
+        Optional<Integer> partnerLen = partnerSummary.minLenInSuit(s);
+        if (!partnerLen.isPresent()) {
+            return ConstBoundInference.F;
+        }
+        int n = 8 - partnerLen.get();
         if (n <= 0) {
             return ConstBoundInference.T;
         }
