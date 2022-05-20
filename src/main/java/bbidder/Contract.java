@@ -110,7 +110,7 @@ public final class Contract {
             }
             return true;
         default:
-            if (winningBid != Bid.P && bid.ordinal() < winningBid.ordinal()) {
+            if (winningBid != Bid.P && bid.ordinal() <= winningBid.ordinal()) {
                 return false;
             }
             return true;

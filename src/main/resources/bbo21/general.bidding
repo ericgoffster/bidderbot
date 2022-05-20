@@ -4,12 +4,10 @@
 # D = ♦
 # H = ♥
 # S = ♠
-     
-[i_bid_suit y, unbid_suit x] NJx:<4C:nonconventional => gf+, 4+ x;
-    test xx AQxxx Qxxx Ax:
-        1C 1H
-        2C 2D;
 
+#
+# Bid NT if possible to the right level
+#
 [] 3N => gf, partial_stoppers unstopped;
     test Axx AQxx Qxx Qxx:
         1C 1H
@@ -19,6 +17,24 @@
     test Axx Kxxx Qxx Qxx:
         1C 1H
         1N 2N;
+
+#
+# Pass NT 
+#
+[] 3N P => gf-;
+    test Axx Kxx Kxx Qxxx:
+        1D 2N
+        3N P;
+
+[] 2N P => inv-;
+    test xxx Kxxx Kxx xxx:
+        1C 1H
+        2N P;
+        
+[i_bid_suit y, unbid_suit x] NJx:<4C:nonconventional => gf+, 4+ x;
+    test xx AQxxx Qxxx Ax:
+        1C 1H
+        2C 2D;
 
 [partner_bid_suit m] 3m => inv, fit m;
     test Ax xx AQxx AQxxx:

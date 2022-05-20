@@ -14,12 +14,12 @@
         1S 2N
         4S P;
 
-[fit_established x] 3x P => inv-;
+[fit_established M] 3M P => inv-;
     test Axxxx Axx Axx xx:
         1S 3S
         P;
 
-[fit_established x] 2x P => min-;
+[fit_established M] 2M P => min-;
     test xxx Axxx Kx xxxx:
         1C 1H
         2H P;
