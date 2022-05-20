@@ -3,8 +3,6 @@ package bbidder.parsers;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import bbidder.Bid;
 import bbidder.BidPattern;
@@ -17,8 +15,6 @@ import bbidder.Symbol;
  *
  */
 public final class BidPatternParser implements Parser<BidPattern> {
-    private static Pattern SEATS = Pattern.compile("seats(\\d+)");
-    
     private String parseSuit(Input inp) throws IOException {
         return inp.readToken(ch -> ch != ')' && ch != ':');
     }
@@ -46,24 +42,21 @@ public final class BidPatternParser implements Parser<BidPattern> {
                 p = p.withDownTheLine(true);
                 continue;
             }
+            if (inp.readKeyword("SEATS")) {
+                short seats = 0;
+                String seatsC = inp.readToken(ch -> ch != ':');
+                for (int i = 0; i < seatsC.length(); i++) {
+                    seats |= (1 << (seatsC.charAt(i) - '1'));
+                }
+                p = p.withSeats(seats);
+                continue;
+            }
             String tag = inp.readToken(ch -> ch != ':');
             if (tag.startsWith("\"") && tag.endsWith("\"")) {
                 Set<String> tags = new HashSet<>(p.tags);
                 tags.add(tag.substring(1, tag.length() - 1));
                 p = p.withTags(tags);
                 continue;
-            }
-            {
-                Matcher m = SEATS.matcher(tag);
-                if (m.matches()) {
-                    short seats = 0;
-                    String seatsC = m.group(1);
-                    for (int i = 0; i < seatsC.length(); i++) {
-                        seats |= (1 << (seatsC.charAt(i) - '1'));
-                    }
-                    p = p.withSeats(seats);
-                    continue;
-                }
             }
             throw new IllegalArgumentException("bad modifier");
         }
