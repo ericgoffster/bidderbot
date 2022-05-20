@@ -19,7 +19,7 @@
 *:partner bid y ?y P => 8+ fit y;
 
 [[Return to known fit]]
-[8+ fit y] NJy => always;
+*:8+ fit y NJy => always;
 
 [[Self support suit]]
 *:i bid y NJy => 8+ fit y;
@@ -62,5 +62,5 @@
 [7+ bestfit y] NJy P => always;
         
 [[Return to best known pseudo fit]]
-[7+ bestfit y] ?x NJy => 7- fit x;
+*:7+ bestfit y ?x NJy => 7- fit x;
 # Help
