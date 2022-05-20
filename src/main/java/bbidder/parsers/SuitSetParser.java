@@ -19,6 +19,9 @@ import bbidder.suitsets.ConstSet;
 import bbidder.suitsets.Gt;
 import bbidder.suitsets.LookupSet;
 import bbidder.suitsets.Not;
+import bbidder.suitsets.Or;
+import bbidder.suitsets.OurSuits;
+import bbidder.suitsets.TheirSuits;
 import bbidder.suitsets.Unbid;
 import bbidder.suitsets.Unstopped;
 
@@ -53,7 +56,7 @@ public final class SuitSetParser {
         public SuitSet lookupSuitSet0() throws IOException {
             readWhite();
             if (ch == '(') {
-                SuitSet s = lookupSuitSet();
+                SuitSet s = lookupSuitSet2();
                 readWhite();
                 if (ch != ')') {
                     throw new IllegalArgumentException("Expected )");
@@ -83,6 +86,10 @@ public final class SuitSetParser {
                     advance();
                 }
                 switch (sb.toString().toUpperCase()) {
+                case "OURS":
+                    return new OurSuits();
+                case "THEIRS":
+                    return new TheirSuits();
                 case "UNBID":
                     return new Unbid();
                 case "UNSTOPPED":
@@ -113,7 +120,21 @@ public final class SuitSetParser {
             }
         }
 
-        public SuitSet lookupSuitSet() throws IOException {
+        public SuitSet lookupSuitSet2() throws IOException {
+            readWhite();
+            SuitSet result = lookupSuitSet1();
+            for (;;) {
+                readWhite();
+                if (ch != '|') {
+                    break;
+                }
+                advance();
+                SuitSet result2 = lookupSuitSet1();
+                result = new Or(result, result2);
+            }
+            return result;
+        }
+        public SuitSet lookupSuitSet1() throws IOException {
             readWhite();
             SuitSet result = lookupSuitSet0();
             for (;;) {
@@ -146,7 +167,7 @@ public final class SuitSetParser {
      */
     public static SuitSet lookupSuitSet(String str) {
         try (ReadState state = new ReadState(str)) {
-            SuitSet suits = state.lookupSuitSet();
+            SuitSet suits = state.lookupSuitSet2();
             state.readWhite();
             if (state.ch != -1) {
                 throw new IllegalArgumentException("Undecipherable characters at end");
