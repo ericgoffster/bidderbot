@@ -16,7 +16,7 @@ common 1x 1y {
 	        1♥ 1♠
 	        2♣;
 	
-	NJz:>2x => 4+z, 5+x, 7- fit y, 18+tpts;
+	NJz:>2x:"reverse" => 4+z, 5+x, 7- fit y, 18+tpts;
 	    test x AKxx Kxx AQxxx:
 	        1♣ 1♠
 	        2♥;
