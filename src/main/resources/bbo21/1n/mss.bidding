@@ -6,13 +6,7 @@
 # S = ♠
 
 1N 2♠
-2N => superbalanced;
-    test AQx QJx AJx Qxxx:
-        1N 2♠
-        2N;
-
-1N 2♠
-3m => 4+m;
+3m => 4+m, 2x;
     test Ax Axxx AJx Qxxx:
         1N 2♠
         3♣;
@@ -22,6 +16,9 @@
 
 1N 2♠
 2N => always;
+    test AQx QJx AJx Qxxx:
+        1N 2♠
+        2N;
     test AQxx QJxx AJx Qx:
         1N 2♠
         2N;

@@ -7,15 +7,7 @@
 
 2C 2D
 2N 3♠
-3N => superbalanced;
-    test AQx AJx AJx AQxx:
-        2C 2D
-        2N 3♠
-        3N;
-
-2C 2D
-2N 3♠
-4m => 4+m;
+4m => 4+m, 2x;
     test Ax AQxx AJx AKxx:
         2C 2D
         2N 3♠
@@ -28,6 +20,10 @@
 2C 2D
 2N 3♠
 3N => always;
+    test AQx AJx AJx AQxx:
+        2C 2D
+        2N 3♠
+        3N;
     test AQxx QJxx AKx Qx:
         2C 2D
         2N 3♠
