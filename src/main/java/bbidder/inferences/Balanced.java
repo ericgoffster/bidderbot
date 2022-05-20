@@ -17,7 +17,8 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class Balanced extends Inference {
-    public Balanced() {
+    public static final Balanced BALANCED = new Balanced(); 
+    private Balanced() {
     }
 
     @Override
@@ -36,7 +37,7 @@ public final class Balanced extends Inference {
         }
         str = str.trim();
         if (str.toLowerCase().equals("balanced")) {
-            return new Balanced();
+            return BALANCED;
         }
         return null;
     }

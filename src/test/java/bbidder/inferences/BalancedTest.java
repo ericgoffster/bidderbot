@@ -13,17 +13,17 @@ import bbidder.Players;
 public class BalancedTest {
     @Test
     public void testValueOf() {
-        assertEquals(new Balanced(), Balanced.valueOf("balanced"));
+        assertEquals(Balanced.BALANCED, Balanced.valueOf("balanced"));
     }
 
     @Test
     public void testToString() {
-        assertEquals("balanced", new Balanced().toString());
+        assertEquals("balanced", Balanced.BALANCED.toString());
     }
 
     @Test
     public void testAffirmative() {
-        IBoundInference inf = new Balanced().bind(new Players());
+        IBoundInference inf = Balanced.BALANCED.bind(new Players());
         assertTrue(inf.test(Hand.valueOf("AKQ JT9 876 5432")));
         assertTrue(inf.test(Hand.valueOf("AKQJT 98 765 432")));
         assertFalse(inf.test(Hand.valueOf("AKQJT 98 76 5432")));

@@ -17,7 +17,9 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class VeryBalanced extends Inference {
-    public VeryBalanced() {
+    private static final VeryBalanced VERY_BALANCED = new VeryBalanced();
+
+    private VeryBalanced() {
     }
 
     @Override
@@ -36,7 +38,7 @@ public final class VeryBalanced extends Inference {
         }
         str = str.trim();
         if (str.toLowerCase().equals("superbalanced")) {
-            return new VeryBalanced();
+            return VERY_BALANCED;
         }
         return null;
     }

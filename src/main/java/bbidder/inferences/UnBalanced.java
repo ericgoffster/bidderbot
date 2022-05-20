@@ -17,8 +17,10 @@ import bbidder.inferences.bound.ShapeBoundInf;
  *
  */
 public final class UnBalanced extends Inference {
+    
+    private static final UnBalanced UNBALANCED = new UnBalanced();
 
-    public UnBalanced() {
+    private UnBalanced() {
     }
 
     @Override
@@ -37,7 +39,7 @@ public final class UnBalanced extends Inference {
         }
         str = str.trim();
         if (str.toLowerCase().equals("unbalanced")) {
-            return new UnBalanced();
+            return UNBALANCED;
         }
         return null;
     }
