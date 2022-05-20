@@ -38,21 +38,27 @@ public final class CardsRange extends Range {
         return new CardsRange(1 << n);
     }
 
-    public static CardsRange atLeast(Integer n) {
-        if (n == null) {
+    public static CardsRange atLeast(int n) {
+        if (n == 0) {
             return ALL;
         }
-        if (n < 0 || n > MAX) {
+        if (n == MAX) {
+            return NONE;
+        }
+        if (n < 1 || n >= MAX) {
             throw new IllegalArgumentException();
         }
         return new CardsRange(BitUtil.bitMask(MAX) ^ BitUtil.bitMask(n - 1));
     }
 
-    public static CardsRange atMost(Integer n) {
-        if (n == null) {
+    public static CardsRange atMost(int n) {
+        if (n == MAX) {
             return ALL;
         }
-        if (n < 0 || n > MAX) {
+        if (n == 0) {
+            return NONE;
+        }
+        if (n < 1 || n >= MAX) {
             throw new IllegalArgumentException();
         }
         return new CardsRange(BitUtil.bitMask(n));
@@ -66,6 +72,15 @@ public final class CardsRange extends Range {
     }
 
     public static CardsRange between(Integer lhs, Integer rhs) {
+        if (lhs == null) {
+            if (rhs == null) {
+                return ALL;
+            }
+            return atMost(rhs);
+        }
+        if (rhs == null) {
+            return atLeast(lhs);
+        }
         return atLeast(lhs).and(atMost(rhs));
     }
 

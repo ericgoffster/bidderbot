@@ -38,21 +38,27 @@ public final class SuitLengthRange extends Range {
         return new SuitLengthRange(1 << n);
     }
 
-    public static SuitLengthRange atLeast(Integer n) {
-        if (n == null) {
+    public static SuitLengthRange atLeast(int n) {
+        if (n == 0) {
             return ALL;
         }
-        if (n < 0 || n > MAX) {
+        if (n == MAX) {
+            return NONE;
+        }
+        if (n < 0 || n >= MAX) {
             throw new IllegalArgumentException();
         }
         return new SuitLengthRange(BitUtil.bitMask(MAX) ^ BitUtil.bitMask(n - 1));
     }
 
-    public static SuitLengthRange atMost(Integer n) {
-        if (n == null) {
+    public static SuitLengthRange atMost(int n) {
+        if (n == MAX) {
             return ALL;
         }
-        if (n < 0 || n > MAX) {
+        if (n == 0) {
+            return NONE;
+        }
+        if (n < 0 || n >= MAX) {
             throw new IllegalArgumentException();
         }
         return new SuitLengthRange(BitUtil.bitMask(n));
@@ -66,6 +72,15 @@ public final class SuitLengthRange extends Range {
     }
 
     public static SuitLengthRange between(Integer lhs, Integer rhs) {
+        if (lhs == null) {
+            if (rhs == null) {
+                return ALL;
+            }
+            return atMost(rhs);
+        }
+        if (rhs == null) {
+            return atLeast(lhs);
+        }
         return atLeast(lhs).and(atMost(rhs));
     }
 
