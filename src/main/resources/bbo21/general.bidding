@@ -73,10 +73,20 @@ anti_test xx AQxxx xxx Kxx:
         1C 1H
         2C 4H;
         
-[i_bid_suit y, unbid_suit x] NJx:<4C:nonconventional => gf, 4+ x;
+[i_bid_suit y, unbid_suit x] NJx:<4C:nonconventional => gf+, 4+ x;
     test xx AQxxx Qxxx Ax:
         1C 1H
         2C 2D;
+
+[] 3N => gf, partial_stoppers unstopped;
+    test Axx AQxx Qxx Qxx:
+        1C 1H
+        1N 3N;
+
+[] 2N => inv, partial_stoppers unstopped;
+    test Axx Kxxx Qxx Qxx:
+        1C 1H
+        1N 2N;
 
 [partner_bid_suit m] 3m => inv, fit m;
     test Ax xx AQxx AQxxx:
@@ -96,6 +106,11 @@ anti_test xx AQxxx xxx Kxx:
         1C 1D
         2C 3D;
         
+[fit_established m] 3m => inv;
+    test xxx Axx AQxxx xx:
+        1C 1D
+        2D 3D;
+        
 [partner_is_two_suited x y] NJx:<2N P => min, prefer x to y;
     test AQxxx x xxxx xxx:
         1H 1S
@@ -109,11 +124,6 @@ anti_test xx AQxxx xxx Kxx:
         1H 1S
         2C 2H;
         
-[] 3N => gf, partial_stoppers unstopped;
-    test Axx AQxx Qxx Qxx:
-        1C 1H
-        1N 3N;
-
 [we_are_three_suited, unbid_suit x] NJx:<3N => gf+;
     test AQxxx AK xx xxxx:
         1H 1S
