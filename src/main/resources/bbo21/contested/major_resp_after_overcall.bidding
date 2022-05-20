@@ -1,0 +1,33 @@
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
+common 1M (1z) {
+	3M => 7- tpts, 4+ M;
+	    test xxx Kxxx x Qxxxx:
+	        1♥ (1S) 3♥;
+	
+	2M => 6-10 tpts, 8+ fit M;
+	    test xxx Kxx Kx xxxxx:
+	        1♥ (1S) 2♥;
+	
+	3z:"splinter" => gf+, 1- z, 4+ M;
+	    test x Kxxx Axx Axxxx:
+	        1♥ (1S) 3♠;
+	
+	NJy:down => inv+, 5+ y, longest_or_equal y among unbid;
+	    test Kxx xx Axx AQxxx :
+	        1♥ (1S) 2♣;
+	
+	1N => 6-10 hcp, stoppers z, partial_stoppers unbid ;
+	    test Axx xx Axxx Jxxx :
+	        1♥ (1S) 1N;
+	2N => 11-12 hcp, stoppers z, partial_stoppers unbid ;
+	    test Axx xx AQxx Jxxx :
+	        1♥ (1S) 2N;
+	        
+	NJy => inv+, 4 y, longest_or_equal y among unbid;
+	    test AQx xx Axxx Kxxx :
+	        1♥ (1S) 2C;
+}

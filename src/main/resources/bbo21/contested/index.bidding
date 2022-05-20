@@ -1,3 +1,4 @@
 include simple_overcalls.bidding;
 include resp_over_x.bidding;
 include resp_to1.bidding;
+include major_resp_after_overcall.bidding;
