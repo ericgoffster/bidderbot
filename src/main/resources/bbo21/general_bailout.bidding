@@ -63,13 +63,6 @@
         1D 1H
         1S P;             
 
-[[Bid 1N with minimum values]]
-1x 1y
-1z 1N => min;
-    test Qxx Kx xxxxx Qxx:
-        1♣ 1♦
-        1♥ 1N;
-
 [[Show preference]]
 [partner_is_two_suited x y] ?y NJx => prefer x to y;
     test AQxxx xx xxxx xx:

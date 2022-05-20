@@ -130,3 +130,9 @@
     test xxx x AKxxxx AKx:
         1♣ 1♦
         1♥ 1♠;
+
+[[Bid 1N with no support]]
+[partner_is_two_suited x y] 1N => min, partial_stoppers unbid;
+    test Qxx Kx xxxxx Qxx:
+        1♣ 1♦
+        1♥ 1N;
