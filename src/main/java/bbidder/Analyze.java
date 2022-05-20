@@ -5,18 +5,6 @@ import bbidder.parsers.InferenceParser;
 import bbidder.utils.DebugUtils;
 
 public class Analyze {
-    public static void showSummary(String label, InfSummary summary) {
-        ShapeStats[] stats = summary.shape.getStats();
-        System.err.println(label);
-        System.err.println("   Spades: " + stats[3]);
-        System.err.println("   Hearts: " + stats[2]);
-        System.err.println("   Diamonds: " + stats[1]);
-        System.err.println("   Clubs: " + stats[0]);
-        System.err.println("   total points: " + summary.tpts);
-        System.err.println("   stoppers: " + summary.stoppers);
-        System.err.println("   partial: " + summary.partialStoppers);
-    }
-
     public static void main(String[] args) {
         BiddingSystem bs = BiddingSystemParser.load("classpath:bbo21/index.bidding", ex -> {
             throw new RuntimeException(ex);
@@ -45,9 +33,9 @@ public class Analyze {
 
         System.out.println(state.players.me.inf);
 
-        showSummary("me", state.players.me.infSummary);
-        showSummary("partner", state.players.partner.infSummary);
-        showSummary("lho", state.players.lho.infSummary);
-        showSummary("rho", state.players.rho.infSummary);
+        state.players.me.infSummary.showSummary("me");
+        state.players.partner.infSummary.showSummary("partner");
+        state.players.lho.infSummary.showSummary("lho");
+        state.players.rho.infSummary.showSummary("rho");
     }
 }

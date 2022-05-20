@@ -17,18 +17,6 @@ import bbidder.utils.DebugUtils;
 public class Test2Over1 {
     public static BiddingSystem bs;
 
-    public void showSummary(String label, InfSummary summary) {
-        ShapeStats[] stats = summary.shape.getStats();
-        System.err.println(label);
-        System.err.println("   Spades: " + stats[3]);
-        System.err.println("   Hearts: " + stats[2]);
-        System.err.println("   Diamonds: " + stats[1]);
-        System.err.println("   Clubs: " + stats[0]);
-        System.err.println("   total points: " + summary.tpts);
-        System.err.println("   stoppers: " + summary.stoppers);
-        System.err.println("   partial: " + summary.partialStoppers);
-    }
-
     public static String getWhere(BidInference i) {
         return i == null ? null : i.where;
     }
@@ -58,8 +46,8 @@ public class Test2Over1 {
                 System.err.println("Bidding: " + result.bids);
                 System.err
                         .println("You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
-                showSummary("My summary", result.state.players.me.infSummary);
-                showSummary("Partner summary", partnerSummary);
+                result.state.players.me.infSummary.showSummary("My summary");
+                partnerSummary.showSummary("Partner summary");
                 System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
                 System.err.println("But I got an exception: ");
                 result.ex.printStackTrace();
@@ -74,8 +62,8 @@ public class Test2Over1 {
                         System.err.println("Bidding: " + result.bids);
                         System.err.println(
                                 "You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
-                        showSummary("My summary", result.state.players.me.infSummary);
-                        showSummary("Partner summary", partnerSummary);
+                        result.state.players.me.infSummary.showSummary("My summary");
+                        partnerSummary.showSummary("Partner summary");
                         System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
                         if (result.found.matchedBid.inf != null) {
                             System.err.println("But " + where + " dictates I should bid " + result.found.matchedBid.bid);
@@ -117,8 +105,8 @@ public class Test2Over1 {
                     InfSummary partnerSummary = result.state.players.partner.infSummary;
                     System.err.println(
                             "You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
-                    showSummary("My summary", result.state.players.me.infSummary);
-                    showSummary("Partner summary", partnerSummary);
+                    result.state.players.me.infSummary.showSummary("My summary");
+                    partnerSummary.showSummary("Partner summary");
                     System.err.println("Test at " + result.where + " claims I should *not* have bid " + result.expected + " but I did");
                     DebugUtils.debugMode = true;
                     DebugUtils.breakpoint();

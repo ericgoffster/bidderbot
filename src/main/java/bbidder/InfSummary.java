@@ -164,4 +164,18 @@ public final class InfSummary {
         return Objects.equals(partialStoppers, other.partialStoppers) && Objects.equals(shape, other.shape)
                 && Objects.equals(stoppers, other.stoppers) && Objects.equals(tpts, other.tpts) && Objects.equals(hcp, other.hcp);
     }
+    
+    public void showSummary(String label) {
+        ShapeStats[] stats = shape.getStats();
+        System.err.println(label);
+        System.err.println("   Spades: " + stats[3]);
+        System.err.println("   Hearts: " + stats[2]);
+        System.err.println("   Diamonds: " + stats[1]);
+        System.err.println("   Clubs: " + stats[0]);
+        System.err.println("   hcp: " + hcp);
+        System.err.println("   total points: " + tpts);
+        System.err.println("   stoppers: " + stoppers);
+        System.err.println("   partial: " + partialStoppers);
+    }
+
 }
