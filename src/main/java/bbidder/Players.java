@@ -61,12 +61,12 @@ public final class Players {
         return "lho=" + lho + ", partner=" + partner + ", rho=" + rho + ", me=" + me;
     }
 
-    public OptionalInt ourCombinedMinTpts() {
-        OptionalInt meLenLonger = me.infSummary.tpts.lowest();
+    public OptionalInt combinedMinTpts(Position position) {
+        OptionalInt meLenLonger = getPlayer(position).infSummary.tpts.lowest();
         if (!meLenLonger.isPresent()) {
             return OptionalInt.empty();
         }
-        OptionalInt partnerLenLonger = partner.infSummary.tpts.lowest();
+        OptionalInt partnerLenLonger = getPlayer(position.getOpposite()).infSummary.tpts.lowest();
         if (!partnerLenLonger.isPresent()) {
             return OptionalInt.empty();
         }
@@ -75,12 +75,12 @@ public final class Players {
         return OptionalInt.of(meLen + partnerLen);
     }
 
-    public OptionalInt ourCombinedMinLength(int s) {
-        OptionalInt meLenLonger = me.infSummary.minLenInSuit(s);
+    public OptionalInt combinedMinLength(Position position, int s) {
+        OptionalInt meLenLonger = getPlayer(position).infSummary.minLenInSuit(s);
         if (!meLenLonger.isPresent()) {
             return OptionalInt.empty();
         }
-        OptionalInt partnerLenLonger = partner.infSummary.minLenInSuit(s);
+        OptionalInt partnerLenLonger = getPlayer(position.getOpposite()).infSummary.minLenInSuit(s);
         if (!partnerLenLonger.isPresent()) {
             return OptionalInt.empty();
         }
@@ -90,8 +90,7 @@ public final class Players {
     }
     
     public boolean bidSuit(Position position, int s) {
-        Player i = getPlayer(position);
-        OptionalInt bidSuits = i.infSummary.getBidSuits();
+        OptionalInt bidSuits = getPlayer(position).infSummary.getBidSuits();
         if (bidSuits.isEmpty()) {
             return false;
         }
@@ -99,9 +98,5 @@ public final class Players {
             return false;
         }
         return true;
-    }
-
-    public boolean iBidSuit(int s) {
-        return bidSuit(Position.ME,s);
     }
 }

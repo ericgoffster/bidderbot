@@ -5,6 +5,7 @@ import java.util.OptionalInt;
 
 import bbidder.Generality;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
@@ -30,7 +31,7 @@ public final class FitEstablished extends Generality {
     @Override
     public boolean test(Players players, TaggedAuction bidList) {
         int s = symbol.getResolvedStrain();
-        OptionalInt ourCombinedMinLength = players.ourCombinedMinLength(s);
+        OptionalInt ourCombinedMinLength = players.combinedMinLength(Position.ME, s);
         if (!ourCombinedMinLength.isPresent()) {
             return false;
         }
