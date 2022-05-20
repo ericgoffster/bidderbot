@@ -10,7 +10,7 @@
 
 # Pass playable fits
 [[Pass any playable fit]]
-[8+ fit y] ?y P => always;
+*:8+ fit y ?y P => always;
 
 [[Pass any playable fit]]
 *:i bid y ?y P => 8+ fit y;
@@ -59,7 +59,7 @@
 *:partner bid x:partner bid y ?y NJx => prefer x to y;
 
 [[Pass best known pseudo fit]]
-[7+ bestfit y] NJy P => always;
+*:7+ bestfit y NJy P => always;
         
 [[Return to best known pseudo fit]]
 *:7+ bestfit y ?x NJy => 7- fit x;

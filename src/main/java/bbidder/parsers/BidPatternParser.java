@@ -207,19 +207,6 @@ public final class BidPatternParser implements Parser<BidPattern> {
     @Override
     public BidPattern parse(Input inp) throws IOException {
         inp.advanceWhite();
-        if (inp.ch == '[') {
-            StringBuilder sb = new StringBuilder();
-            inp.advance();
-            inp.advanceWhite();
-            while (inp.ch != ']') {
-                sb.append((char) inp.ch);
-                inp.advance();
-            }
-            if (inp.ch == ']') {
-                inp.advance();
-            }
-            return BidPattern.createWild().withGenerality(GeneralityParser.parseGenerality(sb.toString()));
-        }
         if (inp.ch == '(') {
             inp.advance();
             BidPattern patt = parseInterior2(inp);

@@ -79,10 +79,6 @@ public class BidPatternListTest {
         assertEquals("1S (P) 1N", BidPatternListParser.parse("1S 1N").withOpposingBidding().toString());
         assertEquals("1C (P) 1S (P) 1N", BidPatternListParser.parse("1C 1S 1N").withOpposingBidding().toString());
         assertEquals("(P) 1N", BidPatternListParser.parse("(P) 1N").withOpposingBidding().toString());
-        assertEquals("[true] 1N", BidPatternListParser.parse("[true] 1N").withOpposingBidding().toString());
-        assertEquals("1C [true] 1N", BidPatternListParser.parse("1C [true] 1N").withOpposingBidding().toString());
-        assertEquals("1C (P) 1S [true] 1N", BidPatternListParser.parse("1C 1S [true] 1N").withOpposingBidding().toString());
-        assertEquals("1C (1S) [true] 1N", BidPatternListParser.parse("1C (1S) [true] 1N").withOpposingBidding().toString());
     }
 
     @Test
