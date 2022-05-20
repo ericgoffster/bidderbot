@@ -34,7 +34,7 @@ public final class SuitTable {
     @Override
     public String toString() {
         return "{" + String.join(",",
-                suitMap.entrySet().stream().map(e -> e.getKey() + "=" + Constants.STR_ALL_SUITS.charAt(e.getValue())).collect(Collectors.toList()))
+                suitMap.entrySet().stream().map(e -> e.getKey() + "=" + Strain.getName(e.getValue())).collect(Collectors.toList()))
                 + "}";
     }
 

@@ -8,7 +8,7 @@ import bbidder.Inference;
 import bbidder.Players;
 import bbidder.ShapeSet;
 import bbidder.SuitSet;
-import bbidder.SuitSets;
+import bbidder.SuitSetParser;
 import bbidder.Symbol;
 import bbidder.SymbolParser;
 import bbidder.SuitTable;
@@ -57,7 +57,7 @@ public final class LongestOrEqual extends Inference {
             if (sym == null) {
                 return null;
             }
-            return new LongestOrEqual(sym, SuitSets.lookupSuitSet(str.substring(pos + 5).trim()));
+            return new LongestOrEqual(sym, SuitSetParser.lookupSuitSet(str.substring(pos + 5).trim()));
         }
         Symbol sym = SymbolParser.parseSymbol(str);
         if (sym == null) {

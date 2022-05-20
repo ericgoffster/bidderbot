@@ -20,7 +20,12 @@ import bbidder.suitsets.Not;
 import bbidder.suitsets.Unbid;
 import bbidder.suitsets.Unstopped;
 
-public final class SuitSets {
+/**
+ * Parses SuitSet's
+ * @author goffster
+ *
+ */
+public final class SuitSetParser {
 
     /**
      * Represents the parser state.

@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 import bbidder.Hand;
 import bbidder.Players;
 import bbidder.SuitSet;
-import bbidder.SuitSets;
+import bbidder.SuitSetParser;
 import bbidder.Symbol;
 import bbidder.symbols.ConstSymbol;
 import bbidder.symbols.VarSymbol;
 
 public class LongestOrEqualTest {
-    SuitSet ALL = SuitSets.lookupSuitSet("ALL");
+    SuitSet ALL = SuitSetParser.lookupSuitSet("ALL");
 
     @Test
     public void testValueOf() {
