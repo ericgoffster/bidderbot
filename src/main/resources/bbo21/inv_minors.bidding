@@ -5,32 +5,29 @@
 # H = ♥
 # S = ♠
 
-1m 2m
-4M => 14+ hcp, 6+ m, 5+ M;
-    test x AKJxx AQJxxx x:
-        1♦ 2♦
-        4♥;
-
-1m 2m
-2N => 12-14 tpts, balanced, partial_stoppers unstopped, stoppers denied;
-    test AKx QJx Kxx xxxx:
-        1♣ 2♣
-        2N;
-
-1m 2m
-3N => 18-19 tpts, balanced, partial_stoppers unstopped, stoppers denied;
-    test AKx QJx Kxx AJxx:
-        1♣ 2♣
-        3N;
-
-1m 2m
-NJx => balanced,stoppers x;
-    test AKx QJx xxx Kxxx:
-        1♣ 2♣
-        2H;
-
-1m 2m
-Jx => gf,1- x;
-    test x AKxx KQxx Axxx:
-        1♣ 2♣
-        3♠;
+common 1m 2m {
+	4M => 14+ hcp, 6+ m, 5+ M;
+	    test x AKJxx AQJxxx x:
+	        1♦ 2♦
+	        4♥;
+	
+	2N => 12-14 tpts, balanced, partial_stoppers unstopped, stoppers denied;
+	    test AKx QJx Kxx xxxx:
+	        1♣ 2♣
+	        2N;
+	
+	3N => 18-19 tpts, balanced, partial_stoppers unstopped, stoppers denied;
+	    test AKx QJx Kxx AJxx:
+	        1♣ 2♣
+	        3N;
+	
+	NJx => balanced,stoppers x;
+	    test AKx QJx xxx Kxxx:
+	        1♣ 2♣
+	        2H;
+	
+	Jx => gf,1- x;
+	    test x AKxx KQxx Axxx:
+	        1♣ 2♣
+	        3♠;
+}
