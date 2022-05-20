@@ -44,7 +44,11 @@ public final class SteppedSymbol extends Symbol {
     }
 
     private int transform(Integer s) {
-        return (s + 5 - delta) % 5;
+        int x = (s - delta) % 5;
+        if (x < 0) {
+            x += 5;
+        }
+        return x;
     }
 
     @Override
