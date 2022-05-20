@@ -17,7 +17,7 @@ public final class TagSet {
         newTags.add(name);
         return new TagSet(newTags);
     }
-    
+
     public TagSet and(TagSet rho) {
         Set<String> s = new HashSet<>(tagSet);
         s.retainAll(rho.tagSet);
@@ -27,7 +27,7 @@ public final class TagSet {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(String str: tagSet) {
+        for (String str : tagSet) {
             sb.append(":\"" + str + "\"");
         }
         return sb.toString();

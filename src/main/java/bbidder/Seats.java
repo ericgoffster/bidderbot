@@ -11,11 +11,11 @@ public class Seats {
         super();
         this.seats = seats;
     }
-    
+
     public Seats addSeat(int seat) {
         return new Seats(seats | (1 << seat));
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(seats);
@@ -34,11 +34,12 @@ public class Seats {
     }
 
     public boolean hasSeat(int s) {
-        return (seats & (1 << s)) != 0; 
+        return (seats & (1 << s)) != 0;
     }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(int s = 0; s < 4; s++) {
+        for (int s = 0; s < 4; s++) {
             if (hasSeat(s)) {
                 sb.append(String.valueOf(s + 1));
             }

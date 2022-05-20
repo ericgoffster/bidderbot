@@ -101,8 +101,8 @@ public final class BidPattern {
 
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
-            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL, false,
-                    null, null);
+            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL,
+                    false, null, null);
         }
         return new BidPattern(false, null, null, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
@@ -114,7 +114,7 @@ public final class BidPattern {
     public static BidPattern createWild(Generality generality) {
         return new BidPattern(false, null, null, null, null, generality, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
-    
+
     /**
      * @param suitTable
      *            The symbols
@@ -134,8 +134,7 @@ public final class BidPattern {
         }).flatMap(e -> {
             BidPattern bidPattern = e.getBidPattern();
             if (bidPattern.lessThan != null) {
-                return bidPattern.lessThan.resolveSuits(e.suitTable)
-                        .map(e2 -> bidPattern.withLessThan(e2.getBidPattern()).new Context(e2.suitTable));
+                return bidPattern.lessThan.resolveSuits(e.suitTable).map(e2 -> bidPattern.withLessThan(e2.getBidPattern()).new Context(e2.suitTable));
             }
             return MyStream.of(e);
         }).flatMap(e -> {
@@ -147,7 +146,7 @@ public final class BidPattern {
                     .flatMap(e2 -> MyStream.of(bidPattern.withSymbol(e2.getSymbol()).new Context(e2.suitTable)));
         });
     }
-    
+
     TaggedBid getResolvedBid(Contract contract, TaggedBid bid) {
         if (simpleBid != null) {
             return new TaggedBid(simpleBid, tags);
@@ -245,7 +244,7 @@ public final class BidPattern {
             return String.valueOf(level + 1) + symbol;
         }
     }
-    
+
     private String _getString() {
         String str = _getBidString();
         if (downTheLine) {

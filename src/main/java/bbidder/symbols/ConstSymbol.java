@@ -46,7 +46,7 @@ public final class ConstSymbol extends Symbol {
     public int getResolvedStrain() {
         return strain;
     }
-    
+
     public final class Context {
         public final SuitTable suitTable;
 
