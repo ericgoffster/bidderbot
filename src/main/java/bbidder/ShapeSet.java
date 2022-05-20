@@ -133,9 +133,7 @@ public final class ShapeSet implements Iterable<Shape> {
         return size() == Shape.values().length;
     }
     
-    private static final ShapeStats EMPTY_STATS[] = { new ShapeStats(0, Range.none(13), Optional.empty()),
-            new ShapeStats(1, Range.none(13), Optional.empty()), new ShapeStats(2, Range.none(13), Optional.empty()),
-            new ShapeStats(3, Range.none(13), Optional.empty()) };
+    private static final ShapeStats EMPTY_STATS[] = { ShapeStats.EMPTY, ShapeStats.EMPTY, ShapeStats.EMPTY, ShapeStats.EMPTY};
 
     /**
      * @return The stats on each suit
@@ -152,18 +150,17 @@ public final class ShapeSet implements Iterable<Shape> {
             bits[1] |= (1L << s.numInSuit(1));
             bits[2] |= (1L << s.numInSuit(2));
             bits[3] |= (1L << s.numInSuit(3));
-            sum[0] += s.numInSuit(0) * s.p;
-            sum[1] += s.numInSuit(1) * s.p;
-            sum[2] += s.numInSuit(2) * s.p;
-            sum[3] += s.numInSuit(3) * s.p;
-            tot += s.p;
+            sum[0] += s.numInSuit(0) * s.probability;
+            sum[1] += s.numInSuit(1) * s.probability;
+            sum[2] += s.numInSuit(2) * s.probability;
+            sum[3] += s.numInSuit(3) * s.probability;
+            tot += s.probability;
         }
-        ShapeStats[] stats = new ShapeStats[4];
-        stats[0] = new ShapeStats(0, new Range(bits[0], 13), Optional.of(sum[0] / tot));
-        stats[1] = new ShapeStats(1, new Range(bits[1], 13), Optional.of(sum[1] / tot));
-        stats[2] = new ShapeStats(2, new Range(bits[2], 13), Optional.of(sum[2] / tot));
-        stats[3] = new ShapeStats(3, new Range(bits[3], 13), Optional.of(sum[3] / tot));
-        return stats;
+        return new ShapeStats[] {
+            new ShapeStats(new Range(bits[0], 13), Optional.of(sum[0] / tot)),
+            new ShapeStats(new Range(bits[1], 13), Optional.of(sum[1] / tot)),
+            new ShapeStats(new Range(bits[2], 13), Optional.of(sum[2] / tot)),
+            new ShapeStats(new Range(bits[3], 13), Optional.of(sum[3] / tot))};
     }
 
     @Override
@@ -174,12 +171,12 @@ public final class ShapeSet implements Iterable<Shape> {
         ShapeStats[] stats = getStats();
         List<String> str = new ArrayList<>();
         for (int s = 0; s < 4; s++) {
-            Range rn = stats[s].range;
+            Range rn = stats[s].lengths;
             if (rn.isEmpty()) {
                 return "{}";
             }
             if (!rn.unBounded()) {
-                str.add(stats[s].toString());
+                str.add(Strain.getName(s) + "-" + stats[s]);
             }
         }
         if (str.size() == 0) {

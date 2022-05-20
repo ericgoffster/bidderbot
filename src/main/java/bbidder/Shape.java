@@ -565,18 +565,18 @@ public enum Shape {
     _01060006(1, 6, 0, 6, 5.97800e-05);
 
     final int[] num = new int[4];
-    final double p;
+    final double probability;
 
     public int numInSuit(int suit) {
         return num[suit];
     }
 
-    private Shape(int c, int d, int h, int s, double p) {
+    private Shape(int c, int d, int h, int s, double probability) {
         this.num[0] = c;
         this.num[1] = d;
         this.num[2] = h;
         this.num[3] = s;
-        this.p = p;
+        this.probability = probability;
     }
 
     static final Shape[][][] numToShape = new Shape[14][14][14];

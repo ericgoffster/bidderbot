@@ -2,23 +2,34 @@ package bbidder;
 
 import java.util.Optional;
 
+/**
+ * Represents the statistics of a shape in a particular suit.
+ * @author goffster
+ *
+ */
 public class ShapeStats {
-    final int suit;
-    final Range range;
-    final Optional<Double> avg;
+    public static final ShapeStats EMPTY = new ShapeStats(Range.none(13), Optional.empty());
+    /**
+     * The range of possible lengths.
+     */
+    public final Range lengths;
+    
+    /**
+     * The average length.   Empty for "null" sets.
+     */
+    public final Optional<Double> averageLength;
 
-    public ShapeStats(int suit, Range range, Optional<Double> avg) {
+    public ShapeStats(Range range, Optional<Double> avg) {
         super();
-        this.suit = suit;
-        this.range = range;
-        this.avg = avg;
+        this.lengths = range;
+        this.averageLength = avg;
     }
 
     @Override
     public String toString() {
-        if (!avg.isPresent()) {
-            return "undefined " + Strain.getName(suit);
+        if (!averageLength.isPresent()) {
+            return "undefined";
         }
-        return range + " " + Strain.getName(suit) + " average " + avg.get();
+        return lengths + " " + " average " + averageLength.get();
     }
 }

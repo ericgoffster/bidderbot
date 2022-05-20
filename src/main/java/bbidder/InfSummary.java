@@ -76,7 +76,7 @@ public final class InfSummary {
      * @return The range of possible lengths for the suit
      */
     public Range getSuit(int suit) {
-        return getShapeStats(suit).range;
+        return getShapeStats(suit).lengths;
     }
 
     /**
@@ -112,7 +112,7 @@ public final class InfSummary {
      * @return The average length in a suit, empty if there is an empty set of lengths.
      */
     public Optional<Double> avgLenInSuit(int suit) {
-        return getShapeStats(suit).avg;
+        return getShapeStats(suit).averageLength;
     }
 
     /**
