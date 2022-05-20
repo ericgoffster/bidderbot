@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,21 +58,22 @@ public final class BiddingSystem {
     }
 
     /**
-     * @param bidding
+     * @param auction
      *            The list of bids
      * @param players
      *            The players
      * @return A list of all possible bids given the list of bids.
      */
-    public List<PossibleBid> getPossibleBids(TaggedAuction bidding, Players players) {
-        DebugUtils.breakpointGetPossibleBid(bidding, players);
+    public List<PossibleBid> getPossibleBids(TaggedAuction auction, Players players) {
+        DebugUtils.breakpointGetPossibleBid(auction, players);
         List<PossibleBid> l = new ArrayList<>();
         Map<Bid, TaggedBid> matched = new HashMap<>();
         inferences.forEach(rsbi -> {
+            BidPattern p = rsbi.unresolved.bids.getLastBid();
             List<PossibleBid> tmp = new ArrayList<>();
             rsbi.inferences.forEach(i -> {
-                i.bids.getMatch(bidding, players).ifPresent(match -> {
-                    DebugUtils.breakpointGetPossibleBid(bidding, players, match, i);
+                i.bids.getMatch(auction, players).ifPresent(match -> {
+                    DebugUtils.breakpointGetPossibleBid(auction, players, match, i);
                     TaggedBid tb = matched.get(match.bid);
                     if (tb == null || tb.equals(match)) {
                         tmp.add(new PossibleBid(i, match));
@@ -79,22 +81,12 @@ public final class BiddingSystem {
                     }
                 });
             });
-            BidPattern p = rsbi.unresolved.bids.getLastBid();
-            if (p.downTheLine) {
-                tmp.sort((a, b) -> {
-                    int cmp = Integer.compare(a.bid.bid.level, b.bid.bid.level);
-                    if (cmp != 0) {
-                        return cmp;
-                    }
-                    return -Integer.compare(a.bid.bid.strain, b.bid.bid.strain);
-                });
-            } else {
-                tmp.sort((a, b) -> a.bid.bid.compareTo(b.bid.bid));
-            }
+            Comparator<Bid> priority = p.getPriority();
+            tmp.sort((a, b) -> priority.compare(a.bid.bid, b.bid.bid));
             l.addAll(tmp);
         });
         if (l.isEmpty()) {
-            DebugUtils.breakpointGetPossibleBid(bidding, players, l);
+            DebugUtils.breakpointGetPossibleBid(auction, players, l);
         }
         return l;
     }
@@ -102,7 +94,7 @@ public final class BiddingSystem {
     /**
      * Retrieve the bid for a hand starting from the list of bids and a summary from everyone.
      * 
-     * @param bidding
+     * @param auction
      *            The auction
      * @param players
      *            Likely hands fro everyone
@@ -110,8 +102,8 @@ public final class BiddingSystem {
      *            The hand to evaluate
      * @return The right bid
      */
-    public BidSource getBid(TaggedAuction bidding, Players players, Hand hand) {
-        List<PossibleBid> possible = getPossibleBids(bidding, players);
+    public BidSource getBid(TaggedAuction auction, Players players, Hand hand) {
+        List<PossibleBid> possible = getPossibleBids(auction, players);
         return possible.stream()
                 .filter(i -> i.inf.inferences.bind(players).test(hand))
                 .findFirst()

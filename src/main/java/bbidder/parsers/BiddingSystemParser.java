@@ -144,6 +144,9 @@ public final class BiddingSystemParser {
                             }
                         } else if (!ln.equals("")) {
                             try {
+                                if (here.equals("classpath:bbo21/contested/minor_resp_over_x.bidding:9")) {
+                                    System.out.println();
+                                }
                                 BidInference unresolved = BidInference.valueOf(here, ln, prefix);
                                 List<BidInference> resolved = new ArrayList<>();
                                 unresolved.resolveSuits().forEach(resolved::add);

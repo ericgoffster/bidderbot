@@ -1,5 +1,6 @@
 package bbidder;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 import bbidder.symbols.ConstSymbol;
@@ -219,6 +220,20 @@ public final class BidPattern {
             }
         }
         return true;
+    }
+    
+    public Comparator<Bid> getPriority() {
+        if (downTheLine) {
+            return (a, b) -> {
+                int cmp = Integer.compare(a.level, b.level);
+                if (cmp != 0) {
+                    return cmp;
+                }
+                return -Integer.compare(a.strain, b.strain);
+            };
+        } else {
+            return (a, b) -> a.compareTo(b);
+        }
     }
 
     @Override
