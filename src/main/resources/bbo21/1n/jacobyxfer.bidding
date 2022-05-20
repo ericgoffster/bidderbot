@@ -33,7 +33,7 @@ NJx => 17 hcp, 4+M, 2-x;
         3♦;
 
 
-1N 2M-1 2M =>;
+1N 2M-1 2M => always ;
     test AQxx xx AJx Axxx:
         1N 2♦
         2♥;
