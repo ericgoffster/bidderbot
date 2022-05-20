@@ -3,6 +3,7 @@ package bbidder;
 import java.util.Map;
 import java.util.OptionalInt;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import bbidder.inferences.Always;
 import bbidder.inferences.AndInference;
@@ -231,7 +232,7 @@ public final class InferenceParser {
         if (str == null) {
             return null;
         }
-        Matcher m = FitInSuit.PATT_FIT.matcher(str);
+        Matcher m = InferenceParser.PATT_FIT.matcher(str);
         if (m.matches()) {
             Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
             if (sym == null) {
@@ -246,7 +247,7 @@ public final class InferenceParser {
         if (str == null) {
             return null;
         }
-        Matcher m = Rebiddable.PATT_FIT.matcher(str);
+        Matcher m = InferenceParser.PATT_REBIDDABLE.matcher(str);
         if (m.matches()) {
             Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
             if (sym == null) {
@@ -261,7 +262,7 @@ public final class InferenceParser {
         if (str == null) {
             return null;
         }
-        Matcher m = RebiddableSecondSuit.PATT_FIT.matcher(str);
+        Matcher m = InferenceParser.PATT_REBIDDABLE_2nd_SUIT.matcher(str);
         if (m.matches()) {
             Symbol longer = SymbolParser.parseSymbol(m.group(1).trim());
             Symbol shorter = SymbolParser.parseSymbol(m.group(2).trim());
@@ -325,7 +326,7 @@ public final class InferenceParser {
         }
         RangeOf rng = RangeOf.valueOf(str);
         if (rng != null) {
-            Matcher m = SpecificCards.PATT.matcher(rng.of);
+            Matcher m = InferenceParser.PATT_SPECIFIC_CARDS.matcher(rng.of);
             if (m.matches()) {
                 int top = Integer.parseInt(m.group(1));
                 String suit = m.group(2);
@@ -365,7 +366,7 @@ public final class InferenceParser {
         if (str == null) {
             return null;
         }
-        Matcher m = Preference.PATT_FIT.matcher(str);
+        Matcher m = InferenceParser.PATT_PREF.matcher(str);
         if (m.matches()) {
             Symbol sym1 = SymbolParser.parseSymbol(m.group(1).trim());
             if (sym1 == null) {
@@ -425,4 +426,9 @@ public final class InferenceParser {
     }
 
     public static final Map<String, Integer> POINT_RANGES = Map.of("min", 18, "inv", 22, "gf", 25, "slaminv", 31, "slam", 33, "grandinv", 35, "grand", 37);
+    public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    public static Pattern PATT_PREF = Pattern.compile("\\s*prefer\\s*(.*)\\s*to\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    public static Pattern PATT_REBIDDABLE = Pattern.compile("\\s*rebiddable\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    public static Pattern PATT_REBIDDABLE_2nd_SUIT = Pattern.compile("\\s*rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
+    public static Pattern PATT_SPECIFIC_CARDS = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
 }

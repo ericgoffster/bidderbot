@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
@@ -19,8 +18,6 @@ import bbidder.inferences.bound.ShapeBoundInf;
 public final class RebiddableSecondSuit extends Inference {
     private final Symbol longer;
     private final Symbol shorter;
-
-    public static Pattern PATT_FIT = Pattern.compile("\\s*rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
     public RebiddableSecondSuit(Symbol longer, Symbol shorter) {
         super();

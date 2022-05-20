@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
@@ -23,8 +22,6 @@ import bbidder.inferences.bound.ShapeBoundInf;
  */
 public final class FitInSuit extends Inference {
     private final Symbol symbol;
-
-    public static Pattern PATT_FIT = Pattern.compile("\\s*fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
     public FitInSuit(Symbol suit) {
         super();

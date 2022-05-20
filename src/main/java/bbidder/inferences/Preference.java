@@ -2,7 +2,6 @@ package bbidder.inferences;
 
 import java.util.Objects;
 import java.util.OptionalInt;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
@@ -18,8 +17,6 @@ import bbidder.inferences.bound.ShapeBoundInf;
 public final class Preference extends Inference {
     private final Symbol longer;
     private final Symbol shorter;
-
-    public static Pattern PATT_FIT = Pattern.compile("\\s*prefer\\s*(.*)\\s*to\\s*(.*)", Pattern.CASE_INSENSITIVE);
 
     public Preference(Symbol longer, Symbol shorter) {
         super();

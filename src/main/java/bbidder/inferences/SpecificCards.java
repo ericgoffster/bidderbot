@@ -1,7 +1,6 @@
 package bbidder.inferences;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import bbidder.CardsRange;
@@ -20,8 +19,6 @@ public final class SpecificCards extends Inference {
     private final Symbol symbol;
     private final CardsRange rng;
     private final int top;
-
-    public static Pattern PATT = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
 
     public SpecificCards(Symbol symbol, CardsRange rng, int top) {
         super();
