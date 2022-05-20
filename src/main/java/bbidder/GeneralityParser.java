@@ -51,7 +51,21 @@ public final class GeneralityParser {
         case BestFitEstablished.NAME: {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new BestFitEstablished(symbol);
+                return new BestFitEstablished(symbol, 7);
+            }
+            break;
+        }
+        case "bestfit7_established": {
+            Symbol symbol = SymbolParser.parseSymbol(remainder);
+            if (symbol != null) {
+                return new BestFitEstablished(symbol, 7);
+            }
+            break;
+        }
+        case "bestfit8_established": {
+            Symbol symbol = SymbolParser.parseSymbol(remainder);
+            if (symbol != null) {
+                return new BestFitEstablished(symbol, 8);
             }
             break;
         }

@@ -5,22 +5,19 @@
 # H = ♥
 # S = ♠
 
-#
-# Pass NT 
-#
+[[Pass 3N with gf values]]
 [] 3N P => gf;
     test Axx Kxx Kxx Qxxx:
         1D 2N
         3N P;
 
+[[Pass 2N with inv values]]
 [] 2N P => inv;
     test xxx Kxxx Kxx xxx:
         1C 1H
         2N P;
 
-#
-# Bid NT if possible to the right level
-#
+[[Bid 3N with gf values]]
 [] 3N => gf, partial_stoppers unstopped;
     test Axx AQxx Qxx Qxx:
         1C 1H
@@ -29,9 +26,7 @@
         1♣ 1♦
         1♥ 3N;
 
-#
-# Rebid minor
-#     
+[[Jump rebid minor below 3N with invitational values]]
 [i_bid_suit m] Jm:<3N => inv, rebiddable m;
     test Kxx xxx AQxxxx x:
         1C 1D
@@ -40,6 +35,7 @@
         1♣ 1♦
         3♣;
 
+[[Bid 2N with invitational values]]
 [] 2N:nonconventional => inv, partial_stoppers unstopped;
     test Axx Kxxx Qxx Qxx:
         1C 1H
@@ -51,35 +47,31 @@
         1♣ 1♦
         1♥ 2N;
 
+[[Rebid minor at 2 level with minimum values]]
 [i_bid_suit m] NJm:<2N => min, rebiddable m;
     test Kxx Kxx x AKxxxx:
         1♣ 1♦
         2♣;
 
-#
-# Bid a new suit
-#
-[i_bid_suit y, unbid_suit x] NJx:<4C:nonconventional => gf+, 4+ x;
+[[Bid a new suit below 3N with game forcing values]]
+[i_bid_suit y, unbid_suit x] NJx:<3N:nonconventional => gf+, 4+ x;
     test xx AQxxx Qxxx Ax:
         1C 1H
         2C 2D;
 
-#
-# Pass minor at right level
-# 
+[[Pass minor at 3 level with invitational values]]
 [] 3m P => inv, fit m;
     test xxx Qxx Axxxx xx:
         1C 1D
         3D P;
 
+[[Pass minor at 2 level with minimum values]]
 [] 2m P => min, fit m;
     test xxx Qxx Axxxx xx:
         1C 1D
         2D P;
     
-#
-# Bid minor at right level
-#    
+[[Bid minor at 3 level with invitational values and a fit]]
 [] 3m => inv, fit m;
     test x Kxxx xx AQxxxx:
         1C 1H
@@ -88,6 +80,7 @@
         1♣ 1♥
         1♠ 3♣;
 
+[[Bid minor at 2 level with minimum values and a fit]]
 [] 2m => min, fit m;
     test Ax xxxx xx Axxxx:
         1C 1H
@@ -96,14 +89,13 @@
         1♣ 1♥
         1♠ 2♣;
 
-[] 1N P => min-;
+[[Pass 1N with minimum values]]
+[] 1N P => min;
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1N P;
         
-#
-# Pass preference
-#
+[[Pass preference at 2 level with minimum values]]
 [partner_is_two_suited x y] NJx:<2N P => min, prefer x to y;
     test AQxxx x xxxx xxx:
         1H 1S
@@ -112,23 +104,20 @@
         1D 1H
         1S P;             
 
+[[Bid 1N with minimum values]]
 1x 1y
 1z 1N => min;
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1♥ 1N;
 
-#
-# Show preference
-#
+[[Show preference at 2 level]]
 [partner_is_two_suited x y] 2x => min, prefer x to y;
     test AQxxx xx xxxx xx:
         1H 1S
         2C 2H;
 
-#
-# Three suited.   bid 4-th suit
-#      
+[[Bid 4th suit if in a bind with game forcing values]]
 [we_are_three_suited, unbid_suit x] NJx:<3N => gf+;
     test AKxxxx x xxx AKx:
         1♦ 1♠
@@ -147,38 +136,48 @@
         1N 2D
         2♥ P;
 
-[[No bid matches, bid cheapest known fit]]
-[bestfit_established y] ?x NJy => always;
+[[No bid matches, Return to best known fit]]
+[bestfit8_established y] ?x NJy => always;
     test AKx Axxx Axx Qxx:
         1N 2D
         2N 3D
         3H;
+    test AQX KJxx xx AJxx:
+        1N 3♣
+        3♦;
+
+[[No bid matches, Return to best known fit]]
+[bestfit8_established y] ?N NJy => always;
+    test AQX KJxx AJxx xx:
+        1N 2N
+        3♣;
+
+[[No bid matches, No fit, pass NT]]
+[] ?N P => always;
+    test xxx xxxx xxx xxx:
+        1N P;
+    test xxx xxxx xxx xxx:
+        2N P;
+        
+[[No bid matches, Return to best known pseudo fit]]
+[bestfit_established y] ?x NJy => always;
     test AQxx xx AJx Axxx:
         1N 2♦
         2♥;
     test AQx xxx AJx Axxx:
         1N 2♥
         2♠;
-    test Qx AQJx AKxx AKx:
-        2C 2D
-        2N 3♥
-        3♠;
     test AQJx Qx AKxx AKx:
         2C 2D
         2N 3♦
         3♥;
+    test Qx AQJx AKxx AKx:
+        2C 2D
+        2N 3♥
+        3♠;
     test xx AQJx AKxx AKx:
         2N 3♥
         3♠;
     test AQJx xx AKxx AKx:
         2N 3♦
         3♥;
-    test AQX KJxx xx AJxx:
-        1N 3♣
-        3♦;
-
-[[No bid matches, bid cheapest known fit]]
-[bestfit_established y] ?N NJy => always;
-    test AQX KJxx AJxx xx:
-        1N 2N
-        3♣;

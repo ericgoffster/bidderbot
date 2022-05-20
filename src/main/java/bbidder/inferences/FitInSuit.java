@@ -75,7 +75,7 @@ public final class FitInSuit extends Inference {
             return ConstBoundInference.F;
         }
         int myLen = minLenInSuitMe.getAsInt();
-        if (myLen + partnerLen >= 8) {
+        if (myLen + partnerLen >= combined) {
             return ConstBoundInference.T;
         }
         if (partnerLen < 2) {

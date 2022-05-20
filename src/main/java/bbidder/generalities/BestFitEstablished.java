@@ -15,32 +15,38 @@ import bbidder.utils.MyStream;
 public final class BestFitEstablished extends Generality {
     public static final String NAME = "bestfit_established";
     private final Symbol symbol;
+    private final int combined;
 
-    public BestFitEstablished(Symbol symbol) {
+    public BestFitEstablished(Symbol symbol, int combined) {
         super();
         this.symbol = symbol;
+        this.combined = combined;
     }
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
-        return symbol.resolveSuits(suitTable).map(e -> new BestFitEstablished(e.getSymbol()).new Context(e.suitTable));
+        return symbol.resolveSuits(suitTable).map(e -> new BestFitEstablished(e.getSymbol(), combined).new Context(e.suitTable));
     }
 
     @Override
     public boolean test(Players players, Auction bidList) {
+        return getBestSuits(players).contains(symbol.getResolvedStrain());
+    }
+
+    private Set<Integer> getBestSuits(Players players) {
         Set<Integer> bestSuits = new HashSet<>();
         int bestLen = 0;
         for(int t = 0; t < 4; t++) {
             OptionalInt minLenInSuitPartner = players.partner.infSummary.minLenInSuit(t);
             if (!minLenInSuitPartner.isPresent()) {
-                return false;
+                return Set.of();
             }
             OptionalInt minLenInSuitMe = players.me.infSummary.minLenInSuit(t);
             if (!minLenInSuitPartner.isPresent()) {
-                return false;
+                return Set.of();
             }
             int combinedLen = minLenInSuitMe.getAsInt() + minLenInSuitPartner.getAsInt();
-            if (combinedLen >= 7) {
+            if (combinedLen >= combined) {
                 if (combinedLen > bestLen) {
                     bestSuits.clear();
                     bestLen = combinedLen;
@@ -50,13 +56,12 @@ public final class BestFitEstablished extends Generality {
                 }
             }
         }
-        
-        return bestSuits.contains(symbol.getResolvedStrain());
+        return bestSuits;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol);
+        return Objects.hash(combined, symbol);
     }
 
     @Override
@@ -68,12 +73,12 @@ public final class BestFitEstablished extends Generality {
         if (getClass() != obj.getClass())
             return false;
         BestFitEstablished other = (BestFitEstablished) obj;
-        return Objects.equals(symbol, other.symbol);
+        return combined == other.combined && Objects.equals(symbol, other.symbol);
     }
 
     @Override
     public String toString() {
-        return "bestfit_established" + " " + symbol;
+        return "bestfit" + combined + "_established" + " " + symbol;
     }
 
 }
