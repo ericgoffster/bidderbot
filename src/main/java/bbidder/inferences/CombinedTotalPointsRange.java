@@ -57,7 +57,12 @@ public final class CombinedTotalPointsRange extends Inference {
             if (r1 == null || r2 == null) {
                 return null;
             }
-            return new CombinedTotalPointsRange(r1.rng.lowest().get(), r2.rng.highest().get());
+            Optional<Integer> lower = r1.rng.lowest();
+            Optional<Integer> higher = r2.rng.highest();
+            if (!lower.isPresent() || !higher.isPresent()) {
+                return new CombinedTotalPointsRange(Range.none(40));
+            }
+            return new CombinedTotalPointsRange(lower.get(), higher.get());
         }
         Range createRange = createRange(str);
         if (createRange == null) {
