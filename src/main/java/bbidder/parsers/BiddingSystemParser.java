@@ -105,6 +105,15 @@ public final class BiddingSystemParser {
                         for(BidPattern pattern: BidPatternList.valueOf(comm[1]).getBids()) {
                             prefix = prefix.withBidAdded(pattern);
                         }
+                    } else if (comm.length == 1 && comm[0].equalsIgnoreCase("continuations")) {
+                        if (last == null) {
+                            reportErrors.accept(new ParseException(here, new IllegalArgumentException("illegal continuation")));
+                        } else {
+                            commons.push(prefix);
+                            for(BidPattern pattern: last.bids.getBids()) {
+                                prefix = prefix.withBidAdded(pattern);
+                            }
+                        }
                     } else {
                         reportErrors.accept(new ParseException(here, new IllegalArgumentException("unrecognized block")));
                     }
