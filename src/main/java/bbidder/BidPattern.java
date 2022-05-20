@@ -141,7 +141,7 @@ public final class BidPattern {
         }).flatMap(e -> {
             BidPattern bidPattern = e.getBidPattern();
             if (bidPattern.symbol == null) {
-                return MyStream.of(bidPattern.new Context(e.suitTable));
+                return MyStream.of(e);
             }
             return bidPattern.symbol.resolveSuits(suitTable)
                     .flatMap(e2 -> MyStream.of(bidPattern.withSymbol(e2.getSymbol()))
