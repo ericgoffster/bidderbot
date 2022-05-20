@@ -1,3 +1,4 @@
 include opening.bidding;
-include resp.bidding;
+include resp_overcall.bidding;
+include resp_takeout.bidding;
 include passout.bidding;

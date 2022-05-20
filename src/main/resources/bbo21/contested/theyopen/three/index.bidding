@@ -1,2 +1,2 @@
 include opening.bidding;
-include resp.bidding;
+include resp_takeout.bidding;

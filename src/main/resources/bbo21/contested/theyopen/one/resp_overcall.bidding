@@ -1,0 +1,20 @@
+common (1w) 1x {
+    2w:"cuebid" => 11+ tpts, 3+x, 10+ hcp;
+	    test xx AQxx AJxx xxx:
+	        (1C) 1H 2C;
+    3x => 6-8 tpts, 4+x;
+	    test xx AQxx xxxx xxx:
+	        (1C) 1H 3H;
+    2x => 6-10 tpts, 3+x;
+	    test xx AQx xxxxx xxx:
+	        (1C) 1H 2H;
+	1y => 10+ tpts, 8+ hcp, 5+y;
+	    test AKxxx xx Qxx xxx:
+	        (1C) 1H 1S;
+	NJy:>1N => 10+ tpts, 8+ hcp, 6+y;
+	    test xx AQJxxx Qxx xx:
+	        (1C) 1S 2H;
+	1N => 10-13 hcp, stoppers w;
+	    test xx AQxx xxxx KJx:
+	        (1C) 1S 1N;
+}
