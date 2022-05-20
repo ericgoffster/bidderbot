@@ -97,7 +97,9 @@ public final class BidPatternParser implements Parser<BidPattern> {
         if (inp.readKeyword("~")) {
             anti = true;
         }
-        if (inp.readKeyword(BidPattern.STR_NONJUMP)) {
+        if (inp.readKeyword("*")) {
+            return BidPattern.createWild();
+        } else if (inp.readKeyword(BidPattern.STR_NONJUMP)) {
             String str = parseSuit(inp);
             Symbol symbol = SymbolParser.parseSymbol(str);
             if (symbol == null) {

@@ -54,7 +54,7 @@
 [8+ fit m] 3m => inv;
 
 [[Self support minor at 3 level with invitational values]]
-[i bid m] 3m => inv, 8+ fit m;
+*:i bid m 3m => inv, 8+ fit m;
     test AJx xx Axxxxx xx:
          1C 1D
          1N 3D;
@@ -88,7 +88,7 @@
         3D P;
 
 [[Pass minor at 3 level with self support and invitational values]]
-[i bid m] 3m P => inv, 8+ fit m;
+*:i bid m 3m P => inv, 8+ fit m;
 
 [[Pass minor at 3 level with support and invitational values]]
 [partner bid m] 3m P => inv, 8+ fit m;
@@ -100,14 +100,14 @@
         2D P;
         
 [[Pass minor at 2 level with self support and minimum values]]
-[i bid m] 2m P => min, 8+ fit m;
+*:i bid m 2m P => min, 8+ fit m;
 
 [[Pass minor at 2 level with support and minimum values]]
 [partner bid m] 2m P => min, 8+ fit m;
 
 # Rebid suit
 [[Rebid minor at 3 level 3N with invitational values]]
-[i bid m] 3m => inv, rebiddable m;
+*:i bid m 3m => inv, rebiddable m;
     test Kxx xxx AQxxxx x:
         1C 1D
         2C 3D;
@@ -116,7 +116,7 @@
         3♣;
 
 [[Rebid minor at 2 level with minimum values]]
-[i bid m] 2m => min, rebiddable m;
+*:i bid m 2m => min, rebiddable m;
     test Kxx Kxx x AKxxxx:
         1♣ 1♦
         2♣;

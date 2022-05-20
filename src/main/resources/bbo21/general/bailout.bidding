@@ -13,7 +13,7 @@
 [8+ fit y] ?y P => always;
 
 [[Pass any playable fit]]
-[i bid y] ?y P => 8+ fit y;
+*:i bid y ?y P => 8+ fit y;
 
 [[Pass any playable fit]]
 [partner bid y] ?y P => 8+ fit y;
@@ -22,7 +22,7 @@
 [8+ fit y] NJy => always;
 
 [[Self support suit]]
-[i bid y] NJy => 8+ fit y;
+*:i bid y NJy => 8+ fit y;
 
 [[Support suit]]
 [partner bid y] NJy => 8+ fit y;
@@ -41,7 +41,7 @@
         2C P;
 
 [[Rebid own suit]]
-[i bid x] NJx => rebiddable m;
+*:i bid x NJx => rebiddable m;
 
 [[Pass NT]]
 [] ?N P => always;
