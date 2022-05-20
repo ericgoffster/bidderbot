@@ -12,17 +12,17 @@ import java.io.CharArrayReader;
 import java.io.Closeable;
 import java.io.IOException;
 
+import bbidder.Position;
 import bbidder.SuitSet;
 import bbidder.Symbol;
 import bbidder.suitsets.And;
+import bbidder.suitsets.BidSuits;
 import bbidder.suitsets.ConstSet;
 import bbidder.suitsets.DeniedStoppers;
 import bbidder.suitsets.Gt;
 import bbidder.suitsets.LookupSet;
 import bbidder.suitsets.Not;
 import bbidder.suitsets.Or;
-import bbidder.suitsets.OurSuits;
-import bbidder.suitsets.TheirSuits;
 import bbidder.suitsets.Unbid;
 import bbidder.suitsets.Unstopped;
 
@@ -90,9 +90,9 @@ public final class SuitSetParser {
                 case "DENIED":
                     return new DeniedStoppers();
                 case "OURS":
-                    return new OurSuits();
+                    return new BidSuits(Position.ME);
                 case "THEIRS":
-                    return new TheirSuits();
+                    return new BidSuits(Position.LHO);
                 case "UNBID":
                     return new Unbid();
                 case "UNSTOPPED":

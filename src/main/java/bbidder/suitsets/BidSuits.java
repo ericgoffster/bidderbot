@@ -1,5 +1,6 @@
 package bbidder.suitsets;
 
+import java.util.Objects;
 import java.util.OptionalInt;
 
 import bbidder.Players;
@@ -8,14 +9,15 @@ import bbidder.SuitSet;
 import bbidder.SuitTable;
 import bbidder.utils.MyStream;
 
-public final class OurSuits extends SuitSet {
-    public OurSuits() {
+public final class BidSuits extends SuitSet {
+    private final Position position;
+    public BidSuits(Position position) {
         super();
+        this.position = position;
     }
 
     @Override
     public short evaluate(Players players) {
-        Position position = Position.ME;
         OptionalInt partnerSuits = players.getPlayer(position.getOpposite()).infSummary.getBidSuits();
         OptionalInt meSuits = players.getPlayer(position).infSummary.getBidSuits();
         if (!partnerSuits.isPresent() || !meSuits.isPresent()) {
@@ -27,7 +29,7 @@ public final class OurSuits extends SuitSet {
 
     @Override
     public int hashCode() {
-        return 0;
+        return Objects.hash(position);
     }
 
     @Override
@@ -38,7 +40,8 @@ public final class OurSuits extends SuitSet {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        return true;
+        BidSuits other = (BidSuits) obj;
+        return position == other.position;
     }
 
     @Override
@@ -48,6 +51,15 @@ public final class OurSuits extends SuitSet {
 
     @Override
     public String toString() {
-        return "ours";
+        switch(position) {
+        case ME:
+        case PARTNER:
+            return "ours";
+        case LHO:
+        case RHO:
+            return "theirs";
+        default:
+            throw new IllegalStateException();
+        }
     }
 }
