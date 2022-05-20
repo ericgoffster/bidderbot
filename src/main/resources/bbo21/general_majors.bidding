@@ -9,17 +9,17 @@
 # We can pass anytime a major in an established
 # suit at the right level has been bid.
 #
-[fit_established M] 4M P => gf-;
+[] 4M P => gf-, fit M;
     test AQxxx Axx Axx xx:
         1S 2N
         4S P;
 
-[fit_established M] 3M P => inv-;
+[] 3M P => inv-, fit M;
     test Axxxx Axx Axx xx:
         1S 3S
         P;
 
-[fit_established M] 2M P => min-;
+[] 2M P => min-, fit M;
     test xxx Axxx Kx xxxx:
         1C 1H
         2H P;
@@ -27,31 +27,30 @@
 #
 # We can always bid the established major to the right level
 #
-[fit_established M] 4M => gf;
+[] 4M => gf, fit M;
     test AQxxx Axxx Ax xx:
         1S 3S
         4S;
-
-[fit_established M] 3M => inv;
-    test AQxx Axx xxxx xx:
-        1C 1S
-        2S 3S;
-
-[partner_bid_suit M] 4M => gf, fit M;
     test AQxx Axxx x AKxx:
         1C 1H
         4H;
 
-[partner_bid_suit M] 3M => inv, fit M;
+[] 3M => inv, fit M;
+    test AQxx Axx xxxx xx:
+        1C 1S
+        2S 3S;
     test AQxx Axxx xx AQx:
         1C 1H
         3H;
 
-[partner_bid_suit M] 2M => min, fit M;
+[] 2M => min, fit M;
     test Axxx Axxx xx Axx:
         1C 1H
         2H;
 
+#
+# Rebid 2nd suit if possible
+#
 [i_am_two_suited x y] NJy => rebiddable_2nd x y;
     test AQxxx x x AQxxxx:
         1C 1H
@@ -61,12 +60,18 @@
         1D 1H
         2C 2H
         3C;
-        
+
+#
+# Rebid major if possible
+# 
 [i_bid_suit M] NJM:<2N => min, rebiddable M;
     test xx AQxxxx xx xxx:
         1C 1H
         1N 2H;
 
+#
+# Jump Rebid major if possible
+# 
 [i_bid_suit M] JM:<3N => inv, rebiddable M;
     test xx AQxxxx xx Kxx:
         1C 1H
@@ -75,6 +80,9 @@ anti_test xx AQxxx xxx Kxx:
         1C 1H
         2C 3H;
 
+#
+# Bid 4 of major
+#
 [i_bid_suit M] 4M => gf, rebiddable M;
     test Ax AQxxxxx xx Kx:
         1C 1H

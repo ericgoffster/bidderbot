@@ -63,11 +63,27 @@ public final class FitInSuit extends Inference {
     }
 
     private IBoundInference createrBound(int s, Players players) {
-        OptionalInt minLenInSuit = players.partner.infSummary.minLenInSuit(s);
-        if (!minLenInSuit.isPresent()) {
+        OptionalInt minLenInSuitPartner = players.partner.infSummary.minLenInSuit(s);
+        if (!minLenInSuitPartner.isPresent()) {
             return ConstBoundInference.F;
         }
-        int partnerLen = minLenInSuit.getAsInt();
+        int partnerLen = minLenInSuitPartner.getAsInt();
+        OptionalInt minLenInSuitMe = players.me.infSummary.minLenInSuit(s);
+        if (!minLenInSuitPartner.isPresent()) {
+            return ConstBoundInference.F;
+        }
+        int myLen = minLenInSuitMe.getAsInt();
+        if (myLen + partnerLen >= 8) {
+            return ConstBoundInference.T;
+        }
+        OptionalInt bidSuits = players.partner.infSummary.getBidSuits();
+        if (bidSuits.isEmpty()) {
+            return ConstBoundInference.F;
+        }
+        if ((bidSuits.getAsInt() & (1 << s)) == 0) {
+            return ConstBoundInference.F;
+        }
+
         int myMinLen = 8 - partnerLen;
         if (myMinLen <= 0) {
             return ConstBoundInference.T;
