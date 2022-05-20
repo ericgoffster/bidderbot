@@ -11,6 +11,7 @@ import bbidder.SuitTable;
 import bbidder.Symbol;
 
 public final class FitEstablished extends Generality {
+    public static final String NAME = "fit_established";
     private final Symbol symbol;
 
     public FitEstablished(Symbol symbol) {
@@ -52,7 +53,7 @@ public final class FitEstablished extends Generality {
 
     @Override
     public String toString() {
-        return "fit_established " + symbol;
+        return NAME + " " + symbol;
     }
 
 }

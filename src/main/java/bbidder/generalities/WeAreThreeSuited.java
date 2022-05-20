@@ -10,6 +10,8 @@ import bbidder.SuitTable;
 import bbidder.utils.BitUtil;
 
 public final class WeAreThreeSuited extends Generality {
+    public static final String NAME = "we_are_three_suited";
+
     public WeAreThreeSuited() {
         super();
     }
@@ -32,7 +34,7 @@ public final class WeAreThreeSuited extends Generality {
 
     @Override
     public String toString() {
-        return "we_are_three_suited";
+        return NAME;
     }
 
 }

@@ -8,6 +8,7 @@ import bbidder.Players;
 import bbidder.SuitTable;
 
 public final class TrueGenerality extends Generality {
+    public static final String NAME = "true";
     public static TrueGenerality T = new TrueGenerality();
 
     private TrueGenerality() {
@@ -25,7 +26,7 @@ public final class TrueGenerality extends Generality {
 
     @Override
     public String toString() {
-        return "true";
+        return NAME;
     }
 
     @Override

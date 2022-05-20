@@ -9,6 +9,7 @@ import bbidder.SuitTable;
 import bbidder.Symbol;
 
 public final class PartnerIsTwoSuitedGenerality extends Generality {
+    public static final String NAME = "partner_is_two_suited";
     private final Symbol symbol1;
     private final Symbol symbol2;
 
@@ -34,7 +35,7 @@ public final class PartnerIsTwoSuitedGenerality extends Generality {
 
     @Override
     public String toString() {
-        return "partner_is_two_suited " + symbol1 + " " + symbol2;
+        return NAME + " " + symbol1 + " " + symbol2;
     }
 
 }

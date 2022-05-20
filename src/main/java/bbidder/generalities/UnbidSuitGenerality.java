@@ -10,6 +10,7 @@ import bbidder.SuitTable;
 import bbidder.Symbol;
 
 public final class UnbidSuitGenerality extends Generality {
+    public static final String NAME = "unbid_suit";
     private final Symbol symbol;
 
     public UnbidSuitGenerality(Symbol symbol) {
@@ -41,7 +42,7 @@ public final class UnbidSuitGenerality extends Generality {
 
     @Override
     public String toString() {
-        return "unbid_suit " + symbol;
+        return NAME + " " + symbol;
     }
 
 }
