@@ -51,7 +51,7 @@ public final class BiddingState {
     }
 
     public BiddingState withNewInference(IBoundInference inference) {
-        IBoundInference newInf = AndBoundInf.create(inference, players.me.inf);
+        IBoundInference newInf = AndBoundInf.create(inference, players.getPlayer(Position.ME).inf);
         InfSummary newSummary = newInf.getSummary();
         return new BiddingState(we, they, bidding, players.withNewMe(new Player(newInf, newSummary)));
     }
@@ -73,7 +73,7 @@ public final class BiddingState {
      */
     public BiddingState withBid(Bid bid) {
         TaggedBoundInference inference = we.getInference(bidding, players, bid);
-        IBoundInference newInf = AndBoundInf.create(inference.inf, players.me.inf);
+        IBoundInference newInf = AndBoundInf.create(inference.inf, players.getPlayer(Position.ME).inf);
         InfSummary newSummary = newInf.getSummary();
         return new BiddingState(we, they, bidding.withBidAdded(new TaggedBid(bid, inference.tags)), players.withNewMe(new Player(newInf, newSummary)))
                 .rotate(1);

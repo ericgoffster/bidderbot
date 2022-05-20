@@ -41,11 +41,11 @@ public class Test2Over1 {
             }
             if (result.ex != null) {
                 hadError.set(true);
-                InfSummary partnerSummary = result.state.players.partner.infSummary;
+                InfSummary partnerSummary = result.state.players.getPlayer(Position.PARTNER).infSummary;
                 System.err.println("Bidding: " + result.bids);
                 System.err
                         .println("You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
-                result.state.players.me.infSummary.showSummary("My summary");
+                result.state.players.getPlayer(Position.ME).infSummary.showSummary("My summary");
                 partnerSummary.showSummary("Partner summary");
                 System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
                 System.err.println("But I got an exception: ");
@@ -57,11 +57,11 @@ public class Test2Over1 {
                 if (!test.anti) {
                     if (!result.found.matchedBid.bid.bid.equals(result.expected)) {
                         hadError.set(true);
-                        InfSummary partnerSummary = result.state.players.partner.infSummary;
+                        InfSummary partnerSummary = result.state.players.getPlayer(Position.PARTNER).infSummary;
                         System.err.println("Bidding: " + result.bids);
                         System.err.println(
                                 "You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
-                        result.state.players.me.infSummary.showSummary("My summary");
+                        result.state.players.getPlayer(Position.ME).infSummary.showSummary("My summary");
                         partnerSummary.showSummary("Partner summary");
                         System.err.println("Test at " + result.where + " claims I should have bid " + result.expected);
                         if (result.found.matchedBid.inf != null) {
@@ -101,10 +101,10 @@ public class Test2Over1 {
                     }
                 } else if (result.found.matchedBid.bid.bid.equals(result.expected)) {
                     hadError.set(true);
-                    InfSummary partnerSummary = result.state.players.partner.infSummary;
+                    InfSummary partnerSummary = result.state.players.getPlayer(Position.PARTNER).infSummary;
                     System.err.println(
                             "You have " + test.hand + ": " + test.hand.numHCP() + " hcp: " + test.hand.getTotalPoints(partnerSummary) + " tpts");
-                    result.state.players.me.infSummary.showSummary("My summary");
+                    result.state.players.getPlayer(Position.ME).infSummary.showSummary("My summary");
                     partnerSummary.showSummary("Partner summary");
                     System.err.println("Test at " + result.where + " claims I should *not* have bid " + result.expected + " but I did");
                     test.getResult(bs);

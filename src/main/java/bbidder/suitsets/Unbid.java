@@ -3,6 +3,7 @@ package bbidder.suitsets;
 import java.util.OptionalInt;
 
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.SuitSet;
 import bbidder.SuitTable;
 import bbidder.utils.MyStream;
@@ -16,8 +17,8 @@ public final class Unbid extends SuitSet {
     public short evaluate(Players players) {
         OptionalInt lhoSuits = players.lho.infSummary.getBidSuits();
         OptionalInt rhoSuits = players.rho.infSummary.getBidSuits();
-        OptionalInt partnerSuits = players.partner.infSummary.getBidSuits();
-        OptionalInt meSuits = players.me.infSummary.getBidSuits();
+        OptionalInt partnerSuits = players.getPlayer(Position.PARTNER).infSummary.getBidSuits();
+        OptionalInt meSuits = players.getPlayer(Position.ME).infSummary.getBidSuits();
         if (!lhoSuits.isPresent() || !rhoSuits.isPresent() || !partnerSuits.isPresent() || !meSuits.isPresent()) {
             return 0;
         }

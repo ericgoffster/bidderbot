@@ -5,6 +5,7 @@ import java.util.OptionalInt;
 
 import bbidder.Generality;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.TaggedAuction;
@@ -27,8 +28,8 @@ public final class UnbidSuitGenerality extends Generality {
     @Override
     public boolean test(Players players, TaggedAuction bidList) {
         int suit = symbol.getResolvedStrain();
-        OptionalInt meSuits = players.me.infSummary.getBidSuits();
-        OptionalInt partnerSuits = players.partner.infSummary.getBidSuits();
+        OptionalInt meSuits = players.getPlayer(Position.ME).infSummary.getBidSuits();
+        OptionalInt partnerSuits = players.getPlayer(Position.PARTNER).infSummary.getBidSuits();
         OptionalInt lhoSuits = players.lho.infSummary.getBidSuits();
         OptionalInt rhoSuits = players.rho.infSummary.getBidSuits();
         if (!meSuits.isPresent() || !partnerSuits.isPresent() || !lhoSuits.isPresent() || !rhoSuits.isPresent()) {

@@ -4,6 +4,7 @@ import java.util.OptionalInt;
 
 import bbidder.InfSummary;
 import bbidder.Players;
+import bbidder.Position;
 import bbidder.SuitSet;
 import bbidder.SuitTable;
 import bbidder.utils.MyStream;
@@ -15,8 +16,8 @@ public final class DeniedStoppers extends SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        InfSummary partner = players.partner.infSummary;
-        InfSummary me = players.me.infSummary;
+        InfSummary partner = players.getPlayer(Position.PARTNER).infSummary;
+        InfSummary me = players.getPlayer(Position.ME).infSummary;
         OptionalInt partnerSuits = partner.getBidSuits();
         OptionalInt meSuits = me.getBidSuits();
         if (!partnerSuits.isPresent() || !meSuits.isPresent()) {

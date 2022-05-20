@@ -30,10 +30,10 @@ public class Analyze {
             }
         }
 
-        System.out.println(state.players.me.inf);
+        System.out.println(state.players.getPlayer(Position.ME).inf);
 
-        state.players.me.infSummary.showSummary("me");
-        state.players.partner.infSummary.showSummary("partner");
+        state.players.getPlayer(Position.ME).infSummary.showSummary("me");
+        state.players.getPlayer(Position.PARTNER).infSummary.showSummary("partner");
         state.players.lho.infSummary.showSummary("lho");
         state.players.rho.infSummary.showSummary("rho");
     }

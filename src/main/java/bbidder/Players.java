@@ -4,9 +4,9 @@ import java.util.OptionalInt;
 
 public final class Players {
     public final Player lho;
-    public final Player partner;
+    private final Player partner;
     public final Player rho;
-    public final Player me;
+    private final Player me;
     
     public Player getPlayer(Position position) {
         switch(position) {
