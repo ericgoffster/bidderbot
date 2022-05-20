@@ -71,11 +71,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
                     Position position = Position.getPosition(tag);
                     inp.advanceWhite();
                     if (inp.readKeyword("BID")) {
-                        String sym = parseSuit(inp);
-                        Symbol symbol = SymbolParser.parseSymbol(sym);
-                        if (symbol == null) {
-                            throw new IllegalArgumentException("Invalid symbol");
-                        }
+                        Symbol symbol = parseSymbol(inp);
                         SuitLengthRange range;
                         inp.advanceWhite();
                         if (inp.readKeyword("PROMISING")) {
@@ -94,11 +90,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
                     }
                     break;
                 case UnbidSuitGenerality.NAME: {
-                    String sym = parseSuit(inp);
-                    Symbol symbol = SymbolParser.parseSymbol(sym);
-                    if (symbol == null) {
-                        throw new IllegalArgumentException("Invalid symbol");
-                    }
+                    Symbol symbol = parseSymbol(inp);
                     p = p.addGenerality(new UnbidSuitGenerality(symbol));
                     break;
                 }
@@ -112,19 +104,13 @@ public final class BidPatternParser implements Parser<BidPattern> {
                     if (rng != null) {
                         inp.advanceWhite();
                         if (inp.readKeyword(FitEstablished.NAME.toUpperCase())) {
-                            String sy = parseSuit(inp);
-                            Symbol sym = SymbolParser.parseSymbol(sy);
-                            if (sym != null) {
-                                p = p.addGenerality(new FitEstablished(sym, SuitLengthRange.between(rng.min, rng.max)));
-                                break;
-                            }
+                            Symbol symbol = parseSymbol(inp);
+                            p = p.addGenerality(new FitEstablished(symbol, SuitLengthRange.between(rng.min, rng.max)));
+                            break;
                         } else if (inp.readKeyword(BestFitEstablished.NAME.toUpperCase())) {
-                            String sy = parseSuit(inp);
-                            Symbol sym = SymbolParser.parseSymbol(sy);
-                            if (sym != null) {
-                                p = p.addGenerality(new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max)));
-                                break;
-                            }
+                            Symbol symbol = parseSymbol(inp);
+                            p = p.addGenerality(new BestFitEstablished(symbol, SuitLengthRange.between(rng.min, rng.max)));
+                            break;
                         } else {
                             throw new IllegalArgumentException();
                         }
@@ -152,56 +138,44 @@ public final class BidPatternParser implements Parser<BidPattern> {
         if (inp.readKeyword("*")) {
             return BidPattern.createWild();
         } else if (inp.readKeyword(BidPattern.STR_NONJUMP)) {
-            String str = parseSuit(inp);
-            Symbol symbol = SymbolParser.parseSymbol(str);
-            if (symbol == null) {
-                throw new IllegalArgumentException("Invalid bid: " + str);
-            }
+            Symbol symbol = parseSymbol(inp);
             return BidPattern.createJump(symbol, 0).withAntiMatch(anti);
         } else if (inp.readKeyword(BidPattern.STR_DOUBLEJUMP)) {
-            String str = parseSuit(inp);
-            Symbol symbol = SymbolParser.parseSymbol(str);
-            if (symbol == null) {
-                throw new IllegalArgumentException("Invalid bid: " + str);
-            }
+            Symbol symbol = parseSymbol(inp);
             return BidPattern.createJump(symbol, 2).withAntiMatch(anti);
         } else if (inp.readKeyword(BidPattern.STR_JUMP)) {
-            String str = parseSuit(inp);
-            Symbol symbol = SymbolParser.parseSymbol(str);
-            if (symbol == null) {
-                throw new IllegalArgumentException("Invalid bid: " + str);
-            }
+            Symbol symbol = parseSymbol(inp);
             return BidPattern.createJump(symbol, 1).withAntiMatch(anti);
         } else if (inp.readKeyword("?")) {
-            String str = parseSuit(inp);
-            Symbol symbol = SymbolParser.parseSymbol(str);
-            if (symbol == null) {
-                throw new IllegalArgumentException("Invalid bid: " + str);
-            }
+            Symbol symbol = parseSymbol(inp);
             return BidPattern.createBid(null, symbol).withAntiMatch(anti);
         } else {
-            String str = parseSuit(inp);
-            if (str.length() == 0) {
-                return null;
+            if (inp.ch >= '1' && inp.ch <= '7') {
+                int level = inp.ch - '1';
+                inp.advance();
+                Symbol symbol = parseSymbol(inp);
+                return BidPattern.createBid(level, symbol).withAntiMatch(anti);
             }
-            Bid simpleBid = Bid.fromStr(str);
-            if (simpleBid != null) {
-                return BidPattern.createSimpleBid(simpleBid).withAntiMatch(anti);
+            if (inp.readKeyword("P")) {
+                return BidPattern.createSimpleBid(Bid.P).withAntiMatch(anti);
             }
-            if (str.length() < 1) {
-                throw new IllegalArgumentException("Invalid bid: " + str);
+            if (inp.readKeyword("XX")) {
+                return BidPattern.createSimpleBid(Bid.XX).withAntiMatch(anti);
             }
-            char ch = str.charAt(0);
-            if (ch < '1' || ch > '7') {
-                throw new IllegalArgumentException("Invalid bid: " + str);
+            if (inp.readKeyword("X")) {
+                return BidPattern.createSimpleBid(Bid.X).withAntiMatch(anti);
             }
-            int level = ch - '1';
-            Symbol symbol = SymbolParser.parseSymbol(str.substring(1));
-            if (symbol == null) {
-                throw new IllegalArgumentException("Invalid bid: " + str);
-            }
-            return BidPattern.createBid(level, symbol).withAntiMatch(anti);
+            throw new IllegalArgumentException("Invalid bid");
         }
+    }
+
+    private Symbol parseSymbol(Input inp) throws IOException {
+        String str = parseSuit(inp);
+        Symbol symbol = SymbolParser.parseSymbol(str);
+        if (symbol == null) {
+            throw new IllegalArgumentException("Invalid bid: " + str);
+        }
+        return symbol;
     }
 
     @Override

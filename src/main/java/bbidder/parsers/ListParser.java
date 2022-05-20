@@ -19,6 +19,10 @@ public final class ListParser<T> implements Parser<List<T>> {
     public List<T> parse(Input inp) throws IOException {
         List<T> l = new ArrayList<>();
         for (;;) {
+            inp.advanceWhite();
+            if (inp.ch < 0) {
+                break;
+            }
             T elem = elementParser.parse(inp);
             if (elem == null) {
                 break;
