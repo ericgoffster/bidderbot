@@ -44,6 +44,26 @@
     test AKxxxx AKx Ax xx:
         1♠ 2♠
         4♠;
+    test AJxx Axxx Axx xx:
+        1N 2♣
+        2♥ 4♥;
+    test AJxx Axxx Axx xx:
+        1N 2♣
+        2♠ 4♠;
+    test Axx Qxxx xxx xxx:
+        2C 2D
+        2N 3♣
+        3♥ 4H;
+    test Qxxx Axx xxx xxx:
+        2C 2D
+        2N 3♣
+        3♠ 4S;
+    test Axx Axxx xxx xxx:
+        2N 3♣
+        3♥ 4H;
+    test Axxx Axx xxx xxx:
+        2N 3♣
+        3♠ 4S;
 
 [] 3M => inv, fit M;
     test AQxx Axx xxxx xx:
@@ -58,6 +78,12 @@
     test Qx Axxxxx xx Axx:
         1C 1H
         1N 3H;
+    test AJxx Kxxx xx xxx:
+        1N 2♣
+        2♠ 3♠;
+    test AJxx Kxxx xx xxx:
+        1N 2♣
+        2♥ 3♥;
 
 [] 2M => min, fit M;
     test AQxx Axxx xx Kxx:

@@ -63,15 +63,6 @@
         3D 4N;
 
 2N 3♣
-3M 4M => gf, 4+M;
-    test Axx Axxx xxx xxx:
-        2N 3♣
-        3♥ 4H;
-    test Axxx Axx xxx xxx:
-        2N 3♣
-        3♠ 4S;
-
-2N 3♣
 3M NJOM => slaminv+, 4+M;
     test Axx Axxx Axx xxx:
         2N 3♣
@@ -81,7 +72,7 @@
         3♠ 4♥;
 
 2N 3♣
-3M 4m => slaminv+, 5+m;
+3M 4m => slaminv+, 5+m, nofit M;
     test Axxx Ax Axxxx xx:
         2N 3♣
         3♥ 4♦;
@@ -90,7 +81,7 @@
         3♥ 4♣;
 
 2N 3♣
-3M 4N => slaminv;
+3M 4N => slaminv, nofit M;
     test Axxx Ax Axxx xxx:
         2N 3♣
         3♥ 4N;
