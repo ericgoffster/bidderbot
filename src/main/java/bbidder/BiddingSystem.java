@@ -148,6 +148,10 @@ public final class BiddingSystem {
         if (positive == ConstBoundInference.F && lastBid != Bid.P) {
             throw new RuntimeException(lastBid + ": Unrecognized bid for: " + auction);
         }
+        
+        if (tags == null) {
+            tags = Set.of();
+        }
 
         // Pass means... Nothing else works, this will get smarter.
         if (lastBid == Bid.P) {

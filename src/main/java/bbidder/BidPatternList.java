@@ -156,7 +156,13 @@ public final class BidPatternList {
             } else {
                 TaggedBid bid = theBids.get(i);
                 Optional<TaggedBid> expected = pattern.resolveToBid(bidding.firstN(i), bid);
-                if (!expected.isPresent() || !Objects.equals(bid.bid, expected.get().bid)) {
+                if (!expected.isPresent()) {
+                    return Optional.empty();
+                }
+                if (Objects.equals(bid.bid, expected.get().bid) != Objects.equals(bid, expected.get())) {
+                    System.out.println(bid + " " + expected.get());
+                }
+                if (!Objects.equals(bid.bid, expected.get().bid)) {
                     return Optional.empty();
                 }
                 i++;
