@@ -84,6 +84,9 @@
     test AQxx AJxx Ax AJx:
         2N 4♥
         4♠;
+    test xx Axxxxx xx AQx:
+        1C 1H
+        2N 4H;
 
 [] 3M => inv, fit M;
     test AQxx Axx xxxx xx:
@@ -104,6 +107,9 @@
     test AJxx Kxxx xx xxx:
         1N 2♣
         2♥ 3♥;
+    test xx Axxxxx xx xxx:
+        1C 1H
+        2N 3H;
 
 [] 2M => min, fit M;
     test AQxx Axxx xx Kxx:

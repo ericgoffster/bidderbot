@@ -17,21 +17,15 @@
         1C 1S
         2N 3H;
 
-1y 1M
-2N 4M => gf, 6+M;
-    test xx Axxxxx xx AQx:
+1m 1M
+2N 3om => 7+ tpts, 5 M;
+    test xxx AQJxx xx xxx:
         1C 1H
-        2N 4H;
-
-1y 1x
-2N 3x => 6+x;
-    test xx Axxxxx xx xxx:
-        1C 1H
-        2N 3H;
+        2N 3D;
 
 1m 1M
-2N 3om => 7+ tpts, 5+ M;
-    test xxx AQJxx xx xxx:
+2N 3om => slaminv+, 6+ M;
+    test xx AQJxxx xx Axx:
         1C 1H
         2N 3D;
 

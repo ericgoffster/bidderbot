@@ -40,7 +40,7 @@
         1♣ 1♦
         3♣;
 
-[] 2N => inv, partial_stoppers unstopped;
+[] 2N:nonconventional => inv, partial_stoppers unstopped;
     test Axx Kxxx Qxx Qxx:
         1C 1H
         1N 2N;

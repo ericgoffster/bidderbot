@@ -5,14 +5,12 @@
 # H = ♥
 # S = ♠
 
-P 1M
-2♣ => 11+ tpts, fit M;
+1M:seats34 2♣ => 11+ tpts, fit M;
     test xxx KJx Kx Axxxx:
         P 1♥
         2♣;
 
-P 1M
-2M => 6-10 tpts, fit M;
+1M:seats34 2M => 6-10 tpts, fit M;
     test xxx Kxx Kx xxxxx:
         P 1♥
         2♥;
