@@ -70,15 +70,6 @@ public final class FitInSuit extends Inference {
             return ConstBoundInference.F;
         }
         int partnerLen = minLenInSuitPartner.getAsInt();
-        OptionalInt minLenInSuitMe = players.me.infSummary.minLenInSuit(s);
-        if (!minLenInSuitPartner.isPresent()) {
-            return ConstBoundInference.F;
-        }
-        int myLen = minLenInSuitMe.getAsInt();
-        if (combined.contains(myLen + partnerLen)) {
-            return ConstBoundInference.T;
-        }
-
         SuitLengthRange r = combined.addOffset(-partnerLen);
         return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
     }

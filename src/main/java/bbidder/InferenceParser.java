@@ -13,7 +13,6 @@ import bbidder.inferences.FitInSuit;
 import bbidder.inferences.HCPRange;
 import bbidder.inferences.LongestOrEqual;
 import bbidder.inferences.MaxSuitRange;
-import bbidder.inferences.NotInference;
 import bbidder.inferences.Preference;
 import bbidder.inferences.Rebiddable;
 import bbidder.inferences.RebiddableSecondSuit;
@@ -106,7 +105,7 @@ public final class InferenceParser {
         case "nofit": {
             Symbol sym = SymbolParser.parseSymbol(remainder.trim());
             if (sym != null) {
-                return NotInference.create(new FitInSuit(sym, SuitLengthRange.atLeast(8)));
+                return new FitInSuit(sym, SuitLengthRange.atMost(7));
             }
             break;
         }
