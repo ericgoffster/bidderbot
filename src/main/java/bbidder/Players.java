@@ -34,22 +34,26 @@ public final class Players {
         return "lho=" + lho + ", partner=" + partner + ", rho=" + rho + ", me=" + me;
     }
     
-    public Optional<Integer> ourCombinedMinLength(int s) {
+    public OptionalInt ourCombinedMinLength(int s) {
         OptionalInt meLenLonger = me.infSummary.minLenInSuit(s);
         if (!meLenLonger.isPresent()) {
-            return Optional.empty();
+            return OptionalInt.empty();
         }
         OptionalInt partnerLenLonger = partner.infSummary.minLenInSuit(s);
         if (!partnerLenLonger.isPresent()) {
-            return Optional.empty();
+            return OptionalInt.empty();
         }
         int meLen = meLenLonger.getAsInt();
         int partnerLen = partnerLenLonger.getAsInt();
-        return Optional.of(meLen + partnerLen);
+        return OptionalInt.of(meLen + partnerLen);
     }
     
     public boolean iBidSuit(int s) {
-        if (ourCombinedMinLength(s).filter(ourLen -> ourLen >= 8).isPresent()) {
+        OptionalInt ourCombinedMinLength = ourCombinedMinLength(s);
+        if (!ourCombinedMinLength.isPresent()) {
+            return false;
+        }
+        if (ourCombinedMinLength.getAsInt() >= 8) {
             return false;
         }
         Optional<Short> bidSuits = me.infSummary.getBidSuits();
