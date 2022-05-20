@@ -5,7 +5,6 @@
 # H = ♥
 # S = ♠
 
-[[17 hcp, 4 card support, and a doubleton ${x}]]
 1N 2M-1
 NJx => 17 hcp, 4+M, 2-x;
     test Ax Axxx AJxx Axx:
@@ -24,7 +23,6 @@ NJx => 17 hcp, 4+M, 2-x;
         1N 2♦
         3♦;
       
-[[17 hcp, 4 card support, and no doubletons]]
 1N 2M-1
 2N => 17 hcp, 4+M;
     test AQx Axxx Axx Kxx:
@@ -34,7 +32,6 @@ NJx => 17 hcp, 4+M, 2-x;
         1N 2♥
         2N;
 
-[[Fewer than 17 hcp]]
 1N 2M-1 2M => always ;
     test AQxx xx AJx Axxx:
         1N 2♦
@@ -43,14 +40,12 @@ NJx => 17 hcp, 4+M, 2-x;
         1N 2♥
         2♠;
 
-[[Invitational with 5-5 in the majors]]
 1N 2♦
 2♥ 2♠ => inv, 5+♠;
     test AJxxx Jxxxx xx x:
         1N 2♦
         2♥ 2♠;
 
-[[Invitational with 6 or more ${M}]]
 1N 2M-1
 2M 3M => inv, 6+M;
     test Axx Kxxxxx xx xx:
@@ -60,7 +55,6 @@ NJx => 17 hcp, 4+M, 2-x;
         1N 2♥
         2♠ 3♠;
 
-[[Invitational with 5 ${M}]]
 1N 2M-1
 2M 2N => inv;
     test Axx Kxxxx xx Jxx:
@@ -70,7 +64,6 @@ NJx => 17 hcp, 4+M, 2-x;
         1N 2♥
         2♠ 2N;
 
-[[Game Forcing with 4 or more ${m}]]
 1N 2M-1
 2M 3m => gf+, 4+m;
     test Axx Axxxx x Axxx:
@@ -80,7 +73,6 @@ NJx => 17 hcp, 4+M, 2-x;
         1N 2♥
         2♠ 3♣;
 
-[[Game Forcing with 5 ${m}]]
 1N 2M-1
 2M 3N => gf;
     test AJx AQxxx xxx xx:
@@ -90,7 +82,6 @@ NJx => 17 hcp, 4+M, 2-x;
         1N 2♥
         2♠ 3N;
 
-[[Game Forcing splinter in ${x} and 6 ${M}]]
 1N 2M-1
 2M Jx => slaminv, 6+M, 1-x;
     test x AQxxxx Axx Axx:
