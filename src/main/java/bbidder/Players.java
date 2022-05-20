@@ -13,11 +13,24 @@ public final class Players {
     }
 
     public Players rotate() {
-        return new Players(partner, rho, me, lho);
+        return rotate(1);
+    }
+
+    public Players rotate(int n) {
+        Players p = this;
+        while(n > 0) {
+            p = new Players(p.partner, p.rho, p.me, p.lho);
+            n--;
+        }
+        while(n < 0) {
+            p = new Players(p.me, p.lho, p.partner, p.rho);
+            n++;
+        }
+        return p;
     }
 
     public Players flip() {
-        return new Players(rho, me, lho, partner);
+        return rotate(2);
     }
 
     public Players withNewMe(Player me) {

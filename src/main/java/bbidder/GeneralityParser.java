@@ -2,11 +2,9 @@ package bbidder;
 
 import bbidder.generalities.AndGenerality;
 import bbidder.generalities.BestFitEstablished;
+import bbidder.generalities.BidSuitGenerality;
 import bbidder.generalities.FitEstablished;
-import bbidder.generalities.IAmTwoSuitedGenerality;
-import bbidder.generalities.IBidSuitGenerality;
-import bbidder.generalities.PartnerBidSuitGenerality;
-import bbidder.generalities.PartnerIsTwoSuitedGenerality;
+import bbidder.generalities.IsTwoSuitedGenerality;
 import bbidder.generalities.TrueGenerality;
 import bbidder.generalities.UnbidSuitGenerality;
 import bbidder.generalities.WeAreThreeSuited;
@@ -104,17 +102,17 @@ public final class GeneralityParser {
             }
             break;
         }
-        case IBidSuitGenerality.NAME: {
+        case "i_bid_suit": {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new IBidSuitGenerality(symbol);
+                return new BidSuitGenerality(symbol, 0);
             }
             break;
         }
-        case PartnerBidSuitGenerality.NAME: {
+        case "partner_bid_suit": {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new PartnerBidSuitGenerality(symbol);
+                return new BidSuitGenerality(symbol, 2);
             }
             break;
         }
@@ -131,24 +129,24 @@ public final class GeneralityParser {
             }
             break;
         }
-        case IAmTwoSuitedGenerality.NAME: {
+        case "i_am_two_suited": {
             String[] symbols = SplitUtil.split(remainder, "\\s+", 2);
             if (symbols.length == 2) {
                 Symbol longer = SymbolParser.parseSymbol(symbols[0]);
                 Symbol shorter = SymbolParser.parseSymbol(symbols[1]);
                 if (longer != null && shorter != null) {
-                    return new IAmTwoSuitedGenerality(longer, shorter);
+                    return new IsTwoSuitedGenerality(longer, shorter, 0);
                 }
             }
             break;
         }
-        case PartnerIsTwoSuitedGenerality.NAME: {
+        case "partner_is_two_suited": {
             String[] symbols = SplitUtil.split(remainder, "\\s+", 2);
             if (symbols.length == 2) {
                 Symbol longer = SymbolParser.parseSymbol(symbols[0]);
                 Symbol shorter = SymbolParser.parseSymbol(symbols[1]);
                 if (longer != null && shorter != null) {
-                    return new PartnerIsTwoSuitedGenerality(longer, shorter);
+                    return new IsTwoSuitedGenerality(longer, shorter, 2);
                 }
             }
             break;
