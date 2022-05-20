@@ -14,7 +14,7 @@ public final class TaggedBid {
 
     @Override
     public String toString() {
-        return bid + ":" + tags;
+        return bid + "" + tags;
     }
 
     @Override

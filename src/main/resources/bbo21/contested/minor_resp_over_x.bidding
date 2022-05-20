@@ -5,10 +5,10 @@
 # H = ♥
 # S = ♠
 
-common 1m (X) {
-#	1y:down => gf+, 5+ y, longest_or_equal y among unbid;
-#	    test AQxxx Axxx x Kxx:
-#	        1♦ (X) 1♠;
+common 1m (X:"takeout") {
+	1y:down => gf+, 5+ y, longest_or_equal y among unbid;
+	    test AQxxx Axxx x Kxx:
+	        1♦ (X) 1♠;
 #	
 #	1y => gf+, 4 y, longest_or_equal y among unbid;
 #	    test Kxxx Ax xxx AQxx:
