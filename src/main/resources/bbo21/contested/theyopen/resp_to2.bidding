@@ -20,6 +20,14 @@ common (2w) X:"takeout" {
         test xxx Axxx xxx xxx:
 	        (2S) X 2N;
 	continuations {
+	    3x:>3C => 5+ x, 18+ tpts;
+	        test Ax xx AQJxxx AQx:
+	            (2H) X 2N
+	                 3D;
+	    3N => balanced, stoppers w, 20+ tpts;
+	        test AQx AQx Axx KJxx:
+	            (2H) X 2N
+	                 3N;
 	    3C => always;
 	        test Axxx xx AQx Axxx:
 	            (2H) X 2N
