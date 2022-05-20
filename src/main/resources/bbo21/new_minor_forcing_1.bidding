@@ -37,7 +37,7 @@
 
 1m 1M
 1N 2om
-2N => 13- hcp, stoppers unbid & MAJORS;
+2N => 13- hcp, stoppers unstopped & MAJORS;
     test Ax Axx Axxxx xxx:
         1D 1S
         1N 2C
@@ -80,7 +80,7 @@
 
 1m 1M
 1N 2om
-3N => stoppers unbid & MAJORS;
+3N => stoppers unstopped & MAJORS;
     test Ax AQx Axxxx xxx:
         1D 1S
         1N 2C

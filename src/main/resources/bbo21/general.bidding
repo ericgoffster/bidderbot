@@ -138,7 +138,7 @@
         1♥ 1♠;
 
 [[Bid 1N with no support]]
-[partner bid x, partner bid y] 1N => min, partial_stoppers unbid;
+[partner bid x, partner bid y] 1N => min, partial_stoppers unstopped;
     test Qxx Kx xxxxx Qxx:
         1♣ 1♦
         1♥ 1N;

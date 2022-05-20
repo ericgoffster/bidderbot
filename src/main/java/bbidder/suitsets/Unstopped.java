@@ -19,14 +19,14 @@ public final class Unstopped extends SuitSet {
         if (!partnerSuits.isPresent() || !meSuits.isPresent()) {
             return 0;
         }
-        int allBid = partnerSuits.getAsInt() | meSuits.getAsInt();
+        int stopped = partnerSuits.getAsInt() | meSuits.getAsInt();
         for (int i = 0; i < 4; i++) {
             if (players.me.infSummary.stoppers.stopperIn(i) || players.partner.infSummary.stoppers.stopperIn(i)
                     || players.me.infSummary.partialStoppers.stopperIn(i) || players.partner.infSummary.partialStoppers.stopperIn(i)) {
-                allBid |= 1 << i;
+                stopped |= 1 << i;
             }
         }
-        return (short) (0xf ^ allBid);
+        return (short) (0xf ^ stopped);
     }
 
     @Override

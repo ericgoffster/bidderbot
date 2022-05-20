@@ -41,7 +41,7 @@
     test Qxx x xxx AQJxxx:
         1♥ 3♣;
 
-1M 3N => superbalanced, 3M, gf, 14-15 hcp, partial_stoppers unbid;
+1M 3N => superbalanced, 3M, gf, 14-15 hcp, partial_stoppers unstopped;
     test Qxx Kxx Axx AJxx:
         1♥ 3N;
 
