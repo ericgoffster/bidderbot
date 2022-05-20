@@ -16,20 +16,22 @@ common [] 1N:"nt_opener" 2♠ {
 	        1N 2♠
 	        3♦;
 	
-	[[Bid singleton major, if you have it]]
-	3m 3M => gf, 1-M;
-	    test x Axx Axxxx Axxx:
-	        1N 2♠
-	        3♣ 3♠;
-	    test x Axx Axxx Axxxx:
-	        1N 2♠
-	        3♦ 3♠;
-	    test Axx x Axxxx Axxx:
-	        1N 2♠
-	        3♣ 3♥;
-	    test Axx x Axxx Axxxx:
-	        1N 2♠
-	        3♦ 3♥;
+	continuations {
+		[[Bid singleton major, if you have it]]
+		3M => gf, 1-M;
+		    test x Axx Axxxx Axxx:
+		        1N 2♠
+		        3♣ 3♠;
+		    test x Axx Axxx Axxxx:
+		        1N 2♠
+		        3♦ 3♠;
+		    test Axx x Axxxx Axxx:
+		        1N 2♠
+		        3♣ 3♥;
+		    test Axx x Axxx Axxxx:
+		        1N 2♠
+		        3♦ 3♥;
+    }
 	
 	[[Bid 2N with no minor]]
 	2N => always;
@@ -39,13 +41,14 @@ common [] 1N:"nt_opener" 2♠ {
 	    test AQxx QJxx AJx Qx:
 	        1N 2♠
 	        2N;
-	
-	[[Bid singleton major over 2N, if you have it and with a 5 card minor]]
-	2N 3M => 1-M, 5+m;
-	    test x Axx Axxxx Axxx:
-	        1N 2♠
-	        2N 3♠;
-	    test Axx x Axxxx Axxx:
-	        1N 2♠
-	        2N 3♥;
+    continuations {
+		[[Bid singleton major over 2N, if you have it and with a 5 card minor]]
+		3M => 1-M, 5+m;
+		    test x Axx Axxxx Axxx:
+		        1N 2♠
+		        2N 3♠;
+		    test Axx x Axxxx Axxx:
+		        1N 2♠
+		        2N 3♥;
+    }
 }

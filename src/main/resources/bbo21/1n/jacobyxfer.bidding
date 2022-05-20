@@ -23,12 +23,13 @@ common [] 1N:"nt_opener" 2M-1 {
 	    test Axx Axxx Ax AJxx:
 	        1N 2♦
 	        3♦;
-	
-	[[Re-transfer over super accept]]
-	NJx 3M-1 => always;
-	    test xx Axxxx xxx xxx:
-	        1N 2♦
-	        2♠ 3D;
+	continuations {
+		[[Re-transfer over super accept]]
+		3M-1 => always;
+		    test xx Axxxx xxx xxx:
+		        1N 2♦
+		        2♠ 3D;
+    }
 	        
 	[[With max and no doubleton, bid 2N]] 
 	2N => max hcp, 4+M;
@@ -38,12 +39,13 @@ common [] 1N:"nt_opener" 2M-1 {
 	    test AQxx Axx Axx Kxx:
 	        1N 2♥
 	        2N;
-	
-	[[Re-transfer over super accept]]
-	2N 3M-1 => always;
-	    test xx Axxxx xxx xxx:
-	        1N 2♦
-	        2N 3D;
+	continuations {	
+		[[Re-transfer over super accept]]
+		3M-1 => always;
+		    test xx Axxxx xxx xxx:
+		        1N 2♦
+		        2N 3D;
+    }
 }
 
 common [] 1N:"nt_opener" 2M-1 2M {

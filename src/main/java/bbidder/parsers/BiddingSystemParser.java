@@ -110,9 +110,7 @@ public final class BiddingSystemParser {
                             reportErrors.accept(new ParseException(here, new IllegalArgumentException("illegal continuation")));
                         } else {
                             commons.push(prefix);
-                            for(BidPattern pattern: last.bids.getBids()) {
-                                prefix = prefix.withBidAdded(pattern);
-                            }
+                            prefix = last.bids;
                         }
                     } else {
                         reportErrors.accept(new ParseException(here, new IllegalArgumentException("unrecognized block")));
