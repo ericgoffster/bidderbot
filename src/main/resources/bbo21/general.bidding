@@ -62,9 +62,6 @@
 [[Bid to 2 level with established minor suit fit and minimum values]]
 [fit_established m] 2m => min;
 
-[[Self Support minor at 2 level with minimum values]]
-[i_bid_suit m] 2m => min, fit m;
-
 [[Support minor at 2 level with minimum values]]
 [partner_bid_suit m] 2m => min, fit m;
     test Ax xxxx xx Axxxx:
