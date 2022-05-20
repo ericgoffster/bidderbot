@@ -144,8 +144,7 @@ public final class BidPattern {
                 return MyStream.of(e);
             }
             return bidPattern.symbol.resolveSuits(suitTable)
-                    .flatMap(e2 -> MyStream.of(bidPattern.withSymbol(e2.getSymbol()))
-                            .flatMap(bidPattern2 -> MyStream.of(bidPattern2.new Context(e2.suitTable))));
+                    .flatMap(e2 -> MyStream.of(bidPattern.withSymbol(e2.getSymbol()).new Context(e2.suitTable)));
         });
     }
     
