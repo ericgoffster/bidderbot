@@ -10,33 +10,3 @@
     test AKxx x xxxxx AKx:
         1♣ 1♦
         1♥ 2♠;
-
-1x 1y
-1z 1N => min, nofit x, nofit z, 5- y, partial_stoppers unbid;
-    test Qxx Kx xxxxx Qxx:
-        1♣ 1♦
-        1♥ 1N;
-
-1x 1y
-1z 2N => balanced, nofit x, nofit z, inv, partial_stoppers unbid;
-    test AQx Kx xxxxx Qxx:
-        1♣ 1♦
-        1♥ 2N;
-
-1x 1y
-1z 3N => balanced, gf, nofit x, nofit z, partial_stoppers unbid;
-    test AKx Ax xxxxx Kxx:
-        1♣ 1♦
-        1♥ 3N;
-
-1C 1D
-1H 1S => gf+;
-    test xxx x AKxxxx AKx:
-        1♣ 1♦
-        1♥ 1♠;
-
-1x 1y
-NJz:<2x NJw => gf+;
-    test AKxxxx x xxx AKx:
-        1♦ 1♠
-        2♣ 2♥;

@@ -76,11 +76,7 @@ public final class FitInSuit extends Inference {
         if (myLen + partnerLen >= 8) {
             return ConstBoundInference.T;
         }
-        OptionalInt bidSuits = players.partner.infSummary.getBidSuits();
-        if (bidSuits.isEmpty()) {
-            return ConstBoundInference.F;
-        }
-        if ((bidSuits.getAsInt() & (1 << s)) == 0) {
+        if (partnerLen < 2) {
             return ConstBoundInference.F;
         }
 

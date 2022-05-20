@@ -25,6 +25,9 @@
     test Axx AQxx Qxx Qxx:
         1C 1H
         1N 3N;
+    test AKx Ax xxxxx Kxx:
+        1♣ 1♦
+        1♥ 3N;
 
 #
 # Rebid minor
@@ -44,6 +47,9 @@
     test AQJxx Ax Axx Kxx:
         1S 1N
         2N;
+    test AQx Kx xxxxx Qxx:
+        1♣ 1♦
+        1♥ 2N;
 
 [i_bid_suit m] NJm:<2N => min, rebiddable m;
     test Kxx Kxx x AKxxxx:
@@ -90,6 +96,11 @@
         1♣ 1♥
         1♠ 2♣;
 
+[] 1N P => min-;
+    test Qxx Kx xxxxx Qxx:
+        1♣ 1♦
+        1N P;
+        
 #
 # Pass preference
 #
@@ -100,6 +111,12 @@
     test xxx AQxxx xx xxx:
         1D 1H
         1S P;             
+
+1x 1y
+1z 1N => min;
+    test Qxx Kx xxxxx Qxx:
+        1♣ 1♦
+        1♥ 1N;
 
 #
 # Show preference
@@ -113,7 +130,13 @@
 # Three suited.   bid 4-th suit
 #      
 [we_are_three_suited, unbid_suit x] NJx:<3N => gf+;
+    test AKxxxx x xxx AKx:
+        1♦ 1♠
+        2♣ 2♥;
     test Kx xxx Ax AQxxxx:
         1C 1S
         2C 2D
         2H;
+    test xxx x AKxxxx AKx:
+        1♣ 1♦
+        1♥ 1♠;
