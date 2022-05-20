@@ -39,7 +39,7 @@ common
 	        2D 3D;
 	
 	# 4sf with generic game force
-	NJw => gf;
+	NJw:"4sf" => gf;
 	    test AQxx xxx xxxx Ax:
 	        1♣ 1♠
 	        2♥ 3♦;
@@ -53,13 +53,13 @@ common
 	        1♣ 1♠
 	        2♥ 2N;
 	continuations {
-		3z => 5+ z;
+		3z:>3C => 5+ z;
 		    test - AQxxx KQ AKxxxx:
 		        1♣ 1♠
 		        2♥ 2N
 		        3♥;
 		
-		3x => 6+ x;
+		3x:>3C => 6+ x;
 		    test - AQxx AKxxxx KQx:
 		        1♦ 1♠
 		        2♥ 2N
@@ -71,7 +71,7 @@ common
 		        2♥ 2N
 		        3N;
 		
-		3♣ => always;
+		3♣:"leb_resp" => always;
 		    test x AQxx KJx AQxxx:
 		        1♣ 1♠
 		        2♥ 2N

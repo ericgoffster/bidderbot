@@ -62,7 +62,7 @@ common [] 2N:"nt_opener" 3♣:"stayman" {
 		        2N 3♣
 		        3♥ 4♣;
 	}
-	3♦ => always;
+	3♦:"deny_major" => always;
 	    test Axx AQx KJxx AQx:
 	        2N 3♣
 	        3♦;

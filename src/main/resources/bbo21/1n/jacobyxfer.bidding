@@ -25,7 +25,7 @@ common [] 1N:"nt_opener" 2M-1:"xfer" {
 	        3♦;
 	continuations {
 		[[Re-transfer over super accept]]
-		3M-1 => always;
+		3M-1:"xfer" => always;
 		    test xx Axxxx xxx xxx:
 		        1N 2♦
 		        2♠ 3D;

@@ -32,7 +32,7 @@ common [] 2N:"nt_opener" 3M-1:"xfer" {
 	        3♠;
 	        
 	continuations {	
-		4M-1 => always;
+		4M-1:"xfer" => always;
 		    test xx Axxxx xxx xxx:
 		        2N 3♦
 		        4C 4D;
