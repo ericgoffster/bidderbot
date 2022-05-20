@@ -6,10 +6,10 @@
 # S = ♠
 
 [[Establish major fit]]
-[gf+, 7- fit_established M, i_bid_suit M] NJM:<4N => 8+ fit m;
+[gf+, 7- fit M, i_bid_suit M] NJM:<4N => 8+ fit m;
  
 [[Establish major fit]]
-[gf+, 7- fit_established M, partner_bid_suit M] NJM:<4N => 8+ fit M;
+[gf+, 7- fit M, partner_bid_suit M] NJM:<4N => 8+ fit M;
     test Axx Qxxx xxx xxx:
         2C 2D
         2N 3♣
@@ -26,10 +26,10 @@
         3♠ 4S;
 
 [[Establish minor fit]]
-[gf+, 7- fit_established m, i_bid_suit m] NJm:<3N => 8+ fit m;
+[gf+, 7- fit m, i_bid_suit m] NJm:<3N => 8+ fit m;
 
 [[Establish minor fit]]
-[gf+, 7- fit_established m, partner_bid_suit m] NJm:<3N => 8+ fit m;
+[gf+, 7- fit m, partner_bid_suit m] NJm:<3N => 8+ fit m;
 
 [[Rebid second suit]]
 [gf+, i_am_two_suited x y] NJy:<3N => rebiddable_2nd x y;
@@ -46,7 +46,7 @@
         3S;
 
 [[Secondary support]]
-[gf+, partner_bid_suit y, 6- fit_established y] NJy:<3N => max y, 7 fit y;
+[gf+, partner_bid_suit y, 6- fit y] NJy:<3N => max y, 7 fit y;
     test AQxxx Axx xx Axx:
         1S 2H
         2S 3C
@@ -63,7 +63,7 @@
         3N;
 
 [[Just keep supporting]]
-[gf+, 8+ fit_established M] NJM:<4N => always;
+[gf+, 8+ fit M] NJM:<4N => always;
     test AQxx AJxx Ax xxx:
         1N 4♦ 
         4♥;
@@ -89,7 +89,7 @@
         4S;
 
 [[Just keep supporting]]
-[gf+, 8+ fit_established m] NJm:<3N => always;
+[gf+, 8+ fit m] NJm:<3N => always;
 
 [[Ran out of bids]]
 [gf+, we_are_three_suited, unbid_suit x] NJx:<3N => always;

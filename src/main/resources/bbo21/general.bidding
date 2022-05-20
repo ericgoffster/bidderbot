@@ -42,7 +42,7 @@
 
 # Bid fit
 [[Bid to 3 level with established minor suit fit and invitational values]]
-[8+ fit_established m] 3m => inv;
+[8+ fit m] 3m => inv;
 
 [[Self support minor at 3 level with invitational values]]
 [i_bid_suit m] 3m => inv, 8+ fit m;
@@ -60,7 +60,7 @@
         1♠ 3♣;
         
 [[Bid to 2 level with established minor suit fit and minimum values]]
-[8+ fit_established m] 2m => min;
+[8+ fit m] 2m => min;
 
 [[Support minor at 2 level with minimum values]]
 [partner_bid_suit m] 2m => min, 8+ fit m;
@@ -73,7 +73,7 @@
 
 # Pass fit
 [[Pass established fit at 3 level with invitational values]]
-[8+ fit_established m] 3m P => inv;
+[8+ fit m] 3m P => inv;
     test xxx Qxx Axxxx xx:
         1C 1D
         3D P;
@@ -85,7 +85,7 @@
 [partner_bid_suit m] 3m P => inv, 8+ fit m;
 
 [[Pass established fit at 2 level with minimum values]]
-[8+ fit_established m] 2m P => min;
+[8+ fit m] 2m P => min;
     test xxx Qxx Axxxx xx:
         1C 1D
         2D P;

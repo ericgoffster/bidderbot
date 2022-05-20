@@ -14,7 +14,7 @@ import bbidder.Symbol;
 import bbidder.utils.MyStream;
 
 public final class BestFitEstablished extends Generality {
-    public static final String NAME = "bestfit_established";
+    public static final String NAME = "bestfit";
     private final Symbol symbol;
     private final SuitLengthRange combined;
 

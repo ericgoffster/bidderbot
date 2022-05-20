@@ -7,7 +7,7 @@
 
 # Pass playable fits
 [[Pass any playable fit]]
-[8+ fit_established y] ?y P => always;
+[8+ fit y] ?y P => always;
 
 [[Pass any playable fit]]
 [i_bid_suit y] ?y P => 8+ fit y;
@@ -16,7 +16,7 @@
 [partner_bid_suit y] ?y P => 8+ fit y;
 
 [[Return to known fit over a suit bid]]
-[8+ fit_established y] ?x NJy => 7- fit x;
+[8+ fit y] ?x NJy => 7- fit x;
     test AQX KJxx xx AJxx:
         1N 3♣
         3♦;
@@ -26,7 +26,7 @@
 
 # Bid playable fits
 [[Return to best known fit]]
-[8+ fit_established y] NJy => always;
+[8+ fit y] NJy => always;
     test AQX KJxx AJxx xx:
         1N 2N
         3♣;
@@ -76,10 +76,10 @@
 [partner_is_two_suited x y] ?y NJx => prefer x to y;
 
 [[Pass best known pseudo fit]]
-[7+ bestfit_established y] NJy P => always;
+[7+ bestfit y] NJy P => always;
         
 [[Return to best known pseudo fit]]
-[7+ bestfit_established y] ?x NJy => 7- fit x;
+[7+ bestfit y] ?x NJy => 7- fit x;
     test AQxx xx AJx Axxx:
         1N 2♦
         2♥;

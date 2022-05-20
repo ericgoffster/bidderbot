@@ -12,7 +12,7 @@ import bbidder.Symbol;
 import bbidder.utils.MyStream;
 
 public final class FitEstablished extends Generality {
-    public static final String NAME = "fit_established";
+    public static final String NAME = "fit";
     private final Symbol symbol;
     private final SuitLengthRange combined;
 
