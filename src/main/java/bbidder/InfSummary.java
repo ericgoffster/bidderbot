@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -91,7 +92,7 @@ public final class InfSummary {
     /**
      * @return The minimum total points, empty if there is an empty set of points.
      */
-    public Optional<Integer> minTotalPts() {
+    public OptionalInt minTotalPts() {
         return tpts.lowest();
     }
 
@@ -101,7 +102,7 @@ public final class InfSummary {
      *            The suit
      * @return The minimum length in a suit, empty if there is an empty set of lengths.
      */
-    public Optional<Integer> minLenInSuit(int suit) {
+    public OptionalInt minLenInSuit(int suit) {
         return getSuit(suit).lowest();
     }
 
@@ -120,7 +121,7 @@ public final class InfSummary {
      *         the suits are the empty set.
      */
     public Optional<Short> getBidSuits() {
-        List<Optional<Integer>> minLens = IntStream.range(0, 4)
+        List<OptionalInt> minLens = IntStream.range(0, 4)
                 .mapToObj(suit -> minLenInSuit(suit))
                 .filter(o -> o.isPresent())
                 .collect(Collectors.toList());
@@ -130,16 +131,16 @@ public final class InfSummary {
         List<Double> avgL = IntStream.range(0, 4).mapToObj(suit -> avgLenInSuit(suit).get()).collect(Collectors.toList());
         Integer[] suitArr = { 0, 1, 2, 3 };
         Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgL.get(s1), avgL.get(s2)));
-        List<Integer> minL = minLens.stream().map(ml -> ml.get()).collect(Collectors.toList());
-        if (minL.get(suitArr[0]) >= 5 || minL.get(suitArr[0]) >= 4 && minL.get(suitArr[1]) >= 4) {
+        int[] minL = minLens.stream().mapToInt(ml -> ml.getAsInt()).toArray();
+        if (minL[suitArr[0]] >= 5 || minL[suitArr[0]] >= 4 && minL[suitArr[1]] >= 4) {
             short suits = 0;
-            for (int i = 0; i < 4 && minL.get(suitArr[i]) >= 4; i++) {
+            for (int i = 0; i < 4 && minL[suitArr[i]] >= 4; i++) {
                 suits |= (short) (1 << suitArr[i]);
             }
             return Optional.of(suits);
         }
-        if (minL.get(suitArr[0]) == 4) {
-            if (minL.get(suitArr[1]) > minL.get(suitArr[2])) {
+        if (minL[suitArr[0]] == 4) {
+            if (minL[suitArr[1]] > minL[suitArr[2]]) {
                 return Optional.of((short) ((1 << suitArr[0]) | (1 << suitArr[1])));
             }
             return Optional.of((short) ((1 << suitArr[0])));

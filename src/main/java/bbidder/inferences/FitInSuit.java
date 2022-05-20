@@ -1,6 +1,7 @@
 package bbidder.inferences;
 
 import java.util.Objects;
+import java.util.OptionalInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -81,14 +82,17 @@ public final class FitInSuit extends Inference {
     }
 
     private IBoundInference createrBound(int s, Players players) {
-        return players.partner.infSummary.minLenInSuit(s).map(partnerLen -> {
-            int myMinLen = 8 - partnerLen;
-            if (myMinLen <= 0) {
-                return ConstBoundInference.T;
-            } else {
-                SuitLengthRange r = SuitLengthRange.atLeast(myMinLen);
-                return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
-            }
-        }).orElse(ConstBoundInference.F);
+        OptionalInt minLenInSuit = players.partner.infSummary.minLenInSuit(s);
+        if (!minLenInSuit.isPresent()) {
+            return ConstBoundInference.F;
+        }
+        int partnerLen = minLenInSuit.getAsInt();
+        int myMinLen = 8 - partnerLen;
+        if (myMinLen <= 0) {
+            return ConstBoundInference.T;
+        } else {
+            SuitLengthRange r = SuitLengthRange.atLeast(myMinLen);
+            return ShapeBoundInf.create(ShapeSet.create(shape -> shape.isSuitInRange(s, r)));
+        }
     }
 }

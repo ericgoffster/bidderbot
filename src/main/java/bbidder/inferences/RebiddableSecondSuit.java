@@ -1,6 +1,7 @@
 package bbidder.inferences;
 
 import java.util.Objects;
+import java.util.OptionalInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -44,11 +45,14 @@ public final class RebiddableSecondSuit extends Inference {
     }
 
     private static IBoundInference createrBound(int longer, int shorter, InfSummary meSummary) {
-        return meSummary.minLenInSuit(shorter).map(myMinLen -> {
-            SuitLengthRange r = SuitLengthRange.atLeast(Math.max(myMinLen + 1, 5));
-            return ShapeBoundInf.create(
-                    ShapeSet.create(shape -> shape.isSuitInRange(shorter, r) && shape.isLongerOrEqual(longer, (short)(1 << shorter))));
-        }).orElse(ConstBoundInference.F);
+        OptionalInt minLenInSuit = meSummary.minLenInSuit(shorter);
+        if (!minLenInSuit.isPresent()) {
+            return ConstBoundInference.F;
+        }
+        int myMinLen = minLenInSuit.getAsInt();
+        SuitLengthRange r = SuitLengthRange.atLeast(Math.max(myMinLen + 1, 5));
+        return ShapeBoundInf.create(
+                ShapeSet.create(shape -> shape.isSuitInRange(shorter, r) && shape.isLongerOrEqual(longer, (short)(1 << shorter))));
     }
 
     public static Inference valueOf(String str) {

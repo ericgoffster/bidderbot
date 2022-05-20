@@ -1,6 +1,7 @@
 package bbidder;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public final class Players {
     public final Player lho;
@@ -34,9 +35,17 @@ public final class Players {
     }
     
     public Optional<Integer> ourCombinedMinLength(int s) {
-        Optional<Integer> meLenLonger = me.infSummary.minLenInSuit(s);
-        Optional<Integer> partnerLenLonger = partner.infSummary.minLenInSuit(s);
-        return meLenLonger.flatMap(meLen -> partnerLenLonger.map(partnerLen -> meLen + partnerLen));
+        OptionalInt meLenLonger = me.infSummary.minLenInSuit(s);
+        if (!meLenLonger.isPresent()) {
+            return Optional.empty();
+        }
+        OptionalInt partnerLenLonger = partner.infSummary.minLenInSuit(s);
+        if (!partnerLenLonger.isPresent()) {
+            return Optional.empty();
+        }
+        int meLen = meLenLonger.getAsInt();
+        int partnerLen = partnerLenLonger.getAsInt();
+        return Optional.of(meLen + partnerLen);
     }
     
     public boolean iBidSuit(int s) {

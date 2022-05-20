@@ -2,7 +2,7 @@ package bbidder.inferences;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.Stream;
 
 import bbidder.IBoundInference;
@@ -36,9 +36,12 @@ public final class CombinedTotalPointsRange extends Inference {
 
     @Override
     public IBoundInference bind(Players players) {
-        return players.partner.infSummary.minTotalPts()
-                .map(tpts -> TotalPtsBoundInf.create(players.partner.infSummary, new PointRange(rng.bits >> tpts)))
-                .orElse(ConstBoundInference.F);
+        OptionalInt minTotalPts = players.partner.infSummary.minTotalPts();
+        if (!minTotalPts.isPresent()) {
+            return ConstBoundInference.F;
+        }
+        int tpts = minTotalPts.getAsInt();
+        return TotalPtsBoundInf.create(players.partner.infSummary, new PointRange(rng.bits >> tpts));
     }
 
     @Override
@@ -54,10 +57,17 @@ public final class CombinedTotalPointsRange extends Inference {
             if (rlow == null || rhigh == null) {
                 return null;
             }
-            Optional<Integer> l = rlow.rng.lowest();
-            Optional<Integer> h = rhigh.rng.highest();
-            PointRange createRange = l.map(lower -> h.map(higher -> PointRange.between(lower, higher)).orElse(PointRange.NONE)).orElse(PointRange.NONE);
-            return new CombinedTotalPointsRange(createRange);
+            OptionalInt l = rlow.rng.lowest();
+            OptionalInt h = rhigh.rng.highest();
+            if (!l.isPresent()) {
+                return new CombinedTotalPointsRange(PointRange.NONE);
+            }
+            if (!h.isPresent()) {
+                return new CombinedTotalPointsRange(PointRange.NONE);
+            }
+            int lower = l.getAsInt();
+            int higher = h.getAsInt();
+            return new CombinedTotalPointsRange(PointRange.between(lower, higher));
         }
         PointRange createRange = createRange(str);
         if (createRange == null) {

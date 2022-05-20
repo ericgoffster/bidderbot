@@ -1,7 +1,5 @@
 package bbidder;
 
-import java.util.Optional;
-
 import bbidder.utils.BitUtil;
 
 /**
@@ -21,14 +19,6 @@ public final class CardsRange extends Range {
     
     public CardsRange(long bits) {
         super(bits);
-    }
-
-    public Optional<Integer> highest() {
-        return BitUtil.highestBit(bits);
-    }
-
-    public Optional<Integer> lowest() {
-        return BitUtil.leastBit(bits);
     }
 
     public static CardsRange exactly(int n) {

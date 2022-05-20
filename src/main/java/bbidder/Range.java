@@ -3,7 +3,7 @@ package bbidder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.OptionalInt;
 
 import bbidder.utils.BitUtil;
 
@@ -30,11 +30,11 @@ public abstract class Range {
         return bits == 0;
     }
 
-    public Optional<Integer> highest() {
+    public OptionalInt highest() {
         return BitUtil.highestBit(bits);
     }
 
-    public Optional<Integer> lowest() {
+    public OptionalInt lowest() {
         return BitUtil.leastBit(bits);
     }
 

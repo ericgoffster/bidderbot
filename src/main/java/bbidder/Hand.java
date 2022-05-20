@@ -14,6 +14,7 @@ import static bbidder.Constants.TEN;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 import bbidder.utils.BitUtil;
 import bbidder.utils.SplitUtil;
@@ -222,7 +223,12 @@ public final class Hand {
     }
 
     public boolean haveFit(InfSummary partnerSummary, int suit) {
-        return partnerSummary.minLenInSuit(suit).filter(partnerLen -> numInSuit(suit) + partnerLen >= 8).isPresent();
+        OptionalInt minLenInSuit = partnerSummary.minLenInSuit(suit);
+        if (!minLenInSuit.isPresent()) {
+            return false;
+        }
+        int partnerLen = minLenInSuit.getAsInt();
+        return numInSuit(suit) + partnerLen >= 8;
     }
 
     public int getTotalPoints(InfSummary partnerSummary) {

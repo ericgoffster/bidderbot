@@ -2,6 +2,7 @@ package bbidder.utils;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
 /**
@@ -93,24 +94,24 @@ public final class BitUtil {
      *            The bit pattern
      * @return The index of the highest bit set in the pattern.
      */
-    public static Optional<Integer> highestBit(long pattern) {
+    public static OptionalInt highestBit(long pattern) {
         int p3 = (int) ((pattern >>> 48) & 0xffff);
         if (p3 != 0) {
-            return Optional.of(highest[p3] + 48);
+            return OptionalInt.of(highest[p3] + 48);
         }
         int p2 = (int) ((pattern >>> 32) & 0xffff);
         if (p2 != 0) {
-            return Optional.of(highest[p2] + 32);
+            return OptionalInt.of(highest[p2] + 32);
         }
         int p1 = (int) ((pattern >>> 16) & 0xffff);
         if (p1 != 0) {
-            return Optional.of(highest[p1] + 16);
+            return OptionalInt.of(highest[p1] + 16);
         }
         int p0 = (int) (pattern & 0xffff);
         if (p0 != 0) {
-            return Optional.of(highest[p0]);
+            return OptionalInt.of(highest[p0]);
         }
-        return Optional.empty();
+        return OptionalInt.empty();
     }
 
     /**
@@ -118,24 +119,24 @@ public final class BitUtil {
      *            The bit pattern
      * @return The index of the lowest bit set in the pattern. (-1 if all zero)
      */
-    public static Optional<Integer> leastBit(long pattern) {
+    public static OptionalInt leastBit(long pattern) {
         int p0 = (int) (pattern & 0xffff);
         if (p0 != 0) {
-            return Optional.of(lowest[p0]);
+            return OptionalInt.of(lowest[p0]);
         }
         int p1 = (int) ((pattern >>> 16) & 0xffff);
         if (p1 != 0) {
-            return Optional.of(lowest[p1] + 16);
+            return OptionalInt.of(lowest[p1] + 16);
         }
         int p2 = (int) ((pattern >>> 32) & 0xffff);
         if (p2 != 0) {
-            return Optional.of(lowest[p2] + 32);
+            return OptionalInt.of(lowest[p2] + 32);
         }
         int p3 = (int) ((pattern >>> 48) & 0xffff);
         if (p3 != 0) {
-            return Optional.of(lowest[p3] + 48);
+            return OptionalInt.of(lowest[p3] + 48);
         }
-        return Optional.empty();
+        return OptionalInt.empty();
     }
     
     public static IntStream stream(long pattern) {
