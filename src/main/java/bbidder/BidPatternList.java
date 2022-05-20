@@ -23,7 +23,7 @@ public final class BidPatternList {
         super();
         this.bids = bids;
     }
-    
+
     public static BidPatternList create(List<BidPattern> bids) {
         return new BidPatternList(new ArrayList<>(bids));
     }

@@ -109,8 +109,8 @@ public final class BidPattern {
 
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
-            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, null, null, null, TagSet.EMPTY, false, Seats.ALL,
-                    false, null, null);
+            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, null, null, null, TagSet.EMPTY, false, Seats.ALL, false,
+                    null, null);
         }
         return new BidPattern(false, null, null, simpleBid, null, null, TagSet.EMPTY, false, Seats.ALL, false, null, null);
     }
@@ -159,8 +159,10 @@ public final class BidPattern {
     }
 
     /**
-     * @param contract The current contract
-     * @param bid The current bid (used to resolve anonymous levels)
+     * @param contract
+     *            The current contract
+     * @param bid
+     *            The current bid (used to resolve anonymous levels)
      * @return The level resolved bid pattern.
      */
     public BidPattern resolveLevel(Contract contract, Bid bid) {
@@ -172,15 +174,14 @@ public final class BidPattern {
             return this;
         }
         if (jumpLevel != null) {
-            Bid b = contract.getJumpBid(jumpLevel, strain);
-            return withLevel(b.level).withJumpLevel(null);
+            return withLevel(contract.getJumpBid(jumpLevel, strain).level).withJumpLevel(null);
         }
         if (bid == null) {
             throw new IllegalArgumentException("anonymous level not allowed");
         }
         return withLevel(bid.level);
     }
-    
+
     /**
      * @return The bid this pattern represents (after resolution has been performed)
      */
@@ -192,8 +193,10 @@ public final class BidPattern {
     }
 
     /**
-     * @param contract The current contract
-     * @param bid The bid to test
+     * @param contract
+     *            The current contract
+     * @param bid
+     *            The bid to test
      * @return true, if the bid was compatible with this pattern
      */
     public boolean isBidCompatible(Contract contract, Bid bid) {
