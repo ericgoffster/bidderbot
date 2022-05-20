@@ -41,7 +41,7 @@
         1C 1D
         3D P;
 
-[fit_established M] 2m P => min-;
+[fit_established m] 2m P => min-;
     test xxx Qxx Axxxx xx:
         1C 1D
         2D P;
@@ -68,11 +68,6 @@
     anti_test Kxx xxxx AQxxx x:
         1C 1D
         2C 3D;
-        
-[fit_established m] 3m => inv;
-    test xxx Axx AQxxx xx:
-        1C 1D
-        2D 3D;
         
 [partner_is_two_suited x y] NJx:<2N P => min, prefer x to y;
     test AQxxx x xxxx xxx:
