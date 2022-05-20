@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common [] 2N:"nt_opener" 3♣ {
+common [] 2N:"nt_opener" 3♣:"stayman" {
 
 	3M => 4+M;
 	    test Axx AQxx KJx AQx:

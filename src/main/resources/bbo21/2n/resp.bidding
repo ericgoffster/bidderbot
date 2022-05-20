@@ -7,7 +7,7 @@
 
 common [] 2N:"nt_opener" {
 
-	3♣ => gf+, 4M;
+	3♣:"stayman" => gf+, 4M;
 	    test AJxxx Axxx xx xx:
 	        2N 3♣;
 	    test AJxx Axxxx xx xx:
