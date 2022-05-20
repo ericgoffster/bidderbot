@@ -75,7 +75,7 @@ public final class InfSummary {
      *            The suit
      * @return The range of possible lengths for the suit
      */
-    public Range getSuit(int suit) {
+    public SuitLengthRange getSuit(int suit) {
         return getShapeStats(suit).lengths;
     }
 

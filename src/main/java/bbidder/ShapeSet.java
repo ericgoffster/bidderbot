@@ -171,7 +171,7 @@ public final class ShapeSet implements Iterable<Shape> {
         ShapeStats[] stats = getStats();
         List<String> str = new ArrayList<>();
         for (int s = 0; s < 4; s++) {
-            Range rn = stats[s].lengths;
+            SuitLengthRange rn = stats[s].lengths;
             if (rn.isEmpty()) {
                 return "{}";
             }
