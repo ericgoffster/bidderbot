@@ -30,7 +30,7 @@ public class AnalyzeBids {
             state = state.withBid(bid);
         }
 
-        for(var pb: state.getPossibleBids()) {
+        for (var pb : state.getPossibleBids()) {
             System.out.println(pb.inf.where);
             System.out.println(pb.inf);
         }

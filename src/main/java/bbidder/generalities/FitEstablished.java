@@ -36,7 +36,7 @@ public final class FitEstablished extends Generality {
         }
         return combined.contains(ourCombinedMinLength.getAsInt());
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(combined, symbol);

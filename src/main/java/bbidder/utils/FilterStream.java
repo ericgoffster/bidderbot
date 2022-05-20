@@ -14,7 +14,7 @@ public class FilterStream<E> implements MyStream<E> {
 
     @Override
     public E next() {
-        for(;;) {
+        for (;;) {
             E o = stream.next();
             if (o == null) {
                 return null;

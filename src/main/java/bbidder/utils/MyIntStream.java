@@ -8,11 +8,11 @@ public class MyIntStream implements MyStream<Integer> {
         super();
         this.arr = arr;
     }
-    
+
     @Override
     public Integer next() {
         if (i >= arr.length) {
-           return null; 
+            return null;
         }
         return arr[i++];
     }

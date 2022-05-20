@@ -27,14 +27,14 @@ public final class MadeBid extends Generality {
     @Override
     public boolean test(Players players, TaggedAuction bidList) {
         var bids = bidList.getBids();
-        for(int i = bids.size() - position; i >= 0; i -= 4) {
+        for (int i = bids.size() - position; i >= 0; i -= 4) {
             if (bids.get(i).tags.contains(tag)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(tag, position);
@@ -51,13 +51,17 @@ public final class MadeBid extends Generality {
         MadeBid other = (MadeBid) obj;
         return Objects.equals(tag, other.tag) && Objects.equals(position, other.position);
     }
-    
+
     public String getPosName() {
-        switch(position) {
-        case 4: return "i";
-        case 1: return "rho";
-        case 2: return "partner";
-        case 3: return "lho";
+        switch (position) {
+        case 4:
+            return "i";
+        case 1:
+            return "rho";
+        case 2:
+            return "partner";
+        case 3:
+            return "lho";
         default:
             throw new IllegalStateException();
         }

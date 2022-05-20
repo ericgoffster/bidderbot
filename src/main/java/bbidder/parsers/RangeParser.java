@@ -21,7 +21,7 @@ public class RangeParser {
         if (m.matches()) {
             return new RangeOf(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)), m.group(3).trim(), false);
         }
-    
+
         m = PATT_MAX2.matcher(str);
         if (m.matches()) {
             return new RangeOf(null, null, m.group(1).trim(), true);

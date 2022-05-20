@@ -12,7 +12,7 @@ public class SingletonStream<E> implements MyStream<E> {
     @Override
     public E next() {
         if (consumed) {
-           return null; 
+            return null;
         }
         consumed = true;
         return o;

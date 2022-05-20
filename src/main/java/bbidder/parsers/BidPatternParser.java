@@ -21,7 +21,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
 
     public BidPattern parseInterior2(Input inp) throws IOException {
         BidPattern p = parseInterior(inp);
-        while(inp.readKeyword(":")) {
+        while (inp.readKeyword(":")) {
             if (inp.readKeyword("<")) {
                 BidPattern other = parseInterior(inp);
                 if (other == null) {
@@ -45,8 +45,8 @@ public final class BidPatternParser implements Parser<BidPattern> {
                 p = p.withSeats(seats);
             } else if (inp.readKeyword("\"")) {
                 StringBuilder tag = new StringBuilder();
-                while(inp.ch >= 0 && inp.ch != '"') {
-                    tag.append((char)inp.ch);
+                while (inp.ch >= 0 && inp.ch != '"') {
+                    tag.append((char) inp.ch);
                     inp.advance();
                 }
                 if (inp.ch == '"') {
@@ -61,6 +61,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
         }
         return p;
     }
+
     private BidPattern parseInterior(Input inp) throws IOException {
         inp.advanceWhite();
         boolean anti = false;
@@ -88,7 +89,7 @@ public final class BidPatternParser implements Parser<BidPattern> {
                 throw new IllegalArgumentException("Invalid bid: " + str);
             }
             return BidPattern.createJump(symbol, 1).withAntiMatch(anti);
-        }  else if (inp.readKeyword("?")) {
+        } else if (inp.readKeyword("?")) {
             String str = parseSuit(inp);
             Symbol symbol = SymbolParser.parseSymbol(str);
             if (symbol == null) {

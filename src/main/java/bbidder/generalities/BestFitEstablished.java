@@ -37,7 +37,7 @@ public final class BestFitEstablished extends Generality {
     private Set<Integer> getBestSuits(Players players) {
         Set<Integer> bestSuits = new HashSet<>();
         int bestLen = 0;
-        for(int t = 0; t < 4; t++) {
+        for (int t = 0; t < 4; t++) {
             OptionalInt minLenInSuitPartner = players.partner.infSummary.minLenInSuit(t);
             if (!minLenInSuitPartner.isPresent()) {
                 return Set.of();

@@ -54,7 +54,7 @@ public final class BiddingSystemParser {
      *            The url spec
      * @param reportErrors
      *            The consumer of parse errors
-     * @param prefix 
+     * @param prefix
      */
     private static void load(String where, String urlSpec, Consumer<ParseException> reportErrors, Consumer<ResolvedBidInference> inferences,
             Consumer<BiddingTest> tests, BidPatternList prefix) {
@@ -102,7 +102,7 @@ public final class BiddingSystemParser {
                     String[] comm = SplitUtil.split(ln, "\\s+", 2);
                     if (comm.length == 2 && comm[0].equalsIgnoreCase("common")) {
                         commons.push(prefix);
-                        for(BidPattern pattern: BidPatternList.valueOf(comm[1]).getBids()) {
+                        for (BidPattern pattern : BidPatternList.valueOf(comm[1]).getBids()) {
                             prefix = prefix.withBidAdded(pattern);
                         }
                     } else if (comm.length == 1 && comm[0].equalsIgnoreCase("continuations")) {

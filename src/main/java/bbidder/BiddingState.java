@@ -76,7 +76,8 @@ public final class BiddingState {
         if (!oldSummary.isEmpty() && newSummary.isEmpty()) {
             DebugUtils.breakpointNoBid(bidding, bid, players);
         }
-        return new BiddingState(we, they, bidding.withBidAdded(new TaggedBid(bid, inference.tags)), players.withNewMe(new Player(newInf, newSummary))).rotate(1);
+        return new BiddingState(we, they, bidding.withBidAdded(new TaggedBid(bid, inference.tags)), players.withNewMe(new Player(newInf, newSummary)))
+                .rotate(1);
     }
 
     /**

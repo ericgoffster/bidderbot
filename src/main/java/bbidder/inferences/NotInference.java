@@ -22,8 +22,7 @@ public final class NotInference extends Inference {
 
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
-        return i1.resolveSuits(suitTable)
-               .map(e1 -> new NotInference(e1.getInference()).new Context(e1.suitTable));
+        return i1.resolveSuits(suitTable).map(e1 -> new NotInference(e1.getInference()).new Context(e1.suitTable));
     }
 
     public static Inference create(Inference i1) {

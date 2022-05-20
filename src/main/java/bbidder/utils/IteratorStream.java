@@ -9,7 +9,7 @@ public class IteratorStream<E> implements MyStream<E> {
         super();
         this.stream = stream;
     }
-    
+
     public IteratorStream(Iterable<E> stream) {
         super();
         this.stream = stream.iterator();
@@ -18,7 +18,7 @@ public class IteratorStream<E> implements MyStream<E> {
     @Override
     public E next() {
         if (!stream.hasNext()) {
-           return null; 
+            return null;
         }
         return stream.next();
     }

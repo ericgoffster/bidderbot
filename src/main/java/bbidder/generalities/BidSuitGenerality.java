@@ -39,13 +39,17 @@ public final class BidSuitGenerality extends Generality {
         }
         return rotate.iBidSuit(suit) && range.contains(minLenInSuit.getAsInt());
     }
-    
+
     public String getPosName() {
-        switch(position) {
-        case 0: return "i";
-        case 1: return "rho";
-        case 2: return "partner";
-        case 3: return "lho";
+        switch (position) {
+        case 0:
+            return "i";
+        case 1:
+            return "rho";
+        case 2:
+            return "partner";
+        case 3:
+            return "lho";
         default:
             throw new IllegalStateException();
         }
@@ -70,7 +74,7 @@ public final class BidSuitGenerality extends Generality {
 
     @Override
     public String toString() {
-        return getPosName()+ "_" + NAME + " " + symbol + " promising " + range;
+        return getPosName() + "_" + NAME + " " + symbol + " promising " + range;
     }
 
 }

@@ -40,6 +40,7 @@ import bbidder.utils.SplitUtil;
  */
 public final class InferenceParser {
     private static Pattern PATT_SPECIFIC_CARDS = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
+
     /**
      * @param str
      *            The string to parse.

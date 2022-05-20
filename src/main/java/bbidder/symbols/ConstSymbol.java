@@ -14,7 +14,7 @@ public final class ConstSymbol extends Symbol {
         super();
         this.strain = strain;
     }
-    
+
     @Override
     public MyStream<Context> resolveSuits(SuitTable suitTable) {
         return MyStream.of(new Context(suitTable));

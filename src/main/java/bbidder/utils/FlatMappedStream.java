@@ -21,7 +21,7 @@ public class FlatMappedStream<E, F> implements MyStream<E> {
                 return null;
             }
         }
-        for(;;) {
+        for (;;) {
             E o = curr.next();
             if (o != null) {
                 return o;

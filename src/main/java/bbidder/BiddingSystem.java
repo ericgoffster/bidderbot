@@ -128,7 +128,7 @@ public final class BiddingSystem {
      *            The auction.
      * @param players
      *            The like hands for everyone so far.
-     * @param lastBid 
+     * @param lastBid
      *            The last bid
      * @return The inference The inference from the bid.
      */
@@ -153,7 +153,7 @@ public final class BiddingSystem {
         if (positive == ConstBoundInference.F && lastBid != Bid.P) {
             throw new RuntimeException(lastBid + ": Unrecognized bid for: " + auction);
         }
-        
+
         if (tags == null) {
             tags = Set.of();
         }

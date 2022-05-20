@@ -15,7 +15,7 @@ public final class VarSymbol extends Symbol {
         super();
         this.varName = varName;
     }
-    
+
     @Override
     public String toString() {
         return varName;

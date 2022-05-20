@@ -43,7 +43,7 @@ public final class BidInference {
      *            Where is it located.
      * @param str
      *            The string to parse.
-     * @param prefix 
+     * @param prefix
      *            The prefix
      * @return A BidInference parsed from the string
      */
@@ -68,7 +68,7 @@ public final class BidInference {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid bid inference '" + str + "'");
         }
-        for(BidPattern pattern: BidPatternList.valueOf(parts[0]).getBids()) {
+        for (BidPattern pattern : BidPatternList.valueOf(parts[0]).getBids()) {
             prefix = prefix.withBidAdded(pattern);
         }
         return new BidInference(description, where, prefix, InferenceParser.parseInference(parts[1]));

@@ -137,6 +137,7 @@ public final class SuitSetParser {
             }
             return result;
         }
+
         public SuitSet lookupSuitSet1() throws IOException {
             readWhite();
             SuitSet result = lookupSuitSet0();

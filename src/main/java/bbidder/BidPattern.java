@@ -18,7 +18,7 @@ import bbidder.utils.MyStream;
  *
  */
 public final class BidPattern {
-    private static final short ALL_SEATS = (short)0xf;
+    private static final short ALL_SEATS = (short) 0xf;
     public static final String STR_DOUBLEJUMP = "DJ";
     public static final String STR_JUMP = "J";
     public static final String STR_NONJUMP = "NJ";
@@ -37,8 +37,8 @@ public final class BidPattern {
     public final BidPattern greaterThan;
     public final BidPattern lessThan;
 
-    private BidPattern(boolean isOpposition, Symbol symbol, Integer level, Bid simpleBid, Integer jumpLevel, Generality generality,
-            Set<String> tags, boolean antiMatch, short seats, boolean downTheLine, BidPattern greaterThan, BidPattern lessThan) {
+    private BidPattern(boolean isOpposition, Symbol symbol, Integer level, Bid simpleBid, Integer jumpLevel, Generality generality, Set<String> tags,
+            boolean antiMatch, short seats, boolean downTheLine, BidPattern greaterThan, BidPattern lessThan) {
         super();
         this.isOpposition = isOpposition;
         this.symbol = symbol;
@@ -60,9 +60,10 @@ public final class BidPattern {
     public boolean isPass() {
         return simpleBid == Bid.P;
     }
-    
+
     public BidPattern withSymbol(Symbol symbol) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan);
     }
 
     /**
@@ -71,31 +72,38 @@ public final class BidPattern {
      * @return A pattern with isOpposition set.
      */
     public BidPattern withIsOpposition(boolean isOpposition) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan);
     }
 
     public BidPattern withSeats(short seats) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan);
     }
-    
+
     public BidPattern withDownTheLine(boolean downTheLine) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan);
     }
-    
+
     public BidPattern withTags(Set<String> tags) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan);
     }
-    
+
     public BidPattern withGreaterThan(BidPattern greaterThan) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan);
     }
-    
+
     public BidPattern withLessThan(BidPattern lessThan) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan);
     }
-    
+
     public BidPattern withAntiMatch(boolean antiMatch) {
-        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan, lessThan);
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan);
     }
 
     /**
@@ -116,7 +124,8 @@ public final class BidPattern {
      */
     public static BidPattern createSimpleBid(Bid simpleBid) {
         if (simpleBid.isSuitBid()) {
-            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, Set.of(), false, ALL_SEATS, false, null, null);
+            return new BidPattern(false, new ConstSymbol(simpleBid.strain), simpleBid.level, simpleBid, null, null, Set.of(), false, ALL_SEATS, false,
+                    null, null);
         }
         return new BidPattern(false, null, null, simpleBid, null, null, Set.of(), false, ALL_SEATS, false, null, null);
     }
@@ -155,8 +164,8 @@ public final class BidPattern {
             if (!isBidCompatible(contract, symbol, b)) {
                 return Optional.empty();
             }
-            return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, tags,
-                    false, seats, downTheLine, greaterThan, lessThan));
+            return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, tags, false, seats,
+                    downTheLine, greaterThan, lessThan));
         }
         if (jumpLevel != null) {
             if (contract != null) {
@@ -165,11 +174,12 @@ public final class BidPattern {
                 if (!isBidCompatible(contract, symbol, b)) {
                     return Optional.empty();
                 }
-                return Optional
-                        .of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, tags, false, seats, downTheLine, greaterThan, lessThan));
+                return Optional.of(new BidPattern(isOpposition, new ConstSymbol(symbol.getResolvedStrain()), b.level, b, null, null, tags, false,
+                        seats, downTheLine, greaterThan, lessThan));
             }
         }
-        return Optional.of(new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, false, seats, downTheLine, greaterThan, lessThan));
+        return Optional.of(new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, false, seats, downTheLine, greaterThan,
+                lessThan));
     }
 
     private boolean isBidCompatible(Contract contract, Symbol symbol, Bid b) {
@@ -180,14 +190,24 @@ public final class BidPattern {
             return false;
         }
         if (lessThan != null) {
-            Bid comparisonBid = Bid.valueOf(lessThan.level, lessThan.symbol.getResolvedStrain());
-            if (b.compareTo(comparisonBid) >= 0) {
+            Optional<TaggedBid> tb = lessThan.resolveToBid(contract, null);
+            if (tb.isPresent()) {
+                Bid comparisonBid = tb.get().bid;
+                if (b.compareTo(comparisonBid) >= 0) {
+                    return false;
+                }
+            } else {
                 return false;
             }
         }
         if (greaterThan != null) {
-            Bid comparisonBid = Bid.valueOf(greaterThan.level, greaterThan.symbol.getResolvedStrain());
-            if (b.compareTo(comparisonBid) <= 0) {
+            Optional<TaggedBid> tb = greaterThan.resolveToBid(contract, null);
+            if (tb.isPresent()) {
+                Bid comparisonBid = tb.get().bid;
+                if (b.compareTo(comparisonBid) <= 0) {
+                    return false;
+                }
+            } else {
                 return false;
             }
         }
@@ -234,19 +254,18 @@ public final class BidPattern {
      * At this point, the bid pattern's suit has already been
      * resolved, so we just need to determine the level.
      * 
-     * @param taggedAuction
-     *            The current list of bids.
+     * @param contract
+     *            The current contract.s
      * @param bid
      *            The bid I am trying to match.
      * @return The bid associated with the given pattern. Null, if not valid.
      */
-    public Optional<TaggedBid> resolveToBid(TaggedAuction taggedAuction, TaggedBid bid) {
+    public Optional<TaggedBid> resolveToBid(Contract contract, TaggedBid bid) {
         if (simpleBid != null) {
             return Optional.of(new TaggedBid(simpleBid, tags));
         }
         int strain = symbol.getResolvedStrain();
         if (jumpLevel != null) {
-            Contract contract = taggedAuction.getContract();
             Bid b = contract.getBid(jumpLevel, strain);
             if (level != null && b.level != level.intValue()) {
                 return Optional.empty();
@@ -260,7 +279,6 @@ public final class BidPattern {
             if (bid == null) {
                 throw new IllegalArgumentException("anonymous level not allowed");
             }
-            Contract contract = taggedAuction.getContract();
             Bid b = Bid.valueOf(bid.bid.level, strain);
             if (level != null && b.level != level.intValue()) {
                 return Optional.empty();
@@ -299,9 +317,8 @@ public final class BidPattern {
         if (getClass() != obj.getClass())
             return false;
         BidPattern other = (BidPattern) obj;
-        return Objects.equals(generality, other.generality) && isOpposition == other.isOpposition
-                && Objects.equals(jumpLevel, other.jumpLevel) && Objects.equals(level, other.level) && simpleBid == other.simpleBid
-                && Objects.equals(symbol, other.symbol);
+        return Objects.equals(generality, other.generality) && isOpposition == other.isOpposition && Objects.equals(jumpLevel, other.jumpLevel)
+                && Objects.equals(level, other.level) && simpleBid == other.simpleBid && Objects.equals(symbol, other.symbol);
     }
 
     private String _getString() {
@@ -325,10 +342,10 @@ public final class BidPattern {
             sym = sym + ":down";
         }
         if (seats != 0xf) {
-            sym = sym + ":seats"+seats; 
+            sym = sym + ":seats" + seats;
         }
         if (!tags.isEmpty()) {
-            sym = sym + ":\""+tags.iterator().next()+"\"";
+            sym = sym + ":\"" + tags.iterator().next() + "\"";
         }
         if (level == null) {
             return "?" + sym;

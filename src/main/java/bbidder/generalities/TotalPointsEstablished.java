@@ -31,7 +31,7 @@ public final class TotalPointsEstablished extends Generality {
         }
         return rng.contains(ourCombinedMinLength.getAsInt());
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(rng);
