@@ -17,14 +17,14 @@
         1C 1S
         2N 3H;
 
-1m 1M
-2N:"nt_rebid" 3om:"cb_stayman" => 7+ tpts, 5 M;
+1x 1M
+2N:"nt_rebid" 3y:"cb_stayman":<3z => 7+ tpts, 5 M;
     test xxx AQJxx xx xxx:
         1C 1H
         2N 3D;
 
-1m 1M
-2N:"nt_rebid" 3om:"cb_stayman" => slaminv+, 6+ M;
+1x 1M
+2N:"nt_rebid" 3y:"cb_stayman":<3z => slaminv+, 6+ M;
     test xx AQJxxx xx Axx:
         1C 1H
         2N 3D;

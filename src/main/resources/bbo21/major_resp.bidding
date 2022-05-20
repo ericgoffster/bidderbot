@@ -11,7 +11,7 @@ common 1M:seats34 {
 	        P 1♥
 	        2S;
 	
-	2♣ => 11+ tpts, 8+ fit M;
+	2♣:"drury" => 11+ tpts, 8+ fit M;
 	    test xxx KJx Kx Axxxx:
 	        P 1♥
 	        2♣;

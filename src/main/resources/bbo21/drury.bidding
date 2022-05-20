@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-common 1M:seats34 2C {
+common 1M 2C:"drury" {
 	2OM:<2M => inv, 4+OM;
 	    test Axxxx Axxx xx Ax:
 	        P 1S
