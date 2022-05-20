@@ -90,10 +90,14 @@
         2N 4H;
 
 [[Bid invitation with the values]]
-[] 3M => inv, fit M;
+[fit_established M] 3M => inv;
     test AQxx Axx xxxx xx:
         1C 1S
         2S 3S;
+    test AKxxxx AQx Kx xx:
+        1♠ 2♠
+        3♠;
+[] 3M => inv, fit M;
     test AKxx Kxxx xx AKx:
         1♣ 1♥
         3♥;
@@ -112,9 +116,6 @@
     test xx Axxxxx xx xxx:
         1C 1H
         2N 3H;
-    test AKxxxx AQx Kx xx:
-        1♠ 2♠
-        3♠;
 
 [[Bid min with no further values]]
 [] 2M => min, fit M;
