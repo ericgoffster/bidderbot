@@ -5,6 +5,7 @@
 # H = ♥
 # S = ♠
 
+[[Bid a minor, if you have it]]
 1N 2♠
 3m => 4+m, 2x;
     test Ax Axxx AJx Qxxx:
@@ -14,6 +15,7 @@
         1N 2♠
         3♦;
 
+[[Bid 2N with no minor]]
 1N 2♠
 2N => always;
     test AQx QJx AJx Qxxx:
@@ -23,8 +25,9 @@
         1N 2♠
         2N;
 
+[[Bid short major, if you have it]]
 1N 2♠
-3m 3M => 1-M;
+3m 3M => gf, 1-M;
     test x Axx Axxxx Axxx:
         1N 2♠
         3♣ 3♠;
@@ -38,8 +41,9 @@
         1N 2♠
         3♦ 3♥;
 
+[[Bid short major over 2N, if you have it and with a 5 card minor]]
 1N 2♠
-2N 3M => 1-M;
+2N 3M => 1-M, 5m;
     test x Axx Axxxx Axxx:
         1N 2♠
         2N 3♠;
