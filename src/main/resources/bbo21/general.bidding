@@ -112,6 +112,15 @@
         1♣ 1♦
         2♣;
 
+[[Bid a possible pseudo fit]]
+[partner_is_two_suited x y] NJy:<2x:>1N NJx => min, prefer x to y;
+    test AQxxx xx xxxx xx:
+        1H 1S
+        2C 2H;
+    test xx AQxxx xxx xxx:
+        1S 1N
+        2C 2S;
+
 [[Bid a new suit below 3N with game forcing values]]
 [i_bid_suit y, unbid_suit x] NJx:<3N:nonconventional => gf+, 4+ x;
     test xx AQxxx Qxxx Ax:

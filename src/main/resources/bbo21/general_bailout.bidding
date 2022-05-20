@@ -87,9 +87,6 @@
         
 [[Show preference]]
 [partner_is_two_suited x y] ?y NJx => prefer x to y;
-    test AQxxx xx xxxx xx:
-        1H 1S
-        2C 2H;
 
 [[Pass best known pseudo fit]]
 [bestfit_established y] NJy P => always;
