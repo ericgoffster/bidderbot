@@ -36,18 +36,6 @@ NJz:>2x => 4+z, 5+x, nofit y, 18+tpts;
         3N ;
 
 1x 1y
-3x => 6+x, 17-20 tpts, nofit y;
-    test AKx Kxx x AKxxxx:
-        1♣ 1♦
-        3♣;
-
-1x 1y
-2x => 6+x, 16- tpts, nofit y;
-    test Kxx Kxx x AKxxxx:
-        1♣ 1♦
-        2♣;
-
-1x 1y
 1N => semibalanced, 12-14 tpts, nofit y;
     test Qxx Axx Ax Axxxx:
         1♣ 1♦

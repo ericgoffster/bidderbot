@@ -69,7 +69,9 @@
 # Rebid major if possible
 # 
 [i_bid_suit M] NJM:<2N => min, rebiddable M;
-
+    test Kxx AKxxxx Kxx x:
+        1H 1S
+        2H;
 #
 # Jump Rebid major if possible
 # 
