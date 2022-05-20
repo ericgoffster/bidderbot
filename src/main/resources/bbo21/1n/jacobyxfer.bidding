@@ -56,6 +56,20 @@ common [] 1N:"nt_opener" 2M-1 {
 		        3H;
 		}
     }
+    
+    2M => always;
+	    test AQx xxx AJx Axxx:
+	        1N 2♦
+	        2♥;
+	    test AQx xxx AJx Axxx:
+	        1N 2♥
+	        2♠;
+	    test AQxx xx AJx Axxx:
+	        1N 2♦
+	        2♥;
+	    test AQ xxxx AJx Axxx:
+	        1N 2♥
+	        2♠;
 }
 
 common [] 1N:"nt_opener" 2M-1 2M {
