@@ -1,3 +1,95 @@
-include opening_bids.bidding;
-include contested/index.bidding;
-include nt_slams.bidding;
+# Opening Bids
+
+# C = ♣
+# D = ♦
+# H = ♥
+# S = ♠
+
+2♣:"2c_opener" => 19+ hcp, 23+ tpts;
+    test AKQxx AKQ AK xxx:
+        2♣;
+continuations {
+	2M => 5+ M, 8+ tpts, 2 of top 3 in M;
+	    test AQxxx Kxx xxx xx:
+	        2♣ 2S;
+	3m => 5+ m, 8+ tpts, 2 of top 3 in m;
+	    test xx Kxx AQxxx xxx:
+	        2♣ 3D;
+	
+	2N => 8+ tpts, balanced, partial_stoppers unstopped, stoppers denied;
+	    test Qx Kxxx Kxxx Jxx:
+	        2♣ 2N;
+	
+	2D:"waiting" => always;
+	    test xx Kxxx xxxx xxx:
+	        2♣ 2D;
+	continuations {
+		2N:"nt_opener" => balanced, 22-24 tpts, 22-24 hcp;
+		    test AKQx AQxx AQ Qxx:
+		        2C 2D
+		        2N;
+		NJx => 5+ x;
+		    test AKQxx AQxx A Axx:
+		        2C 2D
+		        2S;
+	}
+}
+
+2N:"nt_opener" => balanced, 20-21 tpts, 20-21 hcp;
+    test AKQx AQxx AQ xxx:
+        2N;
+
+1N:"nt_opener" => balanced, 15-17 hcp, 18- tpts;
+    test AQxx KQxx AQ xxx:
+        1N;
+
+1M:down:seats34 => 5+ M, 8+ tpts, longest_or_equal M among majors;
+    test KQJxx xxx Axx xx:
+        P 1♠;
+
+1x:down => 5+ x, 11+ hcp, 12+ tpts, longest_or_equal x among all;
+    test AQxxx Axxx Kx xx:
+        1♠;
+    test Axxx AQxxx Kx xx:
+        1♥;
+    test AQxxx Axxxx K2 2:
+        1♠;
+    test AQxxx AKxxxx x x:
+        1♥;
+    test Axxx Kx AQxxx xx:
+        1♦;
+
+1m:down => 4 m, 11+ hcp, 12+ tpts, longest_or_equal m among minors;
+    test Axxx x AQxx Kxxx:
+        1♦;
+
+1m => 3 m, 11+ hcp, 12+ tpts, longest_or_equal m among minors;
+    test Axxx xxx AQx Kxx:
+        1♣;
+
+# Preempts
+2x => 6 x, 6-10 hcp, 2+ of top 3 in x, 3+ of top 5 in x;
+    test KQJxxx xxx x xxx:
+        2♠;
+
+3x => 7 x, 5-9 hcp, 1+ of top 3 in x;
+    test KQJxxxx xx x xxx:
+        3♠;
+
+4x => 8 x, 5-9 hcp, 1+ of top 3 in x;
+    test KQJxxxxx xx x xx:
+        4♠;
+
+5x => 9 x, 5-9 hcp, 1+ of top 3 in x;
+    test xx x KQJxxxxxx x:
+        5♦;
+
+include major_resp.bidding;
+include minor_resp.bidding;
+include 1over1rebids.bidding;
+include 2over1rebids.bidding;
+include 1n/resp.bidding;
+include 2n/resp.bidding;
+include solowayrebids.bidding;
+include 1n_forcing.bidding;
+include drury.bidding;
