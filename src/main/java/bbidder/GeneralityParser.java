@@ -49,21 +49,21 @@ public final class GeneralityParser {
         case BestFitEstablished.NAME: {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new BestFitEstablished(symbol, 7);
+                return new BestFitEstablished(symbol, SuitLengthRange.atLeast(7));
             }
             break;
         }
         case "bestfit7_established": {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new BestFitEstablished(symbol, 7);
+                return new BestFitEstablished(symbol, SuitLengthRange.atLeast(7));
             }
             break;
         }
         case "bestfit8_established": {
             Symbol symbol = SymbolParser.parseSymbol(remainder);
             if (symbol != null) {
-                return new BestFitEstablished(symbol, 8);
+                return new BestFitEstablished(symbol, SuitLengthRange.atLeast(8));
             }
             break;
         }
@@ -143,10 +143,15 @@ public final class GeneralityParser {
         default: {
             RangeOf rng = RangeParser.parseRange(str.trim());
             if (rng != null) {
-                 if (rng.of.startsWith("fit_established")) {
+                if (rng.of.startsWith("fit_established")) {
                     Symbol sym = SymbolParser.parseSymbol(rng.of.substring(15).trim());
                     if (sym != null) {
                         return new FitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
+                    }
+                } else if (rng.of.startsWith("bestfit_established")) {
+                    Symbol sym = SymbolParser.parseSymbol(rng.of.substring(19).trim());
+                    if (sym != null) {
+                        return new BestFitEstablished(sym, SuitLengthRange.between(rng.min, rng.max));
                     }
                 }
             }

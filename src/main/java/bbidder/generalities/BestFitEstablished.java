@@ -8,6 +8,7 @@ import java.util.Set;
 import bbidder.Auction;
 import bbidder.Generality;
 import bbidder.Players;
+import bbidder.SuitLengthRange;
 import bbidder.SuitTable;
 import bbidder.Symbol;
 import bbidder.utils.MyStream;
@@ -15,9 +16,9 @@ import bbidder.utils.MyStream;
 public final class BestFitEstablished extends Generality {
     public static final String NAME = "bestfit_established";
     private final Symbol symbol;
-    private final int combined;
+    private final SuitLengthRange combined;
 
-    public BestFitEstablished(Symbol symbol, int combined) {
+    public BestFitEstablished(Symbol symbol, SuitLengthRange combined) {
         super();
         this.symbol = symbol;
         this.combined = combined;
@@ -46,7 +47,7 @@ public final class BestFitEstablished extends Generality {
                 return Set.of();
             }
             int combinedLen = minLenInSuitMe.getAsInt() + minLenInSuitPartner.getAsInt();
-            if (combinedLen >= combined) {
+            if (combined.contains(combinedLen)) {
                 if (combinedLen > bestLen) {
                     bestSuits.clear();
                     bestLen = combinedLen;
@@ -73,12 +74,12 @@ public final class BestFitEstablished extends Generality {
         if (getClass() != obj.getClass())
             return false;
         BestFitEstablished other = (BestFitEstablished) obj;
-        return combined == other.combined && Objects.equals(symbol, other.symbol);
+        return Objects.equals(combined, other.combined) && Objects.equals(symbol, other.symbol);
     }
 
     @Override
     public String toString() {
-        return "bestfit" + combined + "_established" + " " + symbol;
+        return combined + " bestfit_established" + " " + symbol;
     }
 
 }
