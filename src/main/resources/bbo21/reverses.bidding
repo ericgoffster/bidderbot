@@ -22,19 +22,19 @@ NJz:>2x 2y => 5+ y, 7+ tpts;
 
 # gf simple raise of first suit.
 1x 1y
-NJz:>2x NJx => fit x, gf;
+NJz:>2x NJx => 8+ fit x, gf;
     test KQxx x xxxx Axxx:
         1♣ 1♠ 2♥ 3♣;
 
 # slam inv with jump raise of first suit
 1x 1y
-NJz:>2x Jx => fit x, slaminv+;
+NJz:>2x Jx => 8+ fit x, slaminv+;
     test KQxx x Kxxx AKxx:
         1♣ 1♠ 2♥ 4♣;
 
 # simple raise of second suit with gf+
 1x 1y
-NJz:>2x NJz => fit z, gf+;
+NJz:>2x NJz => 8+ fit z, gf+;
     test xxx KQxx Axxx xx:
         1C 1H
         2D 3D;
