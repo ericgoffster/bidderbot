@@ -156,7 +156,7 @@ public final class BidPatternList {
             } else {
                 TaggedBid bid = theBids.get(i);
                 Optional<Bid> expected = pattern.resolveToBid(bidding.firstN(i), bid);
-                if (bid.bid != expected.orElse(null)) {
+                if (!Objects.equals(bid.bid, expected.orElse(null))) {
                     return Optional.empty();
                 }
                 i++;
