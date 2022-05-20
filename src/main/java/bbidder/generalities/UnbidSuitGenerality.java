@@ -1,5 +1,6 @@
 package bbidder.generalities;
 
+import java.util.OptionalInt;
 import java.util.stream.Stream;
 
 import bbidder.Auction;
@@ -26,16 +27,15 @@ public final class UnbidSuitGenerality extends Generality {
     @Override
     public boolean test(Players players, Auction bidList) {
         int suit = symbol.getResolvedStrain();
-        if (players.me.infSummary.getBidSuits().filter(s -> (s & (1 << suit)) != 0).isPresent()) {
+        OptionalInt meSuits = players.me.infSummary.getBidSuits();
+        OptionalInt partnerSuits = players.partner.infSummary.getBidSuits();
+        OptionalInt lhoSuits = players.lho.infSummary.getBidSuits();
+        OptionalInt rhoSuits = players.rho.infSummary.getBidSuits();
+        if (!meSuits.isPresent() || !partnerSuits.isPresent() || !lhoSuits.isPresent() || !rhoSuits.isPresent()) {
             return false;
         }
-        if (players.partner.infSummary.getBidSuits().filter(s -> (s & (1 << suit)) != 0).isPresent()) {
-            return false;
-        }
-        if (players.lho.infSummary.getBidSuits().filter(s -> (s & (1 << suit)) != 0).isPresent()) {
-            return false;
-        }
-        if (players.rho.infSummary.getBidSuits().filter(s -> (s & (1 << suit)) != 0).isPresent()) {
+        int combined = meSuits.getAsInt() | partnerSuits.getAsInt() | lhoSuits.getAsInt() | rhoSuits.getAsInt();
+        if ((combined & (1 << suit)) != 0) {
             return false;
         }
         return true;

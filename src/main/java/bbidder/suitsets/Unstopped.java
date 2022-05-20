@@ -1,6 +1,6 @@
 package bbidder.suitsets;
 
-import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.Stream;
 
 import bbidder.Players;
@@ -14,16 +14,16 @@ public final class Unstopped extends SuitSet {
 
     @Override
     public short evaluate(Players players) {
-        Optional<Short> partnerSuits = players.partner.infSummary.getBidSuits();
-        Optional<Short> meSuits = players.me.infSummary.getBidSuits();
+        OptionalInt partnerSuits = players.partner.infSummary.getBidSuits();
+        OptionalInt meSuits = players.me.infSummary.getBidSuits();
         if (!partnerSuits.isPresent() || !meSuits.isPresent()) {
             return 0;
         }
-        short allBid = (short) (partnerSuits.get() | meSuits.get());
+        int allBid = partnerSuits.getAsInt() | meSuits.getAsInt();
         for (int i = 0; i < 4; i++) {
             if (players.me.infSummary.stoppers.stopperIn(i) || players.partner.infSummary.stoppers.stopperIn(i)
                     || players.me.infSummary.partialStoppers.stopperIn(i) || players.partner.infSummary.partialStoppers.stopperIn(i)) {
-                allBid |= (short) (1 << i);
+                allBid |= 1 << i;
             }
         }
         return (short) (0xf ^ allBid);

@@ -1,6 +1,5 @@
 package bbidder;
 
-import java.util.Optional;
 import java.util.OptionalInt;
 
 public final class Players {
@@ -56,11 +55,11 @@ public final class Players {
         if (ourCombinedMinLength.getAsInt() >= 8) {
             return false;
         }
-        Optional<Short> bidSuits = me.infSummary.getBidSuits();
+        OptionalInt bidSuits = me.infSummary.getBidSuits();
         if (bidSuits.isEmpty()) {
             return false;
         }
-        if ((bidSuits.get() & (1 << s)) == 0) {
+        if ((bidSuits.getAsInt() & (1 << s)) == 0) {
             return false;
         }
         return true;

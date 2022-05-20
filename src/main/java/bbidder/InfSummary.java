@@ -2,7 +2,6 @@ package bbidder;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.concurrent.atomic.AtomicReference;
@@ -119,37 +118,40 @@ public final class InfSummary {
      * @return A bit pattern of all suits that have been bid.  empty if
      *         the suits are the empty set.
      */
-    public Optional<Short> getBidSuits() {
+    public OptionalInt getBidSuits() {
         int[] minL = IntStream.range(0, 4)
                 .mapToObj(suit -> minLenInSuit(suit))
                 .filter(o -> o.isPresent())
                 .mapToInt(o -> o.getAsInt())
                 .toArray();
         if (minL.length != 4) {
-            return Optional.empty();
+            return OptionalInt.empty();
         }
         double[] avgL = IntStream.range(0, 4).mapToDouble(suit -> avgLenInSuit(suit).getAsDouble()).toArray();
+        if (avgL.length != 4) {
+            return OptionalInt.empty();
+        }
         Integer[] suitArr = { 0, 1, 2, 3 };
         Arrays.sort(suitArr, (s1, s2) -> -Double.compare(avgL[s1], avgL[s2]));
         if (minL[suitArr[0]] >= 5 || minL[suitArr[0]] >= 4 && minL[suitArr[1]] >= 4) {
-            short suits = 0;
+            int suits = 0;
             for (int i = 0; i < 4 && minL[suitArr[i]] >= 4; i++) {
-                suits |= (short) (1 << suitArr[i]);
+                suits |= 1 << suitArr[i];
             }
-            return Optional.of(suits);
+            return OptionalInt.of(suits);
         }
         if (minL[suitArr[0]] == 4) {
             if (minL[suitArr[1]] > minL[suitArr[2]]) {
-                return Optional.of((short) ((1 << suitArr[0]) | (1 << suitArr[1])));
+                return OptionalInt.of((1 << suitArr[0]) | (1 << suitArr[1]));
             }
-            return Optional.of((short) ((1 << suitArr[0])));
+            return OptionalInt.of(1 << suitArr[0]);
         }
         {
-            short suits = 0;
+            int suits = 0;
             for (int i = 0; i < 4 && avgL[suitArr[i]] >= 4; i++) {
-                suits |= (short) (1 << suitArr[i]);
+                suits |= 1 << suitArr[i];
             }
-            return Optional.of(suits);
+            return OptionalInt.of(suits);
         }
     }
 
