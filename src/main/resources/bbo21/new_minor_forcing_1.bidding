@@ -7,7 +7,7 @@
 
 common
 	1x 1M
-	1N 2y:"cb_stayman" {
+	1N 2y:"cb_stayman":<2z {
 	
 	2z:<2M => 13- hcp, 4+z;
 	    test xx AKxxx KJxx Qx:
