@@ -152,8 +152,12 @@ public final class BidPatternList {
                 i += wildSize;
             } else {
                 TaggedBid bid = theBids.get(i);
-                Optional<TaggedBid> expected = pattern.resolveToBid(bidding.firstN(i).getContract(), bid);
-                boolean matches = expected.isPresent() && Objects.equals(bid, expected.get());
+                Contract subContract = bidding.firstN(i).getContract();
+                TaggedBid newBid = pattern.getResolvedBid(subContract, bid);
+                if (!subContract.isLegalBid(newBid.bid)) {
+                    return Optional.empty();
+                }
+                boolean matches = pattern.isBidCompatible(subContract, newBid) && Objects.equals(bid, newBid);
                 if ((!matches) ^ pattern.antiMatch) {
                     return Optional.empty();
                 }
@@ -161,12 +165,15 @@ public final class BidPatternList {
             }
         }
         BidPattern lastBid = bids.get(bids.size() - 1);
-        return lastBid.resolveToBid(bidding.getContract(), null).flatMap(nextBid -> {
-            if (!bidding.isLegalBid(nextBid.bid)) {
-                return Optional.empty();
-            }
-            return Optional.of(nextBid);
-        });
+        Contract contract = bidding.getContract();
+        TaggedBid newBid = lastBid.getResolvedBid(contract, null);
+        if (!contract.isLegalBid(newBid.bid)) {
+            return Optional.empty();
+        }
+        if (!lastBid.isBidCompatible(contract, newBid)) {
+            return Optional.empty();
+        }
+        return Optional.of(newBid);
     }
 
     /**

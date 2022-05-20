@@ -1,7 +1,6 @@
 package bbidder;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import bbidder.symbols.ConstSymbol;
 import bbidder.utils.MyStream;
@@ -203,43 +202,27 @@ public final class BidPattern {
         });
     }
     
-    private TaggedBid getResolvedBid(Contract contract, TaggedBid bid) {
+    TaggedBid getResolvedBid(Contract contract, TaggedBid bid) {
         if (simpleBid != null) {
             return new TaggedBid(simpleBid, tags);
         }
         int strain = symbol.getResolvedStrain();
-        if (contract != null) {
-            if (jumpLevel != null) {
-                Bid b = contract.getBid(jumpLevel, strain);
-                return new TaggedBid(b, tags);
+        if (jumpLevel != null) {
+            Bid b = contract.getBid(jumpLevel, strain);
+            return new TaggedBid(b, tags);
+        }
+        if (level == null) {
+            if (bid == null) {
+                throw new IllegalArgumentException("anonymous level not allowed");
             }
-            if (level == null) {
-                if (bid == null) {
-                    throw new IllegalArgumentException("anonymous level not allowed");
-                }
-                Bid b = Bid.valueOf(bid.bid.level, strain);
-                return new TaggedBid(b, tags);
-            }
+            Bid b = Bid.valueOf(bid.bid.level, strain);
+            return new TaggedBid(b, tags);
         }
         return new TaggedBid(Bid.valueOf(level, strain), tags);
     }
 
-    /**
-     * At this point, the bid pattern's suit has already been
-     * resolved, so we just need to determine the level.
-     * 
-     * @param contract
-     *            The current contract.s
-     * @param bid
-     *            The bid I am trying to match.
-     * @return The bid associated with the given pattern. Null, if not valid.
-     */
-    public Optional<TaggedBid> resolveToBid(Contract contract, TaggedBid bid) {
-        TaggedBid newBid = getResolvedBid(contract, bid);
-        if (!isBidCompatible(contract, symbol, newBid.bid)) {
-            return Optional.empty();
-        }
-        return Optional.of(newBid);
+    public boolean isBidCompatible(Contract contract, TaggedBid bid) {
+        return isBidCompatible(contract, symbol, bid.bid);
     }
 
     @Override
