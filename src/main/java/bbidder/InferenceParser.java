@@ -35,6 +35,9 @@ public final class InferenceParser {
     private static Pattern PATT_FIT = Pattern.compile("fit\\s*(.*)", Pattern.CASE_INSENSITIVE);
     private static Pattern PATT_PREF = Pattern.compile("prefer\\s*(.*)\\s*to\\s*(.*)", Pattern.CASE_INSENSITIVE);
     private static Pattern PATT_REBIDDABLE = Pattern.compile("rebiddable\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PATT_LONGEQ_AMONG = Pattern.compile("longest_or_equal\\s*(.*)among\\s*(.*)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PATT_LONGEQ = Pattern.compile("longest_or_equal\\s*(.*)", Pattern.CASE_INSENSITIVE);
+
     private static Pattern PATT_REBIDDABLE_2nd_SUIT = Pattern.compile("rebiddable_2nd\\s+(.*)\\s+(.*)", Pattern.CASE_INSENSITIVE);
     private static Pattern PATT_SPECIFIC_CARDS = Pattern.compile("of\\s+top\\s+(\\d+)\\s+in\\s+(.*)", Pattern.CASE_INSENSITIVE);
     private static Pattern PATT_MIN_TO_MAX = Pattern.compile("(\\d+)\\s*\\-\\s*(\\d+)\\s*(.*)");
@@ -102,9 +105,21 @@ public final class InferenceParser {
             }
         }
         {
-            Inference i = InferenceParser.parseLongestOrEq(str.trim());
-            if (i != null) {
-                return i;
+            Matcher m = InferenceParser.PATT_LONGEQ_AMONG.matcher(str.trim());
+            if (m.matches()) {
+                Symbol sym = SymbolParser.parseSymbol(m.group(1).trim());
+                if (sym != null) {
+                    return new LongestOrEqual(sym, SuitSetParser.lookupSuitSet(m.group(2)));
+                }
+            }
+        }
+        {
+            Matcher m = InferenceParser.PATT_LONGEQ.matcher(str.trim());
+            if (m.matches()) {
+                Symbol sym = SymbolParser.parseSymbol(m.group(1));
+                if (sym != null) {
+                    return new LongestOrEqual(sym, null);
+                }
             }
         }
         {
@@ -163,30 +178,6 @@ public final class InferenceParser {
             }
         }
         throw new IllegalArgumentException("unknown inference: '" + str + "'");
-    }
-
-    private static LongestOrEqual parseLongestOrEq(String str) {
-        if (str == null) {
-            return null;
-        }
-        str = str.trim();
-        if (!str.toLowerCase().startsWith("longest_or_equal")) {
-            return null;
-        }
-        str = str.substring(16).trim();
-        int pos = str.indexOf("among");
-        if (pos >= 0) {
-            Symbol sym = SymbolParser.parseSymbol(str.substring(0, pos).trim());
-            if (sym == null) {
-                return null;
-            }
-            return new LongestOrEqual(sym, SuitSetParser.lookupSuitSet(str.substring(pos + 5).trim()));
-        }
-        Symbol sym = SymbolParser.parseSymbol(str);
-        if (sym == null) {
-            return null;
-        }
-        return new LongestOrEqual(sym, null);
     }
 
     private static CombinedTotalPointsRange makeTPtsRange(String str) {
