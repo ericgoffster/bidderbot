@@ -1,6 +1,6 @@
 include opening_bids.bidding;
 include contested/index.bidding;
-include ntslamauctions.bidding;
+include nt_slams.bidding;
 include general_gf.bidding;
 include general_majors.bidding;
 include general.bidding;
