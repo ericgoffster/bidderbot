@@ -58,6 +58,16 @@ public final class BidPattern {
                 lessThan);
     }
 
+    public BidPattern withLevel(Integer level) {
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan);
+    }
+
+    public BidPattern withJumpLevel(Integer jumpLevel) {
+        return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
+                lessThan);
+    }
+
     public BidPattern withIsOpposition(boolean isOpposition) {
         return new BidPattern(isOpposition, symbol, level, simpleBid, jumpLevel, generality, tags, antiMatch, seats, downTheLine, greaterThan,
                 lessThan);
@@ -153,21 +163,32 @@ public final class BidPattern {
      * @param bid The current bid (used to resolve anonymous levels)
      * @return The level resolved bid pattern.
      */
-    public TaggedBid resolveLevel(Contract contract, TaggedBid bid) {
+    public BidPattern resolveLevel(Contract contract, Bid bid) {
         if (simpleBid != null) {
-            return new TaggedBid(simpleBid, tags);
+            return this;
         }
         int strain = symbol.getResolvedStrain();
         if (level != null) {
-            return new TaggedBid(Bid.valueOf(level, strain), tags);
+            return this;
         }
         if (jumpLevel != null) {
-            return new TaggedBid(contract.getJumpBid(jumpLevel, strain), tags);
+            Bid b = contract.getJumpBid(jumpLevel, strain);
+            return withLevel(b.level).withJumpLevel(null);
         }
         if (bid == null) {
             throw new IllegalArgumentException("anonymous level not allowed");
         }
-        return new TaggedBid(Bid.valueOf(bid.bid.level, strain), tags);
+        return withLevel(bid.level);
+    }
+    
+    /**
+     * @return The bid this pattern represents (after resolution has been performed)
+     */
+    public TaggedBid getResolvedBid() {
+        if (simpleBid != null) {
+            return new TaggedBid(simpleBid, tags);
+        }
+        return new TaggedBid(Bid.valueOf(level, symbol.getResolvedStrain()), tags);
     }
 
     /**
@@ -183,13 +204,13 @@ public final class BidPattern {
             return false;
         }
         if (lessThan != null) {
-            Bid lt = lessThan.resolveLevel(contract, null).bid;
+            Bid lt = lessThan.resolveLevel(contract, null).getResolvedBid().bid;
             if (bid.compareTo(lt) >= 0) {
                 return false;
             }
         }
         if (greaterThan != null) {
-            Bid gt = greaterThan.resolveLevel(contract, null).bid;
+            Bid gt = greaterThan.resolveLevel(contract, null).getResolvedBid().bid;
             if (bid.compareTo(gt) <= 0) {
                 return false;
             }

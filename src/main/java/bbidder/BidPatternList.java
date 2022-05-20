@@ -144,7 +144,7 @@ public final class BidPatternList {
             } else {
                 TaggedBid bid = theBids.get(i);
                 Contract subContract = auction.firstN(i).getContract();
-                TaggedBid newBid = pattern.resolveLevel(subContract, bid);
+                TaggedBid newBid = pattern.resolveLevel(subContract, bid.bid).getResolvedBid();
                 if ((!Objects.equals(bid, newBid)) ^ pattern.antiMatch) {
                     return Optional.empty();
                 }
@@ -163,7 +163,7 @@ public final class BidPatternList {
             throw new IllegalArgumentException("generality not permitted in this context");
         }
         Contract contract = auction.getContract();
-        TaggedBid newBid = pattern.resolveLevel(contract, null);
+        TaggedBid newBid = pattern.resolveLevel(contract, null).getResolvedBid();
         if (!pattern.isBidCompatible(contract, newBid.bid)) {
             return Optional.empty();
         }
