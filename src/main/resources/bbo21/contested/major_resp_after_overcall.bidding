@@ -7,15 +7,21 @@ common 1M (NJz) {
 	3M => 7- tpts, 4+ M;
 	    test xxx Kxxx x Qxxxx:
 	        1♥ (1S) 3♥;
+	    test xxx Kxxx x Qxxxx:
+	        1♥ (2C) 3♥;
 	
 	2M => 6-10 tpts, 8+ fit M;
 	    test xxx Kxx Kx xxxxx:
 	        1♥ (1S) 2♥;
-	
+
 	Jz:<4M:"splinter" => gf+, 1- z, 4+ M;
 	    test x Kxxx Axx Axxxx:
 	        1♥ (1S) 3♠;
 	
+    NJz:<3M:"cuebid" => inv+, 3+ M;
+	    test xx Kxx Axx Kxxxx:
+	        1♥ (1S) 2S;
+    	
 	NJy:down => inv+, 5+ y, longest_or_equal y among unbid;
 	    test Kxx xx Axx AQxxx :
 	        1♥ (1S) 2♣;
@@ -38,6 +44,4 @@ common 1M (NJz) {
 	        1♥ (1S) 3N;
 	        
 	NJy => inv+, longest_or_equal y among unbid;
-	    test Axx xxx Axx Kxxx :
-	        1♥ (1S) 2C;
 }
