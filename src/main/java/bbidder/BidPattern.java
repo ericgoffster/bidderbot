@@ -17,9 +17,9 @@ import bbidder.utils.MyStream;
  *
  */
 public final class BidPattern {
-    static final String STR_DOUBLEJUMP = "DJ";
-    static final String STR_JUMP = "J";
-    static final String STR_NONJUMP = "NJ";
+    public static final String STR_DOUBLEJUMP = "DJ";
+    public static final String STR_JUMP = "J";
+    public static final String STR_NONJUMP = "NJ";
     public static final BidPattern PASS = createSimpleBid(Bid.P);
     public static final BidPattern PASS_OPP = createSimpleBid(Bid.P).withIsOpposition(true);
     public final boolean isOpposition;
