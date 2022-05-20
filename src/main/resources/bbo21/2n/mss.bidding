@@ -5,7 +5,7 @@
 # H = ♥
 # S = ♠
 
-2N:"2nt_opener" 3♠
+[] 2N:"2nt_opener" 3♠
 4m => 4+m, 2x;
     test Ax Axxx AJx AKxx:
         2N 3♠
@@ -13,8 +13,16 @@
     test Ax Axxx AKxx AJx:
         2N 3♠
         4♦;
+    test Ax AQxx AJx AKxx:
+        2C 2D
+        2N 3♠
+        4♣;
+    test Ax AQxx AKxx AJx:
+        2C 2D
+        2N 3♠
+        4♦;
 
-2N:"2nt_opener" 3♠
+[] 2N:"2nt_opener" 3♠
 3N => always;
     test AQx AJx AJx Axxx:
         2N 3♠
@@ -22,8 +30,16 @@
     test AQxx QJxx AJx Qx:
         2N 3♠
         3N;
+    test AQx AJx AJx AQxx:
+        2C 2D
+        2N 3♠
+        3N;
+    test AQxx QJxx AKx Qx:
+        2C 2D
+        2N 3♠
+        3N;
 
-2N:"2nt_opener" 3♠
+[] 2N:"2nt_opener" 3♠
 4m 4M => gf+, 1-M;
     test x Axx Axxxx Axxx:
         2N 3♠
@@ -37,8 +53,24 @@
     test Axx x Axxx Axxxx:
         2N 3♠
         4♦ 4♥;
+    test x Axx AQxxx Axxx:
+        2C 2D
+        2N 3♠
+        4♣ 4♠;
+    test x Axx AQxx Axxxx:
+        2C 2D
+        2N 3♠
+        4♦ 4♠;
+    test Axx x AQxxx Axxx:
+        2C 2D
+        2N 3♠
+        4♣ 4♥;
+    test Axx x AQxx Axxxx:
+        2C 2D
+        2N 3♠
+        4♦ 4♥;
 
-2N:"2nt_opener" 3♠
+[] 2N:"2nt_opener" 3♠
 3N 4M => gf+, 1-M;
     test x Axx Axxxx Axxx:
         2N 3♠
@@ -46,3 +78,12 @@
     test Axx x Axxxx Axxx:
         2N 3♠
         3N 4♥;
+    test x Axx AQxxx Axxx:
+        2C 2D
+        2N 3♠
+        3N 4♠;
+    test Axx x AQxxx Axxx:
+        2C 2D
+        2N 3♠
+        3N 4♥;
+        

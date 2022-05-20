@@ -65,7 +65,6 @@ include 1over1rebids.bidding;
 include 2over1rebids.bidding;
 include 1n/resp.bidding;
 include 2n/resp.bidding;
-include 2c_2n/resp.bidding;
 include solowayrebids.bidding;
 include 1n_forcing.bidding;
 include drury.bidding;

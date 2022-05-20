@@ -21,7 +21,7 @@
         2♣ 2D;
 
 2♣ 2D
-2N => balanced, 22-24 tpts, 22-24 hcp;
+2N:"2nt_opener" => balanced, 22-24 tpts, 22-24 hcp;
     test AKQx AQxx AQ Qxx:
         2C 2D
         2N;
